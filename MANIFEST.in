@@ -1,0 +1,4 @@
+include LICENSE
+recursive-include qtdraw *.ui
+recursive-include qtdraw *.png
+recursive-include qtdraw *.py
