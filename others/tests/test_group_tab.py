@@ -1,7 +1,7 @@
 from gcoreutils.dataset import DataSet
 from qtdraw.core.group_tab import GroupTab
 from qtdraw.core.util import create_application
-from qtdraw.test.data import test_data1, test_data2
+from data import test_data1, test_data2
 
 ds1 = DataSet(test_data1)
 ds2 = DataSet(test_data2)

@@ -3,7 +3,7 @@ from qtpy.QtWidgets import QWidget, QTreeView, QGridLayout, QInputDialog, QPushB
 from qtpy.QtCore import Qt
 from gcoreutils.dataset import DataSet
 from qtdraw.core.tree_item_model import TreeItemModel
-from qtdraw.test.data import test_data1, test_data2
+from data import test_data1, test_data2
 
 
 class Window(QWidget):

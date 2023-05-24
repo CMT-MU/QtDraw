@@ -12,7 +12,7 @@ from qtdraw.core.editable_widget import (
 from qtdraw.core.util import create_application
 
 
-IMAGEFILE = __file__[: __file__.rfind("/")] + "/../test/fig.jpg"
+IMAGEFILE = __file__[: __file__.rfind("/")] + "/fig.jpg"
 
 
 app = create_application()
