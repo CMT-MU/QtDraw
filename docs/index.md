@@ -69,6 +69,8 @@ QtDraw can draw the following 3D objects.
 - spline curve by data or parametric function
 - caption
 
+To draw these objects, push `list` button in DataSet panel, and then push `Add` and input a group name. Properties of an object are editable by double click of each column.
+
 These objects are also drawn from Python code.
 See [API](./API.md) for detail.
 
