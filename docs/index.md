@@ -76,4 +76,6 @@ See [API](./API.md) for detail.
 
 Example of all objects is found in [sample.qtdw](./sample.qtdw), which is drawn by [sample.py](./sample.py).
 
+Shell command `qtdraw [filename]` is available.
+
 Drawing supported by [MultiPie](https://github.com/CMT-MU/MultiPie) is shown [here](./multipie.md).
