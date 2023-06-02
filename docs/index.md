@@ -80,6 +80,6 @@ Shell command `qtdraw [filename]` is available.
 
 Drawing supported by [MultiPie](https://github.com/CMT-MU/MultiPie) is shown [here](./multipie.md).
 
-## Changes
+## Change Log
 - [version 1.1.3](ver1.1.3.md)
 - [version 1.1.2](ver1.1.2.md)
