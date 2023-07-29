@@ -78,8 +78,9 @@ Example of all objects is found in [sample.qtdw](./sample.qtdw), which is drawn 
 
 Shell command `qtdraw [filename]` is available.
 
-Drawing supported by [MultiPie](https://github.com/CMT-MU/MultiPie) is shown [here](./multipie.md).
+Detailed Usage (with [MultiPie](https://github.com/CMT-MU/MultiPie)) is given in [Manual](./manual.pdf).
 
 ## Change Log
+- [version 1.1.4](ver1.1.4.md)
 - [version 1.1.3](ver1.1.3.md)
 - [version 1.1.2](ver1.1.2.md)
