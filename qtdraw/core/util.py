@@ -1,6 +1,6 @@
 import numpy as np
 import vtk
-from pyvista._vtk import vtkParametricSpline
+from vtk import vtkParametricSpline
 import pyvista as pv
 from pyvista.utilities import surface_from_para
 from qtpy.QtWidgets import QApplication, QStyleFactory
