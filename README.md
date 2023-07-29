@@ -53,4 +53,5 @@ url = {https://link.aps.org/doi/10.1103/PhysRevB.107.195118}
 
 ## Documentation
 
-Refer to the [documentation](https://cmt-mu.github.io/QtDraw/) for detailed installation and usage details.
+Refer to the [documentation](https://cmt-mu.github.io/QtDraw/) for installation and usage.
+See also, [Manual](./manual.pdf).
