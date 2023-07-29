@@ -940,7 +940,7 @@ class DialogGroup(QDialog):
         def select_z_samb_vector():
             self.tab2_vector_proj_comb_select = self.tab2_vector_proj_z_samb[vector_proj_type1.currentText()]
             vector_proj_irrep1.clear()
-            comb = [self._combined_format(i) for i in self.tab2_vector_proj_comb_select]
+            comb = [i[0] for i in self.tab2_vector_proj_comb_select]
             vector_proj_irrep1.addItems(comb)
             vector_proj_irrep1.setCurrentIndex(0)
 
@@ -1007,7 +1007,7 @@ class DialogGroup(QDialog):
         def select_z_samb_orbital():
             self.tab2_orbital_proj_comb_select = self.tab2_orbital_proj_z_samb[orbital_proj_type1.currentText()]
             orbital_proj_irrep1.clear()
-            comb = [self._combined_format(i) for i in self.tab2_orbital_proj_comb_select]
+            comb = [i[0] for i in self.tab2_orbital_proj_comb_select]
             orbital_proj_irrep1.addItems(comb)
             orbital_proj_irrep1.setCurrentIndex(0)
 
@@ -1107,8 +1107,7 @@ class DialogGroup(QDialog):
 
     # ==================================================
     def _combined_format(self, tag_list):
-        z_tag = tag_list[0]
-        _, x_tag, y_tag = tag_list[1][0]
+        z_tag, x_tag, y_tag = tag_list
         t1 = (",".join(str(x_tag).split(",")[:-1]) + ")").replace("h", "a")
         t2 = ",".join(str(y_tag).split(",")[:-1]) + ")"
         tag = f"{z_tag} = {t1} x {t2}"
@@ -1140,8 +1139,8 @@ class DialogGroup(QDialog):
         z_samb_all = self._group.z_samb(x_tag, y_tag)
         z_samb = {"Q": [], "G": [], "T": [], "M": []}
         for tag, c in z_samb_all.items():
-            tag = tag[0]
-            z_samb[tag.head].append((tag, c))
+            tag_str = self._combined_format(tag)
+            z_samb[tag[0].head].append((tag_str, c))
         for k in z_samb.keys():
             z_samb[k] = list(sorted(z_samb[k], key=lambda i: i[0]))
 
