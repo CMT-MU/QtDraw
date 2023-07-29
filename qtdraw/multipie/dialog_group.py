@@ -686,6 +686,12 @@ class DialogGroup(QDialog):
         orbital_proj_draw_button = QPushButton("draw", self)
         orbital_proj_draw_button.setFocusPolicy(Qt.NoFocus)
 
+        hopping_proj_label = QLabel(
+            "HOPPING (imag)\ne.g., [0,0,0];[1/2,1/2,0] (bond)",
+            self,
+        )
+        hopping_proj_pos = QLineEdit("[0, 0, 0]; [1/2, 1/2, 0]", self)
+
         tab2_v_spacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
 
         tab2_grid = QGridLayout(self.tab2)
@@ -719,7 +725,10 @@ class DialogGroup(QDialog):
         tab2_grid.addWidget(orbital_proj_irrep1, 11, 2, 1, 6)
         tab2_grid.addWidget(orbital_proj_draw_button, 11, 8, 1, 1)
 
-        tab2_grid.addItem(tab2_v_spacer, 12, 1, 1, 1)
+        tab2_grid.addWidget(hopping_proj_label, 12, 0, 1, 9)
+        tab2_grid.addWidget(hopping_proj_pos, 13, 0, 1, 9)
+
+        tab2_grid.addItem(tab2_v_spacer, 14, 1, 1, 1)
 
         show_lbl = rcParams["show_label"]
 
@@ -1056,6 +1065,40 @@ class DialogGroup(QDialog):
         orbital_proj_pos.returnPressed.connect(gen_z_samb_orbital)
         orbital_proj_type1.currentIndexChanged.connect(select_z_samb_orbital)
         orbital_proj_draw_button.clicked.connect(plot_z_samb_orbital)
+
+        # --- plot hopping ---
+        def plot_z_samb_hopping():
+            combined_info = self._create_combined(hopping_proj_pos.text(), 1, "T")
+            if combined_info is None:
+                return
+
+            c_samb, site, z_samb = combined_info
+
+            try:
+                eq = z_samb["Q"][0][1]
+            except (IndexError, AttributeError):
+                return
+            cluster_obj = NSArray(str([0] * len(site)))
+            v = NSArray.vector3d()
+
+            for coeff, tag_h, tag_c in eq:
+                harm = self._pgroup.harmonics[tag_h].expression(v=v)
+                cluster = c_samb[tag_c]
+                cluster_obj += coeff * harm * cluster
+
+            cluster_obj *= -sp.I
+
+            rep = {v[0]: sp.Matrix([1, 0, 0]), v[1]: sp.Matrix([0, 1, 0]), v[2]: sp.Matrix([0, 0, 1])}
+            color = rcParams["vector_color_T"]
+            self._qtdraw._close_dialog()
+            lbl = "t_imag"
+            pname = "Z_" + self._qtdraw._get_name("vector")
+
+            plot_vector_object(site, cluster_obj, rep, pname, lbl, color)
+
+            self._qtdraw._plot_all_object()
+
+        hopping_proj_pos.returnPressed.connect(plot_z_samb_hopping)
 
     # ==================================================
     def _different_time_reversal(self, t1, t2):
