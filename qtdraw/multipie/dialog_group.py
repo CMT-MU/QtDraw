@@ -935,6 +935,23 @@ class DialogGroup(QDialog):
             vector_proj_irrep1.addItems(comb)
             vector_proj_irrep1.setCurrentIndex(0)
 
+        def plot_vector_object(site, obj, rep, pname, label, color):
+            if self.n_pset == 1:
+                for s, c in zip(site, obj):
+                    if c != 0:
+                        c = str(c.subs(rep).T[:])
+                        c = NSArray(c)
+                        d = c.norm()
+                        self._qtdraw.plot_vector(s, c, length=d, color=color, name=pname, label=label, show_lbl=show_lbl)
+            else:
+                for p in self._group.symmetry_operation.plus_set:
+                    for s, c in zip(site, obj):
+                        if c != 0:
+                            c = str(c.subs(rep).T[:])
+                            c = NSArray(c)
+                            d = c.norm()
+                            self._qtdraw.plot_vector(s + p, c, length=d, color=color, name=pname, label=label, show_lbl=show_lbl)
+
         def plot_z_samb_vector():
             irrep = vector_proj_irrep1.currentIndex()
             try:
@@ -957,21 +974,8 @@ class DialogGroup(QDialog):
             self._qtdraw._close_dialog()
             lbl = vector_proj_irrep1.currentText().replace("(", "[").replace(")", "]")
             pname = "Z_" + self._qtdraw._get_name("vector")
-            if self.n_pset == 1:
-                for s, c in zip(self.tab2_vector_proj_site, cluster_obj):
-                    if c != 0:
-                        c = str(c.subs(rep).T[:])
-                        c = NSArray(c)
-                        d = c.norm()
-                        self._qtdraw.plot_vector(s, c, length=d, color=color, name=pname, label=lbl, show_lbl=show_lbl)
-            else:
-                for p in self._group.symmetry_operation.plus_set:
-                    for s, c in zip(self.tab2_vector_proj_site, cluster_obj):
-                        if c != 0:
-                            c = str(c.subs(rep).T[:])
-                            c = NSArray(c)
-                            d = c.norm()
-                            self._qtdraw.plot_vector(s + p, c, length=d, color=color, name=pname, label=lbl, show_lbl=show_lbl)
+
+            plot_vector_object(self.tab2_vector_proj_site, cluster_obj, rep, pname, lbl, color)
 
             self._qtdraw._plot_all_object()
 
@@ -998,6 +1002,33 @@ class DialogGroup(QDialog):
             orbital_proj_irrep1.addItems(comb)
             orbital_proj_irrep1.setCurrentIndex(0)
 
+        def plot_orbital_object(site, obj, pname, label, color):
+            if self.n_pset == 1:
+                for s, orb in zip(site, obj):
+                    self._qtdraw.plot_orbital(
+                        s,
+                        orb,
+                        size=0.6,
+                        scale=False,
+                        color=color,
+                        name=pname,
+                        label=label,
+                        show_lbl=show_lbl,
+                    )
+            else:
+                for p in self._group.symmetry_operation.plus_set:
+                    for s, orb in zip(site, obj):
+                        self._qtdraw.plot_orbital(
+                            s + p,
+                            orb,
+                            size=0.6,
+                            scale=False,
+                            color=color,
+                            name=pname,
+                            label=label,
+                            show_lbl=show_lbl,
+                        )
+
         def plot_z_samb_orbital():
             irrep = orbital_proj_irrep1.currentIndex()
             try:
@@ -1017,31 +1048,9 @@ class DialogGroup(QDialog):
             color = rcParams["orbital_color_" + orbital_proj_type.currentText()]
             lbl = orbital_proj_irrep1.currentText().replace("(", "[").replace(")", "]")
             pname = "Z_" + self._qtdraw._get_name("orbital")
-            if self.n_pset == 1:
-                for s, orb in zip(self.tab2_orbital_proj_site, cluster_obj):
-                    self._qtdraw.plot_orbital(
-                        s,
-                        orb,
-                        size=0.6,
-                        scale=False,
-                        color=color,
-                        name=pname,
-                        label=lbl,
-                        show_lbl=show_lbl,
-                    )
-            else:
-                for p in self._group.symmetry_operation.plus_set:
-                    for s, orb in zip(self.tab2_orbital_proj_site, cluster_obj):
-                        self._qtdraw.plot_orbital(
-                            s + p,
-                            orb,
-                            size=0.6,
-                            scale=False,
-                            color=color,
-                            name=pname,
-                            label=lbl,
-                            show_lbl=show_lbl,
-                        )
+
+            plot_orbital_object(self.tab2_orbital_proj_site, cluster_obj, pname, lbl, color)
+
             self._qtdraw._plot_all_object()
 
         orbital_proj_pos.returnPressed.connect(gen_z_samb_orbital)
