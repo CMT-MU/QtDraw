@@ -1670,7 +1670,7 @@ class QtDrawWidget(QtDrawBase):
                 self.set_status(f"{ext} is unsupported, use {default_ext}.")
 
     # ==================================================
-    def _load_file(self, filename, ext=None):
+    def _load_file(self, filename, ext):
         self._homedir = os.path.dirname(filename)
         os.chdir(self._homedir)
 
@@ -2470,7 +2470,8 @@ class QtDraw(QtDrawWidget):
             QMessageBox.critical(None, "Error", f"LaTeX command, '{latex_cmd}', cannot be found.", QMessageBox.Yes)
             exit()
         if filename is not None and os.path.isfile(filename):
-            self._load_file(filename)
+            _, ext = os.path.splitext(filename)
+            self._load_file(filename, ext)
             self.set_status(f"loaded {filename}.")
 
     # ==================================================
