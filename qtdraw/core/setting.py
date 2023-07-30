@@ -53,7 +53,7 @@ rcParams = {
     "plotter.ext": ".qtdw",
     "plotter.cif": ".cif",
     "plotter.vesta": ".vesta",
-    "plotter.color_scheme": "Jmol",  # "VESTA/Jmol"
+    "plotter.color_scheme": "VESTA",  # "VESTA/Jmol"
     "plotter.site_scale": 1.2,
     "plotter.bond_scale": 1.2,
     #
