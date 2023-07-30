@@ -53,6 +53,9 @@ rcParams = {
     "plotter.ext": ".qtdw",
     "plotter.cif": ".cif",
     "plotter.vesta": ".vesta",
+    "plotter.color_scheme": "Jmol",  # "VESTA/Jmol"
+    "plotter.site_scale": 1.2,
+    "plotter.bond_scale": 1.2,
     #
     # default for plotting.
     "plot.orbital.theta": 180,
