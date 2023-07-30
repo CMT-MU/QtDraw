@@ -51,6 +51,11 @@ rcParams = {
     "plotter.font.size": 13,  # pixel
     "plotter.theme": "document",  # "document/paraview/default/dark"
     "plotter.ext": ".qtdw",
+    "plotter.cif": ".cif",
+    "plotter.vesta": ".vesta",
+    "plotter.color_scheme": "VESTA",  # "VESTA/Jmol"
+    "plotter.site_scale": 1.2,
+    "plotter.bond_scale": 1.2,
     #
     # default for plotting.
     "plot.orbital.theta": 180,

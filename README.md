@@ -9,7 +9,7 @@ QtDraw can be installed from PyPI using pip on Python >= 3.8:
 ```
 pip install qtdraw
 ```
-It is useful to associate with the following application with `.qtdw` extension.
+It is useful to associate with the following application with `.qtdw` and `.cif` extension.
 - [Mac](https://github.com/CMT-MU/QtDraw/tree/main/others/QtDraw_MacApp.zip)
 - [Windows](https://github.com/CMT-MU/QtDraw/tree/main/others/QtDraw_WinApp.zip)
 
@@ -54,4 +54,4 @@ url = {https://link.aps.org/doi/10.1103/PhysRevB.107.195118}
 ## Documentation
 
 Refer to the [documentation](https://cmt-mu.github.io/QtDraw/) for installation and usage.
-See also, [Manual](./manual.pdf).
+See also, [Manual](https://github.com/CMT-MU/QtDraw/blob/main/docs/manual.pdf).
