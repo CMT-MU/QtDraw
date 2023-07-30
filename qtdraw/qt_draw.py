@@ -33,6 +33,7 @@ from qtdraw.core.basic_object import (
     create_spline,
 )
 from qtdraw.core.color_palette import all_colors, custom_colormap, check_color
+from qtdraw.parser.read_cif import plot_cif
 from qtdraw import __version__
 
 from qtdraw.core.qt_logging import UncaughtHook
@@ -1650,26 +1651,34 @@ class QtDrawWidget(QtDrawBase):
     # ==================================================
     def _load(self):
         default_ext = rcParams["plotter.ext"]
+        loadable_ext = rcParams["plotter.cif"]  # +" "+rcParams["plotter.vesta"]
         default_file = os.getcwd()
-        filename, _ = QFileDialog.getOpenFileName(self, "Load QtDraw", default_file, "QtDraw file (*" + default_ext + ")")
+        ext_str = default_ext + " " + loadable_ext
+        filename, _ = QFileDialog.getOpenFileName(
+            self, "Load QtDraw", default_file, "QtDraw file (" + ext_str.replace(".", "*.") + ")"
+        )
         if filename:
             _, ext = os.path.splitext(filename)
             if ext == "":
                 ext = default_ext
                 filename += ext
-            if ext == default_ext:
+            if ext in ext_str.split(" "):
                 self._close_dialog()
-                self._load_file(filename)
+                self._load_file(filename, ext)
                 self.set_status(f"loaded {filename}.")
             else:
                 self.set_status(f"{ext} is unsupported, use {default_ext}.")
 
     # ==================================================
-    def _load_file(self, filename):
-        load_dict = read_dict(filename)
-
+    def _load_file(self, filename, ext):
         self._homedir = os.path.dirname(filename)
         os.chdir(self._homedir)
+
+        if ext == rcParams["plotter.cif"]:
+            plot_cif(self, filename)
+            return
+
+        load_dict = read_dict(filename)
 
         self.preference = load_dict["preference"]
         self.setting = load_dict["setting"]
@@ -2461,7 +2470,8 @@ class QtDraw(QtDrawWidget):
             QMessageBox.critical(None, "Error", f"LaTeX command, '{latex_cmd}', cannot be found.", QMessageBox.Yes)
             exit()
         if filename is not None and os.path.isfile(filename):
-            self._load_file(filename)
+            _, ext = os.path.splitext(filename)
+            self._load_file(filename, ext)
             self.set_status(f"loaded {filename}.")
 
     # ==================================================
