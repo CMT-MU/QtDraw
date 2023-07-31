@@ -3,6 +3,7 @@ from pymatgen.io.cif import CifParser
 from pymatgen.analysis.graphs import StructureGraph
 from pymatgen.analysis.local_env import MinimumDistanceNN
 from pymatgen.symmetry.analyzer import SpacegroupAnalyzer
+from pymatgen.core.periodic_table import Element
 from qtdraw.parser.element import element_color
 from qtdraw.core.setting import rcParams
 
@@ -77,7 +78,11 @@ def get_site_info(graph):
     # grouping equivalent sites.
     dsites = {}
     for es in eq_sites:
-        el = es[0].species_string
+        el = es[0].specie
+        if type(el) != type(Element):
+            el = str(el).replace("0+", "")
+        else:
+            el = el.symbol
         dsites[el] = dsites.get(el, []) + [es]
 
     site_info = []
@@ -86,11 +91,14 @@ def get_site_info(graph):
             el_name = name + str(el_no + 1)
             for s_no, s in enumerate(sl):
                 s_name = el_name + "_" + str(s_no + 1)
-                s_element = s.species_string
                 frac_coords = s.frac_coords.round(digit)
-                radius = float(s.specie.atomic_radius)
-                color = element_color[color_scheme][s_element]
-                site_info.append((el_name, s_name, s_element, frac_coords, radius, color))
+                if name in element_color[color_scheme].keys():
+                    radius = float(s.specie.atomic_radius)
+                    color = element_color[color_scheme][name]
+                else:
+                    radius = 1.0
+                    color = "silver"
+                site_info.append((el_name, s_name, name, frac_coords, radius, color))
 
     return site_info
 
@@ -115,8 +123,8 @@ def get_bond_info(graph, site_info):
         for head_info in tail_adjacency:
             h_name, _, _, h_pos, _, h_c = site_info[head_info["id"]]
             h_pos = np.array(head_info["to_jimage"]) + h_pos
-            center = (t_pos + h_pos) / 2
-            vector = h_pos - t_pos
+            center = ((t_pos + h_pos) / 2).round(digit)
+            vector = (h_pos - t_pos).round(digit)
             key = t_name + "-" + h_name
             dbonds[key] = dbonds.get(key, []) + [(center, vector, t_c, h_c)]
 
