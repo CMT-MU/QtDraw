@@ -33,7 +33,7 @@ from qtdraw.core.basic_object import (
     create_spline,
 )
 from qtdraw.core.color_palette import all_colors, custom_colormap, check_color
-from qtdraw.parser.read_cif import plot_cif
+from qtdraw.parser.read_cif_vesta import plot_cif, plot_vesta
 from qtdraw import __version__
 
 from qtdraw.core.qt_logging import UncaughtHook
@@ -1651,7 +1651,7 @@ class QtDrawWidget(QtDrawBase):
     # ==================================================
     def _load(self):
         default_ext = rcParams["plotter.ext"]
-        loadable_ext = rcParams["plotter.cif"]  # +" "+rcParams["plotter.vesta"]
+        loadable_ext = rcParams["plotter.cif"] + " " + rcParams["plotter.vesta"]
         default_file = os.getcwd()
         ext_str = default_ext + " " + loadable_ext
         filename, _ = QFileDialog.getOpenFileName(
@@ -1676,6 +1676,9 @@ class QtDrawWidget(QtDrawBase):
 
         if ext == rcParams["plotter.cif"]:
             plot_cif(self, filename)
+            return
+        elif ext == rcParams["plotter.vesta"]:
+            plot_vesta(self, filename)
             return
 
         load_dict = read_dict(filename)
