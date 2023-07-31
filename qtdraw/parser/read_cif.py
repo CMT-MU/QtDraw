@@ -1,38 +1,53 @@
+import numpy as np
 from pymatgen.io.cif import CifParser
 from pymatgen.analysis.graphs import StructureGraph
 from pymatgen.analysis.local_env import MinimumDistanceNN
-import numpy as np
+from pymatgen.symmetry.analyzer import SpacegroupAnalyzer
 from qtdraw.parser.element import element_color
 from qtdraw.core.setting import rcParams
 
+color_scheme = rcParams["plotter.color_scheme"]
+digit = 6
+
 
 # ==================================================
-def get_structure(file):
+def get_graph(file):
     """
-    get structure data.
+    get symmetrized structure graph.
 
     Args:
-        file (str): filename.
+        file (str): file name.
+
+    Returns:
+        StructureGraph: pymatgen StructureGraph object.
+    """
+    parser = CifParser(file)
+    structure = parser.get_structures(primitive=False, symmetrized=False)[0]
+    sga = SpacegroupAnalyzer(structure)
+    symmetrized = sga.get_symmetrized_structure()
+    env = MinimumDistanceNN()
+    graph = StructureGraph.with_local_env_strategy(symmetrized, env)
+
+    return graph
+
+
+# ==================================================
+def get_model_cell(graph):
+    """
+    get model and cell.
+
+    Args:
+        graph (StructureGraph): pymatgen StructureGraph object.
 
     Returns: tuple.
         - str: name of model.
-        - dict: cell info.
-        - float: cell volume.
-        - dict: sites, {name: [position]}.
-        - dict: bonds, {(tail_name,head_name):[(center,vector)]}.
+        - dict: unit-cell info.
+        - float: unit-cell volume.
     """
-    digit = 6
-    color_scheme = rcParams["plotter.color_scheme"]
-
-    parser = CifParser(file)
-    structure = parser.get_structures(primitive=False)[0]
-    env = MinimumDistanceNN()
-    graph = StructureGraph.with_local_env_strategy(structure, env)
-
     name = graph.structure.composition.reduced_formula
 
-    lat = structure.lattice
-    lattice = {
+    lat = graph.structure.lattice
+    cell = {
         "a": np.round(lat.a, digit),
         "b": np.round(lat.b, digit),
         "c": np.round(lat.c, digit),
@@ -42,56 +57,91 @@ def get_structure(file):
     }
     volume = lat.volume
 
-    sites0 = [
-        (
-            i.label,
-            i.frac_coords.round(digit).tolist(),
-            float(list(i.species)[0].atomic_radius),
-            element_color[color_scheme][i.species_string],
-        )
-        for i in graph.structure.sites
-    ]
-    adjacency = graph.as_dict()["graphs"]["adjacency"]
-    bonds0 = []
-    for tail_site, ad in zip(sites0, adjacency):
-        tail_lbl = tail_site[0]
-        tail = np.array(tail_site[1])
-        tail_c = tail_site[3]
-        for i in ad:
-            head_site = sites0[i["id"]]
-            head_lbl = head_site[0]
-            head = np.array(i["to_jimage"]) + np.array(head_site[1])
-            head_c = head_site[3]
-            c = str(((tail + head) / 2).tolist())
-            v = str((head - tail).tolist())
-            b = (tail_lbl, head_lbl, c, v, tail_c, head_c)
-            bonds0.append(b)
-
-    sites = {}
-    for lbl, pos, r, c in sites0:
-        sites[lbl] = sites.get(lbl, []) + [(str(pos), r, c)]
-
-    bonds = {}
-    for tl, hl, c, v, tc, hc in bonds0:
-        lbl = (tl, hl)
-        bonds[lbl] = bonds.get(lbl, []) + [(c, v, tc, hc)]
-
-    return name, lattice, volume, sites, bonds
+    return name, cell, volume
 
 
 # ==================================================
-def create_qtdraw_dict(qtdraw, name, lattice, volume, sites, bonds):
+def get_site_info(graph):
     """
-    create QtDraw file.
+    get site information.
+
+    Args:
+        graph (StructureGraph): pymatgen StructureGraph object.
+
+    Returns:
+        list: site_info. (name, label, element, frac_coords, radius, color).
+    """
+    structure = graph.structure
+    eq_sites = structure.equivalent_sites
+
+    # grouping equivalent sites.
+    dsites = {}
+    for es in eq_sites:
+        el = es[0].species_string
+        dsites[el] = dsites.get(el, []) + [es]
+
+    site_info = []
+    for name, v in dsites.items():
+        for el_no, sl in enumerate(v):
+            el_name = name + str(el_no + 1)
+            for s_no, s in enumerate(sl):
+                s_name = el_name + "_" + str(s_no + 1)
+                s_element = s.species_string
+                frac_coords = s.frac_coords.round(digit)
+                radius = float(s.specie.atomic_radius)
+                color = element_color[color_scheme][s_element]
+                site_info.append((el_name, s_name, s_element, frac_coords, radius, color))
+
+    return site_info
+
+
+# ==================================================
+def get_bond_info(graph, site_info):
+    """
+    get bond information.
+
+    Args:
+        graph (StructureGraph): pymatgen StructureGraph object.
+        site_info (list): site info.
+
+    Returns:
+        list: bond_info. (name, label, center, vector, tail_color, head_color).
+    """
+    adjacency = graph.as_dict()["graphs"]["adjacency"]
+
+    dbonds = {}
+    for tail, tail_adjacency in zip(site_info, adjacency):
+        t_name, _, _, t_pos, _, t_c = tail
+        for head_info in tail_adjacency:
+            h_name, _, _, h_pos, _, h_c = site_info[head_info["id"]]
+            h_pos = np.array(head_info["to_jimage"]) + h_pos
+            center = (t_pos + h_pos) / 2
+            vector = h_pos - t_pos
+            key = t_name + "-" + h_name
+            dbonds[key] = dbonds.get(key, []) + [(center, vector, t_c, h_c)]
+
+    bond_info = []
+    for name, v in dbonds.items():
+        for no, (center, vector, t_c, h_c) in enumerate(v):
+            label = name + "_" + str(no + 1)
+            bond_info.append((name, label, center, vector, t_c, h_c))
+
+    return bond_info
+
+
+# ==================================================
+def plot_site_bond(qtdraw, name, cell, volume, site_info, bond_info):
+    """
+    plot site and bond.
 
     Args:
         name (str): name of model.
-        lattice (dict): cell info.
-        volume (float): cell volume.
-        sites (dict): sites.
-        bonds (dict): bonds.
+        cell (dict): unit-cell info.
+        volume (float): unit-cell volume.
+        site_info (list): site info.
+        bond_info (list): bond info.
     """
-    qtdraw._init_setting(model=name, cell=lattice, axis_type="abc", clip=False)
+    qtdraw._init_setting(model=name, cell=cell, axis_type="abc", clip=False)
     qtdraw._remove_all_actor()
     qtdraw._init_all()
 
@@ -100,17 +150,20 @@ def create_qtdraw_dict(qtdraw, name, lattice, volume, sites, bonds):
     bond_scale = rcParams["plotter.bond_scale"]
 
     # plot sites.
-    for lbl, lst in sites.items():
-        for pno, (p, size, color) in enumerate(lst):
-            label = f"{lbl}_{pno+1}"
-            qtdraw.plot_site(p, name=lbl, label=label, color=color, size=site_scale * size * scale)
+    for name, label, _, frac_coords, radius, color in site_info:
+        qtdraw.plot_site(str(frac_coords.tolist()), name=name, label=label, color=color, size=site_scale * radius * scale)
 
     # plot bonds.
-    for lbl, lst in bonds.items():
-        for pno, (c, v, tc, hc) in enumerate(lst):
-            lbl1 = lbl[0] + "-" + lbl[1]
-            label = lbl1 + "_" + str(pno + 1)
-            qtdraw.plot_bond(c, v, color=tc, color2=hc, name=lbl1, label=label, width=bond_scale * scale)
+    for name, label, center, vector, tail_color, head_color in bond_info:
+        qtdraw.plot_bond(
+            str(center.tolist()),
+            str(vector.tolist()),
+            color=tail_color,
+            color2=head_color,
+            name=name,
+            label=label,
+            width=bond_scale * scale,
+        )
 
     qtdraw._plot_all_object()
     qtdraw.set_view()
@@ -124,5 +177,8 @@ def plot_cif(qtdraw, filename):
     Args:
         filename (str): filename.
     """
-    name, lattice, volume, sites, bonds = get_structure(filename)
-    create_qtdraw_dict(qtdraw, name, lattice, volume, sites, bonds)
+    graph = get_graph(filename)
+    name, cell, volume = get_model_cell(graph)
+    site_info = get_site_info(graph)
+    bond_info = get_bond_info(graph, site_info)
+    plot_site_bond(qtdraw, name, cell, volume, site_info, bond_info)
