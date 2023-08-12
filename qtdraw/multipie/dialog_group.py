@@ -745,7 +745,7 @@ class DialogGroup(QDialog):
         def site_cluster_samb_select():
             self.tab2_site_proj_comb_select = self.tab2_site_proj_z_samb["Q"]
             site_proj_irrep1.clear()
-            comb = [self._combined_format(i) for i in self.tab2_site_proj_comb_select]
+            comb = [i[0] for i in self.tab2_site_proj_comb_select]
             site_proj_irrep1.addItems(comb)
             site_proj_irrep1.setCurrentIndex(0)
 
@@ -819,7 +819,7 @@ class DialogGroup(QDialog):
         def bond_cluster_samb_select():
             self.tab2_bond_proj_comb_select = self.tab2_bond_proj_z_samb["Q"] + self.tab2_bond_proj_z_samb["T"]
             bond_proj_irrep1.clear()
-            comb = [self._combined_format(i) for i in self.tab2_bond_proj_comb_select]
+            comb = [i[0] for i in self.tab2_bond_proj_comb_select]
             bond_proj_irrep1.addItems(comb)
             bond_proj_irrep1.setCurrentIndex(0)
 
