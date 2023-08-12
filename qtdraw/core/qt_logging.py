@@ -62,4 +62,4 @@ class UncaughtHook(QtCore.QObject):
 
 # ==================================================
 def dprint(s):
-    QMessageBox(None, "dprint", str(s))
+    QMessageBox.information(None, "dprint", str(s))
