@@ -11,6 +11,7 @@ from qtpy.QtWidgets import (
     QComboBox,
     QPushButton,
     QLineEdit,
+    QCheckBox,
 )
 from qtpy.QtCore import Qt
 from gcoreutils.nsarray import NSArray
@@ -301,6 +302,10 @@ class DialogGroup(QDialog):
         self.main_irrep.addItems(self.irrep)
         self.main_irrep.setCurrentIndex(0)
 
+        self.tab1_pgharm_type.setCurrentIndex(0)
+        self.tab1_pgharm_rank.setCurrentIndex(0)
+        self.pgharm_rank_select()
+
     # ==================================================
     def set_group_type(self, point_group):
         if point_group:
@@ -464,6 +469,28 @@ class DialogGroup(QDialog):
         orbital_type.addItems(["Q", "G", "T", "M"])
         orbital_type.setCurrentIndex(0)
 
+        pgharm_label = QLabel(
+            "POINT-GROUP HARMONICS\ne.g., site: [1/2, 1/2, 0], bond: [2/3, 1/3, 0]; [1/3, 2/3, 0]",
+            self,
+        )
+        pgharm_pos = QLineEdit("[ 0, 0, 0 ]", self)
+        self.tab1_pgharm_type = QComboBox(self)
+        self.tab1_pgharm_type.addItems(["Q", "G", "T", "M"])
+        self.tab1_pgharm_type.setCurrentIndex(0)
+        self.tab1_pgharm_rank = QComboBox(self)
+        self.tab1_pgharm_rank.setFocusPolicy(Qt.NoFocus)
+        self.tab1_pgharm_rank.addItems(map(str, range(12)))
+        self.tab1_pgharm_rank.setCurrentIndex(0)
+        self.tab1_pgharm_irrep = QComboBox(self)
+        self.tab1_pgharm_irrep.setFocusPolicy(Qt.NoFocus)
+        hs0 = self._pgroup.harmonics.select(rank=0, head="Q")
+        self.tab1_pgharm_irrep.addItems(["Q" + str(i)[2:] for i in hs0])
+        self.tab1_pgharm_irrep.setCurrentIndex(0)
+        pgharm_exp_label = QLabel("expression", self)
+        self.tab1_pgharm_exp = QLineEdit("1", self)
+        pgharm_exp_latex = QCheckBox("LaTeX", self)
+        pgharm_exp_latex.setChecked(False)
+
         tab1_v_spacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
 
         tab1_grid = QGridLayout(self.tab1)
@@ -481,7 +508,16 @@ class DialogGroup(QDialog):
         tab1_grid.addWidget(orbital_pos, 7, 0, 1, 8)
         tab1_grid.addWidget(orbital_type, 7, 8, 1, 1)
 
-        tab1_grid.addItem(tab1_v_spacer, 8, 1, 1, 1)
+        tab1_grid.addWidget(pgharm_label, 8, 0, 1, 9)
+        tab1_grid.addWidget(pgharm_pos, 9, 0, 1, 5)
+        tab1_grid.addWidget(self.tab1_pgharm_type, 9, 5, 1, 1)
+        tab1_grid.addWidget(self.tab1_pgharm_rank, 9, 6, 1, 1)
+        tab1_grid.addWidget(self.tab1_pgharm_irrep, 9, 7, 1, 2)
+        tab1_grid.addWidget(pgharm_exp_label, 10, 0, 1, 1)
+        tab1_grid.addWidget(self.tab1_pgharm_exp, 10, 1, 1, 7)
+        tab1_grid.addWidget(pgharm_exp_latex, 10, 8, 1, 1)
+
+        tab1_grid.addItem(tab1_v_spacer, 11, 1, 1, 1)
 
         show_lbl = rcParams["show_label"]
 
@@ -612,6 +648,74 @@ class DialogGroup(QDialog):
             self._qtdraw._plot_all_object()
 
         orbital_pos.returnPressed.connect(plot_orbital)
+
+        # --- plot pg harmonics ---
+        self.tab1_pgharm_type.currentIndexChanged.connect(self.pgharm_rank_select)
+        self.tab1_pgharm_rank.currentIndexChanged.connect(self.pgharm_rank_select)
+
+        def select_pg_harmonics():
+            head = self.tab1_pgharm_type.currentText()
+            head1 = head.replace("T", "Q").replace("M", "G")
+            rank = int(self.tab1_pgharm_rank.currentText())
+            hs = self._pgroup.harmonics.select(rank=rank, head=head1)
+            h = hs[self.tab1_pgharm_irrep.currentIndex()]
+            ex = h.expression(v=NSArray.vector3d("Q"))
+            if pgharm_exp_latex.checkState():
+                ex = ex.latex()
+            self.tab1_pgharm_exp.setText(str(ex))
+
+        self.tab1_pgharm_irrep.currentIndexChanged.connect(select_pg_harmonics)
+        self.tab1_pgharm_type.currentIndexChanged.connect(select_pg_harmonics)
+        self.tab1_pgharm_rank.currentIndexChanged.connect(select_pg_harmonics)
+        pgharm_exp_latex.toggled.connect(select_pg_harmonics)
+
+        def plot_pg_harmonics():
+            head = self.tab1_pgharm_type.currentText()
+            head1 = head.replace("T", "Q").replace("M", "G")
+            rank = int(self.tab1_pgharm_rank.currentText())
+            hs = self._pgroup.harmonics.select(rank=rank, head=head1)
+            h = hs[self.tab1_pgharm_irrep.currentIndex()]
+            ex = h.expression(v=NSArray.vector3d("Q"))
+
+            pos = pgharm_pos.text()
+            if any(map(pos.__contains__, (";", ":", "@"))):
+                pos = str(NSArray(pos).convert_bond("bond")[1])
+            try:
+                if self.pg:
+                    c_mapping = self._group.site_mapping(pos)
+                else:
+                    c_mapping = self._group.site_mapping(pos, plus_set=True)
+                basic_num = len(c_mapping) // self.n_pset
+                c = NSArray.from_str(c_mapping.keys())
+            except Exception:
+                return
+            pname = self._qtdraw._get_name("orbital")
+            pname0 = head + str(h)[2:]
+            self._qtdraw._close_dialog()
+            color = rcParams["orbital_color_" + head]
+            for no in range(len(c)):
+                idx = no % basic_num
+                pset = no // basic_num
+                if self.n_pset > 1:
+                    pname = pname0 + f"({pset+1})"
+                else:
+                    pname = pname0
+                label = f"orb{idx+1}"
+                self._qtdraw.plot_orbital(c[no], ex, size=0.3, color=color, name=pname, label=label, show_lbl=show_lbl)
+            self._qtdraw._plot_all_object()
+
+        pgharm_pos.returnPressed.connect(plot_pg_harmonics)
+
+    def pgharm_rank_select(self):
+        head = self.tab1_pgharm_type.currentText()
+        head1 = head.replace("T", "Q").replace("M", "G")
+        rank = int(self.tab1_pgharm_rank.currentText())
+        hs = self._pgroup.harmonics.select(rank=rank, head=head1)
+        self.tab1_pgharm_irrep.clear()
+        comb = [head + str(i)[2:] for i in hs]
+        self.tab1_pgharm_irrep.addItems(comb)
+        self.tab1_pgharm_irrep.setCurrentIndex(0)
+        self.tab1_pgharm_exp.setText("1")
 
     # ==================================================
     def create_tab2(self):
