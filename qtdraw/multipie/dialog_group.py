@@ -1149,9 +1149,10 @@ class DialogGroup(QDialog):
             except (IndexError, AttributeError):
                 return
             cluster_obj = NSArray(str([0] * len(self.tab2_orbital_proj_site)))
+            v = NSArray.vector3d()
             for i in eq:
                 coeff, tag_h, tag_c = i
-                harm = self._pgroup.harmonics[tag_h].expression()
+                harm = self._pgroup.harmonics[tag_h].expression(v=v)
                 cluster = self.tab2_orbital_proj_c_samb[tag_c]
                 cluster_obj += coeff * harm * cluster
             if self._different_time_reversal(orbital_proj_type.currentText(), orbital_proj_type1.currentText()):
