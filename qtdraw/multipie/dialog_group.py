@@ -32,6 +32,7 @@ from qtdraw.multipie.dialog_group_info import (
     create_atomic_mp,
 )
 from qtdraw.multipie.setting import rcParams
+from qtdraw.core.qt_logging import dprint
 
 
 # ==================================================
@@ -43,8 +44,8 @@ class DialogGroup(QDialog):
         self._qtdraw = qtdraw
         self.crystal = [{}, {}]  # space/point group.
         for crystal in __def_dict__["crystal"]:
-            self.crystal[0][crystal] = [f"{i.no}. {i}" for i in TagGroup.create(crystal=crystal, space_group=True)]
-            self.crystal[1][crystal] = [f"{i.no}. {i}" for i in TagGroup.create(crystal=crystal)]
+            self.crystal[0][crystal] = [f"{i.no}. {i} ({i.IS})" for i in TagGroup.create(crystal=crystal, space_group=True)]
+            self.crystal[1][crystal] = [f"{i.no}. {i} ({i.IS})" for i in TagGroup.create(crystal=crystal)]
 
         self.setWindowTitle(f"QtDraw - Group Operations with MultiPie Ver. {self._qtdraw._multipie_loaded}")
         self.resize(width, height)
@@ -203,7 +204,7 @@ class DialogGroup(QDialog):
         self.layout = QGridLayout(self)
         self.layout.addWidget(self.main_g_type, 0, 0, 1, 2)
         self.layout.addWidget(self.main_c_type, 0, 2, 1, 3)
-        self.layout.addWidget(self.main_group, 0, 5, 1, 2)
+        self.layout.addWidget(self.main_group, 0, 5, 1, 4)
 
         self.layout.addWidget(self.main_symmetry_operation, 1, 0, 1, 2)
         self.layout.addWidget(self.main_character_table, 1, 2, 1, 3)
@@ -307,20 +308,21 @@ class DialogGroup(QDialog):
         self.pgharm_rank_select()
 
     # ==================================================
-    def set_group_type(self, point_group):
-        if point_group:
+    def set_group_type(self, is_point_group):
+        if is_point_group:
             tag = str(self._pgroup.tag)
         else:
-            tag = self.main_group.currentText()
+            tag = self.main_group.currentText().split(" ")[1]
             if tag[-2:] == "-1":
                 tag = tag[:-2]
-            tag = tag.split(" ")[1] + "^1"
+            tag = tag + "^1"
+
         self.set_group_object(tag)
 
         crystal = self.main_c_type.currentText()
         self.main_group.clear()
         lst = self.crystal[self.pg][crystal]
-        no = lst.index(str(self._group.tag.no) + ". " + tag)
+        no = lst.index(str(self._group.tag.no) + ". " + tag + " (" + self._group.tag.IS + ")")
         self.main_group.addItems(lst)
         self.main_group.setCurrentIndex(no)
 
