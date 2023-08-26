@@ -38,10 +38,16 @@ from qtdraw import __version__
 
 from qtdraw.core.qt_logging import UncaughtHook
 
-CHOP = 1e-4
+CHOP = 1e-5
 qt_exception_hook = UncaughtHook()
 global QT_EXCEPTION_HOOK
 QT_EXCEPTION_HOOK = qt_exception_hook
+
+
+# ==================================================
+def to_chopped_list(a):
+    a[np.abs(a) < CHOP] = 0.0
+    return a.tolist()
 
 
 # ==================================================
@@ -575,7 +581,7 @@ class QtDrawWidget(QtDrawBase):
         if v.norm() < CHOP or width < CHOP:
             return
 
-        info = [v.tolist(), float(width), color, color2, float(opacity), int(space)]
+        info = [to_chopped_list(v), float(width), color, color2, float(opacity), int(space)]
         self._plot_to_data("bond", name, position, info, label, show_lbl)
 
     # ==================================================
@@ -637,7 +643,7 @@ class QtDrawWidget(QtDrawBase):
         if v.norm() < CHOP or length < CHOP or width < CHOP:
             return
 
-        info = [v.tolist(), float(length), float(width), float(offset), color, float(opacity), int(space)]
+        info = [to_chopped_list(v), float(length), float(width), float(offset), color, float(opacity), int(space)]
         self._plot_to_data("vector", name, position, info, label, show_lbl)
 
     # ==================================================
@@ -887,7 +893,7 @@ class QtDrawWidget(QtDrawBase):
         if v.norm() < CHOP or x < CHOP or y < CHOP:
             return
 
-        info = [v.tolist(), float(x), float(y), color, float(opacity), int(space)]
+        info = [to_chopped_list(v), float(x), float(y), color, float(opacity), int(space)]
         self._plot_to_data("plane", name, position, info, label, show_lbl)
 
     # ==================================================
@@ -959,9 +965,9 @@ class QtDrawWidget(QtDrawBase):
             return
 
         info = [
-            a1.tolist(),
-            a2.tolist(),
-            a3.tolist(),
+            to_chopped_list(a1),
+            to_chopped_list(a2),
+            to_chopped_list(a3),
             bool(edge),
             bool(wireframe),
             float(width),
@@ -1029,7 +1035,7 @@ class QtDrawWidget(QtDrawBase):
         if space < 0:
             return
 
-        point = NSArray(point, "vector", "value").tolist()
+        point = to_chopped_list(NSArray(point, "vector", "value"))
         connection = NSArray(connection, "vector", "value").astype(int).tolist()
 
         info = [point, connection, bool(edge), bool(wireframe), float(width), color, float(opacity), int(space)]
@@ -1100,9 +1106,9 @@ class QtDrawWidget(QtDrawBase):
         if n.norm() < CHOP:
             return
 
-        offset = NSArray(offset, "vector", "value").tolist()
+        offset = to_chopped_list(NSArray(offset, "vector", "value"))
 
-        info = [text, float(size), float(depth), n.tolist(), offset, color, float(opacity), int(space)]
+        info = [text, float(size), float(depth), to_chopped_list(n), offset, color, float(opacity), int(space)]
         self._plot_to_data("text3d", name, position, info, label, show_lbl)
 
     # ==================================================
@@ -1166,7 +1172,7 @@ class QtDrawWidget(QtDrawBase):
         if space < 0:
             return
 
-        point = NSArray(point, "vector", "value").tolist()
+        point = to_chopped_list(NSArray(point, "vector", "value"))
 
         info = [point, float(width), int(n_interp), bool(closed), bool(natural), color, float(opacity), int(space)]
         self._plot_to_data("spline", name, position, info, label, show_lbl)
@@ -1237,7 +1243,7 @@ class QtDrawWidget(QtDrawBase):
             return
 
         expression = NSArray(expression, "vector").str()
-        t_range = NSArray(t_range, "vector", "value").tolist()
+        t_range = to_chopped_list(NSArray(t_range, "vector", "value"))
 
         info = [expression, t_range, float(width), int(n_interp), bool(closed), bool(natural), color, float(opacity), int(space)]
         self._plot_to_data("spline_t", name, position, info, label, show_lbl)
