@@ -32,7 +32,6 @@ from qtdraw.multipie.dialog_group_info import (
     create_atomic_mp,
 )
 from qtdraw.multipie.setting import rcParams
-from qtdraw.core.qt_logging import dprint
 
 
 # ==================================================
@@ -775,7 +774,7 @@ class DialogGroup(QDialog):
         vector_proj_draw_button = QPushButton("draw", self)
         vector_proj_draw_button.setFocusPolicy(Qt.NoFocus)
         vector_proj_lc_label = QLabel("linear comb.", self)
-        vector_proj_lc = QLineEdit("", self)
+        vector_proj_lc = QLineEdit("(Q01+Q02)/sqrt(2)", self)
 
         orbital_proj_label = QLabel(
             "ORBITAL draw symmetry-adapted orbital.\n1. choose (type,rank), 2. input representative SITE/BOND, 3. ENTER,\n\u21d2  4. choose (type,basis), 5. push `draw` or 4. input linear combination, 5. ENTER.",
@@ -800,7 +799,7 @@ class DialogGroup(QDialog):
         orbital_proj_draw_button = QPushButton("draw", self)
         orbital_proj_draw_button.setFocusPolicy(Qt.NoFocus)
         orbital_proj_lc_label = QLabel("linear comb.", self)
-        orbital_proj_lc = QLineEdit("", self)
+        orbital_proj_lc = QLineEdit("(Q01+Q02)/sqrt(2)", self)
 
         hopping_proj_label = QLabel(
             "HOPPING: draw hopping direction.\n1. input representative BOND, 2. ENTER.",
@@ -1081,22 +1080,50 @@ class DialogGroup(QDialog):
                             d = c.norm()
                             self._qtdraw.plot_vector(s + p, c, length=d, color=color, name=pname, label=label, show_lbl=show_lbl)
 
-        def plot_z_samb_vector():
-            irrep = vector_proj_irrep1.currentIndex()
+        def create_vector_object(idx, v):
             try:
-                eq = self.tab2_vector_proj_comb_select[irrep][1]
+                eq = self.tab2_vector_proj_comb_select[idx][1]
             except (IndexError, AttributeError):
                 return
-            cluster_obj = NSArray(str([0] * len(self.tab2_vector_proj_site)))
-            v = NSArray.vector3d()
 
+            cluster_obj = NSArray(str([0] * len(self.tab2_vector_proj_site)))
             for i in eq:
                 coeff, tag_h, tag_c = i
                 harm = self._pgroup.harmonics[tag_h].expression(v=v)
                 cluster = self.tab2_vector_proj_c_samb[tag_c]
                 cluster_obj += coeff * harm * cluster
+
             if self._different_time_reversal(vector_proj_type.currentText(), vector_proj_type1.currentText()):
                 cluster_obj *= -sp.I
+
+            return cluster_obj
+
+        def plot_z_samb_vector():
+            irrep = vector_proj_irrep1.currentIndex()
+            v = NSArray.vector3d()
+            cluster_obj = create_vector_object(irrep, v)
+
+            rep = {v[0]: sp.Matrix([1, 0, 0]), v[1]: sp.Matrix([0, 1, 0]), v[2]: sp.Matrix([0, 0, 1])}
+            color = rcParams["vector_color_" + vector_proj_type.currentText()]
+            self._qtdraw._close_dialog()
+            lbl = vector_proj_irrep1.currentText().replace("(", "[").replace(")", "]")
+            pname = "Z_" + self._qtdraw._get_name("vector")
+
+            plot_vector_object(self.tab2_vector_proj_site, cluster_obj, rep, pname, lbl, color)
+
+            self._qtdraw._plot_all_object()
+
+        def plot_z_samb_vector_lc():
+            samb_type = vector_proj_type1.currentText().lower()
+            irrep_num = vector_proj_irrep1.count()
+            form = vector_proj_lc.text().lower()
+            var = [f"{samb_type}{i+1:02d}" for i in range(irrep_num)]
+            if not set(NSArray(form).variable()).issubset(set(var)):
+                return
+            var = [i for i in var if i in form]
+            v = NSArray.vector3d()
+            lc_basis = {i: sp.Matrix(create_vector_object(int(i[1:]) - 1, v).tolist()) for i in var}
+            cluster_obj = NSArray(str(NSArray(form).subs(lc_basis).tolist().T.tolist()[0]))
 
             rep = {v[0]: sp.Matrix([1, 0, 0]), v[1]: sp.Matrix([0, 1, 0]), v[2]: sp.Matrix([0, 0, 1])}
             color = rcParams["vector_color_" + vector_proj_type.currentText()]
@@ -1111,6 +1138,7 @@ class DialogGroup(QDialog):
         vector_proj_pos.returnPressed.connect(gen_z_samb_vector)
         vector_proj_type1.currentIndexChanged.connect(select_z_samb_vector)
         vector_proj_draw_button.clicked.connect(plot_z_samb_vector)
+        vector_proj_lc.returnPressed.connect(plot_z_samb_vector_lc)
 
         # --- plot combined SAMB (orbital) ---
         def gen_z_samb_orbital():
@@ -1158,21 +1186,49 @@ class DialogGroup(QDialog):
                             show_lbl=show_lbl,
                         )
 
-        def plot_z_samb_orbital():
-            irrep = orbital_proj_irrep1.currentIndex()
+        def create_orbital_object(idx, v):
             try:
-                eq = self.tab2_orbital_proj_comb_select[irrep][1]
+                eq = self.tab2_orbital_proj_comb_select[idx][1]
             except (IndexError, AttributeError):
                 return
+
             cluster_obj = NSArray(str([0] * len(self.tab2_orbital_proj_site)))
-            v = NSArray.vector3d()
             for i in eq:
                 coeff, tag_h, tag_c = i
                 harm = self._pgroup.harmonics[tag_h].expression(v=v)
                 cluster = self.tab2_orbital_proj_c_samb[tag_c]
                 cluster_obj += coeff * harm * cluster
+
             if self._different_time_reversal(orbital_proj_type.currentText(), orbital_proj_type1.currentText()):
                 cluster_obj *= -sp.I
+
+            return cluster_obj
+
+        def plot_z_samb_orbital():
+            irrep = orbital_proj_irrep1.currentIndex()
+            v = NSArray.vector3d()
+            cluster_obj = create_orbital_object(irrep, v)
+
+            self._qtdraw._close_dialog()
+            color = rcParams["orbital_color_" + orbital_proj_type.currentText()]
+            lbl = orbital_proj_irrep1.currentText().replace("(", "[").replace(")", "]")
+            pname = "Z_" + self._qtdraw._get_name("orbital")
+
+            plot_orbital_object(self.tab2_orbital_proj_site, cluster_obj, pname, lbl, color)
+
+            self._qtdraw._plot_all_object()
+
+        def plot_z_samb_orbital_lc():
+            samb_type = orbital_proj_type1.currentText().lower()
+            irrep_num = orbital_proj_irrep1.count()
+            form = orbital_proj_lc.text().lower()
+            var = [f"{samb_type}{i+1:02d}" for i in range(irrep_num)]
+            if not set(NSArray(form).variable()).issubset(set(var)):
+                return
+            var = [i for i in var if i in form]
+            v = NSArray.vector3d()
+            lc_basis = {i: sp.Matrix(create_orbital_object(int(i[1:]) - 1, v).tolist()) for i in var}
+            cluster_obj = NSArray(str(NSArray(form).subs(lc_basis).tolist().T.tolist()[0]))
 
             self._qtdraw._close_dialog()
             color = rcParams["orbital_color_" + orbital_proj_type.currentText()]
@@ -1186,6 +1242,7 @@ class DialogGroup(QDialog):
         orbital_proj_pos.returnPressed.connect(gen_z_samb_orbital)
         orbital_proj_type1.currentIndexChanged.connect(select_z_samb_orbital)
         orbital_proj_draw_button.clicked.connect(plot_z_samb_orbital)
+        orbital_proj_lc.returnPressed.connect(plot_z_samb_orbital_lc)
 
         # --- plot hopping ---
         def plot_z_samb_hopping():
