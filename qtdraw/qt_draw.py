@@ -1701,6 +1701,11 @@ class QtDrawWidget(QtDrawBase):
         self._layer.set_focus(self.setting["camera.focus"])
         self._layer.set_position(self.setting["camera.position"], reset=True)
 
+        if "multipie" in load_dict.keys():
+            if not hasattr(self, "group_panel"):
+                self._multipie()
+            self.group_panel.load_dict(load_dict["multipie"])
+
     # ==================================================
     def _save(self):
         default_ext = rcParams["plotter.ext"]
@@ -1751,6 +1756,9 @@ class QtDrawWidget(QtDrawBase):
                 df0.loc[:, "AD"] = ""
                 df0.loc[:, "AL"] = ""
             save_dict[key] = df0.to_dict(orient="split")["data"]
+
+        if hasattr(self, "group_panel"):
+            save_dict["multipie"] = self.group_panel.save_dict()
 
         return save_dict
 
