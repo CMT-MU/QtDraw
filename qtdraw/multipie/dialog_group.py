@@ -32,6 +32,7 @@ from qtdraw.multipie.dialog_group_info import (
     create_atomic_mp,
 )
 from qtdraw.multipie.setting import rcParams
+from qtdraw.core.qt_logging import dprint
 
 
 # ==================================================
@@ -1080,12 +1081,8 @@ class DialogGroup(QDialog):
                             d = c.norm()
                             self._qtdraw.plot_vector(s + p, c, length=d, color=color, name=pname, label=label, show_lbl=show_lbl)
 
-        def create_vector_object(idx, v):
-            try:
-                eq = self.tab2_vector_proj_comb_select[idx][1]
-            except (IndexError, AttributeError):
-                return
-
+        def create_vector_object(tp, idx, t_odd, v):
+            eq = self.tab2_vector_proj_z_samb[tp][idx][1]
             cluster_obj = NSArray(str([0] * len(self.tab2_vector_proj_site)))
             for i in eq:
                 coeff, tag_h, tag_c = i
@@ -1093,15 +1090,17 @@ class DialogGroup(QDialog):
                 cluster = self.tab2_vector_proj_c_samb[tag_c]
                 cluster_obj += coeff * harm * cluster
 
-            if self._different_time_reversal(self.tab2_vector_proj_type.currentText(), self.tab2_vector_proj_type1.currentText()):
+            if t_odd:
                 cluster_obj *= -sp.I
 
             return cluster_obj
 
         def plot_z_samb_vector():
+            tp = self.tab2_vector_proj_type1.currentText()
             irrep = self.tab2_vector_proj_irrep1.currentIndex()
             v = NSArray.vector3d()
-            cluster_obj = create_vector_object(irrep, v)
+            t_odd = self._different_time_reversal(self.tab2_vector_proj_type.currentText(), tp)
+            cluster_obj = create_vector_object(tp, irrep, t_odd, v)
 
             rep = {v[0]: sp.Matrix([1, 0, 0]), v[1]: sp.Matrix([0, 1, 0]), v[2]: sp.Matrix([0, 0, 1])}
             color = rcParams["vector_color_" + self.tab2_vector_proj_type.currentText()]
@@ -1114,15 +1113,19 @@ class DialogGroup(QDialog):
             self._qtdraw._plot_all_object()
 
         def plot_z_samb_vector_lc():
-            samb_type = self.tab2_vector_proj_type1.currentText().lower()
-            irrep_num = self.tab2_vector_proj_irrep1.count()
+            irrep_num = {i: len(self.tab2_vector_proj_z_samb[i]) for i in ["Q", "G", "T", "M"]}
+            var_e = set([f"q{i+1:02d}" for i in range(irrep_num["Q"])] + [f"g{i+1:02d}" for i in range(irrep_num["G"])])
+            var_m = set([f"t{i+1:02d}" for i in range(irrep_num["T"])] + [f"m{i+1:02d}" for i in range(irrep_num["M"])])
             form = self.tab2_vector_proj_lc.text().lower()
-            var = [f"{samb_type}{i+1:02d}" for i in range(irrep_num)]
-            if not set(NSArray(form).variable()).issubset(set(var)):
+            ex_var = set(NSArray(form).variable())
+            t_odd = "Q"
+            if ex_var.issubset(var_m):
+                t_odd = "T"
+            elif not ex_var.issubset(var_e):
                 return
-            var = [i for i in var if i in form]
+            t_odd = self._different_time_reversal(self.tab2_vector_proj_type.currentText(), t_odd)
             v = NSArray.vector3d()
-            lc_basis = {i: sp.Matrix(create_vector_object(int(i[1:]) - 1, v).tolist()) for i in var}
+            lc_basis = {i: sp.Matrix(create_vector_object(i[0].upper(), int(i[1:]) - 1, t_odd, v).tolist()) for i in ex_var}
             cluster_obj = NSArray(str(NSArray(form).subs(lc_basis).tolist().T.tolist()[0]))
 
             rep = {v[0]: sp.Matrix([1, 0, 0]), v[1]: sp.Matrix([0, 1, 0]), v[2]: sp.Matrix([0, 0, 1])}
@@ -1188,12 +1191,8 @@ class DialogGroup(QDialog):
                             show_lbl=show_lbl,
                         )
 
-        def create_orbital_object(idx, v):
-            try:
-                eq = self.tab2_orbital_proj_comb_select[idx][1]
-            except (IndexError, AttributeError):
-                return
-
+        def create_orbital_object(tp, idx, t_odd, v):
+            eq = self.tab2_orbital_proj_z_samb[tp][idx][1]
             cluster_obj = NSArray(str([0] * len(self.tab2_orbital_proj_site)))
             for i in eq:
                 coeff, tag_h, tag_c = i
@@ -1201,17 +1200,17 @@ class DialogGroup(QDialog):
                 cluster = self.tab2_orbital_proj_c_samb[tag_c]
                 cluster_obj += coeff * harm * cluster
 
-            if self._different_time_reversal(
-                self.tab2_orbital_proj_type.currentText(), self.tab2_orbital_proj_type1.currentText()
-            ):
+            if t_odd:
                 cluster_obj *= -sp.I
 
             return cluster_obj
 
         def plot_z_samb_orbital():
+            tp = self.tab2_orbital_proj_type1.currentText()
             irrep = self.tab2_orbital_proj_irrep1.currentIndex()
             v = NSArray.vector3d()
-            cluster_obj = create_orbital_object(irrep, v)
+            t_odd = self._different_time_reversal(self.tab2_orbital_proj_type.currentText(), tp)
+            cluster_obj = create_orbital_object(tp, irrep, t_odd, v)
 
             self._qtdraw._close_dialog()
             color = rcParams["orbital_color_" + self.tab2_orbital_proj_type.currentText()]
@@ -1223,15 +1222,19 @@ class DialogGroup(QDialog):
             self._qtdraw._plot_all_object()
 
         def plot_z_samb_orbital_lc():
-            samb_type = self.tab2_orbital_proj_type1.currentText().lower()
-            irrep_num = self.tab2_orbital_proj_irrep1.count()
+            irrep_num = {i: len(self.tab2_orbital_proj_z_samb[i]) for i in ["Q", "G", "T", "M"]}
+            var_e = set([f"q{i+1:02d}" for i in range(irrep_num["Q"])] + [f"g{i+1:02d}" for i in range(irrep_num["G"])])
+            var_m = set([f"t{i+1:02d}" for i in range(irrep_num["T"])] + [f"m{i+1:02d}" for i in range(irrep_num["M"])])
             form = self.tab2_orbital_proj_lc.text().lower()
-            var = [f"{samb_type}{i+1:02d}" for i in range(irrep_num)]
-            if not set(NSArray(form).variable()).issubset(set(var)):
+            ex_var = set(NSArray(form).variable())
+            t_odd = "Q"
+            if ex_var.issubset(var_m):
+                t_odd = "T"
+            elif not ex_var.issubset(var_e):
                 return
-            var = [i for i in var if i in form]
+            t_odd = self._different_time_reversal(self.tab2_orbital_proj_type.currentText(), t_odd)
             v = NSArray.vector3d()
-            lc_basis = {i: sp.Matrix(create_orbital_object(int(i[1:]) - 1, v).tolist()) for i in var}
+            lc_basis = {i: sp.Matrix(create_orbital_object(i[0].upper(), int(i[1:]) - 1, t_odd, v).tolist()) for i in ex_var}
             cluster_obj = NSArray(str(NSArray(form).subs(lc_basis).tolist().T.tolist()[0]))
 
             self._qtdraw._close_dialog()
