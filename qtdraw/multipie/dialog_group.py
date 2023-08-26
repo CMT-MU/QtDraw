@@ -169,6 +169,9 @@ class DialogGroup(QDialog):
         self.main_clear = QPushButton("clear")
         self.main_clear.setFocusPolicy(Qt.NoFocus)
 
+        self.main_site_bond_label = QLabel("SITE: [x,y,z],    BOND: [tail];[head] / [vector]@[center] / [start]:[vector]", self)
+        self.main_site_bond_label.setFocusPolicy(Qt.NoFocus)
+
         # connections.
         self.main_g_type.currentIndexChanged.connect(self.set_group_type)
         self.main_c_type.currentTextChanged.connect(self.set_crystal_type)
@@ -246,7 +249,9 @@ class DialogGroup(QDialog):
 
         self.layout.addWidget(self.main_clear, 7, 9, 1, 1)
 
-        self.layout.addWidget(self.tab, 8, 0, 1, 10)
+        self.layout.addWidget(self.main_site_bond_label, 8, 0, 1, 9)
+
+        self.layout.addWidget(self.tab, 9, 0, 1, 10)
 
     # ==================================================
     def set_group_object(self, tag):
@@ -444,35 +449,35 @@ class DialogGroup(QDialog):
         self.tab1 = QWidget()
         self.tab.addTab(self.tab1, "object drawing")
 
-        site_label = QLabel("SITE\ne.g., [1/2,1/2,0] (position).", self)
+        site_label = QLabel("SITE: draw equivalent sites.\n1. input representative SITE, 2. ENTER.", self)
         site_pos = QLineEdit("[ 1/2, 1/2, 0 ]", self)
 
         bond_label = QLabel(
-            "BOND\ne.g., [0,0,0];[1/2,1/2,0] (tail-head), [1/2,1/2,0]@[1/4,1/4,0] (vector-center), [0,0,0]:[1/2,1/2,0] (start-vector).",
+            "BOND: draw equivalent bonds.\n1. input representative BOND, 2. ENTER.",
             self,
         )
-        bond_pos = QLineEdit("[ 0, 0, 0 ]; [ 1/2, 1/2, 0 ]", self)
+        bond_pos = QLineEdit("[ 0, 0, 0 ] ; [ 1/2, 1/2, 0 ]", self)
 
         vector_label = QLabel(
-            "VECTOR\ne.g., [0,0,1]@[1/2,1/2,0] (vector-center)",
+            "VECTOR: draw vectors at equivalent sites or bonds.\n1. input vector [x,y,z] # representative SITE/BOND, 2. ENTER.",
             self,
         )
-        vector_pos = QLineEdit("[ 0, 0, 1 ] @ [ 1/2, 1/2, 0 ]", self)
+        vector_pos = QLineEdit("[ 0, 0, 1 ] # [ 1/2, 1/2, 0 ]", self)
         vector_type = QComboBox(self)
         vector_type.addItems(["Q", "G", "T", "M"])
         vector_type.setCurrentIndex(0)
 
         orbital_label = QLabel(
-            "ORBITAL\ne.g., 3z**2-r**2@[1/4,1/4,0] (orbital-center)",
+            "ORBITAL: draw orbitals at equivalent sites or bonds.\n1. input orbital (xyz polynomial) # representative SITE/BOND, 2. ENTER.",
             self,
         )
-        orbital_pos = QLineEdit("3z**2 - r**2 @ [ 1/4, 1/4, 0 ]", self)
+        orbital_pos = QLineEdit("3z**2 - r**2 # [ 1/4, 1/4, 0 ]", self)
         orbital_type = QComboBox(self)
         orbital_type.addItems(["Q", "G", "T", "M"])
         orbital_type.setCurrentIndex(0)
 
         pgharm_label = QLabel(
-            "POINT-GROUP HARMONICS\ne.g., site: [1/2, 1/2, 0], bond: [2/3, 1/3, 0]; [1/3, 2/3, 0]",
+            "POINT-GROUP HARMONICS: draw point-group harmonics at equivalent sites or bonds.\n1. choose (type,rank,irrep.), 2. input representative SITE/BOND, 3. ENTER.  \u21d2  used expression is shown (in LaTeX form).",
             self,
         )
         pgharm_pos = QLineEdit("[ 0, 0, 0 ]", self)
@@ -592,14 +597,15 @@ class DialogGroup(QDialog):
             pos = vector_pos.text()
             head = vector_type.currentText()
             try:
-                vc = pos.split("@")
+                vc = pos.split("#")
+                site = self._get_position(vc[1])
+                v = vc[0]
                 if self.pg:
-                    c_mapping = self._group.site_mapping(vc[1])
+                    c_mapping = self._group.site_mapping(site)
                 else:
-                    c_mapping = self._group.site_mapping(vc[1], plus_set=True)
+                    c_mapping = self._group.site_mapping(site, plus_set=True)
                 basic_num = len(c_mapping) // self.n_pset
                 c = NSArray.from_str(c_mapping.keys())
-                v = vc[0]
             except Exception:
                 return
             pname = self._qtdraw._get_name("vector")
@@ -624,14 +630,15 @@ class DialogGroup(QDialog):
             pos = orbital_pos.text()
             head = orbital_type.currentText()
             try:
-                sc = pos.split("@")
+                sc = pos.split("#")
+                site = self._get_position(sc[1])
+                s = sc[0]
                 if self.pg:
-                    c_mapping = self._group.site_mapping(sc[1])
+                    c_mapping = self._group.site_mapping(site)
                 else:
-                    c_mapping = self._group.site_mapping(sc[1], plus_set=True)
+                    c_mapping = self._group.site_mapping(site, plus_set=True)
                 basic_num = len(c_mapping) // self.n_pset
                 c = NSArray.from_str(c_mapping.keys())
-                s = sc[0]
             except Exception:
                 return
             pname = self._qtdraw._get_name("orbital")
@@ -680,8 +687,7 @@ class DialogGroup(QDialog):
             ex = h.expression(v=NSArray.vector3d("Q"))
 
             pos = pgharm_pos.text()
-            if any(map(pos.__contains__, (";", ":", "@"))):
-                pos = str(NSArray(pos).convert_bond("bond")[1])
+            pos = self._get_position(pos)
             try:
                 if self.pg:
                     c_mapping = self._group.site_mapping(pos)
@@ -725,11 +731,11 @@ class DialogGroup(QDialog):
         self.tab.addTab(self.tab2, "basis drawing")
 
         site_proj_label = QLabel(
-            "SITE\ne.g., [1/2,1/2,0] (position)   [head]   →   [head] [SAMB]",
+            "SITE: draw site-cluster basis.\n1. input representative SITE, 2. ENTER,  \u21d2  3. choose basis, 4. push `draw`.",
             self,
         )
         site_proj_pos = QLineEdit("[ 1/2, 1/2, 0 ]", self)
-        site_proj_label1 = QLabel("→", self)
+        site_proj_label1 = QLabel("\u21d2", self)
         site_proj_label1.setAlignment(Qt.AlignCenter)
         site_proj_irrep1 = QComboBox(self)
         site_proj_irrep1.addItems([""])
@@ -738,11 +744,11 @@ class DialogGroup(QDialog):
         site_proj_draw_button.setFocusPolicy(Qt.NoFocus)
 
         bond_proj_label = QLabel(
-            "BOND\ne.g., [0,0,0];[1/2,1/2,0] (tail-head), [1/2,1/2,0]@[1/4,1/4,0] (vector-center), [0,0,0]:[1/2,1/2,0] (start-vector)   [head]   →   [head] [SAMB]",
+            "BOND: draw bond-cluster basis.\n1. input representative BOND, 2. ENTER,  \u21d2  3. choose basis, 4. push `draw`.",
             self,
         )
         bond_proj_pos = QLineEdit("[ 1/2, 1/2, 0 ] @ [ 1/4, 1/4, 0 ]", self)
-        bond_proj_label1 = QLabel("→", self)
+        bond_proj_label1 = QLabel("\u21d2", self)
         bond_proj_label1.setAlignment(Qt.AlignCenter)
         bond_proj_irrep1 = QComboBox(self)
         bond_proj_irrep1.addItems([""])
@@ -751,7 +757,7 @@ class DialogGroup(QDialog):
         bond_proj_draw_button.setFocusPolicy(Qt.NoFocus)
 
         vector_proj_label = QLabel(
-            "VECTOR\ne.g., [1/2,1/2,0] (site) or [0,0,0];[1/2,1/2,0] (bond)   [head]   →   [head] [SAMB]",
+            "VECTOR: draw symmetry-adapted vector.\n1. choose type, 2. input representative SITE/BOND, 3. ENTER,  \u21d2  3. choose (type,basis), 4. push `draw`.",
             self,
         )
         vector_proj_pos = QLineEdit("[ 1/2, 1/2, 0 ]", self)
@@ -761,16 +767,18 @@ class DialogGroup(QDialog):
         vector_proj_type1 = QComboBox(self)
         vector_proj_type1.addItems(["Q", "G", "T", "M"])
         vector_proj_type1.setCurrentIndex(0)
-        vector_proj_label1 = QLabel("→", self)
+        vector_proj_label1 = QLabel("\u21d2", self)
         vector_proj_label1.setAlignment(Qt.AlignCenter)
         vector_proj_irrep1 = QComboBox(self)
         vector_proj_irrep1.addItems([""])
         vector_proj_irrep1.setCurrentIndex(0)
         vector_proj_draw_button = QPushButton("draw", self)
         vector_proj_draw_button.setFocusPolicy(Qt.NoFocus)
+        vector_proj_lc_label = QLabel("linear comb.", self)
+        vector_proj_lc = QLineEdit("", self)
 
         orbital_proj_label = QLabel(
-            "ORBITAL\ne.g., [1/2,1/2,0] (site) or [0,0,0];[1/2/1,2/0] (bond)   [head] [rank]   →   [head] [SAMB]",
+            "ORBITAL draw symmetry-adapted orbital.\n1. choose (type,rank), 2. input representative SITE/BOND, 3. ENTER,  \u21d2  3. choose (type,basis), 4. push `draw`.",
             self,
         )
         orbital_proj_pos = QLineEdit("[ 0, 0, 0 ]; [ 1/2, 1/2, 0 ]", self)
@@ -780,7 +788,7 @@ class DialogGroup(QDialog):
         orbital_proj_type1 = QComboBox(self)
         orbital_proj_type1.addItems(["Q", "G", "T", "M"])
         orbital_proj_type1.setCurrentIndex(0)
-        orbital_proj_label1 = QLabel("→", self)
+        orbital_proj_label1 = QLabel("\u21d2", self)
         orbital_proj_label1.setAlignment(Qt.AlignCenter)
         orbital_proj_irrep1 = QComboBox(self)
         orbital_proj_irrep1.addItems([""])
@@ -791,12 +799,14 @@ class DialogGroup(QDialog):
         orbital_proj_rank.setCurrentIndex(0)
         orbital_proj_draw_button = QPushButton("draw", self)
         orbital_proj_draw_button.setFocusPolicy(Qt.NoFocus)
+        orbital_proj_lc_label = QLabel("linear comb.", self)
+        orbital_proj_lc = QLineEdit("", self)
 
         hopping_proj_label = QLabel(
-            "HOPPING (imag)\ne.g., [0,0,0];[1/2,1/2,0] (bond)",
+            "HOPPING: draw hopping direction.\n1. input representative BOND, 2. ENTER.",
             self,
         )
-        hopping_proj_pos = QLineEdit("[0, 0, 0]; [1/2, 1/2, 0]", self)
+        hopping_proj_pos = QLineEdit("[ 0, 0, 0 ] ; [ 1/2, 1/2, 0 ]", self)
 
         tab2_v_spacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
 
@@ -821,20 +831,24 @@ class DialogGroup(QDialog):
         tab2_grid.addWidget(vector_proj_type1, 8, 1, 1, 1)
         tab2_grid.addWidget(vector_proj_irrep1, 8, 2, 1, 6)
         tab2_grid.addWidget(vector_proj_draw_button, 8, 8, 1, 1)
+        tab2_grid.addWidget(vector_proj_lc_label, 9, 0, 1, 8)
+        tab2_grid.addWidget(vector_proj_lc, 9, 1, 1, 8)
 
-        tab2_grid.addWidget(orbital_proj_label, 9, 0, 1, 9)
-        tab2_grid.addWidget(orbital_proj_pos, 10, 0, 1, 7)
-        tab2_grid.addWidget(orbital_proj_type, 10, 7, 1, 1)
-        tab2_grid.addWidget(orbital_proj_rank, 10, 8, 1, 1)
-        tab2_grid.addWidget(orbital_proj_label1, 11, 0, 1, 1)
-        tab2_grid.addWidget(orbital_proj_type1, 11, 1, 1, 1)
-        tab2_grid.addWidget(orbital_proj_irrep1, 11, 2, 1, 6)
-        tab2_grid.addWidget(orbital_proj_draw_button, 11, 8, 1, 1)
+        tab2_grid.addWidget(orbital_proj_label, 10, 0, 1, 9)
+        tab2_grid.addWidget(orbital_proj_pos, 11, 0, 1, 7)
+        tab2_grid.addWidget(orbital_proj_type, 11, 7, 1, 1)
+        tab2_grid.addWidget(orbital_proj_rank, 11, 8, 1, 1)
+        tab2_grid.addWidget(orbital_proj_label1, 12, 0, 1, 1)
+        tab2_grid.addWidget(orbital_proj_type1, 12, 1, 1, 1)
+        tab2_grid.addWidget(orbital_proj_irrep1, 12, 2, 1, 6)
+        tab2_grid.addWidget(orbital_proj_draw_button, 12, 8, 1, 1)
+        tab2_grid.addWidget(orbital_proj_lc_label, 13, 0, 1, 8)
+        tab2_grid.addWidget(orbital_proj_lc, 13, 1, 1, 8)
 
-        tab2_grid.addWidget(hopping_proj_label, 12, 0, 1, 9)
-        tab2_grid.addWidget(hopping_proj_pos, 13, 0, 1, 9)
+        tab2_grid.addWidget(hopping_proj_label, 14, 0, 1, 9)
+        tab2_grid.addWidget(hopping_proj_pos, 15, 0, 1, 9)
 
-        tab2_grid.addItem(tab2_v_spacer, 14, 1, 1, 1)
+        tab2_grid.addItem(tab2_v_spacer, 16, 1, 1, 1)
 
         show_lbl = rcParams["show_label"]
 
@@ -1252,3 +1266,18 @@ class DialogGroup(QDialog):
             z_samb[k] = list(sorted(z_samb[k], key=lambda i: i[0]))
 
         return c_samb, site, z_samb
+
+    # ==================================================
+    def _get_position(self, site_bond):
+        try:
+            pos = NSArray(site_bond)
+        except Exception:
+            return None
+
+        if pos.style not in ["vector", "bond", "bond_th", "bond_sv"]:
+            return None
+
+        if pos.style == "bond":
+            pos = str(pos.convert_bond("bond")[1])
+
+        return pos
