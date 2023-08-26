@@ -32,7 +32,6 @@ from qtdraw.multipie.dialog_group_info import (
     create_atomic_mp,
 )
 from qtdraw.multipie.setting import rcParams
-from qtdraw.core.qt_logging import dprint
 
 
 # ==================================================
