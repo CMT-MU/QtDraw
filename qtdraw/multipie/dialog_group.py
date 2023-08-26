@@ -731,7 +731,7 @@ class DialogGroup(QDialog):
         self.tab.addTab(self.tab2, "basis drawing")
 
         site_proj_label = QLabel(
-            "SITE: draw site-cluster basis.\n1. input representative SITE, 2. ENTER,  \u21d2  3. choose basis, 4. push `draw`.",
+            "SITE: draw site-cluster basis.\n1. input representative SITE, 2. ENTER,\n\u21d2  3. choose basis, 4. push `draw`.",
             self,
         )
         site_proj_pos = QLineEdit("[ 1/2, 1/2, 0 ]", self)
@@ -744,7 +744,7 @@ class DialogGroup(QDialog):
         site_proj_draw_button.setFocusPolicy(Qt.NoFocus)
 
         bond_proj_label = QLabel(
-            "BOND: draw bond-cluster basis.\n1. input representative BOND, 2. ENTER,  \u21d2  3. choose basis, 4. push `draw`.",
+            "BOND: draw bond-cluster basis.\n1. input representative BOND, 2. ENTER,\n\u21d2  3. choose basis, 4. push `draw`.",
             self,
         )
         bond_proj_pos = QLineEdit("[ 1/2, 1/2, 0 ] @ [ 1/4, 1/4, 0 ]", self)
@@ -757,7 +757,7 @@ class DialogGroup(QDialog):
         bond_proj_draw_button.setFocusPolicy(Qt.NoFocus)
 
         vector_proj_label = QLabel(
-            "VECTOR: draw symmetry-adapted vector.\n1. choose type, 2. input representative SITE/BOND, 3. ENTER,  \u21d2  3. choose (type,basis), 4. push `draw`.",
+            "VECTOR: draw symmetry-adapted vector.\n1. choose type, 2. input representative SITE/BOND, 3. ENTER,\n\u21d2  4. choose (type,basis), 5. push `draw` or 4. input linear combination, 5. ENTER.",
             self,
         )
         vector_proj_pos = QLineEdit("[ 1/2, 1/2, 0 ]", self)
@@ -778,7 +778,7 @@ class DialogGroup(QDialog):
         vector_proj_lc = QLineEdit("", self)
 
         orbital_proj_label = QLabel(
-            "ORBITAL draw symmetry-adapted orbital.\n1. choose (type,rank), 2. input representative SITE/BOND, 3. ENTER,  \u21d2  3. choose (type,basis), 4. push `draw`.",
+            "ORBITAL draw symmetry-adapted orbital.\n1. choose (type,rank), 2. input representative SITE/BOND, 3. ENTER,\n\u21d2  4. choose (type,basis), 5. push `draw` or 4. input linear combination, 5. ENTER.",
             self,
         )
         orbital_proj_pos = QLineEdit("[ 0, 0, 0 ]; [ 1/2, 1/2, 0 ]", self)
@@ -1060,7 +1060,7 @@ class DialogGroup(QDialog):
         def select_z_samb_vector():
             self.tab2_vector_proj_comb_select = self.tab2_vector_proj_z_samb[vector_proj_type1.currentText()]
             vector_proj_irrep1.clear()
-            comb = [i[0] for i in self.tab2_vector_proj_comb_select]
+            comb = [f"{no+1:02d}: {i[0]}" for no, i in enumerate(self.tab2_vector_proj_comb_select)]
             vector_proj_irrep1.addItems(comb)
             vector_proj_irrep1.setCurrentIndex(0)
 
@@ -1127,7 +1127,7 @@ class DialogGroup(QDialog):
         def select_z_samb_orbital():
             self.tab2_orbital_proj_comb_select = self.tab2_orbital_proj_z_samb[orbital_proj_type1.currentText()]
             orbital_proj_irrep1.clear()
-            comb = [i[0] for i in self.tab2_orbital_proj_comb_select]
+            comb = [f"{no+1:02d}: {i[0]}" for no, i in enumerate(self.tab2_orbital_proj_comb_select)]
             orbital_proj_irrep1.addItems(comb)
             orbital_proj_irrep1.setCurrentIndex(0)
 
