@@ -18,7 +18,6 @@ from gcoreutils.nsarray import NSArray
 from multipie.group.point_group import PointGroup
 from multipie.group.space_group import SpaceGroup
 from multipie.tag.tag_group import TagGroup
-from multipie.model.material_model import MaterialModel
 from multipie.const import __def_dict__
 from qtdraw.multipie.dialog_group_info import (
     create_character_table,
@@ -32,6 +31,15 @@ from qtdraw.multipie.dialog_group_info import (
     create_atomic_mp,
 )
 from qtdraw.multipie.setting import rcParams
+from qtdraw.multipie.plot_object import (
+    check_get_site,
+    check_get_bond,
+    check_get_site_bond,
+    plot_equivalent_site,
+    plot_equivalent_bond,
+    plot_vector_equivalent_site,
+    plot_orbital_equivalent_site,
+)
 
 
 # ==================================================
@@ -629,134 +637,79 @@ class DialogGroup(QDialog):
         """
         plot equivalent sites.
         """
-        pos = self.tab1_site_pos.text()
-        try:
-            if self.pg:
-                r = self._group.site_mapping(pos)
-            else:
-                r = self._group.site_mapping(pos, plus_set=True)
-            basic_num = len(r) // self.n_pset
-        except Exception:
+        r_site = check_get_site(self.tab1_site_pos.text())
+        if r_site is None:
             return
-        pname = self._qtdraw._get_name("site")
-        pname0 = f"S{int(pname[1:])+1}"
-        self._qtdraw._close_dialog()
-        color = rcParams["site_color"]
-        for no, (s, mp) in enumerate(r.items()):
-            mp = MaterialModel._mapping_str(mp)
-            idx = no % basic_num
-            pset = no // basic_num
-            if self.n_pset > 1:
-                pname = pname0 + f"({pset+1})"
-            else:
-                pname = pname0
-            label = f"s{idx+1}:{mp}"
-            self._qtdraw.plot_site(s, color=color, name=pname, label=label, show_lbl=rcParams["show_label"])
-        self._qtdraw._plot_all_object()
+
+        if self.pg:
+            site = self._group.site_mapping(r_site)
+        else:
+            site = self._group.site_mapping(r_site, plus_set=True)
+
+        plot_equivalent_site(self._qtdraw, site, self.n_pset)
 
     # ==================================================
     def tab1_plot_bond(self):
         """
         plot equivalent bonds.
         """
-        pos = self.tab1_bond_pos.text()
-        try:
-            if self.pg:
-                r, nd = self._group.bond_mapping(pos)
-            else:
-                r, nd = self._group.bond_mapping(pos, plus_set=True)
-            basic_num = len(r) // self.n_pset
-        except Exception:
+        r_bond = check_get_bond(self.tab1_bond_pos.text())
+        if r_bond is None:
             return
-        pname = self._qtdraw._get_name("bond")
-        pname0 = f"B{int(pname[1:])+1}"
-        self._qtdraw._close_dialog()
-        color1 = rcParams["bond_color1"]
-        if nd:
-            color2 = color1
+
+        if self.pg:
+            bond, nondirectional = self._group.bond_mapping(r_bond)
         else:
-            color2 = rcParams["bond_color2"]
-        for no, (b, mp) in enumerate(r.items()):
-            b = NSArray(b)
-            v, c = b.convert_bond("bond")
-            mp = MaterialModel._mapping_str(mp)
-            idx = no % basic_num
-            pset = no // basic_num
-            if self.n_pset > 1:
-                pname = pname0 + f"({pset+1})"
-            else:
-                pname = pname0
-            label = f"b{idx+1}:{mp}"
-            self._qtdraw.plot_bond(c, v, color=color1, color2=color2, name=pname, label=label, show_lbl=rcParams["show_label"])
-        self._qtdraw._plot_all_object()
+            bond, nondirectional = self._group.bond_mapping(r_bond, plus_set=True)
+
+        plot_equivalent_bond(self._qtdraw, bond, nondirectional, self.n_pset)
 
     # ==================================================
     def tab1_plot_vector(self):
         """
         plot vectors at equivalent sites/bonds.
         """
-        pos = self.tab1_vector_pos.text()
         head = self.tab1_vector_type.currentText()
-        try:
-            vc = pos.split("#")
-            site = self._get_position(vc[1])
-            v = vc[0]
-            if self.pg:
-                c_mapping = self._group.site_mapping(site)
-            else:
-                c_mapping = self._group.site_mapping(site, plus_set=True)
-            basic_num = len(c_mapping) // self.n_pset
-            c = NSArray.from_str(c_mapping.keys())
-        except Exception:
+        txt = self.tab1_vector_pos.text().split("#")
+        if len(txt) != 2:
             return
-        pname = self._qtdraw._get_name("vector")
-        pname0 = f"V{int(pname[3:])+1}"
-        self._qtdraw._close_dialog()
-        color = rcParams["vector_color_" + head]
-        for no in range(len(c)):
-            idx = no % basic_num
-            pset = no // basic_num
-            if self.n_pset > 1:
-                pname = pname0 + f"({pset+1})"
-            else:
-                pname = pname0
-            label = f"v{idx+1}"
-            self._qtdraw.plot_vector(c[no], v, color=color, name=pname, label=label, show_lbl=rcParams["show_label"])
-        self._qtdraw._plot_all_object()
+        vector, r_site_bond = txt
+        vector = check_get_site(vector)
+        if vector is None:
+            return
+        r_site = check_get_site_bond(r_site_bond)
+        if r_site is None:
+            return
+
+        if self.pg:
+            site = self._group.site_mapping(r_site)
+        else:
+            site = self._group.site_mapping(r_site, plus_set=True)
+        site = NSArray.from_str(site.keys())
+
+        plot_vector_equivalent_site(self._qtdraw, site, vector, head, self.n_pset)
 
     # ==================================================
     def tab1_plot_orbital(self):
         """
         plot orbitals at equivalent sites/bonds.
         """
-        pos = self.tab1_orbital_pos.text()
         head = self.tab1_orbital_type.currentText()
-        try:
-            sc = pos.split("#")
-            site = self._get_position(sc[1])
-            s = sc[0]
-            if self.pg:
-                c_mapping = self._group.site_mapping(site)
-            else:
-                c_mapping = self._group.site_mapping(site, plus_set=True)
-            basic_num = len(c_mapping) // self.n_pset
-            c = NSArray.from_str(c_mapping.keys())
-        except Exception:
+        txt = self.tab1_orbital_pos.text().split("#")
+        if len(txt) != 2:
             return
-        pname = self._qtdraw._get_name("orbital")
-        pname0 = f"O{int(pname[3:])+1}"
-        self._qtdraw._close_dialog()
-        color = rcParams["orbital_color_" + head]
-        for no in range(len(c)):
-            idx = no % basic_num
-            pset = no // basic_num
-            if self.n_pset > 1:
-                pname = pname0 + f"({pset+1})"
-            else:
-                pname = pname0
-            label = f"o{idx+1}"
-            self._qtdraw.plot_orbital(c[no], s, size=0.3, color=color, name=pname, label=label, show_lbl=rcParams["show_label"])
-        self._qtdraw._plot_all_object()
+        orbital, r_site_bond = txt
+        r_site = check_get_site_bond(r_site_bond)
+        if r_site is None:
+            return
+
+        if self.pg:
+            site = self._group.site_mapping(r_site)
+        else:
+            site = self._group.site_mapping(r_site, plus_set=True)
+        site = NSArray.from_str(site.keys())
+
+        plot_orbital_equivalent_site(self._qtdraw, site, orbital, head, self.n_pset)
 
     # ==================================================
     def tab1_select_pg_harmonics(self):
@@ -774,44 +727,6 @@ class DialogGroup(QDialog):
         self.tab1_pgharm_exp.setText(str(ex))
 
     # ==================================================
-    def tab1_plot_pg_harmonics(self):
-        """
-        plot poing-group harmonics at equivalent sites/bonds.
-        """
-        head = self.tab1_pgharm_type.currentText()
-        head1 = head.replace("T", "Q").replace("M", "G")
-        rank = int(self.tab1_pgharm_rank.currentText())
-        hs = self._pgroup.harmonics.select(rank=rank, head=head1)
-        h = hs[self.tab1_pgharm_irrep.currentIndex()]
-        ex = h.expression(v=NSArray.vector3d("Q"))
-
-        pos = self.tab1_pgharm_pos.text()
-        pos = self._get_position(pos)
-        try:
-            if self.pg:
-                c_mapping = self._group.site_mapping(pos)
-            else:
-                c_mapping = self._group.site_mapping(pos, plus_set=True)
-            basic_num = len(c_mapping) // self.n_pset
-            c = NSArray.from_str(c_mapping.keys())
-        except Exception:
-            return
-        pname = self._qtdraw._get_name("orbital")
-        pname0 = head + str(h)[2:]
-        self._qtdraw._close_dialog()
-        color = rcParams["orbital_color_" + head]
-        for no in range(len(c)):
-            idx = no % basic_num
-            pset = no // basic_num
-            if self.n_pset > 1:
-                pname = pname0 + f"({pset+1})"
-            else:
-                pname = pname0
-            label = f"orb{idx+1}"
-            self._qtdraw.plot_orbital(c[no], ex, size=0.3, color=color, name=pname, label=label, show_lbl=rcParams["show_label"])
-        self._qtdraw._plot_all_object()
-
-    # ==================================================
     def tab1_pgharm_rank_select(self):
         """
         select point-group harmonics rank.
@@ -825,6 +740,29 @@ class DialogGroup(QDialog):
         self.tab1_pgharm_irrep.addItems(comb)
         self.tab1_pgharm_irrep.setCurrentIndex(0)
         self.tab1_pgharm_exp.setText("1")
+
+    # ==================================================
+    def tab1_plot_pg_harmonics(self):
+        """
+        plot poing-group harmonics at equivalent sites/bonds.
+        """
+        head = self.tab1_pgharm_type.currentText()
+        rank = int(self.tab1_pgharm_rank.currentText())
+        harmonics_set = self._pgroup.harmonics.select(rank=rank, head=head.replace("T", "Q").replace("M", "G"))
+        harmonics = harmonics_set[self.tab1_pgharm_irrep.currentIndex()]
+        orbital = harmonics.expression(v=NSArray.vector3d("Q"))
+
+        r_site = check_get_site_bond(self.tab1_pgharm_pos.text())
+        if r_site is None:
+            return
+
+        if self.pg:
+            site = self._group.site_mapping(r_site)
+        else:
+            site = self._group.site_mapping(r_site, plus_set=True)
+        site = NSArray.from_str(site.keys())
+
+        plot_orbital_equivalent_site(self._qtdraw, site, orbital, head, self.n_pset)
 
     # ==================================================
     def create_tab2_panel(self):
