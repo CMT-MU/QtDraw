@@ -1,4 +1,3 @@
-import numpy as np
 import sympy as sp
 from qtpy.QtWidgets import (
     QDialog,
@@ -35,10 +34,17 @@ from qtdraw.multipie.plot_object import (
     check_get_site,
     check_get_bond,
     check_get_site_bond,
+    check_linear_combination,
+    create_samb_object,
+    combined_format,
     plot_equivalent_site,
     plot_equivalent_bond,
     plot_vector_equivalent_site,
     plot_orbital_equivalent_site,
+    plot_site_cluster,
+    plot_bond_cluster,
+    plot_vector_cluster,
+    plot_orbital_cluster,
 )
 
 
@@ -295,7 +301,7 @@ class DialogGroup(QDialog):
             tag (TagGroup or str): group tag.
 
         Notes:
-            - set the following properties, self.pg, self._group, self._pgroup, self.wp, self.irrep, self.n_op, self.n_pset.
+            - set the following properties, self.pg, self._group, self._pgroup, self.wp, self.irrep, self.n_op, self.n_pset, self.pset.
         """
         if type(tag) == str:
             if tag.count(" ") > 0:
@@ -309,6 +315,7 @@ class DialogGroup(QDialog):
             self._qtdraw._toggle_clip(False)
             self._qtdraw.button_repeat.hide()
             self.n_pset = 1
+            self.pset = NSArray("{[0,0,0]}")
         else:
             self._group = SpaceGroup(tag, self._core)
             self._pgroup = self._group.pg
@@ -316,6 +323,7 @@ class DialogGroup(QDialog):
             self._qtdraw._toggle_clip(True)
             self._qtdraw.button_repeat.show()
             self.n_pset = len(self._group.symmetry_operation.plus_set)
+            self.pset = self._group.symmetry_operation.plus_set
         self.wp = list(map(str, self._pgroup.wyckoff.keys()))[::-1]
         self.irrep = list(map(str, self._pgroup.character.irrep_list))
         self.n_op = len(self._group.symmetry_operation)
@@ -937,57 +945,14 @@ class DialogGroup(QDialog):
         plot site cluster SAMB.
         """
         irrep = self.tab2_site_proj_irrep1.currentIndex()
-        try:
-            eq = self.tab2_site_proj_comb_select[irrep][1]
-        except (IndexError, AttributeError):
-            return
-        cluster_obj = NSArray(str([0] * len(self.tab2_site_proj_site)))
-        for i in eq:
-            coeff, _, tag_c = i
-            cluster = self.tab2_site_proj_c_samb[tag_c]
-            cluster_obj += coeff * cluster
 
-        color = []
-        for orb in cluster_obj:
-            if orb > 0:
-                c = "salmon"
-            elif orb < 0:
-                c = "aqua"
-            else:
-                c = "silver"
-            color.append(c)
+        v = NSArray.vector3d()
+        cluster_obj = create_samb_object(
+            self.tab2_site_proj_z_samb, self.tab2_site_proj_site, self.tab2_site_proj_c_samb, "Q", irrep, self._pgroup, v, False
+        )
 
-        cluster_obj /= np.abs(cluster_obj).max()
-
-        self._qtdraw._close_dialog()
-        lbl = self.tab2_site_proj_irrep1.currentText().replace("(", "[").replace(")", "]")
-        pname = "Z_" + self._qtdraw._get_name("site")
-        if self.n_pset == 1:
-            for s, orb, cl in zip(self.tab2_site_proj_site, cluster_obj, color):
-                if cl == "silver":
-                    orb = 1
-                self._qtdraw.plot_site(
-                    s,
-                    size=abs(orb),
-                    color=cl,
-                    name=pname,
-                    label=lbl,
-                    show_lbl=rcParams["show_label"],
-                )
-        else:
-            for p in self._group.symmetry_operation.plus_set:
-                for s, orb, cl in zip(self.tab2_site_proj_site, cluster_obj, color):
-                    if cl == "silver":
-                        orb = 1
-                    self._qtdraw.plot_site(
-                        s + p,
-                        size=abs(orb),
-                        color=cl,
-                        name=pname,
-                        label=lbl,
-                        show_lbl=rcParams["show_label"],
-                    )
-        self._qtdraw._plot_all_object()
+        label = self.tab2_site_proj_irrep1.currentText().replace("(", "[").replace(")", "]")
+        plot_site_cluster(self._qtdraw, self.tab2_site_proj_site, cluster_obj, label, self.pset)
 
     # ==================================================
     def tab2_gen_bond_cluster(self):
@@ -1019,126 +984,25 @@ class DialogGroup(QDialog):
         plot bond cluster SAMB.
         """
         irrep = self.tab2_bond_proj_irrep1.currentIndex()
-        head = self.tab2_bond_proj_irrep1.currentText()[0]
-        try:
-            eq = self.tab2_bond_proj_comb_select[irrep][1]
-        except (IndexError, AttributeError):
-            return
-        cluster_obj = NSArray(str([0] * len(self.tab2_bond_proj_site)))
-        for i in eq:
-            coeff, _, tag_c = i
-            if head == "Q":
-                cluster = self.tab2_bond_proj_c_samb[tag_c]
-            else:
-                cluster = self.tab2_bond_proj_c_samb[tag_c].im()
-            cluster_obj += coeff * cluster
-        color = []
-        if head == "Q":
-            for orb in cluster_obj:
-                if orb > 0:
-                    c = "salmon"
-                elif orb < 0:
-                    c = "aqua"
-                else:
-                    c = "silver"
-                color.append(c)
-        else:
-            for orb in cluster_obj:
-                if orb == 0:
-                    c = "silver"
-                else:
-                    c = "salmon"
-                color.append(c)
+        z_head = self.tab2_bond_proj_irrep1.currentText()[0]
+        if z_head == "T":
+            irrep -= len(self.tab2_bond_proj_z_samb["Q"])
+        t_odd = z_head != "Q"
 
-        cluster_obj /= np.abs(cluster_obj).max()
+        v = NSArray.vector3d()
+        cluster_obj = create_samb_object(
+            self.tab2_bond_proj_z_samb,
+            self.tab2_bond_proj_site,
+            self.tab2_bond_proj_c_samb,
+            z_head,
+            irrep,
+            self._pgroup,
+            v,
+            t_odd,
+        )
 
-        self._qtdraw._close_dialog()
-        lbl = self.tab2_bond_proj_irrep1.currentText().replace("(", "[").replace(")", "]")
-        pname = "Z_" + self._qtdraw._get_name("bond")
-        if head == "Q":
-            if self.n_pset == 1:
-                for s, orb, cl in zip(self.tab2_bond_proj_site, cluster_obj, color):
-                    v, c = s.convert_bond("bond")
-                    if cl == "silver":
-                        orb = 1
-                    self._qtdraw.plot_bond(
-                        c, v, color=cl, color2=cl, width=abs(orb), name=pname, label=lbl, show_lbl=rcParams["show_label"]
-                    )
-            else:
-                for p in self._group.symmetry_operation.plus_set:
-                    for s, orb, cl in zip(self.tab2_bond_proj_site, cluster_obj, color):
-                        v, c = s.convert_bond("bond")
-                        if cl == "silver":
-                            orb = 1
-                        self._qtdraw.plot_bond(
-                            c + p,
-                            v,
-                            color=cl,
-                            color2=cl,
-                            width=abs(orb),
-                            name=pname,
-                            label=lbl,
-                            show_lbl=rcParams["show_label"],
-                        )
-        else:
-            if self.n_pset == 1:
-                for s, orb, cl in zip(self.tab2_bond_proj_site, cluster_obj, color):
-                    v, c = s.convert_bond("bond")
-                    if cl == "silver":
-                        orb = 1
-                        self._qtdraw.plot_bond(
-                            c, v, color=cl, color2=cl, width=abs(orb), name=pname, label=lbl, show_lbl=rcParams["show_label"]
-                        )
-                    else:
-                        v = v.transform(self._qtdraw._A)
-                        if orb < 0:
-                            v = -v
-                        norm = v.norm() * 0.7
-                        self._qtdraw.plot_vector(
-                            c,
-                            v,
-                            color=cl,
-                            width=abs(orb),
-                            length=norm,
-                            offset=-0.5,
-                            name=pname,
-                            label=lbl,
-                            show_lbl=rcParams["show_label"],
-                        )
-            else:
-                for p in self._group.symmetry_operation.plus_set:
-                    for s, orb, cl in zip(self.tab2_bond_proj_site, cluster_obj, color):
-                        v, c = s.convert_bond("bond")
-                        if cl == "silver":
-                            orb = 1
-                            self._qtdraw.plot_bond(
-                                c + p,
-                                v,
-                                color=cl,
-                                color2=cl,
-                                width=abs(orb),
-                                name=pname,
-                                label=lbl,
-                                show_lbl=rcParams["show_label"],
-                            )
-                        else:
-                            v = v.transform(self._qtdraw._A)
-                            if orb < 0:
-                                v = -v
-                            norm = v.norm() * 0.7
-                            self._qtdraw.plot_vector(
-                                c + p,
-                                v,
-                                color=cl,
-                                width=abs(orb),
-                                length=norm,
-                                offset=-0.5,
-                                name=pname,
-                                label=lbl,
-                                show_lbl=rcParams["show_label"],
-                            )
-
-        self._qtdraw._plot_all_object()
+        label = self.tab2_bond_proj_irrep1.currentText().replace("(", "[").replace(")", "]")
+        plot_bond_cluster(self._qtdraw, self.tab2_bond_proj_site, cluster_obj, label, self.pset, z_head)
 
     # ==================================================
     def tab2_gen_z_samb_vector(self):
@@ -1165,115 +1029,60 @@ class DialogGroup(QDialog):
         self.tab2_vector_proj_irrep1.setCurrentIndex(0)
 
     # ==================================================
-    def tab2_plot_vector_object(self, site, obj, rep, pname, label, color):
-        """
-        plot vector SAMB.
-
-        Args:
-            site (NSArray): position.
-            obj (NSArray): object expression.
-            rep (dict): (x,y,z) replace dict.
-            pname (str): object group name.
-            label (str): object label.
-            color (str): color.
-        """
-        if self.n_pset == 1:
-            for s, c in zip(site, obj):
-                if c != 0:
-                    c = str(c.subs(rep).T[:])
-                    c = NSArray(c)
-                    d = c.norm()
-                    self._qtdraw.plot_vector(
-                        s, c, length=d, color=color, name=pname, label=label, show_lbl=rcParams["show_label"]
-                    )
-        else:
-            for p in self._group.symmetry_operation.plus_set:
-                for s, c in zip(site, obj):
-                    if c != 0:
-                        c = str(c.subs(rep).T[:])
-                        c = NSArray(c)
-                        d = c.norm()
-                        self._qtdraw.plot_vector(
-                            s + p, c, length=d, color=color, name=pname, label=label, show_lbl=rcParams["show_label"]
-                        )
-
-    # ==================================================
-    def tab2_create_vector_object(self, tp, idx, t_odd, v):
-        """
-        create vector object.
-
-        Args:
-            tp (str): type of multipole.
-            idx (int): index of SAMB.
-            t_odd (bool): magnetic bond ?
-            v (NSArray): (xyz) vector symbol.
-
-        Returns:
-            NSArray: vector object.
-        """
-        eq = self.tab2_vector_proj_z_samb[tp][idx][1]
-        cluster_obj = NSArray(str([0] * len(self.tab2_vector_proj_site)))
-        for i in eq:
-            coeff, tag_h, tag_c = i
-            harm = self._pgroup.harmonics[tag_h].expression(v=v)
-            cluster = self.tab2_vector_proj_c_samb[tag_c]
-            cluster_obj += coeff * harm * cluster
-
-        if t_odd:
-            cluster_obj *= -sp.I
-
-        return cluster_obj
-
-    # ==================================================
     def tab2_plot_z_samb_vector(self):
         """
         plot vector SAMB.
         """
-        tp = self.tab2_vector_proj_type1.currentText()
+        z_head = self.tab2_vector_proj_type1.currentText()
+        head = self.tab2_vector_proj_type.currentText()
         irrep = self.tab2_vector_proj_irrep1.currentIndex()
+        t_odd = head.replace("M", "T").replace("G", "Q") != z_head.replace("M", "T").replace("G", "Q")
+
         v = NSArray.vector3d()
-        t_odd = self._different_time_reversal(self.tab2_vector_proj_type.currentText(), tp)
-        cluster_obj = self.tab2_create_vector_object(tp, irrep, t_odd, v)
+        cluster_obj = create_samb_object(
+            self.tab2_vector_proj_z_samb,
+            self.tab2_vector_proj_site,
+            self.tab2_vector_proj_c_samb,
+            z_head,
+            irrep,
+            self._pgroup,
+            v,
+            t_odd,
+        )
 
-        rep = {v[0]: sp.Matrix([1, 0, 0]), v[1]: sp.Matrix([0, 1, 0]), v[2]: sp.Matrix([0, 0, 1])}
-        color = rcParams["vector_color_" + self.tab2_vector_proj_type.currentText()]
-        self._qtdraw._close_dialog()
-        lbl = self.tab2_vector_proj_irrep1.currentText().replace("(", "[").replace(")", "]")
-        pname = "Z_" + self._qtdraw._get_name("vector")
-
-        self.tab2_plot_vector_object(self.tab2_vector_proj_site, cluster_obj, rep, pname, lbl, color)
-
-        self._qtdraw._plot_all_object()
+        label = self.tab2_vector_proj_irrep1.currentText().replace("(", "[").replace(")", "]")
+        plot_vector_cluster(self._qtdraw, self.tab2_vector_proj_site, cluster_obj, label, self.pset, head, v)
 
     # ==================================================
     def tab2_plot_z_samb_vector_lc(self):
         """
         plot linear combination of vector SAMB.
         """
-        irrep_num = {i: len(self.tab2_vector_proj_z_samb[i]) for i in ["Q", "G", "T", "M"]}
-        var_e = set([f"q{i+1:02d}" for i in range(irrep_num["Q"])] + [f"g{i+1:02d}" for i in range(irrep_num["G"])])
-        var_m = set([f"t{i+1:02d}" for i in range(irrep_num["T"])] + [f"m{i+1:02d}" for i in range(irrep_num["M"])])
-        form = self.tab2_vector_proj_lc.text().lower()
-        ex_var = set(NSArray(form).variable())
-        t_odd = "Q"
-        if ex_var.issubset(var_m):
-            t_odd = "T"
-        elif not ex_var.issubset(var_e):
+        head = self.tab2_vector_proj_type.currentText()
+        form, ex_var, t_odd = check_linear_combination(self.tab2_vector_proj_z_samb, self.tab2_vector_proj_lc.text(), head)
+        if form is None:
             return
-        t_odd = self._different_time_reversal(self.tab2_vector_proj_type.currentText(), t_odd)
+
         v = NSArray.vector3d()
-        lc_basis = {i: sp.Matrix(self.tab2_create_vector_object(i[0].upper(), int(i[1:]) - 1, t_odd, v).tolist()) for i in ex_var}
+        lc_basis = {
+            i: sp.Matrix(
+                create_samb_object(
+                    self.tab2_vector_proj_z_samb,
+                    self.tab2_vector_proj_site,
+                    self.tab2_vector_proj_c_samb,
+                    i[0].upper(),
+                    int(i[1:]) - 1,
+                    self._pgroup,
+                    v,
+                    t_odd,
+                ).tolist()
+            )
+            for i in ex_var
+        }
         cluster_obj = NSArray(str(NSArray(form).subs(lc_basis).tolist().T.tolist()[0]))
 
-        rep = {v[0]: sp.Matrix([1, 0, 0]), v[1]: sp.Matrix([0, 1, 0]), v[2]: sp.Matrix([0, 0, 1])}
-        color = rcParams["vector_color_" + self.tab2_vector_proj_type.currentText()]
-        self._qtdraw._close_dialog()
-        lbl = self.tab2_vector_proj_irrep1.currentText().replace("(", "[").replace(")", "]")
-        pname = "Z_" + self._qtdraw._get_name("vector")
-
-        self.tab2_plot_vector_object(self.tab2_vector_proj_site, cluster_obj, rep, pname, lbl, color)
-
-        self._qtdraw._plot_all_object()
+        label = self.tab2_vector_proj_irrep1.currentText().replace("(", "[").replace(")", "]")
+        plot_vector_cluster(self._qtdraw, self.tab2_vector_proj_site, cluster_obj, label, self.pset, head, v)
 
     # ==================================================
     def tab2_gen_z_samb_orbital(self):
@@ -1304,187 +1113,78 @@ class DialogGroup(QDialog):
         self.tab2_orbital_proj_irrep1.setCurrentIndex(0)
 
     # ==================================================
-    def tab2_plot_orbital_object(self, site, obj, pname, label, color):
-        """
-        plot orbital SAMB.
-
-        Args:
-            site (NSArray): position.
-            obj (NSArray): object expression.
-            pname (str): object group name.
-            label (str): object label.
-            color (str): color.
-        """
-        if self.n_pset == 1:
-            for s, orb in zip(site, obj):
-                self._qtdraw.plot_orbital(
-                    s,
-                    orb,
-                    size=0.6,
-                    scale=False,
-                    color=color,
-                    name=pname,
-                    label=label,
-                    show_lbl=rcParams["show_label"],
-                )
-        else:
-            for p in self._group.symmetry_operation.plus_set:
-                for s, orb in zip(site, obj):
-                    self._qtdraw.plot_orbital(
-                        s + p,
-                        orb,
-                        size=0.6,
-                        scale=False,
-                        color=color,
-                        name=pname,
-                        label=label,
-                        show_lbl=rcParams["show_label"],
-                    )
-
-    # ==================================================
-    def tab2_create_orbital_object(self, tp, idx, t_odd, v):
-        """
-        create orbital object.
-
-        Args:
-            tp (str): type of multipole.
-            idx (int): index of SAMB.
-            t_odd (bool): magnetic bond ?
-            v (NSArray): (xyz) vector symbol.
-
-        Returns:
-            NSArray: orbital object.
-        """
-        eq = self.tab2_orbital_proj_z_samb[tp][idx][1]
-        cluster_obj = NSArray(str([0] * len(self.tab2_orbital_proj_site)))
-        for i in eq:
-            coeff, tag_h, tag_c = i
-            harm = self._pgroup.harmonics[tag_h].expression(v=v)
-            cluster = self.tab2_orbital_proj_c_samb[tag_c]
-            cluster_obj += coeff * harm * cluster
-
-        if t_odd:
-            cluster_obj *= -sp.I
-
-        return cluster_obj
-
-    # ==================================================
     def tab2_plot_z_samb_orbital(self):
         """
         plot orbital SAMB.
         """
-        tp = self.tab2_orbital_proj_type1.currentText()
+        z_head = self.tab2_orbital_proj_type1.currentText()
+        head = self.tab2_orbital_proj_type.currentText()
         irrep = self.tab2_orbital_proj_irrep1.currentIndex()
+        t_odd = head.replace("M", "T").replace("G", "Q") != z_head.replace("M", "T").replace("G", "Q")
+
         v = NSArray.vector3d()
-        t_odd = self._different_time_reversal(self.tab2_orbital_proj_type.currentText(), tp)
-        cluster_obj = self.tab2_create_orbital_object(tp, irrep, t_odd, v)
+        cluster_obj = create_samb_object(
+            self.tab2_orbital_proj_z_samb,
+            self.tab2_orbital_proj_site,
+            self.tab2_orbital_proj_c_samb,
+            z_head,
+            irrep,
+            self._pgroup,
+            v,
+            t_odd,
+        )
 
-        self._qtdraw._close_dialog()
-        color = rcParams["orbital_color_" + self.tab2_orbital_proj_type.currentText()]
-        lbl = self.tab2_orbital_proj_irrep1.currentText().replace("(", "[").replace(")", "]")
-        pname = "Z_" + self._qtdraw._get_name("orbital")
-
-        self.tab2_plot_orbital_object(self.tab2_orbital_proj_site, cluster_obj, pname, lbl, color)
-
-        self._qtdraw._plot_all_object()
+        label = self.tab2_orbital_proj_irrep1.currentText().replace("(", "[").replace(")", "]")
+        plot_orbital_cluster(self._qtdraw, self.tab2_orbital_proj_site, cluster_obj, label, self.pset, head)
 
     # ==================================================
     def tab2_plot_z_samb_orbital_lc(self):
         """
         plot linear combination of orbital SAMB.
         """
-        irrep_num = {i: len(self.tab2_orbital_proj_z_samb[i]) for i in ["Q", "G", "T", "M"]}
-        var_e = set([f"q{i+1:02d}" for i in range(irrep_num["Q"])] + [f"g{i+1:02d}" for i in range(irrep_num["G"])])
-        var_m = set([f"t{i+1:02d}" for i in range(irrep_num["T"])] + [f"m{i+1:02d}" for i in range(irrep_num["M"])])
-        form = self.tab2_orbital_proj_lc.text().lower()
-        ex_var = set(NSArray(form).variable())
-        t_odd = "Q"
-        if ex_var.issubset(var_m):
-            t_odd = "T"
-        elif not ex_var.issubset(var_e):
+        head = self.tab2_orbital_proj_type.currentText()
+        form, ex_var, t_odd = check_linear_combination(self.tab2_orbital_proj_z_samb, self.tab2_orbital_proj_lc.text(), head)
+        if form is None:
             return
-        t_odd = self._different_time_reversal(self.tab2_orbital_proj_type.currentText(), t_odd)
+
         v = NSArray.vector3d()
         lc_basis = {
-            i: sp.Matrix(self.tab2_create_orbital_object(i[0].upper(), int(i[1:]) - 1, t_odd, v).tolist()) for i in ex_var
+            i: sp.Matrix(
+                create_samb_object(
+                    self.tab2_orbital_proj_z_samb,
+                    self.tab2_orbital_proj_site,
+                    self.tab2_orbital_proj_c_samb,
+                    i[0].upper(),
+                    int(i[1:]) - 1,
+                    self._pgroup,
+                    v,
+                    t_odd,
+                ).tolist()
+            )
+            for i in ex_var
         }
         cluster_obj = NSArray(str(NSArray(form).subs(lc_basis).tolist().T.tolist()[0]))
 
-        self._qtdraw._close_dialog()
-        color = rcParams["orbital_color_" + self.tab2_orbital_proj_type.currentText()]
-        lbl = self.tab2_orbital_proj_irrep1.currentText().replace("(", "[").replace(")", "]")
-        pname = "Z_" + self._qtdraw._get_name("orbital")
-
-        self.tab2_plot_orbital_object(self.tab2_orbital_proj_site, cluster_obj, pname, lbl, color)
-
-        self._qtdraw._plot_all_object()
+        label = self.tab2_orbital_proj_irrep1.currentText().replace("(", "[").replace(")", "]")
+        plot_orbital_cluster(self._qtdraw, self.tab2_orbital_proj_site, cluster_obj, label, self.pset, head)
 
     # ==================================================
     def tab2_plot_z_samb_hopping(self):
         """
         plot hopping direction.
         """
-        combined_info = self._create_combined(self.tab2_hopping_proj_pos.text(), 1, "T")
+        head = "T"
+        combined_info = self._create_combined(self.tab2_hopping_proj_pos.text(), 1, head)
         if combined_info is None:
             return
 
         c_samb, site, z_samb = combined_info
 
-        try:
-            eq = z_samb["Q"][0][1]
-        except (IndexError, AttributeError):
-            return
-        cluster_obj = NSArray(str([0] * len(site)))
         v = NSArray.vector3d()
+        cluster_obj = create_samb_object(z_samb, site, c_samb, "Q", 0, self._pgroup, v, True)
 
-        for coeff, tag_h, tag_c in eq:
-            harm = self._pgroup.harmonics[tag_h].expression(v=v)
-            cluster = c_samb[tag_c]
-            cluster_obj += coeff * harm * cluster
-
-        cluster_obj *= -sp.I
-
-        rep = {v[0]: sp.Matrix([1, 0, 0]), v[1]: sp.Matrix([0, 1, 0]), v[2]: sp.Matrix([0, 0, 1])}
-        color = rcParams["vector_color_T"]
-        self._qtdraw._close_dialog()
-        lbl = "t_imag"
-        pname = "Z_" + self._qtdraw._get_name("vector")
-
-        self.tab2_plot_vector_object(site, cluster_obj, rep, pname, lbl, color)
-
-        self._qtdraw._plot_all_object()
-
-    # ==================================================
-    def _different_time_reversal(self, t1, t2):
-        """
-        check different time-reversal parity.
-
-        Args:
-            t1 (str): multipole type 1.
-            t2 (str): multipole type 2.
-
-        Returns:
-            bool: different TR-parity ?
-        """
-        tp = {"Q": "E", "G": "E", "T": "M", "M": "M"}
-        return tp[t1] != tp[t2]
-
-    # ==================================================
-    def _combined_format(self, tag_list):
-        """
-        create formatted combined SAMB.
-
-        Args:
-            tag_list (tuple): (Z,X,Y) tag.
-
-        Returns:
-            str: formatted combined SAMB.
-        """
-        z_tag, x_tag, y_tag = tag_list
-        t1 = (",".join(str(x_tag).split(",")[:-1]) + ")").replace("h", "a")
-        t2 = ",".join(str(y_tag).split(",")[:-1]) + ")"
-        tag = f"{z_tag} = {t1} x {t2}"
-        return tag
+        label = "t_imag"
+        plot_vector_cluster(self._qtdraw, site, cluster_obj, label, self.pset, head, v)
 
     # ==================================================
     def _create_combined(self, site_bond, harm_rank, harm_head, ret_bond=False):
@@ -1527,36 +1227,12 @@ class DialogGroup(QDialog):
         z_samb_all = self._group.z_samb(x_tag, y_tag)
         z_samb = {"Q": [], "G": [], "T": [], "M": []}
         for tag, c in z_samb_all.items():
-            tag_str = self._combined_format(tag)
+            tag_str = combined_format(tag)
             z_samb[tag[0].head].append((tag_str, c))
         for k in z_samb.keys():
             z_samb[k] = list(sorted(z_samb[k], key=lambda i: i[0]))
 
         return c_samb, site, z_samb
-
-    # ==================================================
-    def _get_position(self, site_bond):
-        """
-        get position.
-
-        Args:
-            site_bond (str): site or bond.
-
-        Returns:
-            str: site or bond-center.
-        """
-        try:
-            pos = NSArray(site_bond)
-        except Exception:
-            return None
-
-        if pos.style not in ["vector", "bond", "bond_th", "bond_sv"]:
-            return None
-
-        if pos.style == "bond":
-            pos = str(pos.convert_bond("bond")[1])
-
-        return pos
 
     # ==================================================
     def save_dict(self):

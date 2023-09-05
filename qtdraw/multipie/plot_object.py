@@ -1,3 +1,5 @@
+import numpy as np
+import sympy as sp
 from qtdraw.multipie.setting import rcParams
 from gcoreutils.nsarray import NSArray
 from multipie.model.material_model import MaterialModel
@@ -66,6 +68,89 @@ def check_get_site_bond(txt):
         return None
 
     return site
+
+
+# ==================================================
+def create_samb_object(z_samb, site, c_samb, z_head, irrep, pg, v, t_odd):
+    """
+    create SAMB object.
+
+    Args:
+        z_samb (dict): combined SAMB.
+        site (NSArray): site.
+        c_samb (dict): cluster SAMB.
+        z_head (str): multipole type.
+        irrep (int): irrep. index.
+        pg (PointGroup): point group.
+        v (NSArray): vector variable.
+        t_odd (bool): magnetic bond ?
+
+    Returns:
+        _type_: _description_
+    """
+    obj = NSArray.zeros(len(site), "vector")
+    for i in z_samb[z_head][irrep][1]:
+        coeff, tag_h, tag_c = i
+        harm = pg.harmonics[tag_h].expression(v=v)
+        cluster = c_samb[tag_c]
+        obj += coeff * harm * cluster
+
+    if t_odd:
+        obj *= -sp.I
+
+    return obj
+
+
+# ==================================================
+def check_linear_combination(z_samb, form, head):
+    """
+    check form of linear combination.
+
+    Args:
+        z_samb (dict): combined SAMB.
+        form (str): expression of linear combination.
+        head (str): multipole type.
+
+    Returns:
+        tuple:
+            - str: expression of linear combination (lower case).
+            - set: used variables.
+            - bool: magnetic bond ?
+    """
+    irrep_num = {i: len(z_samb[i]) for i in ["Q", "G", "T", "M"]}
+    var_e = set([f"q{i+1:02d}" for i in range(irrep_num["Q"])] + [f"g{i+1:02d}" for i in range(irrep_num["G"])])
+    var_m = set([f"t{i+1:02d}" for i in range(irrep_num["T"])] + [f"m{i+1:02d}" for i in range(irrep_num["M"])])
+
+    form = form.lower()
+    form_variable = set(NSArray(form).variable())
+
+    t_odd = "Q"
+    if form_variable.issubset(var_m):
+        t_odd = "T"
+    elif not form_variable.issubset(var_e):
+        return None, None, None
+    t_odd = head.replace("M", "T").replace("G", "Q") != t_odd
+
+    return form, form_variable, t_odd
+
+
+# ==================================================
+def combined_format(tag_list):
+    """
+    create formatted combined SAMB.
+
+    Args:
+        tag_list (tuple): (Z,X,Y) tag.
+
+    Returns:
+        str: formatted combined SAMB.
+    """
+    z_tag, x_tag, y_tag = tag_list
+    t1 = (",".join(str(x_tag).split(",")[:-1]) + ")").replace("h", "a")
+    t2 = ",".join(str(y_tag).split(",")[:-1]) + ")"
+    tag = f"{z_tag} = {t1} x {t2}"
+
+    return tag
 
 
 # ==================================================
@@ -186,4 +271,200 @@ def plot_orbital_equivalent_site(qtdraw, site, orbital, head, n_pset):
             name += f"({pset+1})"
         label = f"o{idx+1}"
         qtdraw.plot_orbital(s, orbital, size=0.3, color=color, name=name, label=label, show_lbl=rcParams["show_label"])
+    qtdraw._plot_all_object()
+
+
+# ==================================================
+def plot_site_cluster(qtdraw, site, obj, label, pset):
+    """
+    plot site cluster SAMB.
+
+    Args:
+        qtdraw (QtDraw): QtDraw.
+        site (NSArray): equivalent sites.
+        obj (NSArray): SAMB weight.
+        label (str): label.
+        pset (NSArray): plus set.
+    """
+    color = []
+    for w in obj:
+        if w > 0:
+            c = "salmon"
+        elif w < 0:
+            c = "aqua"
+        else:
+            c = "silver"
+        color.append(c)
+
+    obj /= np.abs(obj).max()
+
+    qtdraw._close_dialog()
+    name = "Z_" + qtdraw._get_name("site")
+    for p in pset:
+        for s, w, cl in zip(site, obj, color):
+            s = (s + p).shift()
+            if cl == "silver":
+                w = 1
+            qtdraw.plot_site(
+                s,
+                size=abs(w),
+                color=cl,
+                name=name,
+                label=label,
+                show_lbl=rcParams["show_label"],
+            )
+    qtdraw._plot_all_object()
+
+
+# ==================================================
+def plot_bond_cluster(qtdraw, bond, obj, label, pset, z_head):
+    """
+    plot bond cluster SAMB.
+
+    Args:
+        qtdraw (QtDraw): QtDraw.
+        bond (NSArray): equivalent bonds.
+        obj (NSArray): SAMB weight.
+        label (str): label.
+        pset (NSArray): plus set.
+        z_head (str): multipole type.
+    """
+    color = []
+    if z_head == "Q":
+        for w in obj:
+            if w > 0:
+                c = "salmon"
+            elif w < 0:
+                c = "aqua"
+            else:
+                c = "silver"
+            color.append(c)
+    else:
+        for w in obj:
+            if w == 0:
+                c = "silver"
+            else:
+                c = "salmon"
+            color.append(c)
+
+    obj /= np.abs(obj).max()
+
+    qtdraw._close_dialog()
+    name = "Z_" + qtdraw._get_name("bond")
+    if z_head == "Q":
+        for p in pset:
+            for s, w, cl in zip(bond, obj, color):
+                v, c = s.convert_bond("bond")
+                c = (c + p).shift()
+                if cl == "silver":
+                    w = 1
+                qtdraw.plot_bond(
+                    c,
+                    v,
+                    color=cl,
+                    color2=cl,
+                    width=abs(w),
+                    name=name,
+                    label=label,
+                    show_lbl=rcParams["show_label"],
+                )
+    else:
+        for p in pset:
+            for s, w, cl in zip(bond, obj, color):
+                v, c = s.convert_bond("bond")
+                c = (c + p).shift()
+                if cl == "silver":
+                    w = 1
+                    qtdraw.plot_bond(
+                        c,
+                        v,
+                        color=cl,
+                        color2=cl,
+                        width=abs(w),
+                        name=name,
+                        label=label,
+                        show_lbl=rcParams["show_label"],
+                    )
+                else:
+                    v = v.transform(qtdraw._A)
+                    if w < 0:
+                        v = -v
+                    norm = v.norm() * 0.7
+                    qtdraw.plot_vector(
+                        c,
+                        v,
+                        color=cl,
+                        width=abs(w),
+                        length=norm,
+                        offset=-0.5,
+                        name=name,
+                        label=label,
+                        show_lbl=rcParams["show_label"],
+                    )
+
+    qtdraw._plot_all_object()
+
+
+# ==================================================
+def plot_vector_cluster(qtdraw, site, obj, label, pset, head, v):
+    """
+    plot vector cluster SAMB.
+
+    Args:
+        qtdraw (QtDraw): QtDraw.
+        site (NSArray): equivalent sites.
+        obj (NSArray): SAMB weight.
+        label (str): label.
+        pset (NSArray): plus set.
+        head (str): multipole type.
+        v (NSArray): vector variable.
+    """
+    rep = {v[0]: sp.Matrix([1, 0, 0]), v[1]: sp.Matrix([0, 1, 0]), v[2]: sp.Matrix([0, 0, 1])}
+    color = rcParams["vector_color_" + head]
+    qtdraw._close_dialog()
+    name = "Z_" + qtdraw._get_name("vector")
+
+    for p in pset:
+        for s, c in zip(site, obj):
+            s = (s + p).shift()
+            if c != 0:
+                c = str(c.subs(rep).T[:])
+                c = NSArray(c)
+                d = c.norm()
+                qtdraw.plot_vector(s, c, length=d, color=color, name=name, label=label, show_lbl=rcParams["show_label"])
+
+    qtdraw._plot_all_object()
+
+
+# ==================================================
+def plot_orbital_cluster(qtdraw, site, obj, label, pset, head):
+    """
+    plot orbital cluster SAMB.
+
+    Args:
+        qtdraw (QtDraw): QtDraw.
+        site (NSArray): equivalent sites.
+        obj (NSArray): SAMB weight.
+        label (str): label.
+        pset (NSArray): plus set.
+        head (str): multipole type.
+    """
+    color = rcParams["orbital_color_" + head]
+    qtdraw._close_dialog()
+    name = "Z_" + qtdraw._get_name("orbital")
+
+    for p in pset:
+        for s, orb in zip(site, obj):
+            s = (s + p).shift()
+            qtdraw.plot_orbital(
+                s,
+                orb,
+                size=0.6,
+                scale=False,
+                color=color,
+                name=name,
+                label=label,
+                show_lbl=rcParams["show_label"],
+            )
+
     qtdraw._plot_all_object()
