@@ -448,16 +448,16 @@ class DialogGroup(QDialog):
         self.tab1 = QWidget()
         self.tab.addTab(self.tab1, "object drawing")
 
-        site_label = QLabel("SITE: draw equivalent sites.\n1. input representative SITE, 2. ENTER.", self)
+        self.tab1_site_label = QLabel("SITE: draw equivalent sites.\n1. input representative SITE, 2. ENTER.", self)
         self.tab1_site_pos = QLineEdit("[ 1/2, 1/2, 0 ]", self)
 
-        bond_label = QLabel(
+        self.tab1_bond_label = QLabel(
             "BOND: draw equivalent bonds.\n1. input representative BOND, 2. ENTER.",
             self,
         )
         self.tab1_bond_pos = QLineEdit("[ 0, 0, 0 ] ; [ 1/2, 1/2, 0 ]", self)
 
-        vector_label = QLabel(
+        self.tab1_vector_label = QLabel(
             "VECTOR: draw vectors at equivalent sites or bonds.\n1. input vector [x,y,z] # representative SITE/BOND, 2. ENTER.",
             self,
         )
@@ -466,7 +466,7 @@ class DialogGroup(QDialog):
         self.tab1_vector_type.addItems(["Q", "G", "T", "M"])
         self.tab1_vector_type.setCurrentIndex(0)
 
-        orbital_label = QLabel(
+        self.tab1_orbital_label = QLabel(
             "ORBITAL: draw orbitals at equivalent sites or bonds.\n1. input orbital (xyz polynomial) # representative SITE/BOND, 2. ENTER.",
             self,
         )
@@ -475,7 +475,7 @@ class DialogGroup(QDialog):
         self.tab1_orbital_type.addItems(["Q", "G", "T", "M"])
         self.tab1_orbital_type.setCurrentIndex(0)
 
-        pgharm_label = QLabel(
+        self.tab1_pgharm_label = QLabel(
             "POINT-GROUP HARMONICS: draw point-group harmonics at equivalent sites or bonds.\n1. choose (type,rank,irrep.), 2. input representative SITE/BOND, 3. ENTER.  \u21d2  used expression is shown (in LaTeX form).",
             self,
         )
@@ -492,38 +492,38 @@ class DialogGroup(QDialog):
         hs0 = self._pgroup.harmonics.select(rank=0, head="Q")
         self.tab1_pgharm_irrep.addItems(["Q" + str(i)[2:] for i in hs0])
         self.tab1_pgharm_irrep.setCurrentIndex(0)
-        pgharm_exp_label = QLabel("expression", self)
+        self.tab1_pgharm_exp_label = QLabel("expression", self)
         self.tab1_pgharm_exp = QLineEdit("1", self)
-        pgharm_exp_latex = QCheckBox("LaTeX", self)
-        pgharm_exp_latex.setChecked(False)
+        self.tab1_pgharm_exp_latex = QCheckBox("LaTeX", self)
+        self.tab1_pgharm_exp_latex.setChecked(False)
 
-        tab1_v_spacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        self.tab1_v_spacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
 
-        tab1_grid = QGridLayout(self.tab1)
-        tab1_grid.addWidget(site_label, 0, 0, 1, 9)
-        tab1_grid.addWidget(self.tab1_site_pos, 1, 0, 1, 9)
+        self.tab1_grid = QGridLayout(self.tab1)
+        self.tab1_grid.addWidget(self.tab1_site_label, 0, 0, 1, 9)
+        self.tab1_grid.addWidget(self.tab1_site_pos, 1, 0, 1, 9)
 
-        tab1_grid.addWidget(bond_label, 2, 0, 1, 9)
-        tab1_grid.addWidget(self.tab1_bond_pos, 3, 0, 1, 9)
+        self.tab1_grid.addWidget(self.tab1_bond_label, 2, 0, 1, 9)
+        self.tab1_grid.addWidget(self.tab1_bond_pos, 3, 0, 1, 9)
 
-        tab1_grid.addWidget(vector_label, 4, 0, 1, 9)
-        tab1_grid.addWidget(self.tab1_vector_pos, 5, 0, 1, 8)
-        tab1_grid.addWidget(self.tab1_vector_type, 5, 8, 1, 1)
+        self.tab1_grid.addWidget(self.tab1_vector_label, 4, 0, 1, 9)
+        self.tab1_grid.addWidget(self.tab1_vector_pos, 5, 0, 1, 8)
+        self.tab1_grid.addWidget(self.tab1_vector_type, 5, 8, 1, 1)
 
-        tab1_grid.addWidget(orbital_label, 6, 0, 1, 9)
-        tab1_grid.addWidget(self.tab1_orbital_pos, 7, 0, 1, 8)
-        tab1_grid.addWidget(self.tab1_orbital_type, 7, 8, 1, 1)
+        self.tab1_grid.addWidget(self.tab1_orbital_label, 6, 0, 1, 9)
+        self.tab1_grid.addWidget(self.tab1_orbital_pos, 7, 0, 1, 8)
+        self.tab1_grid.addWidget(self.tab1_orbital_type, 7, 8, 1, 1)
 
-        tab1_grid.addWidget(pgharm_label, 8, 0, 1, 9)
-        tab1_grid.addWidget(self.tab1_pgharm_pos, 9, 0, 1, 5)
-        tab1_grid.addWidget(self.tab1_pgharm_type, 9, 5, 1, 1)
-        tab1_grid.addWidget(self.tab1_pgharm_rank, 9, 6, 1, 1)
-        tab1_grid.addWidget(self.tab1_pgharm_irrep, 9, 7, 1, 2)
-        tab1_grid.addWidget(pgharm_exp_label, 10, 0, 1, 1)
-        tab1_grid.addWidget(self.tab1_pgharm_exp, 10, 1, 1, 7)
-        tab1_grid.addWidget(pgharm_exp_latex, 10, 8, 1, 1)
+        self.tab1_grid.addWidget(self.tab1_pgharm_label, 8, 0, 1, 9)
+        self.tab1_grid.addWidget(self.tab1_pgharm_pos, 9, 0, 1, 5)
+        self.tab1_grid.addWidget(self.tab1_pgharm_type, 9, 5, 1, 1)
+        self.tab1_grid.addWidget(self.tab1_pgharm_rank, 9, 6, 1, 1)
+        self.tab1_grid.addWidget(self.tab1_pgharm_irrep, 9, 7, 1, 2)
+        self.tab1_grid.addWidget(self.tab1_pgharm_exp_label, 10, 0, 1, 1)
+        self.tab1_grid.addWidget(self.tab1_pgharm_exp, 10, 1, 1, 7)
+        self.tab1_grid.addWidget(self.tab1_pgharm_exp_latex, 10, 8, 1, 1)
 
-        tab1_grid.addItem(tab1_v_spacer, 11, 1, 1, 1)
+        self.tab1_grid.addItem(self.tab1_v_spacer, 11, 1, 1, 1)
 
         show_lbl = rcParams["show_label"]
 
@@ -668,14 +668,14 @@ class DialogGroup(QDialog):
             hs = self._pgroup.harmonics.select(rank=rank, head=head1)
             h = hs[self.tab1_pgharm_irrep.currentIndex()]
             ex = h.expression(v=NSArray.vector3d("Q"))
-            if pgharm_exp_latex.checkState():
+            if self.tab1_pgharm_exp_latex.checkState():
                 ex = ex.latex()
             self.tab1_pgharm_exp.setText(str(ex))
 
         self.tab1_pgharm_irrep.currentIndexChanged.connect(select_pg_harmonics)
         self.tab1_pgharm_type.currentIndexChanged.connect(select_pg_harmonics)
         self.tab1_pgharm_rank.currentIndexChanged.connect(select_pg_harmonics)
-        pgharm_exp_latex.toggled.connect(select_pg_harmonics)
+        self.tab1_pgharm_exp_latex.toggled.connect(select_pg_harmonics)
 
         def plot_pg_harmonics():
             head = self.tab1_pgharm_type.currentText()
@@ -729,33 +729,33 @@ class DialogGroup(QDialog):
         self.tab2 = QWidget()
         self.tab.addTab(self.tab2, "basis drawing")
 
-        site_proj_label = QLabel(
+        self.tab2_site_proj_label = QLabel(
             "SITE: draw site-cluster basis.\n1. input representative SITE, 2. ENTER,\n\u21d2  3. choose basis, 4. push `draw`.",
             self,
         )
         self.tab2_site_proj_pos = QLineEdit("[ 1/2, 1/2, 0 ]", self)
-        site_proj_label1 = QLabel("\u21d2", self)
-        site_proj_label1.setAlignment(Qt.AlignCenter)
+        self.tab2_site_proj_label1 = QLabel("\u21d2", self)
+        self.tab2_site_proj_label1.setAlignment(Qt.AlignCenter)
         self.tab2_site_proj_irrep1 = QComboBox(self)
         self.tab2_site_proj_irrep1.addItems([""])
         self.tab2_site_proj_irrep1.setCurrentIndex(0)
-        site_proj_draw_button = QPushButton("draw", self)
-        site_proj_draw_button.setFocusPolicy(Qt.NoFocus)
+        self.tab2_site_proj_draw_button = QPushButton("draw", self)
+        self.tab2_site_proj_draw_button.setFocusPolicy(Qt.NoFocus)
 
-        bond_proj_label = QLabel(
+        self.tab2_bond_proj_label = QLabel(
             "BOND: draw bond-cluster basis.\n1. input representative BOND, 2. ENTER,\n\u21d2  3. choose basis, 4. push `draw`.",
             self,
         )
         self.tab2_bond_proj_pos = QLineEdit("[ 1/2, 1/2, 0 ] @ [ 1/4, 1/4, 0 ]", self)
-        bond_proj_label1 = QLabel("\u21d2", self)
-        bond_proj_label1.setAlignment(Qt.AlignCenter)
+        self.tab2_bond_proj_label1 = QLabel("\u21d2", self)
+        self.tab2_bond_proj_label1.setAlignment(Qt.AlignCenter)
         self.tab2_bond_proj_irrep1 = QComboBox(self)
         self.tab2_bond_proj_irrep1.addItems([""])
         self.tab2_bond_proj_irrep1.setCurrentIndex(0)
-        bond_proj_draw_button = QPushButton("draw", self)
-        bond_proj_draw_button.setFocusPolicy(Qt.NoFocus)
+        self.tab2_bond_proj_draw_button = QPushButton("draw", self)
+        self.tab2_bond_proj_draw_button.setFocusPolicy(Qt.NoFocus)
 
-        vector_proj_label = QLabel(
+        self.tab2_vector_proj_label = QLabel(
             "VECTOR: draw symmetry-adapted vector.\n1. choose type, 2. input representative SITE/BOND, 3. ENTER,\n\u21d2  4. choose (type,basis), 5. push `draw` or 4. input linear combination, 5. ENTER.",
             self,
         )
@@ -766,17 +766,17 @@ class DialogGroup(QDialog):
         self.tab2_vector_proj_type1 = QComboBox(self)
         self.tab2_vector_proj_type1.addItems(["Q", "G", "T", "M"])
         self.tab2_vector_proj_type1.setCurrentIndex(0)
-        vector_proj_label1 = QLabel("\u21d2", self)
-        vector_proj_label1.setAlignment(Qt.AlignCenter)
+        self.tab2_vector_proj_label1 = QLabel("\u21d2", self)
+        self.tab2_vector_proj_label1.setAlignment(Qt.AlignCenter)
         self.tab2_vector_proj_irrep1 = QComboBox(self)
         self.tab2_vector_proj_irrep1.addItems([""])
         self.tab2_vector_proj_irrep1.setCurrentIndex(0)
-        vector_proj_draw_button = QPushButton("draw", self)
-        vector_proj_draw_button.setFocusPolicy(Qt.NoFocus)
+        self.tab2_vector_proj_draw_button = QPushButton("draw", self)
+        self.tab2_vector_proj_draw_button.setFocusPolicy(Qt.NoFocus)
         self.tab2_vector_proj_lc_label = QLabel("linear comb.", self)
         self.tab2_vector_proj_lc = QLineEdit("(Q01+Q02)/sqrt(2)", self)
 
-        orbital_proj_label = QLabel(
+        self.tab2_orbital_proj_label = QLabel(
             "ORBITAL draw symmetry-adapted orbital.\n1. choose (type,rank), 2. input representative SITE/BOND, 3. ENTER,\n\u21d2  4. choose (type,basis), 5. push `draw` or 4. input linear combination, 5. ENTER.",
             self,
         )
@@ -787,8 +787,8 @@ class DialogGroup(QDialog):
         self.tab2_orbital_proj_type1 = QComboBox(self)
         self.tab2_orbital_proj_type1.addItems(["Q", "G", "T", "M"])
         self.tab2_orbital_proj_type1.setCurrentIndex(0)
-        orbital_proj_label1 = QLabel("\u21d2", self)
-        orbital_proj_label1.setAlignment(Qt.AlignCenter)
+        self.tab2_orbital_proj_label1 = QLabel("\u21d2", self)
+        self.tab2_orbital_proj_label1.setAlignment(Qt.AlignCenter)
         self.tab2_orbital_proj_irrep1 = QComboBox(self)
         self.tab2_orbital_proj_irrep1.addItems([""])
         self.tab2_orbital_proj_irrep1.setCurrentIndex(0)
@@ -796,58 +796,58 @@ class DialogGroup(QDialog):
         self.tab2_orbital_proj_rank.setFocusPolicy(Qt.NoFocus)
         self.tab2_orbital_proj_rank.addItems(map(str, range(12)))
         self.tab2_orbital_proj_rank.setCurrentIndex(1)
-        orbital_proj_draw_button = QPushButton("draw", self)
-        orbital_proj_draw_button.setFocusPolicy(Qt.NoFocus)
+        self.tab2_orbital_proj_draw_button = QPushButton("draw", self)
+        self.tab2_orbital_proj_draw_button.setFocusPolicy(Qt.NoFocus)
         self.tab2_orbital_proj_lc_label = QLabel("linear comb.", self)
         self.tab2_orbital_proj_lc = QLineEdit("(Q01+Q02)/sqrt(2)", self)
 
-        hopping_proj_label = QLabel(
+        self.tab2_hopping_proj_label = QLabel(
             "HOPPING: draw hopping direction.\n1. input representative BOND, 2. ENTER.",
             self,
         )
         self.tab2_hopping_proj_pos = QLineEdit("[ 0, 0, 0 ] ; [ 1/2, 1/2, 0 ]", self)
 
-        tab2_v_spacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        self.tab2_vspacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
 
-        tab2_grid = QGridLayout(self.tab2)
+        self.tab2_grid = QGridLayout(self.tab2)
 
-        tab2_grid.addWidget(site_proj_label, 0, 0, 1, 9)
-        tab2_grid.addWidget(self.tab2_site_proj_pos, 1, 0, 1, 7)
-        tab2_grid.addWidget(site_proj_label1, 2, 0, 1, 1)
-        tab2_grid.addWidget(self.tab2_site_proj_irrep1, 2, 1, 1, 7)
-        tab2_grid.addWidget(site_proj_draw_button, 2, 8, 1, 1)
+        self.tab2_grid.addWidget(self.tab2_site_proj_label, 0, 0, 1, 9)
+        self.tab2_grid.addWidget(self.tab2_site_proj_pos, 1, 0, 1, 7)
+        self.tab2_grid.addWidget(self.tab2_site_proj_label1, 2, 0, 1, 1)
+        self.tab2_grid.addWidget(self.tab2_site_proj_irrep1, 2, 1, 1, 7)
+        self.tab2_grid.addWidget(self.tab2_site_proj_draw_button, 2, 8, 1, 1)
 
-        tab2_grid.addWidget(bond_proj_label, 3, 0, 1, 9)
-        tab2_grid.addWidget(self.tab2_bond_proj_pos, 4, 0, 1, 7)
-        tab2_grid.addWidget(bond_proj_label1, 5, 0, 1, 1)
-        tab2_grid.addWidget(self.tab2_bond_proj_irrep1, 5, 1, 1, 7)
-        tab2_grid.addWidget(bond_proj_draw_button, 5, 8, 1, 1)
+        self.tab2_grid.addWidget(self.tab2_bond_proj_label, 3, 0, 1, 9)
+        self.tab2_grid.addWidget(self.tab2_bond_proj_pos, 4, 0, 1, 7)
+        self.tab2_grid.addWidget(self.tab2_bond_proj_label1, 5, 0, 1, 1)
+        self.tab2_grid.addWidget(self.tab2_bond_proj_irrep1, 5, 1, 1, 7)
+        self.tab2_grid.addWidget(self.tab2_bond_proj_draw_button, 5, 8, 1, 1)
 
-        tab2_grid.addWidget(vector_proj_label, 6, 0, 1, 9)
-        tab2_grid.addWidget(self.tab2_vector_proj_pos, 7, 0, 1, 7)
-        tab2_grid.addWidget(self.tab2_vector_proj_type, 7, 7, 1, 1)
-        tab2_grid.addWidget(vector_proj_label1, 8, 0, 1, 1)
-        tab2_grid.addWidget(self.tab2_vector_proj_type1, 8, 1, 1, 1)
-        tab2_grid.addWidget(self.tab2_vector_proj_irrep1, 8, 2, 1, 6)
-        tab2_grid.addWidget(vector_proj_draw_button, 8, 8, 1, 1)
-        tab2_grid.addWidget(self.tab2_vector_proj_lc_label, 9, 0, 1, 8)
-        tab2_grid.addWidget(self.tab2_vector_proj_lc, 9, 1, 1, 8)
+        self.tab2_grid.addWidget(self.tab2_vector_proj_label, 6, 0, 1, 9)
+        self.tab2_grid.addWidget(self.tab2_vector_proj_pos, 7, 0, 1, 7)
+        self.tab2_grid.addWidget(self.tab2_vector_proj_type, 7, 7, 1, 1)
+        self.tab2_grid.addWidget(self.tab2_vector_proj_label1, 8, 0, 1, 1)
+        self.tab2_grid.addWidget(self.tab2_vector_proj_type1, 8, 1, 1, 1)
+        self.tab2_grid.addWidget(self.tab2_vector_proj_irrep1, 8, 2, 1, 6)
+        self.tab2_grid.addWidget(self.tab2_vector_proj_draw_button, 8, 8, 1, 1)
+        self.tab2_grid.addWidget(self.tab2_vector_proj_lc_label, 9, 0, 1, 8)
+        self.tab2_grid.addWidget(self.tab2_vector_proj_lc, 9, 1, 1, 8)
 
-        tab2_grid.addWidget(orbital_proj_label, 10, 0, 1, 9)
-        tab2_grid.addWidget(self.tab2_orbital_proj_pos, 11, 0, 1, 7)
-        tab2_grid.addWidget(self.tab2_orbital_proj_type, 11, 7, 1, 1)
-        tab2_grid.addWidget(self.tab2_orbital_proj_rank, 11, 8, 1, 1)
-        tab2_grid.addWidget(orbital_proj_label1, 12, 0, 1, 1)
-        tab2_grid.addWidget(self.tab2_orbital_proj_type1, 12, 1, 1, 1)
-        tab2_grid.addWidget(self.tab2_orbital_proj_irrep1, 12, 2, 1, 6)
-        tab2_grid.addWidget(orbital_proj_draw_button, 12, 8, 1, 1)
-        tab2_grid.addWidget(self.tab2_orbital_proj_lc_label, 13, 0, 1, 8)
-        tab2_grid.addWidget(self.tab2_orbital_proj_lc, 13, 1, 1, 8)
+        self.tab2_grid.addWidget(self.tab2_orbital_proj_label, 10, 0, 1, 9)
+        self.tab2_grid.addWidget(self.tab2_orbital_proj_pos, 11, 0, 1, 7)
+        self.tab2_grid.addWidget(self.tab2_orbital_proj_type, 11, 7, 1, 1)
+        self.tab2_grid.addWidget(self.tab2_orbital_proj_rank, 11, 8, 1, 1)
+        self.tab2_grid.addWidget(self.tab2_orbital_proj_label1, 12, 0, 1, 1)
+        self.tab2_grid.addWidget(self.tab2_orbital_proj_type1, 12, 1, 1, 1)
+        self.tab2_grid.addWidget(self.tab2_orbital_proj_irrep1, 12, 2, 1, 6)
+        self.tab2_grid.addWidget(self.tab2_orbital_proj_draw_button, 12, 8, 1, 1)
+        self.tab2_grid.addWidget(self.tab2_orbital_proj_lc_label, 13, 0, 1, 8)
+        self.tab2_grid.addWidget(self.tab2_orbital_proj_lc, 13, 1, 1, 8)
 
-        tab2_grid.addWidget(hopping_proj_label, 14, 0, 1, 9)
-        tab2_grid.addWidget(self.tab2_hopping_proj_pos, 15, 0, 1, 9)
+        self.tab2_grid.addWidget(self.tab2_hopping_proj_label, 14, 0, 1, 9)
+        self.tab2_grid.addWidget(self.tab2_hopping_proj_pos, 15, 0, 1, 9)
 
-        tab2_grid.addItem(tab2_v_spacer, 16, 1, 1, 1)
+        self.tab2_grid.addItem(self.tab2_vspacer, 16, 1, 1, 1)
 
         show_lbl = rcParams["show_label"]
 
@@ -923,7 +923,7 @@ class DialogGroup(QDialog):
             self._qtdraw._plot_all_object()
 
         self.tab2_site_proj_pos.returnPressed.connect(gen_site_cluster)
-        site_proj_draw_button.clicked.connect(plot_site_cluster_samb)
+        self.tab2_site_proj_draw_button.clicked.connect(plot_site_cluster_samb)
 
         # --- plot bond_cluster SAMB ---
         def gen_bond_cluster():
@@ -1044,7 +1044,7 @@ class DialogGroup(QDialog):
             self._qtdraw._plot_all_object()
 
         self.tab2_bond_proj_pos.returnPressed.connect(gen_bond_cluster)
-        bond_proj_draw_button.clicked.connect(plot_bond_cluster_samb)
+        self.tab2_bond_proj_draw_button.clicked.connect(plot_bond_cluster_samb)
 
         # --- plot combined SAMB (vector) ---
         def gen_z_samb_vector():
@@ -1139,7 +1139,7 @@ class DialogGroup(QDialog):
 
         self.tab2_vector_proj_pos.returnPressed.connect(gen_z_samb_vector)
         self.tab2_vector_proj_type1.currentIndexChanged.connect(select_z_samb_vector)
-        vector_proj_draw_button.clicked.connect(plot_z_samb_vector)
+        self.tab2_vector_proj_draw_button.clicked.connect(plot_z_samb_vector)
         self.tab2_vector_proj_lc.returnPressed.connect(plot_z_samb_vector_lc)
 
         # --- plot combined SAMB (orbital) ---
@@ -1247,7 +1247,7 @@ class DialogGroup(QDialog):
 
         self.tab2_orbital_proj_pos.returnPressed.connect(gen_z_samb_orbital)
         self.tab2_orbital_proj_type1.currentIndexChanged.connect(select_z_samb_orbital)
-        orbital_proj_draw_button.clicked.connect(plot_z_samb_orbital)
+        self.tab2_orbital_proj_draw_button.clicked.connect(plot_z_samb_orbital)
         self.tab2_orbital_proj_lc.returnPressed.connect(plot_z_samb_orbital_lc)
 
         # --- plot hopping ---
