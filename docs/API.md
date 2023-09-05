@@ -6,7 +6,7 @@ API for drawing objects.
 
 ## Site (sphere)
 
-**plot_site(position, size=None, color=None, opacity=None, space=None, name=None, label="", show_lbl=False)**
+**plot_site(position, size=None, color=None, opacity=None, space=None, name=None, label="", show_lbl=False, cell=[0, 0, 0])**
 
 Args:
 - **position** (str or list or ndarray or NSArray): position(s) to plot site (reduced).
@@ -17,13 +17,14 @@ Args:
 - **name** (str, optional): group name of object.
 - **label** (str, optional): label of object.
 - **show_lbl** (bool, optional): show label ?
+- **cell** (list, optional): cell position.
 
 Notes:
 - if argument is None, default value is used.
 
 ## Bond
 
-**plot_bond(position, vector=None, width=None, color=None, color2="", opacity=None, space=None, name=None, label="", show_lbl=False)**
+**plot_bond(position, vector=None, width=None, color=None, color2="", opacity=None, space=None, name=None, label="", show_lbl=False, cell=[0, 0, 0])**
 
 Args:
 - **position** (str or list or ndarray or NSArray): position(s) to plot bond center (reduced).
@@ -36,6 +37,7 @@ Args:
 - **name** (str, optional): group name of object.
 - **label** (str, optional): label of object.
 - **show_lbl** (bool, optional): show label ?
+- **cell** (list, optional): cell position.
 
 Notes:
 - if argument is None, default value is used.
@@ -43,7 +45,7 @@ Notes:
 
 ## Vector
 
-**plot_vector(position, vector=None, length=None, width=None, offset=None, color=None, opacity=None, space=None, name=None, label="", show_lbl=False)**
+**plot_vector(position, vector=None, length=None, width=None, offset=None, color=None, opacity=None, space=None, name=None, label="", show_lbl=False, cell=[0, 0, 0])**
 
 Args:
 - **position** (str or list or ndarray or NSArray): position(s) to plot vector (reduced).
@@ -57,6 +59,7 @@ Args:
 - **name** (str, optional): group name of object.
 - **label** (str, optional): label of object.
 - **show_lbl** (bool, optional): show label ?
+- **cell** (list, optional): cell position.
 
 Notes:
 - if argument is None, default value is used.
@@ -64,7 +67,7 @@ Notes:
 
 ## Orbital
 
-**plot_orbital(position, shape=None, surface="", size=None, theta_range=None, phi_range=None, color=None, opacity=None, space=None, scale=True, name=None, label="", show_lbl=False)**
+**plot_orbital(position, shape=None, surface="", size=None, theta_range=None, phi_range=None, color=None, opacity=None, space=None, scale=True, name=None, label="", show_lbl=False, cell=[0, 0, 0])**
 
 Args:
 - **position** (str or list or ndarray or NSArray): position(s) to plot orbital (reduced).
@@ -80,6 +83,7 @@ Args:
 - **name** (str, optional): group name of object.
 - **label** (str, optional): label of object.
 - **show_lbl** (bool, optional): show label ?
+- **cell** (list, optional): cell position.
 
 Notes:
 - if surface is "", surface is same as shape.
@@ -87,7 +91,7 @@ Notes:
 
 ## Stream vector with center orbital
 
-**plot_stream_vector(position, shape=None, vector=None, size=None, v_size=None, width=None, scale=None, theta=None, phi=None, theta_range=None, phi_range=None, color=None, component=None, opacity=None, space=None, name=None, label="", show_lbl=False)**
+**plot_stream_vector(position, shape=None, vector=None, size=None, v_size=None, width=None, scale=None, theta=None, phi=None, theta_range=None, phi_range=None, color=None, component=None, opacity=None, space=None, name=None, label="", show_lbl=False, cell=[0, 0, 0])**
 
 Args:
 - **position** (str or list or ndarray or NSArray): position(s) to plot stream vector (reduced).
@@ -108,6 +112,7 @@ Args:
 - **name** (str, optional): group name of object.
 - **label** (str, optional): label of object.
 - **show_lbl** (bool, optional): show label ?
+- **cell** (list, optional): cell position.
 
 Notes:
 - if shape is None, "1" is used.
@@ -115,7 +120,7 @@ Notes:
 
 ## Plane
 
-**plot_plane(position, normal=None, x=None, y=None, color=None, opacity=None, space=None, name=None, label="", show_lbl=False)**
+**plot_plane(position, normal=None, x=None, y=None, color=None, opacity=None, space=None, name=None, label="", show_lbl=False, cell=[0, 0, 0])**
 
 Args:
 - **position** (str or list or ndarray or NSArray): position(s) to plot plane (reduced).
@@ -128,6 +133,7 @@ Args:
 - **name** (str, optional): group name of object.
 - **label** (str, optional): label of object.
 - **show_lbl** (bool, optional): show label ?
+- **cell** (list, optional): cell position.
 
 Notes:
 - position is for center of plane.
@@ -136,7 +142,7 @@ Notes:
 
 ## Box
 
-**plot_box(position, a1=None, a2=None, a3=None, edge=None, wireframe=None, width=None, color=None, opacity=None, space=None, name=None, label="", show_lbl=False)**
+**plot_box(position, a1=None, a2=None, a3=None, edge=None, wireframe=None, width=None, color=None, opacity=None, space=None, name=None, label="", show_lbl=False, cell=[0, 0, 0])**
 
 Args:
 - **position** (str or list or ndarray or NSArray): position(s) to plot box (reduced).
@@ -152,13 +158,14 @@ Args:
 - **name** (str, optional): group name of object.
 - **label** (str, optional): label of object.
 - **show_lbl** (bool, optional): show label ?
+- **cell** (list, optional): cell position.
 
 Notes:
 - if argument is None, default value is used.
 
 ## Polygon
 
-**plot_polygon(position, point=None, connection=None, edge=None, wireframe=None, width=None, color=None, opacity=None, space=None, name=None, label="", show_lbl=False)**
+**plot_polygon(position, point=None, connection=None, edge=None, wireframe=None, width=None, color=None, opacity=None, space=None, name=None, label="", show_lbl=False, cell=[0, 0, 0])**
 
 Args:
 - **position** (str or list or ndarray or NSArray): position(s) to plot polygon (reduced).
@@ -173,12 +180,13 @@ Args:
 - **name** (str, optional): group name of object.
 - **label** (str, optional): label of object.
 - **show_lbl** (bool, optional): show label ?
+- **cell** (list, optional): cell position.
 
 Notes:
 - if argument is None, default value is used.
 
 ## 3d text
-**plot_text3d(position, text=None, size=None, depth=None, normal=None, offset=None, color=None, opacity=None, space=None, name=None, label="", show_lbl=False)**
+**plot_text3d(position, text=None, size=None, depth=None, normal=None, offset=None, color=None, opacity=None, space=None, name=None, label="", show_lbl=False, cell=[0, 0, 0])**
 
 Args:
 - **position** (str or list or ndarray or NSArray): position(s) to plot 3d text (reduced).
@@ -193,6 +201,7 @@ Args:
 - **name** (str, optional): group name of object.
 - **label** (str, optional): label of object.
 - **show_lbl** (bool, optional): show label ?
+- **cell** (list, optional): cell position.
 
 Notes:
 - if argument is None, default value is used.
@@ -200,7 +209,7 @@ Notes:
 
 ## Spline curve
 
-**plot_spline(position, point=None, width=None, n_interp=None, closed=None, natural=None, color=None, opacity=None, space=None, name=None, label="", show_lbl=False)**
+**plot_spline(position, point=None, width=None, n_interp=None, closed=None, natural=None, color=None, opacity=None, space=None, name=None, label="", show_lbl=False, cell=[0, 0, 0])**
 
 Args:
 - **position** (str or list or ndarray or NSArray): position(s) to plot spline curve (reduced).
@@ -215,13 +224,14 @@ Args:
 - **name** (str, optional): group name of object.
 - **label** (str, optional): label of object.
 - **show_lbl** (bool, optional): show label ?
+- **cell** (list, optional): cell position.
 
 Notes:
 - if argument is None, default value is used.
 
 ## Spline curve (parametric function)
 
-**plot_spline_t(position, expression=None, t_range=None, width=None, n_interp=None, closed=None, natural=None, color=None, opacity=None, space=None, name=None, label="", show_lbl=False)**
+**plot_spline_t(position, expression=None, t_range=None, width=None, n_interp=None, closed=None, natural=None, color=None, opacity=None, space=None, name=None, label="", show_lbl=False, cell=[0, 0, 0])**
 
 Args:
 - **position** (str or list or ndarray or NSArray): position(s) to plot spline curve (reduced).
@@ -237,13 +247,14 @@ Args:
 - **name** (str, optional): group name of object.
 - **label** (str, optional): label of object.
 - **show_lbl** (bool, optional): show label ?
+- **cell** (list, optional): cell position.
 
 Notes:
 - if argument is None, default value is used.
 
 ## Caption
 
-**plot_caption(position, caption=None, space=None, size=None, color=None, bold=None, name=None)**
+**plot_caption(position, caption=None, space=None, size=None, color=None, bold=None, name=None, cell=[0, 0, 0])**
 
 Args:
 - **position** (str or list or ndarray or NSArray): position(s) to plot labels (reduced).
@@ -253,6 +264,7 @@ Args:
 - **color** (str, optional): text color.
 - **bold** (bool, optional): bold face ?
 - **name** (str, optional): group name.
+- **cell** (list, optional): cell position.
 
 Notes:
 - if caption is None, simple number is used.

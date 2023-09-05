@@ -487,7 +487,9 @@ class QtDrawWidget(QtDrawBase):
         return position
 
     # ==================================================
-    def plot_site(self, position, size=None, color=None, opacity=None, space=None, name=None, label="", show_lbl=False):
+    def plot_site(
+        self, position, size=None, color=None, opacity=None, space=None, name=None, label="", show_lbl=False, cell=[0, 0, 0]
+    ):
         """
         plot site.
 
@@ -500,6 +502,7 @@ class QtDrawWidget(QtDrawBase):
             name (str, optional): group name of object.
             label (str, optional): label of object.
             show_lbl (bool, optional): show label ?
+            cell (list, optional): cell position.
 
         Notes:
             - if argument is None, default value is used.
@@ -521,7 +524,7 @@ class QtDrawWidget(QtDrawBase):
             return
 
         info = [float(size), color, float(opacity), int(space)]
-        self._plot_to_data("site", name, position, info, label, show_lbl)
+        self._plot_to_data("site", name, position, info, label, show_lbl, cell)
 
     # ==================================================
     def plot_bond(
@@ -536,6 +539,7 @@ class QtDrawWidget(QtDrawBase):
         name=None,
         label="",
         show_lbl=False,
+        cell=[0, 0, 0],
     ):
         """
         plot bond.
@@ -551,6 +555,7 @@ class QtDrawWidget(QtDrawBase):
             name (str, optional): group name of object.
             label (str, optional): label of object.
             show_lbl (bool, optional): show label ?
+            cell (list, optional): cell position.
 
         Notes:
             - if argument is None, default value is used.
@@ -582,7 +587,7 @@ class QtDrawWidget(QtDrawBase):
             return
 
         info = [to_chopped_list(v), float(width), color, color2, float(opacity), int(space)]
-        self._plot_to_data("bond", name, position, info, label, show_lbl)
+        self._plot_to_data("bond", name, position, info, label, show_lbl, cell)
 
     # ==================================================
     def plot_vector(
@@ -598,6 +603,7 @@ class QtDrawWidget(QtDrawBase):
         name=None,
         label="",
         show_lbl=False,
+        cell=[0, 0, 0],
     ):
         """
         plot vector.
@@ -614,6 +620,7 @@ class QtDrawWidget(QtDrawBase):
             name (str, optional): group name of object.
             label (str, optional): label of object.
             show_lbl (bool, optional): show label ?
+            cell (list, optional): cell position.
 
         Notes:
             - if argument is None, default value is used.
@@ -644,7 +651,7 @@ class QtDrawWidget(QtDrawBase):
             return
 
         info = [to_chopped_list(v), float(length), float(width), float(offset), color, float(opacity), int(space)]
-        self._plot_to_data("vector", name, position, info, label, show_lbl)
+        self._plot_to_data("vector", name, position, info, label, show_lbl, cell)
 
     # ==================================================
     def plot_orbital(
@@ -662,6 +669,7 @@ class QtDrawWidget(QtDrawBase):
         name=None,
         label="",
         show_lbl=False,
+        cell=[0, 0, 0],
     ):
         """
         plot orbital.
@@ -680,6 +688,7 @@ class QtDrawWidget(QtDrawBase):
             name (str, optional): group name of object.
             label (str, optional): label of object.
             show_lbl (bool, optional): show label ?
+            cell (list, optional): cell position.
 
         Notes:
             - if surface is "", surface is same as shape.
@@ -735,7 +744,7 @@ class QtDrawWidget(QtDrawBase):
             float(opacity),
             int(space),
         ]
-        self._plot_to_data("orbital", name, position, info, label, show_lbl)
+        self._plot_to_data("orbital", name, position, info, label, show_lbl, cell)
 
     # ==================================================
     def plot_stream_vector(
@@ -758,6 +767,7 @@ class QtDrawWidget(QtDrawBase):
         name=None,
         label="",
         show_lbl=False,
+        cell=[0, 0, 0],
     ):
         """
         plot stream vector with center orbital.
@@ -781,6 +791,7 @@ class QtDrawWidget(QtDrawBase):
             name (str, optional): group name of object.
             label (str, optional): label of object.
             show_lbl (bool, optional): show label ?
+            cell (list, optional): cell position.
 
         Notes:
             - if shape is None, "1" is used.
@@ -845,11 +856,22 @@ class QtDrawWidget(QtDrawBase):
             float(opacity),
             int(space),
         ]
-        self._plot_to_data("stream", name, position, info, label, show_lbl)
+        self._plot_to_data("stream", name, position, info, label, show_lbl, cell)
 
     # ==================================================
     def plot_plane(
-        self, position, normal=None, x=None, y=None, color=None, opacity=None, space=None, name=None, label="", show_lbl=False
+        self,
+        position,
+        normal=None,
+        x=None,
+        y=None,
+        color=None,
+        opacity=None,
+        space=None,
+        name=None,
+        label="",
+        show_lbl=False,
+        cell=[0, 0, 0],
     ):
         """
         plot plane.
@@ -865,6 +887,7 @@ class QtDrawWidget(QtDrawBase):
             name (str, optional): group name of object.
             label (str, optional): label of object.
             show_lbl (bool, optional): show label ?
+            cell (list, optional): cell position.
 
         Notes:
             - position is for center of plane.
@@ -894,7 +917,7 @@ class QtDrawWidget(QtDrawBase):
             return
 
         info = [to_chopped_list(v), float(x), float(y), color, float(opacity), int(space)]
-        self._plot_to_data("plane", name, position, info, label, show_lbl)
+        self._plot_to_data("plane", name, position, info, label, show_lbl, cell)
 
     # ==================================================
     def plot_box(
@@ -912,6 +935,7 @@ class QtDrawWidget(QtDrawBase):
         name=None,
         label="",
         show_lbl=False,
+        cell=[0, 0, 0],
     ):
         """
         plot box.
@@ -930,6 +954,7 @@ class QtDrawWidget(QtDrawBase):
             name (str, optional): group name of object.
             label (str, optional): label of object.
             show_lbl (bool, optional): show label ?
+            cell (list, optional): cell position.
 
         Notes:
             - if argument is None, default value is used.
@@ -975,7 +1000,7 @@ class QtDrawWidget(QtDrawBase):
             float(opacity),
             int(space),
         ]
-        self._plot_to_data("box", name, position, info, label, show_lbl)
+        self._plot_to_data("box", name, position, info, label, show_lbl, cell)
 
     # ==================================================
     def plot_polygon(
@@ -992,6 +1017,7 @@ class QtDrawWidget(QtDrawBase):
         name=None,
         label="",
         show_lbl=False,
+        cell=[0, 0, 0],
     ):
         """
         plot polygon.
@@ -1009,6 +1035,7 @@ class QtDrawWidget(QtDrawBase):
             name (str, optional): group name of object.
             label (str, optional): label of object.
             show_lbl (bool, optional): show label ?
+            cell (list, optional): cell position.
 
         Notes:
             - if argument is None, default value is used.
@@ -1039,7 +1066,7 @@ class QtDrawWidget(QtDrawBase):
         connection = NSArray(connection, "vector", "value").astype(int).tolist()
 
         info = [point, connection, bool(edge), bool(wireframe), float(width), color, float(opacity), int(space)]
-        self._plot_to_data("polygon", name, position, info, label, show_lbl)
+        self._plot_to_data("polygon", name, position, info, label, show_lbl, cell)
 
     # ==================================================
     def plot_text3d(
@@ -1056,6 +1083,7 @@ class QtDrawWidget(QtDrawBase):
         name=None,
         label="",
         show_lbl=False,
+        cell=[0, 0, 0],
     ):
         """
         plot 3d text.
@@ -1073,6 +1101,7 @@ class QtDrawWidget(QtDrawBase):
             name (str, optional): group name of object.
             label (str, optional): label of object.
             show_lbl (bool, optional): show label ?
+            cell (list, optional): cell position.
 
         Notes:
             - if argument is None, default value is used.
@@ -1109,7 +1138,7 @@ class QtDrawWidget(QtDrawBase):
         offset = to_chopped_list(NSArray(offset, "vector", "value"))
 
         info = [text, float(size), float(depth), to_chopped_list(n), offset, color, float(opacity), int(space)]
-        self._plot_to_data("text3d", name, position, info, label, show_lbl)
+        self._plot_to_data("text3d", name, position, info, label, show_lbl, cell)
 
     # ==================================================
     def plot_spline(
@@ -1126,6 +1155,7 @@ class QtDrawWidget(QtDrawBase):
         name=None,
         label="",
         show_lbl=False,
+        cell=[0, 0, 0],
     ):
         """
         plot spline curve.
@@ -1143,6 +1173,7 @@ class QtDrawWidget(QtDrawBase):
             name (str, optional): group name of object.
             label (str, optional): label of object.
             show_lbl (bool, optional): show label ?
+            cell (list, optional): cell position.
 
         Notes:
             - if argument is None, default value is used.
@@ -1175,7 +1206,7 @@ class QtDrawWidget(QtDrawBase):
         point = to_chopped_list(NSArray(point, "vector", "value"))
 
         info = [point, float(width), int(n_interp), bool(closed), bool(natural), color, float(opacity), int(space)]
-        self._plot_to_data("spline", name, position, info, label, show_lbl)
+        self._plot_to_data("spline", name, position, info, label, show_lbl, cell)
 
     # ==================================================
     def plot_spline_t(
@@ -1193,6 +1224,7 @@ class QtDrawWidget(QtDrawBase):
         name=None,
         label="",
         show_lbl=False,
+        cell=[0, 0, 0],
     ):
         """
         plot spline curve.
@@ -1211,6 +1243,7 @@ class QtDrawWidget(QtDrawBase):
             name (str, optional): group name of object.
             label (str, optional): label of object.
             show_lbl (bool, optional): show label ?
+            cell (list, optional): cell position.
 
         Notes:
             - if argument is None, default value is used.
@@ -1246,10 +1279,10 @@ class QtDrawWidget(QtDrawBase):
         t_range = to_chopped_list(NSArray(t_range, "vector", "value"))
 
         info = [expression, t_range, float(width), int(n_interp), bool(closed), bool(natural), color, float(opacity), int(space)]
-        self._plot_to_data("spline_t", name, position, info, label, show_lbl)
+        self._plot_to_data("spline_t", name, position, info, label, show_lbl, cell)
 
     # ==================================================
-    def plot_caption(self, position, caption=None, space=None, size=None, color=None, bold=None, name=None):
+    def plot_caption(self, position, caption=None, space=None, size=None, color=None, bold=None, name=None, cell=[0, 0, 0]):
         """
         plot caption.
 
@@ -1261,6 +1294,7 @@ class QtDrawWidget(QtDrawBase):
             color (str, optional): text color.
             bold (bool, optional): bold face ?
             name (str, optional): group name.
+            cell (list, optional): cell position.
 
         Notes:
             - if caption is None, simple number is used.
@@ -1290,7 +1324,7 @@ class QtDrawWidget(QtDrawBase):
             return
 
         info = [caption, int(space), int(size), bool(bold), color]
-        self._plot_to_data("caption", name, position, info)
+        self._plot_to_data("caption", name, position, info, cell=cell)
 
     # ==================================================
     def plot_text(self, position, caption=None, relative=None, size=None, color=None, font=None, name=None):
@@ -1913,7 +1947,7 @@ class QtDrawWidget(QtDrawBase):
         self._spotlight_actor = []
 
     # ==================================================
-    def _plot_to_data(self, group, name, position, info, label="", show_lbl=False):
+    def _plot_to_data(self, group, name, position, info, label="", show_lbl=False, cell=[0, 0, 0]):
         """
         store plot data.
 
@@ -1924,12 +1958,16 @@ class QtDrawWidget(QtDrawBase):
             info (list): other options such as size, opacity etc.
             label (str, optional): label of object.
             show_lbl (bool, optional): show label ?
+            cell (list, optional): cell position.
         """
         if name is None:  # default name.
             name = self._get_name(group)
 
+        if type(cell) == str:
+            cell = NSArray(cell).tolist()
+
         if group == "caption":
-            info1 = [name, [0, 0, 0], position] + info + [True, ""]
+            info1 = [name, cell, position] + info + [True, ""]
             self.dataset.append(group, info1)
         elif group == "text":
             info1 = [name, position] + info + [True, ""]
@@ -1938,7 +1976,7 @@ class QtDrawWidget(QtDrawBase):
             if label == "":
                 label = name
             for i in position:
-                info1 = [name, show_lbl, label, [0, 0, 0], i] + info + [True, "", ""]
+                info1 = [name, show_lbl, label, cell, i] + info + [True, "", ""]
                 self.dataset.append(group, info1)
 
     # ==================================================
