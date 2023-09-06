@@ -56,7 +56,7 @@ def check_get_site_bond(txt):
         txt (str): site_bond.
 
     Returns:
-        NSArray: site (bond center) or None if invalid.
+        NSArray: site (bond center), or None if invalid.
     """
     try:
         site = NSArray(txt)
@@ -68,6 +68,52 @@ def check_get_site_bond(txt):
         return None
 
     return site
+
+
+# ==================================================
+def create_combined(group, pg, site_bond, rank, head, ret_bond=False):
+    """
+    create SAMB.
+
+    Args:
+        group (Group): space/point group.
+        pg (PointGroup): associated point group.
+        site_bond (str): site or bond.
+        rank (str): harmonics rank.
+        head (str): harmonics type.
+        ret_bond (bool, optional): return bond ?
+
+    Returns:
+        tuple:
+            - dict: cluster SAMB.
+            - NSArray: site or bond.
+            - dict: combined SAMB.
+    """
+    t_rev = {"Q": "Q", "G": "G", "T": "Q", "M": "G"}
+
+    if site_bond.style == "vector":
+        c_samb, site = group.site_cluster_samb(site_bond)
+    else:
+        c_samb, bond = group.bond_cluster_samb(site_bond)
+        if ret_bond:
+            site = bond
+        else:
+            site = bond.convert_bond("bond")[1]
+
+    x_tag = pg.harmonics.key_list().select(rank=int(rank), head=t_rev[head])
+    if head in ["T", "M"]:
+        x_tag = [tag.reverse_t_type() for tag in x_tag]
+    y_tag = list(c_samb.keys())
+
+    z_samb_all = group.z_samb(x_tag, y_tag)
+    z_samb = {"Q": [], "G": [], "T": [], "M": []}
+    for tag, c in z_samb_all.items():
+        tag_str = combined_format(tag)
+        z_samb[tag[0].head].append((tag_str, c))
+    for k in z_samb.keys():
+        z_samb[k] = list(sorted(z_samb[k], key=lambda i: i[0]))
+
+    return c_samb, site, z_samb
 
 
 # ==================================================

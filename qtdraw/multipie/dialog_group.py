@@ -36,7 +36,7 @@ from qtdraw.multipie.plot_object import (
     check_get_site_bond,
     check_linear_combination,
     create_samb_object,
-    combined_format,
+    create_combined,
     plot_equivalent_site,
     plot_equivalent_bond,
     plot_vector_equivalent_site,
@@ -920,9 +920,11 @@ class DialogGroup(QDialog):
         """
         generate site cluster SAMB.
         """
-        combined_info = self._create_combined(self.tab2_site_proj_pos.text(), 0, "Q")
-        if combined_info is None:
+        pos = check_get_site(self.tab2_site_proj_pos.text())
+        if pos is None:
             return
+
+        combined_info = create_combined(self._group, self._pgroup, pos, 0, "Q")
 
         self.tab2_site_proj_c_samb, self.tab2_site_proj_site, self.tab2_site_proj_z_samb = combined_info
 
@@ -959,9 +961,11 @@ class DialogGroup(QDialog):
         """
         generate bond cluster SAMB.
         """
-        combined_info = self._create_combined(self.tab2_bond_proj_pos.text(), 0, "Q", ret_bond=True)
-        if combined_info is None:
+        pos = check_get_bond(self.tab2_bond_proj_pos.text())
+        if pos is None:
             return
+
+        combined_info = create_combined(self._group, self._pgroup, pos, 0, "Q", ret_bond=True)
 
         self.tab2_bond_proj_c_samb, self.tab2_bond_proj_site, self.tab2_bond_proj_z_samb = combined_info
 
@@ -1009,9 +1013,11 @@ class DialogGroup(QDialog):
         """
         generate vector cluster SAMB for given site/bond.
         """
-        combined_info = self._create_combined(self.tab2_vector_proj_pos.text(), 1, self.tab2_vector_proj_type.currentText())
-        if combined_info is None:
+        pos = check_get_site_bond(self.tab2_vector_proj_pos.text())
+        if pos is None:
             return
+
+        combined_info = create_combined(self._group, self._pgroup, pos, 1, self.tab2_vector_proj_type.currentText())
 
         self.tab2_vector_proj_c_samb, self.tab2_vector_proj_site, self.tab2_vector_proj_z_samb = combined_info
 
@@ -1089,13 +1095,17 @@ class DialogGroup(QDialog):
         """
         generate orbital cluster SAMB for given site/bond.
         """
-        combined_info = self._create_combined(
-            self.tab2_orbital_proj_pos.text(),
+        pos = check_get_site_bond(self.tab2_orbital_proj_pos.text())
+        if pos is None:
+            return
+
+        combined_info = create_combined(
+            self._group,
+            self._pgroup,
+            pos,
             self.tab2_orbital_proj_rank.currentText(),
             self.tab2_orbital_proj_type.currentText(),
         )
-        if combined_info is None:
-            return
 
         self.tab2_orbital_proj_c_samb, self.tab2_orbital_proj_site, self.tab2_orbital_proj_z_samb = combined_info
 
@@ -1173,10 +1183,12 @@ class DialogGroup(QDialog):
         """
         plot hopping direction.
         """
-        head = "T"
-        combined_info = self._create_combined(self.tab2_hopping_proj_pos.text(), 1, head)
-        if combined_info is None:
+        pos = check_get_bond(self.tab2_hopping_proj_pos.text())
+        if pos is None:
             return
+
+        head = "T"
+        combined_info = create_combined(self._group, self._pgroup, pos, 1, head)
 
         c_samb, site, z_samb = combined_info
 
@@ -1185,54 +1197,6 @@ class DialogGroup(QDialog):
 
         label = "t_imag"
         plot_vector_cluster(self._qtdraw, site, cluster_obj, label, self.pset, head, v)
-
-    # ==================================================
-    def _create_combined(self, site_bond, harm_rank, harm_head, ret_bond=False):
-        """
-        create SAMB.
-
-        Args:
-            site_bond (str): site or bond.
-            harm_rank (str): harmonics rank.
-            harm_head (str): harmonics type.
-            ret_bond (bool, optional): return bond ?
-
-        Returns:
-            tuple:
-                - dict: cluster SAMB.
-                - NSArray: site or bond.
-                - dict: combined SAMB.
-        """
-        t_rev = {"Q": "Q", "G": "G", "T": "Q", "M": "G"}
-
-        try:
-            pos = NSArray(site_bond)
-            is_site = pos.style == "vector"
-        except Exception:
-            return None
-
-        if is_site:
-            c_samb, site = self._group.site_cluster_samb(pos)
-        else:
-            c_samb, bond = self._group.bond_cluster_samb(pos)
-            if ret_bond:
-                site = bond
-            else:
-                site = bond.convert_bond("bond")[1]
-
-        x_tag = self._pgroup.harmonics.key_list().select(rank=int(harm_rank), head=t_rev[harm_head])
-        if harm_head in ["T", "M"]:
-            x_tag = [tag.reverse_t_type() for tag in x_tag]
-        y_tag = list(c_samb.keys())
-        z_samb_all = self._group.z_samb(x_tag, y_tag)
-        z_samb = {"Q": [], "G": [], "T": [], "M": []}
-        for tag, c in z_samb_all.items():
-            tag_str = combined_format(tag)
-            z_samb[tag[0].head].append((tag_str, c))
-        for k in z_samb.keys():
-            z_samb[k] = list(sorted(z_samb[k], key=lambda i: i[0]))
-
-        return c_samb, site, z_samb
 
     # ==================================================
     def save_dict(self):
