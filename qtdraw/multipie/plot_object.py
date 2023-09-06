@@ -343,10 +343,14 @@ def plot_site_cluster(qtdraw, site, obj, label, pset):
         color.append(c)
 
     obj /= np.abs(obj).max()
+    n_pset = len(pset)
 
     qtdraw._close_dialog()
     name = "Z_" + qtdraw._get_name("site")
-    for p in pset:
+    for no, p in enumerate(pset):
+        name1 = name
+        if n_pset != 1:
+            name1 += f"({no+1})"
         for s, w, cl in zip(site, obj, color):
             s = (s + p).shift()
             if cl == "silver":
@@ -355,7 +359,7 @@ def plot_site_cluster(qtdraw, site, obj, label, pset):
                 s,
                 size=abs(w),
                 color=cl,
-                name=name,
+                name=name1,
                 label=label,
                 show_lbl=rcParams["show_label"],
             )
@@ -394,11 +398,15 @@ def plot_bond_cluster(qtdraw, bond, obj, label, pset, z_head):
             color.append(c)
 
     obj /= np.abs(obj).max()
+    n_pset = len(pset)
 
     qtdraw._close_dialog()
     name = "Z_" + qtdraw._get_name("bond")
     if z_head == "Q":
-        for p in pset:
+        for no, p in enumerate(pset):
+            name1 = name
+            if n_pset != 1:
+                name1 += f"({no+1})"
             for s, w, cl in zip(bond, obj, color):
                 v, c = s.convert_bond("bond")
                 c = (c + p).shift()
@@ -410,12 +418,15 @@ def plot_bond_cluster(qtdraw, bond, obj, label, pset, z_head):
                     color=cl,
                     color2=cl,
                     width=abs(w),
-                    name=name,
+                    name=name1,
                     label=label,
                     show_lbl=rcParams["show_label"],
                 )
     else:
-        for p in pset:
+        for no, p in enumerate(pset):
+            name1 = name
+            if n_pset != 1:
+                name1 += f"({no+1})"
             for s, w, cl in zip(bond, obj, color):
                 v, c = s.convert_bond("bond")
                 c = (c + p).shift()
@@ -427,7 +438,7 @@ def plot_bond_cluster(qtdraw, bond, obj, label, pset, z_head):
                         color=cl,
                         color2=cl,
                         width=abs(w),
-                        name=name,
+                        name=name1,
                         label=label,
                         show_lbl=rcParams["show_label"],
                     )
@@ -443,7 +454,7 @@ def plot_bond_cluster(qtdraw, bond, obj, label, pset, z_head):
                         width=abs(w),
                         length=norm,
                         offset=-0.5,
-                        name=name,
+                        name=name1,
                         label=label,
                         show_lbl=rcParams["show_label"],
                     )
@@ -469,15 +480,19 @@ def plot_vector_cluster(qtdraw, site, obj, label, pset, head, v):
     color = rcParams["vector_color_" + head]
     qtdraw._close_dialog()
     name = "Z_" + qtdraw._get_name("vector")
+    n_pset = len(pset)
 
-    for p in pset:
+    for no, p in enumerate(pset):
+        name1 = name
+        if n_pset != 1:
+            name1 += f"({no+1})"
         for s, c in zip(site, obj):
             s = (s + p).shift()
             if c != 0:
                 c = str(c.subs(rep).T[:])
                 c = NSArray(c)
                 d = c.norm()
-                qtdraw.plot_vector(s, c, length=d, color=color, name=name, label=label, show_lbl=rcParams["show_label"])
+                qtdraw.plot_vector(s, c, length=d, color=color, name=name1, label=label, show_lbl=rcParams["show_label"])
 
     qtdraw._plot_all_object()
 
@@ -498,8 +513,12 @@ def plot_orbital_cluster(qtdraw, site, obj, label, pset, head):
     color = rcParams["orbital_color_" + head]
     qtdraw._close_dialog()
     name = "Z_" + qtdraw._get_name("orbital")
+    n_pset = len(pset)
 
-    for p in pset:
+    for no, p in enumerate(pset):
+        name1 = name
+        if n_pset != 1:
+            name1 += f"({no+1})"
         for s, orb in zip(site, obj):
             s = (s + p).shift()
             qtdraw.plot_orbital(
@@ -508,7 +527,7 @@ def plot_orbital_cluster(qtdraw, site, obj, label, pset, head):
                 size=0.6,
                 scale=False,
                 color=color,
-                name=name,
+                name=name1,
                 label=label,
                 show_lbl=rcParams["show_label"],
             )

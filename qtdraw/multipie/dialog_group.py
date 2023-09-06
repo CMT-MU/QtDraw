@@ -14,6 +14,7 @@ from qtpy.QtWidgets import (
 )
 from qtpy.QtCore import Qt
 from gcoreutils.nsarray import NSArray
+from gcoreutils.string_util import remove_space
 from multipie.group.point_group import PointGroup
 from multipie.group.space_group import SpaceGroup
 from multipie.tag.tag_group import TagGroup
@@ -550,17 +551,17 @@ class DialogGroup(QDialog):
         self.tab1 = QWidget()
         self.tab.addTab(self.tab1, "object drawing")
 
-        self.tab1_site_label = QLabel("SITE: draw equivalent sites.\n1. input representative SITE, 2. ENTER.", self)
+        self.tab1_site_label = QLabel("SITE: draw equivalent sites.\n1. input representative SITE, + ENTER.", self)
         self.tab1_site_pos = QLineEdit("[ 1/2, 1/2, 0 ]", self)
 
         self.tab1_bond_label = QLabel(
-            "BOND: draw equivalent bonds.\n1. input representative BOND, 2. ENTER.",
+            "BOND: draw equivalent bonds.\n1. input representative BOND, + ENTER.",
             self,
         )
         self.tab1_bond_pos = QLineEdit("[ 0, 0, 0 ] ; [ 1/2, 1/2, 0 ]", self)
 
         self.tab1_vector_label = QLabel(
-            "VECTOR: draw vectors at equivalent sites or bonds.\n1. input vector [x,y,z] # representative SITE/BOND, 2. ENTER.",
+            "VECTOR: draw vectors at equivalent sites or bonds.\n1. choose type, 2. input vector [x,y,z] # representative SITE/BOND, + ENTER.",
             self,
         )
         self.tab1_vector_pos = QLineEdit("[ 0, 0, 1 ] # [ 1/2, 1/2, 0 ]", self)
@@ -569,7 +570,7 @@ class DialogGroup(QDialog):
         self.tab1_vector_type.setCurrentIndex(0)
 
         self.tab1_orbital_label = QLabel(
-            "ORBITAL: draw orbitals at equivalent sites or bonds.\n1. input orbital (xyz polynomial) # representative SITE/BOND, 2. ENTER.",
+            "ORBITAL: draw orbitals at equivalent sites or bonds.\n1. choose type, 2. input orbital (xyz polynomial) # representative SITE/BOND, + ENTER.",
             self,
         )
         self.tab1_orbital_pos = QLineEdit("3z**2 - r**2 # [ 1/4, 1/4, 0 ]", self)
@@ -578,7 +579,7 @@ class DialogGroup(QDialog):
         self.tab1_orbital_type.setCurrentIndex(0)
 
         self.tab1_pgharm_label = QLabel(
-            "POINT-GROUP HARMONICS: draw point-group harmonics at equivalent sites or bonds.\n1. choose (type,rank,irrep.), 2. input representative SITE/BOND, 3. ENTER.  \u21d2  used expression is shown (in LaTeX form).",
+            "POINT-GROUP HARMONICS: draw point-group harmonics at equivalent sites or bonds.\n1. choose (type,rank,irrep.), 2. input representative SITE/BOND, + ENTER.\n\u21d2  used expression is shown (in LaTeX form).",
             self,
         )
         self.tab1_pgharm_pos = QLineEdit("[ 0, 0, 0 ]", self)
@@ -609,18 +610,18 @@ class DialogGroup(QDialog):
         self.tab1_grid.addWidget(self.tab1_bond_pos, 3, 0, 1, 9)
 
         self.tab1_grid.addWidget(self.tab1_vector_label, 4, 0, 1, 9)
-        self.tab1_grid.addWidget(self.tab1_vector_pos, 5, 0, 1, 8)
-        self.tab1_grid.addWidget(self.tab1_vector_type, 5, 8, 1, 1)
+        self.tab1_grid.addWidget(self.tab1_vector_type, 5, 0, 1, 1)
+        self.tab1_grid.addWidget(self.tab1_vector_pos, 5, 1, 1, 8)
 
         self.tab1_grid.addWidget(self.tab1_orbital_label, 6, 0, 1, 9)
-        self.tab1_grid.addWidget(self.tab1_orbital_pos, 7, 0, 1, 8)
-        self.tab1_grid.addWidget(self.tab1_orbital_type, 7, 8, 1, 1)
+        self.tab1_grid.addWidget(self.tab1_orbital_type, 7, 0, 1, 1)
+        self.tab1_grid.addWidget(self.tab1_orbital_pos, 7, 1, 1, 8)
 
         self.tab1_grid.addWidget(self.tab1_pgharm_label, 8, 0, 1, 9)
-        self.tab1_grid.addWidget(self.tab1_pgharm_pos, 9, 0, 1, 5)
-        self.tab1_grid.addWidget(self.tab1_pgharm_type, 9, 5, 1, 1)
-        self.tab1_grid.addWidget(self.tab1_pgharm_rank, 9, 6, 1, 1)
-        self.tab1_grid.addWidget(self.tab1_pgharm_irrep, 9, 7, 1, 2)
+        self.tab1_grid.addWidget(self.tab1_pgharm_type, 9, 0, 1, 1)
+        self.tab1_grid.addWidget(self.tab1_pgharm_rank, 9, 1, 1, 1)
+        self.tab1_grid.addWidget(self.tab1_pgharm_irrep, 9, 2, 1, 2)
+        self.tab1_grid.addWidget(self.tab1_pgharm_pos, 9, 4, 1, 5)
         self.tab1_grid.addWidget(self.tab1_pgharm_exp_label, 10, 0, 1, 1)
         self.tab1_grid.addWidget(self.tab1_pgharm_exp, 10, 1, 1, 7)
         self.tab1_grid.addWidget(self.tab1_pgharm_exp_latex, 10, 8, 1, 1)
@@ -781,7 +782,7 @@ class DialogGroup(QDialog):
         self.tab.addTab(self.tab2, "basis drawing")
 
         self.tab2_site_proj_label = QLabel(
-            "SITE: draw site-cluster basis.\n1. input representative SITE, 2. ENTER,\n\u21d2  3. choose basis, 4. push `draw`.",
+            "SITE: draw site-cluster basis.\n1. input representative SITE, + ENTER,\n\u21d2  2. choose basis, 3. push `draw`.",
             self,
         )
         self.tab2_site_proj_pos = QLineEdit("[ 1/2, 1/2, 0 ]", self)
@@ -794,7 +795,7 @@ class DialogGroup(QDialog):
         self.tab2_site_proj_draw_button.setFocusPolicy(Qt.NoFocus)
 
         self.tab2_bond_proj_label = QLabel(
-            "BOND: draw bond-cluster basis.\n1. input representative BOND, 2. ENTER,\n\u21d2  3. choose basis, 4. push `draw`.",
+            "BOND: draw bond-cluster basis.\n1. input representative BOND, + ENTER,\n\u21d2  2. choose basis, 3. push `draw`.",
             self,
         )
         self.tab2_bond_proj_pos = QLineEdit("[ 1/2, 1/2, 0 ] @ [ 1/4, 1/4, 0 ]", self)
@@ -807,7 +808,7 @@ class DialogGroup(QDialog):
         self.tab2_bond_proj_draw_button.setFocusPolicy(Qt.NoFocus)
 
         self.tab2_vector_proj_label = QLabel(
-            "VECTOR: draw symmetry-adapted vector.\n1. choose type, 2. input representative SITE/BOND, 3. ENTER,\n\u21d2  4. choose (type,basis), 5. push `draw` or 4. input linear combination, 5. ENTER.",
+            "VECTOR: draw symmetry-adapted vector.\n1. choose type, 2. input representative SITE/BOND, + ENTER,\n\u21d2  3. choose (type,basis), 4. push `draw` or 3. input linear combination, + ENTER.",
             self,
         )
         self.tab2_vector_proj_pos = QLineEdit("[ 1/2, 1/2, 0 ]", self)
@@ -828,7 +829,7 @@ class DialogGroup(QDialog):
         self.tab2_vector_proj_lc = QLineEdit("(Q01+Q02)/sqrt(2)", self)
 
         self.tab2_orbital_proj_label = QLabel(
-            "ORBITAL draw symmetry-adapted orbital.\n1. choose (type,rank), 2. input representative SITE/BOND, 3. ENTER,\n\u21d2  4. choose (type,basis), 5. push `draw` or 4. input linear combination, 5. ENTER.",
+            "ORBITAL draw symmetry-adapted orbital.\n1. choose (type,rank), 2. input representative SITE/BOND, + ENTER,\n\u21d2  3. choose (type,basis), 4. push `draw` or 3. input linear combination, + ENTER.",
             self,
         )
         self.tab2_orbital_proj_pos = QLineEdit("[ 0, 0, 0 ]; [ 1/2, 1/2, 0 ]", self)
@@ -853,7 +854,7 @@ class DialogGroup(QDialog):
         self.tab2_orbital_proj_lc = QLineEdit("(Q01+Q02)/sqrt(2)", self)
 
         self.tab2_hopping_proj_label = QLabel(
-            "HOPPING: draw hopping direction.\n1. input representative BOND, 2. ENTER.",
+            "HOPPING: draw hopping direction.\n1. input representative BOND, + ENTER.",
             self,
         )
         self.tab2_hopping_proj_pos = QLineEdit("[ 0, 0, 0 ] ; [ 1/2, 1/2, 0 ]", self)
@@ -863,20 +864,20 @@ class DialogGroup(QDialog):
         self.tab2_grid = QGridLayout(self.tab2)
 
         self.tab2_grid.addWidget(self.tab2_site_proj_label, 0, 0, 1, 9)
-        self.tab2_grid.addWidget(self.tab2_site_proj_pos, 1, 0, 1, 7)
+        self.tab2_grid.addWidget(self.tab2_site_proj_pos, 1, 0, 1, 9)
         self.tab2_grid.addWidget(self.tab2_site_proj_label1, 2, 0, 1, 1)
         self.tab2_grid.addWidget(self.tab2_site_proj_irrep1, 2, 1, 1, 7)
         self.tab2_grid.addWidget(self.tab2_site_proj_draw_button, 2, 8, 1, 1)
 
         self.tab2_grid.addWidget(self.tab2_bond_proj_label, 3, 0, 1, 9)
-        self.tab2_grid.addWidget(self.tab2_bond_proj_pos, 4, 0, 1, 7)
+        self.tab2_grid.addWidget(self.tab2_bond_proj_pos, 4, 0, 1, 9)
         self.tab2_grid.addWidget(self.tab2_bond_proj_label1, 5, 0, 1, 1)
         self.tab2_grid.addWidget(self.tab2_bond_proj_irrep1, 5, 1, 1, 7)
         self.tab2_grid.addWidget(self.tab2_bond_proj_draw_button, 5, 8, 1, 1)
 
         self.tab2_grid.addWidget(self.tab2_vector_proj_label, 6, 0, 1, 9)
-        self.tab2_grid.addWidget(self.tab2_vector_proj_pos, 7, 0, 1, 7)
-        self.tab2_grid.addWidget(self.tab2_vector_proj_type, 7, 7, 1, 1)
+        self.tab2_grid.addWidget(self.tab2_vector_proj_type, 7, 0, 1, 1)
+        self.tab2_grid.addWidget(self.tab2_vector_proj_pos, 7, 1, 1, 8)
         self.tab2_grid.addWidget(self.tab2_vector_proj_label1, 8, 0, 1, 1)
         self.tab2_grid.addWidget(self.tab2_vector_proj_type1, 8, 1, 1, 1)
         self.tab2_grid.addWidget(self.tab2_vector_proj_irrep1, 8, 2, 1, 6)
@@ -885,9 +886,9 @@ class DialogGroup(QDialog):
         self.tab2_grid.addWidget(self.tab2_vector_proj_lc, 9, 1, 1, 8)
 
         self.tab2_grid.addWidget(self.tab2_orbital_proj_label, 10, 0, 1, 9)
-        self.tab2_grid.addWidget(self.tab2_orbital_proj_pos, 11, 0, 1, 7)
-        self.tab2_grid.addWidget(self.tab2_orbital_proj_type, 11, 7, 1, 1)
-        self.tab2_grid.addWidget(self.tab2_orbital_proj_rank, 11, 8, 1, 1)
+        self.tab2_grid.addWidget(self.tab2_orbital_proj_type, 11, 0, 1, 1)
+        self.tab2_grid.addWidget(self.tab2_orbital_proj_rank, 11, 1, 1, 1)
+        self.tab2_grid.addWidget(self.tab2_orbital_proj_pos, 11, 2, 1, 7)
         self.tab2_grid.addWidget(self.tab2_orbital_proj_label1, 12, 0, 1, 1)
         self.tab2_grid.addWidget(self.tab2_orbital_proj_type1, 12, 1, 1, 1)
         self.tab2_grid.addWidget(self.tab2_orbital_proj_irrep1, 12, 2, 1, 6)
@@ -937,7 +938,7 @@ class DialogGroup(QDialog):
         """
         self.tab2_site_proj_comb_select = self.tab2_site_proj_z_samb["Q"]
         self.tab2_site_proj_irrep1.clear()
-        comb = [i[0] for i in self.tab2_site_proj_comb_select]
+        comb = [f"{i[0][0]}{no+1:02d}: {i[0]}" for no, i in enumerate(self.tab2_site_proj_comb_select)]
         self.tab2_site_proj_irrep1.addItems(comb)
         self.tab2_site_proj_irrep1.setCurrentIndex(0)
 
@@ -953,7 +954,7 @@ class DialogGroup(QDialog):
             self.tab2_site_proj_z_samb, self.tab2_site_proj_site, self.tab2_site_proj_c_samb, "Q", irrep, self._pgroup, v, False
         )
 
-        label = self.tab2_site_proj_irrep1.currentText().replace("(", "[").replace(")", "]")
+        label = self.tab2_site_proj_irrep1.currentText()[:3] + " \u21d0 " + remove_space(self.tab2_site_proj_pos.text())
         plot_site_cluster(self._qtdraw, self.tab2_site_proj_site, cluster_obj, label, self.pset)
 
     # ==================================================
@@ -977,8 +978,12 @@ class DialogGroup(QDialog):
         create bond cluster SAMB select list.
         """
         self.tab2_bond_proj_comb_select = self.tab2_bond_proj_z_samb["Q"] + self.tab2_bond_proj_z_samb["T"]
+        qn = len(self.tab2_bond_proj_z_samb["Q"])
         self.tab2_bond_proj_irrep1.clear()
-        comb = [i[0] for i in self.tab2_bond_proj_comb_select]
+        comb = [
+            f"Q{no+1:02d}: {i[0]}" if i[0][0] == "Q" else f"T{no+1-qn:02d}: {i[0]}"
+            for no, i in enumerate(self.tab2_bond_proj_comb_select)
+        ]
         self.tab2_bond_proj_irrep1.addItems(comb)
         self.tab2_bond_proj_irrep1.setCurrentIndex(0)
 
@@ -1005,7 +1010,7 @@ class DialogGroup(QDialog):
             t_odd,
         )
 
-        label = self.tab2_bond_proj_irrep1.currentText().replace("(", "[").replace(")", "]")
+        label = self.tab2_bond_proj_irrep1.currentText()[:3] + " \u21d0 " + remove_space(self.tab2_bond_proj_pos.text())
         plot_bond_cluster(self._qtdraw, self.tab2_bond_proj_site, cluster_obj, label, self.pset, z_head)
 
     # ==================================================
@@ -1030,7 +1035,7 @@ class DialogGroup(QDialog):
         """
         self.tab2_vector_proj_comb_select = self.tab2_vector_proj_z_samb[self.tab2_vector_proj_type1.currentText()]
         self.tab2_vector_proj_irrep1.clear()
-        comb = [f"{no+1:02d}: {i[0]}" for no, i in enumerate(self.tab2_vector_proj_comb_select)]
+        comb = [f"{i[0][0]}{no+1:02d}: {i[0]}" for no, i in enumerate(self.tab2_vector_proj_comb_select)]
         self.tab2_vector_proj_irrep1.addItems(comb)
         self.tab2_vector_proj_irrep1.setCurrentIndex(0)
 
@@ -1056,7 +1061,13 @@ class DialogGroup(QDialog):
             t_odd,
         )
 
-        label = self.tab2_vector_proj_irrep1.currentText().replace("(", "[").replace(")", "]")
+        label = (
+            self.tab2_vector_proj_irrep1.currentText()[:3]
+            + " \u21d0 "
+            + head
+            + ", "
+            + remove_space(self.tab2_vector_proj_pos.text())
+        )
         plot_vector_cluster(self._qtdraw, self.tab2_vector_proj_site, cluster_obj, label, self.pset, head, v)
 
     # ==================================================
@@ -1087,7 +1098,14 @@ class DialogGroup(QDialog):
         }
         cluster_obj = NSArray(str(NSArray(form).subs(lc_basis).tolist().T.tolist()[0]))
 
-        label = self.tab2_vector_proj_irrep1.currentText().replace("(", "[").replace(")", "]")
+        label = (
+            remove_space(self.tab2_vector_proj_lc.text())
+            + " \u21d0 "
+            + head
+            + ", "
+            + remove_space(self.tab2_vector_proj_pos.text())
+        )
+
         plot_vector_cluster(self._qtdraw, self.tab2_vector_proj_site, cluster_obj, label, self.pset, head, v)
 
     # ==================================================
@@ -1118,7 +1136,7 @@ class DialogGroup(QDialog):
         """
         self.tab2_orbital_proj_comb_select = self.tab2_orbital_proj_z_samb[self.tab2_orbital_proj_type1.currentText()]
         self.tab2_orbital_proj_irrep1.clear()
-        comb = [f"{no+1:02d}: {i[0]}" for no, i in enumerate(self.tab2_orbital_proj_comb_select)]
+        comb = [f"{i[0][0]}{no+1:02d}: {i[0]}" for no, i in enumerate(self.tab2_orbital_proj_comb_select)]
         self.tab2_orbital_proj_irrep1.addItems(comb)
         self.tab2_orbital_proj_irrep1.setCurrentIndex(0)
 
@@ -1144,7 +1162,14 @@ class DialogGroup(QDialog):
             t_odd,
         )
 
-        label = self.tab2_orbital_proj_irrep1.currentText().replace("(", "[").replace(")", "]")
+        label = (
+            self.tab2_orbital_proj_irrep1.currentText()[:3]
+            + " \u21d0 "
+            + head
+            + self.tab2_orbital_proj_rank.currentText()
+            + ", "
+            + remove_space(self.tab2_orbital_proj_pos.text())
+        )
         plot_orbital_cluster(self._qtdraw, self.tab2_orbital_proj_site, cluster_obj, label, self.pset, head)
 
     # ==================================================
@@ -1175,7 +1200,14 @@ class DialogGroup(QDialog):
         }
         cluster_obj = NSArray(str(NSArray(form).subs(lc_basis).tolist().T.tolist()[0]))
 
-        label = self.tab2_orbital_proj_irrep1.currentText().replace("(", "[").replace(")", "]")
+        label = (
+            remove_space(self.tab2_orbital_proj_lc.text())
+            + " \u21d0 "
+            + head
+            + self.tab2_orbital_proj_rank.currentText()
+            + ", "
+            + remove_space(self.tab2_orbital_proj_pos.text())
+        )
         plot_orbital_cluster(self._qtdraw, self.tab2_orbital_proj_site, cluster_obj, label, self.pset, head)
 
     # ==================================================
@@ -1195,7 +1227,7 @@ class DialogGroup(QDialog):
         v = NSArray.vector3d()
         cluster_obj = create_samb_object(z_samb, site, c_samb, "Q", 0, self._pgroup, v, True)
 
-        label = "t_imag"
+        label = "t_dir \u21d0 " + remove_space(self.tab2_hopping_proj_pos.text())
         plot_vector_cluster(self._qtdraw, site, cluster_obj, label, self.pset, head, v)
 
     # ==================================================
