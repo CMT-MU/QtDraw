@@ -2458,23 +2458,23 @@ class QtDrawWidget(QtDrawBase):
         from qtdraw.multipie.dialog_group import DialogGroup
 
         self.group_panel = DialogGroup(core=self._core, qtdraw=self, parent=self)
-        self.group_panel.finished["int"].connect(self._multipie_done)
+        self.group_panel.force_close = False
         self.group_panel.show()
 
     # ==================================================
-    def _multipie_done(self, _):
+    def closeEvent(self, event):
         ret = QMessageBox.question(self, "", "Quit QtDraw ?", QMessageBox.Ok, QMessageBox.Cancel)
-        if ret == QMessageBox.Ok:
-            self.app.quit()
+        if ret != QMessageBox.Ok:
+            event.ignore()
         else:
-            self.button_clear.show()
-            self.button_multipie.show()
-            self.button_repeat.show()
+            if hasattr(self, "group_panel"):
+                self.group_panel.force_close = True
+                self.group_panel.close()
+            self.close()
 
     # ==================================================
-    def closeEvent(self, QCloseEvent):
-        super().closeEvent(QCloseEvent)
-        self.close()
+    def close(self):
+        super().close()
 
 
 # ==================================================

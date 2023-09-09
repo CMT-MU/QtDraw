@@ -1,8 +1,10 @@
 import numpy as np
 import sympy as sp
-from qtdraw.multipie.setting import rcParams
 from gcoreutils.nsarray import NSArray
+from gcoreutils.convert_util import text_to_list
+from gcoreutils.string_util import remove_space
 from multipie.model.material_model import MaterialModel
+from qtdraw.multipie.setting import rcParams
 
 
 # ==================================================
@@ -59,15 +61,13 @@ def check_get_site_bond(txt):
         NSArray: site (bond center), or None if invalid.
     """
     try:
-        site = NSArray(txt)
-        if site.style not in ["vector", "bond", "bond_th", "bond_sv"]:
+        site_bond = NSArray(txt)
+        if site_bond.style not in ["vector", "bond", "bond_th", "bond_sv"]:
             return None
-        if site.style != "vector":
-            site = site.convert_bond("bond")[1]
     except Exception:
         return None
 
-    return site
+    return site_bond
 
 
 # ==================================================
@@ -132,7 +132,7 @@ def create_samb_object(z_samb, site, c_samb, z_head, irrep, pg, v, t_odd):
         t_odd (bool): magnetic bond ?
 
     Returns:
-        _type_: _description_
+        NSArray: (xyz)-polynomial at each cluster site.
     """
     obj = NSArray.zeros(len(site), "vector")
     for i in z_samb[z_head][irrep][1]:
@@ -533,3 +533,177 @@ def plot_orbital_cluster(qtdraw, site, obj, label, pset, head):
             )
 
     qtdraw._plot_all_object()
+
+
+# ==================================================
+def create_phase_factor(modulation, repeat, offset, pset):
+    """
+    create phase factor.
+
+    Args:
+        modulation (list): modulation info. [(basis, coeff, k, n)]
+        repeat (list): repeat.
+        offset (list): offset.
+        pset (NSArray): plus set.
+
+    Returns: tuple.
+        - dict: {(k(str),n(int),plus_set no(int)): [phase at each grid(float)]}.
+        - list: cell grid.
+    """
+    igrid = NSArray.igrid(repeat, offset)
+    pset = np.array(pset.tolist(), dtype=float)
+    phase_dict = {}
+    for _, _, k, n in modulation:
+        kvec = np.array(NSArray(k).tolist(), dtype=float)
+        for p_no, p in enumerate(pset):
+            lst = []
+            for i in igrid:
+                kr = 2.0 * np.pi * kvec @ (i.numpy().astype(float) + p)
+                phase = np.cos(kr) if n == 0 else np.sin(kr)
+                lst.append(phase)
+            phase_dict[(k, n, p_no)] = lst
+
+    return phase_dict, igrid.numpy().astype(int).tolist()
+
+
+# ==================================================
+def create_modulated_samb_object(z_samb, site, c_samb, pg, v, head, modulation, repeat, offset, pset):
+    """
+    create modulated SAMB object.
+
+    Args:
+        z_samb (dict): combined SAMB.
+        site (NSArray): site.
+        c_samb (dict): cluster SAMB.
+        pg (PointGroup): point group.
+        v (NSArray): vector variable.
+        head (str): _description_
+        modulation (list): modulation info.
+        repeat (list): repeat.
+        offset (list): offset.
+        pset (NSArray): plus set.
+
+    Returns: tuple.
+        - list: [(xyz)-polynomial at each cluster site.] [cell][pset].
+        - list: cell grid.
+    """
+    phase_dict, igrid = create_phase_factor(modulation, repeat, offset, pset)
+    obj = NSArray.zeros((len(igrid) * len(pset), len(site)), "vector")
+    for p_no in range(len(pset)):
+        for basis, coeff, k, n in modulation:
+            z_head = basis[0]
+            irrep = int(basis[1:]) - 1
+            t_odd = head.replace("M", "T").replace("G", "Q") != z_head.replace("M", "T").replace("G", "Q")
+            phase = phase_dict[(k, n, p_no)]
+            coeff = NSArray(coeff, fmt="value")
+            cluster_obj = create_samb_object(
+                z_samb,
+                site,
+                c_samb,
+                z_head,
+                irrep,
+                pg,
+                v,
+                t_odd,
+            )
+            for i_no in range(len(igrid)):
+                obj[i_no * len(pset) + p_no] += coeff * phase[i_no] * cluster_obj
+
+    obj = obj.numpy().reshape((len(igrid), len(pset), len(site))).tolist()
+
+    return obj, igrid
+
+
+# ==================================================
+def plot_modulated_vector_cluster(qtdraw, site, obj, name, pset, igrid, head, v):
+    """
+    plot modulated vector cluster SAMB.
+
+    Args:
+        qtdraw (QtDraw): QtDraw.
+        site (NSArray): equivalent sites.
+        obj (list): SAMB weight at (cell,pset).
+        name (str): name.
+        pset (NSArray): plus set.
+        igrid (NSArray): cell grid.
+        head (str): multipole type.
+        v (NSArray): vector variable.
+    """
+    rep = {v[0]: sp.Matrix([1, 0, 0]), v[1]: sp.Matrix([0, 1, 0]), v[2]: sp.Matrix([0, 0, 1])}
+    color = rcParams["vector_color_" + head]
+    qtdraw._close_dialog()
+    n_pset = len(pset)
+
+    for i_no, i in enumerate(igrid):
+        for p_no, p in enumerate(pset):
+            label = ""
+            if n_pset != 1:
+                label = f"({p_no+1})"
+            for no, (s, c) in enumerate(zip(site, obj[i_no][p_no])):
+                s = (s + p).shift()
+                label = f"s{no+1}" + label
+                if c != 0:
+                    c = str(c.subs(rep).T[:])
+                    c = NSArray(c)
+                    d = c.norm()
+                    qtdraw.plot_vector(
+                        s, c, length=d, color=color, name=name, label=label, show_lbl=rcParams["show_label"], cell=i
+                    )
+
+    qtdraw._plot_all_object()
+
+
+# ==================================================
+def plot_modulated_orbital_cluster(qtdraw, site, obj, name, pset, igrid, head):
+    """
+    plot modulated vector cluster SAMB.
+
+    Args:
+        qtdraw (QtDraw): QtDraw.
+        site (NSArray): equivalent sites.
+        obj (list): SAMB weight at (cell,pset).
+        name (str): name.
+        pset (NSArray): plus set.
+        igrid (NSArray): cell grid.
+        head (str): multipole type.
+    """
+    color = rcParams["orbital_color_" + head]
+    qtdraw._close_dialog()
+    n_pset = len(pset)
+
+    for i_no, i in enumerate(igrid):
+        for p_no, p in enumerate(pset):
+            label = ""
+            if n_pset != 1:
+                label += f"({p_no+1})"
+            for no, (s, orb) in enumerate(zip(site, obj[i_no][p_no])):
+                s = (s + p).shift()
+                label = f"s{no+1}" + label
+                qtdraw.plot_orbital(
+                    s, orb, size=0.6, scale=False, color=color, name=name, label=label, show_lbl=rcParams["show_label"], cell=i
+                )
+
+    qtdraw._plot_all_object()
+
+
+# ==================================================
+def parse_modulation_list(lst):
+    """
+    parse modulation list.
+
+    Args:
+        lst (str): modulation list in str, [[basis,coeff,k,cos/sin]]
+
+    Returns:
+        list: modulation list.
+    """
+    lst = text_to_list(remove_space(lst))
+    if lst is None:
+        return None
+
+    modulation = []
+    for basis, coeff, k, cs in lst:
+        cs = 0 if cs == "cos" else 1
+        modulation.append([coeff, basis, "[" + (",".join(k)) + "]", cs])
+
+    return modulation
