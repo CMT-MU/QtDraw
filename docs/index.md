@@ -7,7 +7,7 @@ Drawings are associated with crystallographic symmetry operations provided by [M
 
 ## Installation
 
-QtDraw can be installed from PyPI using pip on Python >= 3.8:
+QtDraw can be installed from PyPI using pip on Python >= 3.9:
 ```
 pip install qtdraw
 ```
