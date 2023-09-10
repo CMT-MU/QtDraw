@@ -641,13 +641,13 @@ def plot_modulated_vector_cluster(qtdraw, site, obj, name, pset, igrid, head, v)
                 label = f"({p_no+1})"
             for no, (s, c) in enumerate(zip(site, obj[i_no][p_no])):
                 s = (s + p).shift()
-                label = f"s{no+1}" + label
+                label1 = f"s{no+1}" + label
                 if c != 0:
                     c = str(c.subs(rep).T[:])
                     c = NSArray(c)
                     d = c.norm()
                     qtdraw.plot_vector(
-                        s, c, length=d, color=color, name=name, label=label, show_lbl=rcParams["show_label"], cell=i
+                        s, c, length=d, color=color, name=name, label=label1, show_lbl=rcParams["show_label"], cell=i
                     )
 
     qtdraw._plot_all_object()
@@ -678,9 +678,9 @@ def plot_modulated_orbital_cluster(qtdraw, site, obj, name, pset, igrid, head):
                 label += f"({p_no+1})"
             for no, (s, orb) in enumerate(zip(site, obj[i_no][p_no])):
                 s = (s + p).shift()
-                label = f"s{no+1}" + label
+                label1 = f"s{no+1}" + label
                 qtdraw.plot_orbital(
-                    s, orb, size=0.6, scale=False, color=color, name=name, label=label, show_lbl=rcParams["show_label"], cell=i
+                    s, orb, size=0.6, scale=False, color=color, name=name, label=label1, show_lbl=rcParams["show_label"], cell=i
                 )
 
     qtdraw._plot_all_object()

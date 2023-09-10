@@ -12,6 +12,7 @@ from qtpy.QtWidgets import (
     QSizePolicy,
 )
 from gcoreutils.convert_util import text_to_list, text_to_sympy, sympy_to_latex
+from gcoreutils.nsarray import NSArray
 from qtdraw.core.color_palette import color2pixmap, _color2pixmap
 from qtdraw.core.pixmap_converter import latex2pixmap
 from qtdraw.core.line_edit import LineEditor, Label
@@ -491,7 +492,8 @@ class QtMath(EditableWidget):
         if label == "":
             return
         if self.validator is not None:
-            latex = sympy_to_latex(text_to_sympy(label))
+            # latex = sympy_to_latex(text_to_sympy(label))
+            latex = sympy_to_latex(NSArray(label).semi_evalf().tolist())
         else:
             latex = label
 
