@@ -625,6 +625,16 @@ class DialogGroup(QDialog):
         self.tab1_pgharm_exp_latex = QCheckBox("LaTeX", self)
         self.tab1_pgharm_exp_latex.setChecked(False)
 
+        self.tab1_wyckoff_label = QLabel(
+            "WYCKOFF: find wyckoff position and local symmetry. 1. input representative SITE/BOND, + ENTER.\n \u21d2  wyckoff position and its local symmetry are shown.",
+            self,
+        )
+        self.tab1_wyckoff_pos = QLineEdit("[ 0, 0, 0 ]", self)
+        self.tab1_wyckoff_letter_label = QLabel(" \u21d2 Wyckoff position", self)
+        self.tab1_wyckoff_letter = QLineEdit("", self)
+        self.tab1_wyckoff_sym_label = QLabel("local symmetry", self)
+        self.tab1_wyckoff_sym = QLineEdit("", self)
+
         self.tab1_v_spacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
 
         self.tab1_grid = QGridLayout(self.tab1)
@@ -651,7 +661,14 @@ class DialogGroup(QDialog):
         self.tab1_grid.addWidget(self.tab1_pgharm_exp, 10, 1, 1, 7)
         self.tab1_grid.addWidget(self.tab1_pgharm_exp_latex, 10, 8, 1, 1)
 
-        self.tab1_grid.addItem(self.tab1_v_spacer, 11, 1, 1, 1)
+        self.tab1_grid.addWidget(self.tab1_wyckoff_label, 11, 0, 1, 9)
+        self.tab1_grid.addWidget(self.tab1_wyckoff_pos, 12, 0, 1, 4)
+        self.tab1_grid.addWidget(self.tab1_wyckoff_letter_label, 12, 4, 1, 2)
+        self.tab1_grid.addWidget(self.tab1_wyckoff_letter, 12, 6, 1, 1)
+        self.tab1_grid.addWidget(self.tab1_wyckoff_sym_label, 12, 7, 1, 1)
+        self.tab1_grid.addWidget(self.tab1_wyckoff_sym, 12, 8, 1, 1)
+
+        self.tab1_grid.addItem(self.tab1_v_spacer, 13, 1, 1, 1)
 
         # connections.
         self.tab1_site_pos.returnPressed.connect(self.tab1_plot_site)
@@ -665,6 +682,7 @@ class DialogGroup(QDialog):
         self.tab1_pgharm_rank.currentIndexChanged.connect(self.tab1_select_pg_harmonics)
         self.tab1_pgharm_exp_latex.toggled.connect(self.tab1_select_pg_harmonics)
         self.tab1_pgharm_pos.returnPressed.connect(self.tab1_plot_pg_harmonics)
+        self.tab1_wyckoff_pos.returnPressed.connect(self.tab1_find_wyckoff)
 
     # ==================================================
     def tab1_plot_site(self):
@@ -711,7 +729,7 @@ class DialogGroup(QDialog):
         vector = check_get_site(vector)
         if vector is None:
             return
-        r_site = check_get_site_bond(r_site_bond)
+        r_site = check_get_site_bond(r_site_bond, ret_site=True)
         if r_site is None:
             return
 
@@ -733,7 +751,7 @@ class DialogGroup(QDialog):
         if len(txt) != 2:
             return
         orbital, r_site_bond = txt
-        r_site = check_get_site_bond(r_site_bond)
+        r_site = check_get_site_bond(r_site_bond, ret_site=True)
         if r_site is None:
             return
 
@@ -786,7 +804,7 @@ class DialogGroup(QDialog):
         harmonics = harmonics_set[self.tab1_pgharm_irrep.currentIndex()]
         orbital = harmonics.expression(v=NSArray.vector3d("Q"))
 
-        r_site = check_get_site_bond(self.tab1_pgharm_pos.text())
+        r_site = check_get_site_bond(self.tab1_pgharm_pos.text(), ret_site=True)
         if r_site is None:
             return
 
@@ -797,6 +815,21 @@ class DialogGroup(QDialog):
         site = NSArray.from_str(site.keys())
 
         plot_orbital_equivalent_site(self._qtdraw, site, orbital, head, self.n_pset)
+
+    # ==================================================
+    def tab1_find_wyckoff(self):
+        """
+        find wyckoff position.
+        """
+        r_site_bond = self.tab1_wyckoff_pos.text()
+        r_site = check_get_site_bond(r_site_bond, ret_site=True)
+        if r_site is None:
+            return
+
+        wp = self._group.find_wyckoff_position(r_site)
+        self.tab1_wyckoff_letter.setText(str(wp))
+        sym = self._group.wyckoff.site_symmetry(wp)
+        self.tab1_wyckoff_sym.setText(sym)
 
     # ==================================================
     def create_tab2_panel(self):
@@ -1366,6 +1399,7 @@ class DialogGroup(QDialog):
                     self.tab1_pgharm_rank.currentIndex(),
                     self.tab1_pgharm_irrep.currentIndex(),
                 ),
+                "wyckoff": (self.tab1_wyckoff_pos.text(), self.tab1_wyckoff_letter.text(), self.tab1_wyckoff_sym.text()),
             },
             "tab2": {
                 "site": (self.tab2_site_proj_pos.text(), self.tab2_site_proj_irrep1.currentIndex()),
@@ -1423,6 +1457,10 @@ class DialogGroup(QDialog):
         self.tab1_pgharm_type.setCurrentIndex(t1_harmonics_type)
         self.tab1_pgharm_rank.setCurrentIndex(t1_harmonics_rank)
         self.tab1_pgharm_irrep.setCurrentIndex(t1_harmonics_irrep)
+        t1_wyckoff_pos, t1_wyckoff_letter, t1_wyckoff_sym = dic["tab1"]["wyckoff"]
+        self.tab1_wyckoff_pos.setText(t1_wyckoff_pos)
+        self.tab1_wyckoff_letter.setText(t1_wyckoff_letter)
+        self.tab1_wyckoff_sym.setText(t1_wyckoff_sym)
 
         t2_site_pos, t2_site_irrep1 = dic["tab2"]["site"]
         self.tab2_site_proj_pos.setText(t2_site_pos)
