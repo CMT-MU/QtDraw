@@ -70,9 +70,9 @@ class DialogModulation(QDialog):
 
         # range.
         self.offset_label = QLabel("lower", self)
-        self.offset = QLineEdit("[0,0,0]", self)
+        self.offset = QLineEdit(str(self.parent._qtdraw._ilower), self)
         self.repeat_label = QLabel("repeat", self)
-        self.repeat = QLineEdit("[1,1,1]", self)
+        self.repeat = QLineEdit(str(self.parent._qtdraw._dims), self)
 
         # buttons.
         self.add_button = QPushButton("add", self)
