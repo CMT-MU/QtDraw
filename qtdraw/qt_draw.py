@@ -70,6 +70,7 @@ class QtDrawWidget(QtDrawBase):
         repeat=False,
         clip=True,
         cluster=False,
+        background=False,
         parent=None,
     ):
         """
@@ -87,9 +88,11 @@ class QtDrawWidget(QtDrawBase):
             repeat (bool, optional): repeat plot ?
             clip (bool, optional): clip objects out of view_range ?
             cluster (bool, optional): cluster without repeat ?
+            background (bool, optional): background run ?
             parent (QWidget, optional): parent.
         """
         self.preference = preference
+        self.background = background
         # set qtdraw base.
         UI = os.path.dirname(__file__) + "/core/" + rcParams["plotter.ui"]
         UI = UI.replace(os.sep, "/")
@@ -1368,7 +1371,8 @@ class QtDrawWidget(QtDrawBase):
             - this must be called at the end of plots.
         """
         self._plot_all_object()
-        super().show()
+        if not self.background:
+            super().show()
 
     # ==================================================
     def _connect_slot(self):
@@ -2463,6 +2467,9 @@ class QtDrawWidget(QtDrawBase):
 
     # ==================================================
     def closeEvent(self, event):
+        if self.background:
+            self.close()
+            return
         ret = QMessageBox.question(self, "", "Quit QtDraw ?", QMessageBox.Ok, QMessageBox.Cancel)
         if ret != QMessageBox.Ok:
             event.ignore()
@@ -2497,6 +2504,7 @@ class QtDraw(QtDrawWidget):
         repeat=False,
         clip=True,
         cluster=False,
+        background=False,
         filename=None,
     ):
         """
@@ -2514,13 +2522,14 @@ class QtDraw(QtDrawWidget):
             repeat (bool, optional): repeat plot ?
             clip (bool, optional): clip objects out of view_range ?
             cluster (bool, optional): cluster without repeat ?
+            background (bool, optional): background run ?
             filename (str, optional): if not None, load filename.
         """
         style = rcParams["plotter.style"]
         font = rcParams["plotter.font.family"]
         font_size = rcParams["plotter.font.size"]
         self.app = create_application(style=style, font=font, font_size=font_size)
-        super().__init__(title, model, cell, origin, view, size, axis_type, view_range, repeat, clip, cluster)
+        super().__init__(title, model, cell, origin, view, size, axis_type, view_range, repeat, clip, cluster, background)
         if not check_latex_installed():
             QMessageBox.critical(None, "Error", f"LaTeX command, '{latex_cmd}', cannot be found.", QMessageBox.Yes)
             exit()
@@ -2560,6 +2569,7 @@ class QtMultiDraw(dict):
         repeat=None,
         clip=None,
         cluster=None,
+        background=None,
     ):
         """
         initialize the class.
@@ -2577,6 +2587,7 @@ class QtMultiDraw(dict):
             repeat ([bool], optional): repeat plot of each plotter ?
             clip (bool, optional): clip objects out of view_range ?
             cluster (bool, optional): cluster without repeat ?
+            background (bool, optional): background run ?
 
         Notes:
             - number of list content must be equal to n.
@@ -2612,6 +2623,8 @@ class QtMultiDraw(dict):
             clip = [True] * n
         if cluster is None:
             cluster = [False] * n
+        if background is None:
+            background = [False] * n
 
         for i in range(n):
             self[i] = QtDrawWidget(
@@ -2626,6 +2639,7 @@ class QtMultiDraw(dict):
                 repeat=repeat[i],
                 clip=clip[i],
                 cluster=cluster[i],
+                background=background[i],
             )
 
     # ==================================================
