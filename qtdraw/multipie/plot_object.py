@@ -50,15 +50,16 @@ def check_get_bond(txt):
 
 
 # ==================================================
-def check_get_site_bond(txt):
+def check_get_site_bond(txt, ret_site=False):
     """
     check and get site (bond center) from site_bond.
 
     Args:
         txt (str): site_bond.
+        ret_site (bool, optional): return site ?
 
     Returns:
-        NSArray: site (bond center), or None if invalid.
+        NSArray: site, bond or bond center, or None if invalid.
     """
     try:
         site_bond = NSArray(txt)
@@ -67,7 +68,10 @@ def check_get_site_bond(txt):
     except Exception:
         return None
 
-    return site_bond
+    if ret_site and site_bond.style != "vector":
+        return site_bond.convert_bond("bond")[1]
+    else:
+        return site_bond
 
 
 # ==================================================
