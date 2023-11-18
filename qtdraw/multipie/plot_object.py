@@ -168,8 +168,14 @@ def check_linear_combination(z_samb, form, head):
             - bool: magnetic bond ?
     """
     irrep_num = {i: len(z_samb[i]) for i in ["Q", "G", "T", "M"]}
-    var_e = set([f"q{i+1:02d}" for i in range(irrep_num["Q"])] + [f"g{i+1:02d}" for i in range(irrep_num["G"])])
-    var_m = set([f"t{i+1:02d}" for i in range(irrep_num["T"])] + [f"m{i+1:02d}" for i in range(irrep_num["M"])])
+    var_e = set(
+        [f"q{i+1:02d}" for i in range(irrep_num["Q"])]
+        + [f"g{i+1:02d}" for i in range(irrep_num["G"])]
+    )
+    var_m = set(
+        [f"t{i+1:02d}" for i in range(irrep_num["T"])]
+        + [f"m{i+1:02d}" for i in range(irrep_num["M"])]
+    )
 
     form = form.lower()
     form_variable = set(NSArray(form).variable())
@@ -227,7 +233,9 @@ def plot_equivalent_site(qtdraw, site, n_pset):
         if n_pset > 1:
             name += f"({pset+1})"
         label = f"s{idx+1}:{mp}"
-        qtdraw.plot_site(s, color=color, name=name, label=label, show_lbl=rcParams["show_label"])
+        qtdraw.plot_site(
+            s, color=color, name=name, label=label, show_lbl=rcParams["show_label"]
+        )
     qtdraw._plot_all_object()
 
 
@@ -262,7 +270,15 @@ def plot_equivalent_bond(qtdraw, bond, nondirectional, n_pset):
         if n_pset > 1:
             name += f"({pset+1})"
         label = f"b{idx+1}:{mp}"
-        qtdraw.plot_bond(c, v, color=color1, color2=color2, name=name, label=label, show_lbl=rcParams["show_label"])
+        qtdraw.plot_bond(
+            c,
+            v,
+            color=color1,
+            color2=color2,
+            name=name,
+            label=label,
+            show_lbl=rcParams["show_label"],
+        )
     qtdraw._plot_all_object()
 
 
@@ -291,7 +307,14 @@ def plot_vector_equivalent_site(qtdraw, site, vector, head, n_pset):
         if n_pset > 1:
             name += f"({pset+1})"
         label = f"v{idx+1}"
-        qtdraw.plot_vector(s, vector, color=color, name=name, label=label, show_lbl=rcParams["show_label"])
+        qtdraw.plot_vector(
+            s,
+            vector,
+            color=color,
+            name=name,
+            label=label,
+            show_lbl=rcParams["show_label"],
+        )
     qtdraw._plot_all_object()
 
 
@@ -320,12 +343,20 @@ def plot_orbital_equivalent_site(qtdraw, site, orbital, head, n_pset):
         if n_pset > 1:
             name += f"({pset+1})"
         label = f"o{idx+1}"
-        qtdraw.plot_orbital(s, orbital, size=0.3, color=color, name=name, label=label, show_lbl=rcParams["show_label"])
+        qtdraw.plot_orbital(
+            s,
+            orbital,
+            size=0.3,
+            color=color,
+            name=name,
+            label=label,
+            show_lbl=rcParams["show_label"],
+        )
     qtdraw._plot_all_object()
 
 
 # ==================================================
-def plot_site_cluster(qtdraw, site, obj, label, pset):
+def plot_site_cluster(qtdraw, site, obj, label, pset, pg=False):
     """
     plot site cluster SAMB.
 
@@ -335,6 +366,7 @@ def plot_site_cluster(qtdraw, site, obj, label, pset):
         obj (NSArray): SAMB weight.
         label (str): label.
         pset (NSArray): plus set.
+        pg (bool, optional): point group ?
     """
     color = []
     for w in obj:
@@ -356,7 +388,8 @@ def plot_site_cluster(qtdraw, site, obj, label, pset):
         if n_pset != 1:
             name1 += f"({no+1})"
         for s, w, cl in zip(site, obj, color):
-            s = (s + p).shift()
+            if not pg:
+                s = (s + p).shift()
             if cl == "silver":
                 w = 1
             qtdraw.plot_site(
@@ -371,7 +404,7 @@ def plot_site_cluster(qtdraw, site, obj, label, pset):
 
 
 # ==================================================
-def plot_bond_cluster(qtdraw, bond, obj, label, pset, z_head):
+def plot_bond_cluster(qtdraw, bond, obj, label, pset, z_head, pg=False):
     """
     plot bond cluster SAMB.
 
@@ -382,6 +415,7 @@ def plot_bond_cluster(qtdraw, bond, obj, label, pset, z_head):
         label (str): label.
         pset (NSArray): plus set.
         z_head (str): multipole type.
+        pg (bool, optional): point group ?
     """
     color = []
     if z_head == "Q":
@@ -413,7 +447,8 @@ def plot_bond_cluster(qtdraw, bond, obj, label, pset, z_head):
                 name1 += f"({no+1})"
             for s, w, cl in zip(bond, obj, color):
                 v, c = s.convert_bond("bond")
-                c = (c + p).shift()
+                if not pg:
+                    c = (c + p).shift()
                 if cl == "silver":
                     w = 1
                 qtdraw.plot_bond(
@@ -433,7 +468,8 @@ def plot_bond_cluster(qtdraw, bond, obj, label, pset, z_head):
                 name1 += f"({no+1})"
             for s, w, cl in zip(bond, obj, color):
                 v, c = s.convert_bond("bond")
-                c = (c + p).shift()
+                if not pg:
+                    c = (c + p).shift()
                 if cl == "silver":
                     w = 1
                     qtdraw.plot_bond(
@@ -467,7 +503,7 @@ def plot_bond_cluster(qtdraw, bond, obj, label, pset, z_head):
 
 
 # ==================================================
-def plot_vector_cluster(qtdraw, site, obj, label, pset, head, v):
+def plot_vector_cluster(qtdraw, site, obj, label, pset, head, v, pg=False):
     """
     plot vector cluster SAMB.
 
@@ -479,8 +515,13 @@ def plot_vector_cluster(qtdraw, site, obj, label, pset, head, v):
         pset (NSArray): plus set.
         head (str): multipole type.
         v (NSArray): vector variable.
+        pg (bool, optional): point group ?
     """
-    rep = {v[0]: sp.Matrix([1, 0, 0]), v[1]: sp.Matrix([0, 1, 0]), v[2]: sp.Matrix([0, 0, 1])}
+    rep = {
+        v[0]: sp.Matrix([1, 0, 0]),
+        v[1]: sp.Matrix([0, 1, 0]),
+        v[2]: sp.Matrix([0, 0, 1]),
+    }
     color = rcParams["vector_color_" + head]
     qtdraw._close_dialog()
     name = "Z_" + qtdraw._get_name("vector")
@@ -491,18 +532,27 @@ def plot_vector_cluster(qtdraw, site, obj, label, pset, head, v):
         if n_pset != 1:
             name1 += f"({no+1})"
         for s, c in zip(site, obj):
-            s = (s + p).shift()
+            if not pg:
+                s = (s + p).shift()
             if c != 0:
                 c = str(c.subs(rep).T[:])
                 c = NSArray(c)
                 d = c.norm()
-                qtdraw.plot_vector(s, c, length=d, color=color, name=name1, label=label, show_lbl=rcParams["show_label"])
+                qtdraw.plot_vector(
+                    s,
+                    c,
+                    length=d,
+                    color=color,
+                    name=name1,
+                    label=label,
+                    show_lbl=rcParams["show_label"],
+                )
 
     qtdraw._plot_all_object()
 
 
 # ==================================================
-def plot_orbital_cluster(qtdraw, site, obj, label, pset, head):
+def plot_orbital_cluster(qtdraw, site, obj, label, pset, head, pg=False):
     """
     plot orbital cluster SAMB.
 
@@ -513,6 +563,7 @@ def plot_orbital_cluster(qtdraw, site, obj, label, pset, head):
         label (str): label.
         pset (NSArray): plus set.
         head (str): multipole type.
+        pg (bool, optional): point group ?
     """
     color = rcParams["orbital_color_" + head]
     qtdraw._close_dialog()
@@ -524,7 +575,8 @@ def plot_orbital_cluster(qtdraw, site, obj, label, pset, head):
         if n_pset != 1:
             name1 += f"({no+1})"
         for s, orb in zip(site, obj):
-            s = (s + p).shift()
+            if not pg:
+                s = (s + p).shift()
             qtdraw.plot_orbital(
                 s,
                 orb,
@@ -571,7 +623,9 @@ def create_phase_factor(modulation, repeat, offset, pset):
 
 
 # ==================================================
-def create_modulated_samb_object(z_samb, site, c_samb, pg, v, head, modulation, repeat, offset, pset):
+def create_modulated_samb_object(
+    z_samb, site, c_samb, pg, v, head, modulation, repeat, offset, pset
+):
     """
     create modulated SAMB object.
 
@@ -597,7 +651,9 @@ def create_modulated_samb_object(z_samb, site, c_samb, pg, v, head, modulation, 
         for basis, coeff, k, n in modulation:
             z_head = basis[0]
             irrep = int(basis[1:]) - 1
-            t_odd = head.replace("M", "T").replace("G", "Q") != z_head.replace("M", "T").replace("G", "Q")
+            t_odd = head.replace("M", "T").replace("G", "Q") != z_head.replace(
+                "M", "T"
+            ).replace("G", "Q")
             phase = phase_dict[(k, n, p_no)]
             coeff = NSArray(coeff, fmt="value")
             cluster_obj = create_samb_object(
@@ -633,7 +689,11 @@ def plot_modulated_vector_cluster(qtdraw, site, obj, name, pset, igrid, head, v)
         head (str): multipole type.
         v (NSArray): vector variable.
     """
-    rep = {v[0]: sp.Matrix([1, 0, 0]), v[1]: sp.Matrix([0, 1, 0]), v[2]: sp.Matrix([0, 0, 1])}
+    rep = {
+        v[0]: sp.Matrix([1, 0, 0]),
+        v[1]: sp.Matrix([0, 1, 0]),
+        v[2]: sp.Matrix([0, 0, 1]),
+    }
     color = rcParams["vector_color_" + head]
     qtdraw._close_dialog()
     n_pset = len(pset)
@@ -651,7 +711,14 @@ def plot_modulated_vector_cluster(qtdraw, site, obj, name, pset, igrid, head, v)
                     c = NSArray(c)
                     d = c.norm()
                     qtdraw.plot_vector(
-                        s, c, length=d, color=color, name=name, label=label1, show_lbl=rcParams["show_label"], cell=i
+                        s,
+                        c,
+                        length=d,
+                        color=color,
+                        name=name,
+                        label=label1,
+                        show_lbl=rcParams["show_label"],
+                        cell=i,
                     )
 
     qtdraw._plot_all_object()
@@ -684,7 +751,15 @@ def plot_modulated_orbital_cluster(qtdraw, site, obj, name, pset, igrid, head):
                 s = (s + p).shift()
                 label1 = f"s{no+1}" + label
                 qtdraw.plot_orbital(
-                    s, orb, size=0.6, scale=False, color=color, name=name, label=label1, show_lbl=rcParams["show_label"], cell=i
+                    s,
+                    orb,
+                    size=0.6,
+                    scale=False,
+                    color=color,
+                    name=name,
+                    label=label1,
+                    show_lbl=rcParams["show_label"],
+                    cell=i,
                 )
 
     qtdraw._plot_all_object()
