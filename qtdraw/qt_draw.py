@@ -15,7 +15,12 @@ from gcoreutils.crystal_util import cell_transform_matrix
 from gcoreutils.latex_util import check_latex_installed, latex_cmd
 from qtdraw.qt_draw_base import QtDrawBase
 from qtdraw.core.setting import rcParams, preference
-from qtdraw.core.util import create_unit_cell, plot_axis, view_vectors, create_application
+from qtdraw.core.util import (
+    create_unit_cell,
+    plot_axis,
+    view_vectors,
+    create_application,
+)
 from qtdraw.core.dialog_about import DialogAbout
 from qtdraw.core.dialog_preference import DialogPreference
 from qtdraw.core.line_edit import LineEditor
@@ -129,7 +134,19 @@ class QtDrawWidget(QtDrawBase):
         self._connect_slot()
 
         # set parameters.
-        self._init_setting(title, model, cell, origin, view, size, axis_type, view_range, repeat, clip, cluster)
+        self._init_setting(
+            title,
+            model,
+            cell,
+            origin,
+            view,
+            size,
+            axis_type,
+            view_range,
+            repeat,
+            clip,
+            cluster,
+        )
 
         self._create_panel()
         self._init_all()
@@ -205,7 +222,9 @@ class QtDrawWidget(QtDrawBase):
         self.setting["repeat"] = bool(repeat)
         self.setting["clip"] = bool(clip)
         self.setting["cluster"] = bool(cluster)
-        self.setting["crystal"] = ""  # triclinic, monoclinic, orthorhombic, tetragonal, trigonal, hexagonal, cubic
+        self.setting[
+            "crystal"
+        ] = ""  # triclinic, monoclinic, orthorhombic, tetragonal, trigonal, hexagonal, cubic
 
         self.setting["axis_mode"] = 0
         self.setting["cell_mode"] = 2 if self.setting["cluster"] else 0
@@ -213,19 +232,33 @@ class QtDrawWidget(QtDrawBase):
     # ==================================================
     def _create_panel(self):
         # model.
-        self.edit_model_o = LineEditor(validator="string", callback=self._set_model, parent=self)
+        self.edit_model_o = LineEditor(
+            validator="string", callback=self._set_model, parent=self
+        )
         self.layout_model.replaceWidget(self.edit_model, self.edit_model_o)
 
         # origin.
-        self.edit_origin_o = LineEditor("Origin:", validator="r_vector", decimal=2, callback=self.set_origin, parent=self)
+        self.edit_origin_o = LineEditor(
+            "Origin:",
+            validator="r_vector",
+            decimal=2,
+            callback=self.set_origin,
+            parent=self,
+        )
         self.layout_cell.replaceWidget(self.edit_origin, self.edit_origin_o)
 
         # a, b, c, alpha, beta, gamma.
-        self.edit_a_o = LineEditor("a:", validator="real_positive", callback=self._set_a, parent=self)
+        self.edit_a_o = LineEditor(
+            "a:", validator="real_positive", callback=self._set_a, parent=self
+        )
         self.layout_cell.replaceWidget(self.edit_a, self.edit_a_o)
-        self.edit_b_o = LineEditor("b:", validator="real_positive", callback=self._set_b, parent=self)
+        self.edit_b_o = LineEditor(
+            "b:", validator="real_positive", callback=self._set_b, parent=self
+        )
         self.layout_cell.replaceWidget(self.edit_b, self.edit_b_o)
-        self.edit_c_o = LineEditor("c:", validator="real_positive", callback=self._set_c, parent=self)
+        self.edit_c_o = LineEditor(
+            "c:", validator="real_positive", callback=self._set_c, parent=self
+        )
         self.layout_cell.replaceWidget(self.edit_c, self.edit_c_o)
         self.edit_alpha_o = LineEditor(
             "α:",
@@ -491,7 +524,16 @@ class QtDrawWidget(QtDrawBase):
 
     # ==================================================
     def plot_site(
-        self, position, size=None, color=None, opacity=None, space=None, name=None, label="", show_lbl=False, cell=[0, 0, 0]
+        self,
+        position,
+        size=None,
+        color=None,
+        opacity=None,
+        space=None,
+        name=None,
+        label="",
+        show_lbl=False,
+        cell=[0, 0, 0],
     ):
         """
         plot site.
@@ -589,7 +631,14 @@ class QtDrawWidget(QtDrawBase):
         if v.norm() < CHOP or width < CHOP:
             return
 
-        info = [to_chopped_list(v), float(width), color, color2, float(opacity), int(space)]
+        info = [
+            to_chopped_list(v),
+            float(width),
+            color,
+            color2,
+            float(opacity),
+            int(space),
+        ]
         self._plot_to_data("bond", name, position, info, label, show_lbl, cell)
 
     # ==================================================
@@ -653,7 +702,15 @@ class QtDrawWidget(QtDrawBase):
         if v.norm() < CHOP or length < CHOP or width < CHOP:
             return
 
-        info = [to_chopped_list(v), float(length), float(width), float(offset), color, float(opacity), int(space)]
+        info = [
+            to_chopped_list(v),
+            float(length),
+            float(width),
+            float(offset),
+            color,
+            float(opacity),
+            int(space),
+        ]
         self._plot_to_data("vector", name, position, info, label, show_lbl, cell)
 
     # ==================================================
@@ -919,7 +976,14 @@ class QtDrawWidget(QtDrawBase):
         if v.norm() < CHOP or x < CHOP or y < CHOP:
             return
 
-        info = [to_chopped_list(v), float(x), float(y), color, float(opacity), int(space)]
+        info = [
+            to_chopped_list(v),
+            float(x),
+            float(y),
+            color,
+            float(opacity),
+            int(space),
+        ]
         self._plot_to_data("plane", name, position, info, label, show_lbl, cell)
 
     # ==================================================
@@ -1068,7 +1132,16 @@ class QtDrawWidget(QtDrawBase):
         point = to_chopped_list(NSArray(point, "vector", "value"))
         connection = NSArray(connection, "vector", "value").astype(int).tolist()
 
-        info = [point, connection, bool(edge), bool(wireframe), float(width), color, float(opacity), int(space)]
+        info = [
+            point,
+            connection,
+            bool(edge),
+            bool(wireframe),
+            float(width),
+            color,
+            float(opacity),
+            int(space),
+        ]
         self._plot_to_data("polygon", name, position, info, label, show_lbl, cell)
 
     # ==================================================
@@ -1140,7 +1213,16 @@ class QtDrawWidget(QtDrawBase):
 
         offset = to_chopped_list(NSArray(offset, "vector", "value"))
 
-        info = [text, float(size), float(depth), to_chopped_list(n), offset, color, float(opacity), int(space)]
+        info = [
+            text,
+            float(size),
+            float(depth),
+            to_chopped_list(n),
+            offset,
+            color,
+            float(opacity),
+            int(space),
+        ]
         self._plot_to_data("text3d", name, position, info, label, show_lbl, cell)
 
     # ==================================================
@@ -1208,7 +1290,16 @@ class QtDrawWidget(QtDrawBase):
 
         point = to_chopped_list(NSArray(point, "vector", "value"))
 
-        info = [point, float(width), int(n_interp), bool(closed), bool(natural), color, float(opacity), int(space)]
+        info = [
+            point,
+            float(width),
+            int(n_interp),
+            bool(closed),
+            bool(natural),
+            color,
+            float(opacity),
+            int(space),
+        ]
         self._plot_to_data("spline", name, position, info, label, show_lbl, cell)
 
     # ==================================================
@@ -1281,11 +1372,31 @@ class QtDrawWidget(QtDrawBase):
         expression = NSArray(expression, "vector").str()
         t_range = to_chopped_list(NSArray(t_range, "vector", "value"))
 
-        info = [expression, t_range, float(width), int(n_interp), bool(closed), bool(natural), color, float(opacity), int(space)]
+        info = [
+            expression,
+            t_range,
+            float(width),
+            int(n_interp),
+            bool(closed),
+            bool(natural),
+            color,
+            float(opacity),
+            int(space),
+        ]
         self._plot_to_data("spline_t", name, position, info, label, show_lbl, cell)
 
     # ==================================================
-    def plot_caption(self, position, caption=None, space=None, size=None, color=None, bold=None, name=None, cell=[0, 0, 0]):
+    def plot_caption(
+        self,
+        position,
+        caption=None,
+        space=None,
+        size=None,
+        color=None,
+        bold=None,
+        name=None,
+        cell=[0, 0, 0],
+    ):
         """
         plot caption.
 
@@ -1330,7 +1441,16 @@ class QtDrawWidget(QtDrawBase):
         self._plot_to_data("caption", name, position, info, cell=cell)
 
     # ==================================================
-    def plot_text(self, position, caption=None, relative=None, size=None, color=None, font=None, name=None):
+    def plot_text(
+        self,
+        position,
+        caption=None,
+        relative=None,
+        size=None,
+        color=None,
+        font=None,
+        name=None,
+    ):
         """
         plot text.
 
@@ -1420,7 +1540,10 @@ class QtDrawWidget(QtDrawBase):
 
         # default value.
         self.def_value = {
-            group: [self.dataset.role[group][i][-1] for i in range(len(self.dataset.role[group]))]
+            group: [
+                self.dataset.role[group][i][-1]
+                for i in range(len(self.dataset.role[group]))
+            ]
             for group in self.dataset.keys()
         }
 
@@ -1451,7 +1574,9 @@ class QtDrawWidget(QtDrawBase):
         if cell is None:
             cell = {}
 
-        cell, self._volume, self._A, self._G, self._A_norm = cell_transform_matrix(cell, crystal=self.setting["crystal"])
+        cell, self._volume, self._A, self._G, self._A_norm = cell_transform_matrix(
+            cell, crystal=self.setting["crystal"]
+        )
         origin = self.setting["origin"]
 
         self.setting["cell"] = cell
@@ -1684,7 +1809,9 @@ class QtDrawWidget(QtDrawBase):
 
         if not self._dialog_dataset:
             self._dialog_dataset = True
-            self.tab = GroupTab(ds=self.dataset, title="DataSet - " + self.setting["model"], parent=self)
+            self.tab = GroupTab(
+                ds=self.dataset, title="DataSet - " + self.setting["model"], parent=self
+            )
             self.tab.rawDataChanged.connect(self._plot_object)
             self.tab.textMessage.connect(self.set_status)
             self.tab.selectedData.connect(spot)
@@ -1699,7 +1826,10 @@ class QtDrawWidget(QtDrawBase):
         default_file = os.getcwd()
         ext_str = default_ext + " " + loadable_ext
         filename, _ = QFileDialog.getOpenFileName(
-            self, "Load QtDraw", default_file, "QtDraw file (" + ext_str.replace(".", "*.") + ")"
+            self,
+            "Load QtDraw",
+            default_file,
+            "QtDraw file (" + ext_str.replace(".", "*.") + ")",
         )
         if filename:
             _, ext = os.path.splitext(filename)
@@ -1740,6 +1870,10 @@ class QtDrawWidget(QtDrawBase):
             if key in load_dict.keys():
                 for item in load_dict[key]:
                     self.dataset.append(key, item)
+
+        for key in rcParams["detail.dataset.property"].keys():
+            self._counter[key] = len(set(self.dataset[key].iloc[:, 0]))
+
         self._plot_all_object()
         self._layer.set_viewup(self.setting["camera.up"])
         self._layer.set_focus(self.setting["camera.focus"])
@@ -1755,7 +1889,9 @@ class QtDrawWidget(QtDrawBase):
         default_ext = rcParams["plotter.ext"]
         default_file = os.getcwd() + "/" + self.setting["model"] + default_ext
         default_file = default_file.replace(os.sep, "/")
-        filename, _ = QFileDialog.getSaveFileName(self, "Save QtDraw", default_file, "QtDraw file (*" + default_ext + ")")
+        filename, _ = QFileDialog.getSaveFileName(
+            self, "Save QtDraw", default_file, "QtDraw file (*" + default_ext + ")"
+        )
         if filename:
             _, ext = os.path.splitext(filename)
             if ext == "":
@@ -1788,7 +1924,11 @@ class QtDrawWidget(QtDrawBase):
         self.setting["camera.up"] = self._layer.camera.up
         self.setting["camera.focus"] = self._layer.camera.focal_point
 
-        save_dict = {"version": __version__, "setting": self.setting, "preference": self.preference}
+        save_dict = {
+            "version": __version__,
+            "setting": self.setting,
+            "preference": self.preference,
+        }
 
         self._garbage_collection()
 
@@ -1814,12 +1954,14 @@ class QtDrawWidget(QtDrawBase):
 
     # ==================================================
     def _clear(self):
-        ret = QMessageBox.question(self, "", "Are you sure ?", QMessageBox.Ok, QMessageBox.Cancel)
+        ret = QMessageBox.question(
+            self, "", "Are you sure ?", QMessageBox.Ok, QMessageBox.Cancel
+        )
         if ret == QMessageBox.Ok:
             self._close_dialog()
             self._remove_all_actor()
             self._init_dataset()
-            self._init_counter
+            self._init_counter()
             self._init_actor()
             self._init_setting(
                 title=self.setting["title"],
@@ -1933,7 +2075,9 @@ class QtDrawWidget(QtDrawBase):
         cell = NSArray(cell, "vector", "value").astype(int)
         position = NSArray(position, "vector", "value")
         pos = (cell + position).transform(self._A)
-        obj = create_sphere(size, th_phi, (0, 180), (0, 360)).translate(pos, inplace=True)
+        obj = create_sphere(size, th_phi, (0, 180), (0, 360)).translate(
+            pos, inplace=True
+        )
         actor = self._layer.add_mesh(obj, **opt)
         self._spotlight_actor.append((actor, group, row_idx))
 
@@ -1951,7 +2095,9 @@ class QtDrawWidget(QtDrawBase):
         self._spotlight_actor = []
 
     # ==================================================
-    def _plot_to_data(self, group, name, position, info, label="", show_lbl=False, cell=[0, 0, 0]):
+    def _plot_to_data(
+        self, group, name, position, info, label="", show_lbl=False, cell=[0, 0, 0]
+    ):
         """
         store plot data.
 
@@ -2032,7 +2178,9 @@ class QtDrawWidget(QtDrawBase):
             self._actorset[obj_id] = obj_actor
             self._show_actor(obj_id, obj_show)
         else:
-            opt, obj_id, obj_show, lbl_opt, lbl_id, lbl_show = self._data_to_object(group, row)
+            opt, obj_id, obj_show, lbl_opt, lbl_id, lbl_show = self._data_to_object(
+                group, row
+            )
             if obj_id == "":
                 obj_id = self._actor_id()
                 self.dataset[group].iat[row_idx, -2] = obj_id
@@ -2179,7 +2327,10 @@ class QtDrawWidget(QtDrawBase):
                 obj = create_bond(vec, width, False)
                 opt = {"color": all_colors[color][0], "opacity": opacity}
 
-            if not (self._check_in_view_range(igrid + position - v / 2) and self._check_in_view_range(igrid + position + v / 2)):
+            if not (
+                self._check_in_view_range(igrid + position - v / 2)
+                and self._check_in_view_range(igrid + position + v / 2)
+            ):
                 obj_show = False
                 lbl_show = False
 
@@ -2201,7 +2352,19 @@ class QtDrawWidget(QtDrawBase):
             opt = {"color": color, "opacity": opacity}
 
         elif group == "orbital":
-            shape, surface, size, scale, th0, th1, phi0, phi1, color, opacity, space = info
+            (
+                shape,
+                surface,
+                size,
+                scale,
+                th0,
+                th1,
+                phi0,
+                phi1,
+                color,
+                opacity,
+                space,
+            ) = info
             size = float(size)
             scale = bool(scale)
             opacity = float(opacity)
@@ -2211,7 +2374,9 @@ class QtDrawWidget(QtDrawBase):
 
             th_phi = (rcParams["plot.orbital.theta"], rcParams["plot.orbital.phi"])
 
-            obj = create_orbital(shape, surface, size, th_phi, scale, th_range, phi_range)
+            obj = create_orbital(
+                shape, surface, size, th_phi, scale, th_range, phi_range
+            )
             if check_color(color):
                 opt = {"color": all_colors[color][0], "opacity": opacity}
             else:
@@ -2224,7 +2389,24 @@ class QtDrawWidget(QtDrawBase):
                 }
 
         elif group == "stream":
-            shape, vector, size, v_size, width, scale, theta, phi, th0, th1, phi0, phi1, color, component, opacity, space = info
+            (
+                shape,
+                vector,
+                size,
+                v_size,
+                width,
+                scale,
+                theta,
+                phi,
+                th0,
+                th1,
+                phi0,
+                phi1,
+                color,
+                component,
+                opacity,
+                space,
+            ) = info
             size = float(size)
             v_size = float(v_size)
             width = float(width)
@@ -2242,15 +2424,23 @@ class QtDrawWidget(QtDrawBase):
             shaft_r = self.preference["vector.shaft.radius"]
             tip_r = self.preference["vector.tip.radius"]
 
-            v = create_stream_vector(shape, vector, size, (theta, phi), th_range, phi_range)
+            v = create_stream_vector(
+                shape, vector, size, (theta, phi), th_range, phi_range
+            )
             g = create_vector("[1, 0, 0]", 1.0, width, -0.43, tip_l, shaft_r, tip_r)
             if scale:
-                obj = v.glyph(orient="vector", scale="vector_abs", factor=v_size, geom=g)
+                obj = v.glyph(
+                    orient="vector", scale="vector_abs", factor=v_size, geom=g
+                )
             else:
                 obj = v.glyph(orient="vector", scale=None, factor=v_size, geom=g)
 
             if check_color(color):
-                opt = {"clim": [-1, 1], "color": all_colors[color][0], "opacity": opacity}
+                opt = {
+                    "clim": [-1, 1],
+                    "color": all_colors[color][0],
+                    "opacity": opacity,
+                }
             else:
                 opt = {
                     "clim": [-1, 1],
@@ -2289,9 +2479,19 @@ class QtDrawWidget(QtDrawBase):
             space = int(space)
             obj = create_box(a1A, a2A, a3A)
             if wireframe:
-                opt = {"color": color, "opacity": opacity, "style": "wireframe", "line_width": width}
+                opt = {
+                    "color": color,
+                    "opacity": opacity,
+                    "style": "wireframe",
+                    "line_width": width,
+                }
             else:
-                opt = {"color": color, "opacity": opacity, "show_edges": edge, "line_width": width}
+                opt = {
+                    "color": color,
+                    "opacity": opacity,
+                    "show_edges": edge,
+                    "line_width": width,
+                }
 
         elif group == "polygon":
             point, cnt, edge, wireframe, width, color, opacity, space = info
@@ -2305,9 +2505,19 @@ class QtDrawWidget(QtDrawBase):
             space = int(space)
             obj = create_polygon(pointA, cnt)
             if wireframe:
-                opt = {"color": color, "opacity": opacity, "style": "wireframe", "line_width": width}
+                opt = {
+                    "color": color,
+                    "opacity": opacity,
+                    "style": "wireframe",
+                    "line_width": width,
+                }
             else:
-                opt = {"color": color, "opacity": opacity, "show_edges": edge, "line_width": width}
+                opt = {
+                    "color": color,
+                    "opacity": opacity,
+                    "show_edges": edge,
+                    "line_width": width,
+                }
 
         elif group == "text3d":
             text, size, depth, n, offset, color, opacity, space = info
@@ -2336,7 +2546,17 @@ class QtDrawWidget(QtDrawBase):
             opt = {"color": color, "opacity": opacity}
 
         elif group == "spline_t":
-            expression, t_range, width, n_interp, closed, natural, color, opacity, space = info
+            (
+                expression,
+                t_range,
+                width,
+                n_interp,
+                closed,
+                natural,
+                color,
+                opacity,
+                space,
+            ) = info
             expression = NSArray(expression, "vector")
             t_range = NSArray(t_range, "vector", "value")
             f = expression.lambdify()
@@ -2387,7 +2607,11 @@ class QtDrawWidget(QtDrawBase):
         for group, df in self.dataset.items():
             if len(df) > 0:
                 if group != "text":
-                    df0 = df[df["cell"].apply(lambda x: str(x)) == "[0, 0, 0]"].copy().reset_index(drop=True)
+                    df0 = (
+                        df[df["cell"].apply(lambda x: str(x)) == "[0, 0, 0]"]
+                        .copy()
+                        .reset_index(drop=True)
+                    )
                     for i in range(len(df0)):
                         df0.at[i, "cell"] = [0, 0, 0]
                 else:
@@ -2412,7 +2636,9 @@ class QtDrawWidget(QtDrawBase):
                         df0 = df.reset_index(drop=True)
                         for i in range(len(df0)):
                             df0.at[i, "cell"] = grid
-                        self.dataset[group] = pd.concat([self.dataset[group], df0], ignore_index=True, axis=0)
+                        self.dataset[group] = pd.concat(
+                            [self.dataset[group], df0], ignore_index=True, axis=0
+                        )
         else:
             for group, df in dataset0.items():
                 self.dataset[group] = df.reset_index(drop=True)
@@ -2470,7 +2696,9 @@ class QtDrawWidget(QtDrawBase):
         if self.background:
             self.close()
             return
-        ret = QMessageBox.question(self, "", "Quit QtDraw ?", QMessageBox.Ok, QMessageBox.Cancel)
+        ret = QMessageBox.question(
+            self, "", "Quit QtDraw ?", QMessageBox.Ok, QMessageBox.Cancel
+        )
         if ret != QMessageBox.Ok:
             event.ignore()
         else:
@@ -2529,9 +2757,27 @@ class QtDraw(QtDrawWidget):
         font = rcParams["plotter.font.family"]
         font_size = rcParams["plotter.font.size"]
         self.app = create_application(style=style, font=font, font_size=font_size)
-        super().__init__(title, model, cell, origin, view, size, axis_type, view_range, repeat, clip, cluster, background)
+        super().__init__(
+            title,
+            model,
+            cell,
+            origin,
+            view,
+            size,
+            axis_type,
+            view_range,
+            repeat,
+            clip,
+            cluster,
+            background,
+        )
         if not check_latex_installed():
-            QMessageBox.critical(None, "Error", f"LaTeX command, '{latex_cmd}', cannot be found.", QMessageBox.Yes)
+            QMessageBox.critical(
+                None,
+                "Error",
+                f"LaTeX command, '{latex_cmd}', cannot be found.",
+                QMessageBox.Yes,
+            )
             exit()
         if filename is not None and os.path.isfile(filename):
             _, ext = os.path.splitext(filename)
@@ -2597,7 +2843,12 @@ class QtMultiDraw(dict):
         font_size = rcParams["plotter.font.size"]
         self.app = create_application(style=style, font=font, font_size=font_size)
         if not check_latex_installed():
-            QMessageBox.critical(None, "Error", f"LaTeX command, '{latex_cmd}', cannot be found.", QMessageBox.Yes)
+            QMessageBox.critical(
+                None,
+                "Error",
+                f"LaTeX command, '{latex_cmd}', cannot be found.",
+                QMessageBox.Yes,
+            )
             exit()
 
         if title is None:
