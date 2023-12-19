@@ -786,3 +786,77 @@ def parse_modulation_list(lst):
         modulation.append([coeff, basis, "[" + (",".join(k)) + "]", cs])
 
     return modulation
+
+
+# ==================================================
+def create_hopping_direction(group, bond, pg):
+    """
+    create set of normal bond direction.
+
+    Args:
+        group (Group): point/space group.
+        bond (NSArray): a bond.
+        pg (bool): point group ?
+
+    Returns:
+        NSArray: a set of bonds (no plus_set).
+    """
+    site = bond.convert_bond("bond_th")[0]
+    if pg:
+        sites = list(group.site_mapping(site).keys())
+    else:
+        sites = list(group.site_mapping(site, plus_set=True).keys())
+    bonds = NSArray.from_str(list(group.bond_mapping(bond)[0].keys()))
+    new_bonds = []
+    for i in range(len(bonds)):
+        t = bonds[i].convert_bond("bond_th")[0]
+        if not pg:
+            t = t.shift()
+        if str(t) not in sites:
+            new_bonds.append(str(bonds[i].reverse_direction()))
+        else:
+            new_bonds.append(str(bonds[i]))
+
+    new_bonds = NSArray.from_str(new_bonds)
+
+    return new_bonds
+
+
+# ==================================================
+def plot_hopping(qtdraw, bond, label, pset, pg):
+    """
+    plot normal hopping direction.
+
+    Args:
+        qtdraw (QtDraw): QtDraw.
+        bond (NSArray): equivalent bonds.
+        label (str): label.
+        pset (NSArray): plus set.
+        pg (bool, optional): point group ?
+    """
+    color = "salmon"
+    n_pset = len(pset)
+
+    qtdraw._close_dialog()
+    name = "Z_" + qtdraw._get_name("bond")
+    for no, p in enumerate(pset):
+        name1 = name
+        if n_pset != 1:
+            name1 += f"({no+1})"
+        for s in bond:
+            v, c = s.convert_bond("bond")
+            if not pg:
+                c = (c + p).shift()
+            v = v.transform(qtdraw._A)
+            norm = v.norm() * 0.7
+            qtdraw.plot_vector(
+                c,
+                v,
+                color=color,
+                length=norm,
+                offset=-0.5,
+                name=name1,
+                label=label,
+                show_lbl=rcParams["show_label"],
+            )
+    qtdraw._plot_all_object()

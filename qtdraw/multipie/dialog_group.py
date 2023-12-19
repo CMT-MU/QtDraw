@@ -47,6 +47,8 @@ from qtdraw.multipie.plot_object import (
     plot_bond_cluster,
     plot_vector_cluster,
     plot_orbital_cluster,
+    create_hopping_direction,
+    plot_hopping,
 )
 from qtdraw.multipie.dialog_modulation import DialogModulation
 from qtdraw.core.qt_logging import dprint
@@ -1525,24 +1527,13 @@ class DialogGroup(QDialog):
         """
         plot hopping direction.
         """
-        pos = check_get_bond(self.tab2_hopping_proj_pos.text())
-        if pos is None:
+        bond = check_get_bond(self.tab2_hopping_proj_pos.text())
+        if bond is None:
             return
 
-        head = "T"
-        combined_info = create_combined(self._group, self._pgroup, pos, 1, head)
-
-        c_samb, site, z_samb = combined_info
-
-        v = NSArray.vector3d()
-        cluster_obj = create_samb_object(
-            z_samb, site, c_samb, "Q", 0, self._pgroup, v, True
-        )
-
+        bonds = create_hopping_direction(self._group, bond, self.pg)
         label = "t_dir \u21d0 " + remove_space(self.tab2_hopping_proj_pos.text())
-        plot_vector_cluster(
-            self._qtdraw, site, cluster_obj, label, self.pset, head, v, self.pg
-        )
+        plot_hopping(self._qtdraw, bonds, label, self.pset, self.pg)
 
     # ==================================================
     def save_dict(self):
