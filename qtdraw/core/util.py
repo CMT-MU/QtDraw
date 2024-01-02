@@ -93,7 +93,7 @@ def create_unit_cell(A, origin, lower, dims):
     box.transform(As)
 
     # repeated boxes.
-    m = pv.UniformGrid(origin=lower, dims=dims).cast_to_unstructured_grid()
+    m = pv.ImageData(origin=lower, dims=dims).cast_to_unstructured_grid()
     m.transform(As)
     p = m.glyph(geom=box, factor=1.0)
 
