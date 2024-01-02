@@ -1,19 +1,21 @@
 import numpy as np
+from gcoreutils.nsarray import NSArray
+from gcoreutils.latex_util import latex_setting
+from gcoreutils.color_palette import custom_colormap, all_colors
 import vtk
 from vtk import vtkParametricSpline
 import pyvista as pv
 from pyvista.utilities import surface_from_para
 from qtpy.QtWidgets import QApplication, QStyleFactory
-from gcoreutils.nsarray import NSArray
-from gcoreutils.latex_util import latex_setting
 from qtdraw.core.setting import rcParams
-from qtdraw.core.color_palette import custom_colormap, all_colors
 
 CHOP = 1e-4
 
 
 # ==================================================
-def create_application(style="fusion", font="Helvetica Neue", font_size=13, latex_mode="standard"):
+def create_application(
+    style="fusion", font="Helvetica Neue", font_size=13, latex_mode="standard"
+):
     """
     create QApplication with style.
 
@@ -70,15 +72,28 @@ def create_unit_cell(A, origin, lower, dims):
     As = A.copy()
 
     # signle box.
-    pts = np.array([[0.0, 0, 0], [1, 0, 0], [1, 1, 0], [0, 1, 0], [0, 0, 1], [1, 0, 1], [1, 1, 1], [0, 1, 1]])
+    pts = np.array(
+        [
+            [0.0, 0, 0],
+            [1, 0, 0],
+            [1, 1, 0],
+            [0, 1, 0],
+            [0, 0, 1],
+            [1, 0, 1],
+            [1, 1, 1],
+            [0, 1, 1],
+        ]
+    )
     shift = np.array([origin] * len(pts))
     pts = pts + shift
-    lines = np.array([5, 0, 1, 2, 3, 0, 5, 4, 5, 6, 7, 4, 2, 0, 4, 2, 1, 5, 2, 2, 6, 2, 3, 7])
+    lines = np.array(
+        [5, 0, 1, 2, 3, 0, 5, 4, 5, 6, 7, 4, 2, 0, 4, 2, 1, 5, 2, 2, 6, 2, 3, 7]
+    )
     box = pv.PolyData(pts, lines=lines)
     box.transform(As)
 
     # repeated boxes.
-    m = pv.UniformGrid(origin=lower, dims=dims).cast_to_unstructured_grid()
+    m = pv.ImageData(origin=lower, dims=dims).cast_to_unstructured_grid()
     m.transform(As)
     p = m.glyph(geom=box, factor=1.0)
 
@@ -89,9 +104,22 @@ def create_unit_cell(A, origin, lower, dims):
 def axis_object(normA, labels, size, bold, italic, position):
     # axes arrows.
     a1, a2, a3 = normA
-    mesh = pv.PolyData([[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [-1.1, -1.1, -1.1], [1.1, 1.1, 1.1]])
+    mesh = pv.PolyData(
+        [
+            [0, 0, 0],
+            [0, 0, 0],
+            [0, 0, 0],
+            [0, 0, 0],
+            [-1.1, -1.1, -1.1],
+            [1.1, 1.1, 1.1],
+        ]
+    )
 
-    colors = rcParams["detail.axis.color"] + [rcParams["detail.axis.color.center"]] + ["white", "white"]
+    colors = (
+        rcParams["detail.axis.color"]
+        + [rcParams["detail.axis.color.center"]]
+        + ["white", "white"]
+    )
     cmap = custom_colormap(colors)
 
     g0 = pv.Arrow(
@@ -123,7 +151,12 @@ def axis_object(normA, labels, size, bold, italic, position):
     g4 = pv.Sphere(0)
     idx = np.array([0, 1, 2, 3, 4, 5])
     mesh.point_data["scalars"] = idx
-    axes = mesh.glyph(geom=(g0, g1, g2, g3, g4, g4), factor=rcParams["detail.axis.scale"], scale=False, rng=(0, 5))
+    axes = mesh.glyph(
+        geom=(g0, g1, g2, g3, g4, g4),
+        factor=rcParams["detail.axis.scale"],
+        scale=False,
+        rng=(0, 5),
+    )
 
     # axes labels.
     lbl_actor = vtk.vtkAxesActor()
@@ -146,7 +179,11 @@ def axis_object(normA, labels, size, bold, italic, position):
     x_p = lbl_actor.GetXAxisCaptionActor2D()
     y_p = lbl_actor.GetYAxisCaptionActor2D()
     z_p = lbl_actor.GetZAxisCaptionActor2D()
-    for i, c, pos in zip([x_p, y_p, z_p], rcParams["detail.axis.label.color"], rcParams["detail.axis.label.position"]):
+    for i, c, pos in zip(
+        [x_p, y_p, z_p],
+        rcParams["detail.axis.label.color"],
+        rcParams["detail.axis.label.position"],
+    ):
         i.GetPositionCoordinate().SetCoordinateSystemToWorld()
         i.GetPositionCoordinate().SetValue(*pos)
         i.GetTextActor().SetTextScaleModeToViewport()
@@ -170,7 +207,9 @@ def plot_axis(plotter, normA, labels, size, bold, italic, position):
     axes, cmap, lbl_actor = axis_object(normA, labels, size, bold, italic, position)
 
     # axes.
-    axes_actor = plotter.add_mesh(axes, show_scalar_bar=False, cmap=cmap, smooth_shading=True, name="axis")
+    axes_actor = plotter.add_mesh(
+        axes, show_scalar_bar=False, cmap=cmap, smooth_shading=True, name="axis"
+    )
     axes_widget = plotter.add_orientation_widget(axes_actor)
     axes_widget.SetViewport(*rcParams["detail.axis.viewport"])
 
@@ -187,7 +226,9 @@ def plot_axis(plotter, normA, labels, size, bold, italic, position):
     axes_label_widget.InteractiveOff()
 
     # axes actor.
-    axes_actor = plotter.add_mesh(axes, show_scalar_bar=False, cmap=cmap, smooth_shading=True, name="axis")
+    axes_actor = plotter.add_mesh(
+        axes, show_scalar_bar=False, cmap=cmap, smooth_shading=True, name="axis"
+    )
 
     return axes_widget, axes_label_widget, axes_actor
 

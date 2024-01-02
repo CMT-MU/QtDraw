@@ -1,5 +1,5 @@
+from gcoreutils.color_palette import hex_colornames, _hex2rgb
 from qtpy.QtWidgets import QColorDialog
-from qtdraw.core.color_palette import hex_colornames, _hex2rgb
 
 
 # ==================================================
