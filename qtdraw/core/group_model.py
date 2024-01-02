@@ -1,3 +1,4 @@
+from gcoreutils.color_palette import all_colors
 from qtpy.QtCore import Qt, QSize, QModelIndex
 from qtpy.QtWidgets import QItemDelegate, QStyle
 from qtpy.QtGui import QColor
@@ -13,7 +14,6 @@ from qtdraw.core.editable_widget import (
     QtColorSelector,
 )
 from qtdraw.core.setting import rcParams
-from qtdraw.core.color_palette import all_colors
 
 
 # ==================================================
@@ -67,7 +67,11 @@ class GroupModel(TreeItemModel):
         if role == "check":
             if len(opt) == 0:
                 item = QtText(
-                    data, callback=lambda txt: self.setData(index, txt), read_only=self.read_only, align=align, parent=parent
+                    data,
+                    callback=lambda txt: self.setData(index, txt),
+                    read_only=self.read_only,
+                    align=align,
+                    parent=parent,
                 )
             else:
                 index_s = self._associated_index(index, opt[0])  # check status.
@@ -102,7 +106,11 @@ class GroupModel(TreeItemModel):
             if len(opt) == 0:  # no validator.
                 data = str(data).replace("j", "i").strip(" ()")
                 item = QtText(
-                    data, callback=lambda txt: self.setData(index, txt), read_only=self.read_only, align=align, parent=parent
+                    data,
+                    callback=lambda txt: self.setData(index, txt),
+                    read_only=self.read_only,
+                    align=align,
+                    parent=parent,
                 )
             elif len(opt) == 1:  # validator only.
                 item = QtText(
@@ -185,12 +193,21 @@ class GroupModel(TreeItemModel):
             )
         elif role == "combo":
             lst = opt[0]
-            item = QtComboBox(lst=lst, current=data, callback=lambda idx: self.setData(index, idx), parent=parent)
+            item = QtComboBox(
+                lst=lst,
+                current=data,
+                callback=lambda idx: self.setData(index, idx),
+                parent=parent,
+            )
         elif role == "hide":
             return QtText("", read_only=True, parent=parent)
         else:
             item = QtText(
-                str(data), callback=lambda txt: self.setData(index, txt), read_only=self.read_only, align=align, parent=parent
+                str(data),
+                callback=lambda txt: self.setData(index, txt),
+                read_only=self.read_only,
+                align=align,
+                parent=parent,
             )
 
         if not isinstance(item, EditableWidget):
@@ -207,7 +224,6 @@ class Delegate(QItemDelegate):
 
     # ==================================================
     def paint(self, painter, option, index):
-
         if option.state & QStyle.State_Selected:
             painter.fillRect(option.rect, self.bgcolor)
 
