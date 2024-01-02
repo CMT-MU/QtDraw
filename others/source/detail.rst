@@ -13,10 +13,10 @@ core/color_dialog.py
 
 .. automodule:: qtdraw.core.color_dialog
 
-core/color_palette.py
+core/color_pixmap.py
 ---------------------
 
-.. automodule:: qtdraw.core.color_palette
+.. automodule:: qtdraw.core.color_pixmap
 
 core/editable_widget.py
 -----------------------

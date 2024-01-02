@@ -13,7 +13,7 @@ from qtpy.QtWidgets import (
 )
 from gcoreutils.convert_util import text_to_list, text_to_sympy, sympy_to_latex
 from gcoreutils.nsarray import NSArray
-from qtdraw.core.color_palette import color2pixmap, _color2pixmap
+from qtdraw.core.color_pixmap import color2pixmap, _color2pixmap
 from qtdraw.core.pixmap_converter import latex2pixmap
 from qtdraw.core.line_edit import LineEditor, Label
 
@@ -41,11 +41,21 @@ class EditableWidget(QWidget):
         self.setLayout(self.layout)
 
     # ==================================================
-    def set_editor(self, label="", init="", validator=None, decimal=4, check_var=None, callback=None):
+    def set_editor(
+        self,
+        label="",
+        init="",
+        validator=None,
+        decimal=4,
+        check_var=None,
+        callback=None,
+    ):
         if label is None:
             self.editor = None
         else:
-            self.editor = LineEditor(label, init, validator, decimal, check_var, callback, self)
+            self.editor = LineEditor(
+                label, init, validator, decimal, check_var, callback, self
+            )
             self.editor.setWindowTitle("Input Panel")
             self.editor.layout.setContentsMargins(3, 3, 3, 3)
             self.editor.resize(600, 2 * self.label.height())
@@ -148,7 +158,15 @@ class QtCheckBox(EditableWidget):
     """
 
     # ==================================================
-    def __init__(self, label=None, current=True, callback_check=None, callback_label=None, read_only=False, parent=None):
+    def __init__(
+        self,
+        label=None,
+        current=True,
+        callback_check=None,
+        callback_label=None,
+        read_only=False,
+        parent=None,
+    ):
         """
         initialize the class.
 
@@ -351,7 +369,17 @@ class QtText(EditableWidget):
     """
 
     # ==================================================
-    def __init__(self, label, callback=None, validator=None, decimal=4, check_var=None, read_only=False, align=None, parent=None):
+    def __init__(
+        self,
+        label,
+        callback=None,
+        validator=None,
+        decimal=4,
+        check_var=None,
+        read_only=False,
+        align=None,
+        parent=None,
+    ):
         """
         initialize the class.
 
@@ -372,7 +400,13 @@ class QtText(EditableWidget):
         super().__init__(label, parent=parent)
 
         if callback is not None and not read_only:
-            self.set_editor(init=label, validator=validator, decimal=decimal, check_var=check_var, callback=callback)
+            self.set_editor(
+                init=label,
+                validator=validator,
+                decimal=decimal,
+                check_var=check_var,
+                callback=callback,
+            )
             self.setLabel(self.editor.text(), align)
         else:
             self.setLabel(label, align)
@@ -420,7 +454,12 @@ class QtText(EditableWidget):
             "r_pos_vector_list",
         ]:
             text = text_to_list(label)
-            text = "\n".join(["[" + ", ".join(map(lambda j: str(j).strip(" "), i)) + "]" for i in text])
+            text = "\n".join(
+                [
+                    "[" + ", ".join(map(lambda j: str(j).strip(" "), i)) + "]"
+                    for i in text
+                ]
+            )
         else:
             text = label
 
@@ -471,7 +510,16 @@ class QtMath(EditableWidget):
             align = "left"
         if label is None:
             return
-        if validator not in [None, "s_scalar", "s_row", "s_column", "s_matrix", "s_vector", "s_column_vector", "s_vector_list"]:
+        if validator not in [
+            None,
+            "s_scalar",
+            "s_row",
+            "s_column",
+            "s_matrix",
+            "s_vector",
+            "s_column_vector",
+            "s_vector_list",
+        ]:
             return
 
         self.validator = validator
@@ -482,7 +530,9 @@ class QtMath(EditableWidget):
         super().__init__(label, parent=parent)
 
         if callback is not None and not read_only:
-            self.set_editor(init=label, validator=validator, check_var=check_var, callback=callback)
+            self.set_editor(
+                init=label, validator=validator, check_var=check_var, callback=callback
+            )
             self.setLabel(self.editor.text(), align)
         else:
             self.setLabel(label, align)
@@ -503,13 +553,24 @@ class QtMath(EditableWidget):
         if self.validator in ["s_row", "s_vector"]:
             latex = r"\begin{pmatrix}" + (r"&" + sp).join(latex) + r"\end{pmatrix}"
         elif self.validator in ["s_column", "s_column_vector"]:
-            latex = (r"\begin{pmatrix}" + r"&".join(latex) + r"\end{pmatrix}").replace(r"&", r"\\")
+            latex = (r"\begin{pmatrix}" + r"&".join(latex) + r"\end{pmatrix}").replace(
+                r"&", r"\\"
+            )
         elif self.validator == "s_matrix":
-            latex = r"\begin{pmatrix}" + r"\\".join([(r"&" + sp).join(i) for i in latex]) + r"\end{pmatrix}"
+            latex = (
+                r"\begin{pmatrix}"
+                + r"\\".join([(r"&" + sp).join(i) for i in latex])
+                + r"\end{pmatrix}"
+            )
         elif self.validator == "s_vector_list":
             latex = (
                 r"\begin{matrix}"
-                + r"\\".join([r"\begin{pmatrix}" + (r"&" + sp).join(i) + r"\end{pmatrix}" for i in latex])
+                + r"\\".join(
+                    [
+                        r"\begin{pmatrix}" + (r"&" + sp).join(i) + r"\end{pmatrix}"
+                        for i in latex
+                    ]
+                )
                 + r"\end{matrix}"
             )
 
