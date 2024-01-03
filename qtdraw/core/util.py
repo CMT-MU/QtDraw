@@ -5,7 +5,7 @@ from gcoreutils.color_palette import custom_colormap, all_colors
 import vtk
 from vtk import vtkParametricSpline
 import pyvista as pv
-from pyvista.utilities import surface_from_para
+from pyvista.core.utilities import surface_from_para
 from qtpy.QtWidgets import QApplication, QStyleFactory
 from qtdraw.core.setting import rcParams
 
