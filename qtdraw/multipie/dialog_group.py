@@ -31,6 +31,7 @@ from qtdraw.multipie.dialog_group_info import (
     create_response,
     create_atomic_mp,
 )
+from multipie.multipole.util.atomic_orbital_util import parse_orb_list
 from qtdraw.multipie.setting import rcParams
 from qtdraw.multipie.plot_object import (
     check_get_site,
@@ -546,9 +547,11 @@ class DialogGroup(QDialog):
         ket = self.main_atomic_mp_ket_basis.currentText()
 
         spinful = btype == "jm"
-        am = self._pgroup.atomic_multipole_basis(bra, ket, spinful)
+        bra = parse_orb_list(bra, spinful, self._pgroup.symmetry_operation.crystal)
+        ket = parse_orb_list(ket, spinful, self._pgroup.symmetry_operation.crystal)
+        am = self._pgroup.atomic_samb(bra, ket, spinful)
         if head != "":
-            am = am.select(head=head)
+            am = {tag: m for tag, m in am.items() if tag.head == head}
 
         create_atomic_mp(self._pgroup, bra, ket, am, self)
 
