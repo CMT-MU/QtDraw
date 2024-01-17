@@ -9,7 +9,18 @@ from qtdraw.multipie.setting import rcParams
 
 
 # ==================================================
-def show_group_info(group, name, header, role, align, data, vheader=None, width=1024, height=600, parent=None):
+def show_group_info(
+    group,
+    name,
+    header,
+    role,
+    align,
+    data,
+    vheader=None,
+    width=1024,
+    height=600,
+    parent=None,
+):
     no, _, IS, setting = group.tag.info()
     s = f"No.{no}: {str(group)}, {IS}"
     if setting:
@@ -17,7 +28,15 @@ def show_group_info(group, name, header, role, align, data, vheader=None, width=
     title = name + " - " + s
 
     table = TableDialog(
-        data, title=title, header=header, vheader=vheader, role=role, align=align, width=width, height=height, parent=parent
+        data,
+        title=title,
+        header=header,
+        vheader=vheader,
+        role=role,
+        align=align,
+        width=width,
+        height=height,
+        parent=parent,
     )
     table.show()
 
@@ -46,12 +65,26 @@ def create_harmonics(group, rank, head, qtdraw, parent):
         if dim == 1:
             comp = ""
         data.append(
-            [h.latex(), rank, irrep.latex(), mul, comp, h.expression(v=NSArray.vector3d(head)).latex(), h.definition().latex()]
+            [
+                h.latex(),
+                rank,
+                irrep.latex(),
+                mul,
+                comp,
+                h.expression(v=NSArray.vector3d(head)).latex(),
+                h.definition().latex(),
+            ]
         )
 
-    show_group_info(group, name, header, role, align, data, vheader=vheader, parent=parent)
+    show_group_info(
+        group, name, header, role, align, data, vheader=vheader, parent=parent
+    )
 
-    pos = NSArray([[np.cos(2 * np.pi * i / n), np.sin(2 * np.pi * i / n), 0.0] for i in range(n)], "vector", "value")
+    pos = NSArray(
+        [[np.cos(2 * np.pi * i / n), np.sin(2 * np.pi * i / n), 0.0] for i in range(n)],
+        "vector",
+        "value",
+    )
     color = rcParams["orbital_color_" + head]
     pname = qtdraw._get_name("orbital")
     for i in range(n):
@@ -90,7 +123,9 @@ def create_harmonics_decomp(group, rank, head, to_pg, parent):
             ex += c * TagMultipole(b).symbol()
         data.append([h.latex(), sp.latex(ex)])
 
-    show_group_info(group, name, header, role, align, data, vheader=vheader, parent=parent)
+    show_group_info(
+        group, name, header, role, align, data, vheader=vheader, parent=parent
+    )
 
 
 # ==================================================
@@ -156,7 +191,9 @@ def create_product_table(group, parent):
     for i in so.keys():
         data.append([i.latex()] + [so.product(i, j).latex() for j in so.keys()])
 
-    show_group_info(group, name, header, role, align, data, vheader=vheader, parent=parent)
+    show_group_info(
+        group, name, header, role, align, data, vheader=vheader, parent=parent
+    )
 
 
 # ==================================================
@@ -181,9 +218,13 @@ def create_symmetry_operation(group, parent):
     for no in range(len(so)):
         p = pso[no][0:3, :]
         a = aso[no][0:3, :]
-        data.append([so.full[no].latex(), p.latex(), a.latex(), p[0:3, 0:3].det().latex()])
+        data.append(
+            [so.full[no].latex(), p.latex(), a.latex(), p[0:3, 0:3].det().latex()]
+        )
 
-    show_group_info(group, name, header, role, align, data, vheader=vheader, parent=parent)
+    show_group_info(
+        group, name, header, role, align, data, vheader=vheader, parent=parent
+    )
 
 
 # ==================================================
@@ -217,7 +258,14 @@ def create_v_cluster(group, wp, bond, qtdraw, parent):
     pname = qtdraw._get_name("site")
     color = rcParams["site_color"]
     for i in range(len(site)):
-        qtdraw.plot_site(site[i], size=1.0, color=color, name=pname, label=f"{i+1}", show_lbl=rcParams["show_label"])
+        qtdraw.plot_site(
+            site[i],
+            size=1.0,
+            color=color,
+            name=pname,
+            label=f"{i+1}",
+            show_lbl=rcParams["show_label"],
+        )
 
     if bond == "":
         bond = "1"
@@ -238,7 +286,12 @@ def create_v_cluster(group, wp, bond, qtdraw, parent):
 
 # ==================================================
 def create_response(group, rank, i_type, t_type, parent):
-    dic = {("polar", "E"): "Q", ("polar", "M"): "T", ("axial", "E"): "G", ("axial", "M"): "M"}
+    dic = {
+        ("polar", "E"): "Q",
+        ("polar", "M"): "T",
+        ("axial", "E"): "G",
+        ("axial", "M"): "M",
+    }
     pgr = group.response
     head = dic[(i_type, t_type)]
     rt = pgr.select(rank=rank, head=head)
@@ -269,14 +322,24 @@ def create_atomic_mp(group, bra, ket, am, parent):
     header = ["symbol", "rank", "irrep.", "s", "k", "basis"]
     role = ["math", "text", "math", "text", "text", "math"]
     align = ["center"] * 6
-    vheader = ["", ""] + [str(i + 1) for i in range(am.active_num())]
+    vheader = ["", ""] + [str(i + 1) for i in range(len(am))]
 
     data = []
-    s = r"\langle " + str(bra) + r"|" + str(ket) + r"\rangle"
+    s = r"\langle " + ",".join(bra) + r"|" + ",".join(ket) + r"\rangle"
     data.append([""] * 5 + [s])
     data.append([""] * 6)
-    for am1 in am.values():
-        for tag, m in am1.items():
-            data.append([tag.latex(), tag.rank, TagIrrep(tag.irrep).latex(), tag.s, tag.k, NSArray(m.tolist(), "matrix").latex()])
+    for tag, am1 in am.items():
+        data.append(
+            [
+                tag.latex(),
+                tag.rank,
+                TagIrrep(tag.irrep).latex(),
+                tag.s,
+                tag.k,
+                am1.latex(),
+            ]
+        )
 
-    show_group_info(group, name, header, role, align, data, vheader=vheader, parent=parent)
+    show_group_info(
+        group, name, header, role, align, data, vheader=vheader, parent=parent
+    )
