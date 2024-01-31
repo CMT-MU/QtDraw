@@ -17,9 +17,10 @@ def cmd(filename):
     """
     n = len(filename)
     if n < 1:
-        filename = None
+        QtDraw().show()
+        exit()
     elif n > 1:
         exit()
-    filename = os.path.abspath(filename[0])
 
+    filename = os.path.abspath(filename[0])
     QtDraw(filename=filename).show()
