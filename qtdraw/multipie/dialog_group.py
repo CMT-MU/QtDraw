@@ -659,7 +659,7 @@ class DialogGroup(QDialog):
         self.tab1_pgharm_exp_latex = QCheckBox("LaTeX", self)
         self.tab1_pgharm_exp_latex.setChecked(False)
         self.tab1_wyckoff_label = QLabel(
-            "WYCKOFF: find wyckoff position and local symmetry. 1. input representative SITE/BOND, + ENTER.\n \u21d2  wyckoff position and its local symmetry are shown.",
+            "WYCKOFF: find wyckoff position and local symmetry.\n 1. input representative SITE/BOND, + ENTER.\n \u21d2  wyckoff position and its local symmetry are shown.",
             self,
         )
         self.tab1_wyckoff_pos = QLineEdit("[ 0, 0, 0 ]", self)
