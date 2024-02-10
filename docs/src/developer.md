@@ -78,3 +78,32 @@ Document for all codes.
     ```{eval-rst}
     .. automodule:: qtdraw.core.validator
     ```
+
+## multipie
+
+- dialog_group_info.py
+    ```{eval-rst}
+    .. automodule:: qtdraw.multipie.dialog_group_info
+    ```
+
+- dialog_group.py
+    ```{eval-rst}
+    .. automodule:: qtdraw.multipie.dialog_group
+    ```
+
+- dialog_modulation.py
+    ```{eval-rst}
+    .. automodule:: qtdraw.multipie.dialog_modulation
+    ```
+
+- plot_object.py
+    ```{eval-rst}
+    .. automodule:: qtdraw.multipie.plot_object
+    ```
+
+## parser
+
+- read_cif_vesta.py
+    ```{eval-rst}
+    .. automodule:: qtdraw.parser.read_cif_vesta
+    ```
