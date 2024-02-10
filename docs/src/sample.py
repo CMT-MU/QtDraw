@@ -1,3 +1,4 @@
+# sample.py
 """
 Example for QtDraw.
 """
