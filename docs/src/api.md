@@ -1,8 +1,4 @@
-<img width="128" src="qtdraw_logo.png">
-
-# QtDraw
-
-API for drawing objects.
+# API for drawing objects.
 
 ## Site (sphere)
 
