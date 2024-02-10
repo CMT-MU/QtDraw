@@ -1,6 +1,7 @@
 """
 Example for QtMultiDraw.
 """
+
 from qtdraw.qt_draw import QtMultiDraw
 
 

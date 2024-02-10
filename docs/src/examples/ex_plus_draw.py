@@ -1,6 +1,7 @@
 """
 Example for QtDraw with additional panel.
 """
+
 from qtdraw.qt_draw import QtDraw
 
 
