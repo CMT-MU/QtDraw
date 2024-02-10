@@ -1,0 +1,795 @@
+
+<!DOCTYPE html>
+
+
+<html lang="jp" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>API for drawing objects. &#8212; QtDraw</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b76e3c8a" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script src="../_static/documentation_options.js?v=8cf54648"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=36754332"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=afe5de03"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'src/api';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Change Logs (not in tags)" href="change_log.html" />
+    <link rel="prev" title="Objects" href="object.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="jp"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../README.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/qtdraw_logo.png" class="logo__image only-light" alt="QtDraw - Home"/>
+    <script>document.write(`<img src="../_static/qtdraw_logo.png" class="logo__image only-dark" alt="QtDraw - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Feature</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="object.html">Objects</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">API for drawing objects.</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Change Log</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="change_log.html">Change Logs (not in tags)</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/CMT-MU/QtDraw.git" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>API for drawing objects.</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#site-sphere">Site (sphere)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bond">Bond</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#vector">Vector</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#orbital">Orbital</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stream-vector-with-center-orbital">Stream vector with center orbital</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plane">Plane</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#box">Box</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#polygon">Polygon</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#d-text">3d text</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#spline-curve">Spline curve</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#spline-curve-parametric-function">Spline curve (parametric function)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#caption">Caption</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#text">Text</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="api-for-drawing-objects">
+<h1>API for drawing objects.<a class="headerlink" href="#api-for-drawing-objects" title="Link to this heading">#</a></h1>
+<section id="site-sphere">
+<h2>Site (sphere)<a class="headerlink" href="#site-sphere" title="Link to this heading">#</a></h2>
+<p><strong>plot_site(position, size=None, color=None, opacity=None, space=None, name=None, label=“”, show_lbl=False, cell=[0, 0, 0])</strong></p>
+<p>Args:</p>
+<ul class="simple">
+<li><p><strong>position</strong> (str or list or ndarray or NSArray): position(s) to plot site (reduced).</p></li>
+<li><p><strong>size</strong> (float, optional): size of site.</p></li>
+<li><p><strong>color</strong> (str, optional): color of site.</p></li>
+<li><p><strong>opacity</strong> (float, optional): opacity of site.</p></li>
+<li><p><strong>space</strong> (int, optional): pre-space of label.</p></li>
+<li><p><strong>name</strong> (str, optional): group name of object.</p></li>
+<li><p><strong>label</strong> (str, optional): label of object.</p></li>
+<li><p><strong>show_lbl</strong> (bool, optional): show label ?</p></li>
+<li><p><strong>cell</strong> (list, optional): cell position.</p></li>
+</ul>
+<p>Notes:</p>
+<ul class="simple">
+<li><p>if argument is None, default value is used.</p></li>
+</ul>
+</section>
+<section id="bond">
+<h2>Bond<a class="headerlink" href="#bond" title="Link to this heading">#</a></h2>
+<p><strong>plot_bond(position, vector=None, width=None, color=None, color2=“”, opacity=None, space=None, name=None, label=“”, show_lbl=False, cell=[0, 0, 0])</strong></p>
+<p>Args:</p>
+<ul class="simple">
+<li><p><strong>position</strong> (str or list or ndarray or NSArray): position(s) to plot bond center (reduced).</p></li>
+<li><p><strong>vector</strong> (str or list or ndarray or NSArray, optional): bond vector (reduced).</p></li>
+<li><p><strong>width</strong> (float, optional): width of bond.</p></li>
+<li><p><strong>color</strong> (str, optional): color of bond.</p></li>
+<li><p><strong>color2</strong> (str, optional): color of bond for half tail.</p></li>
+<li><p><strong>opacity</strong> (float, optional): opacity of bond.</p></li>
+<li><p><strong>space</strong> (int, optional): pre-space of label.</p></li>
+<li><p><strong>name</strong> (str, optional): group name of object.</p></li>
+<li><p><strong>label</strong> (str, optional): label of object.</p></li>
+<li><p><strong>show_lbl</strong> (bool, optional): show label ?</p></li>
+<li><p><strong>cell</strong> (list, optional): cell position.</p></li>
+</ul>
+<p>Notes:</p>
+<ul class="simple">
+<li><p>if argument is None, default value is used.</p></li>
+<li><p>if color2 is “”, same color is used.</p></li>
+</ul>
+</section>
+<section id="vector">
+<h2>Vector<a class="headerlink" href="#vector" title="Link to this heading">#</a></h2>
+<p><strong>plot_vector(position, vector=None, length=None, width=None, offset=None, color=None, opacity=None, space=None, name=None, label=“”, show_lbl=False, cell=[0, 0, 0])</strong></p>
+<p>Args:</p>
+<ul class="simple">
+<li><p><strong>position</strong> (str or list or ndarray or NSArray): position(s) to plot vector (reduced).</p></li>
+<li><p><strong>vector</strong> (str or list or ndarray or NSArray, optional): vector direction (cartesian).</p></li>
+<li><p><strong>length</strong> (float, optional): length of vector.</p></li>
+<li><p><strong>width</strong> (float, optional): width of vector.</p></li>
+<li><p><strong>offset</strong> (float, optional): offset of vector end (ratio).</p></li>
+<li><p><strong>color</strong> (str, optional): color of vector.</p></li>
+<li><p><strong>opacity</strong> (float, optional): opacity of vector.</p></li>
+<li><p><strong>space</strong> (int, optional): pre-space of label.</p></li>
+<li><p><strong>name</strong> (str, optional): group name of object.</p></li>
+<li><p><strong>label</strong> (str, optional): label of object.</p></li>
+<li><p><strong>show_lbl</strong> (bool, optional): show label ?</p></li>
+<li><p><strong>cell</strong> (list, optional): cell position.</p></li>
+</ul>
+<p>Notes:</p>
+<ul class="simple">
+<li><p>if argument is None, default value is used.</p></li>
+<li><p>vector is not necessary to be normalized.</p></li>
+</ul>
+</section>
+<section id="orbital">
+<h2>Orbital<a class="headerlink" href="#orbital" title="Link to this heading">#</a></h2>
+<p><strong>plot_orbital(position, shape=None, surface=“”, size=None, theta_range=None, phi_range=None, color=None, opacity=None, space=None, scale=True, name=None, label=“”, show_lbl=False, cell=[0, 0, 0])</strong></p>
+<p>Args:</p>
+<ul class="simple">
+<li><p><strong>position</strong> (str or list or ndarray or NSArray): position(s) to plot orbital (reduced).</p></li>
+<li><p><strong>shape</strong> (str, optional): (x,y,z) shape of orbital in terms of (x,y,z) (cartesian).</p></li>
+<li><p><strong>surface</strong> (str, optional): surface color in terms of (x,y,z) (cartesian).</p></li>
+<li><p><strong>size</strong> (float, optional): size of orbital.</p></li>
+<li><p><strong>theta_range</strong> (str or list or ndarray or NSArray, optional): theta range, default=[0,180].</p></li>
+<li><p><strong>phi_range</strong> (str or list or ndarray or NSArray, optional): phi range, default=[0,360].</p></li>
+<li><p><strong>color</strong> (str, optional): color/colormap of surface.</p></li>
+<li><p><strong>opacity</strong> (float, optional): opacity of orbital.</p></li>
+<li><p><strong>space</strong> (int, optional): pre-space of label.</p></li>
+<li><p><strong>scale</strong> (bool, optional): if False, absolute size is used.</p></li>
+<li><p><strong>name</strong> (str, optional): group name of object.</p></li>
+<li><p><strong>label</strong> (str, optional): label of object.</p></li>
+<li><p><strong>show_lbl</strong> (bool, optional): show label ?</p></li>
+<li><p><strong>cell</strong> (list, optional): cell position.</p></li>
+</ul>
+<p>Notes:</p>
+<ul class="simple">
+<li><p>if surface is “”, surface is same as shape.</p></li>
+<li><p>if argument is None, default value is used.</p></li>
+</ul>
+</section>
+<section id="stream-vector-with-center-orbital">
+<h2>Stream vector with center orbital<a class="headerlink" href="#stream-vector-with-center-orbital" title="Link to this heading">#</a></h2>
+<p><strong>plot_stream_vector(position, shape=None, vector=None, size=None, v_size=None, width=None, scale=None, theta=None, phi=None, theta_range=None, phi_range=None, color=None, component=None, opacity=None, space=None, name=None, label=“”, show_lbl=False, cell=[0, 0, 0])</strong></p>
+<p>Args:</p>
+<ul class="simple">
+<li><p><strong>position</strong> (str or list or ndarray or NSArray): position(s) to plot stream vector (reduced).</p></li>
+<li><p><strong>shape</strong> (str, optional): shape of center orbital in terms of (x,y,z) (cartesian).</p></li>
+<li><p><strong>vector</strong> (str or list or ndarray or NSArray, optional): vector components in terms of (x,y,z) [str]/str (cartesian).</p></li>
+<li><p><strong>size</strong> (float, optional): size of orbital.</p></li>
+<li><p><strong>v_size</strong> (float, optional): ratio of vector size to orbital.</p></li>
+<li><p><strong>width</strong> (float, optional): width of vector.</p></li>
+<li><p><strong>scale</strong> (bool, optional): scale vector size by value ?</p></li>
+<li><p><strong>theta</strong> (int, optional): resolution in theta direction.</p></li>
+<li><p><strong>phi</strong> (int, optional): resolution in phi direction.</p></li>
+<li><p><strong>theta_range</strong> (str or list or ndarray or NSArray, optional): theta range, default=[0,180].</p></li>
+<li><p><strong>phi_range</strong> (str or list or ndarray or NSArray, optional): phi range, default=[0,360].</p></li>
+<li><p><strong>color</strong> (str, optional): color of vector.</p></li>
+<li><p><strong>component</strong> (int, optional): component of vector to use for colormap (0,1,2,None = x,y,z,abs.).</p></li>
+<li><p><strong>opacity</strong> (float, optional): opacity of center orbital.</p></li>
+<li><p><strong>space</strong> (int, optional): pre-space of label.</p></li>
+<li><p><strong>name</strong> (str, optional): group name of object.</p></li>
+<li><p><strong>label</strong> (str, optional): label of object.</p></li>
+<li><p><strong>show_lbl</strong> (bool, optional): show label ?</p></li>
+<li><p><strong>cell</strong> (list, optional): cell position.</p></li>
+</ul>
+<p>Notes:</p>
+<ul class="simple">
+<li><p>if shape is None, “1” is used.</p></li>
+<li><p>if argument is None, default value is used.</p></li>
+</ul>
+</section>
+<section id="plane">
+<h2>Plane<a class="headerlink" href="#plane" title="Link to this heading">#</a></h2>
+<p><strong>plot_plane(position, normal=None, x=None, y=None, color=None, opacity=None, space=None, name=None, label=“”, show_lbl=False, cell=[0, 0, 0])</strong></p>
+<p>Args:</p>
+<ul class="simple">
+<li><p><strong>position</strong> (str or list or ndarray or NSArray): position(s) to plot plane (reduced).</p></li>
+<li><p><strong>normal</strong> (str or list or ndarray or NSArray, optional): normal vector of plane (reduced).</p></li>
+<li><p><strong>x</strong> (float, optional): x size of plane.</p></li>
+<li><p><strong>y</strong> (float, optional); y size of plane.</p></li>
+<li><p><strong>color</strong> (str, optional): color of plane.</p></li>
+<li><p><strong>opacity</strong> (float, optional): opacity of plane.</p></li>
+<li><p><strong>space</strong> (int, optional): pre-space of label.</p></li>
+<li><p><strong>name</strong> (str, optional): group name of object.</p></li>
+<li><p><strong>label</strong> (str, optional): label of object.</p></li>
+<li><p><strong>show_lbl</strong> (bool, optional): show label ?</p></li>
+<li><p><strong>cell</strong> (list, optional): cell position.</p></li>
+</ul>
+<p>Notes:</p>
+<ul class="simple">
+<li><p>position is for center of plane.</p></li>
+<li><p>if argument is None, default value is used.</p></li>
+<li><p>normal is not necessary to be normalized.</p></li>
+</ul>
+</section>
+<section id="box">
+<h2>Box<a class="headerlink" href="#box" title="Link to this heading">#</a></h2>
+<p><strong>plot_box(position, a1=None, a2=None, a3=None, edge=None, wireframe=None, width=None, color=None, opacity=None, space=None, name=None, label=“”, show_lbl=False, cell=[0, 0, 0])</strong></p>
+<p>Args:</p>
+<ul class="simple">
+<li><p><strong>position</strong> (str or list or ndarray or NSArray): position(s) to plot box (reduced).</p></li>
+<li><p><strong>a1</strong> (str or list or ndarray or NSArray, optional): 1st direction of box (reduced).</p></li>
+<li><p><strong>a2</strong> (str or list or ndarray or NSArray, optional): 2nd direction of box (reduced).</p></li>
+<li><p><strong>a3</strong> (str or list or ndarray or NSArray, optional): 3rd direction of box (reduced).</p></li>
+<li><p><strong>edge</strong> (bool, optional): show edge of box ?</p></li>
+<li><p><strong>wireframe</strong> (bool, optional): draw box by wireframe ?</p></li>
+<li><p><strong>width</strong> (float, optional): line width of box for wireframe plot.</p></li>
+<li><p><strong>color</strong> (str, optional): color of box.</p></li>
+<li><p><strong>opacity</strong> (float, optional): opacity of box.</p></li>
+<li><p><strong>space</strong> (int, optional): pre-space of label.</p></li>
+<li><p><strong>name</strong> (str, optional): group name of object.</p></li>
+<li><p><strong>label</strong> (str, optional): label of object.</p></li>
+<li><p><strong>show_lbl</strong> (bool, optional): show label ?</p></li>
+<li><p><strong>cell</strong> (list, optional): cell position.</p></li>
+</ul>
+<p>Notes:</p>
+<ul class="simple">
+<li><p>if argument is None, default value is used.</p></li>
+</ul>
+</section>
+<section id="polygon">
+<h2>Polygon<a class="headerlink" href="#polygon" title="Link to this heading">#</a></h2>
+<p><strong>plot_polygon(position, point=None, connection=None, edge=None, wireframe=None, width=None, color=None, opacity=None, space=None, name=None, label=“”, show_lbl=False, cell=[0, 0, 0])</strong></p>
+<p>Args:</p>
+<ul class="simple">
+<li><p><strong>position</strong> (str or list or ndarray or NSArray): position(s) to plot polygon (reduced).</p></li>
+<li><p><strong>point</strong> (str or list or ndarray or NSArray, optional): vertices of polygon (reduced).</p></li>
+<li><p><strong>connection</strong> (str or list or ndarray or NSArray, optional): list of connected vectices for each plane.</p></li>
+<li><p><strong>edge</strong> (bool, optional): show edge of box ?</p></li>
+<li><p><strong>wireframe</strong> (bool, optional): draw box by wireframe ?</p></li>
+<li><p><strong>width</strong> (float, optional): line width of box for wireframe plot.</p></li>
+<li><p><strong>color</strong> (str, optional): color of box.</p></li>
+<li><p><strong>opacity</strong> (float, optional): opacity of box.</p></li>
+<li><p><strong>space</strong> (int, optional): pre-space of label.</p></li>
+<li><p><strong>name</strong> (str, optional): group name of object.</p></li>
+<li><p><strong>label</strong> (str, optional): label of object.</p></li>
+<li><p><strong>show_lbl</strong> (bool, optional): show label ?</p></li>
+<li><p><strong>cell</strong> (list, optional): cell position.</p></li>
+</ul>
+<p>Notes:</p>
+<ul class="simple">
+<li><p>if argument is None, default value is used.</p></li>
+</ul>
+</section>
+<section id="d-text">
+<h2>3d text<a class="headerlink" href="#d-text" title="Link to this heading">#</a></h2>
+<p><strong>plot_text3d(position, text=None, size=None, depth=None, normal=None, offset=None, color=None, opacity=None, space=None, name=None, label=“”, show_lbl=False, cell=[0, 0, 0])</strong></p>
+<p>Args:</p>
+<ul class="simple">
+<li><p><strong>position</strong> (str or list or ndarray or NSArray): position(s) to plot 3d text (reduced).</p></li>
+<li><p><strong>text</strong> (str, optional): text.</p></li>
+<li><p><strong>size</strong> (float, optional): size of text.</p></li>
+<li><p><strong>depth</strong> (float, optional): depth of text.</p></li>
+<li><p><strong>normal</strong> (str or list or ndarray or NSArray, optional): normal vector of text (reduced).</p></li>
+<li><p><strong>offset</strong> (str or list or ndarray or NSArray, optional): offset of text.</p></li>
+<li><p><strong>color</strong> (str, optional): color of text.</p></li>
+<li><p><strong>opacity</strong> (float, optional): opacity of text.</p></li>
+<li><p><strong>space</strong> (int, optional): pre-space of label.</p></li>
+<li><p><strong>name</strong> (str, optional): group name of object.</p></li>
+<li><p><strong>label</strong> (str, optional): label of object.</p></li>
+<li><p><strong>show_lbl</strong> (bool, optional): show label ?</p></li>
+<li><p><strong>cell</strong> (list, optional): cell position.</p></li>
+</ul>
+<p>Notes:</p>
+<ul class="simple">
+<li><p>if argument is None, default value is used.</p></li>
+<li><p>normal is not necessary to be normalized.</p></li>
+</ul>
+</section>
+<section id="spline-curve">
+<h2>Spline curve<a class="headerlink" href="#spline-curve" title="Link to this heading">#</a></h2>
+<p><strong>plot_spline(position, point=None, width=None, n_interp=None, closed=None, natural=None, color=None, opacity=None, space=None, name=None, label=“”, show_lbl=False, cell=[0, 0, 0])</strong></p>
+<p>Args:</p>
+<ul class="simple">
+<li><p><strong>position</strong> (str or list or ndarray or NSArray): position(s) to plot spline curve (reduced).</p></li>
+<li><p><strong>point</strong> (str or list or ndarray or NSArray, optional): points to be interpolated (reduced).</p></li>
+<li><p><strong>width</strong> (float, optioanl): width of spline curve.</p></li>
+<li><p><strong>n_interp</strong> (int, optional): number of interpolation points.</p></li>
+<li><p><strong>closed</strong> (bool, optional): closed spline ?</p></li>
+<li><p><strong>natural</strong> (bool, optional): natural boundary ?</p></li>
+<li><p><strong>color</strong> (str, optional): color of spline curve.</p></li>
+<li><p><strong>opacity</strong> (float, optional): opacity of spline curve.</p></li>
+<li><p><strong>space</strong> (int, optional): pre-space of label.</p></li>
+<li><p><strong>name</strong> (str, optional): group name of object.</p></li>
+<li><p><strong>label</strong> (str, optional): label of object.</p></li>
+<li><p><strong>show_lbl</strong> (bool, optional): show label ?</p></li>
+<li><p><strong>cell</strong> (list, optional): cell position.</p></li>
+</ul>
+<p>Notes:</p>
+<ul class="simple">
+<li><p>if argument is None, default value is used.</p></li>
+</ul>
+</section>
+<section id="spline-curve-parametric-function">
+<h2>Spline curve (parametric function)<a class="headerlink" href="#spline-curve-parametric-function" title="Link to this heading">#</a></h2>
+<p><strong>plot_spline_t(position, expression=None, t_range=None, width=None, n_interp=None, closed=None, natural=None, color=None, opacity=None, space=None, name=None, label=“”, show_lbl=False, cell=[0, 0, 0])</strong></p>
+<p>Args:</p>
+<ul class="simple">
+<li><p><strong>position</strong> (str or list or ndarray or NSArray): position(s) to plot spline curve (reduced).</p></li>
+<li><p><strong>expression</strong> (str or list or ndarray or NSArray, optional): component function of “t” to create interpolated points (reduced).</p></li>
+<li><p><strong>t_range</strong> (str or list or ndarray or NSArray, optional): range of “t”, [start, stop, step].</p></li>
+<li><p><strong>width</strong> (float, optioanl): width of spline curve.</p></li>
+<li><p><strong>n_interp</strong> (int, optional): number of interpolation points.</p></li>
+<li><p><strong>closed</strong> (bool, optional): closed spline ?</p></li>
+<li><p><strong>natural</strong> (bool, optional): natural boundary ?</p></li>
+<li><p><strong>color</strong> (str, optional): color of spline curve.</p></li>
+<li><p><strong>opacity</strong> (float, optional): opacity of spline curve.</p></li>
+<li><p><strong>space</strong> (int, optional): pre-space of label.</p></li>
+<li><p><strong>name</strong> (str, optional): group name of object.</p></li>
+<li><p><strong>label</strong> (str, optional): label of object.</p></li>
+<li><p><strong>show_lbl</strong> (bool, optional): show label ?</p></li>
+<li><p><strong>cell</strong> (list, optional): cell position.</p></li>
+</ul>
+<p>Notes:</p>
+<ul class="simple">
+<li><p>if argument is None, default value is used.</p></li>
+</ul>
+</section>
+<section id="caption">
+<h2>Caption<a class="headerlink" href="#caption" title="Link to this heading">#</a></h2>
+<p><strong>plot_caption(position, caption=None, space=None, size=None, color=None, bold=None, name=None, cell=[0, 0, 0])</strong></p>
+<p>Args:</p>
+<ul class="simple">
+<li><p><strong>position</strong> (str or list or ndarray or NSArray): position(s) to plot labels (reduced).</p></li>
+<li><p><strong>caption</strong> (str or list, optional): label or list of labels.</p></li>
+<li><p><strong>space</strong> (int, optional): pre-space of label.</p></li>
+<li><p><strong>size</strong> (int, optional): font size.</p></li>
+<li><p><strong>color</strong> (str, optional): text color.</p></li>
+<li><p><strong>bold</strong> (bool, optional): bold face ?</p></li>
+<li><p><strong>name</strong> (str, optional): group name.</p></li>
+<li><p><strong>cell</strong> (list, optional): cell position.</p></li>
+</ul>
+<p>Notes:</p>
+<ul class="simple">
+<li><p>if caption is None, simple number is used.</p></li>
+<li><p>if argument is None, default value is used.</p></li>
+<li><p>list size of caption must be equal to that of position.</p></li>
+</ul>
+</section>
+<section id="text">
+<h2>Text<a class="headerlink" href="#text" title="Link to this heading">#</a></h2>
+<p><strong>plot_text(position, caption=None, relative=None, size=None, color=None, font=None, name=None)</strong></p>
+<p>Args:</p>
+<ul class="simple">
+<li><p><strong>position</strong> (str or list or ndarray or NSArray): position to plot caption, [x,y].</p></li>
+<li><p><strong>caption</strong> (str, optional): label.</p></li>
+<li><p><strong>relative</strong> (bool, optional): relative position ?</p></li>
+<li><p><strong>size</strong> (int, optional): font size.</p></li>
+<li><p><strong>color</strong> (str, optional): text color.</p></li>
+<li><p><strong>font</strong> (str, optional): font, “arial/times/courier”.</p></li>
+<li><p><strong>name</strong> (str, optional): group name.</p></li>
+</ul>
+<p>Notes:</p>
+<ul class="simple">
+<li><p>if argument is None, default value is used.</p></li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./src"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#site-sphere">Site (sphere)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bond">Bond</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#vector">Vector</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#orbital">Orbital</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stream-vector-with-center-orbital">Stream vector with center orbital</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plane">Plane</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#box">Box</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#polygon">Polygon</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#d-text">3d text</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#spline-curve">Spline curve</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#spline-curve-parametric-function">Spline curve (parametric function)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#caption">Caption</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#text">Text</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Hiroaki Kusunose
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2021-2024.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
