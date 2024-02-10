@@ -1,0 +1,526 @@
+
+<!DOCTYPE html>
+
+
+<html lang="jp" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>qtdraw.core.validator &#8212; QtDraw</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b76e3c8a" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="../../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script src="../../../_static/documentation_options.js?v=8cf54648"></script>
+    <script src="../../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../_static/design-tabs.js?v=36754332"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../../_static/sphinx-thebe.js?v=afe5de03"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/qtdraw/core/validator';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="jp"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../../../README.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/qtdraw_logo.png" class="logo__image only-light" alt="QtDraw - Home"/>
+    <script>document.write(`<img src="../../../_static/qtdraw_logo.png" class="logo__image only-dark" alt="QtDraw - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Feature</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../src/object.html">Objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../src/api.html">API for drawing objects.</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Misc.</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../src/example.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../src/class.html">Class Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../src/developer.html">For Developer</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Change Log</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../src/change_log.html">Change Logs (not in tags)</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/CMT-MU/QtDraw.git" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for qtdraw.core.validator</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">qtpy.QtGui</span> <span class="kn">import</span> <span class="n">QDoubleValidator</span><span class="p">,</span> <span class="n">QRegExpValidator</span><span class="p">,</span> <span class="n">QValidator</span>
+<span class="kn">from</span> <span class="nn">qtpy.QtCore</span> <span class="kn">import</span> <span class="n">QRegExp</span>
+<span class="kn">from</span> <span class="nn">qtdraw.core.pixmap_converter</span> <span class="kn">import</span> <span class="n">_latex2pixmap</span>
+
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">regular-expression patterns.</span>
+<span class="sd">    - see, https://regexlib.com/CheatSheet.aspx</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="c1"># scalar.</span>
+<span class="n">int_ptn</span> <span class="o">=</span> <span class="s2">&quot;[+-]?[0-9]+&quot;</span>
+<span class="n">float_ptn</span> <span class="o">=</span> <span class="s2">&quot;[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)&quot;</span>
+<span class="n">str_ptn</span> <span class="o">=</span> <span class="s2">&quot;[^\[\],</span><span class="se">\&quot;</span><span class="s2">&#39;]*&quot;</span>  <span class="c1"># except [],&quot;</span>
+<span class="n">int_pos_ptn</span> <span class="o">=</span> <span class="s2">&quot;[+]?[0-9]+&quot;</span>
+<span class="n">float_pos_ptn</span> <span class="o">=</span> <span class="s2">&quot;[+]?([0-9]+([.][0-9]*)?|[.][0-9]+)&quot;</span>
+
+<span class="c1"># 3-component vector.</span>
+<span class="n">int_vector_ptn</span> <span class="o">=</span> <span class="s2">&quot;^\[(&quot;</span> <span class="o">+</span> <span class="n">int_ptn</span> <span class="o">+</span> <span class="s2">&quot;,)</span><span class="si">{2}</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">int_ptn</span> <span class="o">+</span> <span class="s2">&quot;\]$&quot;</span>
+<span class="n">int_pos_vector_ptn</span> <span class="o">=</span> <span class="s2">&quot;^\[(&quot;</span> <span class="o">+</span> <span class="n">int_pos_ptn</span> <span class="o">+</span> <span class="s2">&quot;,)</span><span class="si">{2}</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">int_pos_ptn</span> <span class="o">+</span> <span class="s2">&quot;\]$&quot;</span>
+<span class="n">float_vector_ptn</span> <span class="o">=</span> <span class="s2">&quot;^\[(&quot;</span> <span class="o">+</span> <span class="n">float_ptn</span> <span class="o">+</span> <span class="s2">&quot;,)</span><span class="si">{2}</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">float_ptn</span> <span class="o">+</span> <span class="s2">&quot;\]$&quot;</span>
+<span class="n">float_pos_vector_ptn</span> <span class="o">=</span> <span class="s2">&quot;^\[(&quot;</span> <span class="o">+</span> <span class="n">float_pos_ptn</span> <span class="o">+</span> <span class="s2">&quot;,)</span><span class="si">{2}</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">float_pos_ptn</span> <span class="o">+</span> <span class="s2">&quot;\]$&quot;</span>
+<span class="n">str_vector_ptn</span> <span class="o">=</span> <span class="s2">&quot;^\[(&quot;</span> <span class="o">+</span> <span class="n">str_ptn</span> <span class="o">+</span> <span class="s2">&quot;,)</span><span class="si">{2}</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">str_ptn</span> <span class="o">+</span> <span class="s2">&quot;\]$&quot;</span>
+
+<span class="c1"># list.</span>
+<span class="n">int_list_ptn</span> <span class="o">=</span> <span class="s2">&quot;^\[(&quot;</span> <span class="o">+</span> <span class="n">int_ptn</span> <span class="o">+</span> <span class="s2">&quot;,)*&quot;</span> <span class="o">+</span> <span class="n">int_ptn</span> <span class="o">+</span> <span class="s2">&quot;\]$&quot;</span>
+<span class="n">int_pos_list_ptn</span> <span class="o">=</span> <span class="s2">&quot;^\[(&quot;</span> <span class="o">+</span> <span class="n">int_pos_ptn</span> <span class="o">+</span> <span class="s2">&quot;,)*&quot;</span> <span class="o">+</span> <span class="n">int_pos_ptn</span> <span class="o">+</span> <span class="s2">&quot;\]$&quot;</span>
+<span class="n">float_list_ptn</span> <span class="o">=</span> <span class="s2">&quot;^\[(&quot;</span> <span class="o">+</span> <span class="n">float_ptn</span> <span class="o">+</span> <span class="s2">&quot;,)*&quot;</span> <span class="o">+</span> <span class="n">float_ptn</span> <span class="o">+</span> <span class="s2">&quot;\]$&quot;</span>
+<span class="n">float_pos_list_ptn</span> <span class="o">=</span> <span class="s2">&quot;^\[(&quot;</span> <span class="o">+</span> <span class="n">float_pos_ptn</span> <span class="o">+</span> <span class="s2">&quot;,)*&quot;</span> <span class="o">+</span> <span class="n">float_pos_ptn</span> <span class="o">+</span> <span class="s2">&quot;\]$&quot;</span>
+<span class="n">str_list_ptn</span> <span class="o">=</span> <span class="s2">&quot;^\[(&quot;</span> <span class="o">+</span> <span class="n">str_ptn</span> <span class="o">+</span> <span class="s2">&quot;,)*&quot;</span> <span class="o">+</span> <span class="n">str_ptn</span> <span class="o">+</span> <span class="s2">&quot;\]$&quot;</span>
+
+<span class="c1"># list of 3-component vector.</span>
+<span class="n">int_vector_list_ptn</span> <span class="o">=</span> <span class="s2">&quot;^\[(&quot;</span> <span class="o">+</span> <span class="n">int_vector_ptn</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;,)*&quot;</span> <span class="o">+</span> <span class="n">int_vector_ptn</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;\]$&quot;</span>
+<span class="n">int_pos_vector_list_ptn</span> <span class="o">=</span> <span class="s2">&quot;^\[(&quot;</span> <span class="o">+</span> <span class="n">int_pos_vector_ptn</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;,)*&quot;</span> <span class="o">+</span> <span class="n">int_pos_vector_ptn</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;\]$&quot;</span>
+<span class="n">float_vector_list_ptn</span> <span class="o">=</span> <span class="s2">&quot;^\[(&quot;</span> <span class="o">+</span> <span class="n">float_vector_ptn</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;,)*&quot;</span> <span class="o">+</span> <span class="n">float_vector_ptn</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;\]$&quot;</span>
+<span class="n">float_pos_vector_list_ptn</span> <span class="o">=</span> <span class="s2">&quot;^\[(&quot;</span> <span class="o">+</span> <span class="n">float_pos_vector_ptn</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;,)*&quot;</span> <span class="o">+</span> <span class="n">float_pos_vector_ptn</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;\]$&quot;</span>
+<span class="n">str_vector_list_ptn</span> <span class="o">=</span> <span class="s2">&quot;^\[(&quot;</span> <span class="o">+</span> <span class="n">str_vector_ptn</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;,)*&quot;</span> <span class="o">+</span> <span class="n">str_vector_ptn</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;\]$&quot;</span>
+
+<span class="c1"># list of list.</span>
+<span class="n">int_list_list_ptn</span> <span class="o">=</span> <span class="s2">&quot;^\[(&quot;</span> <span class="o">+</span> <span class="n">int_list_ptn</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;,)*&quot;</span> <span class="o">+</span> <span class="n">int_list_ptn</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;\]$&quot;</span>
+<span class="n">int_pos_list_list_ptn</span> <span class="o">=</span> <span class="s2">&quot;^\[(&quot;</span> <span class="o">+</span> <span class="n">int_pos_list_ptn</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;,)*&quot;</span> <span class="o">+</span> <span class="n">int_pos_list_ptn</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;\]$&quot;</span>
+<span class="n">float_list_list_ptn</span> <span class="o">=</span> <span class="s2">&quot;^\[(&quot;</span> <span class="o">+</span> <span class="n">float_list_ptn</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;,)*&quot;</span> <span class="o">+</span> <span class="n">float_list_ptn</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;\]$&quot;</span>
+<span class="n">float_pos_list_list_ptn</span> <span class="o">=</span> <span class="s2">&quot;^\[(&quot;</span> <span class="o">+</span> <span class="n">float_pos_list_ptn</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;,)*&quot;</span> <span class="o">+</span> <span class="n">float_pos_list_ptn</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;\]$&quot;</span>
+<span class="n">str_list_list_ptn</span> <span class="o">=</span> <span class="s2">&quot;^\[(&quot;</span> <span class="o">+</span> <span class="n">str_list_ptn</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;,)*&quot;</span> <span class="o">+</span> <span class="n">str_list_ptn</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;\]$&quot;</span>
+
+
+<div class="viewcode-block" id="UnitValidator">
+<a class="viewcode-back" href="../../../src/developer.html#qtdraw.core.validator.UnitValidator">[docs]</a>
+<span class="k">class</span> <span class="nc">UnitValidator</span><span class="p">(</span><span class="n">QDoubleValidator</span><span class="p">):</span>
+<div class="viewcode-block" id="UnitValidator.__init__">
+<a class="viewcode-back" href="../../../src/developer.html#qtdraw.core.validator.UnitValidator.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setNotation</span><span class="p">(</span><span class="n">QDoubleValidator</span><span class="o">.</span><span class="n">StandardNotation</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="LaTeXValidator">
+<a class="viewcode-back" href="../../../src/developer.html#qtdraw.core.validator.LaTeXValidator">[docs]</a>
+<span class="k">class</span> <span class="nc">LaTeXValidator</span><span class="p">(</span><span class="n">QValidator</span><span class="p">):</span>
+<div class="viewcode-block" id="LaTeXValidator.__init__">
+<a class="viewcode-back" href="../../../src/developer.html#qtdraw.core.validator.LaTeXValidator.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="LaTeXValidator.validate">
+<a class="viewcode-back" href="../../../src/developer.html#qtdraw.core.validator.LaTeXValidator.validate">[docs]</a>
+    <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">pos</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">text</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s2">&quot;$&quot;</span><span class="p">):</span>
+            <span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s2">&quot;$&quot;</span><span class="p">)</span>
+            <span class="n">flag</span> <span class="o">=</span> <span class="n">_latex2pixmap</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">flag</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">QValidator</span><span class="o">.</span><span class="n">Invalid</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">pos</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;$&quot;</span> <span class="o">+</span> <span class="n">text</span> <span class="o">+</span> <span class="s2">&quot;$&quot;</span>
+        <span class="k">return</span> <span class="n">QValidator</span><span class="o">.</span><span class="n">Acceptable</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">pos</span></div>
+</div>
+
+
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">validator mapping.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="n">validator_map</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;int&quot;</span><span class="p">:</span> <span class="n">int_ptn</span><span class="p">,</span>
+    <span class="s2">&quot;real&quot;</span><span class="p">:</span> <span class="n">float_ptn</span><span class="p">,</span>
+    <span class="s2">&quot;string&quot;</span><span class="p">:</span> <span class="n">str_ptn</span><span class="p">,</span>
+    <span class="s2">&quot;int_positive&quot;</span><span class="p">:</span> <span class="n">int_pos_ptn</span><span class="p">,</span>
+    <span class="s2">&quot;real_positive&quot;</span><span class="p">:</span> <span class="n">float_pos_ptn</span><span class="p">,</span>
+    <span class="s2">&quot;real_unit&quot;</span><span class="p">:</span> <span class="s2">&quot;real_unit&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;latex&quot;</span><span class="p">:</span> <span class="s2">&quot;latex&quot;</span><span class="p">,</span>
+    <span class="c1">#</span>
+    <span class="s2">&quot;i_scalar&quot;</span><span class="p">:</span> <span class="n">int_ptn</span><span class="p">,</span>
+    <span class="s2">&quot;i_pos_scalar&quot;</span><span class="p">:</span> <span class="n">int_pos_ptn</span><span class="p">,</span>
+    <span class="s2">&quot;i_row&quot;</span><span class="p">:</span> <span class="n">int_list_ptn</span><span class="p">,</span>
+    <span class="s2">&quot;i_pos_row&quot;</span><span class="p">:</span> <span class="n">int_pos_list_ptn</span><span class="p">,</span>
+    <span class="s2">&quot;i_column&quot;</span><span class="p">:</span> <span class="n">int_list_ptn</span><span class="p">,</span>
+    <span class="s2">&quot;i_pos_column&quot;</span><span class="p">:</span> <span class="n">int_pos_list_ptn</span><span class="p">,</span>
+    <span class="s2">&quot;i_matrix&quot;</span><span class="p">:</span> <span class="n">int_list_list_ptn</span><span class="p">,</span>
+    <span class="s2">&quot;i_pos_matrix&quot;</span><span class="p">:</span> <span class="n">int_pos_list_list_ptn</span><span class="p">,</span>
+    <span class="s2">&quot;i_vector&quot;</span><span class="p">:</span> <span class="n">int_vector_ptn</span><span class="p">,</span>
+    <span class="s2">&quot;i_pos_vector&quot;</span><span class="p">:</span> <span class="n">int_pos_vector_ptn</span><span class="p">,</span>
+    <span class="s2">&quot;i_column_vector&quot;</span><span class="p">:</span> <span class="n">int_vector_ptn</span><span class="p">,</span>
+    <span class="s2">&quot;i_pos_column_vector&quot;</span><span class="p">:</span> <span class="n">int_pos_vector_ptn</span><span class="p">,</span>
+    <span class="s2">&quot;i_vector_list&quot;</span><span class="p">:</span> <span class="n">int_vector_list_ptn</span><span class="p">,</span>
+    <span class="s2">&quot;i_pos_vector_list&quot;</span><span class="p">:</span> <span class="n">int_pos_vector_list_ptn</span><span class="p">,</span>
+    <span class="c1">#</span>
+    <span class="s2">&quot;r_scalar&quot;</span><span class="p">:</span> <span class="n">float_ptn</span><span class="p">,</span>
+    <span class="s2">&quot;r_pos_scalar&quot;</span><span class="p">:</span> <span class="n">float_pos_ptn</span><span class="p">,</span>
+    <span class="s2">&quot;r_row&quot;</span><span class="p">:</span> <span class="n">float_list_ptn</span><span class="p">,</span>
+    <span class="s2">&quot;r_pos_row&quot;</span><span class="p">:</span> <span class="n">float_pos_list_ptn</span><span class="p">,</span>
+    <span class="s2">&quot;r_column&quot;</span><span class="p">:</span> <span class="n">float_list_ptn</span><span class="p">,</span>
+    <span class="s2">&quot;r_pos_column&quot;</span><span class="p">:</span> <span class="n">float_pos_list_ptn</span><span class="p">,</span>
+    <span class="s2">&quot;r_matrix&quot;</span><span class="p">:</span> <span class="n">float_list_list_ptn</span><span class="p">,</span>
+    <span class="s2">&quot;r_pos_matrix&quot;</span><span class="p">:</span> <span class="n">float_pos_list_list_ptn</span><span class="p">,</span>
+    <span class="s2">&quot;r_vector&quot;</span><span class="p">:</span> <span class="n">float_vector_ptn</span><span class="p">,</span>
+    <span class="s2">&quot;r_pos_vector&quot;</span><span class="p">:</span> <span class="n">float_pos_vector_ptn</span><span class="p">,</span>
+    <span class="s2">&quot;r_column_vector&quot;</span><span class="p">:</span> <span class="n">float_vector_ptn</span><span class="p">,</span>
+    <span class="s2">&quot;r_pos_column_vector&quot;</span><span class="p">:</span> <span class="n">float_pos_vector_ptn</span><span class="p">,</span>
+    <span class="s2">&quot;r_vector_list&quot;</span><span class="p">:</span> <span class="n">float_vector_list_ptn</span><span class="p">,</span>
+    <span class="s2">&quot;r_pos_vector_list&quot;</span><span class="p">:</span> <span class="n">float_pos_vector_list_ptn</span><span class="p">,</span>
+    <span class="c1">#</span>
+    <span class="s2">&quot;s_scalar&quot;</span><span class="p">:</span> <span class="n">str_ptn</span><span class="p">,</span>
+    <span class="s2">&quot;s_row&quot;</span><span class="p">:</span> <span class="n">str_list_ptn</span><span class="p">,</span>
+    <span class="s2">&quot;s_column&quot;</span><span class="p">:</span> <span class="n">str_list_ptn</span><span class="p">,</span>
+    <span class="s2">&quot;s_matrix&quot;</span><span class="p">:</span> <span class="n">str_list_list_ptn</span><span class="p">,</span>
+    <span class="s2">&quot;s_vector&quot;</span><span class="p">:</span> <span class="n">str_vector_ptn</span><span class="p">,</span>
+    <span class="s2">&quot;s_column_vector&quot;</span><span class="p">:</span> <span class="n">str_vector_ptn</span><span class="p">,</span>
+    <span class="s2">&quot;s_vector_list&quot;</span><span class="p">:</span> <span class="n">str_vector_list_ptn</span><span class="p">,</span>
+<span class="p">}</span>
+
+
+<div class="viewcode-block" id="create_validator">
+<a class="viewcode-back" href="../../../src/developer.html#qtdraw.core.validator.create_validator">[docs]</a>
+<span class="k">def</span> <span class="nf">create_validator</span><span class="p">(</span><span class="n">validator</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    create validator.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        validator (str): name of validator. see, validator_map.keys()</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        QValidator: validator.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">validator</span> <span class="o">==</span> <span class="s2">&quot;real_unit&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">UnitValidator</span><span class="p">()</span>
+    <span class="k">elif</span> <span class="n">validator</span> <span class="o">==</span> <span class="s2">&quot;latex&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">LaTeXValidator</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">QRegExpValidator</span><span class="p">(</span><span class="n">QRegExp</span><span class="p">(</span><span class="n">validator_map</span><span class="p">[</span><span class="n">validator</span><span class="p">]))</span></div>
+
+</pre></div>
+
+                </article>
+              
+
+              
+              
+              
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Hiroaki Kusunose
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2021-2024.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

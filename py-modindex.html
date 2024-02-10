@@ -6,9 +6,8 @@
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
-
-    <title>QtDraw &#8212; QtDraw</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Python Module Index &#8212; QtDraw</title>
   
   
   
@@ -65,12 +64,14 @@ const thebe_selector = ".thebe,.cell"
 const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'README';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'py-modindex';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Objects" href="src/object.html" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="jp"/>
+
+
   </head>
   
   
@@ -148,7 +149,7 @@ const thebe_selector_output = ".output, .cell_output"
 
   
 
-<a class="navbar-brand logo" href="#">
+<a class="navbar-brand logo" href="README.html">
   
   
   
@@ -250,54 +251,6 @@ const thebe_selector_output = ".output, .cell_output"
 
 
 
-
-
-<div class="dropdown dropdown-download-buttons">
-  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
-    <i class="fas fa-download"></i>
-  </button>
-  <ul class="dropdown-menu">
-      
-      
-      
-      <li><a href="_sources/" target="_blank"
-   class="btn btn-sm btn-download-source-button dropdown-item"
-   title="Download source file"
-   data-bs-placement="left" data-bs-toggle="tooltip"
->
-  
-
-<span class="btn__icon-container">
-  <i class="fas fa-file"></i>
-  </span>
-<span class="btn__text-container">.md</span>
-</a>
-</li>
-      
-      
-      
-      
-      <li>
-<button onclick="window.print()"
-  class="btn btn-sm btn-download-pdf-button dropdown-item"
-  title="Print to PDF"
-  data-bs-placement="left" data-bs-toggle="tooltip"
->
-  
-
-<span class="btn__icon-container">
-  <i class="fas fa-file-pdf"></i>
-  </span>
-<span class="btn__text-container">.pdf</span>
-</button>
-</li>
-      
-  </ul>
-</div>
-
-
-
-
 <button onclick="toggleFullScreen()"
   class="btn btn-sm btn-fullscreen-button"
   title="Fullscreen mode"
@@ -342,7 +295,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>QtDraw</h1>
+    <h1></h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -356,76 +309,110 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="qtdraw">
-<h1><a class="reference external" href="https://cmt-mu.github.io/QtDraw/">QtDraw</a><a class="headerlink" href="#qtdraw" title="Link to this heading">#</a></h1>
-<p>3D drawing tool for molecules and crystals based on <a class="reference external" href="https://docs.pyvista.org/">PyVista</a> and <a class="reference external" href="https://www.riverbankcomputing.com/static/Docs/PyQt5/#">Qt</a>.
-Drawings are associated with crystallographic symmetry operations provided by <a class="reference external" href="https://github.com/CMT-MU/MultiPie">MultiPie</a>.</p>
-<ul>
-<li><p><strong>Authors</strong>: Hiroaki Kusunose</p></li>
-<li><p><strong>Citing QtDraw and MultiPie</strong>: If you are using QtDraw and/or MultiPie in your scientific research, please help our scientific visibility by citing our work:</p>
-<blockquote>
-<div><p>Hiroaki Kusunose, Rikuto Oiwa, and Satoru Hayami, Symmetry-adapted modeling for molecules and crystals, Phys. Rev. B <b>107</b>, 195118 (2023).<br>
-DOI: <a class="reference external" href="https://doi.org/10.1103/PhysRevB.107.195118">https://doi.org/10.1103/PhysRevB.107.195118</a></p>
-</div></blockquote>
-</li>
-<li><p><strong>Installation</strong>: QtDraw can be installed from PyPI using pip on Python &gt;= 3.9:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">qtdraw</span>
-</pre></div>
-</div>
-<ul class="simple">
-<li><p>It is useful to associate with the following application with <code class="docutils literal notranslate"><span class="pre">.qtdw</span></code> and <code class="docutils literal notranslate"><span class="pre">.cif</span></code> extension.</p>
-<ul>
-<li><p><a class="reference external" href="https://github.com/CMT-MU/QtDraw/tree/main/others/QtDraw_MacApp.zip">Mac</a></p></li>
-<li><p><a class="reference external" href="https://github.com/CMT-MU/QtDraw/tree/main/others/QtDraw_WinApp.zip">Windows</a></p></li>
-</ul>
-</li>
-<li><p>You can also visit <a class="reference external" href="https://pypi.org/project/qtdraw/">PyPI</a> or <a class="reference external" href="https://github.com/CMT-MU/QtDraw">GitHub</a> to download the source.</p></li>
-<li><p>See also, <a class="reference download internal" download="" href="_downloads/2c5bb2f4d05505fc311e4fff1d603a61/install_guide.pdf"><span class="xref download myst">Install Guide (in Japanese)</span></a></p></li>
-<li><p>Shell command <code class="docutils literal notranslate"><span class="pre">qtdraw</span> <span class="pre">[filename]</span></code> is available.</p></li>
-</ul>
-</li>
-<li><p><strong>Requirements</strong>:</p>
-<ul class="simple">
-<li><p>This library requires <a class="reference external" href="https://www.tug.org/texlive/">TeXLive</a> environment.</p></li>
-<li><p>Symmetry operation supports are provided by <a class="reference external" href="https://github.com/CMT-MU/MultiPie">MultiPie</a>.</p></li>
-</ul>
-</li>
-<li><p><strong>See also</strong>:</p>
-<ul class="simple">
-<li><p><a class="reference external" href="https://github.com/CMT-MU/QtDraw/blob/main/docs/manual.pdf">Manual (QtDraw and MultiPie)</a>.</p></li>
-<li><p><a class="reference external" href="https://jupyterbook.org/en/stable/reference/cheatsheet.html">MyST syntax cheat sheet</a></p></li>
-<li><p><a class="reference external" href="https://cmt-mu.github.io/MultiPieTutorial/">MultiPie tutorial (in Japanese)</a></p></li>
-<li><p><a class="reference external" href="https://cmt-mu.github.io/QtDrawTutorial/">QtDraw tutorial (in Japanese)</a></p></li>
-</ul>
-</li>
-</ul>
-<div class="toctree-wrapper compound">
-</div>
-<div class="toctree-wrapper compound">
-</div>
-<div class="toctree-wrapper compound">
-</div>
-</section>
 
-    <script type="text/x-thebe-config">
-    {
-        requestKernel: true,
-        binderOptions: {
-            repo: "binder-examples/jupyter-stacks-datascience",
-            ref: "master",
-        },
-        codeMirrorConfig: {
-            theme: "abcdef",
-            mode: "python"
-        },
-        kernelOptions: {
-            name: "python3",
-            path: "./."
-        },
-        predefinedOutput: true
-    }
-    </script>
-    <script>kernelName = 'python3'</script>
+   <h1>Python Module Index</h1>
+
+   <div class="modindex-jumpbox">
+   <a href="#cap-q"><strong>q</strong></a>
+   </div>
+
+   <table class="indextable modindextable">
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-q"><td></td><td>
+       <strong>q</strong></td><td></td></tr>
+     <tr>
+       <td><img src="_static/minus.png" class="toggler"
+              id="toggle-1" style="display: none" alt="-" /></td>
+       <td>
+       <code class="xref">qtdraw</code></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="src/developer.html#module-qtdraw.core.basic_object"><code class="xref">qtdraw.core.basic_object</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="src/developer.html#module-qtdraw.core.color_dialog"><code class="xref">qtdraw.core.color_dialog</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="src/developer.html#module-qtdraw.core.color_pixmap"><code class="xref">qtdraw.core.color_pixmap</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="src/developer.html#module-qtdraw.core.editable_widget"><code class="xref">qtdraw.core.editable_widget</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="src/developer.html#module-qtdraw.core.group_model"><code class="xref">qtdraw.core.group_model</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="src/developer.html#module-qtdraw.core.group_tab"><code class="xref">qtdraw.core.group_tab</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="src/developer.html#module-qtdraw.core.group_view"><code class="xref">qtdraw.core.group_view</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="src/developer.html#module-qtdraw.core.line_edit"><code class="xref">qtdraw.core.line_edit</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="src/developer.html#module-qtdraw.core.pixmap_converter"><code class="xref">qtdraw.core.pixmap_converter</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="src/developer.html#module-qtdraw.core.qt_logging"><code class="xref">qtdraw.core.qt_logging</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="src/developer.html#module-qtdraw.core.table_dialog"><code class="xref">qtdraw.core.table_dialog</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="src/developer.html#module-qtdraw.core.tree_item"><code class="xref">qtdraw.core.tree_item</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="src/developer.html#module-qtdraw.core.tree_item_model"><code class="xref">qtdraw.core.tree_item_model</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="src/developer.html#module-qtdraw.core.util"><code class="xref">qtdraw.core.util</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="src/developer.html#module-qtdraw.core.validator"><code class="xref">qtdraw.core.validator</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="src/class.html#module-qtdraw.qt_draw"><code class="xref">qtdraw.qt_draw</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="src/class.html#module-qtdraw.qt_draw_base"><code class="xref">qtdraw.qt_draw_base</code></a></td><td>
+       <em></em></td></tr>
+   </table>
+
 
                 </article>
               
