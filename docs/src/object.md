@@ -20,6 +20,5 @@ These objects are also drawn from Python code.
 See [API](api.md) for detail.
 
 Example of all objects is found in [sample.qtdw](sample.qtdw), which is drawn by the following code:
-```{eval-rst}
-.. literalinclude:: sample.py
+```{literalinclude} sample.py
 ```

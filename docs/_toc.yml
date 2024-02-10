@@ -7,12 +7,14 @@ parts:
 - caption: Feature
   chapters:
     - file: src/object
-    - file: src/api
+    - file: src/plot_api
 - caption: Misc.
   chapters:
     - file: src/example
-    - file: src/class
-    - file: src/developer
+    - file: src/api
+      sections:
+      - file: src/class
+      - file: src/developer
 - caption: Change Log
   chapters:
     - file: src/change_log
