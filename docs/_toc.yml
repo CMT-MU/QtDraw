@@ -1,0 +1,13 @@
+# Table of contents
+# Learn more at https://jupyterbook.org/customize/toc.html
+
+format: jb-book
+root: README
+parts:
+- caption: Feature
+  chapters:
+    - file: src/object
+    - file: src/api
+- caption: Change Log
+  chapters:
+    - file: src/change_log

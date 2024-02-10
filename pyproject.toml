@@ -1,0 +1,70 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "qtdraw"
+dependencies = [
+    "matplotlib",
+    "seaborn",
+    "pyqt5",
+    "pyvista",
+    "pyvistaqt",
+    "click",
+    "pymatgen>2023.7.17",
+    "gcoreutils",
+]
+dynamic = ["version"]
+requires-python = ">=3.9"
+authors = [
+  { name="Hiroaki Kusunose", email="hiroaki.kusunose@gmail.com" },
+]
+description = "3D drawing tool for molecules and crystals based on Pyvista and Qt."
+readme = "docs/README.md"
+license = {text = "MIT"}
+keywords = ["group theory", "condensed matter", "materials science", "symmetry-adapted basis", "pyvista", "qtpy5"]
+classifiers = [
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering :: Information Analysis",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: POSIX",
+    "Operating System :: MacOS",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+
+[project.urls]
+Homepage = "https://github.com/CMT-MU/QtDraw"
+Issues = "https://github.com/CMT-MU/QtDraw/issues"
+
+[project.scripts]
+"qtdraw" = "qtdraw.scripts.qtdraw:cmd"
+
+[project.optional-dependencies]
+dev = [
+    "jupyter-book",
+    "ghp-import",
+    "jupytext",
+    "multipie",
+]
+
+[tool.setuptools.dynamic]
+version = {attr = "qtdraw.__version__"}
+
+[tool.setuptools.packages.find]
+include = ["qtdraw", "qtdraw.*"]
+exclude = ["build", "tests"]
+
+[tool.black]
+line-length = 130
+
+[tool.build_sphinx]
+source-dir = "docs"
+build-dir  = "./docs/_build"
+all_files  = 1
+
+[tool.upload_sphinx]
+upload-dir = "docs/_build/html"
