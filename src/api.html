@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>API for drawing objects. &#8212; QtDraw</title>
+    <title>API Reference &#8212; QtDraw</title>
   
   
   
@@ -68,8 +68,8 @@ const thebe_selector_output = ".output, .cell_output"
     <script>DOCUMENTATION_OPTIONS.pagename = 'src/api';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Examples" href="example.html" />
-    <link rel="prev" title="Objects" href="object.html" />
+    <link rel="next" title="Class Reference" href="class.html" />
+    <link rel="prev" title="Examples" href="example.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="jp"/>
   </head>
@@ -177,15 +177,18 @@ const thebe_selector_output = ".output, .cell_output"
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Feature</span></p>
-<ul class="current nav bd-sidenav">
+<ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="object.html">Objects</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">API for drawing objects.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plot_api.html">API for drawing objects.</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Misc.</span></p>
-<ul class="nav bd-sidenav">
+<ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="example.html">Examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="class.html">Class Reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="developer.html">For Developer</a></li>
+<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">API Reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="class.html">Class Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developer.html">For Developer</a></li>
+</ul>
+</li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Change Log</span></p>
 <ul class="nav bd-sidenav">
@@ -343,7 +346,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>API for drawing objects.</h1>
+    <h1>API Reference</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -353,19 +356,13 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#site-sphere">Site (sphere)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bond">Bond</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#vector">Vector</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#orbital">Orbital</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stream-vector-with-center-orbital">Stream vector with center orbital</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plane">Plane</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#box">Box</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#polygon">Polygon</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#d-text">3d text</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#spline-curve">Spline curve</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#spline-curve-parametric-function">Spline curve (parametric function)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#caption">Caption</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#text">Text</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#class">Class</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#for-developer">For Developer</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#core">core</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multipie">multipie</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#parser">parser</a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -377,318 +374,107 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="api-for-drawing-objects">
-<h1>API for drawing objects.<a class="headerlink" href="#api-for-drawing-objects" title="Link to this heading">#</a></h1>
-<section id="site-sphere">
-<h2>Site (sphere)<a class="headerlink" href="#site-sphere" title="Link to this heading">#</a></h2>
-<p><strong>plot_site(position, size=None, color=None, opacity=None, space=None, name=None, label=“”, show_lbl=False, cell=[0, 0, 0])</strong></p>
-<p>Args:</p>
-<ul class="simple">
-<li><p><strong>position</strong> (str or list or ndarray or NSArray): position(s) to plot site (reduced).</p></li>
-<li><p><strong>size</strong> (float, optional): size of site.</p></li>
-<li><p><strong>color</strong> (str, optional): color of site.</p></li>
-<li><p><strong>opacity</strong> (float, optional): opacity of site.</p></li>
-<li><p><strong>space</strong> (int, optional): pre-space of label.</p></li>
-<li><p><strong>name</strong> (str, optional): group name of object.</p></li>
-<li><p><strong>label</strong> (str, optional): label of object.</p></li>
-<li><p><strong>show_lbl</strong> (bool, optional): show label ?</p></li>
-<li><p><strong>cell</strong> (list, optional): cell position.</p></li>
-</ul>
-<p>Notes:</p>
-<ul class="simple">
-<li><p>if argument is None, default value is used.</p></li>
-</ul>
+  <section class="tex2jax_ignore mathjax_ignore" id="api-reference">
+<h1>API Reference<a class="headerlink" href="#api-reference" title="Link to this heading">#</a></h1>
+<section id="class">
+<h2>Class<a class="headerlink" href="#class" title="Link to this heading">#</a></h2>
+<table class="autosummary longtable table autosummary">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="class.html#module-qtdraw.qt_draw" title="qtdraw.qt_draw"><code class="xref py py-obj docutils literal notranslate"><span class="pre">qtdraw.qt_draw</span></code></a></p></td>
+<td><p>Qt Draw</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="class.html#module-qtdraw.qt_draw_base" title="qtdraw.qt_draw_base"><code class="xref py py-obj docutils literal notranslate"><span class="pre">qtdraw.qt_draw_base</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
 </section>
-<section id="bond">
-<h2>Bond<a class="headerlink" href="#bond" title="Link to this heading">#</a></h2>
-<p><strong>plot_bond(position, vector=None, width=None, color=None, color2=“”, opacity=None, space=None, name=None, label=“”, show_lbl=False, cell=[0, 0, 0])</strong></p>
-<p>Args:</p>
-<ul class="simple">
-<li><p><strong>position</strong> (str or list or ndarray or NSArray): position(s) to plot bond center (reduced).</p></li>
-<li><p><strong>vector</strong> (str or list or ndarray or NSArray, optional): bond vector (reduced).</p></li>
-<li><p><strong>width</strong> (float, optional): width of bond.</p></li>
-<li><p><strong>color</strong> (str, optional): color of bond.</p></li>
-<li><p><strong>color2</strong> (str, optional): color of bond for half tail.</p></li>
-<li><p><strong>opacity</strong> (float, optional): opacity of bond.</p></li>
-<li><p><strong>space</strong> (int, optional): pre-space of label.</p></li>
-<li><p><strong>name</strong> (str, optional): group name of object.</p></li>
-<li><p><strong>label</strong> (str, optional): label of object.</p></li>
-<li><p><strong>show_lbl</strong> (bool, optional): show label ?</p></li>
-<li><p><strong>cell</strong> (list, optional): cell position.</p></li>
-</ul>
-<p>Notes:</p>
-<ul class="simple">
-<li><p>if argument is None, default value is used.</p></li>
-<li><p>if color2 is “”, same color is used.</p></li>
-</ul>
+<section id="for-developer">
+<h2>For Developer<a class="headerlink" href="#for-developer" title="Link to this heading">#</a></h2>
+<section id="core">
+<h3>core<a class="headerlink" href="#core" title="Link to this heading">#</a></h3>
+<table class="autosummary longtable table autosummary">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="developer.html#module-qtdraw.core.basic_object" title="qtdraw.core.basic_object"><code class="xref py py-obj docutils literal notranslate"><span class="pre">qtdraw.core.basic_object</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="developer.html#module-qtdraw.core.color_dialog" title="qtdraw.core.color_dialog"><code class="xref py py-obj docutils literal notranslate"><span class="pre">qtdraw.core.color_dialog</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="developer.html#module-qtdraw.core.color_pixmap" title="qtdraw.core.color_pixmap"><code class="xref py py-obj docutils literal notranslate"><span class="pre">qtdraw.core.color_pixmap</span></code></a></p></td>
+<td><p>color pixmap</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="developer.html#module-qtdraw.core.editable_widget" title="qtdraw.core.editable_widget"><code class="xref py py-obj docutils literal notranslate"><span class="pre">qtdraw.core.editable_widget</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="developer.html#module-qtdraw.core.group_model" title="qtdraw.core.group_model"><code class="xref py py-obj docutils literal notranslate"><span class="pre">qtdraw.core.group_model</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="developer.html#module-qtdraw.core.group_tab" title="qtdraw.core.group_tab"><code class="xref py py-obj docutils literal notranslate"><span class="pre">qtdraw.core.group_tab</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="developer.html#module-qtdraw.core.group_view" title="qtdraw.core.group_view"><code class="xref py py-obj docutils literal notranslate"><span class="pre">qtdraw.core.group_view</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="developer.html#module-qtdraw.core.line_edit" title="qtdraw.core.line_edit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">qtdraw.core.line_edit</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="developer.html#module-qtdraw.core.pixmap_converter" title="qtdraw.core.pixmap_converter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">qtdraw.core.pixmap_converter</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="developer.html#module-qtdraw.core.qt_logging" title="qtdraw.core.qt_logging"><code class="xref py py-obj docutils literal notranslate"><span class="pre">qtdraw.core.qt_logging</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="developer.html#module-qtdraw.core.table_dialog" title="qtdraw.core.table_dialog"><code class="xref py py-obj docutils literal notranslate"><span class="pre">qtdraw.core.table_dialog</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="developer.html#module-qtdraw.core.tree_item_model" title="qtdraw.core.tree_item_model"><code class="xref py py-obj docutils literal notranslate"><span class="pre">qtdraw.core.tree_item_model</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="developer.html#module-qtdraw.core.tree_item" title="qtdraw.core.tree_item"><code class="xref py py-obj docutils literal notranslate"><span class="pre">qtdraw.core.tree_item</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="developer.html#module-qtdraw.core.util" title="qtdraw.core.util"><code class="xref py py-obj docutils literal notranslate"><span class="pre">qtdraw.core.util</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="developer.html#module-qtdraw.core.validator" title="qtdraw.core.validator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">qtdraw.core.validator</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
 </section>
-<section id="vector">
-<h2>Vector<a class="headerlink" href="#vector" title="Link to this heading">#</a></h2>
-<p><strong>plot_vector(position, vector=None, length=None, width=None, offset=None, color=None, opacity=None, space=None, name=None, label=“”, show_lbl=False, cell=[0, 0, 0])</strong></p>
-<p>Args:</p>
-<ul class="simple">
-<li><p><strong>position</strong> (str or list or ndarray or NSArray): position(s) to plot vector (reduced).</p></li>
-<li><p><strong>vector</strong> (str or list or ndarray or NSArray, optional): vector direction (cartesian).</p></li>
-<li><p><strong>length</strong> (float, optional): length of vector.</p></li>
-<li><p><strong>width</strong> (float, optional): width of vector.</p></li>
-<li><p><strong>offset</strong> (float, optional): offset of vector end (ratio).</p></li>
-<li><p><strong>color</strong> (str, optional): color of vector.</p></li>
-<li><p><strong>opacity</strong> (float, optional): opacity of vector.</p></li>
-<li><p><strong>space</strong> (int, optional): pre-space of label.</p></li>
-<li><p><strong>name</strong> (str, optional): group name of object.</p></li>
-<li><p><strong>label</strong> (str, optional): label of object.</p></li>
-<li><p><strong>show_lbl</strong> (bool, optional): show label ?</p></li>
-<li><p><strong>cell</strong> (list, optional): cell position.</p></li>
-</ul>
-<p>Notes:</p>
-<ul class="simple">
-<li><p>if argument is None, default value is used.</p></li>
-<li><p>vector is not necessary to be normalized.</p></li>
-</ul>
+<section id="multipie">
+<h3>multipie<a class="headerlink" href="#multipie" title="Link to this heading">#</a></h3>
+<table class="autosummary longtable table autosummary">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="developer.html#module-qtdraw.multipie.dialog_group_info" title="qtdraw.multipie.dialog_group_info"><code class="xref py py-obj docutils literal notranslate"><span class="pre">qtdraw.multipie.dialog_group_info</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="developer.html#module-qtdraw.multipie.dialog_group" title="qtdraw.multipie.dialog_group"><code class="xref py py-obj docutils literal notranslate"><span class="pre">qtdraw.multipie.dialog_group</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="developer.html#module-qtdraw.multipie.dialog_modulation" title="qtdraw.multipie.dialog_modulation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">qtdraw.multipie.dialog_modulation</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="developer.html#module-qtdraw.multipie.plot_object" title="qtdraw.multipie.plot_object"><code class="xref py py-obj docutils literal notranslate"><span class="pre">qtdraw.multipie.plot_object</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
 </section>
-<section id="orbital">
-<h2>Orbital<a class="headerlink" href="#orbital" title="Link to this heading">#</a></h2>
-<p><strong>plot_orbital(position, shape=None, surface=“”, size=None, theta_range=None, phi_range=None, color=None, opacity=None, space=None, scale=True, name=None, label=“”, show_lbl=False, cell=[0, 0, 0])</strong></p>
-<p>Args:</p>
-<ul class="simple">
-<li><p><strong>position</strong> (str or list or ndarray or NSArray): position(s) to plot orbital (reduced).</p></li>
-<li><p><strong>shape</strong> (str, optional): (x,y,z) shape of orbital in terms of (x,y,z) (cartesian).</p></li>
-<li><p><strong>surface</strong> (str, optional): surface color in terms of (x,y,z) (cartesian).</p></li>
-<li><p><strong>size</strong> (float, optional): size of orbital.</p></li>
-<li><p><strong>theta_range</strong> (str or list or ndarray or NSArray, optional): theta range, default=[0,180].</p></li>
-<li><p><strong>phi_range</strong> (str or list or ndarray or NSArray, optional): phi range, default=[0,360].</p></li>
-<li><p><strong>color</strong> (str, optional): color/colormap of surface.</p></li>
-<li><p><strong>opacity</strong> (float, optional): opacity of orbital.</p></li>
-<li><p><strong>space</strong> (int, optional): pre-space of label.</p></li>
-<li><p><strong>scale</strong> (bool, optional): if False, absolute size is used.</p></li>
-<li><p><strong>name</strong> (str, optional): group name of object.</p></li>
-<li><p><strong>label</strong> (str, optional): label of object.</p></li>
-<li><p><strong>show_lbl</strong> (bool, optional): show label ?</p></li>
-<li><p><strong>cell</strong> (list, optional): cell position.</p></li>
-</ul>
-<p>Notes:</p>
-<ul class="simple">
-<li><p>if surface is “”, surface is same as shape.</p></li>
-<li><p>if argument is None, default value is used.</p></li>
-</ul>
+<section id="parser">
+<h3>parser<a class="headerlink" href="#parser" title="Link to this heading">#</a></h3>
+<table class="autosummary longtable table autosummary">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="developer.html#module-qtdraw.parser.read_cif_vesta" title="qtdraw.parser.read_cif_vesta"><code class="xref py py-obj docutils literal notranslate"><span class="pre">qtdraw.parser.read_cif_vesta</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
 </section>
-<section id="stream-vector-with-center-orbital">
-<h2>Stream vector with center orbital<a class="headerlink" href="#stream-vector-with-center-orbital" title="Link to this heading">#</a></h2>
-<p><strong>plot_stream_vector(position, shape=None, vector=None, size=None, v_size=None, width=None, scale=None, theta=None, phi=None, theta_range=None, phi_range=None, color=None, component=None, opacity=None, space=None, name=None, label=“”, show_lbl=False, cell=[0, 0, 0])</strong></p>
-<p>Args:</p>
-<ul class="simple">
-<li><p><strong>position</strong> (str or list or ndarray or NSArray): position(s) to plot stream vector (reduced).</p></li>
-<li><p><strong>shape</strong> (str, optional): shape of center orbital in terms of (x,y,z) (cartesian).</p></li>
-<li><p><strong>vector</strong> (str or list or ndarray or NSArray, optional): vector components in terms of (x,y,z) [str]/str (cartesian).</p></li>
-<li><p><strong>size</strong> (float, optional): size of orbital.</p></li>
-<li><p><strong>v_size</strong> (float, optional): ratio of vector size to orbital.</p></li>
-<li><p><strong>width</strong> (float, optional): width of vector.</p></li>
-<li><p><strong>scale</strong> (bool, optional): scale vector size by value ?</p></li>
-<li><p><strong>theta</strong> (int, optional): resolution in theta direction.</p></li>
-<li><p><strong>phi</strong> (int, optional): resolution in phi direction.</p></li>
-<li><p><strong>theta_range</strong> (str or list or ndarray or NSArray, optional): theta range, default=[0,180].</p></li>
-<li><p><strong>phi_range</strong> (str or list or ndarray or NSArray, optional): phi range, default=[0,360].</p></li>
-<li><p><strong>color</strong> (str, optional): color of vector.</p></li>
-<li><p><strong>component</strong> (int, optional): component of vector to use for colormap (0,1,2,None = x,y,z,abs.).</p></li>
-<li><p><strong>opacity</strong> (float, optional): opacity of center orbital.</p></li>
-<li><p><strong>space</strong> (int, optional): pre-space of label.</p></li>
-<li><p><strong>name</strong> (str, optional): group name of object.</p></li>
-<li><p><strong>label</strong> (str, optional): label of object.</p></li>
-<li><p><strong>show_lbl</strong> (bool, optional): show label ?</p></li>
-<li><p><strong>cell</strong> (list, optional): cell position.</p></li>
-</ul>
-<p>Notes:</p>
-<ul class="simple">
-<li><p>if shape is None, “1” is used.</p></li>
-<li><p>if argument is None, default value is used.</p></li>
-</ul>
 </section>
-<section id="plane">
-<h2>Plane<a class="headerlink" href="#plane" title="Link to this heading">#</a></h2>
-<p><strong>plot_plane(position, normal=None, x=None, y=None, color=None, opacity=None, space=None, name=None, label=“”, show_lbl=False, cell=[0, 0, 0])</strong></p>
-<p>Args:</p>
-<ul class="simple">
-<li><p><strong>position</strong> (str or list or ndarray or NSArray): position(s) to plot plane (reduced).</p></li>
-<li><p><strong>normal</strong> (str or list or ndarray or NSArray, optional): normal vector of plane (reduced).</p></li>
-<li><p><strong>x</strong> (float, optional): x size of plane.</p></li>
-<li><p><strong>y</strong> (float, optional); y size of plane.</p></li>
-<li><p><strong>color</strong> (str, optional): color of plane.</p></li>
-<li><p><strong>opacity</strong> (float, optional): opacity of plane.</p></li>
-<li><p><strong>space</strong> (int, optional): pre-space of label.</p></li>
-<li><p><strong>name</strong> (str, optional): group name of object.</p></li>
-<li><p><strong>label</strong> (str, optional): label of object.</p></li>
-<li><p><strong>show_lbl</strong> (bool, optional): show label ?</p></li>
-<li><p><strong>cell</strong> (list, optional): cell position.</p></li>
-</ul>
-<p>Notes:</p>
-<ul class="simple">
-<li><p>position is for center of plane.</p></li>
-<li><p>if argument is None, default value is used.</p></li>
-<li><p>normal is not necessary to be normalized.</p></li>
-</ul>
-</section>
-<section id="box">
-<h2>Box<a class="headerlink" href="#box" title="Link to this heading">#</a></h2>
-<p><strong>plot_box(position, a1=None, a2=None, a3=None, edge=None, wireframe=None, width=None, color=None, opacity=None, space=None, name=None, label=“”, show_lbl=False, cell=[0, 0, 0])</strong></p>
-<p>Args:</p>
-<ul class="simple">
-<li><p><strong>position</strong> (str or list or ndarray or NSArray): position(s) to plot box (reduced).</p></li>
-<li><p><strong>a1</strong> (str or list or ndarray or NSArray, optional): 1st direction of box (reduced).</p></li>
-<li><p><strong>a2</strong> (str or list or ndarray or NSArray, optional): 2nd direction of box (reduced).</p></li>
-<li><p><strong>a3</strong> (str or list or ndarray or NSArray, optional): 3rd direction of box (reduced).</p></li>
-<li><p><strong>edge</strong> (bool, optional): show edge of box ?</p></li>
-<li><p><strong>wireframe</strong> (bool, optional): draw box by wireframe ?</p></li>
-<li><p><strong>width</strong> (float, optional): line width of box for wireframe plot.</p></li>
-<li><p><strong>color</strong> (str, optional): color of box.</p></li>
-<li><p><strong>opacity</strong> (float, optional): opacity of box.</p></li>
-<li><p><strong>space</strong> (int, optional): pre-space of label.</p></li>
-<li><p><strong>name</strong> (str, optional): group name of object.</p></li>
-<li><p><strong>label</strong> (str, optional): label of object.</p></li>
-<li><p><strong>show_lbl</strong> (bool, optional): show label ?</p></li>
-<li><p><strong>cell</strong> (list, optional): cell position.</p></li>
-</ul>
-<p>Notes:</p>
-<ul class="simple">
-<li><p>if argument is None, default value is used.</p></li>
-</ul>
-</section>
-<section id="polygon">
-<h2>Polygon<a class="headerlink" href="#polygon" title="Link to this heading">#</a></h2>
-<p><strong>plot_polygon(position, point=None, connection=None, edge=None, wireframe=None, width=None, color=None, opacity=None, space=None, name=None, label=“”, show_lbl=False, cell=[0, 0, 0])</strong></p>
-<p>Args:</p>
-<ul class="simple">
-<li><p><strong>position</strong> (str or list or ndarray or NSArray): position(s) to plot polygon (reduced).</p></li>
-<li><p><strong>point</strong> (str or list or ndarray or NSArray, optional): vertices of polygon (reduced).</p></li>
-<li><p><strong>connection</strong> (str or list or ndarray or NSArray, optional): list of connected vectices for each plane.</p></li>
-<li><p><strong>edge</strong> (bool, optional): show edge of box ?</p></li>
-<li><p><strong>wireframe</strong> (bool, optional): draw box by wireframe ?</p></li>
-<li><p><strong>width</strong> (float, optional): line width of box for wireframe plot.</p></li>
-<li><p><strong>color</strong> (str, optional): color of box.</p></li>
-<li><p><strong>opacity</strong> (float, optional): opacity of box.</p></li>
-<li><p><strong>space</strong> (int, optional): pre-space of label.</p></li>
-<li><p><strong>name</strong> (str, optional): group name of object.</p></li>
-<li><p><strong>label</strong> (str, optional): label of object.</p></li>
-<li><p><strong>show_lbl</strong> (bool, optional): show label ?</p></li>
-<li><p><strong>cell</strong> (list, optional): cell position.</p></li>
-</ul>
-<p>Notes:</p>
-<ul class="simple">
-<li><p>if argument is None, default value is used.</p></li>
-</ul>
-</section>
-<section id="d-text">
-<h2>3d text<a class="headerlink" href="#d-text" title="Link to this heading">#</a></h2>
-<p><strong>plot_text3d(position, text=None, size=None, depth=None, normal=None, offset=None, color=None, opacity=None, space=None, name=None, label=“”, show_lbl=False, cell=[0, 0, 0])</strong></p>
-<p>Args:</p>
-<ul class="simple">
-<li><p><strong>position</strong> (str or list or ndarray or NSArray): position(s) to plot 3d text (reduced).</p></li>
-<li><p><strong>text</strong> (str, optional): text.</p></li>
-<li><p><strong>size</strong> (float, optional): size of text.</p></li>
-<li><p><strong>depth</strong> (float, optional): depth of text.</p></li>
-<li><p><strong>normal</strong> (str or list or ndarray or NSArray, optional): normal vector of text (reduced).</p></li>
-<li><p><strong>offset</strong> (str or list or ndarray or NSArray, optional): offset of text.</p></li>
-<li><p><strong>color</strong> (str, optional): color of text.</p></li>
-<li><p><strong>opacity</strong> (float, optional): opacity of text.</p></li>
-<li><p><strong>space</strong> (int, optional): pre-space of label.</p></li>
-<li><p><strong>name</strong> (str, optional): group name of object.</p></li>
-<li><p><strong>label</strong> (str, optional): label of object.</p></li>
-<li><p><strong>show_lbl</strong> (bool, optional): show label ?</p></li>
-<li><p><strong>cell</strong> (list, optional): cell position.</p></li>
-</ul>
-<p>Notes:</p>
-<ul class="simple">
-<li><p>if argument is None, default value is used.</p></li>
-<li><p>normal is not necessary to be normalized.</p></li>
-</ul>
-</section>
-<section id="spline-curve">
-<h2>Spline curve<a class="headerlink" href="#spline-curve" title="Link to this heading">#</a></h2>
-<p><strong>plot_spline(position, point=None, width=None, n_interp=None, closed=None, natural=None, color=None, opacity=None, space=None, name=None, label=“”, show_lbl=False, cell=[0, 0, 0])</strong></p>
-<p>Args:</p>
-<ul class="simple">
-<li><p><strong>position</strong> (str or list or ndarray or NSArray): position(s) to plot spline curve (reduced).</p></li>
-<li><p><strong>point</strong> (str or list or ndarray or NSArray, optional): points to be interpolated (reduced).</p></li>
-<li><p><strong>width</strong> (float, optioanl): width of spline curve.</p></li>
-<li><p><strong>n_interp</strong> (int, optional): number of interpolation points.</p></li>
-<li><p><strong>closed</strong> (bool, optional): closed spline ?</p></li>
-<li><p><strong>natural</strong> (bool, optional): natural boundary ?</p></li>
-<li><p><strong>color</strong> (str, optional): color of spline curve.</p></li>
-<li><p><strong>opacity</strong> (float, optional): opacity of spline curve.</p></li>
-<li><p><strong>space</strong> (int, optional): pre-space of label.</p></li>
-<li><p><strong>name</strong> (str, optional): group name of object.</p></li>
-<li><p><strong>label</strong> (str, optional): label of object.</p></li>
-<li><p><strong>show_lbl</strong> (bool, optional): show label ?</p></li>
-<li><p><strong>cell</strong> (list, optional): cell position.</p></li>
-</ul>
-<p>Notes:</p>
-<ul class="simple">
-<li><p>if argument is None, default value is used.</p></li>
-</ul>
-</section>
-<section id="spline-curve-parametric-function">
-<h2>Spline curve (parametric function)<a class="headerlink" href="#spline-curve-parametric-function" title="Link to this heading">#</a></h2>
-<p><strong>plot_spline_t(position, expression=None, t_range=None, width=None, n_interp=None, closed=None, natural=None, color=None, opacity=None, space=None, name=None, label=“”, show_lbl=False, cell=[0, 0, 0])</strong></p>
-<p>Args:</p>
-<ul class="simple">
-<li><p><strong>position</strong> (str or list or ndarray or NSArray): position(s) to plot spline curve (reduced).</p></li>
-<li><p><strong>expression</strong> (str or list or ndarray or NSArray, optional): component function of “t” to create interpolated points (reduced).</p></li>
-<li><p><strong>t_range</strong> (str or list or ndarray or NSArray, optional): range of “t”, [start, stop, step].</p></li>
-<li><p><strong>width</strong> (float, optioanl): width of spline curve.</p></li>
-<li><p><strong>n_interp</strong> (int, optional): number of interpolation points.</p></li>
-<li><p><strong>closed</strong> (bool, optional): closed spline ?</p></li>
-<li><p><strong>natural</strong> (bool, optional): natural boundary ?</p></li>
-<li><p><strong>color</strong> (str, optional): color of spline curve.</p></li>
-<li><p><strong>opacity</strong> (float, optional): opacity of spline curve.</p></li>
-<li><p><strong>space</strong> (int, optional): pre-space of label.</p></li>
-<li><p><strong>name</strong> (str, optional): group name of object.</p></li>
-<li><p><strong>label</strong> (str, optional): label of object.</p></li>
-<li><p><strong>show_lbl</strong> (bool, optional): show label ?</p></li>
-<li><p><strong>cell</strong> (list, optional): cell position.</p></li>
-</ul>
-<p>Notes:</p>
-<ul class="simple">
-<li><p>if argument is None, default value is used.</p></li>
-</ul>
-</section>
-<section id="caption">
-<h2>Caption<a class="headerlink" href="#caption" title="Link to this heading">#</a></h2>
-<p><strong>plot_caption(position, caption=None, space=None, size=None, color=None, bold=None, name=None, cell=[0, 0, 0])</strong></p>
-<p>Args:</p>
-<ul class="simple">
-<li><p><strong>position</strong> (str or list or ndarray or NSArray): position(s) to plot labels (reduced).</p></li>
-<li><p><strong>caption</strong> (str or list, optional): label or list of labels.</p></li>
-<li><p><strong>space</strong> (int, optional): pre-space of label.</p></li>
-<li><p><strong>size</strong> (int, optional): font size.</p></li>
-<li><p><strong>color</strong> (str, optional): text color.</p></li>
-<li><p><strong>bold</strong> (bool, optional): bold face ?</p></li>
-<li><p><strong>name</strong> (str, optional): group name.</p></li>
-<li><p><strong>cell</strong> (list, optional): cell position.</p></li>
-</ul>
-<p>Notes:</p>
-<ul class="simple">
-<li><p>if caption is None, simple number is used.</p></li>
-<li><p>if argument is None, default value is used.</p></li>
-<li><p>list size of caption must be equal to that of position.</p></li>
-</ul>
-</section>
-<section id="text">
-<h2>Text<a class="headerlink" href="#text" title="Link to this heading">#</a></h2>
-<p><strong>plot_text(position, caption=None, relative=None, size=None, color=None, font=None, name=None)</strong></p>
-<p>Args:</p>
-<ul class="simple">
-<li><p><strong>position</strong> (str or list or ndarray or NSArray): position to plot caption, [x,y].</p></li>
-<li><p><strong>caption</strong> (str, optional): label.</p></li>
-<li><p><strong>relative</strong> (bool, optional): relative position ?</p></li>
-<li><p><strong>size</strong> (int, optional): font size.</p></li>
-<li><p><strong>color</strong> (str, optional): text color.</p></li>
-<li><p><strong>font</strong> (str, optional): font, “arial/times/courier”.</p></li>
-<li><p><strong>name</strong> (str, optional): group name.</p></li>
-</ul>
-<p>Notes:</p>
-<ul class="simple">
-<li><p>if argument is None, default value is used.</p></li>
-</ul>
-</section>
+<div class="toctree-wrapper compound">
+</div>
 </section>
 
     <script type="text/x-thebe-config">
@@ -731,19 +517,13 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#site-sphere">Site (sphere)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bond">Bond</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#vector">Vector</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#orbital">Orbital</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stream-vector-with-center-orbital">Stream vector with center orbital</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plane">Plane</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#box">Box</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#polygon">Polygon</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#d-text">3d text</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#spline-curve">Spline curve</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#spline-curve-parametric-function">Spline curve (parametric function)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#caption">Caption</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#text">Text</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#class">Class</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#for-developer">For Developer</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#core">core</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multipie">multipie</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#parser">parser</a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 
