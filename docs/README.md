@@ -25,7 +25,6 @@ Drawings are associated with crystallographic symmetry operations provided by [M
   - Symmetry operation supports are provided by [MultiPie](https://github.com/CMT-MU/MultiPie).
 
 - **See also**:
-  - [Manual (QtDraw and MultiPie)](https://github.com/CMT-MU/QtDraw/blob/main/docs/manual.pdf).
-  - [MyST syntax cheat sheet](https://jupyterbook.org/en/stable/reference/cheatsheet.html)
+  - [Manual (QtDraw and MultiPie)](https://github.com/CMT-MU/QtDraw/blob/main/docs/src/manual.pdf).
   - [MultiPie tutorial (in Japanese)](https://cmt-mu.github.io/MultiPieTutorial/)
   - [QtDraw tutorial (in Japanese)](https://cmt-mu.github.io/QtDrawTutorial/)
