@@ -31,7 +31,7 @@
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=384b581d" />
     <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
   
@@ -178,13 +178,16 @@ const thebe_selector_output = ".output, .cell_output"
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Feature</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../../../src/object.html">Objects</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../src/api.html">API for drawing objects.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../src/plot_api.html">API for drawing objects.</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Misc.</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../../../src/example.html">Examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../src/class.html">Class Reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../src/developer.html">For Developer</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../src/api.html">API Reference</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../src/class.html">Class Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../src/developer.html">For Developer</a></li>
+</ul>
+</li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Change Log</span></p>
 <ul class="nav bd-sidenav">
@@ -345,8 +348,6 @@ document.write(`
 <span class="k">class</span> <span class="nc">UncaughtHook</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QObject</span><span class="p">):</span>
     <span class="n">_exception_caught</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Signal</span><span class="p">(</span><span class="nb">object</span><span class="p">)</span>
 
-<div class="viewcode-block" id="UncaughtHook.__init__">
-<a class="viewcode-back" href="../../../src/developer.html#qtdraw.core.qt_logging.UncaughtHook.__init__">[docs]</a>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">UncaughtHook</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
@@ -354,8 +355,7 @@ document.write(`
         <span class="n">sys</span><span class="o">.</span><span class="n">excepthook</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">exception_hook</span>
 
         <span class="c1"># connect signal to execute the message box function always on main thread</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_exception_caught</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">show_exception_box</span><span class="p">)</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">_exception_caught</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">show_exception_box</span><span class="p">)</span>
 
 <div class="viewcode-block" id="UncaughtHook.exception_hook">
 <a class="viewcode-back" href="../../../src/developer.html#qtdraw.core.qt_logging.UncaughtHook.exception_hook">[docs]</a>

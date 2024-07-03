@@ -31,7 +31,7 @@
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=384b581d" />
     <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
   
@@ -178,13 +178,16 @@ const thebe_selector_output = ".output, .cell_output"
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Feature</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../../../src/object.html">Objects</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../src/api.html">API for drawing objects.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../src/plot_api.html">API for drawing objects.</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Misc.</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../../../src/example.html">Examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../src/class.html">Class Reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../src/developer.html">For Developer</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../src/api.html">API Reference</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../src/class.html">Class Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../src/developer.html">For Developer</a></li>
+</ul>
+</li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Change Log</span></p>
 <ul class="nav bd-sidenav">
@@ -331,8 +334,6 @@ document.write(`
     <span class="n">_validator_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">validator_map</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
 
     <span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="LineEdit.__init__">
-<a class="viewcode-back" href="../../../src/developer.html#qtdraw.core.line_edit.LineEdit.__init__">[docs]</a>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">init</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">validator</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">decimal</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">check_var</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        initialize the class.</span>
@@ -348,8 +349,7 @@ document.write(`
 
         <span class="bp">self</span><span class="o">.</span><span class="n">set_validator</span><span class="p">(</span><span class="n">validator</span><span class="p">,</span> <span class="n">decimal</span><span class="p">,</span> <span class="n">check_var</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">init</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_backtup</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="p">()</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">_backtup</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
 
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="LineEdit.set_validator">
@@ -487,8 +487,6 @@ document.write(`
     <span class="n">acceptEdit</span> <span class="o">=</span> <span class="n">Signal</span><span class="p">()</span>
 
     <span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="LineEditor.__init__">
-<a class="viewcode-back" href="../../../src/developer.html#qtdraw.core.line_edit.LineEditor.__init__">[docs]</a>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">init</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">validator</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">decimal</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">check_var</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        initialize the class.</span>
@@ -524,8 +522,7 @@ document.write(`
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">editor</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="p">)</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="p">)</span>
 
     <span class="c1"># ==================================================</span>
     <span class="k">def</span> <span class="nf">close_edit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -624,8 +621,6 @@ document.write(`
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="Label.__init__">
-<a class="viewcode-back" href="../../../src/developer.html#qtdraw.core.line_edit.Label.__init__">[docs]</a>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        initialize the class.</span>
@@ -644,8 +639,7 @@ document.write(`
         <span class="n">layout</span><span class="o">.</span><span class="n">setSpacing</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
         <span class="n">layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">layout</span><span class="p">)</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">layout</span><span class="p">)</span>
 
     <span class="c1"># ==================================================</span>
     <span class="k">def</span> <span class="nf">setText</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>

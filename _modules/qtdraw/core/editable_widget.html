@@ -31,7 +31,7 @@
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=384b581d" />
     <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
   
@@ -178,13 +178,16 @@ const thebe_selector_output = ".output, .cell_output"
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Feature</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../../../src/object.html">Objects</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../src/api.html">API for drawing objects.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../src/plot_api.html">API for drawing objects.</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Misc.</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../../../src/example.html">Examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../src/class.html">Class Reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../src/developer.html">For Developer</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../src/api.html">API Reference</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../src/class.html">Class Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../src/developer.html">For Developer</a></li>
+</ul>
+</li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Change Log</span></p>
 <ul class="nav bd-sidenav">
@@ -331,8 +334,6 @@ document.write(`
 <div class="viewcode-block" id="EditableWidget">
 <a class="viewcode-back" href="../../../src/developer.html#qtdraw.core.editable_widget.EditableWidget">[docs]</a>
 <span class="k">class</span> <span class="nc">EditableWidget</span><span class="p">(</span><span class="n">QWidget</span><span class="p">):</span>
-<div class="viewcode-block" id="EditableWidget.__init__">
-<a class="viewcode-back" href="../../../src/developer.html#qtdraw.core.editable_widget.EditableWidget.__init__">[docs]</a>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">callback</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -351,8 +352,7 @@ document.write(`
             <span class="bp">self</span><span class="o">.</span><span class="n">setLabel</span><span class="p">(</span><span class="n">label</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="p">)</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="p">)</span>
 
     <span class="c1"># ==================================================</span>
     <span class="k">def</span> <span class="nf">set_editor</span><span class="p">(</span>
@@ -423,8 +423,6 @@ document.write(`
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="QtColorSelector.__init__">
-<a class="viewcode-back" href="../../../src/developer.html#qtdraw.core.editable_widget.QtColorSelector.__init__">[docs]</a>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">current</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">color_type</span><span class="o">=</span><span class="s2">&quot;color&quot;</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        initialize the class.</span>
@@ -471,7 +469,6 @@ document.write(`
             <span class="k">return</span> <span class="kc">True</span>
 
         <span class="n">combo</span><span class="o">.</span><span class="n">currentTextChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">_callback</span><span class="p">)</span></div>
-</div>
 
 
 
@@ -484,8 +481,6 @@ document.write(`
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="QtCheckBox.__init__">
-<a class="viewcode-back" href="../../../src/developer.html#qtdraw.core.editable_widget.QtCheckBox.__init__">[docs]</a>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">label</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -532,8 +527,7 @@ document.write(`
             <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">insertWidget</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">chkbox</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="o">.</span><span class="n">setContentsMargins</span><span class="p">(</span><span class="mi">13</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 
-        <span class="n">chkbox</span><span class="o">.</span><span class="n">toggled</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">callback_check</span><span class="p">)</span></div>
-
+        <span class="n">chkbox</span><span class="o">.</span><span class="n">toggled</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">callback_check</span><span class="p">)</span>
 
     <span class="c1"># ==================================================</span>
     <span class="k">def</span> <span class="nf">default_check</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">flag</span><span class="p">):</span>
@@ -550,8 +544,6 @@ document.write(`
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="QtRadioGroup.__init__">
-<a class="viewcode-back" href="../../../src/developer.html#qtdraw.core.editable_widget.QtRadioGroup.__init__">[docs]</a>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lst</span><span class="p">,</span> <span class="n">current</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vertical</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        initialize the class.</span>
@@ -587,7 +579,6 @@ document.write(`
             <span class="k">return</span> <span class="kc">True</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">select</span><span class="o">.</span><span class="n">buttonClicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">_callback</span><span class="p">)</span></div>
-</div>
 
 
 
@@ -600,8 +591,6 @@ document.write(`
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="QtComboBox.__init__">
-<a class="viewcode-back" href="../../../src/developer.html#qtdraw.core.editable_widget.QtComboBox.__init__">[docs]</a>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lst</span><span class="p">,</span> <span class="n">current</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        initialize the class.</span>
@@ -632,7 +621,6 @@ document.write(`
             <span class="k">return</span> <span class="kc">True</span>
 
         <span class="n">combo</span><span class="o">.</span><span class="n">currentTextChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">_callback</span><span class="p">)</span></div>
-</div>
 
 
 
@@ -645,8 +633,6 @@ document.write(`
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="QtImage.__init__">
-<a class="viewcode-back" href="../../../src/developer.html#qtdraw.core.editable_widget.QtImage.__init__">[docs]</a>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">read_only</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        initialize the class.</span>
@@ -664,8 +650,7 @@ document.write(`
         <span class="bp">self</span><span class="o">.</span><span class="n">w</span> <span class="o">=</span> <span class="n">width</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">callback</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="n">parent</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">read_only</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">set_editor</span><span class="p">(</span><span class="n">init</span><span class="o">=</span><span class="n">label</span><span class="p">)</span></div>
-
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_editor</span><span class="p">(</span><span class="n">init</span><span class="o">=</span><span class="n">label</span><span class="p">)</span>
 
     <span class="c1"># ==================================================</span>
     <span class="k">def</span> <span class="nf">setLabel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">):</span>
@@ -686,8 +671,6 @@ document.write(`
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="QtColorLabel.__init__">
-<a class="viewcode-back" href="../../../src/developer.html#qtdraw.core.editable_widget.QtColorLabel.__init__">[docs]</a>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        initialize the class.</span>
@@ -712,7 +695,6 @@ document.write(`
 
         <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">insertWidget</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">icon</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="o">.</span><span class="n">setContentsMargins</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span></div>
-</div>
 
 
 
@@ -725,8 +707,6 @@ document.write(`
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="QtText.__init__">
-<a class="viewcode-back" href="../../../src/developer.html#qtdraw.core.editable_widget.QtText.__init__">[docs]</a>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">label</span><span class="p">,</span>
@@ -767,8 +747,7 @@ document.write(`
             <span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">setLabel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">editor</span><span class="o">.</span><span class="n">text</span><span class="p">(),</span> <span class="n">align</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">setLabel</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">align</span><span class="p">)</span></div>
-
+            <span class="bp">self</span><span class="o">.</span><span class="n">setLabel</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">align</span><span class="p">)</span>
 
     <span class="c1"># ==================================================</span>
     <span class="k">def</span> <span class="nf">setLabel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">align</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -840,8 +819,6 @@ document.write(`
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="QtMath.__init__">
-<a class="viewcode-back" href="../../../src/developer.html#qtdraw.core.editable_widget.QtMath.__init__">[docs]</a>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">label</span><span class="p">,</span>
@@ -899,8 +876,7 @@ document.write(`
             <span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">setLabel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">editor</span><span class="o">.</span><span class="n">text</span><span class="p">(),</span> <span class="n">align</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">setLabel</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">align</span><span class="p">)</span></div>
-
+            <span class="bp">self</span><span class="o">.</span><span class="n">setLabel</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">align</span><span class="p">)</span>
 
     <span class="c1"># ==================================================</span>
     <span class="k">def</span> <span class="nf">setLabel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">align</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
