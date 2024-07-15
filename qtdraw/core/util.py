@@ -13,9 +13,7 @@ CHOP = 1e-4
 
 
 # ==================================================
-def create_application(
-    style="fusion", font="Helvetica Neue", font_size=13, latex_mode="standard"
-):
+def create_application(style="fusion", font="Helvetica Neue", font_size=13, latex_mode="standard"):
     """
     create QApplication with style.
 
@@ -86,14 +84,12 @@ def create_unit_cell(A, origin, lower, dims):
     )
     shift = np.array([origin] * len(pts))
     pts = pts + shift
-    lines = np.array(
-        [5, 0, 1, 2, 3, 0, 5, 4, 5, 6, 7, 4, 2, 0, 4, 2, 1, 5, 2, 2, 6, 2, 3, 7]
-    )
+    lines = np.array([5, 0, 1, 2, 3, 0, 5, 4, 5, 6, 7, 4, 2, 0, 4, 2, 1, 5, 2, 2, 6, 2, 3, 7])
     box = pv.PolyData(pts, lines=lines)
     box.transform(As)
 
     # repeated boxes.
-    m = pv.ImageData(origin=lower, dims=dims).cast_to_unstructured_grid()
+    m = pv.ImageData(origin=lower, dimensions=dims).cast_to_unstructured_grid()
     m.transform(As)
     p = m.glyph(geom=box, factor=1.0)
 
@@ -115,11 +111,7 @@ def axis_object(normA, labels, size, bold, italic, position):
         ]
     )
 
-    colors = (
-        rcParams["detail.axis.color"]
-        + [rcParams["detail.axis.color.center"]]
-        + ["white", "white"]
-    )
+    colors = rcParams["detail.axis.color"] + [rcParams["detail.axis.color.center"]] + ["white", "white"]
     cmap = custom_colormap(colors)
 
     g0 = pv.Arrow(
@@ -207,9 +199,7 @@ def plot_axis(plotter, normA, labels, size, bold, italic, position):
     axes, cmap, lbl_actor = axis_object(normA, labels, size, bold, italic, position)
 
     # axes.
-    axes_actor = plotter.add_mesh(
-        axes, show_scalar_bar=False, cmap=cmap, smooth_shading=True, name="axis"
-    )
+    axes_actor = plotter.add_mesh(axes, show_scalar_bar=False, cmap=cmap, smooth_shading=True, name="axis")
     axes_widget = plotter.add_orientation_widget(axes_actor)
     axes_widget.SetViewport(*rcParams["detail.axis.viewport"])
 
@@ -226,9 +216,7 @@ def plot_axis(plotter, normA, labels, size, bold, italic, position):
     axes_label_widget.InteractiveOff()
 
     # axes actor.
-    axes_actor = plotter.add_mesh(
-        axes, show_scalar_bar=False, cmap=cmap, smooth_shading=True, name="axis"
-    )
+    axes_actor = plotter.add_mesh(axes, show_scalar_bar=False, cmap=cmap, smooth_shading=True, name="axis")
 
     return axes_widget, axes_label_widget, axes_actor
 

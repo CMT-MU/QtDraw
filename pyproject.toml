@@ -5,13 +5,15 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "qtdraw"
 dependencies = [
+    "pandas==1.4.4",
     "matplotlib",
     "seaborn",
     "pyqt5",
     "pyvista",
     "pyvistaqt",
     "click",
-    "pymatgen>2023.7.17",
+    #"pymatgen>2023.7.17",
+    "pymatgen<=2023.9.10",
     "gcoreutils",
 ]
 dynamic = ["version"]
