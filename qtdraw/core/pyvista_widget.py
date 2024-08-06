@@ -3427,6 +3427,9 @@ class PyVistaWidget(QtInteractor):
             surface = ""
 
         obj = create_isosurface(grid_data, value, surface)
+        if len(obj.point_data.keys()) < 1:
+            return
+
         if check_color(color):
             option_add = {"color": all_colors[color][0], "opacity": opacity}
         elif surface == "":
