@@ -12,7 +12,7 @@ pip install qtdraw
   - [Windows](https://github.com/CMT-MU/QtDraw/tree/main/others/QtDraw_WinApp.zip)
 - You can also visit [PyPI](https://pypi.org/project/qtdraw/) or [GitHub](https://github.com/CMT-MU/QtDraw) to download the source.
 - Shell command `qtdraw [filename]` is available.
-- Version 1 `.qtdw` can be converted into this version (Version 2) by the command `conv_qtdraw2 [ver1_file.qtdw]`.
+- Version 1 `.qtdw` file can be converted into this version (Version 2) by the command `conv_qtdraw2 [ver1_file.qtdw]`.
 
 ## Requirements:
 - This library requires [TeXLive](https://www.tug.org/texlive/) environment.
