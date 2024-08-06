@@ -489,6 +489,7 @@ document.write(`
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.set_actor"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.set_actor()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.set_additional_status"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.set_additional_status()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.set_axis"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.set_axis()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.set_bar"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.set_bar()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.set_camera_info"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.set_camera_info()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.set_cell"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.set_cell()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.set_clip"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.set_clip()</span></code></a></li>
@@ -555,6 +556,7 @@ document.write(`
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.add_vector"><code class="docutils literal notranslate"><span class="pre">QtDraw.add_vector()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.nonrepeat_data"><code class="docutils literal notranslate"><span class="pre">QtDraw.nonrepeat_data()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.set_axis"><code class="docutils literal notranslate"><span class="pre">QtDraw.set_axis()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.set_bar"><code class="docutils literal notranslate"><span class="pre">QtDraw.set_bar()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.set_cell"><code class="docutils literal notranslate"><span class="pre">QtDraw.set_cell()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.set_clip"><code class="docutils literal notranslate"><span class="pre">QtDraw.set_clip()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.set_crystal"><code class="docutils literal notranslate"><span class="pre">QtDraw.set_crystal()</span></code></a></li>
@@ -1927,6 +1929,23 @@ document.write(`
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.core.pyvista_widget.PyVistaWidget.set_bar">
+<span class="sig-name descname"><span class="pre">set_bar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/pyvista_widget.html#PyVistaWidget.set_bar"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.pyvista_widget.PyVistaWidget.set_bar" title="Link to this definition">#</a></dt>
+<dd><p>Set scalar bar mode.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>mode</strong> (<em>bool</em><em>, </em><em>optional</em>) -- show scalar bar ?</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>if mode is None, default is used.</p></li>
+</ul>
+</div>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="qtdraw.core.pyvista_widget.PyVistaWidget.set_camera_info">
 <span class="sig-name descname"><span class="pre">set_camera_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">info</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/pyvista_widget.html#PyVistaWidget.set_camera_info"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.pyvista_widget.PyVistaWidget.set_camera_info" title="Link to this definition">#</a></dt>
 <dd><p>Get camera info.</p>
@@ -3149,6 +3168,23 @@ document.write(`
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.core.qtdraw_app.QtDraw.set_bar">
+<span class="sig-name descname"><span class="pre">set_bar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/qtdraw_app.html#QtDraw.set_bar"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.qtdraw_app.QtDraw.set_bar" title="Link to this definition">#</a></dt>
+<dd><p>Set scalar bar mode.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>mode</strong> (<em>bool</em><em>, </em><em>optional</em>) -- show scalar bar ?</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>if mode is None, default is used.</p></li>
+</ul>
+</div>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="qtdraw.core.qtdraw_app.QtDraw.set_cell">
 <span class="sig-name descname"><span class="pre">set_cell</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/qtdraw_app.html#QtDraw.set_cell"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.qtdraw_app.QtDraw.set_cell" title="Link to this definition">#</a></dt>
 <dd><p>Set unit cell.</p>
@@ -3544,6 +3580,7 @@ document.write(`
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.set_actor"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.set_actor()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.set_additional_status"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.set_additional_status()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.set_axis"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.set_axis()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.set_bar"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.set_bar()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.set_camera_info"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.set_camera_info()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.set_cell"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.set_cell()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.set_clip"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.set_clip()</span></code></a></li>
@@ -3610,6 +3647,7 @@ document.write(`
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.add_vector"><code class="docutils literal notranslate"><span class="pre">QtDraw.add_vector()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.nonrepeat_data"><code class="docutils literal notranslate"><span class="pre">QtDraw.nonrepeat_data()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.set_axis"><code class="docutils literal notranslate"><span class="pre">QtDraw.set_axis()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.set_bar"><code class="docutils literal notranslate"><span class="pre">QtDraw.set_bar()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.set_cell"><code class="docutils literal notranslate"><span class="pre">QtDraw.set_cell()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.set_clip"><code class="docutils literal notranslate"><span class="pre">QtDraw.set_clip()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.set_crystal"><code class="docutils literal notranslate"><span class="pre">QtDraw.set_crystal()</span></code></a></li>

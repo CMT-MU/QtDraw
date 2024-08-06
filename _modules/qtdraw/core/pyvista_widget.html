@@ -2095,7 +2095,8 @@ document.write(`
         <span class="bp">self</span><span class="o">.</span><span class="n">set_axis</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">set_cell</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">set_light</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">set_latex</span><span class="p">()</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_latex</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_bar</span><span class="p">()</span></div>
 
 
     <span class="c1"># ==================================================</span>
@@ -2538,6 +2539,38 @@ document.write(`
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">remove_bounds_axes</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">remove_bounding_box</span><span class="p">()</span></div>
+
+
+    <span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="PyVistaWidget.set_bar">
+<a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.set_bar">[docs]</a>
+    <span class="k">def</span> <span class="nf">set_bar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set scalar bar mode.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            mode (bool, optional): show scalar bar ?</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            - if mode is None, default is used.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">mode</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">mode</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_status</span><span class="p">[</span><span class="s2">&quot;bar&quot;</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_status</span><span class="p">[</span><span class="s2">&quot;bar&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mode</span>
+
+        <span class="k">if</span> <span class="n">mode</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">add_scalar_bar</span><span class="p">(</span>
+                <span class="n">vertical</span><span class="o">=</span><span class="n">detail</span><span class="p">[</span><span class="s2">&quot;bar_vertical&quot;</span><span class="p">],</span>
+                <span class="n">width</span><span class="o">=</span><span class="n">detail</span><span class="p">[</span><span class="s2">&quot;bar_width&quot;</span><span class="p">],</span>
+                <span class="n">height</span><span class="o">=</span><span class="n">detail</span><span class="p">[</span><span class="s2">&quot;bar_height&quot;</span><span class="p">],</span>
+                <span class="n">position_x</span><span class="o">=</span><span class="n">detail</span><span class="p">[</span><span class="s2">&quot;bar_x&quot;</span><span class="p">],</span>
+                <span class="n">position_y</span><span class="o">=</span><span class="n">detail</span><span class="p">[</span><span class="s2">&quot;bar_y&quot;</span><span class="p">],</span>
+                <span class="n">label_font_size</span><span class="o">=</span><span class="n">detail</span><span class="p">[</span><span class="s2">&quot;bar_size&quot;</span><span class="p">],</span>
+                <span class="n">fmt</span><span class="o">=</span><span class="n">detail</span><span class="p">[</span><span class="s2">&quot;bar_format&quot;</span><span class="p">],</span>
+            <span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_scalar_bars</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">remove_scalar_bar</span><span class="p">()</span></div>
 
 
     <span class="c1"># ==================================================</span>

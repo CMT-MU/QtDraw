@@ -731,6 +731,7 @@ document.write(`
         <span class="bp">self</span><span class="o">.</span><span class="n">view_combo_c</span> <span class="o">=</span> <span class="n">Combo</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="o">-</span><span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">)])</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">view_button_default</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;default&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">view_button_bar</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;bar&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">view_button_parallel</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;parallel&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">view_button_grid</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;grid&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
 
@@ -759,6 +760,7 @@ document.write(`
         <span class="n">layout3</span><span class="o">.</span><span class="n">setContentsMargins</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
         <span class="n">layout3</span><span class="o">.</span><span class="n">setVerticalSpacing</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
         <span class="n">layout3</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">view_button_default</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="n">layout3</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">view_button_bar</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
         <span class="n">layout3</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">view_button_x</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
         <span class="n">layout3</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">view_button_xm</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
         <span class="n">layout3</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">label_a</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
@@ -1007,6 +1009,7 @@ document.write(`
         <span class="bp">self</span><span class="o">.</span><span class="n">view_combo_b</span><span class="o">.</span><span class="n">setCurrentText</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pyvista_widget</span><span class="o">.</span><span class="n">_status</span><span class="p">[</span><span class="s2">&quot;view&quot;</span><span class="p">][</span><span class="mi">1</span><span class="p">]))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">view_combo_c</span><span class="o">.</span><span class="n">setCurrentText</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pyvista_widget</span><span class="o">.</span><span class="n">_status</span><span class="p">[</span><span class="s2">&quot;view&quot;</span><span class="p">][</span><span class="mi">2</span><span class="p">]))</span>
 
+        <span class="bp">self</span><span class="o">.</span><span class="n">view_button_bar</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pyvista_widget</span><span class="o">.</span><span class="n">_status</span><span class="p">[</span><span class="s2">&quot;bar&quot;</span><span class="p">])</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">view_button_parallel</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pyvista_widget</span><span class="o">.</span><span class="n">_status</span><span class="p">[</span><span class="s2">&quot;parallel_projection&quot;</span><span class="p">])</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">view_button_grid</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pyvista_widget</span><span class="o">.</span><span class="n">_status</span><span class="p">[</span><span class="s2">&quot;grid&quot;</span><span class="p">])</span>
 
@@ -1150,6 +1153,23 @@ document.write(`
 <span class="sd">        :meta private:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pyvista_widget</span><span class="o">.</span><span class="n">set_repeat</span><span class="p">(</span><span class="n">mode</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_view</span><span class="p">()</span>
+
+    <span class="c1"># ==================================================</span>
+    <span class="k">def</span> <span class="nf">_set_bar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        set bar.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            mode (bool): scalar bar mode.</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            - if mode is None, default is used.</span>
+
+<span class="sd">        :meta private:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pyvista_widget</span><span class="o">.</span><span class="n">set_bar</span><span class="p">(</span><span class="n">mode</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_update_view</span><span class="p">()</span>
 
@@ -1299,6 +1319,7 @@ document.write(`
         <span class="bp">self</span><span class="o">.</span><span class="n">view_button_nonrepeat</span><span class="o">.</span><span class="n">pressed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_nonrepeat</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">view_edit_lower</span><span class="o">.</span><span class="n">returnPressed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_set_lower</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">view_edit_upper</span><span class="o">.</span><span class="n">returnPressed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_set_upper</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">view_button_bar</span><span class="o">.</span><span class="n">toggled</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_set_bar</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">view_button_default</span><span class="o">.</span><span class="n">pressed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_set_view_default</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">view_button_x</span><span class="o">.</span><span class="n">pressed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pyvista_widget</span><span class="o">.</span><span class="n">view_yz</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">view_button_y</span><span class="o">.</span><span class="n">pressed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pyvista_widget</span><span class="o">.</span><span class="n">view_zx</span><span class="p">)</span>
@@ -2662,6 +2683,22 @@ document.write(`
 <span class="sd">            - if mode is None, default is used.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pyvista_widget</span><span class="o">.</span><span class="n">set_grid</span><span class="p">(</span><span class="n">mode</span><span class="p">)</span></div>
+
+
+    <span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="QtDraw.set_bar">
+<a class="viewcode-back" href="../../../src/from_python.html#qtdraw.core.qtdraw_app.QtDraw.set_bar">[docs]</a>
+    <span class="k">def</span> <span class="nf">set_bar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set scalar bar mode.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            mode (bool, optional): show scalar bar ?</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            - if mode is None, default is used.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pyvista_widget</span><span class="o">.</span><span class="n">set_bar</span><span class="p">(</span><span class="n">mode</span><span class="p">)</span></div>
 
 
     <span class="c1"># ==================================================</span>
