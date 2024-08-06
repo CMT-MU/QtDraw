@@ -414,6 +414,7 @@ document.write(`
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#load-from-files">load from files</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#from-jupyter-notebook">from Jupyter Notebook</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#background-plot">background plot</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#isosurface-plot">isosurface plot</a></li>
 </ul>
             </nav>
@@ -453,6 +454,36 @@ document.write(`
 <li><p><a class="reference internal" href="examples/pyvista_widget.html"><span class="std std-doc">PyVistaWidget</span></a></p></li>
 </ul>
 </section>
+<section id="background-plot">
+<h2>background plot<a class="headerlink" href="#background-plot" title="Link to this heading">#</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#</span>
+<span class="c1"># background.py</span>
+<span class="c1">#</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">qtdraw.util.qt_event_util</span> <span class="kn">import</span> <span class="n">get_qt_application</span>
+<span class="kn">from</span> <span class="nn">qtdraw.core.pyvista_widget</span> <span class="kn">import</span> <span class="n">PyVistaWidget</span>
+
+<span class="n">filename</span> <span class="o">=</span> <span class="s2">&quot;output.qtdw&quot;</span>  <span class="c1"># output file name.</span>
+
+<span class="c1"># create widget.</span>
+<span class="n">app</span> <span class="o">=</span> <span class="n">get_qt_application</span><span class="p">()</span>
+<span class="n">widget</span> <span class="o">=</span> <span class="n">PyVistaWidget</span><span class="p">(</span><span class="n">off_screen</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">widget</span><span class="o">.</span><span class="n">set_cell</span><span class="p">(</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>  <span class="c1"># cell off.</span>
+
+<span class="c1"># add objects.</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">32</span><span class="p">):</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">i</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">8</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">i</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">8</span><span class="p">)</span>
+    <span class="n">z</span> <span class="o">=</span> <span class="n">i</span> <span class="o">*</span> <span class="mf">0.05</span>
+    <span class="n">widget</span><span class="o">.</span><span class="n">add_site</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;[</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">,</span><span class="si">{</span><span class="n">y</span><span class="si">}</span><span class="s2">,</span><span class="si">{</span><span class="n">z</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+
+<span class="c1"># save and quit.</span>
+<span class="n">widget</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+<span class="n">app</span><span class="o">.</span><span class="n">quit</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
 <section id="isosurface-plot">
 <h2>isosurface plot<a class="headerlink" href="#isosurface-plot" title="Link to this heading">#</a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#</span>
@@ -470,24 +501,15 @@ document.write(`
     <span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
     <span class="n">endpoint</span> <span class="o">=</span> <span class="kc">True</span>
 
-    <span class="c1"># data function for each point.</span>
+    <span class="c1"># data function for each point (dispersion relation).</span>
     <span class="k">def</span> <span class="nf">ek</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">):</span>
         <span class="k">return</span> <span class="o">-</span><span class="mf">2.0</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">y</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">z</span><span class="p">))</span>
 
-    <span class="c1"># surface function for each point.</span>
-    <span class="k">def</span> <span class="nf">vx</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">):</span>
-        <span class="k">return</span> <span class="mf">4.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">x</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">vy</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">):</span>
-        <span class="k">return</span> <span class="mf">4.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">y</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">vz</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">):</span>
-        <span class="k">return</span> <span class="mf">4.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">z</span><span class="p">)</span>
-
+    <span class="c1"># surface function for each point (absolute value of velocity).</span>
     <span class="k">def</span> <span class="nf">v</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">):</span>
         <span class="k">return</span> <span class="mf">4.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">x</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">y</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">z</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
 
-    <span class="n">surface</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;vx&quot;</span><span class="p">:</span> <span class="n">vx</span><span class="p">,</span> <span class="s2">&quot;vy&quot;</span><span class="p">:</span> <span class="n">vy</span><span class="p">,</span> <span class="s2">&quot;vz&quot;</span><span class="p">:</span> <span class="n">vz</span><span class="p">,</span> <span class="s2">&quot;v&quot;</span><span class="p">:</span> <span class="n">v</span><span class="p">}</span>
+    <span class="n">surface</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;v&quot;</span><span class="p">:</span> <span class="n">v</span><span class="p">}</span>
 
     <span class="n">grid_data</span> <span class="o">=</span> <span class="n">create_data</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">origin</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">endpoint</span><span class="p">,</span> <span class="n">ek</span><span class="p">,</span> <span class="n">surface</span><span class="p">)</span>
 
@@ -501,7 +523,9 @@ document.write(`
 <span class="n">win</span> <span class="o">=</span> <span class="n">QtDraw</span><span class="p">()</span>
 
 <span class="c1"># draw isosurface.</span>
-<span class="n">win</span><span class="o">.</span><span class="n">add_isosurface</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;cubic.py&quot;</span><span class="p">,</span> <span class="n">grid_data</span><span class="p">),</span> <span class="n">surface</span><span class="o">=</span><span class="s2">&quot;vx&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;coolwarm&quot;</span><span class="p">)</span>
+<span class="n">win</span><span class="o">.</span><span class="n">set_cell</span><span class="p">(</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>
+<span class="n">win</span><span class="o">.</span><span class="n">add_isosurface</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;cubic.py&quot;</span><span class="p">,</span> <span class="n">grid_data</span><span class="p">),</span> <span class="n">surface</span><span class="o">=</span><span class="s2">&quot;v&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;coolwarm&quot;</span><span class="p">)</span>
+<span class="n">win</span><span class="o">.</span><span class="n">set_view</span><span class="p">()</span>
 
 <span class="n">win</span><span class="o">.</span><span class="n">exec</span><span class="p">()</span>
 </pre></div>
@@ -551,6 +575,7 @@ document.write(`
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#load-from-files">load from files</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#from-jupyter-notebook">from Jupyter Notebook</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#background-plot">background plot</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#isosurface-plot">isosurface plot</a></li>
 </ul>
   </nav></div>

@@ -412,10 +412,11 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installation">Installation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#requirements">Requirements:</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#macos">MacOS</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#windows">Windows</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#linux">Linux</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installation-for-macos">Installation for MacOS</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installation-for-windows">Installation for Windows</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installation-for-linux">Installation for Linux</a></li>
 </ul>
             </nav>
         </div>
@@ -429,21 +430,24 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="install-qtdraw-and-multipie">
 <h1>Install QtDraw (and MultiPie)<a class="headerlink" href="#install-qtdraw-and-multipie" title="Link to this heading">#</a></h1>
-<p>QtDraw can be installed from PyPI using pip on Python &gt;= 3.9:</p>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Link to this heading">#</a></h2>
+<p><strong>QtDraw</strong> can be installed from PyPI using pip on Python &gt;= 3.9:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">qtdraw</span>
 </pre></div>
 </div>
 <ul class="simple">
 <li><p>It is useful to associate with the following application with <code class="docutils literal notranslate"><span class="pre">.qtdw</span></code>, <code class="docutils literal notranslate"><span class="pre">.cif</span></code>, <code class="docutils literal notranslate"><span class="pre">.vesta</span></code>, and <code class="docutils literal notranslate"><span class="pre">.xsf</span></code> extensions.</p>
 <ul>
-<li><p><a class="reference external" href="https://github.com/CMT-MU/QtDraw/tree/main/others/QtDraw_MacApp.zip">Mac</a></p></li>
+<li><p><a class="reference external" href="https://github.com/CMT-MU/QtDraw/tree/main/others/QtDraw_MacApp.zip">MacOS</a></p></li>
 <li><p><a class="reference external" href="https://github.com/CMT-MU/QtDraw/tree/main/others/QtDraw_WinApp.zip">Windows</a></p></li>
 </ul>
 </li>
 <li><p>You can also visit <a class="reference external" href="https://pypi.org/project/qtdraw/">PyPI</a> or <a class="reference external" href="https://github.com/CMT-MU/QtDraw">GitHub</a> to download the source.</p></li>
-<li><p>See also, <a class="reference internal" href="#./src/install_guide.pdf"><span class="xref myst">Install Guide (in Japanese)</span></a></p></li>
 <li><p>Shell command <code class="docutils literal notranslate"><span class="pre">qtdraw</span> <span class="pre">[filename]</span></code> is available.</p></li>
+<li><p>Version 1 <code class="docutils literal notranslate"><span class="pre">.qtdw</span></code> can be converted into this version (Version 2) by the command <code class="docutils literal notranslate"><span class="pre">conv_qtdraw2</span> <span class="pre">[ver1_file.qtdw]</span></code>.</p></li>
 </ul>
+</section>
 <section id="requirements">
 <h2>Requirements:<a class="headerlink" href="#requirements" title="Link to this heading">#</a></h2>
 <ul class="simple">
@@ -451,8 +455,8 @@ document.write(`
 <li><p>Symmetry operation supports are provided by <a class="reference external" href="https://github.com/CMT-MU/MultiPie">MultiPie</a>.</p></li>
 </ul>
 </section>
-<section id="macos">
-<h2>MacOS<a class="headerlink" href="#macos" title="Link to this heading">#</a></h2>
+<section id="installation-for-macos">
+<h2>Installation for MacOS<a class="headerlink" href="#installation-for-macos" title="Link to this heading">#</a></h2>
 <ol class="arabic">
 <li><p>construct for LaTeX &amp; Python environments</p>
 <ul class="simple">
@@ -510,8 +514,8 @@ nohup<span class="w"> </span>python<span class="w"> </span>-c<span class="w"> </
 </li>
 </ul>
 </section>
-<section id="windows">
-<h2>Windows<a class="headerlink" href="#windows" title="Link to this heading">#</a></h2>
+<section id="installation-for-windows">
+<h2>Installation for Windows<a class="headerlink" href="#installation-for-windows" title="Link to this heading">#</a></h2>
 <ol class="arabic simple">
 <li><p>construct LaTeX &amp; Python environments</p></li>
 </ol>
@@ -559,8 +563,8 @@ $<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </sp
 </li>
 </ul>
 </section>
-<section id="linux">
-<h2>Linux<a class="headerlink" href="#linux" title="Link to this heading">#</a></h2>
+<section id="installation-for-linux">
+<h2>Installation for Linux<a class="headerlink" href="#installation-for-linux" title="Link to this heading">#</a></h2>
 </section>
 </section>
 
@@ -604,10 +608,11 @@ $<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </sp
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installation">Installation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#requirements">Requirements:</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#macos">MacOS</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#windows">Windows</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#linux">Linux</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installation-for-macos">Installation for MacOS</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installation-for-windows">Installation for Windows</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installation-for-linux">Installation for Linux</a></li>
 </ul>
   </nav></div>
 

@@ -1161,7 +1161,6 @@ document.write(`
 
 <span class="sd">    Returns:</span>
 <span class="sd">        - (vtk.DataSet) -- isosurface object.</span>
-<span class="sd">        - (bool) -- positive value only for surface ?</span>
 
 <span class="sd">    Note:</span>
 <span class="sd">        - n : [nx,ny,nz] division of grid.</span>
@@ -1208,15 +1207,12 @@ document.write(`
     <span class="n">grid</span> <span class="o">=</span> <span class="n">create_grid</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">origin</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">endpoint</span><span class="p">)</span>
     <span class="n">grid</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;data&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span>
 
-    <span class="n">pos</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="k">if</span> <span class="n">surface</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">grid</span><span class="p">[</span><span class="n">surface_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">surface</span>
-        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">surface</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">:</span>
-            <span class="n">pos</span> <span class="o">=</span> <span class="kc">True</span>
 
     <span class="n">obj</span> <span class="o">=</span> <span class="n">grid</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">scalars</span><span class="o">=</span><span class="s2">&quot;data&quot;</span><span class="p">)</span>
 
-    <span class="k">return</span> <span class="n">obj</span><span class="p">,</span> <span class="n">pos</span></div>
+    <span class="k">return</span> <span class="n">obj</span></div>
 
 </pre></div>
 

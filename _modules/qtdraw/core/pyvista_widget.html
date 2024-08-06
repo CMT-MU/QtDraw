@@ -593,6 +593,7 @@ document.write(`
         <span class="bp">self</span><span class="o">.</span><span class="n">_label_counter</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># id for label actor.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_isosurface_data</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_backup</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_block_remove_isosurface</span> <span class="o">=</span> <span class="kc">False</span>
 
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="PyVistaWidget.set_additional_status">
@@ -1707,6 +1708,7 @@ document.write(`
 <span class="sd">        Note:</span>
 <span class="sd">            - if keyword is None, default value is used.</span>
 <span class="sd">            - if filename is tuple, (name, dict), use dict data as name.</span>
+<span class="sd">            - if surface colormap is automatically adjusted by [min.max].</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">row_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_common_row_data</span><span class="p">(</span><span class="s2">&quot;isosurface&quot;</span><span class="p">,</span> <span class="n">opacity</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">cell</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">margin</span><span class="p">)</span>
 
@@ -2068,6 +2070,7 @@ document.write(`
 <span class="sd">        Args:</span>
 <span class="sd">            data (dict, optional): object data.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_block_remove_isosurface</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
             <span class="n">model</span><span class="o">.</span><span class="n">clear_data</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">deselect_actor_all</span><span class="p">()</span>
@@ -2076,7 +2079,8 @@ document.write(`
             <span class="bp">self</span><span class="o">.</span><span class="n">_status</span><span class="p">[</span><span class="s2">&quot;grid&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">add_data</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">reset_camera</span><span class="p">()</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reset_camera</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_block_remove_isosurface</span> <span class="o">=</span> <span class="kc">False</span></div>
 
 
     <span class="c1"># ==================================================</span>
@@ -3021,7 +3025,7 @@ document.write(`
             <span class="n">actor_name</span> <span class="o">=</span> <span class="n">row_data</span><span class="p">[</span><span class="n">COLUMN_LABEL_ACTOR</span><span class="p">]</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">delete_actor</span><span class="p">(</span><span class="n">actor_name</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="n">object_type</span> <span class="o">==</span> <span class="s2">&quot;isosurface&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">object_type</span> <span class="o">==</span> <span class="s2">&quot;isosurface&quot;</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_block_remove_isosurface</span><span class="p">:</span>
             <span class="n">filename</span> <span class="o">=</span> <span class="n">row_data</span><span class="p">[</span><span class="n">COLUMN_ISOSURFACE_FILE</span><span class="p">]</span>
             <span class="k">if</span> <span class="n">filename</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_isosurface_data</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
                 <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_isosurface_data</span><span class="p">[</span><span class="n">filename</span><span class="p">]</span></div>
@@ -4032,8 +4036,7 @@ document.write(`
         <span class="k">if</span> <span class="n">surface</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">grid_data</span><span class="p">[</span><span class="s2">&quot;surface&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
             <span class="n">surface</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
 
-        <span class="n">obj</span><span class="p">,</span> <span class="n">pos</span> <span class="o">=</span> <span class="n">create_isosurface</span><span class="p">(</span><span class="n">grid_data</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">surface</span><span class="p">)</span>
-        <span class="n">rng</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="n">pos</span> <span class="k">else</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="n">create_isosurface</span><span class="p">(</span><span class="n">grid_data</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">surface</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">check_color</span><span class="p">(</span><span class="n">color</span><span class="p">):</span>
             <span class="n">option_add</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;color&quot;</span><span class="p">:</span> <span class="n">all_colors</span><span class="p">[</span><span class="n">color</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;opacity&quot;</span><span class="p">:</span> <span class="n">opacity</span><span class="p">}</span>
         <span class="k">elif</span> <span class="n">surface</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
@@ -4046,7 +4049,6 @@ document.write(`
             <span class="n">option_add</span> <span class="o">=</span> <span class="p">{</span>
                 <span class="s2">&quot;cmap&quot;</span><span class="p">:</span> <span class="n">color</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s2">&quot;*&quot;</span><span class="p">),</span>
                 <span class="s2">&quot;scalars&quot;</span><span class="p">:</span> <span class="n">surface</span><span class="p">,</span>
-                <span class="s2">&quot;clim&quot;</span><span class="p">:</span> <span class="n">rng</span><span class="p">,</span>
                 <span class="s2">&quot;opacity&quot;</span><span class="p">:</span> <span class="n">opacity</span><span class="p">,</span>
                 <span class="s2">&quot;show_scalar_bar&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
             <span class="p">}</span>
