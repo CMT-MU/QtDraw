@@ -33,6 +33,7 @@
 | _set_gamma | Set lattice angle, gamma. |
 | _set_clip | Set clip mode. |
 | _set_repeat | Set repeat mode. |
+| _set_bar | set bar. |
 | _set_lower | Set lower bound. |
 | _set_upper | set upper bound. |
 | _set_view_default | set default. |
@@ -87,6 +88,7 @@
 | set_view | Set view point. |
 | set_parallel_projection | Set parallel projection mode. |
 | set_grid | Set grid mode. |
+| set_bar | Set scalar bar mode. |
 | set_axis | Set axis widget. |
 | set_cell | Set unit cell. |
 | add_mesh | Add any PyVista/VTK mesh or dataset that PyVista can wrap to the scene. |
@@ -194,6 +196,7 @@
 | set_view | Set view point. |
 | set_parallel_projection | Set parallel projection mode. |
 | set_grid | Set grid mode. |
+| set_bar | Set scalar bar mode. |
 | set_axis | Set axis widget. |
 | set_cell | Set unit cell. |
 | init_data_model | Initialize data model. |

@@ -378,6 +378,7 @@ class QtDraw(Window):
         self.view_combo_c = Combo(parent, [str(i) for i in range(-9, 10)])
 
         self.view_button_default = Button(parent, "default")
+        self.view_button_bar = Button(parent, "bar", True)
         self.view_button_parallel = Button(parent, "parallel", True)
         self.view_button_grid = Button(parent, "grid", True)
 
@@ -406,6 +407,7 @@ class QtDraw(Window):
         layout3.setContentsMargins(0, 10, 0, 10)
         layout3.setVerticalSpacing(2)
         layout3.addWidget(self.view_button_default, 0, 0, 1, 3)
+        layout3.addWidget(self.view_button_bar, 0, 4, 1, 4)
         layout3.addWidget(self.view_button_x, 1, 0, 1, 1)
         layout3.addWidget(self.view_button_xm, 1, 1, 1, 1)
         layout3.addWidget(label_a, 1, 4, 1, 1)
@@ -654,6 +656,7 @@ class QtDraw(Window):
         self.view_combo_b.setCurrentText(str(self.pyvista_widget._status["view"][1]))
         self.view_combo_c.setCurrentText(str(self.pyvista_widget._status["view"][2]))
 
+        self.view_button_bar.setChecked(self.pyvista_widget._status["bar"])
         self.view_button_parallel.setChecked(self.pyvista_widget._status["parallel_projection"])
         self.view_button_grid.setChecked(self.pyvista_widget._status["grid"])
 
@@ -797,6 +800,23 @@ class QtDraw(Window):
         :meta private:
         """
         self.pyvista_widget.set_repeat(mode)
+
+        self._update_view()
+
+    # ==================================================
+    def _set_bar(self, mode=None):
+        """
+        set bar.
+
+        Args:
+            mode (bool): scalar bar mode.
+
+        Note:
+            - if mode is None, default is used.
+
+        :meta private:
+        """
+        self.pyvista_widget.set_bar(mode)
 
         self._update_view()
 
@@ -946,6 +966,7 @@ class QtDraw(Window):
         self.view_button_nonrepeat.pressed.connect(self._nonrepeat)
         self.view_edit_lower.returnPressed.connect(self._set_lower)
         self.view_edit_upper.returnPressed.connect(self._set_upper)
+        self.view_button_bar.toggled.connect(self._set_bar)
         self.view_button_default.pressed.connect(self._set_view_default)
         self.view_button_x.pressed.connect(self.pyvista_widget.view_yz)
         self.view_button_y.pressed.connect(self.pyvista_widget.view_zx)
@@ -2223,6 +2244,19 @@ class QtDraw(Window):
             - if mode is None, default is used.
         """
         self.pyvista_widget.set_grid(mode)
+
+    # ==================================================
+    def set_bar(self, mode=None):
+        """
+        Set scalar bar mode.
+
+        Args:
+            mode (bool, optional): show scalar bar ?
+
+        Note:
+            - if mode is None, default is used.
+        """
+        self.pyvista_widget.set_bar(mode)
 
     # ==================================================
     def set_axis(self, axis_type=None):

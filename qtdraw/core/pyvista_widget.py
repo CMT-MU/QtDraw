@@ -1639,6 +1639,7 @@ class PyVistaWidget(QtInteractor):
         self.set_cell()
         self.set_light()
         self.set_latex()
+        self.set_bar()
 
     # ==================================================
     # propery
@@ -2045,6 +2046,35 @@ class PyVistaWidget(QtInteractor):
         else:
             self.remove_bounds_axes()
             self.remove_bounding_box()
+
+    # ==================================================
+    def set_bar(self, mode=None):
+        """
+        Set scalar bar mode.
+
+        Args:
+            mode (bool, optional): show scalar bar ?
+
+        Note:
+            - if mode is None, default is used.
+        """
+        if mode is None:
+            mode = self._status["bar"]
+        else:
+            self._status["bar"] = mode
+
+        if mode:
+            self.add_scalar_bar(
+                vertical=detail["bar_vertical"],
+                width=detail["bar_width"],
+                height=detail["bar_height"],
+                position_x=detail["bar_x"],
+                position_y=detail["bar_y"],
+                label_font_size=detail["bar_size"],
+                fmt=detail["bar_format"],
+            )
+        elif len(self._scalar_bars) > 0:
+            self.remove_scalar_bar()
 
     # ==================================================
     def set_axis(self, axis_type=None):

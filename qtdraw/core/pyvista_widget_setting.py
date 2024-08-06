@@ -22,6 +22,7 @@ default_status = {
     "view": [4, 5, 2],  # indices of [a1,a2,a3] unit vectors.
     "parallel_projection": True,
     "grid": False,
+    "bar": False,
     "axis_type": "on",  # on/axis/off/full.
     "cell_mode": "single",  # single/all/off.
 }
@@ -120,6 +121,14 @@ widget_detail = {
     # cif and vesta.
     "site_scale": 0.3,
     "bond_scale": 0.08,
+    # scalar bar.
+    "bar_vertical": True,
+    "bar_width": 0.05,
+    "bar_height": 0.3,
+    "bar_x": 0.05,
+    "bar_y": 0.65,
+    "bar_size": 14,
+    "bar_format": " %5.2f",
 }
 
 # ==================================================
