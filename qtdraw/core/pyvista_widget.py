@@ -231,6 +231,7 @@ class PyVistaWidget(QtInteractor):
         self._label_counter = 0  # id for label actor.
         self._isosurface_data = {}
         self._backup = None
+        self._block_remove_isosurface = False
 
     # ==================================================
     def set_additional_status(self):
@@ -1292,6 +1293,7 @@ class PyVistaWidget(QtInteractor):
         Note:
             - if keyword is None, default value is used.
             - if filename is tuple, (name, dict), use dict data as name.
+            - if surface colormap is automatically adjusted by [min.max].
         """
         row_data = self.set_common_row_data("isosurface", opacity, position, cell, name, label, margin)
 
@@ -1614,6 +1616,7 @@ class PyVistaWidget(QtInteractor):
         Args:
             data (dict, optional): object data.
         """
+        self._block_remove_isosurface = True
         for model in self._data.values():
             model.clear_data()
         self.deselect_actor_all()
@@ -1623,6 +1626,7 @@ class PyVistaWidget(QtInteractor):
         else:
             self.add_data(data)
         self.reset_camera()
+        self._block_remove_isosurface = False
 
     # ==================================================
     def refresh(self):
@@ -2471,7 +2475,7 @@ class PyVistaWidget(QtInteractor):
             actor_name = row_data[COLUMN_LABEL_ACTOR]
             self.delete_actor(actor_name)
 
-        if object_type == "isosurface":
+        if object_type == "isosurface" and not self._block_remove_isosurface:
             filename = row_data[COLUMN_ISOSURFACE_FILE]
             if filename in self._isosurface_data.keys():
                 del self._isosurface_data[filename]
@@ -3392,8 +3396,7 @@ class PyVistaWidget(QtInteractor):
         if surface not in grid_data["surface"].keys():
             surface = ""
 
-        obj, pos = create_isosurface(grid_data, value, surface)
-        rng = [0, 1] if pos else [-1, 1]
+        obj = create_isosurface(grid_data, value, surface)
         if check_color(color):
             option_add = {"color": all_colors[color][0], "opacity": opacity}
         elif surface == "":
@@ -3406,7 +3409,6 @@ class PyVistaWidget(QtInteractor):
             option_add = {
                 "cmap": color.strip("*"),
                 "scalars": surface,
-                "clim": rng,
                 "opacity": opacity,
                 "show_scalar_bar": False,
             }

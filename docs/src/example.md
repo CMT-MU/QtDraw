@@ -10,6 +10,10 @@ The examples for **QtDraw**.
 - [QtDraw](examples/qtdraw.ipynb)
 - [PyVistaWidget](examples/pyvista_widget.ipynb)
 
+## background plot
+```{literalinclude} examples/background.py
+```
+
 ## isosurface plot
 ```{literalinclude} examples/isosurface.py
 ```

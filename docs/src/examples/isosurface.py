@@ -13,24 +13,15 @@ def create_grid_data():
     A = np.eye(4)
     endpoint = True
 
-    # data function for each point.
+    # data function for each point (dispersion relation).
     def ek(x, y, z):
         return -2.0 * (np.cos(2 * np.pi * x) + np.cos(2 * np.pi * y) + np.cos(2 * np.pi * z))
 
-    # surface function for each point.
-    def vx(x, y, z):
-        return 4.0 * np.pi * np.sin(2 * np.pi * x)
-
-    def vy(x, y, z):
-        return 4.0 * np.pi * np.sin(2 * np.pi * y)
-
-    def vz(x, y, z):
-        return 4.0 * np.pi * np.sin(2 * np.pi * z)
-
+    # surface function for each point (absolute value of velocity).
     def v(x, y, z):
         return 4.0 * np.pi * np.sqrt(np.sin(2 * np.pi * x) ** 2 + np.sin(2 * np.pi * y) ** 2 + np.sin(2 * np.pi * z) ** 2)
 
-    surface = {"vx": vx, "vy": vy, "vz": vz, "v": v}
+    surface = {"v": v}
 
     grid_data = create_data(n, origin, A, endpoint, ek, surface)
 
@@ -44,6 +35,8 @@ grid_data = create_grid_data()
 win = QtDraw()
 
 # draw isosurface.
-win.add_isosurface(data=("cubic.py", grid_data), surface="vx", color="coolwarm")
+win.set_cell("off")
+win.add_isosurface(data=("cubic.py", grid_data), surface="v", color="coolwarm")
+win.set_view()
 
 win.exec()

@@ -1,23 +1,25 @@
 # Install QtDraw (and MultiPie)
 
-QtDraw can be installed from PyPI using pip on Python >= 3.9:
+## Installation
+
+**QtDraw** can be installed from PyPI using pip on Python >= 3.9:
 
 ```
 pip install qtdraw
 ```
 - It is useful to associate with the following application with `.qtdw`, `.cif`, `.vesta`, and `.xsf` extensions.
-  - [Mac](https://github.com/CMT-MU/QtDraw/tree/main/others/QtDraw_MacApp.zip)
+  - [MacOS](https://github.com/CMT-MU/QtDraw/tree/main/others/QtDraw_MacApp.zip)
   - [Windows](https://github.com/CMT-MU/QtDraw/tree/main/others/QtDraw_WinApp.zip)
 - You can also visit [PyPI](https://pypi.org/project/qtdraw/) or [GitHub](https://github.com/CMT-MU/QtDraw) to download the source.
-- See also, [Install Guide (in Japanese)](./src/install_guide.pdf)
 - Shell command `qtdraw [filename]` is available.
+- Version 1 `.qtdw` can be converted into this version (Version 2) by the command `conv_qtdraw2 [ver1_file.qtdw]`.
 
 ## Requirements:
 - This library requires [TeXLive](https://www.tug.org/texlive/) environment.
 - Symmetry operation supports are provided by [MultiPie](https://github.com/CMT-MU/MultiPie).
 
 
-## MacOS
+## Installation for MacOS
 
 1. construct for LaTeX & Python environments
    - install [TeX Live](https://www.tug.org/texlive/doc/texlive-ja/texlive-ja.pdf)
@@ -72,7 +74,7 @@ pip install qtdraw
 
     ![automator.jpg](fig/automator.jpg)
 
-## Windows
+## Installation for Windows
 
 1. construct LaTeX & Python environments
 - install Python [https://www.python.jp/install/windows/install.html](https://www.python.jp/install/windows/install.html)
@@ -118,4 +120,4 @@ pip install qtdraw
     python -c "from qtdraw.core.qtdraw_app import QtDraw; import sys; filename = sys.argv[1] if len(sys.argv) > 1 else None; QtDraw(filename=filename).exec()" %1
     ```
 
-## Linux
+## Installation for Linux

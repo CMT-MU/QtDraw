@@ -2052,6 +2052,7 @@ class QtDraw(Window):
         Note:
             - if keyword is None, default value is used.
             - if filename is tuple, (name, dict), use dict data as name.
+            - if surface colormap is automatically adjusted by [min.max].
         """
         self.pyvista_widget.add_isosurface(data, value, surface, color, opacity, position, cell, name, label, margin)
 

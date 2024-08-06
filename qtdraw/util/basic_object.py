@@ -760,7 +760,6 @@ def create_isosurface(grid_data, value, surface_name):
 
     Returns:
         - (vtk.DataSet) -- isosurface object.
-        - (bool) -- positive value only for surface ?
 
     Note:
         - n : [nx,ny,nz] division of grid.
@@ -807,12 +806,9 @@ def create_isosurface(grid_data, value, surface_name):
     grid = create_grid(n, origin, r, A, endpoint)
     grid[f"data"] = data
 
-    pos = False
     if surface is not None:
         grid[surface_name] = surface
-        if np.min(surface) > 0.0:
-            pos = True
 
     obj = grid.contour(value, scalars="data")
 
-    return obj, pos
+    return obj
