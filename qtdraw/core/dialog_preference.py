@@ -1,357 +1,380 @@
-from qtpy.QtWidgets import (
-    QDialog,
-    QTabWidget,
-    QWidget,
-    QSpacerItem,
-    QSizePolicy,
-    QComboBox,
-    QCheckBox,
-    QSpinBox,
-    QDoubleSpinBox,
-    QLabel,
-    QGridLayout,
-    QDialogButtonBox,
-)
-from qtpy.QtCore import Qt
-from qtdraw.core.editable_widget import QtColorSelector
+"""
+Preference dialog.
+
+This module provides preference dialog for PyVistaWidget.
+"""
+
+from PySide6.QtWidgets import QDialog, QTabWidget, QWidget, QDialogButtonBox
+from PySide6.QtCore import Qt
+from qtdraw.widget.custom_widget import Layout, Label, Combo, Spin, DSpin, Check, VSpacer, HSpacer, ColorSelector
 
 
 # ==================================================
-class DialogPreference(QDialog):
+class PreferenceDialog(QDialog):
     # ==================================================
-    def __init__(self, preference, setting, apply_callback, parent=None):
+    def __init__(self, widget, parent=None):
+        """
+        Preference dialog.
+
+        Args:
+            widget (PyVistaWidget): widget.
+            parent (QWidget, optional): parent.
+        """
         super().__init__(parent)
-        self.setModal(True)
         self.setWindowTitle("Preferences")
+        self.resize(400, 300)
 
-        self.preference = preference
-        self.setting = setting
-        self.callback = apply_callback
-        self.pref = preference.copy()
-        self.sett = setting.copy()
-        self.default = preference.copy()
-        self.default_set = setting.copy()
+        self.widget = widget
+        self.preference = widget._preference
+        self.widget.save_current()
 
-        self.resize(350, 200)
+        panel_label = self.create_label_panel(self)
+        panel_axis = self.create_axis_panel(self)
+        panel_cell = self.create_cell_panel(self)
+        panel_light = self.create_light_panel(self)
+        panel_latex = self.create_latex_panel(self)
+        panel_general = self.create_general_panel(self)
 
-        # tab contents.
-        self.tab = QTabWidget(self)
-        self.create_tab_label()
-        self.create_tab_vector()
-        self.create_tab_axis()
-        self.create_tab_cell()
-        self.create_tab_light()
-        self.create_tab_spotlight()
+        # tab content.
+        tab = QTabWidget(self)
+        tab.addTab(panel_label, "Label")
+        tab.addTab(panel_axis, "Axis")
+        tab.addTab(panel_cell, "Cell")
+        tab.addTab(panel_light, "Light")
+        tab.addTab(panel_latex, "LaTeX")
+        tab.addTab(panel_general, "General")
 
-        # buttons.
-        self.buttonBox = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel | QDialogButtonBox.Apply)
-        self.buttonBox.accepted.connect(self.accept)
-        self.buttonBox.rejected.connect(self.reject)
-        self.buttonBox.clicked.connect(self.apply)
+        # button.
+        button = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel | QDialogButtonBox.Apply)
+        button.accepted.connect(self.accept)
+        button.rejected.connect(self.reject)
+        button.button(QDialogButtonBox.Apply).clicked.connect(self.apply)
 
-        # main layout
-        self.layout = QGridLayout(self)
-        self.layout.addWidget(self.tab, 0, 0, 1, 2)
-        self.layout.addWidget(self.buttonBox, 1, 0, 2, 1)
-
-    # ==================================================
-    def create_tab_label(self):
-        self.tab_label = QWidget()
-        self.tab.addTab(self.tab_label, "label")
-
-        self.lbl_size = QLabel("font size", self)
-        self.spin_size = QSpinBox(self)
-        self.spin_size.setMinimum(4)
-        self.spin_size.setMaximum(48)
-        self.spin_size.setProperty("value", self.pref["label.size"])
-        self.lbl_bold = QLabel("bold", self)
-        self.check_bold = QCheckBox(self)
-        self.check_bold.setChecked(self.pref["label.bold"])
-        self.lbl_italic = QLabel("italic", self)
-        self.check_italic = QCheckBox(self)
-        self.check_italic.setChecked(self.pref["label.italic"])
-        self.lbl_color = QLabel("color", self)
-        self.combo_color = QtColorSelector(
-            self.pref["label.color"],
-            color_type="color",
-            callback=lambda v: self.pref.update({"label.color": v}),
-            parent=self,
-        )
-        self.combo_color.layout.setContentsMargins(0, 0, 0, 0)
-        self.lbl_family = QLabel("font family", self)
-        self.combo_font = QComboBox(self)
-        self.combo_font.addItems(["arial", "courier", "times"])
-        self.combo_font.setCurrentText(self.pref["label.font"])
-
-        spacerItem = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
-        spacerItem1 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
-
-        self.gridLayout_4 = QGridLayout(self.tab_label)
-        self.gridLayout_4.addWidget(self.lbl_size, 0, 0, 1, 1)
-        self.gridLayout_4.addWidget(self.spin_size, 0, 1, 1, 1)
-        self.gridLayout_4.addItem(spacerItem, 0, 2, 1, 1)
-        self.gridLayout_4.addWidget(self.lbl_bold, 1, 0, 1, 1)
-        self.gridLayout_4.addWidget(self.check_bold, 1, 1, 1, 1)
-        self.gridLayout_4.addWidget(self.lbl_italic, 2, 0, 1, 1)
-        self.gridLayout_4.addWidget(self.check_italic, 2, 1, 1, 1)
-        self.gridLayout_4.addWidget(self.lbl_color, 3, 0, 1, 1)
-        self.gridLayout_4.addWidget(self.combo_color, 3, 1, 1, 1)
-        self.gridLayout_4.addWidget(self.lbl_family, 4, 0, 1, 1)
-        self.gridLayout_4.addWidget(self.combo_font, 4, 1, 1, 1)
-        self.gridLayout_4.addItem(spacerItem1, 5, 0, 1, 1)
-
-        self.spin_size.valueChanged.connect(lambda v: self.pref.update({"label.size": v}))
-        self.check_bold.toggled.connect(lambda flag: self.pref.update({"label.bold": flag}))
-        self.check_italic.toggled.connect(lambda flag: self.pref.update({"label.italic": flag}))
-        self.combo_font.currentTextChanged.connect(lambda v: self.pref.update({"label.font": v}))
+        # main layout.
+        layout = Layout(self)
+        layout.setContentsMargins(10, 5, 10, 5)
+        layout.addWidget(tab, 0, 0, 1, 2)
+        layout.addWidget(button, 1, 0, 2, 1)
 
     # ==================================================
-    def create_tab_vector(self):
-        self.tab_vector = QWidget()
-        self.tab.addTab(self.tab_vector, "vector")
+    def create_label_panel(self, parent):
+        """
+        Create label panel.
+        """
+        panel = QWidget(parent)
+        layout = Layout(panel)
+        layout.setContentsMargins(10, 5, 10, 5)
 
-        self.lbl_tip_l = QLabel("tip length", self)
-        self.spin_tip_l = QDoubleSpinBox(self)
-        self.spin_tip_l.setMaximum(1.0)
-        self.spin_tip_l.setSingleStep(0.05)
-        self.spin_tip_l.setProperty("value", self.pref["vector.tip.length"])
-        self.spin_tip_l.setFocusPolicy(Qt.NoFocus)
-        self.lbl_tip_r = QLabel("tip radius", self)
-        self.spin_tip_r = QDoubleSpinBox(self)
-        self.spin_tip_r.setMaximum(0.5)
-        self.spin_tip_r.setSingleStep(0.01)
-        self.spin_tip_r.setProperty("value", self.pref["vector.tip.radius"])
-        self.spin_tip_r.setFocusPolicy(Qt.NoFocus)
-        self.lbl_shaft_r = QLabel("shaft radius", self)
-        self.spin_shaft_r = QDoubleSpinBox(self)
-        self.spin_shaft_r.setMaximum(0.5)
-        self.spin_shaft_r.setSingleStep(0.01)
-        self.spin_shaft_r.setProperty("value", self.pref["vector.shaft.radius"])
-        self.spin_shaft_r.setFocusPolicy(Qt.NoFocus)
+        preference = self.preference["label"]
 
-        spacerItem2 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
-        spacerItem3 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        # widgets.
+        label_font = Label(parent, "font")
+        combo_font = Combo(parent, ["arial", "courier", "times"])
+        label_size = Label(parent, "size")
+        spin_size = Spin(parent, 4, 48)
+        label_color = Label(parent, "color")
+        combo_color = ColorSelector(parent, preference["color"], color_type="color")
+        check_bold = Check(parent, "bold")
+        check_italic = Check(parent, "italic")
+        check_default = Check(parent, "default check")
 
-        self.gridLayout_5 = QGridLayout(self.tab_vector)
-        self.gridLayout_5.addWidget(self.lbl_tip_l, 0, 0, 1, 1)
-        self.gridLayout_5.addWidget(self.spin_tip_l, 0, 1, 1, 1)
-        self.gridLayout_5.addItem(spacerItem2, 0, 2, 1, 1)
-        self.gridLayout_5.addWidget(self.lbl_tip_r, 1, 0, 1, 1)
-        self.gridLayout_5.addWidget(self.spin_tip_r, 1, 1, 1, 1)
-        self.gridLayout_5.addWidget(self.lbl_shaft_r, 2, 0, 1, 1)
-        self.gridLayout_5.addWidget(self.spin_shaft_r, 2, 1, 1, 1)
-        self.gridLayout_5.addItem(spacerItem3, 3, 0, 1, 1)
+        # set layout.
+        layout.addWidget(label_font, 0, 0, 1, 1, Qt.AlignRight)
+        layout.addWidget(combo_font, 0, 1, 1, 1)
+        layout.addWidget(label_size, 0, 2, 1, 1, Qt.AlignRight)
+        layout.addWidget(spin_size, 0, 3, 1, 1)
+        layout.addWidget(check_bold, 1, 1, 1, 1)
+        layout.addWidget(check_italic, 1, 3, 1, 1)
+        layout.addWidget(label_color, 2, 0, 1, 1, Qt.AlignRight)
+        layout.addWidget(combo_color, 2, 1, 1, 1)
+        layout.addWidget(check_default, 3, 1, 1, 1)
+        layout.addItem(HSpacer(), 0, 4, 1, 1)
+        layout.addItem(VSpacer(), 4, 0, 1, 1)
 
-        self.spin_tip_l.valueChanged.connect(lambda v: self.pref.update({"vector.tip.length": round(v, 4)}))
-        self.spin_tip_r.valueChanged.connect(lambda v: self.pref.update({"vector.tip.radius": round(v, 4)}))
-        self.spin_shaft_r.valueChanged.connect(lambda v: self.pref.update({"vector.shaft.radius": round(v, 4)}))
+        # initial values.
+        combo_font.setCurrentText(preference["font"])
+        spin_size.setProperty("value", preference["size"])
+        check_bold.setChecked(preference["bold"])
+        check_italic.setChecked(preference["italic"])
+        check_default.setChecked(preference["default_check"])
 
-    # ==================================================
-    def create_tab_axis(self):
-        self.tab_axis = QWidget()
-        self.tab.addTab(self.tab_axis, "axis")
+        # connections.
+        combo_font.currentTextChanged.connect(lambda v: preference.update({"font": v}))
+        spin_size.valueChanged.connect(lambda v: preference.update({"size": v}))
+        combo_color.currentTextChanged.connect(lambda v: preference.update({"color": v}))
+        check_bold.toggled.connect(lambda flag: preference.update({"bold": flag}))
+        check_italic.toggled.connect(lambda flag: preference.update({"italic": flag}))
+        check_default.toggled.connect(lambda flag: preference.update({"default_check": flag}))
 
-        self.lbl_atype = QLabel("type", self)
-        self.combo_atype = QComboBox(self)
-        self.combo_atype.addItems(["xyz", "abc", "abc*"])
-        self.combo_atype.setCurrentText(self.pref["axis.type"])
-        self.lbl_asize = QLabel("size", self)
-        self.spin_asize = QSpinBox(self)
-        self.spin_asize.setMinimum(10)
-        self.spin_asize.setMaximum(24)
-        self.spin_asize.setProperty("value", self.pref["axis.size"])
-        self.lbl_abold = QLabel("bold", self)
-        self.check_abold = QCheckBox(self)
-        self.check_abold.setChecked(self.pref["axis.bold"])
-        self.lbl_aitalic = QLabel("italic", self)
-        self.check_aitalic = QCheckBox(self)
-        self.check_aitalic.setChecked(self.pref["axis.italic"])
-        self.lbl_aposition = QLabel("position", self)
-        self.spin_aposition = QDoubleSpinBox(self)
-        self.spin_aposition.setMinimum(0.8)
-        self.spin_aposition.setMaximum(1.2)
-        self.spin_aposition.setSingleStep(0.1)
-        self.spin_aposition.setProperty("value", self.pref["axis.position"])
-        self.lbl_ctype = QLabel("crystal", self)
-        self.combo_ctype = QComboBox(self)
-        self.combo_ctype.addItems(["", "triclinic", "monoclinic", "orthorhombic", "tetragonal", "trigonal", "hexagonal", "cubic"])
-        self.combo_ctype.setCurrentText(self.sett["crystal"])
-
-        spacerItema1 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
-        spacerItema2 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
-
-        self.gridLayout_a = QGridLayout(self.tab_axis)
-        self.gridLayout_a.addWidget(self.lbl_atype, 0, 0, 1, 1)
-        self.gridLayout_a.addWidget(self.combo_atype, 0, 1, 1, 1)
-        self.gridLayout_a.addItem(spacerItema1, 0, 2, 1, 1)
-        self.gridLayout_a.addWidget(self.lbl_ctype, 1, 0, 1, 1)
-        self.gridLayout_a.addWidget(self.combo_ctype, 1, 1, 1, 1)
-        self.gridLayout_a.addWidget(self.lbl_asize, 2, 0, 1, 1)
-        self.gridLayout_a.addWidget(self.spin_asize, 2, 1, 1, 1)
-        self.gridLayout_a.addWidget(self.lbl_abold, 3, 0, 1, 1)
-        self.gridLayout_a.addWidget(self.check_abold, 3, 1, 1, 1)
-        self.gridLayout_a.addWidget(self.lbl_aitalic, 4, 0, 1, 1)
-        self.gridLayout_a.addWidget(self.check_aitalic, 4, 1, 1, 1)
-        self.gridLayout_a.addWidget(self.lbl_aposition, 5, 0, 1, 1)
-        self.gridLayout_a.addWidget(self.spin_aposition, 5, 1, 1, 1)
-        self.gridLayout_a.addItem(spacerItema2, 6, 0, 1, 1)
-
-        self.combo_atype.currentTextChanged.connect(lambda v: self.pref.update({"axis.type": v}))
-        self.spin_asize.valueChanged.connect(lambda v: self.pref.update({"axis.size": v}))
-        self.check_abold.toggled.connect(lambda flag: self.pref.update({"axis.bold": flag}))
-        self.check_aitalic.toggled.connect(lambda flag: self.pref.update({"axis.italic": flag}))
-        self.spin_aposition.valueChanged.connect(lambda v: self.pref.update({"axis.position": round(v, 4)}))
-        self.combo_ctype.currentTextChanged.connect(lambda v: self.sett.update({"crystal": v}))
+        return panel
 
     # ==================================================
-    def create_tab_cell(self):
-        self.tab_cell = QWidget()
-        self.tab.addTab(self.tab_cell, "cell")
+    def create_axis_panel(self, parent):
+        """
+        Create axis panel.
+        """
+        panel = QWidget(parent)
+        layout = Layout(panel)
+        layout.setContentsMargins(10, 5, 10, 5)
 
-        self.gridLayout_2 = QGridLayout(self.tab_cell)
-        self.lbl_width = QLabel("width", self)
-        self.spin_width = QDoubleSpinBox(self)
-        self.spin_width.setMaximum(5.0)
-        self.spin_width.setSingleStep(0.1)
-        self.spin_width.setProperty("value", self.pref["cell.width"])
-        self.spin_width.setFocusPolicy(Qt.NoFocus)
-        self.lbl_color_2 = QLabel("color", self)
-        self.combo_color_2 = QtColorSelector(
-            self.pref["cell.color"],
-            color_type="color",
-            callback=lambda v: self.pref.update({"cell.color": v}),
-            parent=self,
-        )
-        self.combo_color_2.layout.setContentsMargins(0, 0, 0, 0)
-        self.lbl_opacity = QLabel("opacity", self)
-        self.spin_opacity = QDoubleSpinBox(self)
-        self.spin_opacity.setMaximum(1.0)
-        self.spin_opacity.setSingleStep(0.1)
-        self.spin_opacity.setProperty("value", self.pref["cell.opacity"])
-        self.spin_opacity.setFocusPolicy(Qt.NoFocus)
+        preference = self.preference["axis"]
+        axis_type = {
+            "xyz": "[x,y,z]",
+            "abc": "[a,b,c]",
+            "abc*": "[a*,b*,c*]",
+            "[x,y,z]": "xyz",
+            "[a,b,c]": "abc",
+            "[a*,b*,c*]": "abc*",
+        }
 
-        spacerItem4 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
-        spacerItem5 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        # widgets.
+        label_type = Label(parent, "type")
+        combo_type = Combo(parent, ["xyz", "abc", "abc*"])
+        label_size = Label(parent, "size")
+        spin_size = Spin(parent, 12, 36)
+        check_bold = Check(parent, "bold")
+        check_italic = Check(parent, "italic")
 
-        self.gridLayout_2.addWidget(self.lbl_width, 0, 0, 1, 1)
-        self.gridLayout_2.addWidget(self.spin_width, 0, 1, 1, 1)
-        self.gridLayout_2.addItem(spacerItem4, 0, 2, 1, 1)
-        self.gridLayout_2.addWidget(self.lbl_color_2, 1, 0, 1, 1)
-        self.gridLayout_2.addWidget(self.combo_color_2, 1, 1, 1, 1)
-        self.gridLayout_2.addWidget(self.lbl_opacity, 2, 0, 1, 1)
-        self.gridLayout_2.addWidget(self.spin_opacity, 2, 1, 1, 1)
-        self.gridLayout_2.addItem(spacerItem5, 3, 0, 1, 1)
+        # set layout.
+        layout.addWidget(label_type, 0, 0, 1, 1, Qt.AlignRight)
+        layout.addWidget(combo_type, 0, 1, 1, 1)
+        layout.addWidget(label_size, 0, 2, 1, 1, Qt.AlignRight)
+        layout.addWidget(spin_size, 0, 3, 1, 1)
+        layout.addWidget(check_bold, 1, 1, 1, 1)
+        layout.addWidget(check_italic, 1, 3, 1, 1)
+        layout.addItem(HSpacer(), 0, 4, 1, 1)
+        layout.addItem(VSpacer(), 2, 0, 1, 1)
 
-        self.spin_width.valueChanged.connect(lambda v: self.pref.update({"cell.width": round(v, 4)}))
-        self.spin_opacity.valueChanged.connect(lambda v: self.pref.update({"cell.opacity": round(v, 4)}))
+        # initial values.
+        combo_type.setCurrentText(axis_type[preference["label"]])
+        spin_size.setProperty("value", preference["size"])
+        check_bold.setChecked(preference["bold"])
+        check_italic.setChecked(preference["italic"])
 
-    # ==================================================
-    def create_tab_light(self):
-        self.tab_light = QWidget()
-        self.tab.addTab(self.tab_light, "light")
+        # connections.
+        combo_type.currentTextChanged.connect(lambda v: preference.update({"label": axis_type[v]}))
+        spin_size.valueChanged.connect(lambda v: preference.update({"size": v}))
+        check_bold.toggled.connect(lambda flag: preference.update({"bold": flag}))
+        check_italic.toggled.connect(lambda flag: preference.update({"italic": flag}))
 
-        self.gridLayout = QGridLayout(self.tab_light)
-        self.lbl_intensity = QLabel("intensity", self)
-        self.spin_intensity = QDoubleSpinBox(self)
-        self.spin_intensity.setMaximum(1.0)
-        self.spin_intensity.setSingleStep(0.1)
-        self.spin_intensity.setProperty("value", self.pref["light.intensity"])
-        self.lbl_prb = QLabel("physics based rendering", self)
-        self.check_pbr = QCheckBox(self)
-        self.check_pbr.setChecked(self.pref["light.pbr"])
-        self.lbl_metallic = QLabel("metallic", self)
-        self.spin_metallic = QDoubleSpinBox(self)
-        self.spin_metallic.setMaximum(1.0)
-        self.spin_metallic.setSingleStep(0.1)
-        self.spin_metallic.setProperty("value", self.pref["light.metallic"])
-        self.lbl_roughness = QLabel("roughness", self)
-        self.spin_roughness = QDoubleSpinBox(self)
-        self.spin_roughness.setMaximum(1.0)
-        self.spin_roughness.setSingleStep(0.1)
-        self.spin_roughness.setProperty("value", self.pref["light.roughness"])
-        self.lbl_eye_light = QLabel("eye dome lighting", self)
-        self.check_eye_dome_light = QCheckBox(self)
-        self.check_eye_dome_light.setChecked(self.pref["light.eye_dome_lighting"])
-
-        spacerItem6 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
-        spacerItem7 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
-
-        self.gridLayout.addWidget(self.lbl_intensity, 0, 0, 1, 1)
-        self.gridLayout.addWidget(self.spin_intensity, 0, 1, 1, 1)
-        self.gridLayout.addItem(spacerItem6, 0, 2, 1, 1)
-        self.gridLayout.addWidget(self.lbl_prb, 1, 0, 1, 1)
-        self.gridLayout.addWidget(self.check_pbr, 1, 1, 1, 1)
-        self.gridLayout.addWidget(self.lbl_metallic, 1, 2, 1, 1)
-        self.gridLayout.addWidget(self.spin_metallic, 1, 3, 1, 1)
-        self.gridLayout.addWidget(self.lbl_roughness, 2, 2, 1, 1)
-        self.gridLayout.addWidget(self.spin_roughness, 2, 3, 1, 1)
-        self.gridLayout.addWidget(self.lbl_eye_light, 3, 0, 1, 1)
-        self.gridLayout.addWidget(self.check_eye_dome_light, 3, 1, 1, 1)
-        self.gridLayout.addItem(spacerItem7, 4, 0, 1, 1)
-
-        self.spin_intensity.valueChanged.connect(lambda v: self.pref.update({"light.intensity": round(v, 4)}))
-        self.check_pbr.toggled.connect(lambda flag: self.pref.update({"light.pbr": flag}))
-        self.spin_metallic.valueChanged.connect(lambda v: self.pref.update({"light.metallic": round(v, 4)}))
-        self.spin_roughness.valueChanged.connect(lambda v: self.pref.update({"light.roughness": round(v, 4)}))
-        self.check_eye_dome_light.toggled.connect(lambda flag: self.pref.update({"light.eye_dome_lighting": flag}))
+        return panel
 
     # ==================================================
-    def create_tab_spotlight(self):
-        self.tab_spotlight = QWidget()
-        self.tab.addTab(self.tab_spotlight, "spotlight")
+    def create_cell_panel(self, parent):
+        """
+        Create cell panel.
+        """
+        panel = QWidget(parent)
+        layout = Layout(panel)
+        layout.setContentsMargins(10, 5, 10, 5)
 
-        self.gridLayout_3 = QGridLayout(self.tab_spotlight)
-        self.lbl_radius = QLabel("radius", self)
-        self.spin_radius = QDoubleSpinBox(self)
-        self.spin_radius.setMaximum(5.0)
-        self.spin_radius.setSingleStep(0.05)
-        self.spin_radius.setProperty("value", self.pref["spotlight.size"])
-        self.lbl_color_3 = QLabel("color", self)
-        self.combo_color_3 = QtColorSelector(
-            self.pref["spotlight.color"],
-            color_type="color",
-            callback=lambda v: self.pref.update({"spotlight.color": v}),
-            parent=self,
-        )
-        self.combo_color_3.layout.setContentsMargins(0, 0, 0, 0)
-        self.lbl_opacity_2 = QLabel("opacity", self)
-        self.spin_opacity_2 = QDoubleSpinBox(self)
-        self.spin_opacity_2.setMaximum(1.0)
-        self.spin_opacity_2.setSingleStep(0.1)
-        self.spin_opacity_2.setProperty("value", self.pref["spotlight.opacity"])
+        preference = self.preference["cell"]
 
-        spacerItem8 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
-        spacerItem9 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        # widgets.
+        label_width = Label(parent, "width")
+        spin_width = DSpin(parent, 0.0, 5.0, 0.1)
+        label_color = Label(parent, "color")
+        combo_color = ColorSelector(parent, preference["color"], color_type="color")
+        label_opacity = Label(parent, "opacity")
+        spin_opacity = DSpin(parent, 0.0, 1.0, 0.1)
 
-        self.gridLayout_3.addWidget(self.lbl_radius, 0, 0, 1, 1)
-        self.gridLayout_3.addWidget(self.spin_radius, 0, 1, 1, 1)
-        self.gridLayout_3.addItem(spacerItem8, 0, 2, 1, 1)
-        self.gridLayout_3.addWidget(self.lbl_color_3, 1, 0, 1, 1)
-        self.gridLayout_3.addWidget(self.combo_color_3, 1, 1, 1, 1)
-        self.gridLayout_3.addWidget(self.lbl_opacity_2, 2, 0, 1, 1)
-        self.gridLayout_3.addWidget(self.spin_opacity_2, 2, 1, 1, 1)
-        self.gridLayout_3.addItem(spacerItem9, 3, 0, 1, 1)
+        # set layout.
+        layout.addWidget(label_width, 0, 0, 1, 1, Qt.AlignRight)
+        layout.addWidget(spin_width, 0, 1, 1, 1)
+        layout.addWidget(label_opacity, 1, 0, 1, 1, Qt.AlignRight)
+        layout.addWidget(spin_opacity, 1, 1, 1, 1)
+        layout.addWidget(label_color, 2, 0, 1, 1, Qt.AlignRight)
+        layout.addWidget(combo_color, 2, 1, 1, 2)
+        layout.addItem(HSpacer(), 2, 3, 1, 1)
+        layout.addItem(VSpacer(), 3, 0, 1, 1)
 
-        self.spin_radius.valueChanged.connect(lambda v: self.pref.update({"spotlight.size": round(v, 4)}))
-        self.spin_opacity_2.valueChanged.connect(lambda v: self.pref.update({"spotlight.opacity": round(v, 4)}))
+        # initial values.
+        spin_width.setProperty("value", preference["line_width"])
+        spin_opacity.setProperty("value", preference["opacity"])
+
+        # connections.
+        spin_width.valueChanged.connect(lambda v: preference.update({"line_width": round(v, 4)}))
+        combo_color.currentTextChanged.connect(lambda v: preference.update({"color": v}))
+        spin_opacity.valueChanged.connect(lambda v: preference.update({"opacity": round(v, 4)}))
+
+        return panel
+
+    # ==================================================
+    def create_light_panel(self, parent):
+        """
+        Create light panel.
+        """
+        panel = QWidget(parent)
+        layout = Layout(panel)
+        layout.setContentsMargins(10, 5, 10, 5)
+
+        preference = self.preference["light"]
+
+        # widgets.
+        label_intensity = Label(parent, "intensity")
+        spin_intensity = DSpin(parent, 0.0, 1.0, 0.1)
+        check_pbr = Check(parent, "physics based rendering")
+        label_metallic = Label(parent, "metallic")
+        spin_metallic = DSpin(parent, 0.0, 1.0, 0.1)
+        label_roughness = Label(parent, "roughness")
+        spin_roughness = DSpin(parent, 0.0, 1.0, 0.1)
+        label_color = Label(parent, "color")
+        combo_color = ColorSelector(parent, preference["color"], color_type="color")
+        label_type = Label(parent, "type")
+        combo_type = Combo(parent, ["five", "three", "one", "ver1"])
+
+        # set layout.
+        layout.addWidget(label_type, 0, 0, 1, 1, Qt.AlignRight)
+        layout.addWidget(combo_type, 0, 1, 1, 1)
+        layout.addWidget(label_intensity, 1, 0, 1, 1, Qt.AlignRight)
+        layout.addWidget(spin_intensity, 1, 1, 1, 1)
+        layout.addWidget(label_color, 1, 2, 1, 1, Qt.AlignRight)
+        layout.addWidget(combo_color, 1, 3, 1, 1)
+        layout.addWidget(check_pbr, 2, 0, 1, 3)
+        layout.addWidget(label_metallic, 3, 1, 1, 1, Qt.AlignRight)
+        layout.addWidget(spin_metallic, 3, 2, 1, 1)
+        layout.addWidget(label_roughness, 4, 1, 1, 1, Qt.AlignRight)
+        layout.addWidget(spin_roughness, 4, 2, 1, 1)
+        layout.addItem(HSpacer(), 0, 4, 1, 1)
+        layout.addItem(VSpacer(), 5, 0, 1, 1)
+
+        # initial values.
+        spin_intensity.setProperty("value", preference["intensity"])
+        check_pbr.setChecked(preference["pbr"])
+        spin_metallic.setProperty("value", preference["metallic"])
+        spin_roughness.setProperty("value", preference["roughness"])
+        combo_type.setCurrentText(preference["type"])
+
+        # connections.
+        spin_intensity.valueChanged.connect(lambda v: preference.update({"intensity": round(v, 4)}))
+        check_pbr.toggled.connect(lambda flag: preference.update({"pbr": flag}))
+        spin_metallic.valueChanged.connect(lambda v: preference.update({"metallic": round(v, 4)}))
+        spin_roughness.valueChanged.connect(lambda v: preference.update({"roughness": round(v, 4)}))
+        combo_color.currentTextChanged.connect(lambda v: preference.update({"color": v}))
+        combo_type.currentTextChanged.connect(lambda v: preference.update({"type": v}))
+
+        return panel
+
+    # ==================================================
+    def create_latex_panel(self, parent):
+        """
+        Create LaTeX panel.
+        """
+        panel = QWidget(parent)
+        layout = Layout(panel)
+        layout.setContentsMargins(10, 5, 10, 5)
+
+        preference = self.preference["latex"]
+
+        # widgets.
+        label_color = Label(parent, "color")
+        combo_color = ColorSelector(parent, preference["color"], color_type="color")
+        label_size = Label(parent, "size")
+        spin_size = Spin(parent, 8, 24)
+        label_dpi = Label(parent, "DPI")
+        combo_dpi = Combo(parent, ["120", "240", "300"])
+
+        # set layout.
+        layout.addWidget(label_color, 0, 0, 1, 1, Qt.AlignRight)
+        layout.addWidget(combo_color, 0, 1, 1, 2)
+        layout.addWidget(label_size, 1, 0, 1, 1, Qt.AlignRight)
+        layout.addWidget(spin_size, 1, 1, 1, 2)
+        layout.addWidget(label_dpi, 2, 0, 1, 1, Qt.AlignRight)
+        layout.addWidget(combo_dpi, 2, 1, 1, 2)
+        layout.addItem(HSpacer(), 0, 3, 1, 1)
+        layout.addItem(VSpacer(), 3, 0, 1, 1)
+
+        # initial values.
+        spin_size.setProperty("value", preference["size"])
+        combo_dpi.setCurrentText(str(preference["dpi"]))
+
+        # connections.
+        combo_color.currentTextChanged.connect(lambda v: preference.update({"color": v}))
+        spin_size.valueChanged.connect(lambda v: preference.update({"size": v}))
+        combo_dpi.currentTextChanged.connect(lambda v: preference.update({"dpi": int(v)}))
+
+        return panel
+
+    # ==================================================
+    def create_general_panel(self, parent):
+        """
+        Create general panel.
+        """
+        panel = QWidget(parent)
+        layout = Layout(panel)
+        layout.setContentsMargins(10, 5, 10, 5)
+
+        preference = self.preference["general"]
+
+        # widgets.
+        label_style = Label(parent, "style")
+        combo_style = Combo(parent, ["fusion", "macos", "windows"])
+        label_font = Label(parent, "font")
+        combo_font = Combo(parent, ["Osaka", "Monaco", "Courier", "Arial", "Times New Roman", "Helvetica Neue"])
+        label_color = Label(parent, "scheme")
+        combo_color = Combo(parent, ["Jmol", "VESTA"])
+        label_size = Label(parent, "size")
+        spin_size = Spin(parent, 10, 16)
+
+        # set layout.
+        layout.addWidget(label_style, 0, 0, 1, 1, Qt.AlignRight)
+        layout.addWidget(combo_style, 0, 1, 1, 1)
+        layout.addWidget(label_font, 1, 0, 1, 1, Qt.AlignRight)
+        layout.addWidget(combo_font, 1, 1, 1, 1)
+        layout.addWidget(label_size, 1, 2, 1, 1, Qt.AlignRight)
+        layout.addWidget(spin_size, 1, 3, 1, 1)
+        layout.addWidget(label_color, 2, 0, 1, 1, Qt.AlignRight)
+        layout.addWidget(combo_color, 2, 1, 1, 1)
+        layout.addItem(HSpacer(), 1, 4, 1, 1)
+        layout.addItem(VSpacer(), 3, 0, 1, 1)
+
+        # initial values.
+        combo_style.setCurrentText(preference["style"])
+        combo_font.setCurrentText(preference["font"])
+        combo_color.setCurrentText(preference["color_scheme"])
+        spin_size.setProperty("value", preference["size"])
+
+        # connections.
+        combo_style.currentTextChanged.connect(lambda v: preference.update({"style": v}))
+        combo_font.currentTextChanged.connect(lambda v: preference.update({"font": v}))
+        combo_color.currentTextChanged.connect(lambda v: preference.update({"color_scheme": v}))
+        spin_size.valueChanged.connect(lambda v: preference.update({"size": v}))
+
+        return panel
 
     # ==================================================
     def accept(self):
-        self.preference.update(self.pref)
-        self.setting.update(self.sett)
-        self.callback()
+        """
+        Accept change.
+
+        :meta private:
+        """
+        self.widget.refresh()
+        self.widget.redraw()
+        self.parent()._update_panel()
         super().accept()
 
     # ==================================================
     def reject(self):
-        self.preference.update(self.default)
-        self.setting.update(self.default_set)
-        self.callback()
+        """
+        Reject change.
+
+        :meta private:
+        """
+        self.widget.restore()
+        self.parent()._update_panel()
         super().reject()
 
     # ==================================================
     def apply(self, button):
-        if self.buttonBox.standardButton(button) == QDialogButtonBox.Apply:
-            self.preference.update(self.pref)
-            self.setting.update(self.sett)
-            self.callback()
+        """
+        Apply change.
+
+        Args:
+            button (QAbstractButton): button status.
+
+        :meta private:
+        """
+        self.widget.refresh()
+        self.widget.redraw()
+        self.parent()._update_panel()

@@ -1,4 +1,7 @@
+# Include docs
 include LICENSE
+recursive-exclude docs *.rst
+recursive-exclude docs *.py
 recursive-include qtdraw *.ui
 recursive-include qtdraw *.png
 recursive-include qtdraw *.py

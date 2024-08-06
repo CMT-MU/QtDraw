@@ -5,15 +5,12 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "qtdraw"
 dependencies = [
-    "pandas==1.4.4",
     "matplotlib",
-    "seaborn",
-    "pyqt5",
+    "PySide6",
     "pyvista",
     "pyvistaqt",
     "click",
-    #"pymatgen>2023.7.17",
-    "pymatgen<=2023.9.10",
+    "pymatgen>2023.3.10", # numpy 1.26.4, emmet-core 0.84.1 (pymatgen 2024.4.13)
     "gcoreutils",
 ]
 dynamic = ["version"]
@@ -23,19 +20,19 @@ authors = [
 ]
 description = "3D drawing tool for molecules and crystals based on Pyvista and Qt."
 readme = "docs/README.md"
+keywords = ['pyvista', 'PySide6', 'multipie']
 license = {text = "MIT"}
-keywords = ["group theory", "condensed matter", "materials science", "symmetry-adapted basis", "pyvista", "qtpy5"]
 classifiers = [
-    "Intended Audience :: Science/Research",
-    "Topic :: Scientific/Engineering :: Information Analysis",
-    "License :: OSI Approved :: MIT License",
-    "Operating System :: Microsoft :: Windows",
-    "Operating System :: POSIX",
-    "Operating System :: MacOS",
-    "Programming Language :: Python :: 3.9",
-    "Programming Language :: Python :: 3.10",
-    "Programming Language :: Python :: 3.11",
-    "Programming Language :: Python :: 3.12",
+    'Intended Audience :: Science/Research',
+    'Topic :: Scientific/Engineering :: Information Analysis',
+    'License :: OSI Approved :: MIT License',
+    'Operating System :: Microsoft :: Windows',
+    'Operating System :: POSIX',
+    'Operating System :: MacOS',
+    'Programming Language :: Python :: 3.9',
+    'Programming Language :: Python :: 3.10',
+    'Programming Language :: Python :: 3.11',
+    'Programming Language :: Python :: 3.12',
 ]
 
 [project.urls]
@@ -44,6 +41,7 @@ Issues = "https://github.com/CMT-MU/QtDraw/issues"
 
 [project.scripts]
 "qtdraw" = "qtdraw.scripts.qtdraw:cmd"
+"conv_qtdraw2" = "qtdraw.scripts.conv_qtdraw2:cmd"
 
 [project.optional-dependencies]
 dev = [
@@ -57,16 +55,16 @@ dev = [
 version = {attr = "qtdraw.__version__"}
 
 [tool.setuptools.packages.find]
-include = ["qtdraw", "qtdraw.*"]
+include = ['qtdraw', 'qtdraw.*']
 exclude = ["build", "tests"]
 
 [tool.black]
 line-length = 130
 
 [tool.build_sphinx]
-source-dir = "docs"
-build-dir  = "./docs/_build"
+source-dir = 'docs'
+build-dir  = './docs/_build'
 all_files  = 1
 
 [tool.upload_sphinx]
-upload-dir = "docs/_build/html"
+upload-dir = 'docs/_build/html'

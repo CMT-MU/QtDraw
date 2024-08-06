@@ -1,97 +1,140 @@
-import os
+"""
+About dialog.
+
+This module provides about dialog for PyVistaWidget.
+"""
+
+from pathlib import Path
 import sys
-from PyQt5.QtCore import QT_VERSION_STR
-from qtpy.QtGui import QPixmap, QFont
-from qtpy.QtWidgets import QDialog, QSizePolicy, QLabel, QGridLayout, QDialogButtonBox
-import pyvista
-import pyvistaqt
-import pandas
-import numpy
-import sympy
-import matplotlib
-from gcoreutils.latex_util import latex_version
+from numpy import __version__ as numpy_ver
+from sympy import __version__ as sympy_ver
+from matplotlib import __version__ as matplot_ver
+from PySide6 import __version__ as pyside6_ver
+import pyvista as pv
+from pyvistaqt import __version__ as pyvistaqt_ver
+from PySide6.QtWidgets import QDialog, QWidget, QDialogButtonBox, QSizePolicy
+from PySide6.QtGui import QPixmap
+from qtdraw.widget.custom_widget import Layout, Label, VSpacer
+from qtdraw.__init__ import __version__, __date__, __author__
+from qtdraw.util.util import check_multipie
 
 
 # ==================================================
-class DialogAbout(QDialog):
+class AboutDialog(QDialog):
     # ==================================================
-    def __init__(self, parent=None):
+    def __init__(self, widget, parent=None):
+        """
+        About dialog.
+
+        Args:
+            widget (PyVistaWidget): widget.
+            parent (QWidget, optional): parent.
+        """
         super().__init__(parent)
-        self.setModal(True)
         self.setWindowTitle("About")
-        indent = 15
-
         self.resize(100, 100)
-        sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.sizePolicy().hasHeightForWidth())
-        self.setSizePolicy(sizePolicy)
+        policy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Minimum)
+        self.setSizePolicy(policy)
 
-        self.icon = QLabel(self)
-        pix = QPixmap(os.path.dirname(__file__) + "/qtdraw.png")
+        self.pvw = widget
+
+        # buttons.
+        button = QDialogButtonBox(QDialogButtonBox.Ok)
+        button.accepted.connect(self.accept)
+
+        panel = self.create_about_panel(self)
+
+        # main layout
+        layout = Layout(self)
+        layout.setContentsMargins(20, 20, 20, 20)
+        layout.addWidget(panel, 0, 0, 1, 1)
+        layout.addWidget(button, 1, 0, 1, 1)
+
+    # ==================================================
+    def create_about_panel(self, parent):
+        """
+        Create about panel.
+        """
+        indent = " " * 4
+        vtk_ver = ".".join(map(str, pv.vtk_version_info))
+        pyvista_ver = pv._version.__version__
+        python_ver = sys.version.replace(" [", f"\n{indent+indent}[")
+        multipie = "version" in self.pvw._status["multipie"].keys()
+
+        panel = QWidget(parent)
+        layout = Layout(panel)
+
+        label_icon = Label(parent)
+        file = str(Path(__file__).parent / "qtdraw.png")
+        pix = QPixmap(file)
         pix = pix.scaledToHeight(int(2.5 * self.height()))
-        self.icon.setPixmap(pix)
+        label_icon.setPixmap(pix)
+        label_qtdraw = Label(parent, "QtDraw", True)
+        label_copyright = Label(parent, self.pvw.copyright)
+        label_python = Label(parent, f"\n{indent}Python: Ver. {python_ver}")
+        label_pyvista = Label(parent, f"{indent}PyVista: Ver. {pyvista_ver}")
+        label_pvqt = Label(parent, f"{indent}PyVistaQt: Ver. {pyvistaqt_ver}")
+        label_vtk = Label(parent, f"{indent}VTK: Ver. {vtk_ver}")
+        label_qt = Label(parent, f"{indent}PySide6: Ver. {pyside6_ver}")
+        label_numpy = Label(parent, f"{indent}NumPy: Ver. {numpy_ver}")
+        label_sympy = Label(parent, f"{indent}SymPy: Ver. {sympy_ver}")
+        label_matplotlib = Label(parent, f"{indent}Matplotlib: Ver. {matplot_ver}")
+        if multipie:
+            multipie_ver = self.pvw._status["multipie"]["version"]
+            label_multipie = Label(parent, f"{indent}MultiPie: Ver. {multipie_ver}")
 
-        self.lbl_qtdraw = QLabel("QtDraw", self)
-        font = QFont()
-        font.setBold(True)
-        self.lbl_qtdraw.setFont(font)
+        panel1 = QWidget(parent)
+        layout1 = Layout(panel1)
+        layout1.setContentsMargins(10, 10, 10, 10)
+        layout1.addWidget(label_qtdraw, 0, 0, 1, 1)
+        layout1.addWidget(label_copyright, 1, 0, 1, 1)
+        layout1.addWidget(label_python, 2, 0, 1, 1)
+        layout1.addWidget(label_pyvista, 3, 0, 1, 1)
+        layout1.addWidget(label_pvqt, 4, 0, 1, 1)
+        layout1.addWidget(label_vtk, 5, 0, 1, 1)
+        layout1.addWidget(label_qt, 6, 0, 1, 1)
+        layout1.addWidget(label_numpy, 7, 0, 1, 1)
+        layout1.addWidget(label_sympy, 8, 0, 1, 1)
+        layout1.addWidget(label_matplotlib, 9, 0, 1, 1)
+        if multipie:
+            layout1.addWidget(label_multipie, 10, 0, 1, 1)
+            layout1.addItem(VSpacer(), 11, 0, 1, 1)
+        else:
+            layout1.addItem(VSpacer(), 10, 0, 1, 1)
 
-        self.txt_copyright = QLabel(parent.copyright_str, self)
+        layout.addWidget(label_icon, 0, 0, 1, 1)
+        layout.addWidget(panel1, 0, 1, 1, 1)
 
-        self.txt_pyvista = QLabel(
-            "\nPyVista: Ver. "
-            + pyvista._version.__version__
-            + "\n     with PyVistaQt: Ver. "
-            + pyvistaqt.__version__
-            + ", VTK: Ver. "
-            + ".".join(map(str, pyvista.vtk_version_info)),
-            self,
-        )
-        self.txt_pyvista.setIndent(indent)
+        return panel
 
-        self.txt_pandas = QLabel("Pandas: Ver. " + pandas.__version__, self)
-        self.txt_pandas.setIndent(indent)
 
-        self.txt_numpy = QLabel("NumPy: Ver. " + numpy.__version__, self)
-        self.txt_numpy.setIndent(indent)
+# ==================================================
+def get_version_info():
+    """
+    Get version info.
 
-        self.txt_sympy = QLabel("SymPy: Ver. " + sympy.__version__, self)
-        self.txt_sympy.setIndent(indent)
+    Returns:
+        - (str) -- version info.
+    """
+    indent = " " * 4
+    vtk_ver = ".".join(map(str, pv.vtk_version_info))
+    pyvista_ver = pv._version.__version__
+    python_ver = sys.version
+    cr = f"Versoin {__version__}, Copyright (C) {__date__} by {__author__}"
 
-        self.txt_qt = QLabel("PyQt: Ver. " + QT_VERSION_STR, self)
-        self.txt_qt.setIndent(indent)
+    s = "* QtDraw: " + cr + "\n"
+    s += f"{indent}Python: Ver. {python_ver}" + "\n"
+    s += f"{indent}PyVista: Ver. {pyvista_ver}" + "\n"
+    s += f"{indent}PyVistaQt: Ver. {pyvistaqt_ver}" + "\n"
+    s += f"{indent}VTK: Ver. {vtk_ver}" + "\n"
+    s += f"{indent}PySide6: Ver. {pyside6_ver}" + "\n"
+    s += f"{indent}NumPy: Ver. {numpy_ver}" + "\n"
+    s += f"{indent}SymPy: Ver. {sympy_ver}" + "\n"
+    s += f"{indent}Matplotlib: Ver. {matplot_ver}" + "\n"
+    if check_multipie():
+        from multipie import __version__ as multipie_ver
 
-        self.txt_matplotlib = QLabel("Matplotlib: Ver. " + matplotlib.__version__ + "\n     with " + latex_version(), self)
-        self.txt_matplotlib.setIndent(indent)
+        s += f"{indent}MultiPie: Ver. {multipie_ver}" + "\n"
+    s += "-" * 90
 
-        ver = sys.version.replace("\n", "").replace("[", "\n    [")
-        self.txt_python = QLabel("\nPython: Ver. " + ver, self)
-
-        if parent._multipie_loaded:
-            self.txt_multipie = QLabel("MultiPie: Ver. " + parent._multipie_loaded, self)
-            self.txt_multipie.setIndent(indent)
-
-        self.buttonBox = QDialogButtonBox(QDialogButtonBox.Ok)
-        self.buttonBox.accepted.connect(self.accept)
-
-        self.gridLayout = QGridLayout(self)
-        self.gridLayout.setContentsMargins(20, 20, 20, 20)
-        self.gridLayout.setHorizontalSpacing(30)
-        self.gridLayout.setVerticalSpacing(0)
-
-        self.gridLayout.addWidget(self.icon, 0, 0, 10, 1)
-        self.gridLayout.addWidget(self.lbl_qtdraw, 0, 1, 1, 1)
-        self.gridLayout.addWidget(self.txt_copyright, 1, 1, 1, 1)
-        self.gridLayout.addWidget(self.txt_pyvista, 2, 1, 1, 1)
-        self.gridLayout.addWidget(self.txt_qt, 3, 1, 1, 1)
-        self.gridLayout.addWidget(self.txt_pandas, 4, 1, 1, 1)
-        self.gridLayout.addWidget(self.txt_matplotlib, 5, 1, 1, 1)
-        self.gridLayout.addWidget(self.txt_numpy, 6, 1, 1, 1)
-        self.gridLayout.addWidget(self.txt_sympy, 7, 1, 1, 1)
-        self.gridLayout.addWidget(self.txt_python, 9, 1, 1, 1)
-        self.gridLayout.addWidget(self.buttonBox, 11, 0, 1, 2)
-
-        if parent._multipie_loaded:
-            self.gridLayout.addWidget(self.txt_multipie, 8, 1, 1, 1)
+    return s

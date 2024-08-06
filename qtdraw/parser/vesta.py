@@ -1,8 +1,11 @@
+"""
+Simple parser for VESTA.
+
+This module contains the parser for VESTA.
+"""
+
 from pymatgen.core import Structure
 from pymatgen.core import Lattice
-from pymatgen.analysis.graphs import StructureGraph
-from pymatgen.analysis.local_env import MinimumDistanceNN
-from pymatgen.symmetry.analyzer import SpacegroupAnalyzer
 
 # ==================================================
 vesta_key = [  # VESTA Keywords.
@@ -73,18 +76,18 @@ vesta_key = [  # VESTA Keywords.
 
 
 # ==================================================
-def parse_vesta(file):
+def parse_vesta(filename):
     """
     parse VESTA file.
 
     Args:
-        file (str): filename.
+        filename (str): filename.
 
     Returns:
-        dict: VESTA keyword - content dict.
+        - (dict) -- VESTA keyword - content dict.
     """
     data = []
-    with open(file) as f:
+    with open(filename) as f:
         for line in f:
             d = line.split(" ")
             d = [i.replace("\n", "") for i in d if i.replace("\n", "") != ""]
@@ -105,15 +108,15 @@ def parse_vesta(file):
 
 
 # ==================================================
-def create_vesta_graph(vesta_dict):
+def create_structure_vesta(vesta_dict):
     """
-    create StructureGraph for VESTA.
+    create Structure from vesta dict.
 
     Args:
-        vesta_dict (dict): VESTA dict.
+        vesta_dict (dict): vesta dict.
 
     Returns:
-        StructureGraph: pymatgen StructureGraph object.
+        - (Structure) -- structure.
     """
     space_group = int(vesta_dict["GROUP"].split(" ")[0])
     lattice = [float(i) for i in vesta_dict["CELLP"].split("\n")[0].split(" ") if i != ""]
@@ -124,9 +127,4 @@ def create_vesta_graph(vesta_dict):
     lattice = Lattice.from_parameters(*lattice)
     structure = Structure.from_spacegroup(space_group, lattice, species, coords)
 
-    sga = SpacegroupAnalyzer(structure)
-    symmetrized = sga.get_symmetrized_structure()
-    env = MinimumDistanceNN()
-    graph = StructureGraph.with_local_env_strategy(symmetrized, env)
-
-    return graph
+    return structure

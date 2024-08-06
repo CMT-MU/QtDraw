@@ -1,9 +1,10 @@
 """
-execute QtDraw.
+Execute QtDraw.
 """
+
 import click
-from qtdraw.qt_draw import QtDraw
-import os
+from pathlib import Path
+from qtdraw.core.qtdraw_app import QtDraw
 
 
 # ================================================== execute QtDraw
@@ -17,10 +18,10 @@ def cmd(filename):
     """
     n = len(filename)
     if n < 1:
-        QtDraw().show()
+        QtDraw().exec()
         exit()
     elif n > 1:
         exit()
 
-    filename = os.path.abspath(filename[0])
-    QtDraw(filename=filename).show()
+    filename = Path(filename[0]).resolve()
+    QtDraw(filename=filename).exec()
