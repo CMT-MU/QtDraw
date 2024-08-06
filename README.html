@@ -417,7 +417,7 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="qtdraw">
 <h1><a class="reference external" href="https://cmt-mu.github.io/QtDraw/">QtDraw</a><a class="headerlink" href="#qtdraw" title="Link to this heading">#</a></h1>
-<p>3D drawing tool for molecules and crystals based on <a class="reference external" href="https://docs.pyvista.org/">PyVista</a> and <a class="reference external" href="https://www.riverbankcomputing.com/static/Docs/PyQt5/#">Qt</a>.
+<p>3D drawing tool for molecules and crystals based on <a class="reference external" href="https://docs.pyvista.org/">PyVista</a> and <a class="reference external" href="https://doc.qt.io/qtforpython-6/index.html">PySide6</a>.
 Drawings are associated with crystallographic symmetry operations provided by <a class="reference external" href="https://github.com/CMT-MU/MultiPie">MultiPie</a>.</p>
 <ul>
 <li><p><strong>Authors</strong>: Hiroaki Kusunose</p></li>
@@ -432,15 +432,15 @@ DOI: <a class="reference external" href="https://doi.org/10.1103/PhysRevB.107.19
 </pre></div>
 </div>
 <ul class="simple">
-<li><p>It is useful to associate with the following application with <code class="docutils literal notranslate"><span class="pre">.qtdw</span></code> and <code class="docutils literal notranslate"><span class="pre">.cif</span></code> extension.</p>
+<li><p>It is useful to associate with the following application with <code class="docutils literal notranslate"><span class="pre">.qtdw</span></code>, <code class="docutils literal notranslate"><span class="pre">.cif</span></code>, <code class="docutils literal notranslate"><span class="pre">.vesta</span></code>, and <code class="docutils literal notranslate"><span class="pre">.xsf</span></code> extensions.</p>
 <ul>
-<li><p><a class="reference external" href="https://github.com/CMT-MU/QtDraw/tree/main/others/QtDraw_MacApp.zip">Mac</a></p></li>
+<li><p><a class="reference external" href="https://github.com/CMT-MU/QtDraw/tree/main/others/QtDraw_MacApp.zip">MacOS</a></p></li>
 <li><p><a class="reference external" href="https://github.com/CMT-MU/QtDraw/tree/main/others/QtDraw_WinApp.zip">Windows</a></p></li>
 </ul>
 </li>
 <li><p>You can also visit <a class="reference external" href="https://pypi.org/project/qtdraw/">PyPI</a> or <a class="reference external" href="https://github.com/CMT-MU/QtDraw">GitHub</a> to download the source.</p></li>
-<li><p>See also, <a class="reference internal" href="#./src/install_guide.pdf"><span class="xref myst">Install Guide (in Japanese)</span></a></p></li>
 <li><p>Shell command <code class="docutils literal notranslate"><span class="pre">qtdraw</span> <span class="pre">[filename]</span></code> is available.</p></li>
+<li><p>Version 1 <code class="docutils literal notranslate"><span class="pre">.qtdw</span></code> file can be converted into this version (Version 2) by the command <code class="docutils literal notranslate"><span class="pre">conv_qtdraw2</span> <span class="pre">[ver1_file.qtdw]</span></code>.</p></li>
 </ul>
 </li>
 <li><p><strong>Requirements</strong>:</p>
