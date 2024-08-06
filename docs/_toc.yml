@@ -4,17 +4,22 @@
 format: jb-book
 root: README
 parts:
-- caption: Feature
+- caption: Getting Started
   chapters:
-    - file: src/object
-    - file: src/plot_api
-- caption: Misc.
+    - file: src/overview
+    - file: src/install
+    - file: src/getting_started
+- caption: Documentation
   chapters:
+    - file: src/user_guide
+    - file: src/from_python
     - file: src/example
-    - file: src/api
+    - file: src/api_summary
       sections:
-      - file: src/class
-      - file: src/developer
-- caption: Change Log
-  chapters:
-    - file: src/change_log
+      - file: src/api_core
+      - file: src/api_multipie
+      - file: src/api_parser
+      - file: src/api_script
+      - file: src/api_util
+      - file: src/api_widget
+      - file: src/function_table

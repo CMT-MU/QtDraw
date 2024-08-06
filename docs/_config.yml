@@ -36,9 +36,9 @@ parse:
 # HTML-specific settings
 html:
   home_page_in_navbar: false
-  use_edit_page_button: false
+  use_edit_page_button: true
   use_repository_button: true
-  use_issues_button: false
+  use_issues_button: true
   collapse_navigation: true
 
 # ==================================================
@@ -49,24 +49,25 @@ latex:
     targetname: book.tex
 
 bibtex_bibfiles:
-  - "references.bib"
+  - references.bib
 
 # ==================================================
 # Information about where the book exists on the web
 repository:
   url: https://github.com/CMT-MU/QtDraw.git
+  path_to_book: docs
   branch: main
 
 # ==================================================
 # Sphinx setting
 sphinx:
-  root_doc: "README.md"
   recursive_update: true
   extra_extensions:
   - "sphinx.ext.autodoc"
   - "sphinx.ext.autosummary"
   - "sphinx.ext.napoleon"
   - "sphinx.ext.viewcode"
+
   config:
     add_module_names: false
     autoclass_content: "init"
