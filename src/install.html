@@ -1,0 +1,665 @@
+
+<!DOCTYPE html>
+
+
+<html lang="jp" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Install QtDraw (and MultiPie) &#8212; QtDraw</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=87e54e7c" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=8cf54648"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=afe5de03"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'src/install';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Getting Started" href="getting_started.html" />
+    <link rel="prev" title="Overview" href="overview.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="jp"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../README.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/qtdraw_logo.png" class="logo__image only-light" alt="QtDraw - Home"/>
+    <script>document.write(`<img src="../_static/qtdraw_logo.png" class="logo__image only-dark" alt="QtDraw - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Install QtDraw (and MultiPie)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="user_guide.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="from_python.html">Usage from Python code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="example.html">Examples</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="api_summary.html">API Reference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_core.html">Core</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_multipie.html">MultiPie</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_parser.html">Parser</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_script.html">Script</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_util.html">Utility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_widget.html">Widget</a></li>
+<li class="toctree-l2"><a class="reference internal" href="function_table.html">Function Summary</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/CMT-MU/QtDraw.git" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/CMT-MU/QtDraw.git/edit/main/docs/src/install.md" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/CMT-MU/QtDraw.git/issues/new?title=Issue%20on%20page%20%2Fsrc/install.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Install QtDraw (and MultiPie)</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#requirements">Requirements:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#macos">MacOS</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#windows">Windows</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#linux">Linux</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="install-qtdraw-and-multipie">
+<h1>Install QtDraw (and MultiPie)<a class="headerlink" href="#install-qtdraw-and-multipie" title="Link to this heading">#</a></h1>
+<p>QtDraw can be installed from PyPI using pip on Python &gt;= 3.9:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">qtdraw</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>It is useful to associate with the following application with <code class="docutils literal notranslate"><span class="pre">.qtdw</span></code>, <code class="docutils literal notranslate"><span class="pre">.cif</span></code>, <code class="docutils literal notranslate"><span class="pre">.vesta</span></code>, and <code class="docutils literal notranslate"><span class="pre">.xsf</span></code> extensions.</p>
+<ul>
+<li><p><a class="reference external" href="https://github.com/CMT-MU/QtDraw/tree/main/others/QtDraw_MacApp.zip">Mac</a></p></li>
+<li><p><a class="reference external" href="https://github.com/CMT-MU/QtDraw/tree/main/others/QtDraw_WinApp.zip">Windows</a></p></li>
+</ul>
+</li>
+<li><p>You can also visit <a class="reference external" href="https://pypi.org/project/qtdraw/">PyPI</a> or <a class="reference external" href="https://github.com/CMT-MU/QtDraw">GitHub</a> to download the source.</p></li>
+<li><p>See also, <a class="reference internal" href="#./src/install_guide.pdf"><span class="xref myst">Install Guide (in Japanese)</span></a></p></li>
+<li><p>Shell command <code class="docutils literal notranslate"><span class="pre">qtdraw</span> <span class="pre">[filename]</span></code> is available.</p></li>
+</ul>
+<section id="requirements">
+<h2>Requirements:<a class="headerlink" href="#requirements" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>This library requires <a class="reference external" href="https://www.tug.org/texlive/">TeXLive</a> environment.</p></li>
+<li><p>Symmetry operation supports are provided by <a class="reference external" href="https://github.com/CMT-MU/MultiPie">MultiPie</a>.</p></li>
+</ul>
+</section>
+<section id="macos">
+<h2>MacOS<a class="headerlink" href="#macos" title="Link to this heading">#</a></h2>
+<ol class="arabic">
+<li><p>construct for LaTeX &amp; Python environments</p>
+<ul class="simple">
+<li><p>install <a class="reference external" href="https://www.tug.org/texlive/doc/texlive-ja/texlive-ja.pdf">TeX Live</a></p></li>
+<li><p>add path for LaTeX and Python in .zshrc.</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span>/Library/TeX/texbin:<span class="nv">$PATH</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span>/opt/homebrew/opt/python@3.11/libexec/bin:<span class="nv">$PATH</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<ul>
+<li><p>restart shell</p></li>
+<li><p>install <a class="reference external" href="https://brew.sh/index_ja">Homebrew</a></p></li>
+<li><p>install the following modules.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>brew<span class="w"> </span>install<span class="w"> </span>python@3.11
+$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>cython
+$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span><span class="nv">numpy</span><span class="o">==</span><span class="m">1</span>.26.4
+$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>sympy
+$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>scipy
+$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>matplotlib
+$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>click
+$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>PySide6
+$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>pyvista
+$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>pyvistaqt
+$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>black
+$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>emmet-core<span class="o">==</span><span class="m">0</span>.84.1
+$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>pymaggen
+$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>gcoreutils
+</pre></div>
+</div>
+</li>
+</ul>
+<ol class="arabic">
+<li><p>install <a class="reference external" href="https://cmt-mu.github.io/QtDraw/">QtDraw</a> &amp; <a class="reference external" href="https://cmt-mu.github.io/MultiPie/">MultiPie</a></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>qtdraw
+$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>multipie
+</pre></div>
+</div>
+</li>
+<li><p>associate QtDraw file (<strong>.qtdw</strong>) to the application</p></li>
+</ol>
+<ul>
+<li><p>download the application from <a class="reference external" href="https://github.com/CMT-MU/QtDraw/blob/main/others/QtDraw_MacApp.zip">QtDraw_MacApp.zip</a></p></li>
+<li><p>extract it and move the App into Applications folder</p></li>
+<li><p>associate .qtdw with QtDraw.app</p>
+<p>(see also) content in Automator for QtDraw.app</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span><span class="w"> </span>~/.zshrc
+nohup<span class="w"> </span>python<span class="w"> </span>-c<span class="w"> </span><span class="s1">&#39;from sys import argv; from qtdraw.core.qtdraw_app import QtDraw; filename = None if len(argv) == 1 else argv[1]; QtDraw(filename=filename).exec()&#39;</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$1</span><span class="s2">&quot;</span><span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null<span class="w"> </span><span class="p">&amp;</span>
+<span class="nb">exit</span><span class="w"> </span><span class="m">0</span>
+</pre></div>
+</div>
+<p><img alt="automator.jpg" src="../_images/automator.jpg" /></p>
+</li>
+</ul>
+</section>
+<section id="windows">
+<h2>Windows<a class="headerlink" href="#windows" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>construct LaTeX &amp; Python environments</p></li>
+</ol>
+<ul>
+<li><p>install Python <a class="reference external" href="https://www.python.jp/install/windows/install.html">https://www.python.jp/install/windows/install.html</a></p>
+<p>execute related commands of PowerShell in the above URL</p>
+</li>
+<li><p>install the following modules in command prompt or Power Shell</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>cython
+$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span><span class="nv">numpy</span><span class="o">==</span><span class="m">1</span>.26.4
+$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>sympy
+$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>scipy
+$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>matplotlib
+$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>click
+$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>PySide6
+$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>pyvista
+$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>pyvistaqt
+$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>black
+$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>emmet-core<span class="o">==</span><span class="m">0</span>.84.1
+$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>pymaggen
+$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>gcoreutils
+</pre></div>
+</div>
+</li>
+<li><p>install <a class="reference external" href="https://www.tug.org/texlive/doc/texlive-ja/texlive-ja.pdf">TeX Live</a></p></li>
+</ul>
+<ol class="arabic">
+<li><p>install <a class="reference external" href="https://cmt-mu.github.io/QtDraw/">QtDraw</a> &amp; <a class="reference external" href="https://cmt-mu.github.io/MultiPie/">MultiPie</a></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>qtdraw
+$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>multipie
+</pre></div>
+</div>
+</li>
+<li><p>associate QtDraw file (<strong>.qtdw</strong>) to the application</p></li>
+</ol>
+<ul>
+<li><p>download the application <a class="reference external" href="https://github.com/CMT-MU/QtDraw/blob/main/others/QtDraw_WinApp.zip">QtDraw_WinApp.zip</a></p></li>
+<li><p>extract it and move exe file to appropriate location</p></li>
+<li><p>associate .qtdw with QtDraw.exe</p>
+<p>(see also) content in bat file for QtDraw.exe</p>
+<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="nv">@echo</span> <span class="n">off</span>
+<span class="n">python</span> <span class="n">-c</span> <span class="s2">&quot;from qtdraw.core.qtdraw_app import QtDraw; import sys; filename = sys.argv[1] if len(sys.argv) &gt; 1 else None; QtDraw(filename=filename).exec()&quot;</span> <span class="k">%</span><span class="n">1</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+<section id="linux">
+<h2>Linux<a class="headerlink" href="#linux" title="Link to this heading">#</a></h2>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./src"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#requirements">Requirements:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#macos">MacOS</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#windows">Windows</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#linux">Linux</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Hiroaki Kusunose
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2021-2024.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
