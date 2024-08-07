@@ -36,7 +36,7 @@ pip install qtdraw
 
     ```bash
     $ brew install python@3.11
-    $ pip install cython
+    $ pip install Cython
     $ pip install numpy==1.26.4
     $ pip install sympy
     $ pip install scipy
@@ -84,7 +84,7 @@ pip install qtdraw
 - install the following modules in command prompt or Power Shell
 
     ```bash
-    $ pip install cython
+    $ pip install Cython
     $ pip install numpy==1.26.4
     $ pip install sympy
     $ pip install scipy

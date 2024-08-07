@@ -36,7 +36,7 @@ default_preference = {
     "general": {
         "style": "fusion",  # "fusion/macos/windows"
         "font": "Osaka",  # "Monaco/Osaka/Arial/Times New Roman/Helvetica Neue"
-        "size": 12,  # pixel
+        "size": 10,  # pixel
         "color_scheme": "Jmol",  # "VESTA/Jmol"
     },
     "light": {
