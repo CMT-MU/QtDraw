@@ -1,5 +1,4 @@
 # Include docs
 include LICENSE
 recursive-include qtdraw *.png
-recursive-include qtdraw *.qss
 recursive-include qtdraw *.py

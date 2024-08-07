@@ -7,6 +7,7 @@ This module provides preference dialog for PyVistaWidget.
 from PySide6.QtWidgets import QDialog, QTabWidget, QWidget, QDialogButtonBox
 from PySide6.QtCore import Qt
 from qtdraw.widget.custom_widget import Layout, Label, Combo, Spin, DSpin, Check, VSpacer, HSpacer, ColorSelector
+from qtdraw.util.util import create_style_sheet
 
 
 # ==================================================
@@ -310,7 +311,7 @@ class PreferenceDialog(QDialog):
         label_style = Label(parent, "style")
         combo_style = Combo(parent, ["fusion", "macos", "windows"])
         label_font = Label(parent, "font")
-        combo_font = Combo(parent, ["Osaka", "Monaco", "Courier", "Arial", "Times New Roman", "Helvetica Neue"])
+        combo_font = Combo(parent, ["Osaka", "Monaco", "Arial", "Times New Roman", "Helvetica Neue"])
         label_color = Label(parent, "scheme")
         combo_color = Combo(parent, ["Jmol", "VESTA"])
         label_size = Label(parent, "size")
@@ -349,6 +350,7 @@ class PreferenceDialog(QDialog):
 
         :meta private:
         """
+        self.parent().app.setStyleSheet(create_style_sheet(self.preference["general"]["size"]))
         self.widget.refresh()
         self.widget.redraw()
         self.parent()._update_panel()
@@ -362,6 +364,7 @@ class PreferenceDialog(QDialog):
         :meta private:
         """
         self.widget.restore()
+        self.parent().app.setStyleSheet(create_style_sheet(self.preference["general"]["size"]))
         self.parent()._update_panel()
         super().reject()
 
@@ -375,6 +378,7 @@ class PreferenceDialog(QDialog):
 
         :meta private:
         """
+        self.parent().app.setStyleSheet(create_style_sheet(self.preference["general"]["size"]))
         self.widget.refresh()
         self.widget.redraw()
         self.parent()._update_panel()

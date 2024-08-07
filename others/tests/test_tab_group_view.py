@@ -7,11 +7,10 @@ This module provides a test for tab group view.
 from qtdraw.widget.group_model import GroupModel
 from qtdraw.widget.tab_group_view import TabGroupView
 from qtdraw.core.pyvista_widget_setting import object_default
-from qtdraw.util.qt_event_util import get_qt_application
 
 # ================================================== main
 if __name__ == "__main__":
-    app = get_qt_application()
+    app = ()
 
     _data = {}
     for object_type, value in object_default.items():

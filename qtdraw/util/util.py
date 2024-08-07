@@ -195,3 +195,49 @@ def cat_filename(base, ext=None):
     path = str(Path.cwd() / Path(base))
 
     return path
+
+
+# ==================================================
+def create_style_sheet(size):
+    """
+    Create style sheet.
+
+    Args:
+        size (int): font size (point).
+
+    Returns:
+        - (str) -- style sheet string.
+    """
+    return f"""
+    QTreeView::item {{
+        padding: 10px 15px 10px 15px;
+        border: none;
+        outline: none;
+        background: none;
+    }}
+
+    QTreeView::item:selected {{
+        border: none;
+        outline: none;
+        color: black;
+        background: lightyellow;
+    }}
+    QTreeView::item:focus {{
+        border: none;
+        outline: none;
+        color: black;
+        background: lightyellow;
+    }}
+
+    QComboBox {{
+        font-size: {size}pt;
+    }}
+
+    QLabel {{
+        font-size: {size}pt;
+    }}
+
+    QPushButton {{
+        font-size: {size}pt;
+    }}
+    """

@@ -18,7 +18,8 @@ from PySide6.QtCore import QObject, Signal, Qt, QLoggingCategory
 from PySide6.QtGui import QFont
 from PySide6.QtWidgets import QApplication
 from qtdraw.widget.message_box import MessageBox
-from qtdraw.util.util import set_latex_setting
+from qtdraw.util.util import set_latex_setting, create_style_sheet
+from qtdraw.core.pyvista_widget_setting import default_preference
 from qtdraw import __top_dir__
 
 
@@ -39,14 +40,11 @@ def gui_qt():
 
 
 # ==================================================
-def get_qt_application(style="fusion", font="Osaka", size=12, latex=True):
+def get_qt_application(latex=True):
     """
     Get Qt application.
 
     Args:
-        style (str): style, "fusion/macos/windows".
-        font (str): font, "Monaco/Osaka/Arial/Times New Roman/Helvetica Neue".
-        size (int): size (pixel).
         latex (bool, optional): use latex setting ?
 
     Returns:
@@ -78,14 +76,12 @@ def get_qt_application(style="fusion", font="Osaka", size=12, latex=True):
     app.setAttribute(Qt.AA_EnableHighDpiScaling)
     app.setAttribute(Qt.AA_UseHighDpiPixmaps)
 
+    style = default_preference["general"]["style"]
+    font = default_preference["general"]["font"]
+    size = default_preference["general"]["size"]
     app.setStyle(style)
-    app.setFont(QFont(font, size))
-
-    # style.
-    file = __top_dir__ / "qtdraw/core/style.qss"
-    with open(file, "r") as f:
-        style = f.read()
-    app.setStyleSheet(style)
+    app.setFont(QFont(font))
+    app.setStyleSheet(create_style_sheet(size))
 
     return app
 
