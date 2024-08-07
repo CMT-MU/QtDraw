@@ -731,7 +731,7 @@ class ColorSelector(QComboBox):
 
         self.setIconSize(size)
         self.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-        self.setFixedHeight(size.height() * 2.7)
+        self.setFixedHeight(size.height() * 3.3)
 
         for i in separator:
             self.insertSeparator(i)
