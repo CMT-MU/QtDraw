@@ -692,11 +692,6 @@ def convert_version2(dic, widget):
     Returns:
         - (dict) -- all data dict in ver. 2.
     """
-    # skip if version is 2.
-    ver = int(dic["version"].split(".")[0])  # major version.
-    if ver > 1:
-        return dic
-
     # all data.
     all_data = {
         "version": __version__,

@@ -1423,9 +1423,12 @@ class PyVistaWidget(QtInteractor):
         self.clear_info()
         self.reload()
         if file.suffix == detail["extension"]:
-            widget = PyVistaWidget(off_screen=True)
             all_data = read_dict(f)
-            all_data = convert_version2(all_data, widget)  # for old version.
+            ver = int(all_data["version"].split(".")[0])  # major version.
+            if ver < 2:
+                widget = PyVistaWidget(off_screen=True)
+                all_data = convert_version2(all_data, widget)  # for old version.
+                widget.close()
         elif file.suffix in detail["ext_material"]:
             all_data = read_draw(f, self)
         else:
