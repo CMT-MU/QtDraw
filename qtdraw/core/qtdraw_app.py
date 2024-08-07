@@ -230,7 +230,7 @@ class QtDraw(Window):
         """
         panel = QWidget(parent)
         panel.setGeometry(60, 50, 180, 694)
-        panel.setMaximumWidth(200)
+        panel.setMaximumWidth(220)
         layout = Layout(panel)
         layout.setContentsMargins(10, 5, 5, 5)
 

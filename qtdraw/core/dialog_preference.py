@@ -315,7 +315,7 @@ class PreferenceDialog(QDialog):
         label_color = Label(parent, "scheme")
         combo_color = Combo(parent, ["Jmol", "VESTA"])
         label_size = Label(parent, "size")
-        spin_size = Spin(parent, 10, 16)
+        spin_size = Spin(parent, 9, 14)
 
         # set layout.
         layout.addWidget(label_style, 0, 0, 1, 1, Qt.AlignRight)
