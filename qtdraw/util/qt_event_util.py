@@ -59,9 +59,9 @@ def get_qt_application(latex=True):
     QLoggingCategory.setFilterRules("qt.qpa.keymapper=false")
 
     # PySide6 setting.
-    # dirname = os.path.dirname(PySide6.__file__)
-    # plugin_path = os.path.join(dirname, "plugins", "platforms")
-    # os.environ["QT_QPA_PLATFORM_PLUGIN_PATH"] = plugin_path
+    dirname = os.path.dirname(PySide6.__file__)
+    plugin_path = os.path.join(dirname, "plugins", "platforms")
+    os.environ["QT_QPA_PLATFORM_PLUGIN_PATH"] = plugin_path
 
     # initial LaTeX setting.
     if latex:
