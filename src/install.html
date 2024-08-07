@@ -412,11 +412,10 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installation">Installation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#requirements">Requirements:</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installation-for-macos">Installation for MacOS</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installation-for-windows">Installation for Windows</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installation-for-linux">Installation for Linux</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installation-for-all-platforms">Installation for all platforms</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#remark">Remark</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#source-code">Source Code</a></li>
 </ul>
             </nav>
         </div>
@@ -430,24 +429,7 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="install-qtdraw-and-multipie">
 <h1>Install QtDraw (and MultiPie)<a class="headerlink" href="#install-qtdraw-and-multipie" title="Link to this heading">#</a></h1>
-<section id="installation">
-<h2>Installation<a class="headerlink" href="#installation" title="Link to this heading">#</a></h2>
 <p><strong>QtDraw</strong> can be installed from PyPI using pip on Python &gt;= 3.9:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">qtdraw</span>
-</pre></div>
-</div>
-<ul class="simple">
-<li><p>It is useful to associate with the following application with <code class="docutils literal notranslate"><span class="pre">.qtdw</span></code>, <code class="docutils literal notranslate"><span class="pre">.cif</span></code>, <code class="docutils literal notranslate"><span class="pre">.vesta</span></code>, and <code class="docutils literal notranslate"><span class="pre">.xsf</span></code> extensions.</p>
-<ul>
-<li><p><a class="reference external" href="https://github.com/CMT-MU/QtDraw/tree/main/others/QtDraw_MacApp.zip">MacOS</a></p></li>
-<li><p><a class="reference external" href="https://github.com/CMT-MU/QtDraw/tree/main/others/QtDraw_WinApp.zip">Windows</a></p></li>
-</ul>
-</li>
-<li><p>You can also visit <a class="reference external" href="https://pypi.org/project/qtdraw/">PyPI</a> or <a class="reference external" href="https://github.com/CMT-MU/QtDraw">GitHub</a> to download the source.</p></li>
-<li><p>Shell command <code class="docutils literal notranslate"><span class="pre">qtdraw</span> <span class="pre">[filename]</span></code> is available.</p></li>
-<li><p>Version 1 <code class="docutils literal notranslate"><span class="pre">.qtdw</span></code> file can be converted into this version (Version 2) by the command <code class="docutils literal notranslate"><span class="pre">conv_qtdraw2</span> <span class="pre">[ver1_file.qtdw]</span></code>.</p></li>
-</ul>
-</section>
 <section id="requirements">
 <h2>Requirements:<a class="headerlink" href="#requirements" title="Link to this heading">#</a></h2>
 <ul class="simple">
@@ -455,27 +437,32 @@ document.write(`
 <li><p>Symmetry operation supports are provided by <a class="reference external" href="https://github.com/CMT-MU/MultiPie">MultiPie</a>.</p></li>
 </ul>
 </section>
-<section id="installation-for-macos">
-<h2>Installation for MacOS<a class="headerlink" href="#installation-for-macos" title="Link to this heading">#</a></h2>
-<ol class="arabic">
-<li><p>construct for LaTeX &amp; Python environments</p>
-<ul class="simple">
-<li><p>install <a class="reference external" href="https://www.tug.org/texlive/doc/texlive-ja/texlive-ja.pdf">TeX Live</a></p></li>
-<li><p>add path for LaTeX and Python in .zshrc.</p></li>
-</ul>
+<section id="installation-for-all-platforms">
+<h2>Installation for all platforms<a class="headerlink" href="#installation-for-all-platforms" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>construct Python &amp; LaTeX environments</p></li>
+</ol>
+<ul>
+<li><p>install Python</p></li>
+<li><p>[macOS or Linux] add path for LaTeX and Python in .zshrc.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span>/Library/TeX/texbin:<span class="nv">$PATH</span>
 <span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span>/opt/homebrew/opt/python@3.11/libexec/bin:<span class="nv">$PATH</span>
 </pre></div>
 </div>
 </li>
-</ol>
-<ul>
 <li><p>restart shell</p></li>
-<li><p>install <a class="reference external" href="https://brew.sh/index_ja">Homebrew</a></p></li>
-<li><p>install the following modules.</p>
+<li><p>[macOS] install <a class="reference external" href="https://brew.sh/index_ja">Homebrew</a></p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>brew<span class="w"> </span>install<span class="w"> </span>python@3.11
-$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>Cython
-$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span><span class="nv">numpy</span><span class="o">==</span><span class="m">1</span>.26.4
+</pre></div>
+</div>
+</li>
+<li><p>[windows] install PowerShell &amp; Python <a class="reference external" href="https://www.python.jp/install/windows/install.html">https://www.python.jp/install/windows/install.html</a></p></li>
+<li><p>install LaTeX: <a class="reference external" href="https://www.tug.org/texlive/doc/texlive-ja/texlive-ja.pdf">TeX Live</a></p></li>
+</ul>
+<ol class="arabic" start="2">
+<li><p>install relevant modules</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>Cython
+$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span><span class="nv">numpy</span><span class="o">==</span><span class="m">1</span>.26.4<span class="w"> </span><span class="c1"># not ver.2 due to pymatgen</span>
 $<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>sympy
 $<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>scipy
 $<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>matplotlib
@@ -483,88 +470,55 @@ $<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </sp
 $<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>PySide6
 $<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>pyvista
 $<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>pyvistaqt
-$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>black
-$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>emmet-core<span class="o">==</span><span class="m">0</span>.84.1
-$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>pymaggen
+$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>black<span class="w"> </span><span class="c1"># format python and .qtdw files</span>
 $<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>gcoreutils
+$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>multipie<span class="w"> </span><span class="c1"># if use MultiPie extension</span>
+$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>emmet-core<span class="o">==</span><span class="m">0</span>.84.1<span class="w"> </span><span class="c1"># need for pymatgen</span>
+$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>pandas<span class="w"> </span><span class="c1"># need for pymatgen</span>
+$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>pymatgen<span class="w"> </span><span class="c1"># to read .cif, .vesta, and .xsf files</span>
 </pre></div>
 </div>
 </li>
-</ul>
-<ol class="arabic">
-<li><p>install <a class="reference external" href="https://cmt-mu.github.io/QtDraw/">QtDraw</a> &amp; <a class="reference external" href="https://cmt-mu.github.io/MultiPie/">MultiPie</a></p>
+<li><p>install <a class="reference external" href="https://cmt-mu.github.io/QtDraw/">QtDraw</a></p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>qtdraw
-$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>multipie
 </pre></div>
 </div>
 </li>
-<li><p>associate QtDraw file (<strong>.qtdw</strong>) to the application</p></li>
-</ol>
-<ul>
-<li><p>download the application from <a class="reference external" href="https://github.com/CMT-MU/QtDraw/blob/main/others/QtDraw_MacApp.zip">QtDraw_MacApp.zip</a></p></li>
+<li><p>associate QtDraw file (<strong>.qtdw</strong>) to the application</p>
+<p>It is useful to associate with the following application with <code class="docutils literal notranslate"><span class="pre">.qtdw</span></code>, <code class="docutils literal notranslate"><span class="pre">.cif</span></code>, <code class="docutils literal notranslate"><span class="pre">.vesta</span></code>, and <code class="docutils literal notranslate"><span class="pre">.xsf</span></code> extensions.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/CMT-MU/QtDraw/tree/main/others/QtDraw_MacApp.zip">MacOS</a></p></li>
+<li><p><a class="reference external" href="https://github.com/CMT-MU/QtDraw/tree/main/others/QtDraw_WinApp.zip">Windows</a></p></li>
 <li><p>extract it and move the App into Applications folder</p></li>
-<li><p>associate .qtdw with QtDraw.app</p>
-<p>(see also) content in Automator for QtDraw.app</p>
+<li><p>associate <code class="docutils literal notranslate"><span class="pre">.qtdw</span></code> with <code class="docutils literal notranslate"><span class="pre">QtDraw.app</span></code> or <code class="docutils literal notranslate"><span class="pre">QtDraw.exe</span></code></p></li>
+</ul>
+<p>(see also) setup in Automator for <code class="docutils literal notranslate"><span class="pre">QtDraw.app</span></code></p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span><span class="w"> </span>~/.zshrc
 nohup<span class="w"> </span>python<span class="w"> </span>-c<span class="w"> </span><span class="s1">&#39;from sys import argv; from qtdraw.core.qtdraw_app import QtDraw; filename = None if len(argv) == 1 else argv[1]; QtDraw(filename=filename).exec()&#39;</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$1</span><span class="s2">&quot;</span><span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null<span class="w"> </span><span class="p">&amp;</span>
 <span class="nb">exit</span><span class="w"> </span><span class="m">0</span>
 </pre></div>
 </div>
 <p><img alt="automator.jpg" src="../_images/automator.jpg" /></p>
-</li>
-</ul>
-</section>
-<section id="installation-for-windows">
-<h2>Installation for Windows<a class="headerlink" href="#installation-for-windows" title="Link to this heading">#</a></h2>
-<ol class="arabic simple">
-<li><p>construct LaTeX &amp; Python environments</p></li>
-</ol>
-<ul>
-<li><p>install Python <a class="reference external" href="https://www.python.jp/install/windows/install.html">https://www.python.jp/install/windows/install.html</a></p>
-<p>execute related commands of PowerShell in the above URL</p>
-</li>
-<li><p>install the following modules in command prompt or Power Shell</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>Cython
-$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span><span class="nv">numpy</span><span class="o">==</span><span class="m">1</span>.26.4
-$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>sympy
-$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>scipy
-$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>matplotlib
-$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>click
-$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>PySide6
-$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>pyvista
-$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>pyvistaqt
-$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>black
-$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>emmet-core<span class="o">==</span><span class="m">0</span>.84.1
-$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>pymaggen
-$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>gcoreutils
-</pre></div>
-</div>
-</li>
-<li><p>install <a class="reference external" href="https://www.tug.org/texlive/doc/texlive-ja/texlive-ja.pdf">TeX Live</a></p></li>
-</ul>
-<ol class="arabic">
-<li><p>install <a class="reference external" href="https://cmt-mu.github.io/QtDraw/">QtDraw</a> &amp; <a class="reference external" href="https://cmt-mu.github.io/MultiPie/">MultiPie</a></p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>qtdraw
-$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>multipie
-</pre></div>
-</div>
-</li>
-<li><p>associate QtDraw file (<strong>.qtdw</strong>) to the application</p></li>
-</ol>
-<ul>
-<li><p>download the application <a class="reference external" href="https://github.com/CMT-MU/QtDraw/blob/main/others/QtDraw_WinApp.zip">QtDraw_WinApp.zip</a></p></li>
-<li><p>extract it and move exe file to appropriate location</p></li>
-<li><p>associate .qtdw with QtDraw.exe</p>
-<p>(see also) content in bat file for QtDraw.exe</p>
+<p>(see also) setup in bat file for <code class="docutils literal notranslate"><span class="pre">QtDraw.exe</span></code></p>
 <div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="nv">@echo</span> <span class="n">off</span>
 <span class="n">python</span> <span class="n">-c</span> <span class="s2">&quot;from qtdraw.core.qtdraw_app import QtDraw; import sys; filename = sys.argv[1] if len(sys.argv) &gt; 1 else None; QtDraw(filename=filename).exec()&quot;</span> <span class="k">%</span><span class="n">1</span>
 </pre></div>
 </div>
 </li>
+</ol>
+</section>
+<section id="remark">
+<h2>Remark<a class="headerlink" href="#remark" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Shell command <code class="docutils literal notranslate"><span class="pre">qtdraw</span> <span class="pre">[filename]</span></code> is available.</p></li>
+<li><p>Version 1 <code class="docutils literal notranslate"><span class="pre">.qtdw</span></code> file can be converted into this version (Version 2) by the command <code class="docutils literal notranslate"><span class="pre">conv_qtdraw2</span> <span class="pre">[ver1_file.qtdw]</span></code>.</p></li>
 </ul>
 </section>
-<section id="installation-for-linux">
-<h2>Installation for Linux<a class="headerlink" href="#installation-for-linux" title="Link to this heading">#</a></h2>
+<section id="source-code">
+<h2>Source Code<a class="headerlink" href="#source-code" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>You can also visit <a class="reference external" href="https://pypi.org/project/qtdraw/">PyPI</a> or <a class="reference external" href="https://github.com/CMT-MU/QtDraw">GitHub</a> to download the source.</p></li>
+</ul>
 </section>
 </section>
 
@@ -608,11 +562,10 @@ $<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </sp
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installation">Installation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#requirements">Requirements:</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installation-for-macos">Installation for MacOS</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installation-for-windows">Installation for Windows</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installation-for-linux">Installation for Linux</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installation-for-all-platforms">Installation for all platforms</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#remark">Remark</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#source-code">Source Code</a></li>
 </ul>
   </nav></div>
 
