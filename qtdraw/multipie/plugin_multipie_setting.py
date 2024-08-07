@@ -136,7 +136,7 @@ plugin_detail = {
         "orbital_mod": -0.2,
         "hopping_scale": 0.7,
     },
-    "group": {"hamonics_size": 0.3},
+    "group": {"harmonics_size": 0.3},
 }
 
 # ==================================================
