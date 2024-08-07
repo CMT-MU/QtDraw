@@ -3441,8 +3441,14 @@ class PyVistaWidget(QtInteractor):
                 "show_scalar_bar": False,
             }
         else:
+            val = np.min(obj[surface])
+            if np.max(obj[surface]) - val < 1e-4:
+                clim = [val - 0.05, val + 0.05]
+            else:
+                clim = None
             option_add = {
                 "cmap": color.strip("*"),
+                "clim": clim,
                 "scalars": surface,
                 "opacity": opacity,
                 "show_scalar_bar": False,

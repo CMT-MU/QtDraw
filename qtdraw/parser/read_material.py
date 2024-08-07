@@ -27,6 +27,6 @@ def read_draw(filename, widget):
 
     if filename.endswith(".xsf"):
         pos = site_info[0][3]
-        widget.add_isosurface(data=filename, position=pos, color="coolwarm", surface="phase")
+        widget.add_isosurface(data=filename, position=pos, color="Pastel1", surface="phase")
 
     return all_data
