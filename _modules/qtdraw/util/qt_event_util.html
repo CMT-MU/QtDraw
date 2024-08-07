@@ -369,7 +369,8 @@ document.write(`
 <span class="kn">from</span> <span class="nn">PySide6.QtGui</span> <span class="kn">import</span> <span class="n">QFont</span>
 <span class="kn">from</span> <span class="nn">PySide6.QtWidgets</span> <span class="kn">import</span> <span class="n">QApplication</span>
 <span class="kn">from</span> <span class="nn">qtdraw.widget.message_box</span> <span class="kn">import</span> <span class="n">MessageBox</span>
-<span class="kn">from</span> <span class="nn">qtdraw.util.util</span> <span class="kn">import</span> <span class="n">set_latex_setting</span>
+<span class="kn">from</span> <span class="nn">qtdraw.util.util</span> <span class="kn">import</span> <span class="n">set_latex_setting</span><span class="p">,</span> <span class="n">create_style_sheet</span>
+<span class="kn">from</span> <span class="nn">qtdraw.core.pyvista_widget_setting</span> <span class="kn">import</span> <span class="n">default_preference</span>
 <span class="kn">from</span> <span class="nn">qtdraw</span> <span class="kn">import</span> <span class="n">__top_dir__</span>
 
 
@@ -395,14 +396,11 @@ document.write(`
 <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="get_qt_application">
 <a class="viewcode-back" href="../../../src/api_util.html#qtdraw.util.qt_event_util.get_qt_application">[docs]</a>
-<span class="k">def</span> <span class="nf">get_qt_application</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s2">&quot;fusion&quot;</span><span class="p">,</span> <span class="n">font</span><span class="o">=</span><span class="s2">&quot;Osaka&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">latex</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">get_qt_application</span><span class="p">(</span><span class="n">latex</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Get Qt application.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        style (str): style, &quot;fusion/macos/windows&quot;.</span>
-<span class="sd">        font (str): font, &quot;Monaco/Osaka/Arial/Times New Roman/Helvetica Neue&quot;.</span>
-<span class="sd">        size (int): size (pixel).</span>
 <span class="sd">        latex (bool, optional): use latex setting ?</span>
 
 <span class="sd">    Returns:</span>
@@ -434,14 +432,12 @@ document.write(`
     <span class="n">app</span><span class="o">.</span><span class="n">setAttribute</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">AA_EnableHighDpiScaling</span><span class="p">)</span>
     <span class="n">app</span><span class="o">.</span><span class="n">setAttribute</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">AA_UseHighDpiPixmaps</span><span class="p">)</span>
 
+    <span class="n">style</span> <span class="o">=</span> <span class="n">default_preference</span><span class="p">[</span><span class="s2">&quot;general&quot;</span><span class="p">][</span><span class="s2">&quot;style&quot;</span><span class="p">]</span>
+    <span class="n">font</span> <span class="o">=</span> <span class="n">default_preference</span><span class="p">[</span><span class="s2">&quot;general&quot;</span><span class="p">][</span><span class="s2">&quot;font&quot;</span><span class="p">]</span>
+    <span class="n">size</span> <span class="o">=</span> <span class="n">default_preference</span><span class="p">[</span><span class="s2">&quot;general&quot;</span><span class="p">][</span><span class="s2">&quot;size&quot;</span><span class="p">]</span>
     <span class="n">app</span><span class="o">.</span><span class="n">setStyle</span><span class="p">(</span><span class="n">style</span><span class="p">)</span>
-    <span class="n">app</span><span class="o">.</span><span class="n">setFont</span><span class="p">(</span><span class="n">QFont</span><span class="p">(</span><span class="n">font</span><span class="p">,</span> <span class="n">size</span><span class="p">))</span>
-
-    <span class="c1"># style.</span>
-    <span class="n">file</span> <span class="o">=</span> <span class="n">__top_dir__</span> <span class="o">/</span> <span class="s2">&quot;qtdraw/core/style.qss&quot;</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">style</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-    <span class="n">app</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="n">style</span><span class="p">)</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">setFont</span><span class="p">(</span><span class="n">QFont</span><span class="p">(</span><span class="n">font</span><span class="p">))</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="n">create_style_sheet</span><span class="p">(</span><span class="n">size</span><span class="p">))</span>
 
     <span class="k">return</span> <span class="n">app</span></div>
 

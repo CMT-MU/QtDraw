@@ -358,6 +358,7 @@ document.write(`
 <span class="kn">from</span> <span class="nn">PySide6.QtWidgets</span> <span class="kn">import</span> <span class="n">QDialog</span><span class="p">,</span> <span class="n">QTabWidget</span><span class="p">,</span> <span class="n">QWidget</span><span class="p">,</span> <span class="n">QDialogButtonBox</span>
 <span class="kn">from</span> <span class="nn">PySide6.QtCore</span> <span class="kn">import</span> <span class="n">Qt</span>
 <span class="kn">from</span> <span class="nn">qtdraw.widget.custom_widget</span> <span class="kn">import</span> <span class="n">Layout</span><span class="p">,</span> <span class="n">Label</span><span class="p">,</span> <span class="n">Combo</span><span class="p">,</span> <span class="n">Spin</span><span class="p">,</span> <span class="n">DSpin</span><span class="p">,</span> <span class="n">Check</span><span class="p">,</span> <span class="n">VSpacer</span><span class="p">,</span> <span class="n">HSpacer</span><span class="p">,</span> <span class="n">ColorSelector</span>
+<span class="kn">from</span> <span class="nn">qtdraw.util.util</span> <span class="kn">import</span> <span class="n">create_style_sheet</span>
 
 
 <span class="c1"># ==================================================</span>
@@ -680,7 +681,7 @@ document.write(`
         <span class="n">label_style</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;style&quot;</span><span class="p">)</span>
         <span class="n">combo_style</span> <span class="o">=</span> <span class="n">Combo</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;fusion&quot;</span><span class="p">,</span> <span class="s2">&quot;macos&quot;</span><span class="p">,</span> <span class="s2">&quot;windows&quot;</span><span class="p">])</span>
         <span class="n">label_font</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;font&quot;</span><span class="p">)</span>
-        <span class="n">combo_font</span> <span class="o">=</span> <span class="n">Combo</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;Osaka&quot;</span><span class="p">,</span> <span class="s2">&quot;Monaco&quot;</span><span class="p">,</span> <span class="s2">&quot;Courier&quot;</span><span class="p">,</span> <span class="s2">&quot;Arial&quot;</span><span class="p">,</span> <span class="s2">&quot;Times New Roman&quot;</span><span class="p">,</span> <span class="s2">&quot;Helvetica Neue&quot;</span><span class="p">])</span>
+        <span class="n">combo_font</span> <span class="o">=</span> <span class="n">Combo</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;Osaka&quot;</span><span class="p">,</span> <span class="s2">&quot;Monaco&quot;</span><span class="p">,</span> <span class="s2">&quot;Arial&quot;</span><span class="p">,</span> <span class="s2">&quot;Times New Roman&quot;</span><span class="p">,</span> <span class="s2">&quot;Helvetica Neue&quot;</span><span class="p">])</span>
         <span class="n">label_color</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;scheme&quot;</span><span class="p">)</span>
         <span class="n">combo_color</span> <span class="o">=</span> <span class="n">Combo</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;Jmol&quot;</span><span class="p">,</span> <span class="s2">&quot;VESTA&quot;</span><span class="p">])</span>
         <span class="n">label_size</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;size&quot;</span><span class="p">)</span>
@@ -720,6 +721,7 @@ document.write(`
 
 <span class="sd">        :meta private:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="p">()</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="n">create_style_sheet</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">preference</span><span class="p">[</span><span class="s2">&quot;general&quot;</span><span class="p">][</span><span class="s2">&quot;size&quot;</span><span class="p">]))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">widget</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">widget</span><span class="o">.</span><span class="n">redraw</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="p">()</span><span class="o">.</span><span class="n">_update_panel</span><span class="p">()</span>
@@ -733,6 +735,7 @@ document.write(`
 <span class="sd">        :meta private:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">widget</span><span class="o">.</span><span class="n">restore</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="p">()</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="n">create_style_sheet</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">preference</span><span class="p">[</span><span class="s2">&quot;general&quot;</span><span class="p">][</span><span class="s2">&quot;size&quot;</span><span class="p">]))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="p">()</span><span class="o">.</span><span class="n">_update_panel</span><span class="p">()</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">reject</span><span class="p">()</span>
 
@@ -746,6 +749,7 @@ document.write(`
 
 <span class="sd">        :meta private:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="p">()</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="n">create_style_sheet</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">preference</span><span class="p">[</span><span class="s2">&quot;general&quot;</span><span class="p">][</span><span class="s2">&quot;size&quot;</span><span class="p">]))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">widget</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">widget</span><span class="o">.</span><span class="n">redraw</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="p">()</span><span class="o">.</span><span class="n">_update_panel</span><span class="p">()</span></div>

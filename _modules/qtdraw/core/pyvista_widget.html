@@ -1950,8 +1950,10 @@ document.write(`
         <span class="c1"># set self._backup.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">save_current</span><span class="p">()</span>
         <span class="c1"># remove temp. info.</span>
-        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_backup</span><span class="p">[</span><span class="s2">&quot;status&quot;</span><span class="p">][</span><span class="s2">&quot;plus&quot;</span><span class="p">]</span>
-        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_backup</span><span class="p">[</span><span class="s2">&quot;status&quot;</span><span class="p">][</span><span class="s2">&quot;multipie&quot;</span><span class="p">][</span><span class="s2">&quot;plus&quot;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="s2">&quot;plus&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_backup</span><span class="p">[</span><span class="s2">&quot;status&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_backup</span><span class="p">[</span><span class="s2">&quot;status&quot;</span><span class="p">][</span><span class="s2">&quot;plus&quot;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="s2">&quot;multipie&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_backup</span><span class="p">[</span><span class="s2">&quot;status&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="ow">and</span> <span class="s2">&quot;plus&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_backup</span><span class="p">[</span><span class="s2">&quot;status&quot;</span><span class="p">][</span><span class="s2">&quot;multipie&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_backup</span><span class="p">[</span><span class="s2">&quot;status&quot;</span><span class="p">][</span><span class="s2">&quot;multipie&quot;</span><span class="p">][</span><span class="s2">&quot;plus&quot;</span><span class="p">]</span>
 
         <span class="c1"># write.</span>
         <span class="n">file</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span><span class="o">.</span><span class="n">as_posix</span><span class="p">()</span>
@@ -4070,6 +4072,9 @@ document.write(`
             <span class="n">surface</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
 
         <span class="n">obj</span> <span class="o">=</span> <span class="n">create_isosurface</span><span class="p">(</span><span class="n">grid_data</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">surface</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">point_data</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span>
+
         <span class="k">if</span> <span class="n">check_color</span><span class="p">(</span><span class="n">color</span><span class="p">):</span>
             <span class="n">option_add</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;color&quot;</span><span class="p">:</span> <span class="n">all_colors</span><span class="p">[</span><span class="n">color</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;opacity&quot;</span><span class="p">:</span> <span class="n">opacity</span><span class="p">}</span>
         <span class="k">elif</span> <span class="n">surface</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
@@ -4079,8 +4084,14 @@ document.write(`
                 <span class="s2">&quot;show_scalar_bar&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
             <span class="p">}</span>
         <span class="k">else</span><span class="p">:</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="n">surface</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="n">surface</span><span class="p">])</span> <span class="o">-</span> <span class="n">val</span> <span class="o">&lt;</span> <span class="mf">1e-4</span><span class="p">:</span>
+                <span class="n">clim</span> <span class="o">=</span> <span class="p">[</span><span class="n">val</span> <span class="o">-</span> <span class="mf">0.05</span><span class="p">,</span> <span class="n">val</span> <span class="o">+</span> <span class="mf">0.05</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">clim</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="n">option_add</span> <span class="o">=</span> <span class="p">{</span>
                 <span class="s2">&quot;cmap&quot;</span><span class="p">:</span> <span class="n">color</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s2">&quot;*&quot;</span><span class="p">),</span>
+                <span class="s2">&quot;clim&quot;</span><span class="p">:</span> <span class="n">clim</span><span class="p">,</span>
                 <span class="s2">&quot;scalars&quot;</span><span class="p">:</span> <span class="n">surface</span><span class="p">,</span>
                 <span class="s2">&quot;opacity&quot;</span><span class="p">:</span> <span class="n">opacity</span><span class="p">,</span>
                 <span class="s2">&quot;show_scalar_bar&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>

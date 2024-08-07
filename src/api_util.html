@@ -484,6 +484,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.convert_str_vector"><code class="docutils literal notranslate"><span class="pre">convert_str_vector()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.convert_to_str"><code class="docutils literal notranslate"><span class="pre">convert_to_str()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.create_grid"><code class="docutils literal notranslate"><span class="pre">create_grid()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.create_style_sheet"><code class="docutils literal notranslate"><span class="pre">create_style_sheet()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.read_dict"><code class="docutils literal notranslate"><span class="pre">read_dict()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.set_latex_setting"><code class="docutils literal notranslate"><span class="pre">set_latex_setting()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.split_filename"><code class="docutils literal notranslate"><span class="pre">split_filename()</span></code></a></li>
@@ -1195,16 +1196,11 @@ The following objects are available.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="qtdraw.util.qt_event_util.get_qt_application">
-<span class="sig-name descname"><span class="pre">get_qt_application</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">style</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'fusion'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">font</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Osaka'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">12</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">latex</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/qt_event_util.html#get_qt_application"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.qt_event_util.get_qt_application" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">get_qt_application</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">latex</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/qt_event_util.html#get_qt_application"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.qt_event_util.get_qt_application" title="Link to this definition">#</a></dt>
 <dd><p>Get Qt application.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>style</strong> (<em>str</em>) -- style, &quot;fusion/macos/windows&quot;.</p></li>
-<li><p><strong>font</strong> (<em>str</em>) -- font, &quot;Monaco/Osaka/Arial/Times New Roman/Helvetica Neue&quot;.</p></li>
-<li><p><strong>size</strong> (<em>int</em>) -- size (pixel).</p></li>
-<li><p><strong>latex</strong> (<em>bool</em><em>, </em><em>optional</em>) -- use latex setting ?</p></li>
-</ul>
+<dd class="field-odd"><p><strong>latex</strong> (<em>bool</em><em>, </em><em>optional</em>) -- use latex setting ?</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><ul class="simple">
@@ -1499,6 +1495,23 @@ different directory (just by copying it).</p>
 <li><p>grid in column-major order.</p></li>
 </ul>
 </div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qtdraw.util.util.create_style_sheet">
+<span class="sig-name descname"><span class="pre">create_style_sheet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/util.html#create_style_sheet"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.util.create_style_sheet" title="Link to this definition">#</a></dt>
+<dd><p>Create style sheet.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>size</strong> (<em>int</em>) -- font size (point).</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>(str) -- style sheet string.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
@@ -2081,6 +2094,7 @@ different directory (just by copying it).</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.convert_str_vector"><code class="docutils literal notranslate"><span class="pre">convert_str_vector()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.convert_to_str"><code class="docutils literal notranslate"><span class="pre">convert_to_str()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.create_grid"><code class="docutils literal notranslate"><span class="pre">create_grid()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.create_style_sheet"><code class="docutils literal notranslate"><span class="pre">create_style_sheet()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.read_dict"><code class="docutils literal notranslate"><span class="pre">read_dict()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.set_latex_setting"><code class="docutils literal notranslate"><span class="pre">set_latex_setting()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.split_filename"><code class="docutils literal notranslate"><span class="pre">split_filename()</span></code></a></li>

@@ -573,6 +573,55 @@ document.write(`
 
     <span class="k">return</span> <span class="n">path</span></div>
 
+
+
+<span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="create_style_sheet">
+<a class="viewcode-back" href="../../../src/api_util.html#qtdraw.util.util.create_style_sheet">[docs]</a>
+<span class="k">def</span> <span class="nf">create_style_sheet</span><span class="p">(</span><span class="n">size</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Create style sheet.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        size (int): font size (point).</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        - (str) -- style sheet string.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    QTreeView::item </span><span class="se">{{</span>
+<span class="s2">        padding: 10px 15px 10px 15px;</span>
+<span class="s2">        border: none;</span>
+<span class="s2">        outline: none;</span>
+<span class="s2">        background: none;</span>
+<span class="s2">    </span><span class="se">}}</span>
+
+<span class="s2">    QTreeView::item:selected </span><span class="se">{{</span>
+<span class="s2">        border: none;</span>
+<span class="s2">        outline: none;</span>
+<span class="s2">        color: black;</span>
+<span class="s2">        background: lightyellow;</span>
+<span class="s2">    </span><span class="se">}}</span>
+<span class="s2">    QTreeView::item:focus </span><span class="se">{{</span>
+<span class="s2">        border: none;</span>
+<span class="s2">        outline: none;</span>
+<span class="s2">        color: black;</span>
+<span class="s2">        background: lightyellow;</span>
+<span class="s2">    </span><span class="se">}}</span>
+
+<span class="s2">    QComboBox </span><span class="se">{{</span>
+<span class="s2">        font-size: </span><span class="si">{</span><span class="n">size</span><span class="si">}</span><span class="s2">pt;</span>
+<span class="s2">    </span><span class="se">}}</span>
+
+<span class="s2">    QLabel </span><span class="se">{{</span>
+<span class="s2">        font-size: </span><span class="si">{</span><span class="n">size</span><span class="si">}</span><span class="s2">pt;</span>
+<span class="s2">    </span><span class="se">}}</span>
+
+<span class="s2">    QPushButton </span><span class="se">{{</span>
+<span class="s2">        font-size: </span><span class="si">{</span><span class="n">size</span><span class="si">}</span><span class="s2">pt;</span>
+<span class="s2">    </span><span class="se">}}</span>
+<span class="s2">    &quot;&quot;&quot;</span></div>
+
 </pre></div>
 
                 </article>
