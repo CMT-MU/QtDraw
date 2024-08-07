@@ -29,3 +29,6 @@ Using this functionality, the background job can be performed.
 See the example in
 ```{literalinclude} examples/background.py
 ```
+The same thing is also simply done by
+```{literalinclude} examples/background_s.py
+```
