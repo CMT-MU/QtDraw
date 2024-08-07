@@ -42,6 +42,7 @@ QtDraw data file in Python dict format.
         "view": [0, 5, 2],
         "parallel_projection": True,
         "grid": False,
+        "bar": False,
         "axis_type": "off",
         "cell_mode": "off",
         "multipie": {

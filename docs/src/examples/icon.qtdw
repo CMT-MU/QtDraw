@@ -7,7 +7,7 @@ QtDraw data file in Python dict format.
     "data": {
         "site": [["a", True, "", "S", False, "", "3", "[0.0,0.0,1.2]", "[0,0,0]", "0.56", "cantaloupe", "1.0"]],
         "vector": [["a", True, "", "vec", False, "", "3", "[0.0,0.0,-0.5]", "[0,0,0]", "[0.0,0.0,1.0]", "1.0", "0.06", "-0.43", "honeydew", "", True, "1.0", "2.0", "0.25", "1.0"]],
-        "orbital": [["a", True, "", "orb", False, "", "3", "[0.0,0.0,3.0]", "[0,0,0]", "x y z", "x y z", "-0.18", "[[0,180],[0,360]]", "coolwarm", "1.0"]],
+        "orbital": [["a", True, "", "orb", False, "", "3", "[0.0,0.0,3.0]", "[0,0,0]", "x y z", "x y z", "0.5", "[[0,180],[0,360]]", "coolwarm", "1.0"]],
         "spline_t": [["a", True, "", "spt", False, "", "3", "[0.0,0.0,0.0]", "[0,0,0]", "[1.5cos(pi t/5), 1.5sin(pi t/5), t/25]", "[0.0000,61.0000,1.0000]", "0.07", "500", "", False, "", True, "", False, "", False, "2.0", "0.1", "sky", "", False, "0.50"]],
     },
     "status": {
@@ -22,6 +22,7 @@ QtDraw data file in Python dict format.
         "view": [4, 5, 2],
         "parallel_projection": True,
         "grid": False,
+        "bar": False,
         "axis_type": "off",
         "cell_mode": "off",
         "multipie": {
@@ -85,5 +86,5 @@ QtDraw data file in Python dict format.
         "axis": {"size": 14, "bold": True, "italic": False, "label": "[x,y,z]"},
         "latex": {"color": "black", "size": 10, "dpi": 120},
     },
-    "camera": {"position": [-4.547463, 9.654604, 5.285017], "viewup": [0.741232, 0.055424, 0.668957], "focal_point": [-9.6e-05, 2e-06, 1.04624], "angle": 30.0, "clipping_range": [6.053499, 18.345107], "distance": 11.482906, "scale": 2.971995},
+    "camera": {"position": [-4.547462, 9.654605, 5.285016], "viewup": [0.741232, 0.055424, 0.668957], "focal_point": [-9.6e-05, 2e-06, 1.04624], "angle": 30.0, "clipping_range": [6.053499, 18.345107], "distance": 11.482906, "scale": 2.971995},
 }

@@ -1514,8 +1514,10 @@ class PyVistaWidget(QtInteractor):
         # set self._backup.
         self.save_current()
         # remove temp. info.
-        del self._backup["status"]["plus"]
-        del self._backup["status"]["multipie"]["plus"]
+        if "plus" in self._backup["status"].keys():
+            del self._backup["status"]["plus"]
+        if "multipie" in self._backup["status"].keys() and "plus" in self._backup["status"]["multipie"].keys():
+            del self._backup["status"]["multipie"]["plus"]
 
         # write.
         file = file.resolve().as_posix()
