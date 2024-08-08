@@ -7,25 +7,25 @@
 - This library requires [TeXLive](https://www.tug.org/texlive/) environment.
 - Symmetry operation supports are provided by [MultiPie](https://github.com/CMT-MU/MultiPie).
 
-## Installation for all platforms
+## Installation
 
-1. construct Python & LaTeX environments
-- install Python
-- [macOS or Linux] add path for LaTeX and Python in .zshrc.
+1. Construct Python & LaTeX environments
+- Install Python
+- [MacOS or Linux] Add path for LaTeX and Python in .zshrc.
     ```bash
     export PATH=/Library/TeX/texbin:$PATH
     export PATH=/opt/homebrew/opt/python@3.11/libexec/bin:$PATH
     ```
-- restart shell
-- [macOS] install [Homebrew](https://brew.sh/index_ja)
+- Restart shell
+- [MacOS] Install [Homebrew](https://brew.sh/index_ja)
     ```bash
     $ brew install python@3.11
     ```
-- [windows] install PowerShell & Python [https://www.python.jp/install/windows/install.html](https://www.python.jp/install/windows/install.html)
+- [Windows] Install PowerShell & Python [https://www.python.jp/install/windows/install.html](https://www.python.jp/install/windows/install.html)
 
-- install LaTeX: [TeX Live](https://www.tug.org/texlive/doc/texlive-ja/texlive-ja.pdf)
+- Install LaTeX: [TeX Live](https://www.tug.org/texlive/doc/texlive-ja/texlive-ja.pdf)
 
-2. install relevant modules
+2. Install relevant modules (most of them are installed just by installing qtdraw)
     ```bash
     $ pip install Cython
     $ pip install numpy==1.26.4 # not ver.2 due to pymatgen
@@ -44,13 +44,13 @@
     $ pip install pymatgen # to read .cif, .vesta, and .xsf files
     ```
 
-3. install [QtDraw](https://cmt-mu.github.io/QtDraw/)
+3. Install [QtDraw](https://cmt-mu.github.io/QtDraw/)
 
     ```bash
     $ pip install qtdraw
     ```
 
-4. associate QtDraw file (**.qtdw**) to the application
+4. Associate QtDraw file (**.qtdw**) to the application
 
     It is useful to associate with the following application with `.qtdw`, `.cif`, `.vesta`, and `.xsf` extensions.
    - [MacOS](https://github.com/CMT-MU/QtDraw/tree/main/others/QtDraw_MacApp.zip)
@@ -58,7 +58,7 @@
    - extract it and move the App into Applications folder
    - associate `.qtdw` with `QtDraw.app` or `QtDraw.exe`
 
-    (see also) setup in Automator for `QtDraw.app`
+    [MacOS] (See also) setup in Automator for `QtDraw.app`
     ```bash
     source ~/.zshrc
     nohup python -c 'from sys import argv; from qtdraw.core.qtdraw_app import QtDraw; filename = None if len(argv) == 1 else argv[1]; QtDraw(filename=filename).exec()' "$1" &> /dev/null &
@@ -66,7 +66,7 @@
     ```
     ![automator.jpg](fig/automator.jpg)
 
-    (see also) setup in bat file for `QtDraw.exe`
+    [Windows] (See also) setup in bat file for `QtDraw.exe`
 
     ```powershell
     @echo off

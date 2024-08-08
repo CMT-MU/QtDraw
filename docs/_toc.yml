@@ -12,8 +12,8 @@ parts:
 - caption: Documentation
   chapters:
     - file: src/user_guide
-    - file: src/from_python
     - file: src/example
+    - file: src/from_python
     - file: src/api_summary
       sections:
       - file: src/api_core
