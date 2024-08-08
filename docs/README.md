@@ -1,6 +1,6 @@
 # [QtDraw](https://cmt-mu.github.io/QtDraw/)
 
-3D drawing tool for molecules and crystals based on [PyVista](https://docs.pyvista.org/) and [Qt](https://www.riverbankcomputing.com/static/Docs/PyQt5/#).
+3D drawing tool for molecules and crystals based on [PyVista](https://docs.pyvista.org/) and [PySide6](https://doc.qt.io/qtforpython-6/index.html).
 Drawings are associated with crystallographic symmetry operations provided by [MultiPie](https://github.com/CMT-MU/MultiPie).
 
 - **Authors**: Hiroaki Kusunose
@@ -13,18 +13,17 @@ Drawings are associated with crystallographic symmetry operations provided by [M
     ```
     pip install qtdraw
     ```
-    - It is useful to associate with the following application with `.qtdw` and `.cif` extension.
-      - [Mac](https://github.com/CMT-MU/QtDraw/tree/main/others/QtDraw_MacApp.zip)
-      - [Windows](https://github.com/CMT-MU/QtDraw/tree/main/others/QtDraw_WinApp.zip)
-    - You can also visit [PyPI](https://pypi.org/project/qtdraw/) or [GitHub](https://github.com/CMT-MU/QtDraw) to download the source.
-    - See also, [Install Guide (in Japanese)](./src/install_guide.pdf)
-    - Shell command `qtdraw [filename]` is available.
+
+- **Shell commands**:
+  - `qtdraw [filename]` : Open QtDraw file.
+  - `conv_qtdraw2 [ver1_file.qtdw]` : Convert Version 1 `.qtdw` file into this version (Version 2).
 
 - **Requirements**:
   - This library requires [TeXLive](https://www.tug.org/texlive/) environment.
   - Symmetry operation supports are provided by [MultiPie](https://github.com/CMT-MU/MultiPie).
 
 - **See also**:
-  - [Manual (QtDraw and MultiPie)](https://github.com/CMT-MU/QtDraw/blob/main/docs/src/manual.pdf).
+  - [Manual](https://cmt-mu.github.io/QtDraw/src/overview.html).
   - [MultiPie tutorial (in Japanese)](https://cmt-mu.github.io/MultiPieTutorial/)
   - [QtDraw tutorial (in Japanese)](https://cmt-mu.github.io/QtDrawTutorial/)
+  - Source : [PyPI](https://pypi.org/project/qtdraw/) or [GitHub](https://github.com/CMT-MU/QtDraw)

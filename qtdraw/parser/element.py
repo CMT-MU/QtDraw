@@ -1,3 +1,10 @@
+"""
+Color scheme of elements for VESTA and Jmol.
+
+This module contains color scheme of elements for VESTA and Jmol.
+"""
+
+# ==================================================
 element_color = {
     "VESTA": {
         "Ac": "cornflowerblue",
