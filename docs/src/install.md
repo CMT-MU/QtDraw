@@ -36,12 +36,13 @@
     $ pip install PySide6
     $ pip install pyvista
     $ pip install pyvistaqt
+    $ pip install ipython
     $ pip install black # format python and .qtdw files
     $ pip install gcoreutils
-    $ pip install multipie # if use MultiPie extension
     $ pip install emmet-core==0.84.1 # need for pymatgen
     $ pip install pandas # need for pymatgen
     $ pip install pymatgen # to read .cif, .vesta, and .xsf files
+    $ pip install multipie # if use MultiPie extension
     ```
 
 3. Install [QtDraw](https://cmt-mu.github.io/QtDraw/)
