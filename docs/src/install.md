@@ -25,7 +25,7 @@
 
 - Install LaTeX: [TeX Live](https://www.tug.org/texlive/doc/texlive-ja/texlive-ja.pdf)
 
-2. Install relevant modules (most of them are installed just by installing qtdraw)
+2. Install relevant modules (all are installed just by installing qtdraw, thus this procedure can be skipped)
     ```bash
     $ pip install -U pip
     $ pip install Cython
@@ -40,7 +40,6 @@
     $ pip install ipython
     $ pip install black # format python and .qtdw files
     $ pip install gcoreutils
-    $ pip install emmet-core==0.84.1 # need for pymatgen
     $ pip install pandas # need for pymatgen
     $ pip install pymatgen # to read .cif, .vesta, and .xsf files
     $ pip install multipie # if use MultiPie extension

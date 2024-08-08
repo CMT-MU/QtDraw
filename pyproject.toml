@@ -5,20 +5,25 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "qtdraw"
 dependencies = [
+    "numpy==1.26.4",
+    "Cython",
     "matplotlib",
     "PySide6",
     "pyvista",
     "pyvistaqt",
     "click",
-    "pymatgen>2023.3.10", # numpy 1.26.4, emmet-core 0.84.1 (pymatgen 2024.4.13)
+    "black",
+    "ipython",
+    "pymatgen>2023.3.10", # numpy 1.26.4 (pymatgen 2024.4.13)
     "gcoreutils",
+    "multipie",
 ]
 dynamic = ["version"]
 requires-python = ">=3.9"
 authors = [
   { name="Hiroaki Kusunose", email="hiroaki.kusunose@gmail.com" },
 ]
-description = "3D drawing tool for molecules and crystals based on Pyvista and Qt."
+description = "3D drawing tool for molecules and crystals based on Pyvista and PySide6."
 readme = "docs/README.md"
 keywords = ['pyvista', 'PySide6', 'multipie']
 license = {text = "MIT"}
@@ -48,7 +53,6 @@ dev = [
     "jupyter-book",
     "ghp-import",
     "jupytext",
-    "multipie",
 ]
 
 [tool.setuptools.dynamic]
