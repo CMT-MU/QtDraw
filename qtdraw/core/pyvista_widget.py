@@ -1522,6 +1522,13 @@ class PyVistaWidget(QtInteractor):
         if "multipie" in self._backup["status"].keys() and "plus" in self._backup["status"]["multipie"].keys():
             del self._backup["status"]["multipie"]["plus"]
 
+        isosurface = self._backup["data"]["isosurface"]
+        if len(isosurface) > 0:
+            for iso in isosurface:
+                name = iso[COLUMN_ISOSURFACE_FILE]
+                with open(name, mode="w", encoding="utf-8") as f:
+                    print(self._isosurface_data[name], file=f)
+
         # write.
         file = file.resolve().as_posix()
         header = "\nQtDraw data file in Python dict format.\n"
