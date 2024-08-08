@@ -62,10 +62,12 @@
 4. Associate QtDraw file (**.qtdw**) to the application
 
     It is useful to associate with the following application with `.qtdw`, `.cif`, `.vesta`, and `.xsf` extensions.
-   - Download and extract [QtDraw_MacApp.zip](https://github.com/CMT-MU/QtDraw/tree/main/others/QtDraw_MacApp.zip) or [QtDraw_WinApp.zip](https://github.com/CMT-MU/QtDraw/tree/main/others/QtDraw_WinApp.zip), and move it into Applications folder
-   - Associate extensions with `QtDraw.app` or `QtDraw.exe`
 
-    [MacOS] (See also) setup in Automator for `QtDraw.app`
+   [MacOS]
+   - Download and extract [QtDraw_MacApp.zip](https://github.com/CMT-MU/QtDraw/tree/main/others/QtDraw_MacApp.zip), and move it into Applications folder
+   - Associate extensions with `QtDraw.app`
+
+    (Note) `QtDraw.app` is created by Automator with the following script:
     ```bash
     source ~/.zshrc
     nohup python -c 'from sys import argv; from qtdraw.core.qtdraw_app import QtDraw; filename = None if len(argv) == 1 else argv[1]; QtDraw(filename=filename).exec()' "$1" &> /dev/null &
@@ -73,12 +75,9 @@
     ```
     ![automator.jpg](fig/automator.jpg)
 
-    [Windows] (See also) setup in bat file for `QtDraw.exe`
-
-    ```powershell
-    @echo off
-    python -c "from qtdraw.core.qtdraw_app import QtDraw; import sys; filename = sys.argv[1] if len(sys.argv) > 1 else None; QtDraw(filename=filename).exec()" %1
-    ```
+    [Windows]
+    - Associate extensions with `qtdraw.exe` in `Scripts` folder
+    - `Scripts` is usually in `C:\Users\<username>\AppData\Local\Programs\Python\Python<version>\`
 
 ## Remark
 - Shell command `qtdraw [filename]` is available.
