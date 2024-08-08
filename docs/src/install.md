@@ -62,10 +62,8 @@
 4. Associate QtDraw file (**.qtdw**) to the application
 
     It is useful to associate with the following application with `.qtdw`, `.cif`, `.vesta`, and `.xsf` extensions.
-   - [MacOS](https://github.com/CMT-MU/QtDraw/tree/main/others/QtDraw_MacApp.zip)
-   - [Windows](https://github.com/CMT-MU/QtDraw/tree/main/others/QtDraw_WinApp.zip)
-   - extract it and move the App into Applications folder
-   - associate `.qtdw` with `QtDraw.app` or `QtDraw.exe`
+   - Download and extract [QtDraw_MacApp.zip](https://github.com/CMT-MU/QtDraw/tree/main/others/QtDraw_MacApp.zip) or [QtDraw_WinApp.zip](https://github.com/CMT-MU/QtDraw/tree/main/others/QtDraw_WinApp.zip), and move it into Applications folder
+   - Associate extensions with `QtDraw.app` or `QtDraw.exe`
 
     [MacOS] (See also) setup in Automator for `QtDraw.app`
     ```bash
