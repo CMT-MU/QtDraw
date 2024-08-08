@@ -112,10 +112,6 @@ class Label(QLabel):
         self.setFocusPolicy(Qt.NoFocus)
         self.setIndent(6)
 
-        palette = self.palette()
-        palette.setColor(self.foregroundRole(), Color(color))
-        self.setPalette(palette)
-
         if math:
             self.to_png = lambda text: latex_to_png(text, True, color, size, dpi)
         else:
