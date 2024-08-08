@@ -187,8 +187,8 @@ const thebe_selector_output = ".output, .cell_output"
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Documentation</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../../../src/user_guide.html">User Guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../src/from_python.html">Usage from Python code</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../src/example.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../src/from_python.html">Usage from Python code</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../src/api_summary.html">API Reference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../src/api_core.html">Core</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../src/api_multipie.html">MultiPie</a></li>
@@ -1957,6 +1957,13 @@ document.write(`
             <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_backup</span><span class="p">[</span><span class="s2">&quot;status&quot;</span><span class="p">][</span><span class="s2">&quot;plus&quot;</span><span class="p">]</span>
         <span class="k">if</span> <span class="s2">&quot;multipie&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_backup</span><span class="p">[</span><span class="s2">&quot;status&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="ow">and</span> <span class="s2">&quot;plus&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_backup</span><span class="p">[</span><span class="s2">&quot;status&quot;</span><span class="p">][</span><span class="s2">&quot;multipie&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
             <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_backup</span><span class="p">[</span><span class="s2">&quot;status&quot;</span><span class="p">][</span><span class="s2">&quot;multipie&quot;</span><span class="p">][</span><span class="s2">&quot;plus&quot;</span><span class="p">]</span>
+
+        <span class="n">isosurface</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_backup</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">][</span><span class="s2">&quot;isosurface&quot;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">isosurface</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">iso</span> <span class="ow">in</span> <span class="n">isosurface</span><span class="p">:</span>
+                <span class="n">name</span> <span class="o">=</span> <span class="n">iso</span><span class="p">[</span><span class="n">COLUMN_ISOSURFACE_FILE</span><span class="p">]</span>
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_isosurface_data</span><span class="p">[</span><span class="n">name</span><span class="p">],</span> <span class="n">file</span><span class="o">=</span><span class="n">f</span><span class="p">)</span>
 
         <span class="c1"># write.</span>
         <span class="n">file</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span><span class="o">.</span><span class="n">as_posix</span><span class="p">()</span>
