@@ -13,12 +13,10 @@ Drawings are associated with crystallographic symmetry operations provided by [M
     ```
     pip install qtdraw
     ```
-  - It is useful to associate with the following application with `.qtdw`, `.cif`, `.vesta`, and `.xsf` extensions.
-    - [MacOS](https://github.com/CMT-MU/QtDraw/tree/main/others/QtDraw_MacApp.zip)
-    - [Windows](https://github.com/CMT-MU/QtDraw/tree/main/others/QtDraw_WinApp.zip)
-  - You can also visit [PyPI](https://pypi.org/project/qtdraw/) or [GitHub](https://github.com/CMT-MU/QtDraw) to download the source.
-  - Shell command `qtdraw [filename]` is available.
-  - Version 1 `.qtdw` file can be converted into this version (Version 2) by the command `conv_qtdraw2 [ver1_file.qtdw]`.
+
+- **Shell commands**:
+  - `qtdraw [filename]` : Open QtDraw file.
+  - `conv_qtdraw2 [ver1_file.qtdw]` : Convert Version 1 `.qtdw` file into this version (Version 2).
 
 - **Requirements**:
   - This library requires [TeXLive](https://www.tug.org/texlive/) environment.
@@ -28,3 +26,4 @@ Drawings are associated with crystallographic symmetry operations provided by [M
   - [Manual](https://cmt-mu.github.io/QtDraw/src/overview.html).
   - [MultiPie tutorial (in Japanese)](https://cmt-mu.github.io/MultiPieTutorial/)
   - [QtDraw tutorial (in Japanese)](https://cmt-mu.github.io/QtDrawTutorial/)
+  - Source : [PyPI](https://pypi.org/project/qtdraw/) or [GitHub](https://github.com/CMT-MU/QtDraw)
