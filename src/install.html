@@ -461,7 +461,8 @@ document.write(`
 </ul>
 <ol class="arabic" start="2">
 <li><p>Install relevant modules (most of them are installed just by installing qtdraw)</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>Cython
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-U<span class="w"> </span>pip
+$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>Cython
 $<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span><span class="nv">numpy</span><span class="o">==</span><span class="m">1</span>.26.4<span class="w"> </span><span class="c1"># not ver.2 due to pymatgen</span>
 $<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>sympy
 $<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>scipy
@@ -482,6 +483,13 @@ $<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </sp
 </li>
 <li><p>Install <a class="reference external" href="https://cmt-mu.github.io/QtDraw/">QtDraw</a></p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>qtdraw
+</pre></div>
+</div>
+<p>[Linux: Ubuntu 22.04.4 LTS on WSL2]</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">QT_QPA_PLATFORM</span><span class="o">=</span>xcb<span class="w">  </span><span class="c1"># add in .bashrc</span>
+sudo<span class="w"> </span>apt<span class="w"> </span>update
+sudo<span class="w"> </span>apt<span class="w"> </span>upgrade<span class="w">  </span><span class="c1"># just in case</span>
+sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>libxcb-cursor-dev
 </pre></div>
 </div>
 </li>
