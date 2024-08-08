@@ -27,6 +27,7 @@
 
 2. Install relevant modules (most of them are installed just by installing qtdraw)
     ```bash
+    $ pip install -U pip
     $ pip install Cython
     $ pip install numpy==1.26.4 # not ver.2 due to pymatgen
     $ pip install sympy
@@ -49,6 +50,13 @@
 
     ```bash
     $ pip install qtdraw
+    ```
+    [Linux: Ubuntu 22.04.4 LTS on WSL2]
+    ```bash
+    export QT_QPA_PLATFORM=xcb  # add in .bashrc
+    sudo apt update
+    sudo apt upgrade  # just in case
+    sudo apt install libxcb-cursor-dev
     ```
 
 4. Associate QtDraw file (**.qtdw**) to the application
