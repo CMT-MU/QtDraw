@@ -79,9 +79,9 @@
     - Associate extensions with `qtdraw.exe` in `Scripts` folder
     - `Scripts` is usually in `C:\Users\<username>\AppData\Local\Programs\Python\Python<version>\`
 
-## Remark
-- Shell command `qtdraw [filename]` is available.
-- Version 1 `.qtdw` file can be converted into this version (Version 2) by the command `conv_qtdraw2 [ver1_file.qtdw]`.
+## Shell commands
+  - `qtdraw [filename]` : Open QtDraw file.
+  - `conv_qtdraw2 [ver1_file.qtdw]` : Convert Version 1 `.qtdw` file into this version (Version 2).
 
 ## Source Code
 - You can also visit [PyPI](https://pypi.org/project/qtdraw/) or [GitHub](https://github.com/CMT-MU/QtDraw) to download the source.
