@@ -495,24 +495,23 @@ sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> <
 </li>
 <li><p>Associate QtDraw file (<strong>.qtdw</strong>) to the application</p>
 <p>It is useful to associate with the following application with <code class="docutils literal notranslate"><span class="pre">.qtdw</span></code>, <code class="docutils literal notranslate"><span class="pre">.cif</span></code>, <code class="docutils literal notranslate"><span class="pre">.vesta</span></code>, and <code class="docutils literal notranslate"><span class="pre">.xsf</span></code> extensions.</p>
+<p>[MacOS]</p>
 <ul class="simple">
-<li><p><a class="reference external" href="https://github.com/CMT-MU/QtDraw/tree/main/others/QtDraw_MacApp.zip">MacOS</a></p></li>
-<li><p><a class="reference external" href="https://github.com/CMT-MU/QtDraw/tree/main/others/QtDraw_WinApp.zip">Windows</a></p></li>
-<li><p>extract it and move the App into Applications folder</p></li>
-<li><p>associate <code class="docutils literal notranslate"><span class="pre">.qtdw</span></code> with <code class="docutils literal notranslate"><span class="pre">QtDraw.app</span></code> or <code class="docutils literal notranslate"><span class="pre">QtDraw.exe</span></code></p></li>
+<li><p>Download and extract <a class="reference external" href="https://github.com/CMT-MU/QtDraw/tree/main/others/QtDraw_MacApp.zip">QtDraw_MacApp.zip</a>, and move it into Applications folder</p></li>
+<li><p>Associate extensions with <code class="docutils literal notranslate"><span class="pre">QtDraw.app</span></code></p></li>
 </ul>
-<p>[MacOS] (See also) setup in Automator for <code class="docutils literal notranslate"><span class="pre">QtDraw.app</span></code></p>
+<p>(Note) <code class="docutils literal notranslate"><span class="pre">QtDraw.app</span></code> is created by Automator with the following script:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span><span class="w"> </span>~/.zshrc
 nohup<span class="w"> </span>python<span class="w"> </span>-c<span class="w"> </span><span class="s1">&#39;from sys import argv; from qtdraw.core.qtdraw_app import QtDraw; filename = None if len(argv) == 1 else argv[1]; QtDraw(filename=filename).exec()&#39;</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$1</span><span class="s2">&quot;</span><span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null<span class="w"> </span><span class="p">&amp;</span>
 <span class="nb">exit</span><span class="w"> </span><span class="m">0</span>
 </pre></div>
 </div>
 <p><img alt="automator.jpg" src="../_images/automator.jpg" /></p>
-<p>[Windows] (See also) setup in bat file for <code class="docutils literal notranslate"><span class="pre">QtDraw.exe</span></code></p>
-<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="nv">@echo</span> <span class="n">off</span>
-<span class="n">python</span> <span class="n">-c</span> <span class="s2">&quot;from qtdraw.core.qtdraw_app import QtDraw; import sys; filename = sys.argv[1] if len(sys.argv) &gt; 1 else None; QtDraw(filename=filename).exec()&quot;</span> <span class="k">%</span><span class="n">1</span>
-</pre></div>
-</div>
+<p>[Windows]</p>
+<ul class="simple">
+<li><p>Associate extensions with <code class="docutils literal notranslate"><span class="pre">qtdraw.exe</span></code> in <code class="docutils literal notranslate"><span class="pre">Scripts</span></code> folder</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Scripts</span></code> is usually in <code class="docutils literal notranslate"><span class="pre">C:\Users\&lt;username&gt;\AppData\Local\Programs\Python\Python&lt;version&gt;\</span></code></p></li>
+</ul>
 </li>
 </ol>
 </section>
