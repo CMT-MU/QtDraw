@@ -62,8 +62,10 @@ from qtdraw.util.basic_object import (
     create_spline,
     create_spline_t,
     create_isosurface,
+    create_orbital_data,
+    create_stream_data,
 )
-from qtdraw.util.util import convert_to_str, read_dict, convert_str_vector, split_filename, cat_filename
+from qtdraw.util.util import convert_to_str, read_dict, convert_str_vector, split_filename, cat_filename, get_data_range
 from qtdraw.parser.read_material import read_draw
 from qtdraw.parser.xsf import extract_data_xsf
 from qtdraw.parser.converter import convert_version2
@@ -2985,10 +2987,12 @@ class PyVistaWidget(QtInteractor):
         if check_color(color):
             option_add = {"color": all_colors[color][0], "opacity": opacity}
         else:
+            scalars = "surface"
+            clim = get_data_range(obj[scalars])
             option_add = {
                 "cmap": color.strip("*"),
-                "scalars": "surface",
-                "clim": [-1, 1],
+                "scalars": scalars,
+                "clim": clim,
                 "opacity": opacity,
                 "show_scalar_bar": False,
             }
@@ -3045,14 +3049,15 @@ class PyVistaWidget(QtInteractor):
 
         if check_color(color):
             option_add = {
-                "clim": [-1, 1],
                 "color": all_colors[color][0],
                 "opacity": opacity,
             }
         else:
+            scalars = "GlyphVector"
+            clim = get_data_range(obj[scalars])
             option_add = {
-                "clim": [-1, 1],
-                "scalars": "GlyphVector",
+                "clim": clim,
+                "scalars": scalars,
                 "cmap": color.strip("*"),
                 "show_scalar_bar": False,
                 "component": component,
@@ -3675,3 +3680,149 @@ class PyVistaWidget(QtInteractor):
             fname = ""
 
         return fname
+
+    # ==================================================
+    def plot_orbital_from_data(
+        self,
+        name,
+        shape,
+        surface=None,
+        size=1.0,
+        point_size=0.03,
+        spherical_plot=False,
+        color="coolwarm",
+        opacity=1.0,
+        position=None,
+    ):
+        """
+        Plot orbital from data.
+
+        Args:
+            name (str): plot name.
+            shape (ndarray): (x,y,z) orbital shape.
+            surface (ndarray, optional): (x,y,z) orbital colormap.
+            size (float, optional): orbital size.
+            point_size(float, optional): point size.
+            spherical_plot (bool, optional): spherical-like plot ?
+            color (str, optional): orbital color or colormap.
+            opacity (float, optional): opacity, [0,1].
+            position (ndarray): position (transformed).
+
+        Note:
+            - if surface is None, the same one of shape is used.
+            - if size is positive, max. value is equivalent to size.
+            - if size is negative, abs. value is scaled by size.
+            - if point_size is None, no point is shown.
+            - to remove object, use remove_actor(name).
+        """
+        if position is None:
+            position = np.zeros(3, dtype=float)
+
+        obj = create_orbital_data(shape=shape, surface=surface, size=size, spherical_plot=spherical_plot, point_size=point_size)
+        if check_color(color):
+            option_add = {"color": all_colors[color][0], "opacity": opacity}
+        else:
+            scalars = "surface"
+            clim = get_data_range(obj[scalars])
+            option_add = {
+                "cmap": color.strip("*"),
+                "scalars": scalars,
+                "clim": clim,
+                "opacity": opacity,
+                "show_scalar_bar": False,
+            }
+
+        option = self.common_option(actor=name, positionT=position, obj=obj)
+        option = option | option_add
+
+        self.add_mesh(**option)
+
+    # ==================================================
+    def plot_stream_from_data(
+        self,
+        name,
+        vector,
+        shape,
+        surface=None,
+        size=1.0,
+        length=0.2,
+        width=0.01,
+        offset=-0.43,
+        abs_scale=False,
+        color="coolwarm",
+        component="abs",
+        spherical_plot=False,
+        shaft_R=1.0,
+        tip_R=2.0,
+        tip_length=0.25,
+        opacity=1.0,
+        position=None,
+    ):
+        """
+        Plot stream from data (vectors in cartesian coordinate).
+
+        Args:
+            name (str): object name.
+            vector (ndarray): stream vector [vx(x,y,z),vy(x,y,z),vz(x,y,z)] (cartesina).
+            shape (ndarray): f(x,y,z) shape on which stream put (cartesian).
+            surface (ndarray, optional): (x,y,z) orbital colormap.
+            size (float, optional): shape size.
+            length (float, optional): stream arrow size.
+            width (float, optional): stream arrow width.
+            offset (float, optional): stream arrow offest.
+            abs_scale (bool, optional): stream arrow scaled ?
+            color (str, optional): stream arrow color or colormap.
+            component (str, optional): use component or abs, "x/y/z/abs".
+            spherical_plot (bool, optional): spherical-like plot ?
+            shaft_R (float, optional) :shaft radius.
+            tip_R (float, optional): tip radius.
+            tip_length (float, optional): tip length.
+            opacity (float, optional): opacity, [0,1].
+            position (ndarray): position (transformed).
+
+        Note:
+            - if size is negative, shape is normalized.
+            - to remove object, use remove_actor(name).
+        """
+        component_str = {"abs": None, "x": 0, "y": 1, "z": 2}
+
+        if position is None:
+            position = np.zeros(3, dtype=float)
+        component = component_str[component]
+
+        obj = create_stream_data(
+            shape=shape,
+            surface=surface,
+            vector=vector,
+            size=size,
+            length=length,
+            width=width,
+            offset=offset,
+            abs_scale=abs_scale,
+            shaft_radius=shaft_R,
+            tip_radius=tip_R,
+            tip_length=tip_length,
+            spherical_plot=spherical_plot,
+        )
+
+        if check_color(color):
+            option_add = {
+                "color": all_colors[color][0],
+                "opacity": opacity,
+            }
+        else:
+            scalars = "GlyphVector"
+            clim = get_data_range(obj[scalars])
+            option_add = {
+                "clim": clim,
+                "scalars": scalars,
+                "cmap": color.strip("*"),
+                "show_scalar_bar": False,
+                "component": component,
+                "opacity": opacity,
+            }
+
+        option = self.common_option(actor=name, positionT=position, obj=obj)
+        option = option | option_add
+
+        self.add_mesh(**option)
