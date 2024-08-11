@@ -347,8 +347,12 @@ def create_stream(
         theta_phi_resolution=division,
     )
     fv, fva = _str_vec_array(vector, stream_vec.points)
-    stream_vec["vector"] = fv
-    stream_vec["vector_abs"] = fva
+
+    # eliminate zero length points.
+    idx = fva > CHOP
+    stream_vec = stream_vec.extract_points(idx)
+    stream_vec["vector"] = fv[idx]
+    stream_vec["vector_abs"] = fva[idx]
 
     g = create_vector(
         np.array([1.0, 0.0, 0.0]),
@@ -902,9 +906,13 @@ def create_stream_data(
         - if size is negative, shape is normalized.
     """
     stream_vec = create_orbital_data(shape, surface=surface, size=size, spherical_plot=spherical_plot, point_size=None)
+    vec_norm = np.linalg.norm(vector, axis=1)
 
-    stream_vec["vector"] = vector
-    stream_vec["vector_abs"] = np.linalg.norm(vector, axis=1)
+    # eliminate zero length points.
+    idx = vec_norm > CHOP
+    stream_vec = stream_vec.extract_points(idx)
+    stream_vec["vector"] = vector[idx]
+    stream_vec["vector_abs"] = vec_norm[idx]
 
     g = create_vector(
         np.array([1.0, 0.0, 0.0]),
