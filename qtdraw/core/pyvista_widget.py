@@ -2988,14 +2988,21 @@ class PyVistaWidget(QtInteractor):
             option_add = {"color": all_colors[color][0], "opacity": opacity}
         else:
             scalars = "surface"
-            clim = get_data_range(obj[scalars])
-            option_add = {
-                "cmap": color.strip("*"),
-                "scalars": scalars,
-                "clim": clim,
-                "opacity": opacity,
-                "show_scalar_bar": False,
-            }
+            if scalars in obj.array_names:
+                clim = get_data_range(obj[scalars])
+                option_add = {
+                    "cmap": color.strip("*"),
+                    "scalars": scalars,
+                    "clim": clim,
+                    "opacity": opacity,
+                    "show_scalar_bar": False,
+                }
+            else:
+                option_add = {
+                    "cmap": color.strip("*"),
+                    "opacity": opacity,
+                    "show_scalar_bar": False,
+                }
 
         option = self.common_option(actor=actor, positionT=positionT, obj=obj)
         option = option | option_add
@@ -3054,15 +3061,22 @@ class PyVistaWidget(QtInteractor):
             }
         else:
             scalars = "GlyphVector"
-            clim = get_data_range(obj[scalars])
-            option_add = {
-                "clim": clim,
-                "scalars": scalars,
-                "cmap": color.strip("*"),
-                "show_scalar_bar": False,
-                "component": component,
-                "opacity": opacity,
-            }
+            if scalars in obj.array_names:
+                clim = get_data_range(obj[scalars])
+                option_add = {
+                    "clim": clim,
+                    "scalars": scalars,
+                    "cmap": color.strip("*"),
+                    "show_scalar_bar": False,
+                    "component": component,
+                    "opacity": opacity,
+                }
+            else:
+                option_add = {
+                    "cmap": color.strip("*"),
+                    "show_scalar_bar": False,
+                    "opacity": opacity,
+                }
 
         option = self.common_option(actor=actor, positionT=positionT, obj=obj)
         option = option | option_add
@@ -3723,14 +3737,21 @@ class PyVistaWidget(QtInteractor):
             option_add = {"color": all_colors[color][0], "opacity": opacity}
         else:
             scalars = "surface"
-            clim = get_data_range(obj[scalars])
-            option_add = {
-                "cmap": color.strip("*"),
-                "scalars": scalars,
-                "clim": clim,
-                "opacity": opacity,
-                "show_scalar_bar": False,
-            }
+            if scalars in obj.array_names:
+                clim = get_data_range(obj[scalars])
+                option_add = {
+                    "cmap": color.strip("*"),
+                    "scalars": scalars,
+                    "clim": clim,
+                    "opacity": opacity,
+                    "show_scalar_bar": False,
+                }
+            else:
+                option_add = {
+                    "cmap": color.strip("*"),
+                    "opacity": opacity,
+                    "show_scalar_bar": False,
+                }
 
         option = self.common_option(actor=name, positionT=position, obj=obj)
         option = option | option_add
@@ -3812,15 +3833,22 @@ class PyVistaWidget(QtInteractor):
             }
         else:
             scalars = "GlyphVector"
-            clim = get_data_range(obj[scalars])
-            option_add = {
-                "clim": clim,
-                "scalars": scalars,
-                "cmap": color.strip("*"),
-                "show_scalar_bar": False,
-                "component": component,
-                "opacity": opacity,
-            }
+            if scalars in obj.array_names:
+                clim = get_data_range(obj[scalars])
+                option_add = {
+                    "clim": clim,
+                    "scalars": scalars,
+                    "cmap": color.strip("*"),
+                    "show_scalar_bar": False,
+                    "component": component,
+                    "opacity": opacity,
+                }
+            else:
+                option_add = {
+                    "cmap": color.strip("*"),
+                    "show_scalar_bar": False,
+                    "opacity": opacity,
+                }
 
         option = self.common_option(actor=name, positionT=position, obj=obj)
         option = option | option_add

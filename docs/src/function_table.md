@@ -94,6 +94,7 @@
 | set_axis | Set axis widget. |
 | set_cell | Set unit cell. |
 | add_mesh | Add any PyVista/VTK mesh or dataset that PyVista can wrap to the scene. |
+| remove_actor | Remove actor. |
 
 
 ## <div class='my-heading' style='color: darkgreen;'>dialog_about.py

@@ -2510,3 +2510,18 @@ class QtDraw(Window):
             edge_opacity,
             **kwargs,
         )
+
+    # ==================================================
+    def remove_actor(self, actor, reset_camera=False, render=True):
+        """
+        Remove actor.
+
+        Args:
+            actor (str, vtk.vtkActor, list or tuple): actor name.
+            reset_camera (bool, optional): reset camera to show all actors ?
+            render (bool, optional): render upon actor removal.
+
+        Returns:
+            - (bool) -- True if actor is removed.
+        """
+        return self.pyvista_widget.remove_actor(actor, reset_camera, render)
