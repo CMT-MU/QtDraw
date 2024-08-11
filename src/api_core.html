@@ -551,6 +551,7 @@ document.write(`
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.nonrepeat_data"><code class="docutils literal notranslate"><span class="pre">QtDraw.nonrepeat_data()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.plot_orbital_from_data"><code class="docutils literal notranslate"><span class="pre">QtDraw.plot_orbital_from_data()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.plot_stream_from_data"><code class="docutils literal notranslate"><span class="pre">QtDraw.plot_stream_from_data()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.remove_actor"><code class="docutils literal notranslate"><span class="pre">QtDraw.remove_actor()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.set_axis"><code class="docutils literal notranslate"><span class="pre">QtDraw.set_axis()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.set_bar"><code class="docutils literal notranslate"><span class="pre">QtDraw.set_bar()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.set_cell"><code class="docutils literal notranslate"><span class="pre">QtDraw.set_cell()</span></code></a></li>
@@ -3281,6 +3282,27 @@ document.write(`
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.core.qtdraw_app.QtDraw.remove_actor">
+<span class="sig-name descname"><span class="pre">remove_actor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">actor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reset_camera</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">render</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/qtdraw_app.html#QtDraw.remove_actor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.qtdraw_app.QtDraw.remove_actor" title="Link to this definition">#</a></dt>
+<dd><p>Remove actor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>actor</strong> (<em>str</em><em>, </em><em>vtk.vtkActor</em><em>, </em><em>list</em><em> or </em><em>tuple</em>) -- actor name.</p></li>
+<li><p><strong>reset_camera</strong> (<em>bool</em><em>, </em><em>optional</em>) -- reset camera to show all actors ?</p></li>
+<li><p><strong>render</strong> (<em>bool</em><em>, </em><em>optional</em>) -- render upon actor removal.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>(bool) -- True if actor is removed.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="qtdraw.core.qtdraw_app.QtDraw.set_axis">
 <span class="sig-name descname"><span class="pre">set_axis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axis_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/qtdraw_app.html#QtDraw.set_axis"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.qtdraw_app.QtDraw.set_axis" title="Link to this definition">#</a></dt>
 <dd><p>Set axis widget.</p>
@@ -3780,6 +3802,7 @@ document.write(`
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.nonrepeat_data"><code class="docutils literal notranslate"><span class="pre">QtDraw.nonrepeat_data()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.plot_orbital_from_data"><code class="docutils literal notranslate"><span class="pre">QtDraw.plot_orbital_from_data()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.plot_stream_from_data"><code class="docutils literal notranslate"><span class="pre">QtDraw.plot_stream_from_data()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.remove_actor"><code class="docutils literal notranslate"><span class="pre">QtDraw.remove_actor()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.set_axis"><code class="docutils literal notranslate"><span class="pre">QtDraw.set_axis()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.set_bar"><code class="docutils literal notranslate"><span class="pre">QtDraw.set_bar()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.set_cell"><code class="docutils literal notranslate"><span class="pre">QtDraw.set_cell()</span></code></a></li>

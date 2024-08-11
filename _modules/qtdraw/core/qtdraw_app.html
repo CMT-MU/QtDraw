@@ -2959,6 +2959,24 @@ document.write(`
             <span class="n">edge_opacity</span><span class="p">,</span>
             <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
         <span class="p">)</span></div>
+
+
+    <span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="QtDraw.remove_actor">
+<a class="viewcode-back" href="../../../src/from_python.html#qtdraw.core.qtdraw_app.QtDraw.remove_actor">[docs]</a>
+    <span class="k">def</span> <span class="nf">remove_actor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">actor</span><span class="p">,</span> <span class="n">reset_camera</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">render</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Remove actor.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            actor (str, vtk.vtkActor, list or tuple): actor name.</span>
+<span class="sd">            reset_camera (bool, optional): reset camera to show all actors ?</span>
+<span class="sd">            render (bool, optional): render upon actor removal.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            - (bool) -- True if actor is removed.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pyvista_widget</span><span class="o">.</span><span class="n">remove_actor</span><span class="p">(</span><span class="n">actor</span><span class="p">,</span> <span class="n">reset_camera</span><span class="p">,</span> <span class="n">render</span><span class="p">)</span></div>
 </div>
 
 </pre></div>

@@ -704,8 +704,12 @@ document.write(`
         <span class="n">theta_phi_resolution</span><span class="o">=</span><span class="n">division</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">fv</span><span class="p">,</span> <span class="n">fva</span> <span class="o">=</span> <span class="n">_str_vec_array</span><span class="p">(</span><span class="n">vector</span><span class="p">,</span> <span class="n">stream_vec</span><span class="o">.</span><span class="n">points</span><span class="p">)</span>
-    <span class="n">stream_vec</span><span class="p">[</span><span class="s2">&quot;vector&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">fv</span>
-    <span class="n">stream_vec</span><span class="p">[</span><span class="s2">&quot;vector_abs&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">fva</span>
+
+    <span class="c1"># eliminate zero length points.</span>
+    <span class="n">idx</span> <span class="o">=</span> <span class="n">fva</span> <span class="o">&gt;</span> <span class="n">CHOP</span>
+    <span class="n">stream_vec</span> <span class="o">=</span> <span class="n">stream_vec</span><span class="o">.</span><span class="n">extract_points</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
+    <span class="n">stream_vec</span><span class="p">[</span><span class="s2">&quot;vector&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">fv</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+    <span class="n">stream_vec</span><span class="p">[</span><span class="s2">&quot;vector_abs&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">fva</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
 
     <span class="n">g</span> <span class="o">=</span> <span class="n">create_vector</span><span class="p">(</span>
         <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]),</span>
@@ -1301,9 +1305,13 @@ document.write(`
 <span class="sd">        - if size is negative, shape is normalized.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">stream_vec</span> <span class="o">=</span> <span class="n">create_orbital_data</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">surface</span><span class="o">=</span><span class="n">surface</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">size</span><span class="p">,</span> <span class="n">spherical_plot</span><span class="o">=</span><span class="n">spherical_plot</span><span class="p">,</span> <span class="n">point_size</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+    <span class="n">vec_norm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">vector</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
-    <span class="n">stream_vec</span><span class="p">[</span><span class="s2">&quot;vector&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">vector</span>
-    <span class="n">stream_vec</span><span class="p">[</span><span class="s2">&quot;vector_abs&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">vector</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="c1"># eliminate zero length points.</span>
+    <span class="n">idx</span> <span class="o">=</span> <span class="n">vec_norm</span> <span class="o">&gt;</span> <span class="n">CHOP</span>
+    <span class="n">stream_vec</span> <span class="o">=</span> <span class="n">stream_vec</span><span class="o">.</span><span class="n">extract_points</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
+    <span class="n">stream_vec</span><span class="p">[</span><span class="s2">&quot;vector&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">vector</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+    <span class="n">stream_vec</span><span class="p">[</span><span class="s2">&quot;vector_abs&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">vec_norm</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
 
     <span class="n">g</span> <span class="o">=</span> <span class="n">create_vector</span><span class="p">(</span>
         <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]),</span>
