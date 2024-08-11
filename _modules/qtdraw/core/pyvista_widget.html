@@ -33,7 +33,7 @@
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=87e54e7c" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
@@ -405,8 +405,10 @@ document.write(`
     <span class="n">create_spline</span><span class="p">,</span>
     <span class="n">create_spline_t</span><span class="p">,</span>
     <span class="n">create_isosurface</span><span class="p">,</span>
+    <span class="n">create_orbital_data</span><span class="p">,</span>
+    <span class="n">create_stream_data</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span> <span class="nn">qtdraw.util.util</span> <span class="kn">import</span> <span class="n">convert_to_str</span><span class="p">,</span> <span class="n">read_dict</span><span class="p">,</span> <span class="n">convert_str_vector</span><span class="p">,</span> <span class="n">split_filename</span><span class="p">,</span> <span class="n">cat_filename</span>
+<span class="kn">from</span> <span class="nn">qtdraw.util.util</span> <span class="kn">import</span> <span class="n">convert_to_str</span><span class="p">,</span> <span class="n">read_dict</span><span class="p">,</span> <span class="n">convert_str_vector</span><span class="p">,</span> <span class="n">split_filename</span><span class="p">,</span> <span class="n">cat_filename</span><span class="p">,</span> <span class="n">get_data_range</span>
 <span class="kn">from</span> <span class="nn">qtdraw.parser.read_material</span> <span class="kn">import</span> <span class="n">read_draw</span>
 <span class="kn">from</span> <span class="nn">qtdraw.parser.xsf</span> <span class="kn">import</span> <span class="n">extract_data_xsf</span>
 <span class="kn">from</span> <span class="nn">qtdraw.parser.converter</span> <span class="kn">import</span> <span class="n">convert_version2</span>
@@ -3587,10 +3589,12 @@ document.write(`
         <span class="k">if</span> <span class="n">check_color</span><span class="p">(</span><span class="n">color</span><span class="p">):</span>
             <span class="n">option_add</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;color&quot;</span><span class="p">:</span> <span class="n">all_colors</span><span class="p">[</span><span class="n">color</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;opacity&quot;</span><span class="p">:</span> <span class="n">opacity</span><span class="p">}</span>
         <span class="k">else</span><span class="p">:</span>
+            <span class="n">scalars</span> <span class="o">=</span> <span class="s2">&quot;surface&quot;</span>
+            <span class="n">clim</span> <span class="o">=</span> <span class="n">get_data_range</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="n">scalars</span><span class="p">])</span>
             <span class="n">option_add</span> <span class="o">=</span> <span class="p">{</span>
                 <span class="s2">&quot;cmap&quot;</span><span class="p">:</span> <span class="n">color</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s2">&quot;*&quot;</span><span class="p">),</span>
-                <span class="s2">&quot;scalars&quot;</span><span class="p">:</span> <span class="s2">&quot;surface&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;clim&quot;</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+                <span class="s2">&quot;scalars&quot;</span><span class="p">:</span> <span class="n">scalars</span><span class="p">,</span>
+                <span class="s2">&quot;clim&quot;</span><span class="p">:</span> <span class="n">clim</span><span class="p">,</span>
                 <span class="s2">&quot;opacity&quot;</span><span class="p">:</span> <span class="n">opacity</span><span class="p">,</span>
                 <span class="s2">&quot;show_scalar_bar&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
             <span class="p">}</span>
@@ -3650,14 +3654,15 @@ document.write(`
 
         <span class="k">if</span> <span class="n">check_color</span><span class="p">(</span><span class="n">color</span><span class="p">):</span>
             <span class="n">option_add</span> <span class="o">=</span> <span class="p">{</span>
-                <span class="s2">&quot;clim&quot;</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
                 <span class="s2">&quot;color&quot;</span><span class="p">:</span> <span class="n">all_colors</span><span class="p">[</span><span class="n">color</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span>
                 <span class="s2">&quot;opacity&quot;</span><span class="p">:</span> <span class="n">opacity</span><span class="p">,</span>
             <span class="p">}</span>
         <span class="k">else</span><span class="p">:</span>
+            <span class="n">scalars</span> <span class="o">=</span> <span class="s2">&quot;GlyphVector&quot;</span>
+            <span class="n">clim</span> <span class="o">=</span> <span class="n">get_data_range</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="n">scalars</span><span class="p">])</span>
             <span class="n">option_add</span> <span class="o">=</span> <span class="p">{</span>
-                <span class="s2">&quot;clim&quot;</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
-                <span class="s2">&quot;scalars&quot;</span><span class="p">:</span> <span class="s2">&quot;GlyphVector&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;clim&quot;</span><span class="p">:</span> <span class="n">clim</span><span class="p">,</span>
+                <span class="s2">&quot;scalars&quot;</span><span class="p">:</span> <span class="n">scalars</span><span class="p">,</span>
                 <span class="s2">&quot;cmap&quot;</span><span class="p">:</span> <span class="n">color</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s2">&quot;*&quot;</span><span class="p">),</span>
                 <span class="s2">&quot;show_scalar_bar&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
                 <span class="s2">&quot;component&quot;</span><span class="p">:</span> <span class="n">component</span><span class="p">,</span>
@@ -4328,6 +4333,158 @@ document.write(`
             <span class="n">fname</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
 
         <span class="k">return</span> <span class="n">fname</span></div>
+
+
+    <span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="PyVistaWidget.plot_orbital_from_data">
+<a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.plot_orbital_from_data">[docs]</a>
+    <span class="k">def</span> <span class="nf">plot_orbital_from_data</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">name</span><span class="p">,</span>
+        <span class="n">shape</span><span class="p">,</span>
+        <span class="n">surface</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">size</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+        <span class="n">point_size</span><span class="o">=</span><span class="mf">0.03</span><span class="p">,</span>
+        <span class="n">spherical_plot</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">color</span><span class="o">=</span><span class="s2">&quot;coolwarm&quot;</span><span class="p">,</span>
+        <span class="n">opacity</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+        <span class="n">position</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Plot orbital from data.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            name (str): plot name.</span>
+<span class="sd">            shape (ndarray): (x,y,z) orbital shape.</span>
+<span class="sd">            surface (ndarray, optional): (x,y,z) orbital colormap.</span>
+<span class="sd">            size (float, optional): orbital size.</span>
+<span class="sd">            point_size(float, optional): point size.</span>
+<span class="sd">            spherical_plot (bool, optional): spherical-like plot ?</span>
+<span class="sd">            color (str, optional): orbital color or colormap.</span>
+<span class="sd">            opacity (float, optional): opacity, [0,1].</span>
+<span class="sd">            position (ndarray): position (transformed).</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            - if surface is None, the same one of shape is used.</span>
+<span class="sd">            - if size is positive, max. value is equivalent to size.</span>
+<span class="sd">            - if size is negative, abs. value is scaled by size.</span>
+<span class="sd">            - if point_size is None, no point is shown.</span>
+<span class="sd">            - to remove object, use remove_actor(name).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">position</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">position</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+
+        <span class="n">obj</span> <span class="o">=</span> <span class="n">create_orbital_data</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="n">shape</span><span class="p">,</span> <span class="n">surface</span><span class="o">=</span><span class="n">surface</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">size</span><span class="p">,</span> <span class="n">spherical_plot</span><span class="o">=</span><span class="n">spherical_plot</span><span class="p">,</span> <span class="n">point_size</span><span class="o">=</span><span class="n">point_size</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">check_color</span><span class="p">(</span><span class="n">color</span><span class="p">):</span>
+            <span class="n">option_add</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;color&quot;</span><span class="p">:</span> <span class="n">all_colors</span><span class="p">[</span><span class="n">color</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;opacity&quot;</span><span class="p">:</span> <span class="n">opacity</span><span class="p">}</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">scalars</span> <span class="o">=</span> <span class="s2">&quot;surface&quot;</span>
+            <span class="n">clim</span> <span class="o">=</span> <span class="n">get_data_range</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="n">scalars</span><span class="p">])</span>
+            <span class="n">option_add</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;cmap&quot;</span><span class="p">:</span> <span class="n">color</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s2">&quot;*&quot;</span><span class="p">),</span>
+                <span class="s2">&quot;scalars&quot;</span><span class="p">:</span> <span class="n">scalars</span><span class="p">,</span>
+                <span class="s2">&quot;clim&quot;</span><span class="p">:</span> <span class="n">clim</span><span class="p">,</span>
+                <span class="s2">&quot;opacity&quot;</span><span class="p">:</span> <span class="n">opacity</span><span class="p">,</span>
+                <span class="s2">&quot;show_scalar_bar&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="p">}</span>
+
+        <span class="n">option</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">common_option</span><span class="p">(</span><span class="n">actor</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">positionT</span><span class="o">=</span><span class="n">position</span><span class="p">,</span> <span class="n">obj</span><span class="o">=</span><span class="n">obj</span><span class="p">)</span>
+        <span class="n">option</span> <span class="o">=</span> <span class="n">option</span> <span class="o">|</span> <span class="n">option_add</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="o">**</span><span class="n">option</span><span class="p">)</span></div>
+
+
+    <span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="PyVistaWidget.plot_stream_from_data">
+<a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.plot_stream_from_data">[docs]</a>
+    <span class="k">def</span> <span class="nf">plot_stream_from_data</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">name</span><span class="p">,</span>
+        <span class="n">vector</span><span class="p">,</span>
+        <span class="n">shape</span><span class="p">,</span>
+        <span class="n">surface</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">size</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+        <span class="n">length</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>
+        <span class="n">width</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span>
+        <span class="n">offset</span><span class="o">=-</span><span class="mf">0.43</span><span class="p">,</span>
+        <span class="n">abs_scale</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">color</span><span class="o">=</span><span class="s2">&quot;coolwarm&quot;</span><span class="p">,</span>
+        <span class="n">component</span><span class="o">=</span><span class="s2">&quot;abs&quot;</span><span class="p">,</span>
+        <span class="n">spherical_plot</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">shaft_R</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+        <span class="n">tip_R</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span>
+        <span class="n">tip_length</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span>
+        <span class="n">opacity</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+        <span class="n">position</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Plot stream from data (vectors in cartesian coordinate).</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            name (str): object name.</span>
+<span class="sd">            vector (ndarray): stream vector [vx(x,y,z),vy(x,y,z),vz(x,y,z)] (cartesina).</span>
+<span class="sd">            shape (ndarray): f(x,y,z) shape on which stream put (cartesian).</span>
+<span class="sd">            surface (ndarray, optional): (x,y,z) orbital colormap.</span>
+<span class="sd">            size (float, optional): shape size.</span>
+<span class="sd">            length (float, optional): stream arrow size.</span>
+<span class="sd">            width (float, optional): stream arrow width.</span>
+<span class="sd">            offset (float, optional): stream arrow offest.</span>
+<span class="sd">            abs_scale (bool, optional): stream arrow scaled ?</span>
+<span class="sd">            color (str, optional): stream arrow color or colormap.</span>
+<span class="sd">            component (str, optional): use component or abs, &quot;x/y/z/abs&quot;.</span>
+<span class="sd">            spherical_plot (bool, optional): spherical-like plot ?</span>
+<span class="sd">            shaft_R (float, optional) :shaft radius.</span>
+<span class="sd">            tip_R (float, optional): tip radius.</span>
+<span class="sd">            tip_length (float, optional): tip length.</span>
+<span class="sd">            opacity (float, optional): opacity, [0,1].</span>
+<span class="sd">            position (ndarray): position (transformed).</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            - if size is negative, shape is normalized.</span>
+<span class="sd">            - to remove object, use remove_actor(name).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">component_str</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;abs&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;z&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
+
+        <span class="k">if</span> <span class="n">position</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">position</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+        <span class="n">component</span> <span class="o">=</span> <span class="n">component_str</span><span class="p">[</span><span class="n">component</span><span class="p">]</span>
+
+        <span class="n">obj</span> <span class="o">=</span> <span class="n">create_stream_data</span><span class="p">(</span>
+            <span class="n">shape</span><span class="o">=</span><span class="n">shape</span><span class="p">,</span>
+            <span class="n">surface</span><span class="o">=</span><span class="n">surface</span><span class="p">,</span>
+            <span class="n">vector</span><span class="o">=</span><span class="n">vector</span><span class="p">,</span>
+            <span class="n">size</span><span class="o">=</span><span class="n">size</span><span class="p">,</span>
+            <span class="n">length</span><span class="o">=</span><span class="n">length</span><span class="p">,</span>
+            <span class="n">width</span><span class="o">=</span><span class="n">width</span><span class="p">,</span>
+            <span class="n">offset</span><span class="o">=</span><span class="n">offset</span><span class="p">,</span>
+            <span class="n">abs_scale</span><span class="o">=</span><span class="n">abs_scale</span><span class="p">,</span>
+            <span class="n">shaft_radius</span><span class="o">=</span><span class="n">shaft_R</span><span class="p">,</span>
+            <span class="n">tip_radius</span><span class="o">=</span><span class="n">tip_R</span><span class="p">,</span>
+            <span class="n">tip_length</span><span class="o">=</span><span class="n">tip_length</span><span class="p">,</span>
+            <span class="n">spherical_plot</span><span class="o">=</span><span class="n">spherical_plot</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">check_color</span><span class="p">(</span><span class="n">color</span><span class="p">):</span>
+            <span class="n">option_add</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;color&quot;</span><span class="p">:</span> <span class="n">all_colors</span><span class="p">[</span><span class="n">color</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span>
+                <span class="s2">&quot;opacity&quot;</span><span class="p">:</span> <span class="n">opacity</span><span class="p">,</span>
+            <span class="p">}</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">scalars</span> <span class="o">=</span> <span class="s2">&quot;GlyphVector&quot;</span>
+            <span class="n">clim</span> <span class="o">=</span> <span class="n">get_data_range</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="n">scalars</span><span class="p">])</span>
+            <span class="n">option_add</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;clim&quot;</span><span class="p">:</span> <span class="n">clim</span><span class="p">,</span>
+                <span class="s2">&quot;scalars&quot;</span><span class="p">:</span> <span class="n">scalars</span><span class="p">,</span>
+                <span class="s2">&quot;cmap&quot;</span><span class="p">:</span> <span class="n">color</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s2">&quot;*&quot;</span><span class="p">),</span>
+                <span class="s2">&quot;show_scalar_bar&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="s2">&quot;component&quot;</span><span class="p">:</span> <span class="n">component</span><span class="p">,</span>
+                <span class="s2">&quot;opacity&quot;</span><span class="p">:</span> <span class="n">opacity</span><span class="p">,</span>
+            <span class="p">}</span>
+
+        <span class="n">option</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">common_option</span><span class="p">(</span><span class="n">actor</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">positionT</span><span class="o">=</span><span class="n">position</span><span class="p">,</span> <span class="n">obj</span><span class="o">=</span><span class="n">obj</span><span class="p">)</span>
+        <span class="n">option</span> <span class="o">=</span> <span class="n">option</span> <span class="o">|</span> <span class="n">option_add</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="o">**</span><span class="n">option</span><span class="p">)</span></div>
 </div>
 
 </pre></div>

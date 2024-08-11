@@ -33,7 +33,7 @@
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=87e54e7c" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
@@ -413,7 +413,7 @@ document.write(`
     <span class="n">max_f</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">fv</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
     <span class="k">if</span> <span class="n">size</span> <span class="o">&gt;</span> <span class="n">CHOP</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">max_f</span> <span class="o">&gt;</span> <span class="n">CHOP</span><span class="p">:</span>
-            <span class="n">scale</span> <span class="o">=</span> <span class="n">size</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">fv</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+            <span class="n">scale</span> <span class="o">=</span> <span class="n">size</span> <span class="o">/</span> <span class="n">max_f</span>
             <span class="n">fv</span> <span class="o">*=</span> <span class="n">scale</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">fv</span> <span class="o">*=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>
@@ -436,7 +436,7 @@ document.write(`
 <span class="sd">        - (numpy.ndarray) -- vector array.</span>
 <span class="sd">        - (numpy.ndarray) -- abs. value array.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">vec</span> <span class="o">=</span> <span class="n">text_to_list</span><span class="p">(</span><span class="n">vec</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">))</span>
+    <span class="n">vec</span> <span class="o">=</span> <span class="n">text_to_list</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span>
     <span class="n">xyz</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">xyz</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
 
     <span class="n">f1</span> <span class="o">=</span> <span class="n">_str_poly_array</span><span class="p">(</span><span class="n">vec</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">xyz</span><span class="p">,</span> <span class="n">var</span><span class="p">)</span>
@@ -445,7 +445,8 @@ document.write(`
     <span class="n">f</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">f1</span><span class="p">,</span> <span class="n">f2</span><span class="p">,</span> <span class="n">f3</span><span class="p">])</span><span class="o">.</span><span class="n">T</span>
     <span class="k">if</span> <span class="n">normalize</span><span class="p">:</span>
         <span class="n">fa</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
-        <span class="n">f</span> <span class="o">=</span> <span class="n">f</span> <span class="o">/</span> <span class="n">fa</span>
+        <span class="k">if</span> <span class="n">fa</span> <span class="o">&gt;</span> <span class="n">CHOP</span><span class="p">:</span>
+            <span class="n">f</span> <span class="o">=</span> <span class="n">f</span> <span class="o">/</span> <span class="n">fa</span>
 
     <span class="n">fs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
@@ -665,7 +666,7 @@ document.write(`
     <span class="n">tip_radius</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span>
     <span class="n">tip_length</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span>
 <span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Create steam vector object.</span>
 
 <span class="sd">    Args:</span>
@@ -1203,6 +1204,119 @@ document.write(`
         <span class="n">grid</span><span class="p">[</span><span class="n">surface_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">surface</span>
 
     <span class="n">obj</span> <span class="o">=</span> <span class="n">grid</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">scalars</span><span class="o">=</span><span class="s2">&quot;data&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">obj</span></div>
+
+
+
+<span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="create_orbital_data">
+<a class="viewcode-back" href="../../../src/api_util.html#qtdraw.util.basic_object.create_orbital_data">[docs]</a>
+<span class="k">def</span> <span class="nf">create_orbital_data</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">surface</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">spherical_plot</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">point_size</span><span class="o">=</span><span class="mf">0.03</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Create orbital object from data.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        shape (ndarray): (x,y,z) shape (cartesian).</span>
+<span class="sd">        surface (ndarray, optional): (x,y,z) surface color (cartesian).</span>
+<span class="sd">        size (float, optional): size.</span>
+<span class="sd">        spherical_plot (bool, optional): spherical-like plot ?</span>
+<span class="sd">        point_size (float, optional): point size.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        - (vtk.PolyData) -- orbital object with &quot;surface&quot;.</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        - if surface is None, the same one of shape is used.</span>
+<span class="sd">        - if size is positive, max. value is equivalent to size.</span>
+<span class="sd">        - if size is negative, abs. value is scaled by size.</span>
+<span class="sd">        - if point_size is None, no point is shown.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># shape data.</span>
+    <span class="k">if</span> <span class="n">surface</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">surface</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="n">shape</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mf">1.0</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">spherical_plot</span><span class="p">:</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">surface</span><span class="p">)</span>
+        <span class="n">shape</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">T</span> <span class="o">*</span> <span class="n">shape</span>
+
+    <span class="n">max_f</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">size</span> <span class="o">&gt;</span> <span class="n">CHOP</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">max_f</span> <span class="o">&gt;</span> <span class="n">CHOP</span><span class="p">:</span>
+            <span class="n">scale</span> <span class="o">=</span> <span class="n">size</span> <span class="o">/</span> <span class="n">max_f</span>
+            <span class="n">shape</span> <span class="o">*=</span> <span class="n">scale</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">shape</span> <span class="o">*=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>
+
+    <span class="n">orbital</span> <span class="o">=</span> <span class="n">pv</span><span class="o">.</span><span class="n">PolyData</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span>
+    <span class="n">orbital</span><span class="p">[</span><span class="s2">&quot;surface&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">surface</span>
+
+    <span class="k">if</span> <span class="n">point_size</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">orbital</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">g</span> <span class="o">=</span> <span class="n">create_sphere</span><span class="p">(</span><span class="n">point_size</span><span class="p">)</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="n">orbital</span><span class="o">.</span><span class="n">glyph</span><span class="p">(</span><span class="n">orient</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">factor</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">geom</span><span class="o">=</span><span class="n">g</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">obj</span></div>
+
+
+
+<span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="create_stream_data">
+<a class="viewcode-back" href="../../../src/api_util.html#qtdraw.util.basic_object.create_stream_data">[docs]</a>
+<span class="k">def</span> <span class="nf">create_stream_data</span><span class="p">(</span>
+    <span class="n">shape</span><span class="p">,</span>
+    <span class="n">surface</span><span class="p">,</span>
+    <span class="n">vector</span><span class="p">,</span>
+    <span class="n">size</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+    <span class="n">length</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+    <span class="n">width</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+    <span class="n">offset</span><span class="o">=-</span><span class="mf">0.43</span><span class="p">,</span>
+    <span class="n">abs_scale</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">shaft_radius</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+    <span class="n">tip_radius</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span>
+    <span class="n">tip_length</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span>
+    <span class="n">spherical_plot</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Create steam vector object.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        shape (ndarray): f(x,y,z) shape (cartesian).</span>
+<span class="sd">        surface (ndarray, optional): (x,y,z) surface color (cartesian).</span>
+<span class="sd">        vector (ndarray): stream vector [vx(x,y,z),vy(x,y,z),vz(x,y,z)] (cartesina).</span>
+<span class="sd">        size (float, optional): shape size.</span>
+<span class="sd">        length (float, optional): length.</span>
+<span class="sd">        width (float, optional): width.</span>
+<span class="sd">        offset (float, optional): offest ratio.</span>
+<span class="sd">        abs_scale (bool, optional): use \|v(x,y,z)\| * length ?</span>
+<span class="sd">        shaft_radius (float, optional) :shaft radius.</span>
+<span class="sd">        tip_radius (float, optional): tip radius.</span>
+<span class="sd">        tip_length (float, optional): tip length.</span>
+<span class="sd">        spherical_plot (bool, optional): spherical-like plot ?</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        - (vtk.PolyData) -- orbital object with &quot;vector&quot; and &quot;vector_abs&quot;.</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        - if size is negative, shape is normalized.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">stream_vec</span> <span class="o">=</span> <span class="n">create_orbital_data</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">surface</span><span class="o">=</span><span class="n">surface</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">size</span><span class="p">,</span> <span class="n">spherical_plot</span><span class="o">=</span><span class="n">spherical_plot</span><span class="p">,</span> <span class="n">point_size</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+
+    <span class="n">stream_vec</span><span class="p">[</span><span class="s2">&quot;vector&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">vector</span>
+    <span class="n">stream_vec</span><span class="p">[</span><span class="s2">&quot;vector_abs&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">vector</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">g</span> <span class="o">=</span> <span class="n">create_vector</span><span class="p">(</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]),</span>
+        <span class="n">length</span><span class="o">=</span><span class="n">length</span><span class="p">,</span>
+        <span class="n">width</span><span class="o">=</span><span class="n">width</span><span class="p">,</span>
+        <span class="n">offset</span><span class="o">=</span><span class="n">offset</span><span class="p">,</span>
+        <span class="n">shaft_radius</span><span class="o">=</span><span class="n">shaft_radius</span><span class="p">,</span>
+        <span class="n">tip_radius</span><span class="o">=</span><span class="n">tip_radius</span><span class="p">,</span>
+        <span class="n">tip_length</span><span class="o">=</span><span class="n">tip_length</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">scale</span> <span class="o">=</span> <span class="s2">&quot;vector_abs&quot;</span> <span class="k">if</span> <span class="n">abs_scale</span> <span class="k">else</span> <span class="kc">None</span>
+    <span class="n">obj</span> <span class="o">=</span> <span class="n">stream_vec</span><span class="o">.</span><span class="n">glyph</span><span class="p">(</span><span class="n">orient</span><span class="o">=</span><span class="s2">&quot;vector&quot;</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">scale</span><span class="p">,</span> <span class="n">factor</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">geom</span><span class="o">=</span><span class="n">g</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">obj</span></div>
 

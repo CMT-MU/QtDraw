@@ -34,7 +34,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=87e54e7c" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
@@ -412,12 +412,14 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_isosurface"><code class="docutils literal notranslate"><span class="pre">create_isosurface()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_line"><code class="docutils literal notranslate"><span class="pre">create_line()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_orbital"><code class="docutils literal notranslate"><span class="pre">create_orbital()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_orbital_data"><code class="docutils literal notranslate"><span class="pre">create_orbital_data()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_plane"><code class="docutils literal notranslate"><span class="pre">create_plane()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_polygon"><code class="docutils literal notranslate"><span class="pre">create_polygon()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_sphere"><code class="docutils literal notranslate"><span class="pre">create_sphere()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_spline"><code class="docutils literal notranslate"><span class="pre">create_spline()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_spline_t"><code class="docutils literal notranslate"><span class="pre">create_spline_t()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_stream"><code class="docutils literal notranslate"><span class="pre">create_stream()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_stream_data"><code class="docutils literal notranslate"><span class="pre">create_stream_data()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_text3d"><code class="docutils literal notranslate"><span class="pre">create_text3d()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_toroid"><code class="docutils literal notranslate"><span class="pre">create_toroid()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_torus"><code class="docutils literal notranslate"><span class="pre">create_torus()</span></code></a></li>
@@ -721,6 +723,38 @@ The following objects are available.</p>
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="qtdraw.util.basic_object.create_orbital_data">
+<span class="sig-name descname"><span class="pre">create_orbital_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shape</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">surface</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spherical_plot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">point_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.03</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/basic_object.html#create_orbital_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.basic_object.create_orbital_data" title="Link to this definition">#</a></dt>
+<dd><p>Create orbital object from data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>shape</strong> (<em>ndarray</em>) -- (x,y,z) shape (cartesian).</p></li>
+<li><p><strong>surface</strong> (<em>ndarray</em><em>, </em><em>optional</em>) -- (x,y,z) surface color (cartesian).</p></li>
+<li><p><strong>size</strong> (<em>float</em><em>, </em><em>optional</em>) -- size.</p></li>
+<li><p><strong>spherical_plot</strong> (<em>bool</em><em>, </em><em>optional</em>) -- spherical-like plot ?</p></li>
+<li><p><strong>point_size</strong> (<em>float</em><em>, </em><em>optional</em>) -- point size.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>(vtk.PolyData) -- orbital object with &quot;surface&quot;.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>if surface is None, the same one of shape is used.</p></li>
+<li><p>if size is positive, max. value is equivalent to size.</p></li>
+<li><p>if size is negative, abs. value is scaled by size.</p></li>
+<li><p>if point_size is None, no point is shown.</p></li>
+</ul>
+</div>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="qtdraw.util.basic_object.create_plane">
 <span class="sig-name descname"><span class="pre">create_plane</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">normal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/basic_object.html#create_plane"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.basic_object.create_plane" title="Link to this definition">#</a></dt>
 <dd><p>Create plane object.</p>
@@ -883,6 +917,42 @@ The following objects are available.</p>
 <p class="admonition-title">Note</p>
 <ul class="simple">
 <li><p>if theta_phi_range/division is None, default is used.</p></li>
+<li><p>if size is negative, shape is normalized.</p></li>
+</ul>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qtdraw.util.basic_object.create_stream_data">
+<span class="sig-name descname"><span class="pre">create_stream_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shape</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">surface</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vector</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-0.43</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">abs_scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shaft_radius</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tip_radius</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tip_length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.25</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spherical_plot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/basic_object.html#create_stream_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.basic_object.create_stream_data" title="Link to this definition">#</a></dt>
+<dd><p>Create steam vector object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>shape</strong> (<em>ndarray</em>) -- f(x,y,z) shape (cartesian).</p></li>
+<li><p><strong>surface</strong> (<em>ndarray</em><em>, </em><em>optional</em>) -- (x,y,z) surface color (cartesian).</p></li>
+<li><p><strong>vector</strong> (<em>ndarray</em>) -- stream vector [vx(x,y,z),vy(x,y,z),vz(x,y,z)] (cartesina).</p></li>
+<li><p><strong>size</strong> (<em>float</em><em>, </em><em>optional</em>) -- shape size.</p></li>
+<li><p><strong>length</strong> (<em>float</em><em>, </em><em>optional</em>) -- length.</p></li>
+<li><p><strong>width</strong> (<em>float</em><em>, </em><em>optional</em>) -- width.</p></li>
+<li><p><strong>offset</strong> (<em>float</em><em>, </em><em>optional</em>) -- offest ratio.</p></li>
+<li><p><strong>abs_scale</strong> (<em>bool</em><em>, </em><em>optional</em>) -- use |v(x,y,z)| * length ?</p></li>
+<li><p><strong>shaft_radius</strong> (<em>float</em><em>, </em><em>optional</em>) -- shaft radius.</p></li>
+<li><p><strong>tip_radius</strong> (<em>float</em><em>, </em><em>optional</em>) -- tip radius.</p></li>
+<li><p><strong>tip_length</strong> (<em>float</em><em>, </em><em>optional</em>) -- tip length.</p></li>
+<li><p><strong>spherical_plot</strong> (<em>bool</em><em>, </em><em>optional</em>) -- spherical-like plot ?</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>(vtk.PolyData) -- orbital object with &quot;vector&quot; and &quot;vector_abs&quot;.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
 <li><p>if size is negative, shape is normalized.</p></li>
 </ul>
 </div>
@@ -2011,12 +2081,14 @@ different directory (just by copying it).</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_isosurface"><code class="docutils literal notranslate"><span class="pre">create_isosurface()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_line"><code class="docutils literal notranslate"><span class="pre">create_line()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_orbital"><code class="docutils literal notranslate"><span class="pre">create_orbital()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_orbital_data"><code class="docutils literal notranslate"><span class="pre">create_orbital_data()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_plane"><code class="docutils literal notranslate"><span class="pre">create_plane()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_polygon"><code class="docutils literal notranslate"><span class="pre">create_polygon()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_sphere"><code class="docutils literal notranslate"><span class="pre">create_sphere()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_spline"><code class="docutils literal notranslate"><span class="pre">create_spline()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_spline_t"><code class="docutils literal notranslate"><span class="pre">create_spline_t()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_stream"><code class="docutils literal notranslate"><span class="pre">create_stream()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_stream_data"><code class="docutils literal notranslate"><span class="pre">create_stream_data()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_text3d"><code class="docutils literal notranslate"><span class="pre">create_text3d()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_toroid"><code class="docutils literal notranslate"><span class="pre">create_toroid()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_torus"><code class="docutils literal notranslate"><span class="pre">create_torus()</span></code></a></li>

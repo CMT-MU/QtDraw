@@ -34,7 +34,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=87e54e7c" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
@@ -427,6 +427,8 @@ document.write(`
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.add_torus"><code class="docutils literal notranslate"><span class="pre">QtDraw.add_torus()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.add_vector"><code class="docutils literal notranslate"><span class="pre">QtDraw.add_vector()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.nonrepeat_data"><code class="docutils literal notranslate"><span class="pre">QtDraw.nonrepeat_data()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.plot_orbital_from_data"><code class="docutils literal notranslate"><span class="pre">QtDraw.plot_orbital_from_data()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.plot_stream_from_data"><code class="docutils literal notranslate"><span class="pre">QtDraw.plot_stream_from_data()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.set_axis"><code class="docutils literal notranslate"><span class="pre">QtDraw.set_axis()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.set_bar"><code class="docutils literal notranslate"><span class="pre">QtDraw.set_bar()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.set_cell"><code class="docutils literal notranslate"><span class="pre">QtDraw.set_cell()</span></code></a></li>
@@ -1087,6 +1089,73 @@ The following API is avalilable to draw objects.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.core.qtdraw_app.QtDraw.plot_orbital_from_data">
+<span class="sig-name descname"><span class="pre">plot_orbital_from_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shape</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">surface</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">point_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.03</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spherical_plot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'coolwarm'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">opacity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">position</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/qtdraw_app.html#QtDraw.plot_orbital_from_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.qtdraw_app.QtDraw.plot_orbital_from_data" title="Link to this definition">#</a></dt>
+<dd><p>Plot orbital from data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) -- plot name.</p></li>
+<li><p><strong>shape</strong> (<em>ndarray</em>) -- (x,y,z) orbital shape.</p></li>
+<li><p><strong>surface</strong> (<em>ndarray</em><em>, </em><em>optional</em>) -- (x,y,z) orbital colormap.</p></li>
+<li><p><strong>size</strong> (<em>float</em><em>, </em><em>optional</em>) -- orbital size.</p></li>
+<li><p><strong>point_size</strong> (<em>float</em><em>, </em><em>optional</em>) -- point size.</p></li>
+<li><p><strong>spherical_plot</strong> (<em>bool</em><em>, </em><em>optional</em>) -- spherical-like plot ?</p></li>
+<li><p><strong>color</strong> (<em>str</em><em>, </em><em>optional</em>) -- orbital color or colormap.</p></li>
+<li><p><strong>opacity</strong> (<em>float</em><em>, </em><em>optional</em>) -- opacity, [0,1].</p></li>
+<li><p><strong>position</strong> (<em>ndarray</em>) -- position (transformed).</p></li>
+</ul>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>if surface is None, the same one of shape is used.</p></li>
+<li><p>if size is positive, max. value is equivalent to size.</p></li>
+<li><p>if size is negative, abs. value is scaled by size.</p></li>
+<li><p>if point_size is None, no point is shown.</p></li>
+<li><p>to remove object, use remove_actor(name).</p></li>
+</ul>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.core.qtdraw_app.QtDraw.plot_stream_from_data">
+<span class="sig-name descname"><span class="pre">plot_stream_from_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vector</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shape</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">surface</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-0.43</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">abs_scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'coolwarm'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">component</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'abs'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spherical_plot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shaft_R</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tip_R</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tip_length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.25</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">opacity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">position</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/qtdraw_app.html#QtDraw.plot_stream_from_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.qtdraw_app.QtDraw.plot_stream_from_data" title="Link to this definition">#</a></dt>
+<dd><p>Plot stream from data (vectors in cartesian coordinate).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) -- object name.</p></li>
+<li><p><strong>vector</strong> (<em>ndarray</em>) -- stream vector [vx(x,y,z),vy(x,y,z),vz(x,y,z)] (cartesina).</p></li>
+<li><p><strong>shape</strong> (<em>ndarray</em>) -- f(x,y,z) shape on which stream put (cartesian).</p></li>
+<li><p><strong>surface</strong> (<em>ndarray</em><em>, </em><em>optional</em>) -- (x,y,z) orbital colormap.</p></li>
+<li><p><strong>size</strong> (<em>float</em><em>, </em><em>optional</em>) -- shape size.</p></li>
+<li><p><strong>length</strong> (<em>float</em><em>, </em><em>optional</em>) -- stream arrow size.</p></li>
+<li><p><strong>width</strong> (<em>float</em><em>, </em><em>optional</em>) -- stream arrow width.</p></li>
+<li><p><strong>offset</strong> (<em>float</em><em>, </em><em>optional</em>) -- stream arrow offest.</p></li>
+<li><p><strong>abs_scale</strong> (<em>bool</em><em>, </em><em>optional</em>) -- stream arrow scaled ?</p></li>
+<li><p><strong>color</strong> (<em>str</em><em>, </em><em>optional</em>) -- stream arrow color or colormap.</p></li>
+<li><p><strong>component</strong> (<em>str</em><em>, </em><em>optional</em>) -- use component or abs, &quot;x/y/z/abs&quot;.</p></li>
+<li><p><strong>spherical_plot</strong> (<em>bool</em><em>, </em><em>optional</em>) -- spherical-like plot ?</p></li>
+<li><p><strong>shaft_R</strong> (<em>float</em><em>, </em><em>optional</em>) -- shaft radius.</p></li>
+<li><p><strong>tip_R</strong> (<em>float</em><em>, </em><em>optional</em>) -- tip radius.</p></li>
+<li><p><strong>tip_length</strong> (<em>float</em><em>, </em><em>optional</em>) -- tip length.</p></li>
+<li><p><strong>opacity</strong> (<em>float</em><em>, </em><em>optional</em>) -- opacity, [0,1].</p></li>
+<li><p><strong>position</strong> (<em>ndarray</em>) -- position (transformed).</p></li>
+</ul>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>if size is negative, shape is normalized.</p></li>
+<li><p>to remove object, use remove_actor(name).</p></li>
+</ul>
+</div>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="qtdraw.core.qtdraw_app.QtDraw.set_axis">
 <span class="sig-name descname"><span class="pre">set_axis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axis_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/qtdraw_app.html#QtDraw.set_axis"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.qtdraw_app.QtDraw.set_axis" title="Link to this definition">#</a></dt>
 <dd><p>Set axis widget.</p>
@@ -1366,6 +1435,8 @@ The following API is avalilable to draw objects.</p>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.add_torus"><code class="docutils literal notranslate"><span class="pre">QtDraw.add_torus()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.add_vector"><code class="docutils literal notranslate"><span class="pre">QtDraw.add_vector()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.nonrepeat_data"><code class="docutils literal notranslate"><span class="pre">QtDraw.nonrepeat_data()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.plot_orbital_from_data"><code class="docutils literal notranslate"><span class="pre">QtDraw.plot_orbital_from_data()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.plot_stream_from_data"><code class="docutils literal notranslate"><span class="pre">QtDraw.plot_stream_from_data()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.set_axis"><code class="docutils literal notranslate"><span class="pre">QtDraw.set_axis()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.set_bar"><code class="docutils literal notranslate"><span class="pre">QtDraw.set_bar()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.set_cell"><code class="docutils literal notranslate"><span class="pre">QtDraw.set_cell()</span></code></a></li>
