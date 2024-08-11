@@ -241,3 +241,17 @@ def create_style_sheet(size):
         font-size: {size}pt;
     }}
     """
+
+
+# ==================================================
+def get_data_range(data):
+    v1 = data.min()
+    v2 = data.max()
+    v = max(abs(v1), abs(v2))
+    if v1 * v2 < 0.0:
+        clim = [-v, v]
+    elif v1 < 0.0:
+        clim = [-v, 0.0]
+    else:
+        clim = [0.0, v]
+    return clim
