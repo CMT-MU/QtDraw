@@ -2116,6 +2116,111 @@ class QtDraw(Window):
         self.pyvista_widget.add_text2d(caption, size, color, font, position, name)
 
     # ==================================================
+    def plot_orbital_from_data(
+        self,
+        name,
+        shape,
+        surface=None,
+        size=1.0,
+        point_size=0.03,
+        spherical_plot=False,
+        color="coolwarm",
+        opacity=1.0,
+        position=None,
+    ):
+        """
+        Plot orbital from data.
+
+        Args:
+            name (str): plot name.
+            shape (ndarray): (x,y,z) orbital shape.
+            surface (ndarray, optional): (x,y,z) orbital colormap.
+            size (float, optional): orbital size.
+            point_size(float, optional): point size.
+            spherical_plot (bool, optional): spherical-like plot ?
+            color (str, optional): orbital color or colormap.
+            opacity (float, optional): opacity, [0,1].
+            position (ndarray): position (transformed).
+
+        Note:
+            - if surface is None, the same one of shape is used.
+            - if size is positive, max. value is equivalent to size.
+            - if size is negative, abs. value is scaled by size.
+            - if point_size is None, no point is shown.
+            - to remove object, use remove_actor(name).
+        """
+        self.pyvista_widget.plot_orbital_from_data(
+            name, shape, surface, size, point_size, spherical_plot, color, opacity, position
+        )
+
+    # ==================================================
+    def plot_stream_from_data(
+        self,
+        name,
+        vector,
+        shape,
+        surface=None,
+        size=1.0,
+        length=0.2,
+        width=0.01,
+        offset=-0.43,
+        abs_scale=False,
+        color="coolwarm",
+        component="abs",
+        spherical_plot=False,
+        shaft_R=1.0,
+        tip_R=2.0,
+        tip_length=0.25,
+        opacity=1.0,
+        position=None,
+    ):
+        """
+        Plot stream from data (vectors in cartesian coordinate).
+
+        Args:
+            name (str): object name.
+            vector (ndarray): stream vector [vx(x,y,z),vy(x,y,z),vz(x,y,z)] (cartesina).
+            shape (ndarray): f(x,y,z) shape on which stream put (cartesian).
+            surface (ndarray, optional): (x,y,z) orbital colormap.
+            size (float, optional): shape size.
+            length (float, optional): stream arrow size.
+            width (float, optional): stream arrow width.
+            offset (float, optional): stream arrow offest.
+            abs_scale (bool, optional): stream arrow scaled ?
+            color (str, optional): stream arrow color or colormap.
+            component (str, optional): use component or abs, "x/y/z/abs".
+            spherical_plot (bool, optional): spherical-like plot ?
+            shaft_R (float, optional) :shaft radius.
+            tip_R (float, optional): tip radius.
+            tip_length (float, optional): tip length.
+            opacity (float, optional): opacity, [0,1].
+            position (ndarray): position (transformed).
+
+        Note:
+            - if size is negative, shape is normalized.
+            - to remove object, use remove_actor(name).
+        """
+        self.pyvista_widget.plot_stream_from_data(
+            name,
+            vector,
+            shape,
+            surface,
+            size,
+            length,
+            width,
+            offset,
+            abs_scale,
+            color,
+            component,
+            spherical_plot,
+            shaft_R,
+            tip_R,
+            tip_length,
+            opacity,
+            position,
+        )
+
+    # ==================================================
     def set_unit_cell(self, cell=None):
         """
         Set unit cell.

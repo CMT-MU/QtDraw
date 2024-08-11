@@ -70,7 +70,7 @@ def _str_poly_array(poly, xyz, var=["x", "y", "z"], size=1.0):
     max_f = np.abs(fv).max()
     if size > CHOP:
         if max_f > CHOP:
-            scale = size / np.abs(fv).max()
+            scale = size / max_f
             fv *= scale
     else:
         fv *= np.abs(size)
@@ -93,7 +93,7 @@ def _str_vec_array(vec, xyz, normalize=True, var=["x", "y", "z"]):
         - (numpy.ndarray) -- vector array.
         - (numpy.ndarray) -- abs. value array.
     """
-    vec = text_to_list(vec.replace(" ", ""))
+    vec = text_to_list(vec)
     xyz = np.array(xyz, dtype=np.float64)
 
     f1 = _str_poly_array(vec[0], xyz, var)
@@ -102,7 +102,8 @@ def _str_vec_array(vec, xyz, normalize=True, var=["x", "y", "z"]):
     f = np.array([f1, f2, f3]).T
     if normalize:
         fa = np.linalg.norm(f, axis=1).max()
-        f = f / fa
+        if fa > CHOP:
+            f = f / fa
 
     fs = np.linalg.norm(f, axis=1)
 
@@ -308,7 +309,7 @@ def create_stream(
     tip_radius=2.0,
     tip_length=0.25,
 ):
-    """
+    r"""
     Create steam vector object.
 
     Args:
@@ -810,5 +811,112 @@ def create_isosurface(grid_data, value, surface_name):
         grid[surface_name] = surface
 
     obj = grid.contour(value, scalars="data")
+
+    return obj
+
+
+# ==================================================
+def create_orbital_data(shape, surface=None, size=1.0, spherical_plot=False, point_size=0.03):
+    """
+    Create orbital object from data.
+
+    Args:
+        shape (ndarray): (x,y,z) shape (cartesian).
+        surface (ndarray, optional): (x,y,z) surface color (cartesian).
+        size (float, optional): size.
+        spherical_plot (bool, optional): spherical-like plot ?
+        point_size (float, optional): point size.
+
+    Returns:
+        - (vtk.PolyData) -- orbital object with "surface".
+
+    Note:
+        - if surface is None, the same one of shape is used.
+        - if size is positive, max. value is equivalent to size.
+        - if size is negative, abs. value is scaled by size.
+        - if point_size is None, no point is shown.
+    """
+    # shape data.
+    if surface is None:
+        surface = np.full(shape.shape[0], 1.0)
+
+    if spherical_plot:
+        r = np.abs(surface)
+        shape = np.tile(r, (3, 1)).T * shape
+
+    max_f = np.linalg.norm(shape, axis=1).max()
+    if size > CHOP:
+        if max_f > CHOP:
+            scale = size / max_f
+            shape *= scale
+    else:
+        shape *= np.abs(size)
+
+    orbital = pv.PolyData(shape)
+    orbital["surface"] = surface
+
+    if point_size is None:
+        return orbital
+    else:
+        g = create_sphere(point_size)
+        obj = orbital.glyph(orient=False, scale=None, factor=1.0, geom=g)
+        return obj
+
+
+# ==================================================
+def create_stream_data(
+    shape,
+    surface,
+    vector,
+    size=1.0,
+    length=0.1,
+    width=0.1,
+    offset=-0.43,
+    abs_scale=False,
+    shaft_radius=1.0,
+    tip_radius=2.0,
+    tip_length=0.25,
+    spherical_plot=False,
+):
+    r"""
+    Create steam vector object.
+
+    Args:
+        shape (ndarray): f(x,y,z) shape (cartesian).
+        surface (ndarray, optional): (x,y,z) surface color (cartesian).
+        vector (ndarray): stream vector [vx(x,y,z),vy(x,y,z),vz(x,y,z)] (cartesina).
+        size (float, optional): shape size.
+        length (float, optional): length.
+        width (float, optional): width.
+        offset (float, optional): offest ratio.
+        abs_scale (bool, optional): use \|v(x,y,z)\| * length ?
+        shaft_radius (float, optional) :shaft radius.
+        tip_radius (float, optional): tip radius.
+        tip_length (float, optional): tip length.
+        spherical_plot (bool, optional): spherical-like plot ?
+
+    Returns:
+        - (vtk.PolyData) -- orbital object with "vector" and "vector_abs".
+
+    Note:
+        - if size is negative, shape is normalized.
+    """
+    stream_vec = create_orbital_data(shape, surface=surface, size=size, spherical_plot=spherical_plot, point_size=None)
+
+    stream_vec["vector"] = vector
+    stream_vec["vector_abs"] = np.linalg.norm(vector, axis=1)
+
+    g = create_vector(
+        np.array([1.0, 0.0, 0.0]),
+        length=length,
+        width=width,
+        offset=offset,
+        shaft_radius=shaft_radius,
+        tip_radius=tip_radius,
+        tip_length=tip_length,
+    )
+
+    scale = "vector_abs" if abs_scale else None
+    obj = stream_vec.glyph(orient="vector", scale=scale, factor=1.0, geom=g)
 
     return obj

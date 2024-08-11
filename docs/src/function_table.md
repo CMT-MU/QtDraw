@@ -78,6 +78,8 @@
 | add_isosurface | Add isosurface. |
 | add_caption | Add caption. |
 | add_text2d | Add text 2d. |
+| plot_orbital_from_data | Plot orbital from data. |
+| plot_stream_from_data | Plot stream from data (vectors in cartesian coordinate). |
 | set_unit_cell | Set unit cell. |
 | set_crystal | Set crystal. |
 | set_origin | Set origin. |
@@ -256,6 +258,8 @@
 | plot_data_text2d | Plot text 2d. |
 | plot_label | Plot label. |
 | set_isosurface_data | Set isosurface data. |
+| plot_orbital_from_data | Plot orbital from data. |
+| plot_stream_from_data | Plot stream from data (vectors in cartesian coordinate). |
 
 
 ## <div class='my-heading' style='color: darkgreen;'>dialog_preference.py
@@ -705,6 +709,8 @@
 | create_spline | Create spline object. |
 | create_spline_t | Create parametric spline object. |
 | create_isosurface | Create isosurface. |
+| create_orbital_data | Create orbital object from data. |
+| create_stream_data | Create steam vector object. |
 
 
 ## <div class='my-heading' style='color: darkgreen;'>qt_event_util.py

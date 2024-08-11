@@ -55,7 +55,7 @@
     export QT_QPA_PLATFORM=xcb  # add in .bashrc
     sudo apt update
     sudo apt upgrade  # just in case
-    sudo apt install libxcb-cursor-dev
+    sudo apt install libxcb-cursor0
     ```
 
 4. Associate QtDraw file (**.qtdw**) to the application
