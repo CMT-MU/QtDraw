@@ -68,3 +68,13 @@ class TabGroupView(QDialog):
         for view in self.view.values():
             view.closeEvent(event)
         super().closeEvent(event)
+
+    # ==================================================
+    def update_widget(self):
+        """
+        Update widget.
+
+        :meta private:
+        """
+        for view in self.view.values():
+            view.update_widget(force=True)

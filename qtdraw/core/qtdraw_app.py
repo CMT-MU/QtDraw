@@ -1167,10 +1167,17 @@ class QtDraw(Window):
         ret = QMessageBox.question(self, "", "Are you sure ?", QMessageBox.Cancel, QMessageBox.Ok)
         self.sender().setDown(False)  # reset push button.
         if ret == QMessageBox.Ok:
-            self.pyvista_widget.reload()
-            self._update_panel()
-            if self.multipie_dialog is not None:
-                self.multipie_dialog.clear_counter()
+            self.clear_data()
+
+    # ==================================================
+    def clear_data(self):
+        """
+        Clear data (actor and data).
+        """
+        self.pyvista_widget.reload()
+        self._update_panel()
+        if self.multipie_dialog is not None:
+            self.multipie_dialog.clear_counter()
 
     # ==================================================
     def exec(self):
