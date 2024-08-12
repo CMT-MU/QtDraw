@@ -1512,10 +1512,20 @@ document.write(`
         <span class="n">ret</span> <span class="o">=</span> <span class="n">QMessageBox</span><span class="o">.</span><span class="n">question</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;Are you sure ?&quot;</span><span class="p">,</span> <span class="n">QMessageBox</span><span class="o">.</span><span class="n">Cancel</span><span class="p">,</span> <span class="n">QMessageBox</span><span class="o">.</span><span class="n">Ok</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sender</span><span class="p">()</span><span class="o">.</span><span class="n">setDown</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>  <span class="c1"># reset push button.</span>
         <span class="k">if</span> <span class="n">ret</span> <span class="o">==</span> <span class="n">QMessageBox</span><span class="o">.</span><span class="n">Ok</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">pyvista_widget</span><span class="o">.</span><span class="n">reload</span><span class="p">()</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_update_panel</span><span class="p">()</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">multipie_dialog</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">multipie_dialog</span><span class="o">.</span><span class="n">clear_counter</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">clear_data</span><span class="p">()</span>
+
+    <span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="QtDraw.clear_data">
+<a class="viewcode-back" href="../../../src/from_python.html#qtdraw.core.qtdraw_app.QtDraw.clear_data">[docs]</a>
+    <span class="k">def</span> <span class="nf">clear_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Clear data (actor and data).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pyvista_widget</span><span class="o">.</span><span class="n">reload</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_panel</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">multipie_dialog</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">multipie_dialog</span><span class="o">.</span><span class="n">clear_counter</span><span class="p">()</span></div>
+
 
     <span class="c1"># ==================================================</span>
     <span class="k">def</span> <span class="nf">exec</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>

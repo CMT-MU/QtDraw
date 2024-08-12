@@ -2808,6 +2808,16 @@ document.write(`
 
 
     <span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="PyVistaWidget.clear_data">
+<a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.clear_data">[docs]</a>
+    <span class="k">def</span> <span class="nf">clear_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Clear Data.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reload</span><span class="p">()</span></div>
+
+
+    <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="PyVistaWidget.get_camera_info">
 <a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.get_camera_info">[docs]</a>
     <span class="k">def</span> <span class="nf">get_camera_info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -2992,7 +3002,8 @@ document.write(`
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Open tab group view.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_tab_group_view</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tab_group_view</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tab_group_view</span><span class="o">.</span><span class="n">update_widget</span><span class="p">()</span></div>
 
 
     <span class="c1"># ==================================================</span>
