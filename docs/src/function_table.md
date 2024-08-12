@@ -53,6 +53,7 @@
 | _show_raw_data | Show raw data dialog. |
 | _show_camera_info | Show camera info. dialog. |
 | _clear_data | Clear data (actor and data). |
+| clear_data | Clear data (actor and data). |
 | exec | Execute QtDraw. |
 | closeEvent | Close with dialog. |
 | close | Close dialogs. |
@@ -209,6 +210,7 @@
 | set_latex | Set LaTeX environment. |
 | screen_off | Screen off. |
 | screen_on | Screen on. |
+| clear_data | Clear Data. |
 | get_camera_info | Get camera info. |
 | set_camera_info | Get camera info. |
 | add_data | Add data. |
@@ -560,6 +562,7 @@
 | TabGroupView | Data view group. |
 | select_tab | Select tab. |
 | closeEvent | Close event for deselect all. |
+| update_widget | Update widget. |
 
 
 ## <div class='my-heading' style='color: darkgreen;'>latex_to_png.py
