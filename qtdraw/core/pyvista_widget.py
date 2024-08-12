@@ -2292,6 +2292,13 @@ class PyVistaWidget(QtInteractor):
         self.ren_win.SetOffScreenRendering(0)
 
     # ==================================================
+    def clear_data(self):
+        """
+        Clear Data.
+        """
+        self.reload()
+
+    # ==================================================
     def get_camera_info(self):
         """
         Get camera info.
@@ -2451,6 +2458,7 @@ class PyVistaWidget(QtInteractor):
         Open tab group view.
         """
         self._tab_group_view.show()
+        self._tab_group_view.update_widget()
 
     # ==================================================
     def release_mouse(self):

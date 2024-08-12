@@ -168,15 +168,16 @@ class GroupView(QTreeView):
         self.model().action_remove_row(indexes)
 
     # ==================================================
-    def update_widget(self):
+    def update_widget(self, force=False):
         """
         Update widget.
         """
-        self.blockSignals(True)
-        self.setUpdatesEnabled(False)
-        self.set_widget(self.model().invisibleRootItem())
-        self.setUpdatesEnabled(True)
-        self.blockSignals(False)
+        if self.isVisible() or force:
+            self.blockSignals(True)
+            self.setUpdatesEnabled(False)
+            self.set_widget(self.model().invisibleRootItem())
+            self.setUpdatesEnabled(True)
+            self.blockSignals(False)
 
     # ==================================================
     def set_widget(self, item):
