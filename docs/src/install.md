@@ -75,7 +75,7 @@
     ![automator.jpg](fig/automator.jpg)
 
     [Windows]
-    - Associate extensions with `qtdraw.exe` in `Scripts` folder
+    - Associate extensions with `qtdraw.exe` in `Scripts` folder or [QtDraw_WinApp.zip](https://github.com/CMT-MU/QtDraw/tree/main/others/QtDraw_WinApp.zip)
     - `Scripts` is usually in `C:\Users\<username>\AppData\Local\Programs\Python\Python<version>\`
 
 ## Shell commands
