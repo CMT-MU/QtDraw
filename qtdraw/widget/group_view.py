@@ -6,7 +6,7 @@ By clicking right button of mouse, the context menu appears.
 """
 
 from PySide6.QtWidgets import QMenu, QTreeView, QHeaderView
-from PySide6.QtCore import Qt, Signal, QPoint, QModelIndex, QItemSelection, QItemSelectionModel
+from PySide6.QtCore import Qt, Signal, QPoint, QModelIndex, QItemSelection, QItemSelectionModel, QObject, QEvent
 from qtdraw.core.pyvista_widget_setting import COLOR_WIDGET, COMBO_WIDGET, EDITOR_WIDGET, HIDE_TYPE
 from qtdraw.widget.delegate import ColorDelegate, ComboDelegate, EditorDelegate
 
@@ -178,6 +178,8 @@ class GroupView(QTreeView):
             self.set_widget(self.model().invisibleRootItem())
             self.setUpdatesEnabled(True)
             self.blockSignals(False)
+            self.hide()  # in order to refresh widget.
+            self.show()
 
     # ==================================================
     def set_widget(self, item):

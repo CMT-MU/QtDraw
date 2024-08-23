@@ -1912,6 +1912,31 @@ class PyVistaWidget(QtInteractor):
                                 self.actors[i].SetVisibility(False)
 
     # ==================================================
+    def clip_actor(self, position, cell, name_actor, label_actor):
+        """
+        Clip actor.
+
+        Args:
+            position (str): position.
+            cell (str): cell.
+            name_actor (str): name actor.
+            label_actor (str): label actor.
+        """
+        if not self._status["clip"]:
+            return
+
+        lower = self._status["lower"]
+        upper = self._status["upper"]
+        point = "[" + position + "]"
+        cell = "[" + cell + "]"
+        point = convert_str_vector(point, cell, False)
+        idx = get_outside_box(point, lower, upper)
+        if len(idx) > 0:
+            self.actors[name_actor].SetVisibility(False)
+        if label_actor is not None and len(idx) > 0 and label_actor != "":
+            self.actors[label_actor].SetVisibility(False)
+
+    # ==================================================
     def show_outside_actor(self):
         """
         Show actors outside the range.
@@ -2881,7 +2906,7 @@ class PyVistaWidget(QtInteractor):
 
         Args:
             index (QModelIndex): index.
-            data (list): data list.
+            data (dict): data list.
             positionT (numpy.ndarray): position (transformed).
         """
         actor = data["name_actor"]
@@ -2897,6 +2922,7 @@ class PyVistaWidget(QtInteractor):
 
         actor = self.add_mesh(**option)
         self.set_actor("site", index, actor.name)
+        self.clip_actor(data["position"], data["cell"], actor.name, data["label_actor"])
 
     # ==================================================
     def plot_data_bond(self, index, data, positionT):
@@ -2905,7 +2931,7 @@ class PyVistaWidget(QtInteractor):
 
         Args:
             index (QModelIndex): index.
-            data (list): data list.
+            data (dict): data list.
             positionT (numpy.ndarray): position (transformed).
         """
         actor = data["name_actor"]
@@ -2931,6 +2957,7 @@ class PyVistaWidget(QtInteractor):
 
         actor = self.add_mesh(**option)
         self.set_actor("bond", index, actor.name)
+        self.clip_actor(data["position"], data["cell"], actor.name, data["label_actor"])
 
     # ==================================================
     def plot_data_vector(self, index, data, positionT):
@@ -2939,7 +2966,7 @@ class PyVistaWidget(QtInteractor):
 
         Args:
             index (QModelIndex): index.
-            data (list): data list.
+            data (dict): data list.
             positionT (numpy.ndarray): position (transformed).
         """
         actor = data["name_actor"]
@@ -2972,6 +2999,7 @@ class PyVistaWidget(QtInteractor):
 
         actor = self.add_mesh(**option)
         self.set_actor("vector", index, actor.name)
+        self.clip_actor(data["position"], data["cell"], actor.name, data["label_actor"])
 
     # ==================================================
     def plot_data_orbital(self, index, data, positionT):
@@ -2980,7 +3008,7 @@ class PyVistaWidget(QtInteractor):
 
         Args:
             index (QModelIndex): index.
-            data (list): data list.
+            data (dict): data list.
             positionT (numpy.ndarray): position (transformed).
         """
         actor = data["name_actor"]
@@ -3017,6 +3045,7 @@ class PyVistaWidget(QtInteractor):
 
         actor = self.add_mesh(**option)
         self.set_actor("orbital", index, actor.name)
+        self.clip_actor(data["position"], data["cell"], actor.name, data["label_actor"])
 
     # ==================================================
     def plot_data_stream(self, index, data, positionT):
@@ -3025,7 +3054,7 @@ class PyVistaWidget(QtInteractor):
 
         Args:
             index (QModelIndex): index.
-            data (list): data list.
+            data (dict): data list.
             positionT (numpy.ndarray): position (transformed).
         """
         component_str = {"abs": None, "x": 0, "y": 1, "z": 2}
@@ -3091,6 +3120,7 @@ class PyVistaWidget(QtInteractor):
 
         actor = self.add_mesh(**option)
         self.set_actor("stream", index, actor.name)
+        self.clip_actor(data["position"], data["cell"], actor.name, data["label_actor"])
 
     # ==================================================
     def plot_data_line(self, index, data, positionT):
@@ -3099,7 +3129,7 @@ class PyVistaWidget(QtInteractor):
 
         Args:
             index (QModelIndex): index.
-            data (list): data list.
+            data (dict): data list.
             positionT (numpy.ndarray): position (transformed).
         """
         actor = data["name_actor"]
@@ -3125,6 +3155,7 @@ class PyVistaWidget(QtInteractor):
 
         actor = self.add_mesh(**option)
         self.set_actor("line", index, actor.name)
+        self.clip_actor(data["position"], data["cell"], actor.name, data["label_actor"])
 
     # ==================================================
     def plot_data_plane(self, index, data, positionT):
@@ -3133,7 +3164,7 @@ class PyVistaWidget(QtInteractor):
 
         Args:
             index (QModelIndex): index.
-            data (list): data list.
+            data (dict): data list.
             positionT (numpy.ndarray): position (transformed).
         """
         actor = data["name_actor"]
@@ -3163,6 +3194,7 @@ class PyVistaWidget(QtInteractor):
 
         actor = self.add_mesh(**option)
         self.set_actor("plane", index, actor.name)
+        self.clip_actor(data["position"], data["cell"], actor.name, data["label_actor"])
 
     # ==================================================
     def plot_data_circle(self, index, data, positionT):
@@ -3171,7 +3203,7 @@ class PyVistaWidget(QtInteractor):
 
         Args:
             index (QModelIndex): index.
-            data (list): data list.
+            data (dict): data list.
             positionT (numpy.ndarray): position (transformed).
         """
         actor = data["name_actor"]
@@ -3200,6 +3232,7 @@ class PyVistaWidget(QtInteractor):
 
         actor = self.add_mesh(**option)
         self.set_actor("circle", index, actor.name)
+        self.clip_actor(data["position"], data["cell"], actor.name, data["label_actor"])
 
     # ==================================================
     def plot_data_torus(self, index, data, positionT):
@@ -3208,7 +3241,7 @@ class PyVistaWidget(QtInteractor):
 
         Args:
             index (QModelIndex): index.
-            data (list): data list.
+            data (dict): data list.
             positionT (numpy.ndarray): position (transformed).
         """
         actor = data["name_actor"]
@@ -3229,6 +3262,7 @@ class PyVistaWidget(QtInteractor):
 
         actor = self.add_mesh(**option)
         self.set_actor("torus", index, actor.name)
+        self.clip_actor(data["position"], data["cell"], actor.name, data["label_actor"])
 
     # ==================================================
     def plot_data_ellipsoid(self, index, data, positionT):
@@ -3237,7 +3271,7 @@ class PyVistaWidget(QtInteractor):
 
         Args:
             index (QModelIndex): index.
-            data (list): data list.
+            data (dict): data list.
             positionT (numpy.ndarray): position (transformed).
         """
         actor = data["name_actor"]
@@ -3259,6 +3293,7 @@ class PyVistaWidget(QtInteractor):
 
         actor = self.add_mesh(**option)
         self.set_actor("ellipsoid", index, actor.name)
+        self.clip_actor(data["position"], data["cell"], actor.name, data["label_actor"])
 
     # ==================================================
     def plot_data_toroid(self, index, data, positionT):
@@ -3267,7 +3302,7 @@ class PyVistaWidget(QtInteractor):
 
         Args:
             index (QModelIndex): index.
-            data (list): data list.
+            data (dict): data list.
             positionT (numpy.ndarray): position (transformed).
         """
         actor = data["name_actor"]
@@ -3302,6 +3337,7 @@ class PyVistaWidget(QtInteractor):
 
         actor = self.add_mesh(**option)
         self.set_actor("toroid", index, actor.name)
+        self.clip_actor(data["position"], data["cell"], actor.name, data["label_actor"])
 
     # ==================================================
     def plot_data_box(self, index, data, positionT):
@@ -3310,7 +3346,7 @@ class PyVistaWidget(QtInteractor):
 
         Args:
             index (QModelIndex): index.
-            data (list): data list.
+            data (dict): data list.
             positionT (numpy.ndarray): position (transformed).
         """
         actor = data["name_actor"]
@@ -3351,6 +3387,7 @@ class PyVistaWidget(QtInteractor):
 
         actor = self.add_mesh(**option)
         self.set_actor("box", index, actor.name)
+        self.clip_actor(data["position"], data["cell"], actor.name, data["label_actor"])
 
     # ==================================================
     def plot_data_polygon(self, index, data, positionT):
@@ -3359,7 +3396,7 @@ class PyVistaWidget(QtInteractor):
 
         Args:
             index (QModelIndex): index.
-            data (list): data list.
+            data (dict): data list.
             positionT (numpy.ndarray): position (transformed).
         """
         actor = data["name_actor"]
@@ -3398,6 +3435,7 @@ class PyVistaWidget(QtInteractor):
 
         actor = self.add_mesh(**option)
         self.set_actor("polygon", index, actor.name)
+        self.clip_actor(data["position"], data["cell"], actor.name, data["label_actor"])
 
     # ==================================================
     def plot_data_text3d(self, index, data, positionT):
@@ -3406,7 +3444,7 @@ class PyVistaWidget(QtInteractor):
 
         Args:
             index (QModelIndex): index.
-            data (list): data list.
+            data (dict): data list.
             positionT (numpy.ndarray): position (transformed).
         """
         actor = data["name_actor"]
@@ -3436,6 +3474,7 @@ class PyVistaWidget(QtInteractor):
 
         actor = self.add_mesh(**option)
         self.set_actor("text3d", index, actor.name)
+        self.clip_actor(data["position"], data["cell"], actor.name, data["label_actor"])
 
     # ==================================================
     def plot_data_isosurface(self, index, data, positionT):
@@ -3444,7 +3483,7 @@ class PyVistaWidget(QtInteractor):
 
         Args:
             index (QModelIndex): index.
-            data (list): data list.
+            data (dict): data list.
             positionT (numpy.ndarray): position (transformed).
         """
         actor = data["name_actor"]
@@ -3496,6 +3535,7 @@ class PyVistaWidget(QtInteractor):
 
         actor = self.add_mesh(**option)
         self.set_actor("isosurface", index, actor.name)
+        self.clip_actor(data["position"], data["cell"], actor.name, data["label_actor"])
 
     # ==================================================
     def plot_data_spline(self, index, data, positionT):
@@ -3504,7 +3544,7 @@ class PyVistaWidget(QtInteractor):
 
         Args:
             index (QModelIndex): index.
-            data (list): data list.
+            data (dict): data list.
             positionT (numpy.ndarray): position (transformed).
         """
         actor = data["name_actor"]
@@ -3541,6 +3581,7 @@ class PyVistaWidget(QtInteractor):
 
         actor = self.add_mesh(**option)
         self.set_actor("spline", index, actor.name)
+        self.clip_actor(data["position"], data["cell"], actor.name, data["label_actor"])
 
     # ==================================================
     def plot_data_spline_t(self, index, data, positionT):
@@ -3549,7 +3590,7 @@ class PyVistaWidget(QtInteractor):
 
         Args:
             index (QModelIndex): index.
-            data (list): data list.
+            data (dict): data list.
             positionT (numpy.ndarray): position (transformed).
         """
         actor = data["name_actor"]
@@ -3578,6 +3619,7 @@ class PyVistaWidget(QtInteractor):
 
         actor = self.add_mesh(**option)
         self.set_actor("spline_t", index, actor.name)
+        self.clip_actor(data["position"], data["cell"], actor.name, data["label_actor"])
 
     # ==================================================
     def plot_data_caption(self, index, data, positionT):
@@ -3586,7 +3628,7 @@ class PyVistaWidget(QtInteractor):
 
         Args:
             index (QModelIndex): index.
-            data (list): data list.
+            data (dict): data list.
             positionT (numpy.ndarray): position (transformed).
         """
         actor = data["name_actor"]
@@ -3616,6 +3658,7 @@ class PyVistaWidget(QtInteractor):
         actor = actor.replace("-labels", "")
         self.add_point_labels(name=actor, **option)
         self.set_actor("caption", index, actor + "-labels")
+        # no implementation for clip_actor
 
     # ==================================================
     def plot_data_text2d(self, index, data, positionT):
@@ -3624,7 +3667,7 @@ class PyVistaWidget(QtInteractor):
 
         Args:
             index (QModelIndex): index.
-            data (list): data list.
+            data (dict): data list.
             positionT (numpy.ndarray): position (transformed).
         """
         actor = data["name_actor"]
@@ -3660,7 +3703,7 @@ class PyVistaWidget(QtInteractor):
         Args:
             object_type (str): object type.
             index (QModelIndex): index.
-            data (list): data list.
+            data (dict): data list.
             positionT (numpy.ndarray): position (transformed).
         """
         label = data["label"]
