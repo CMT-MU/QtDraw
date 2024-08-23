@@ -1524,8 +1524,8 @@ class PyVistaWidget(QtInteractor):
         if "multipie" in self._backup["status"].keys() and "plus" in self._backup["status"]["multipie"].keys():
             del self._backup["status"]["multipie"]["plus"]
 
-        isosurface = self._backup["data"]["isosurface"]
-        if len(isosurface) > 0:
+        isosurface = self._backup["data"].get("isosurface")
+        if isosurface and len(isosurface) > 0:
             for iso in isosurface:
                 name = iso[COLUMN_ISOSURFACE_FILE]
                 with open(name, mode="w", encoding="utf-8") as f:
