@@ -71,7 +71,7 @@ class ModulationDialog(QDialog):
 
         # modulation view.
         modulation_panel["basis"] = ("combo", self.basis, self.basis[0])
-        model = GroupModel("modulation", modulation_panel, parent)
+        model = GroupModel("modulation", modulation_panel, self.widget)
         model.set_data(data)
         self.view = GroupView(model, parent)
         self.view.customContextMenuRequested.disconnect()
