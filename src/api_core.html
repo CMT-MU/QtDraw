@@ -430,6 +430,7 @@ document.write(`
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.change_selection"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.change_selection()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.check_hide"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.check_hide()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.clear_data"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.clear_data()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.clip_actor"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.clip_actor()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.common_option"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.common_option()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.delete_actor"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.delete_actor()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.deselect_actor"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.deselect_actor()</span></code></a></li>
@@ -1285,6 +1286,22 @@ document.write(`
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.core.pyvista_widget.PyVistaWidget.clip_actor">
+<span class="sig-name descname"><span class="pre">clip_actor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">position</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cell</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name_actor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_actor</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/pyvista_widget.html#PyVistaWidget.clip_actor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.pyvista_widget.PyVistaWidget.clip_actor" title="Link to this definition">#</a></dt>
+<dd><p>Clip actor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>position</strong> (<em>str</em>) -- position.</p></li>
+<li><p><strong>cell</strong> (<em>str</em>) -- cell.</p></li>
+<li><p><strong>name_actor</strong> (<em>str</em>) -- name actor.</p></li>
+<li><p><strong>label_actor</strong> (<em>str</em>) -- label actor.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="qtdraw.core.pyvista_widget.PyVistaWidget.common_option">
 <span class="sig-name descname"><span class="pre">common_option</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">actor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">positionT</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/pyvista_widget.html#PyVistaWidget.common_option"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.pyvista_widget.PyVistaWidget.common_option" title="Link to this definition">#</a></dt>
 <dd><p>Create common option to plot.</p>
@@ -1489,7 +1506,7 @@ document.write(`
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>index</strong> (<em>QModelIndex</em>) -- index.</p></li>
-<li><p><strong>data</strong> (<em>list</em>) -- data list.</p></li>
+<li><p><strong>data</strong> (<em>dict</em>) -- data list.</p></li>
 <li><p><strong>positionT</strong> (<em>numpy.ndarray</em>) -- position (transformed).</p></li>
 </ul>
 </dd>
@@ -1504,7 +1521,7 @@ document.write(`
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>index</strong> (<em>QModelIndex</em>) -- index.</p></li>
-<li><p><strong>data</strong> (<em>list</em>) -- data list.</p></li>
+<li><p><strong>data</strong> (<em>dict</em>) -- data list.</p></li>
 <li><p><strong>positionT</strong> (<em>numpy.ndarray</em>) -- position (transformed).</p></li>
 </ul>
 </dd>
@@ -1519,7 +1536,7 @@ document.write(`
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>index</strong> (<em>QModelIndex</em>) -- index.</p></li>
-<li><p><strong>data</strong> (<em>list</em>) -- data list.</p></li>
+<li><p><strong>data</strong> (<em>dict</em>) -- data list.</p></li>
 <li><p><strong>positionT</strong> (<em>numpy.ndarray</em>) -- position (transformed).</p></li>
 </ul>
 </dd>
@@ -1534,7 +1551,7 @@ document.write(`
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>index</strong> (<em>QModelIndex</em>) -- index.</p></li>
-<li><p><strong>data</strong> (<em>list</em>) -- data list.</p></li>
+<li><p><strong>data</strong> (<em>dict</em>) -- data list.</p></li>
 <li><p><strong>positionT</strong> (<em>numpy.ndarray</em>) -- position (transformed).</p></li>
 </ul>
 </dd>
@@ -1549,7 +1566,7 @@ document.write(`
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>index</strong> (<em>QModelIndex</em>) -- index.</p></li>
-<li><p><strong>data</strong> (<em>list</em>) -- data list.</p></li>
+<li><p><strong>data</strong> (<em>dict</em>) -- data list.</p></li>
 <li><p><strong>positionT</strong> (<em>numpy.ndarray</em>) -- position (transformed).</p></li>
 </ul>
 </dd>
@@ -1564,7 +1581,7 @@ document.write(`
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>index</strong> (<em>QModelIndex</em>) -- index.</p></li>
-<li><p><strong>data</strong> (<em>list</em>) -- data list.</p></li>
+<li><p><strong>data</strong> (<em>dict</em>) -- data list.</p></li>
 <li><p><strong>positionT</strong> (<em>numpy.ndarray</em>) -- position (transformed).</p></li>
 </ul>
 </dd>
@@ -1579,7 +1596,7 @@ document.write(`
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>index</strong> (<em>QModelIndex</em>) -- index.</p></li>
-<li><p><strong>data</strong> (<em>list</em>) -- data list.</p></li>
+<li><p><strong>data</strong> (<em>dict</em>) -- data list.</p></li>
 <li><p><strong>positionT</strong> (<em>numpy.ndarray</em>) -- position (transformed).</p></li>
 </ul>
 </dd>
@@ -1594,7 +1611,7 @@ document.write(`
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>index</strong> (<em>QModelIndex</em>) -- index.</p></li>
-<li><p><strong>data</strong> (<em>list</em>) -- data list.</p></li>
+<li><p><strong>data</strong> (<em>dict</em>) -- data list.</p></li>
 <li><p><strong>positionT</strong> (<em>numpy.ndarray</em>) -- position (transformed).</p></li>
 </ul>
 </dd>
@@ -1609,7 +1626,7 @@ document.write(`
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>index</strong> (<em>QModelIndex</em>) -- index.</p></li>
-<li><p><strong>data</strong> (<em>list</em>) -- data list.</p></li>
+<li><p><strong>data</strong> (<em>dict</em>) -- data list.</p></li>
 <li><p><strong>positionT</strong> (<em>numpy.ndarray</em>) -- position (transformed).</p></li>
 </ul>
 </dd>
@@ -1624,7 +1641,7 @@ document.write(`
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>index</strong> (<em>QModelIndex</em>) -- index.</p></li>
-<li><p><strong>data</strong> (<em>list</em>) -- data list.</p></li>
+<li><p><strong>data</strong> (<em>dict</em>) -- data list.</p></li>
 <li><p><strong>positionT</strong> (<em>numpy.ndarray</em>) -- position (transformed).</p></li>
 </ul>
 </dd>
@@ -1639,7 +1656,7 @@ document.write(`
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>index</strong> (<em>QModelIndex</em>) -- index.</p></li>
-<li><p><strong>data</strong> (<em>list</em>) -- data list.</p></li>
+<li><p><strong>data</strong> (<em>dict</em>) -- data list.</p></li>
 <li><p><strong>positionT</strong> (<em>numpy.ndarray</em>) -- position (transformed).</p></li>
 </ul>
 </dd>
@@ -1654,7 +1671,7 @@ document.write(`
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>index</strong> (<em>QModelIndex</em>) -- index.</p></li>
-<li><p><strong>data</strong> (<em>list</em>) -- data list.</p></li>
+<li><p><strong>data</strong> (<em>dict</em>) -- data list.</p></li>
 <li><p><strong>positionT</strong> (<em>numpy.ndarray</em>) -- position (transformed).</p></li>
 </ul>
 </dd>
@@ -1669,7 +1686,7 @@ document.write(`
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>index</strong> (<em>QModelIndex</em>) -- index.</p></li>
-<li><p><strong>data</strong> (<em>list</em>) -- data list.</p></li>
+<li><p><strong>data</strong> (<em>dict</em>) -- data list.</p></li>
 <li><p><strong>positionT</strong> (<em>numpy.ndarray</em>) -- position (transformed).</p></li>
 </ul>
 </dd>
@@ -1684,7 +1701,7 @@ document.write(`
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>index</strong> (<em>QModelIndex</em>) -- index.</p></li>
-<li><p><strong>data</strong> (<em>list</em>) -- data list.</p></li>
+<li><p><strong>data</strong> (<em>dict</em>) -- data list.</p></li>
 <li><p><strong>positionT</strong> (<em>numpy.ndarray</em>) -- position (transformed).</p></li>
 </ul>
 </dd>
@@ -1699,7 +1716,7 @@ document.write(`
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>index</strong> (<em>QModelIndex</em>) -- index.</p></li>
-<li><p><strong>data</strong> (<em>list</em>) -- data list.</p></li>
+<li><p><strong>data</strong> (<em>dict</em>) -- data list.</p></li>
 <li><p><strong>positionT</strong> (<em>numpy.ndarray</em>) -- position (transformed).</p></li>
 </ul>
 </dd>
@@ -1714,7 +1731,7 @@ document.write(`
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>index</strong> (<em>QModelIndex</em>) -- index.</p></li>
-<li><p><strong>data</strong> (<em>list</em>) -- data list.</p></li>
+<li><p><strong>data</strong> (<em>dict</em>) -- data list.</p></li>
 <li><p><strong>positionT</strong> (<em>numpy.ndarray</em>) -- position (transformed).</p></li>
 </ul>
 </dd>
@@ -1729,7 +1746,7 @@ document.write(`
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>index</strong> (<em>QModelIndex</em>) -- index.</p></li>
-<li><p><strong>data</strong> (<em>list</em>) -- data list.</p></li>
+<li><p><strong>data</strong> (<em>dict</em>) -- data list.</p></li>
 <li><p><strong>positionT</strong> (<em>numpy.ndarray</em>) -- position (transformed).</p></li>
 </ul>
 </dd>
@@ -1744,7 +1761,7 @@ document.write(`
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>index</strong> (<em>QModelIndex</em>) -- index.</p></li>
-<li><p><strong>data</strong> (<em>list</em>) -- data list.</p></li>
+<li><p><strong>data</strong> (<em>dict</em>) -- data list.</p></li>
 <li><p><strong>positionT</strong> (<em>numpy.ndarray</em>) -- position (transformed).</p></li>
 </ul>
 </dd>
@@ -1759,7 +1776,7 @@ document.write(`
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>index</strong> (<em>QModelIndex</em>) -- index.</p></li>
-<li><p><strong>data</strong> (<em>list</em>) -- data list.</p></li>
+<li><p><strong>data</strong> (<em>dict</em>) -- data list.</p></li>
 <li><p><strong>positionT</strong> (<em>numpy.ndarray</em>) -- position (transformed).</p></li>
 </ul>
 </dd>
@@ -1775,7 +1792,7 @@ document.write(`
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>object_type</strong> (<em>str</em>) -- object type.</p></li>
 <li><p><strong>index</strong> (<em>QModelIndex</em>) -- index.</p></li>
-<li><p><strong>data</strong> (<em>list</em>) -- data list.</p></li>
+<li><p><strong>data</strong> (<em>dict</em>) -- data list.</p></li>
 <li><p><strong>positionT</strong> (<em>numpy.ndarray</em>) -- position (transformed).</p></li>
 </ul>
 </dd>
@@ -3695,6 +3712,7 @@ document.write(`
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.change_selection"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.change_selection()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.check_hide"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.check_hide()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.clear_data"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.clear_data()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.clip_actor"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.clip_actor()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.common_option"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.common_option()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.delete_actor"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.delete_actor()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.deselect_actor"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.deselect_actor()</span></code></a></li>

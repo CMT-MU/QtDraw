@@ -31,7 +31,7 @@
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -2380,6 +2380,34 @@ document.write(`
 
 
     <span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="PyVistaWidget.clip_actor">
+<a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.clip_actor">[docs]</a>
+    <span class="k">def</span> <span class="nf">clip_actor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">cell</span><span class="p">,</span> <span class="n">name_actor</span><span class="p">,</span> <span class="n">label_actor</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Clip actor.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            position (str): position.</span>
+<span class="sd">            cell (str): cell.</span>
+<span class="sd">            name_actor (str): name actor.</span>
+<span class="sd">            label_actor (str): label actor.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_status</span><span class="p">[</span><span class="s2">&quot;clip&quot;</span><span class="p">]:</span>
+            <span class="k">return</span>
+
+        <span class="n">lower</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_status</span><span class="p">[</span><span class="s2">&quot;lower&quot;</span><span class="p">]</span>
+        <span class="n">upper</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_status</span><span class="p">[</span><span class="s2">&quot;upper&quot;</span><span class="p">]</span>
+        <span class="n">point</span> <span class="o">=</span> <span class="s2">&quot;[&quot;</span> <span class="o">+</span> <span class="n">position</span> <span class="o">+</span> <span class="s2">&quot;]&quot;</span>
+        <span class="n">cell</span> <span class="o">=</span> <span class="s2">&quot;[&quot;</span> <span class="o">+</span> <span class="n">cell</span> <span class="o">+</span> <span class="s2">&quot;]&quot;</span>
+        <span class="n">point</span> <span class="o">=</span> <span class="n">convert_str_vector</span><span class="p">(</span><span class="n">point</span><span class="p">,</span> <span class="n">cell</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="n">get_outside_box</span><span class="p">(</span><span class="n">point</span><span class="p">,</span> <span class="n">lower</span><span class="p">,</span> <span class="n">upper</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">actors</span><span class="p">[</span><span class="n">name_actor</span><span class="p">]</span><span class="o">.</span><span class="n">SetVisibility</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">label_actor</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">label_actor</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">actors</span><span class="p">[</span><span class="n">label_actor</span><span class="p">]</span><span class="o">.</span><span class="n">SetVisibility</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span></div>
+
+
+    <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="PyVistaWidget.show_outside_actor">
 <a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.show_outside_actor">[docs]</a>
     <span class="k">def</span> <span class="nf">show_outside_actor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -3477,7 +3505,7 @@ document.write(`
 
 <span class="sd">        Args:</span>
 <span class="sd">            index (QModelIndex): index.</span>
-<span class="sd">            data (list): data list.</span>
+<span class="sd">            data (dict): data list.</span>
 <span class="sd">            positionT (numpy.ndarray): position (transformed).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">actor</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;name_actor&quot;</span><span class="p">]</span>
@@ -3492,7 +3520,8 @@ document.write(`
         <span class="n">option</span> <span class="o">=</span> <span class="n">option</span> <span class="o">|</span> <span class="n">option_add</span>
 
         <span class="n">actor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="o">**</span><span class="n">option</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">set_actor</span><span class="p">(</span><span class="s2">&quot;site&quot;</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_actor</span><span class="p">(</span><span class="s2">&quot;site&quot;</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clip_actor</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;cell&quot;</span><span class="p">],</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;label_actor&quot;</span><span class="p">])</span></div>
 
 
     <span class="c1"># ==================================================</span>
@@ -3504,7 +3533,7 @@ document.write(`
 
 <span class="sd">        Args:</span>
 <span class="sd">            index (QModelIndex): index.</span>
-<span class="sd">            data (list): data list.</span>
+<span class="sd">            data (dict): data list.</span>
 <span class="sd">            positionT (numpy.ndarray): position (transformed).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">actor</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;name_actor&quot;</span><span class="p">]</span>
@@ -3529,7 +3558,8 @@ document.write(`
         <span class="n">option</span> <span class="o">=</span> <span class="n">option</span> <span class="o">|</span> <span class="n">option_add</span>
 
         <span class="n">actor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="o">**</span><span class="n">option</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">set_actor</span><span class="p">(</span><span class="s2">&quot;bond&quot;</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_actor</span><span class="p">(</span><span class="s2">&quot;bond&quot;</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clip_actor</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;cell&quot;</span><span class="p">],</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;label_actor&quot;</span><span class="p">])</span></div>
 
 
     <span class="c1"># ==================================================</span>
@@ -3541,7 +3571,7 @@ document.write(`
 
 <span class="sd">        Args:</span>
 <span class="sd">            index (QModelIndex): index.</span>
-<span class="sd">            data (list): data list.</span>
+<span class="sd">            data (dict): data list.</span>
 <span class="sd">            positionT (numpy.ndarray): position (transformed).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">actor</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;name_actor&quot;</span><span class="p">]</span>
@@ -3573,7 +3603,8 @@ document.write(`
         <span class="n">option</span> <span class="o">=</span> <span class="n">option</span> <span class="o">|</span> <span class="n">option_add</span>
 
         <span class="n">actor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="o">**</span><span class="n">option</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">set_actor</span><span class="p">(</span><span class="s2">&quot;vector&quot;</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_actor</span><span class="p">(</span><span class="s2">&quot;vector&quot;</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clip_actor</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;cell&quot;</span><span class="p">],</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;label_actor&quot;</span><span class="p">])</span></div>
 
 
     <span class="c1"># ==================================================</span>
@@ -3585,7 +3616,7 @@ document.write(`
 
 <span class="sd">        Args:</span>
 <span class="sd">            index (QModelIndex): index.</span>
-<span class="sd">            data (list): data list.</span>
+<span class="sd">            data (dict): data list.</span>
 <span class="sd">            positionT (numpy.ndarray): position (transformed).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">actor</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;name_actor&quot;</span><span class="p">]</span>
@@ -3621,7 +3652,8 @@ document.write(`
         <span class="n">option</span> <span class="o">=</span> <span class="n">option</span> <span class="o">|</span> <span class="n">option_add</span>
 
         <span class="n">actor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="o">**</span><span class="n">option</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">set_actor</span><span class="p">(</span><span class="s2">&quot;orbital&quot;</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_actor</span><span class="p">(</span><span class="s2">&quot;orbital&quot;</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clip_actor</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;cell&quot;</span><span class="p">],</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;label_actor&quot;</span><span class="p">])</span></div>
 
 
     <span class="c1"># ==================================================</span>
@@ -3633,7 +3665,7 @@ document.write(`
 
 <span class="sd">        Args:</span>
 <span class="sd">            index (QModelIndex): index.</span>
-<span class="sd">            data (list): data list.</span>
+<span class="sd">            data (dict): data list.</span>
 <span class="sd">            positionT (numpy.ndarray): position (transformed).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">component_str</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;abs&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;z&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
@@ -3698,7 +3730,8 @@ document.write(`
         <span class="n">option</span> <span class="o">=</span> <span class="n">option</span> <span class="o">|</span> <span class="n">option_add</span>
 
         <span class="n">actor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="o">**</span><span class="n">option</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">set_actor</span><span class="p">(</span><span class="s2">&quot;stream&quot;</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_actor</span><span class="p">(</span><span class="s2">&quot;stream&quot;</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clip_actor</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;cell&quot;</span><span class="p">],</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;label_actor&quot;</span><span class="p">])</span></div>
 
 
     <span class="c1"># ==================================================</span>
@@ -3710,7 +3743,7 @@ document.write(`
 
 <span class="sd">        Args:</span>
 <span class="sd">            index (QModelIndex): index.</span>
-<span class="sd">            data (list): data list.</span>
+<span class="sd">            data (dict): data list.</span>
 <span class="sd">            positionT (numpy.ndarray): position (transformed).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">actor</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;name_actor&quot;</span><span class="p">]</span>
@@ -3735,7 +3768,8 @@ document.write(`
         <span class="n">option</span> <span class="o">=</span> <span class="n">option</span> <span class="o">|</span> <span class="n">option_add</span>
 
         <span class="n">actor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="o">**</span><span class="n">option</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">set_actor</span><span class="p">(</span><span class="s2">&quot;line&quot;</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_actor</span><span class="p">(</span><span class="s2">&quot;line&quot;</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clip_actor</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;cell&quot;</span><span class="p">],</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;label_actor&quot;</span><span class="p">])</span></div>
 
 
     <span class="c1"># ==================================================</span>
@@ -3747,7 +3781,7 @@ document.write(`
 
 <span class="sd">        Args:</span>
 <span class="sd">            index (QModelIndex): index.</span>
-<span class="sd">            data (list): data list.</span>
+<span class="sd">            data (dict): data list.</span>
 <span class="sd">            positionT (numpy.ndarray): position (transformed).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">actor</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;name_actor&quot;</span><span class="p">]</span>
@@ -3776,7 +3810,8 @@ document.write(`
         <span class="n">option</span> <span class="o">=</span> <span class="n">option</span> <span class="o">|</span> <span class="n">option_add</span>
 
         <span class="n">actor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="o">**</span><span class="n">option</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">set_actor</span><span class="p">(</span><span class="s2">&quot;plane&quot;</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_actor</span><span class="p">(</span><span class="s2">&quot;plane&quot;</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clip_actor</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;cell&quot;</span><span class="p">],</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;label_actor&quot;</span><span class="p">])</span></div>
 
 
     <span class="c1"># ==================================================</span>
@@ -3788,7 +3823,7 @@ document.write(`
 
 <span class="sd">        Args:</span>
 <span class="sd">            index (QModelIndex): index.</span>
-<span class="sd">            data (list): data list.</span>
+<span class="sd">            data (dict): data list.</span>
 <span class="sd">            positionT (numpy.ndarray): position (transformed).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">actor</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;name_actor&quot;</span><span class="p">]</span>
@@ -3816,7 +3851,8 @@ document.write(`
         <span class="n">option</span> <span class="o">=</span> <span class="n">option</span> <span class="o">|</span> <span class="n">option_add</span>
 
         <span class="n">actor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="o">**</span><span class="n">option</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">set_actor</span><span class="p">(</span><span class="s2">&quot;circle&quot;</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_actor</span><span class="p">(</span><span class="s2">&quot;circle&quot;</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clip_actor</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;cell&quot;</span><span class="p">],</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;label_actor&quot;</span><span class="p">])</span></div>
 
 
     <span class="c1"># ==================================================</span>
@@ -3828,7 +3864,7 @@ document.write(`
 
 <span class="sd">        Args:</span>
 <span class="sd">            index (QModelIndex): index.</span>
-<span class="sd">            data (list): data list.</span>
+<span class="sd">            data (dict): data list.</span>
 <span class="sd">            positionT (numpy.ndarray): position (transformed).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">actor</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;name_actor&quot;</span><span class="p">]</span>
@@ -3848,7 +3884,8 @@ document.write(`
         <span class="n">option</span> <span class="o">=</span> <span class="n">option</span> <span class="o">|</span> <span class="n">option_add</span>
 
         <span class="n">actor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="o">**</span><span class="n">option</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">set_actor</span><span class="p">(</span><span class="s2">&quot;torus&quot;</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_actor</span><span class="p">(</span><span class="s2">&quot;torus&quot;</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clip_actor</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;cell&quot;</span><span class="p">],</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;label_actor&quot;</span><span class="p">])</span></div>
 
 
     <span class="c1"># ==================================================</span>
@@ -3860,7 +3897,7 @@ document.write(`
 
 <span class="sd">        Args:</span>
 <span class="sd">            index (QModelIndex): index.</span>
-<span class="sd">            data (list): data list.</span>
+<span class="sd">            data (dict): data list.</span>
 <span class="sd">            positionT (numpy.ndarray): position (transformed).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">actor</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;name_actor&quot;</span><span class="p">]</span>
@@ -3881,7 +3918,8 @@ document.write(`
         <span class="n">option</span> <span class="o">=</span> <span class="n">option</span> <span class="o">|</span> <span class="n">option_add</span>
 
         <span class="n">actor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="o">**</span><span class="n">option</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">set_actor</span><span class="p">(</span><span class="s2">&quot;ellipsoid&quot;</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_actor</span><span class="p">(</span><span class="s2">&quot;ellipsoid&quot;</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clip_actor</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;cell&quot;</span><span class="p">],</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;label_actor&quot;</span><span class="p">])</span></div>
 
 
     <span class="c1"># ==================================================</span>
@@ -3893,7 +3931,7 @@ document.write(`
 
 <span class="sd">        Args:</span>
 <span class="sd">            index (QModelIndex): index.</span>
-<span class="sd">            data (list): data list.</span>
+<span class="sd">            data (dict): data list.</span>
 <span class="sd">            positionT (numpy.ndarray): position (transformed).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">actor</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;name_actor&quot;</span><span class="p">]</span>
@@ -3927,7 +3965,8 @@ document.write(`
         <span class="n">option</span> <span class="o">=</span> <span class="n">option</span> <span class="o">|</span> <span class="n">option_add</span>
 
         <span class="n">actor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="o">**</span><span class="n">option</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">set_actor</span><span class="p">(</span><span class="s2">&quot;toroid&quot;</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_actor</span><span class="p">(</span><span class="s2">&quot;toroid&quot;</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clip_actor</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;cell&quot;</span><span class="p">],</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;label_actor&quot;</span><span class="p">])</span></div>
 
 
     <span class="c1"># ==================================================</span>
@@ -3939,7 +3978,7 @@ document.write(`
 
 <span class="sd">        Args:</span>
 <span class="sd">            index (QModelIndex): index.</span>
-<span class="sd">            data (list): data list.</span>
+<span class="sd">            data (dict): data list.</span>
 <span class="sd">            positionT (numpy.ndarray): position (transformed).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">actor</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;name_actor&quot;</span><span class="p">]</span>
@@ -3979,7 +4018,8 @@ document.write(`
         <span class="n">option</span> <span class="o">=</span> <span class="n">option</span> <span class="o">|</span> <span class="n">option_add</span>
 
         <span class="n">actor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="o">**</span><span class="n">option</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">set_actor</span><span class="p">(</span><span class="s2">&quot;box&quot;</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_actor</span><span class="p">(</span><span class="s2">&quot;box&quot;</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clip_actor</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;cell&quot;</span><span class="p">],</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;label_actor&quot;</span><span class="p">])</span></div>
 
 
     <span class="c1"># ==================================================</span>
@@ -3991,7 +4031,7 @@ document.write(`
 
 <span class="sd">        Args:</span>
 <span class="sd">            index (QModelIndex): index.</span>
-<span class="sd">            data (list): data list.</span>
+<span class="sd">            data (dict): data list.</span>
 <span class="sd">            positionT (numpy.ndarray): position (transformed).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">actor</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;name_actor&quot;</span><span class="p">]</span>
@@ -4029,7 +4069,8 @@ document.write(`
         <span class="n">option</span> <span class="o">=</span> <span class="n">option</span> <span class="o">|</span> <span class="n">option_add</span>
 
         <span class="n">actor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="o">**</span><span class="n">option</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">set_actor</span><span class="p">(</span><span class="s2">&quot;polygon&quot;</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_actor</span><span class="p">(</span><span class="s2">&quot;polygon&quot;</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clip_actor</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;cell&quot;</span><span class="p">],</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;label_actor&quot;</span><span class="p">])</span></div>
 
 
     <span class="c1"># ==================================================</span>
@@ -4041,7 +4082,7 @@ document.write(`
 
 <span class="sd">        Args:</span>
 <span class="sd">            index (QModelIndex): index.</span>
-<span class="sd">            data (list): data list.</span>
+<span class="sd">            data (dict): data list.</span>
 <span class="sd">            positionT (numpy.ndarray): position (transformed).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">actor</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;name_actor&quot;</span><span class="p">]</span>
@@ -4070,7 +4111,8 @@ document.write(`
         <span class="n">option</span> <span class="o">=</span> <span class="n">option</span> <span class="o">|</span> <span class="n">option_add</span>
 
         <span class="n">actor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="o">**</span><span class="n">option</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">set_actor</span><span class="p">(</span><span class="s2">&quot;text3d&quot;</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_actor</span><span class="p">(</span><span class="s2">&quot;text3d&quot;</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clip_actor</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;cell&quot;</span><span class="p">],</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;label_actor&quot;</span><span class="p">])</span></div>
 
 
     <span class="c1"># ==================================================</span>
@@ -4082,7 +4124,7 @@ document.write(`
 
 <span class="sd">        Args:</span>
 <span class="sd">            index (QModelIndex): index.</span>
-<span class="sd">            data (list): data list.</span>
+<span class="sd">            data (dict): data list.</span>
 <span class="sd">            positionT (numpy.ndarray): position (transformed).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">actor</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;name_actor&quot;</span><span class="p">]</span>
@@ -4133,7 +4175,8 @@ document.write(`
         <span class="n">option</span> <span class="o">=</span> <span class="n">option</span> <span class="o">|</span> <span class="n">option_add</span>
 
         <span class="n">actor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="o">**</span><span class="n">option</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">set_actor</span><span class="p">(</span><span class="s2">&quot;isosurface&quot;</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_actor</span><span class="p">(</span><span class="s2">&quot;isosurface&quot;</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clip_actor</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;cell&quot;</span><span class="p">],</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;label_actor&quot;</span><span class="p">])</span></div>
 
 
     <span class="c1"># ==================================================</span>
@@ -4145,7 +4188,7 @@ document.write(`
 
 <span class="sd">        Args:</span>
 <span class="sd">            index (QModelIndex): index.</span>
-<span class="sd">            data (list): data list.</span>
+<span class="sd">            data (dict): data list.</span>
 <span class="sd">            positionT (numpy.ndarray): position (transformed).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">actor</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;name_actor&quot;</span><span class="p">]</span>
@@ -4181,7 +4224,8 @@ document.write(`
         <span class="n">option</span> <span class="o">=</span> <span class="n">option</span> <span class="o">|</span> <span class="n">option_add</span>
 
         <span class="n">actor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="o">**</span><span class="n">option</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">set_actor</span><span class="p">(</span><span class="s2">&quot;spline&quot;</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_actor</span><span class="p">(</span><span class="s2">&quot;spline&quot;</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clip_actor</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;cell&quot;</span><span class="p">],</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;label_actor&quot;</span><span class="p">])</span></div>
 
 
     <span class="c1"># ==================================================</span>
@@ -4193,7 +4237,7 @@ document.write(`
 
 <span class="sd">        Args:</span>
 <span class="sd">            index (QModelIndex): index.</span>
-<span class="sd">            data (list): data list.</span>
+<span class="sd">            data (dict): data list.</span>
 <span class="sd">            positionT (numpy.ndarray): position (transformed).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">actor</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;name_actor&quot;</span><span class="p">]</span>
@@ -4221,7 +4265,8 @@ document.write(`
         <span class="n">option</span> <span class="o">=</span> <span class="n">option</span> <span class="o">|</span> <span class="n">option_add</span>
 
         <span class="n">actor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="o">**</span><span class="n">option</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">set_actor</span><span class="p">(</span><span class="s2">&quot;spline_t&quot;</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_actor</span><span class="p">(</span><span class="s2">&quot;spline_t&quot;</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clip_actor</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;cell&quot;</span><span class="p">],</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;label_actor&quot;</span><span class="p">])</span></div>
 
 
     <span class="c1"># ==================================================</span>
@@ -4233,7 +4278,7 @@ document.write(`
 
 <span class="sd">        Args:</span>
 <span class="sd">            index (QModelIndex): index.</span>
-<span class="sd">            data (list): data list.</span>
+<span class="sd">            data (dict): data list.</span>
 <span class="sd">            positionT (numpy.ndarray): position (transformed).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">actor</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;name_actor&quot;</span><span class="p">]</span>
@@ -4264,6 +4309,7 @@ document.write(`
         <span class="bp">self</span><span class="o">.</span><span class="n">add_point_labels</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">actor</span><span class="p">,</span> <span class="o">**</span><span class="n">option</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">set_actor</span><span class="p">(</span><span class="s2">&quot;caption&quot;</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">actor</span> <span class="o">+</span> <span class="s2">&quot;-labels&quot;</span><span class="p">)</span></div>
 
+        <span class="c1"># no implementation for clip_actor</span>
 
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="PyVistaWidget.plot_data_text2d">
@@ -4274,7 +4320,7 @@ document.write(`
 
 <span class="sd">        Args:</span>
 <span class="sd">            index (QModelIndex): index.</span>
-<span class="sd">            data (list): data list.</span>
+<span class="sd">            data (dict): data list.</span>
 <span class="sd">            positionT (numpy.ndarray): position (transformed).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">actor</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;name_actor&quot;</span><span class="p">]</span>
@@ -4313,7 +4359,7 @@ document.write(`
 <span class="sd">        Args:</span>
 <span class="sd">            object_type (str): object type.</span>
 <span class="sd">            index (QModelIndex): index.</span>
-<span class="sd">            data (list): data list.</span>
+<span class="sd">            data (dict): data list.</span>
 <span class="sd">            positionT (numpy.ndarray): position (transformed).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">label</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;label&quot;</span><span class="p">]</span>
