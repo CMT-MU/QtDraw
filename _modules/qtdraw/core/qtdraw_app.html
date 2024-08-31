@@ -542,7 +542,7 @@ document.write(`
                 <span class="bp">self</span><span class="o">.</span><span class="n">_update_title</span><span class="p">()</span>
 
     <span class="c1"># ==================================================</span>
-    <span class="k">def</span> <span class="nf">save_screenshot</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_save_screenshot</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Save screenshot dialog.</span>
 
@@ -1332,7 +1332,7 @@ document.write(`
         <span class="bp">self</span><span class="o">.</span><span class="n">ds_button_clear</span><span class="o">.</span><span class="n">pressed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_clear_data</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ds_button_load</span><span class="o">.</span><span class="n">pressed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">open_file</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ds_button_save</span><span class="o">.</span><span class="n">pressed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">save_file</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ds_button_screenshot</span><span class="o">.</span><span class="n">pressed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">save_screenshot</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ds_button_screenshot</span><span class="o">.</span><span class="n">pressed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_save_screenshot</span><span class="p">)</span>
 
         <span class="c1"># misc panel.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">misc_button_info</span><span class="o">.</span><span class="n">pressed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">info_dialog</span><span class="o">.</span><span class="n">show</span><span class="p">())</span>
@@ -2987,6 +2987,32 @@ document.write(`
 <span class="sd">            - (bool) -- True if actor is removed.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pyvista_widget</span><span class="o">.</span><span class="n">remove_actor</span><span class="p">(</span><span class="n">actor</span><span class="p">,</span> <span class="n">reset_camera</span><span class="p">,</span> <span class="n">render</span><span class="p">)</span></div>
+
+
+    <span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="QtDraw.load">
+<a class="viewcode-back" href="../../../src/from_python.html#qtdraw.core.qtdraw_app.QtDraw.load">[docs]</a>
+    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Load all info.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            filename (str): full file name.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pyvista_widget</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span></div>
+
+
+    <span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="QtDraw.save">
+<a class="viewcode-back" href="../../../src/from_python.html#qtdraw.core.qtdraw_app.QtDraw.save">[docs]</a>
+    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        save all info.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            filename (str): full file name.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pyvista_widget</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span></div>
 </div>
 
 </pre></div>

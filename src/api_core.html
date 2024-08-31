@@ -551,10 +551,12 @@ document.write(`
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.add_torus"><code class="docutils literal notranslate"><span class="pre">QtDraw.add_torus()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.add_vector"><code class="docutils literal notranslate"><span class="pre">QtDraw.add_vector()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.clear_data"><code class="docutils literal notranslate"><span class="pre">QtDraw.clear_data()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.load"><code class="docutils literal notranslate"><span class="pre">QtDraw.load()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.nonrepeat_data"><code class="docutils literal notranslate"><span class="pre">QtDraw.nonrepeat_data()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.plot_orbital_from_data"><code class="docutils literal notranslate"><span class="pre">QtDraw.plot_orbital_from_data()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.plot_stream_from_data"><code class="docutils literal notranslate"><span class="pre">QtDraw.plot_stream_from_data()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.remove_actor"><code class="docutils literal notranslate"><span class="pre">QtDraw.remove_actor()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.save"><code class="docutils literal notranslate"><span class="pre">QtDraw.save()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.set_axis"><code class="docutils literal notranslate"><span class="pre">QtDraw.set_axis()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.set_bar"><code class="docutils literal notranslate"><span class="pre">QtDraw.set_bar()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.set_cell"><code class="docutils literal notranslate"><span class="pre">QtDraw.set_cell()</span></code></a></li>
@@ -3240,6 +3242,17 @@ document.write(`
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.core.qtdraw_app.QtDraw.load">
+<span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/qtdraw_app.html#QtDraw.load"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.qtdraw_app.QtDraw.load" title="Link to this definition">#</a></dt>
+<dd><p>Load all info.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>filename</strong> (<em>str</em>) -- full file name.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="qtdraw.core.qtdraw_app.QtDraw.nonrepeat_data">
 <span class="sig-name descname"><span class="pre">nonrepeat_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/qtdraw_app.html#QtDraw.nonrepeat_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.qtdraw_app.QtDraw.nonrepeat_data" title="Link to this definition">#</a></dt>
 <dd><p>Transform data to non-repeat data.</p>
@@ -3329,6 +3342,17 @@ document.write(`
 <li><p>(bool) -- True if actor is removed.</p></li>
 </ul>
 </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.core.qtdraw_app.QtDraw.save">
+<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/qtdraw_app.html#QtDraw.save"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.qtdraw_app.QtDraw.save" title="Link to this definition">#</a></dt>
+<dd><p>save all info.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>filename</strong> (<em>str</em>) -- full file name.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -3833,10 +3857,12 @@ document.write(`
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.add_torus"><code class="docutils literal notranslate"><span class="pre">QtDraw.add_torus()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.add_vector"><code class="docutils literal notranslate"><span class="pre">QtDraw.add_vector()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.clear_data"><code class="docutils literal notranslate"><span class="pre">QtDraw.clear_data()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.load"><code class="docutils literal notranslate"><span class="pre">QtDraw.load()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.nonrepeat_data"><code class="docutils literal notranslate"><span class="pre">QtDraw.nonrepeat_data()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.plot_orbital_from_data"><code class="docutils literal notranslate"><span class="pre">QtDraw.plot_orbital_from_data()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.plot_stream_from_data"><code class="docutils literal notranslate"><span class="pre">QtDraw.plot_stream_from_data()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.remove_actor"><code class="docutils literal notranslate"><span class="pre">QtDraw.remove_actor()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.save"><code class="docutils literal notranslate"><span class="pre">QtDraw.save()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.set_axis"><code class="docutils literal notranslate"><span class="pre">QtDraw.set_axis()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.set_bar"><code class="docutils literal notranslate"><span class="pre">QtDraw.set_bar()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.set_cell"><code class="docutils literal notranslate"><span class="pre">QtDraw.set_cell()</span></code></a></li>
