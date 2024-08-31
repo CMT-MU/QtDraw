@@ -11,7 +11,7 @@
 | open_file | Open file dialog. |
 | load_file | Load file. |
 | save_file | Save file dialog. |
-| save_screenshot | Save screenshot dialog. |
+| _save_screenshot | Save screenshot dialog. |
 | create_panel | create right panel. |
 | create_gui_unit_cell | Create unit cell panel. |
 | create_gui_view | Create view panel. |
@@ -96,6 +96,8 @@
 | set_cell | Set unit cell. |
 | add_mesh | Add any PyVista/VTK mesh or dataset that PyVista can wrap to the scene. |
 | remove_actor | Remove actor. |
+| load | Load all info. |
+| save | save all info. |
 
 
 ## <div class='my-heading' style='color: darkgreen;'>dialog_about.py
@@ -194,6 +196,7 @@
 | set_unit_cell | Set unit cell. |
 | set_clip | Set clip mode. |
 | hide_outside_actor | Hide actors outside the range. |
+| clip_actor | Clip actor. |
 | show_outside_actor | Show actors outside the range. |
 | set_repeat | Set repeat mode. |
 | set_range | Set cell range. |
