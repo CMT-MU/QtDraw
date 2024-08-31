@@ -197,7 +197,7 @@ class QtDraw(Window):
                 self._update_title()
 
     # ==================================================
-    def save_screenshot(self):
+    def _save_screenshot(self):
         """
         Save screenshot dialog.
 
@@ -987,7 +987,7 @@ class QtDraw(Window):
         self.ds_button_clear.pressed.connect(self._clear_data)
         self.ds_button_load.pressed.connect(self.open_file)
         self.ds_button_save.pressed.connect(self.save_file)
-        self.ds_button_screenshot.pressed.connect(self.save_screenshot)
+        self.ds_button_screenshot.pressed.connect(self._save_screenshot)
 
         # misc panel.
         self.misc_button_info.pressed.connect(lambda: self.info_dialog.show())
@@ -2532,3 +2532,23 @@ class QtDraw(Window):
             - (bool) -- True if actor is removed.
         """
         return self.pyvista_widget.remove_actor(actor, reset_camera, render)
+
+    # ==================================================
+    def load(self, filename):
+        """
+        Load all info.
+
+        Args:
+            filename (str): full file name.
+        """
+        self.pyvista_widget.load(filename)
+
+    # ==================================================
+    def save(self, filename):
+        """
+        save all info.
+
+        Args:
+            filename (str): full file name.
+        """
+        self.pyvista_widget.save(filename)
