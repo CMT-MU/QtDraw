@@ -526,7 +526,7 @@ class MultiPiePlugin:
         self.plus["site_cluster"] = cluster
         self.plus["site_z_samb"] = z_samb
         self.plus["site_c_samb"] = c_samb
-        return pos
+        return str(pos)
 
     # ==================================================
     def gen_bond_samb(self, pos):
@@ -552,7 +552,7 @@ class MultiPiePlugin:
         self.plus["bond_cluster"] = cluster
         self.plus["bond_z_samb"] = z_samb
         self.plus["bond_c_samb"] = c_samb
-        return pos
+        return str(pos)
 
     # ==================================================
     def gen_vector_samb(self, pos, v_type):

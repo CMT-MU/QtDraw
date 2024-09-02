@@ -2438,7 +2438,8 @@ class PyVistaWidget(QtInteractor):
         """
         model = self._data[object_type]
         model.set_row_data(index, column, actor_name)
-        self._actor_object_type[actor_name] = object_type
+        if column == COLUMN_NAME_ACTOR:
+            self._actor_object_type[actor_name] = object_type
 
         # set saved property.
         if actor_name in self._selected_actor.keys():
