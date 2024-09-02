@@ -391,14 +391,20 @@ class GroupModel(QStandardItemModel):
         if item.parent():  # child.
             row = index.row()
             n = item.parent().rowCount()
-            if row == 0:
+            if row == 0:  # copy 2nd child to parent.
                 row_data = self.get_row_data(item.parent().child(1).index())
                 for c, d in enumerate(row_data):
                     super().setData(self.item(item.parent().row(), c).index(), d)
             self.updateData.emit(self.group_name, self.get_row_data(index), role, index)
-            self.removeRow(row, index.parent())
             if n == 2:
-                self.removeRow(0, index.parent())
+                if row == 1:  # copy 1st child to parent.
+                    row_data = self.get_row_data(item.parent().child(0).index())
+                    for c, d in enumerate(row_data):
+                        super().setData(self.item(item.parent().row(), c).index(), d)
+                self.removeRow(0, index.parent())  # remove 2nd child.
+                self.removeRow(0, index.parent())  # remove first child.
+            else:
+                self.removeRow(row, index.parent())  # remove row child.
         else:  # parent.
             n = self.rowCount(index)
             for row in range(n):
