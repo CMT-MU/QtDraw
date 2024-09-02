@@ -31,7 +31,7 @@
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -2977,7 +2977,8 @@ document.write(`
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="n">object_type</span><span class="p">]</span>
         <span class="n">model</span><span class="o">.</span><span class="n">set_row_data</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">column</span><span class="p">,</span> <span class="n">actor_name</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_actor_object_type</span><span class="p">[</span><span class="n">actor_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">object_type</span>
+        <span class="k">if</span> <span class="n">column</span> <span class="o">==</span> <span class="n">COLUMN_NAME_ACTOR</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_actor_object_type</span><span class="p">[</span><span class="n">actor_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">object_type</span>
 
         <span class="c1"># set saved property.</span>
         <span class="k">if</span> <span class="n">actor_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_selected_actor</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
