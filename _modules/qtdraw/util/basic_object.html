@@ -1,0 +1,1393 @@
+
+<!DOCTYPE html>
+
+
+<html lang="jp" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>qtdraw.util.basic_object &#8212; QtDraw</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../../_static/documentation_options.js?v=8cf54648"></script>
+    <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/qtdraw/util/basic_object';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="jp"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../README.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/qtdraw_logo.png" class="logo__image only-light" alt="QtDraw - Home"/>
+    <script>document.write(`<img src="../../../_static/qtdraw_logo.png" class="logo__image only-dark" alt="QtDraw - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../src/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../src/install.html">Install QtDraw (and MultiPie)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../src/getting_started.html">Getting Started</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../src/user_guide.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../src/example.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../src/from_python.html">Usage from Python code</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../src/api_summary.html">API Reference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../src/api_core.html">Core</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../src/api_multipie.html">MultiPie</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../src/api_parser.html">Parser</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../src/api_script.html">Script</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../src/api_util.html">Utility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../src/api_widget.html">Widget</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../src/function_table.html">Function Summary</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/CMT-MU/QtDraw.git" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/CMT-MU/QtDraw.git/issues/new?title=Issue%20on%20page%20%2F_modules/qtdraw/util/basic_object.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for qtdraw.util.basic_object</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Basic PolyData objects.</span>
+
+<span class="sd">This module provides PolyData objects as fundamental elements to draw.</span>
+<span class="sd">The following objects are available.</span>
+
+<span class="sd">- sphere</span>
+<span class="sd">- bond</span>
+<span class="sd">- vector</span>
+<span class="sd">- orbital</span>
+<span class="sd">- vector stream</span>
+<span class="sd">- line</span>
+<span class="sd">- plane</span>
+<span class="sd">- circle</span>
+<span class="sd">- torus</span>
+<span class="sd">- ellipsoid</span>
+<span class="sd">- toroid</span>
+<span class="sd">- box</span>
+<span class="sd">- polygon</span>
+<span class="sd">- text3d</span>
+<span class="sd">- spline</span>
+<span class="sd">- spline (parametric)</span>
+<span class="sd">- isosurface</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">sympy</span> <span class="k">as</span> <span class="nn">sp</span>
+<span class="kn">from</span> <span class="nn">vtk</span> <span class="kn">import</span> <span class="n">vtkParametricSpline</span>
+<span class="kn">import</span> <span class="nn">pyvista</span> <span class="k">as</span> <span class="nn">pv</span>
+<span class="kn">from</span> <span class="nn">pyvista.core.utilities</span> <span class="kn">import</span> <span class="n">surface_from_para</span><span class="p">,</span> <span class="n">geometric_sources</span>
+<span class="kn">from</span> <span class="nn">gcoreutils.convert_util</span> <span class="kn">import</span> <span class="n">text_to_sympy</span><span class="p">,</span> <span class="n">text_to_list</span>
+<span class="kn">from</span> <span class="nn">qtdraw.util.util_axis</span> <span class="kn">import</span> <span class="n">get_view_vector</span>
+<span class="kn">from</span> <span class="nn">qtdraw.util.util</span> <span class="kn">import</span> <span class="n">create_grid</span>
+<span class="kn">from</span> <span class="nn">qtdraw.core.pyvista_widget_setting</span> <span class="kn">import</span> <span class="n">widget_detail</span> <span class="k">as</span> <span class="n">detail</span>
+<span class="kn">from</span> <span class="nn">qtdraw.core.pyvista_widget_setting</span> <span class="kn">import</span> <span class="n">CHOP</span>
+
+
+<span class="c1"># ==================================================</span>
+<span class="k">def</span> <span class="nf">_str_poly_array</span><span class="p">(</span><span class="n">poly</span><span class="p">,</span> <span class="n">xyz</span><span class="p">,</span> <span class="n">var</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="s2">&quot;z&quot;</span><span class="p">],</span> <span class="n">size</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert from polynomial string to scalar array.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        poly (str): polynomial string of var.</span>
+<span class="sd">        xyz (list or numpy.ndarray): list of (x,y,z) points (given by create_sphere and .points), [[float]].</span>
+<span class="sd">        var (list, optional): polynomial variables, [str].</span>
+<span class="sd">        size (float, optional): normalize to max. value as size ?</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        - (numpy.ndarray) -- scalar array.</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        - if size is positive, max. value is equivalent to size.</span>
+<span class="sd">        - if size is negative, abs. value is scaled by size.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">xyz</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">xyz</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">symbols</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">var</span><span class="p">),</span> <span class="n">real</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">v</span> <span class="o">=</span> <span class="p">{</span><span class="n">var</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span> <span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">var</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span> <span class="n">r</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">var</span><span class="p">[</span><span class="mi">2</span><span class="p">]:</span> <span class="n">r</span><span class="p">[</span><span class="mi">2</span><span class="p">]}</span>
+    <span class="n">poly</span> <span class="o">=</span> <span class="n">poly</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;sqrt&quot;</span><span class="p">,</span> <span class="s2">&quot;SQ&quot;</span><span class="p">)</span>
+    <span class="n">poly</span> <span class="o">=</span> <span class="n">poly</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="s2">&quot;(sqrt(x**2+y**2+z**2))&quot;</span><span class="p">)</span>
+    <span class="n">poly</span> <span class="o">=</span> <span class="n">poly</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;SQ&quot;</span><span class="p">,</span> <span class="s2">&quot;sqrt&quot;</span><span class="p">)</span>
+    <span class="n">ex</span> <span class="o">=</span> <span class="n">text_to_sympy</span><span class="p">(</span><span class="n">poly</span><span class="p">,</span> <span class="n">local</span><span class="o">=</span><span class="n">v</span><span class="p">)</span>
+    <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">xyz</span><span class="o">.</span><span class="n">T</span>
+
+    <span class="n">f</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">lambdify</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">ex</span><span class="p">)</span>
+    <span class="n">fv</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">ex</span><span class="o">.</span><span class="n">atoms</span><span class="p">(</span><span class="n">sp</span><span class="o">.</span><span class="n">Symbol</span><span class="p">))):</span>  <span class="c1"># for const.</span>
+        <span class="n">fv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">fv</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+
+    <span class="n">max_f</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">fv</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">size</span> <span class="o">&gt;</span> <span class="n">CHOP</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">max_f</span> <span class="o">&gt;</span> <span class="n">CHOP</span><span class="p">:</span>
+            <span class="n">scale</span> <span class="o">=</span> <span class="n">size</span> <span class="o">/</span> <span class="n">max_f</span>
+            <span class="n">fv</span> <span class="o">*=</span> <span class="n">scale</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">fv</span> <span class="o">*=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">fv</span>
+
+
+<span class="c1"># ==================================================</span>
+<span class="k">def</span> <span class="nf">_str_vec_array</span><span class="p">(</span><span class="n">vec</span><span class="p">,</span> <span class="n">xyz</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">var</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="s2">&quot;z&quot;</span><span class="p">]):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert from polynomial string (vector) to vector and scalar (abs.) arrays.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        vec (str): polynomial component.</span>
+<span class="sd">        xyz (list or numpy.ndarray): list of (x,y,z) points (given by create_sphere and .points), [[float]].</span>
+<span class="sd">        normalize (bool, optional): normalize ?</span>
+<span class="sd">        var (list, optional): polynomial variables, [str].</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        - (numpy.ndarray) -- vector array.</span>
+<span class="sd">        - (numpy.ndarray) -- abs. value array.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">vec</span> <span class="o">=</span> <span class="n">text_to_list</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span>
+    <span class="n">xyz</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">xyz</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+
+    <span class="n">f1</span> <span class="o">=</span> <span class="n">_str_poly_array</span><span class="p">(</span><span class="n">vec</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">xyz</span><span class="p">,</span> <span class="n">var</span><span class="p">)</span>
+    <span class="n">f2</span> <span class="o">=</span> <span class="n">_str_poly_array</span><span class="p">(</span><span class="n">vec</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">xyz</span><span class="p">,</span> <span class="n">var</span><span class="p">)</span>
+    <span class="n">f3</span> <span class="o">=</span> <span class="n">_str_poly_array</span><span class="p">(</span><span class="n">vec</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">xyz</span><span class="p">,</span> <span class="n">var</span><span class="p">)</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">f1</span><span class="p">,</span> <span class="n">f2</span><span class="p">,</span> <span class="n">f3</span><span class="p">])</span><span class="o">.</span><span class="n">T</span>
+    <span class="k">if</span> <span class="n">normalize</span><span class="p">:</span>
+        <span class="n">fa</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">fa</span> <span class="o">&gt;</span> <span class="n">CHOP</span><span class="p">:</span>
+            <span class="n">f</span> <span class="o">=</span> <span class="n">f</span> <span class="o">/</span> <span class="n">fa</span>
+
+    <span class="n">fs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">f</span><span class="p">,</span> <span class="n">fs</span>
+
+
+<span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="create_sphere">
+<a class="viewcode-back" href="../../../src/api_util.html#qtdraw.util.basic_object.create_sphere">[docs]</a>
+<span class="k">def</span> <span class="nf">create_sphere</span><span class="p">(</span>
+    <span class="n">radius</span><span class="p">,</span>
+    <span class="n">theta_phi_range</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">theta_phi_resolution</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Create sphere object.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        radius (float): radius.</span>
+<span class="sd">        theta_phi_range (list or numpy.ndarray, optional): theta and phi range, [[float]].</span>
+<span class="sd">        theta_phi_resolution (list): theta and phi resolution, [int].</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        - (vtk.PolyData) -- sphere object.</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        - if theta_phi_range/theta_phi_resolution is None, default is used.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">theta_phi_range</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">theta_phi_range</span> <span class="o">=</span> <span class="n">detail</span><span class="p">[</span><span class="s2">&quot;theta_phi_range&quot;</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">theta_phi_resolution</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">theta_phi_resolution</span> <span class="o">=</span> <span class="n">detail</span><span class="p">[</span><span class="s2">&quot;theta_phi_resolution&quot;</span><span class="p">]</span>
+
+    <span class="c1"># note that notation (theta, phi) are opposite as usual.</span>
+    <span class="n">obj</span> <span class="o">=</span> <span class="n">pv</span><span class="o">.</span><span class="n">Sphere</span><span class="p">(</span>
+        <span class="n">radius</span><span class="o">=</span><span class="n">radius</span><span class="p">,</span>
+        <span class="n">phi_resolution</span><span class="o">=</span><span class="n">theta_phi_resolution</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+        <span class="n">theta_resolution</span><span class="o">=</span><span class="n">theta_phi_resolution</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+        <span class="n">start_phi</span><span class="o">=</span><span class="n">theta_phi_range</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span>
+        <span class="n">end_phi</span><span class="o">=</span><span class="n">theta_phi_range</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span>
+        <span class="n">start_theta</span><span class="o">=</span><span class="n">theta_phi_range</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span>
+        <span class="n">end_theta</span><span class="o">=</span><span class="n">theta_phi_range</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span>
+    <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">obj</span></div>
+
+
+
+<span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="create_bond">
+<a class="viewcode-back" href="../../../src/api_util.html#qtdraw.util.basic_object.create_bond">[docs]</a>
+<span class="k">def</span> <span class="nf">create_bond</span><span class="p">(</span><span class="n">direction</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">twotone</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Create bond object.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        direction (list or numpy.ndarray): bond direction (cartesian), [float].</span>
+<span class="sd">        width (float, optional): width.</span>
+<span class="sd">        twotone (bool, optional): twotone color ?</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        - (vtk.PolyData) -- cylinder object</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        - bond position is at center.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">resolution</span> <span class="o">=</span> <span class="n">detail</span><span class="p">[</span><span class="s2">&quot;bond_resolution&quot;</span><span class="p">]</span>
+
+    <span class="n">direction</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">direction</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+    <span class="n">length</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">direction</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">twotone</span><span class="p">:</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">pv</span><span class="o">.</span><span class="n">Cylinder</span><span class="p">(</span>
+            <span class="n">direction</span><span class="o">=</span><span class="n">direction</span><span class="p">,</span>
+            <span class="n">radius</span><span class="o">=</span><span class="n">width</span><span class="p">,</span>
+            <span class="n">height</span><span class="o">=</span><span class="n">length</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span>
+            <span class="n">resolution</span><span class="o">=</span><span class="n">resolution</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="n">pv</span><span class="o">.</span><span class="n">PolyData</span><span class="p">([(</span><span class="o">-</span><span class="mf">0.25</span> <span class="o">*</span> <span class="n">direction</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span> <span class="p">(</span><span class="mf">0.25</span> <span class="o">*</span> <span class="n">direction</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()])</span>
+        <span class="n">m</span><span class="o">.</span><span class="n">point_data</span><span class="p">[</span><span class="s2">&quot;scalars&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">glyph</span><span class="p">(</span><span class="n">geom</span><span class="o">=</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">p</span><span class="p">),</span> <span class="n">scale</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">rng</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">orient</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">pv</span><span class="o">.</span><span class="n">Cylinder</span><span class="p">(</span>
+            <span class="n">direction</span><span class="o">=</span><span class="n">direction</span><span class="p">,</span>
+            <span class="n">radius</span><span class="o">=</span><span class="n">width</span><span class="p">,</span>
+            <span class="n">height</span><span class="o">=</span><span class="n">length</span><span class="p">,</span>
+            <span class="n">resolution</span><span class="o">=</span><span class="n">resolution</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="n">pv</span><span class="o">.</span><span class="n">PolyData</span><span class="p">([[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]])</span>
+        <span class="n">m</span><span class="o">.</span><span class="n">point_data</span><span class="p">[</span><span class="s2">&quot;scalars&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">glyph</span><span class="p">(</span><span class="n">geom</span><span class="o">=</span><span class="p">(</span><span class="n">p</span><span class="p">),</span> <span class="n">scale</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">rng</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">orient</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">obj</span></div>
+
+
+
+<span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="create_vector">
+<a class="viewcode-back" href="../../../src/api_util.html#qtdraw.util.basic_object.create_vector">[docs]</a>
+<span class="k">def</span> <span class="nf">create_vector</span><span class="p">(</span>
+    <span class="n">direction</span><span class="p">,</span>
+    <span class="n">length</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+    <span class="n">width</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+    <span class="n">offset</span><span class="o">=-</span><span class="mf">0.43</span><span class="p">,</span>
+    <span class="n">shaft_radius</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+    <span class="n">tip_radius</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span>
+    <span class="n">tip_length</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Create vector object.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        direction (list or numpy.ndarray): direction (cartesian), [float].</span>
+<span class="sd">        length (float, optional): length.</span>
+<span class="sd">        width (float, optional): width.</span>
+<span class="sd">        offset (float, optional): offest ratio.</span>
+<span class="sd">        shaft_radius (float, optional) :shaft radius.</span>
+<span class="sd">        tip_radius (float, optional): tip radius.</span>
+<span class="sd">        tip_length (float, optional): tip length.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        - (vtk.PolyData) -- arrow object.</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        - if length is zero, vector is used as it is.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">shaft_resolution</span> <span class="o">=</span> <span class="n">detail</span><span class="p">[</span><span class="s2">&quot;shaft_resolution&quot;</span><span class="p">]</span>
+    <span class="n">tip_resolution</span> <span class="o">=</span> <span class="n">detail</span><span class="p">[</span><span class="s2">&quot;tip_resolution&quot;</span><span class="p">]</span>
+
+    <span class="n">direction</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">direction</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+    <span class="n">norm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">direction</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">length</span> <span class="o">&lt;</span> <span class="n">CHOP</span><span class="p">:</span>
+        <span class="n">length</span> <span class="o">=</span> <span class="n">norm</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">direction</span> <span class="o">=</span> <span class="n">length</span> <span class="o">*</span> <span class="n">direction</span> <span class="o">/</span> <span class="n">norm</span>
+
+    <span class="n">obj</span> <span class="o">=</span> <span class="n">pv</span><span class="o">.</span><span class="n">Arrow</span><span class="p">(</span>
+        <span class="n">offset</span> <span class="o">*</span> <span class="n">direction</span><span class="p">,</span>
+        <span class="n">direction</span><span class="p">,</span>
+        <span class="n">scale</span><span class="o">=</span><span class="n">length</span><span class="p">,</span>
+        <span class="n">shaft_radius</span><span class="o">=</span><span class="n">shaft_radius</span> <span class="o">*</span> <span class="n">width</span> <span class="o">/</span> <span class="n">length</span><span class="p">,</span>
+        <span class="n">tip_radius</span><span class="o">=</span><span class="n">tip_radius</span> <span class="o">*</span> <span class="n">width</span> <span class="o">/</span> <span class="n">length</span><span class="p">,</span>
+        <span class="n">tip_length</span><span class="o">=</span><span class="n">tip_length</span><span class="p">,</span>
+        <span class="n">shaft_resolution</span><span class="o">=</span><span class="n">shaft_resolution</span><span class="p">,</span>
+        <span class="n">tip_resolution</span><span class="o">=</span><span class="n">tip_resolution</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">obj</span></div>
+
+
+
+<span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="create_orbital">
+<a class="viewcode-back" href="../../../src/api_util.html#qtdraw.util.basic_object.create_orbital">[docs]</a>
+<span class="k">def</span> <span class="nf">create_orbital</span><span class="p">(</span>
+    <span class="n">shape</span><span class="p">,</span>
+    <span class="n">surface</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+    <span class="n">size</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+    <span class="n">theta_phi_range</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">theta_phi_resolution</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Create orbital object.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        shape (str): (x,y,z) shape (cartesian).</span>
+<span class="sd">        surface (str, optional): (x,y,z) surface color (cartesian).</span>
+<span class="sd">        size (float, optional): size.</span>
+<span class="sd">        theta_phi_range (list or numpy.ndarray, optional): theta and phi range, [[float]].</span>
+<span class="sd">        theta_phi_resolution (list): theta and phi resolution, [int].</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        - (vtk.PolyData) -- orbital object with &quot;surface&quot;.</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        - if surface is &quot;&quot;, the same one of shape is used.</span>
+<span class="sd">        - if size is positive, max. value is equivalent to size.</span>
+<span class="sd">        - if size is negative, abs. value is scaled by size.</span>
+<span class="sd">        - if theta_phi_range is None, default is used.</span>
+<span class="sd">        - if theta_phi_resolution is None, default is used.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">shape</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span>
+    <span class="n">surface</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">surface</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">surface</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+        <span class="n">surface</span> <span class="o">=</span> <span class="n">shape</span>
+
+    <span class="k">if</span> <span class="n">theta_phi_range</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">theta_phi_range</span> <span class="o">=</span> <span class="n">detail</span><span class="p">[</span><span class="s2">&quot;theta_phi_range&quot;</span><span class="p">]</span>
+
+    <span class="n">obj</span> <span class="o">=</span> <span class="n">create_sphere</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">theta_phi_range</span><span class="o">=</span><span class="n">theta_phi_range</span><span class="p">,</span> <span class="n">theta_phi_resolution</span><span class="o">=</span><span class="n">theta_phi_resolution</span><span class="p">)</span>
+    <span class="n">sp</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">points</span>
+    <span class="n">fs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">_str_poly_array</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">sp</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">size</span><span class="p">))</span>
+    <span class="n">fc</span> <span class="o">=</span> <span class="n">_str_poly_array</span><span class="p">(</span><span class="n">surface</span><span class="p">,</span> <span class="n">sp</span><span class="p">)</span>
+    <span class="n">obj</span><span class="o">.</span><span class="n">points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">fs</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">T</span> <span class="o">*</span> <span class="n">sp</span>
+    <span class="n">obj</span><span class="p">[</span><span class="s2">&quot;surface&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">fc</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">obj</span></div>
+
+
+
+<span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="create_stream">
+<a class="viewcode-back" href="../../../src/api_util.html#qtdraw.util.basic_object.create_stream">[docs]</a>
+<span class="k">def</span> <span class="nf">create_stream</span><span class="p">(</span>
+    <span class="n">shape</span><span class="o">=</span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
+    <span class="n">vector</span><span class="o">=</span><span class="s2">&quot;[x,y,z]&quot;</span><span class="p">,</span>
+    <span class="n">size</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+    <span class="n">theta_phi_range</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">division</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">length</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+    <span class="n">width</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+    <span class="n">offset</span><span class="o">=-</span><span class="mf">0.43</span><span class="p">,</span>
+    <span class="n">abs_scale</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">shaft_radius</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+    <span class="n">tip_radius</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span>
+    <span class="n">tip_length</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Create steam vector object.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        shape (str, optional): f(x,y,z) shape (cartesian).</span>
+<span class="sd">        vector (str, optional): stream vector [vx(x,y,z),vy(x,y,z),vz(x,y,z)] (cartesina).</span>
+<span class="sd">        size (float, optional): shape size.</span>
+<span class="sd">        theta_phi_range (list or numpy.ndarray, optional): theta and phi range, [[float]].</span>
+<span class="sd">        division (list, optional): division for theta and phi, [int].</span>
+<span class="sd">        length (float, optional): length.</span>
+<span class="sd">        width (float, optional): width.</span>
+<span class="sd">        offset (float, optional): offest ratio.</span>
+<span class="sd">        abs_scale (bool, optional): use \|v(x,y,z)\| * length ?</span>
+<span class="sd">        shaft_radius (float, optional) :shaft radius.</span>
+<span class="sd">        tip_radius (float, optional): tip radius.</span>
+<span class="sd">        tip_length (float, optional): tip length.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        - (vtk.PolyData) -- orbital object with &quot;vector&quot; and &quot;vector_abs&quot;.</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        - if theta_phi_range/division is None, default is used.</span>
+<span class="sd">        - if size is negative, shape is normalized.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">division</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">division</span> <span class="o">=</span> <span class="n">detail</span><span class="p">[</span><span class="s2">&quot;theta_phi_division&quot;</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">theta_phi_range</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">theta_phi_range</span> <span class="o">=</span> <span class="n">detail</span><span class="p">[</span><span class="s2">&quot;theta_phi_range&quot;</span><span class="p">]</span>
+
+    <span class="n">stream_vec</span> <span class="o">=</span> <span class="n">create_orbital</span><span class="p">(</span>
+        <span class="n">shape</span><span class="p">,</span>
+        <span class="n">surface</span><span class="o">=</span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+        <span class="n">size</span><span class="o">=</span><span class="n">size</span><span class="p">,</span>
+        <span class="n">theta_phi_range</span><span class="o">=</span><span class="n">theta_phi_range</span><span class="p">,</span>
+        <span class="n">theta_phi_resolution</span><span class="o">=</span><span class="n">division</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">fv</span><span class="p">,</span> <span class="n">fva</span> <span class="o">=</span> <span class="n">_str_vec_array</span><span class="p">(</span><span class="n">vector</span><span class="p">,</span> <span class="n">stream_vec</span><span class="o">.</span><span class="n">points</span><span class="p">)</span>
+
+    <span class="c1"># eliminate zero length points.</span>
+    <span class="n">idx</span> <span class="o">=</span> <span class="n">fva</span> <span class="o">&gt;</span> <span class="n">CHOP</span>
+    <span class="n">stream_vec</span> <span class="o">=</span> <span class="n">stream_vec</span><span class="o">.</span><span class="n">extract_points</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
+    <span class="n">stream_vec</span><span class="p">[</span><span class="s2">&quot;vector&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">fv</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+    <span class="n">stream_vec</span><span class="p">[</span><span class="s2">&quot;vector_abs&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">fva</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+
+    <span class="n">g</span> <span class="o">=</span> <span class="n">create_vector</span><span class="p">(</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]),</span>
+        <span class="n">length</span><span class="o">=</span><span class="n">length</span><span class="p">,</span>
+        <span class="n">width</span><span class="o">=</span><span class="n">width</span><span class="p">,</span>
+        <span class="n">offset</span><span class="o">=</span><span class="n">offset</span><span class="p">,</span>
+        <span class="n">shaft_radius</span><span class="o">=</span><span class="n">shaft_radius</span><span class="p">,</span>
+        <span class="n">tip_radius</span><span class="o">=</span><span class="n">tip_radius</span><span class="p">,</span>
+        <span class="n">tip_length</span><span class="o">=</span><span class="n">tip_length</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">scale</span> <span class="o">=</span> <span class="s2">&quot;vector_abs&quot;</span> <span class="k">if</span> <span class="n">abs_scale</span> <span class="k">else</span> <span class="kc">None</span>
+    <span class="n">obj</span> <span class="o">=</span> <span class="n">stream_vec</span><span class="o">.</span><span class="n">glyph</span><span class="p">(</span><span class="n">orient</span><span class="o">=</span><span class="s2">&quot;vector&quot;</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">scale</span><span class="p">,</span> <span class="n">factor</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">geom</span><span class="o">=</span><span class="n">g</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">obj</span></div>
+
+
+
+<span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="create_line">
+<a class="viewcode-back" href="../../../src/api_util.html#qtdraw.util.basic_object.create_line">[docs]</a>
+<span class="k">def</span> <span class="nf">create_line</span><span class="p">(</span><span class="n">direction</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">arrow1</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">arrow2</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">tip_radius</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">tip_length</span><span class="o">=</span><span class="mf">0.1</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Create line object.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        direction (list or numpy.ndarray): bond direction (cartesian), [float].</span>
+<span class="sd">        width (float, optional): width.</span>
+<span class="sd">        arrow1 (bool, optional): arrow at start point ?</span>
+<span class="sd">        arrow2 (bool, optional): arrow at end point ?</span>
+<span class="sd">        tip_radius (float, optional): tip radius.</span>
+<span class="sd">        tip_length (float, optional): tip length.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        - (vtk.PolyData) -- cylinder object</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">resolution</span> <span class="o">=</span> <span class="n">detail</span><span class="p">[</span><span class="s2">&quot;bond_resolution&quot;</span><span class="p">]</span>
+
+    <span class="n">direction</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">direction</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+    <span class="n">length</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">direction</span><span class="p">)</span>
+
+    <span class="n">obj</span> <span class="o">=</span> <span class="n">pv</span><span class="o">.</span><span class="n">Cylinder</span><span class="p">(</span><span class="n">center</span><span class="o">=</span><span class="n">direction</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">direction</span><span class="o">=</span><span class="n">direction</span><span class="p">,</span> <span class="n">radius</span><span class="o">=</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="n">length</span><span class="p">,</span> <span class="n">resolution</span><span class="o">=</span><span class="n">resolution</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">arrow1</span><span class="p">:</span>
+        <span class="n">a1</span> <span class="o">=</span> <span class="n">create_vector</span><span class="p">(</span>
+            <span class="o">-</span><span class="n">direction</span><span class="p">,</span>
+            <span class="n">tip_length</span> <span class="o">*</span> <span class="n">width</span> <span class="o">*</span> <span class="mf">100.0</span><span class="p">,</span>
+            <span class="mf">1.5</span> <span class="o">*</span> <span class="n">tip_radius</span> <span class="o">*</span> <span class="n">width</span><span class="p">,</span>
+            <span class="n">offset</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+            <span class="n">shaft_radius</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+            <span class="n">tip_radius</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+            <span class="n">tip_length</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="k">if</span> <span class="n">arrow2</span><span class="p">:</span>
+        <span class="n">a2</span> <span class="o">=</span> <span class="n">create_vector</span><span class="p">(</span>
+            <span class="n">direction</span><span class="p">,</span>
+            <span class="n">tip_length</span> <span class="o">*</span> <span class="n">width</span> <span class="o">*</span> <span class="mf">100.0</span><span class="p">,</span>
+            <span class="mf">1.5</span> <span class="o">*</span> <span class="n">tip_radius</span> <span class="o">*</span> <span class="n">width</span><span class="p">,</span>
+            <span class="n">offset</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+            <span class="n">shaft_radius</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+            <span class="n">tip_radius</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+            <span class="n">tip_length</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="n">direction</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">arrow1</span><span class="p">:</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="n">obj</span> <span class="o">+</span> <span class="n">a1</span>
+    <span class="k">if</span> <span class="n">arrow2</span><span class="p">:</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="n">obj</span> <span class="o">+</span> <span class="n">a2</span>
+
+    <span class="k">return</span> <span class="n">obj</span></div>
+
+
+
+<span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="create_plane">
+<a class="viewcode-back" href="../../../src/api_util.html#qtdraw.util.basic_object.create_plane">[docs]</a>
+<span class="k">def</span> <span class="nf">create_plane</span><span class="p">(</span><span class="n">normal</span><span class="p">,</span> <span class="n">x_size</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">y_size</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Create plane object.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        normal (list or numpy.ndarray): normal vector (cartesian), [float].</span>
+<span class="sd">        x_size (float, optional): x size.</span>
+<span class="sd">        y_size (float, optional): y size.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        - (vtk.PolyData) -- plane object.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">obj</span> <span class="o">=</span> <span class="n">pv</span><span class="o">.</span><span class="n">Plane</span><span class="p">(</span><span class="n">direction</span><span class="o">=</span><span class="n">normal</span><span class="p">,</span> <span class="n">i_size</span><span class="o">=</span><span class="n">x_size</span><span class="p">,</span> <span class="n">j_size</span><span class="o">=</span><span class="n">y_size</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">obj</span></div>
+
+
+
+<span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="create_circle">
+<a class="viewcode-back" href="../../../src/api_util.html#qtdraw.util.basic_object.create_circle">[docs]</a>
+<span class="k">def</span> <span class="nf">create_circle</span><span class="p">(</span><span class="n">normal</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mf">0.5</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Create circle object.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        normal (list or numpy.ndarray): normal vector (cartesian), [float].</span>
+<span class="sd">        size (float, optional): size.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        - (vtk.PolyData) -- circle object.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">resolution</span> <span class="o">=</span> <span class="n">detail</span><span class="p">[</span><span class="s2">&quot;circle_resolution&quot;</span><span class="p">]</span>
+    <span class="n">obj</span> <span class="o">=</span> <span class="n">pv</span><span class="o">.</span><span class="n">Circle</span><span class="p">(</span><span class="n">radius</span><span class="o">=</span><span class="n">size</span><span class="p">,</span> <span class="n">resolution</span><span class="o">=</span><span class="n">resolution</span><span class="p">)</span>
+
+    <span class="n">obj</span><span class="o">.</span><span class="n">rotate_y</span><span class="p">(</span><span class="mi">90</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">geometric_sources</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">normal</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">obj</span></div>
+
+
+
+<span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="create_torus">
+<a class="viewcode-back" href="../../../src/api_util.html#qtdraw.util.basic_object.create_torus">[docs]</a>
+<span class="k">def</span> <span class="nf">create_torus</span><span class="p">(</span><span class="n">normal</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">0.15</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Create torus object.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        normal (list or numpy.ndarray): normal vector (cartesian), [float].</span>
+<span class="sd">        size (float, optional): size.</span>
+<span class="sd">        width (float, optioanl): torus width.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        - (vtk.PolyData) -- torus object.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">obj</span> <span class="o">=</span> <span class="n">pv</span><span class="o">.</span><span class="n">ParametricTorus</span><span class="p">(</span><span class="n">ringradius</span><span class="o">=</span><span class="n">size</span><span class="p">,</span> <span class="n">crosssectionradius</span><span class="o">=</span><span class="n">width</span><span class="p">)</span>
+
+    <span class="n">obj</span><span class="o">.</span><span class="n">rotate_y</span><span class="p">(</span><span class="mi">90</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">geometric_sources</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">normal</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">obj</span></div>
+
+
+
+<span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="create_ellipsoid">
+<a class="viewcode-back" href="../../../src/api_util.html#qtdraw.util.basic_object.create_ellipsoid">[docs]</a>
+<span class="k">def</span> <span class="nf">create_ellipsoid</span><span class="p">(</span><span class="n">normal</span><span class="p">,</span> <span class="n">x_size</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">y_size</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">z_size</span><span class="o">=</span><span class="mf">0.3</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Create ellipsoid object.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        normal (list or numpy.ndarray): normal vector (cartesian), [float].</span>
+<span class="sd">        x_size (float, optional): x_size.</span>
+<span class="sd">        y_size (float, optional): y_size.</span>
+<span class="sd">        z_size (float, optional): z_size.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        - (vtk.PolyData) -- ellipsoid object.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">obj</span> <span class="o">=</span> <span class="n">pv</span><span class="o">.</span><span class="n">ParametricEllipsoid</span><span class="p">(</span><span class="n">xradius</span><span class="o">=</span><span class="n">x_size</span><span class="p">,</span> <span class="n">yradius</span><span class="o">=</span><span class="n">y_size</span><span class="p">,</span> <span class="n">zradius</span><span class="o">=</span><span class="n">z_size</span><span class="p">)</span>
+
+    <span class="n">obj</span><span class="o">.</span><span class="n">rotate_y</span><span class="p">(</span><span class="mi">90</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">geometric_sources</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">normal</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">obj</span></div>
+
+
+
+<span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="create_toroid">
+<a class="viewcode-back" href="../../../src/api_util.html#qtdraw.util.basic_object.create_toroid">[docs]</a>
+<span class="k">def</span> <span class="nf">create_toroid</span><span class="p">(</span><span class="n">normal</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">0.15</span><span class="p">,</span> <span class="n">x_scale</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">y_scale</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">z_scale</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">ring_shape</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">tube_shape</span><span class="o">=</span><span class="mf">0.3</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Create ellipsoid object.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        normal (list or numpy.ndarray): normal vector (cartesian), [float].</span>
+<span class="sd">        size (float, optional): ring size.</span>
+<span class="sd">        width (float, optional): tube width.</span>
+<span class="sd">        x_scale (float, optional): scale factor for x axis.</span>
+<span class="sd">        y_scale (float, optional): scale factor for y axis.</span>
+<span class="sd">        z_scale (float, optional): scale factor for z axis.</span>
+<span class="sd">        ring_shape (float, optional): ring shape.</span>
+<span class="sd">        tube_shape (float, optional): tube shape.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        - (vtk.PolyData) -- toroid object.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">obj</span> <span class="o">=</span> <span class="n">pv</span><span class="o">.</span><span class="n">ParametricSuperToroid</span><span class="p">(</span>
+        <span class="n">ringradius</span><span class="o">=</span><span class="n">size</span><span class="p">,</span> <span class="n">crosssectionradius</span><span class="o">=</span><span class="n">width</span><span class="p">,</span> <span class="n">xradius</span><span class="o">=</span><span class="n">x_scale</span><span class="p">,</span> <span class="n">yradius</span><span class="o">=</span><span class="n">y_scale</span><span class="p">,</span> <span class="n">zradius</span><span class="o">=</span><span class="n">z_scale</span><span class="p">,</span> <span class="n">n1</span><span class="o">=</span><span class="n">ring_shape</span><span class="p">,</span> <span class="n">n2</span><span class="o">=</span><span class="n">tube_shape</span>
+    <span class="p">)</span>
+
+    <span class="n">obj</span><span class="o">.</span><span class="n">rotate_y</span><span class="p">(</span><span class="mi">90</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">geometric_sources</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">normal</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">obj</span></div>
+
+
+
+<span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="create_box">
+<a class="viewcode-back" href="../../../src/api_util.html#qtdraw.util.basic_object.create_box">[docs]</a>
+<span class="k">def</span> <span class="nf">create_box</span><span class="p">(</span><span class="n">a1</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">a2</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">a3</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Create box object.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        a1 (numpy.ndarray, optional): a1 vector (cartesian).</span>
+<span class="sd">        a2 (numpy.ndarray, optional): a2 vector (cartesian).</span>
+<span class="sd">        a3 (numpy.ndarray, optional): a3 vector (cartesian).</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        - (vtk.PolyData) -- cube object.</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        - if a1/a2/a3 is None, unit vector is used.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">a1</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">a1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+    <span class="k">if</span> <span class="n">a2</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">a2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+    <span class="k">if</span> <span class="n">a3</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">a3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+
+    <span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+    <span class="n">A</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">a1</span>
+    <span class="n">A</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">a2</span>
+    <span class="n">A</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">a3</span>
+
+    <span class="n">obj</span> <span class="o">=</span> <span class="n">pv</span><span class="o">.</span><span class="n">Cube</span><span class="p">(</span><span class="n">bounds</span><span class="o">=</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span> <span class="n">clean</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">obj</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">obj</span></div>
+
+
+
+<span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="create_polygon">
+<a class="viewcode-back" href="../../../src/api_util.html#qtdraw.util.basic_object.create_polygon">[docs]</a>
+<span class="k">def</span> <span class="nf">create_polygon</span><span class="p">(</span><span class="n">point</span><span class="p">,</span> <span class="n">connectivity</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Create polygon object.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        point (list or numpy.ndarray): vertices (cartesian), [float].</span>
+<span class="sd">        conectivity (list): list connectivities of #point for each plane, [[int]].</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        - (vtk.PolyData) -- polygon object.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">point</span><span class="p">)</span>
+    <span class="n">connectivity</span> <span class="o">=</span> <span class="p">[[</span><span class="nb">len</span><span class="p">(</span><span class="n">cell</span><span class="p">),</span> <span class="o">*</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">%</span> <span class="n">n</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">cell</span><span class="p">]]</span> <span class="k">for</span> <span class="n">cell</span> <span class="ow">in</span> <span class="n">connectivity</span><span class="p">]</span>
+    <span class="n">cell</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">(</span><span class="n">connectivity</span><span class="p">)</span>
+    <span class="n">obj</span> <span class="o">=</span> <span class="n">pv</span><span class="o">.</span><span class="n">PolyData</span><span class="p">(</span><span class="n">point</span><span class="p">,</span> <span class="n">cell</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">obj</span></div>
+
+
+
+<span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="create_text3d">
+<a class="viewcode-back" href="../../../src/api_util.html#qtdraw.util.basic_object.create_text3d">[docs]</a>
+<span class="k">def</span> <span class="nf">create_text3d</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">view</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">depth</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">A</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Create text3d object.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        text (str): text.</span>
+<span class="sd">        size (float, optional): size.</span>
+<span class="sd">        view (list, optional): normal indices, [int].</span>
+<span class="sd">        depth (float, optional): depth.</span>
+<span class="sd">        offset (list or numpy.ndarray, optional): offset, [float].</span>
+<span class="sd">        A (numpy.ndarray, optional): (a1, a2, a3) in each column, 4x4 (cartesian).</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        - (vtk.PolyData) -- text3d object.</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        - if normal is None, default is used.</span>
+<span class="sd">        - if A is None, unit vector is used.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">view</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">view</span> <span class="o">=</span> <span class="n">detail</span><span class="p">[</span><span class="s2">&quot;text_normal&quot;</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">A</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+
+    <span class="n">view</span><span class="p">,</span> <span class="n">viewup</span> <span class="o">=</span> <span class="n">get_view_vector</span><span class="p">(</span><span class="n">view</span><span class="p">,</span> <span class="n">A</span><span class="p">)</span>
+
+    <span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+    <span class="n">A</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cross</span><span class="p">(</span><span class="n">viewup</span><span class="p">,</span> <span class="n">view</span><span class="p">)</span>
+    <span class="n">A</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">viewup</span>
+    <span class="n">A</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">view</span>
+    <span class="n">A</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">offset</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+
+    <span class="n">obj</span> <span class="o">=</span> <span class="n">pv</span><span class="o">.</span><span class="n">Text3D</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">depth</span><span class="p">)</span>
+    <span class="n">obj</span><span class="o">.</span><span class="n">scale</span><span class="p">([</span><span class="n">size</span><span class="p">]</span> <span class="o">*</span> <span class="mi">3</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">obj</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">obj</span></div>
+
+
+
+<span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="create_spline">
+<a class="viewcode-back" href="../../../src/api_util.html#qtdraw.util.basic_object.create_spline">[docs]</a>
+<span class="k">def</span> <span class="nf">create_spline</span><span class="p">(</span>
+    <span class="n">point</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">n_interp</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">closed</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">natural</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">arrow1</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">arrow2</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">tip_radius</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">tip_length</span><span class="o">=</span><span class="mf">0.1</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Create spline object.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        point (list or numpy.ndarray): points to be connected, [[float]].</span>
+<span class="sd">        width (float, optional); width.</span>
+<span class="sd">        n_interp (int, optional): number of interpolation points.</span>
+<span class="sd">        closed (bool, optional): closed spline ?</span>
+<span class="sd">        natural (bool, optional): natural boundary ?</span>
+<span class="sd">        arrow1 (bool, optional): arrow at start point ?</span>
+<span class="sd">        arrow2 (bool, optional): arrow at end point ?</span>
+<span class="sd">        tip_radius (float, optional): tip radius.</span>
+<span class="sd">        tip_length (float, optional): tip length.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        - (vtk.PolyData) -- spline object.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">point</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">point</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+    <span class="n">spline_function</span> <span class="o">=</span> <span class="n">vtkParametricSpline</span><span class="p">()</span>
+    <span class="n">spline_function</span><span class="o">.</span><span class="n">SetPoints</span><span class="p">(</span><span class="n">pv</span><span class="o">.</span><span class="n">vtk_points</span><span class="p">(</span><span class="n">point</span><span class="p">,</span> <span class="kc">False</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="n">closed</span><span class="p">:</span>
+        <span class="n">spline_function</span><span class="o">.</span><span class="n">ClosedOn</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">spline_function</span><span class="o">.</span><span class="n">ClosedOff</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">natural</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">closed</span><span class="p">:</span>
+        <span class="n">spline_function</span><span class="o">.</span><span class="n">SetLeftConstraint</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">spline_function</span><span class="o">.</span><span class="n">SetLeftValue</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>
+        <span class="n">spline_function</span><span class="o">.</span><span class="n">SetRightConstraint</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">spline_function</span><span class="o">.</span><span class="n">SetRightValue</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>
+
+    <span class="c1"># get interpolation density</span>
+    <span class="n">u_res</span> <span class="o">=</span> <span class="n">n_interp</span>
+    <span class="k">if</span> <span class="n">u_res</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">u_res</span> <span class="o">=</span> <span class="n">point</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="n">u_res</span> <span class="o">-=</span> <span class="mi">1</span>
+    <span class="n">spline</span> <span class="o">=</span> <span class="n">surface_from_para</span><span class="p">(</span><span class="n">spline_function</span><span class="p">,</span> <span class="n">u_res</span><span class="p">)</span>
+    <span class="n">obj</span> <span class="o">=</span> <span class="n">spline</span><span class="o">.</span><span class="n">compute_arc_length</span><span class="p">()</span>
+    <span class="n">obj</span><span class="o">.</span><span class="n">tube</span><span class="p">(</span><span class="n">radius</span><span class="o">=</span><span class="n">width</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">closed</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">obj</span>
+
+    <span class="k">if</span> <span class="n">arrow1</span><span class="p">:</span>
+        <span class="n">d1</span> <span class="o">=</span> <span class="n">spline</span><span class="o">.</span><span class="n">points</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">spline</span><span class="o">.</span><span class="n">points</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">a1</span> <span class="o">=</span> <span class="n">create_vector</span><span class="p">(</span>
+            <span class="n">d1</span><span class="p">,</span> <span class="n">tip_length</span> <span class="o">*</span> <span class="n">width</span> <span class="o">*</span> <span class="mf">100.0</span><span class="p">,</span> <span class="mf">1.5</span> <span class="o">*</span> <span class="n">tip_radius</span> <span class="o">*</span> <span class="n">width</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">shaft_radius</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">tip_radius</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">tip_length</span><span class="o">=</span><span class="mf">1.0</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="n">spline</span><span class="o">.</span><span class="n">points</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">arrow2</span><span class="p">:</span>
+        <span class="n">d2</span> <span class="o">=</span> <span class="n">spline</span><span class="o">.</span><span class="n">points</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">spline</span><span class="o">.</span><span class="n">points</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">a2</span> <span class="o">=</span> <span class="n">create_vector</span><span class="p">(</span>
+            <span class="n">d2</span><span class="p">,</span> <span class="n">tip_length</span> <span class="o">*</span> <span class="n">width</span> <span class="o">*</span> <span class="mf">100.0</span><span class="p">,</span> <span class="mf">1.5</span> <span class="o">*</span> <span class="n">tip_radius</span> <span class="o">*</span> <span class="n">width</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">shaft_radius</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">tip_radius</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">tip_length</span><span class="o">=</span><span class="mf">1.0</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="n">spline</span><span class="o">.</span><span class="n">points</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">arrow1</span><span class="p">:</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="n">obj</span> <span class="o">+</span> <span class="n">a1</span>
+    <span class="k">if</span> <span class="n">arrow2</span><span class="p">:</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="n">obj</span> <span class="o">+</span> <span class="n">a2</span>
+
+    <span class="k">return</span> <span class="n">obj</span></div>
+
+
+
+<span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="create_spline_t">
+<a class="viewcode-back" href="../../../src/api_util.html#qtdraw.util.basic_object.create_spline_t">[docs]</a>
+<span class="k">def</span> <span class="nf">create_spline_t</span><span class="p">(</span>
+    <span class="n">point</span><span class="p">,</span>
+    <span class="n">t_range</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">width</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+    <span class="n">n_interp</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span>
+    <span class="n">closed</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">natural</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">arrow1</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">arrow2</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">tip_radius</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span>
+    <span class="n">tip_length</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+    <span class="n">A</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Create parametric spline object.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        point (str): sympy expression for point in terms of &quot;t&quot;.</span>
+<span class="sd">        t_range (list or numpy.ndarray, optional): t range, [start, stop, step], [float].</span>
+<span class="sd">        width (float, optional): width.</span>
+<span class="sd">        n_interp (int, optional): interpolation points.</span>
+<span class="sd">        closed (bool, optional): closed spline ?</span>
+<span class="sd">        natural (bool, optional): natural boundary ?</span>
+<span class="sd">        arrow1 (bool, optional): arrow at start point ?</span>
+<span class="sd">        arrow2 (bool, optional): arrow at end point ?</span>
+<span class="sd">        tip_radius (float, optional): tip radius.</span>
+<span class="sd">        tip_length (float, optional): tip length.</span>
+<span class="sd">        A (numpy.ndarray, optional): (a1, a2, a3) in each column, 4x4 (cartesian).</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        - (vtk.PolyData) -- parameteric spline object.</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        - if t_range is None, default is used.</span>
+<span class="sd">        - if A is None, unit vector is used.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">t_range</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">t_range</span> <span class="o">=</span> <span class="n">detail</span><span class="p">[</span><span class="s2">&quot;spline_t_range&quot;</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">A</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+
+    <span class="n">point</span> <span class="o">=</span> <span class="n">text_to_list</span><span class="p">(</span><span class="n">point</span><span class="p">)</span>
+
+    <span class="n">t</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">symbols</span><span class="p">(</span><span class="s2">&quot;t&quot;</span><span class="p">,</span> <span class="n">real</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">ex</span> <span class="o">=</span> <span class="p">[</span><span class="n">text_to_sympy</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">local</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;t&quot;</span><span class="p">:</span> <span class="n">t</span><span class="p">})</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">point</span><span class="p">]</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">lambdify</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">ex</span><span class="p">,</span> <span class="n">modules</span><span class="o">=</span><span class="s2">&quot;numpy&quot;</span><span class="p">)</span>
+
+    <span class="n">tp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">t_range</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">t_range</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">t_range</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+
+    <span class="n">pts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">tp</span><span class="p">))</span>
+    <span class="n">pointA</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">],</span> <span class="n">pts</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+    <span class="n">obj</span> <span class="o">=</span> <span class="n">create_spline</span><span class="p">(</span><span class="n">pointA</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">n_interp</span><span class="p">,</span> <span class="n">closed</span><span class="p">,</span> <span class="n">natural</span><span class="p">,</span> <span class="n">arrow1</span><span class="p">,</span> <span class="n">arrow2</span><span class="p">,</span> <span class="n">tip_radius</span><span class="p">,</span> <span class="n">tip_length</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">obj</span></div>
+
+
+
+<span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="create_isosurface">
+<a class="viewcode-back" href="../../../src/api_util.html#qtdraw.util.basic_object.create_isosurface">[docs]</a>
+<span class="k">def</span> <span class="nf">create_isosurface</span><span class="p">(</span><span class="n">grid_data</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">surface_name</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Create isosurface.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        grid_data (dict): grid data.</span>
+<span class="sd">        value (list or numpy.ndarray): value of isosurface.</span>
+<span class="sd">        surface_name (str): surface data.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        - (vtk.DataSet) -- isosurface object.</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        - n : [nx,ny,nz] division of grid.</span>
+<span class="sd">        - origin : [rx,ry,rz] origin in fractional coordinate.</span>
+<span class="sd">        - Ag : [g1,g2,g3] grid vectors in 4x4 matrix.</span>
+<span class="sd">        - data : data at each grid point.</span>
+<span class="sd">        - surface : surface data at each grid point.</span>
+<span class="sd">        - endpoint : include endpoint ?</span>
+<span class="sd">        - row_major : row-major grid ?</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">grid_data</span><span class="p">[</span><span class="s2">&quot;n&quot;</span><span class="p">])</span>
+    <span class="n">origin</span> <span class="o">=</span> <span class="n">grid_data</span><span class="p">[</span><span class="s2">&quot;origin&quot;</span><span class="p">]</span>
+    <span class="n">A</span> <span class="o">=</span> <span class="n">grid_data</span><span class="p">[</span><span class="s2">&quot;Ag&quot;</span><span class="p">]</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">grid_data</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">])</span>
+    <span class="n">endpoint</span> <span class="o">=</span> <span class="n">grid_data</span><span class="p">[</span><span class="s2">&quot;endpoint&quot;</span><span class="p">]</span>
+    <span class="n">row_major</span> <span class="o">=</span> <span class="n">grid_data</span><span class="p">[</span><span class="s2">&quot;row_major&quot;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">surface_name</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+        <span class="n">surface</span> <span class="o">=</span> <span class="n">grid_data</span><span class="p">[</span><span class="s2">&quot;surface&quot;</span><span class="p">][</span><span class="n">surface_name</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">surface</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">if</span> <span class="n">origin</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">origin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">origin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">origin</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">A</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">surface</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">surface</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">surface</span><span class="p">)</span>
+
+    <span class="c1"># convert data in column major.</span>
+    <span class="k">if</span> <span class="n">row_major</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">n</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">n</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">n</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">n</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">surface</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">surface</span> <span class="o">=</span> <span class="n">surface</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">n</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">n</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">n</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+            <span class="n">surface</span> <span class="o">=</span> <span class="n">surface</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]</span>
+            <span class="n">surface</span> <span class="o">=</span> <span class="n">surface</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">n</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+
+    <span class="n">r</span> <span class="o">=</span> <span class="n">origin</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])</span>
+    <span class="n">grid</span> <span class="o">=</span> <span class="n">create_grid</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">origin</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">endpoint</span><span class="p">)</span>
+    <span class="n">grid</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;data&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span>
+
+    <span class="k">if</span> <span class="n">surface</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">grid</span><span class="p">[</span><span class="n">surface_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">surface</span>
+
+    <span class="n">obj</span> <span class="o">=</span> <span class="n">grid</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">scalars</span><span class="o">=</span><span class="s2">&quot;data&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">obj</span></div>
+
+
+
+<span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="create_orbital_data">
+<a class="viewcode-back" href="../../../src/api_util.html#qtdraw.util.basic_object.create_orbital_data">[docs]</a>
+<span class="k">def</span> <span class="nf">create_orbital_data</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">surface</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">spherical_plot</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">point_size</span><span class="o">=</span><span class="mf">0.03</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Create orbital object from data.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        shape (ndarray): (x,y,z) shape (cartesian).</span>
+<span class="sd">        surface (ndarray, optional): (x,y,z) surface color (cartesian).</span>
+<span class="sd">        size (float, optional): size.</span>
+<span class="sd">        spherical_plot (bool, optional): spherical-like plot ?</span>
+<span class="sd">        point_size (float, optional): point size.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        - (vtk.PolyData) -- orbital object with &quot;surface&quot;.</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        - if surface is None, the same one of shape is used.</span>
+<span class="sd">        - if size is positive, max. value is equivalent to size.</span>
+<span class="sd">        - if size is negative, abs. value is scaled by size.</span>
+<span class="sd">        - if point_size is None, no point is shown.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># shape data.</span>
+    <span class="k">if</span> <span class="n">surface</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">surface</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="n">shape</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mf">1.0</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">spherical_plot</span><span class="p">:</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">surface</span><span class="p">)</span>
+        <span class="n">shape</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">T</span> <span class="o">*</span> <span class="n">shape</span>
+
+    <span class="n">max_f</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">size</span> <span class="o">&gt;</span> <span class="n">CHOP</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">max_f</span> <span class="o">&gt;</span> <span class="n">CHOP</span><span class="p">:</span>
+            <span class="n">scale</span> <span class="o">=</span> <span class="n">size</span> <span class="o">/</span> <span class="n">max_f</span>
+            <span class="n">shape</span> <span class="o">*=</span> <span class="n">scale</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">shape</span> <span class="o">*=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>
+
+    <span class="n">orbital</span> <span class="o">=</span> <span class="n">pv</span><span class="o">.</span><span class="n">PolyData</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span>
+    <span class="n">orbital</span><span class="p">[</span><span class="s2">&quot;surface&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">surface</span>
+
+    <span class="k">if</span> <span class="n">point_size</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">orbital</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">g</span> <span class="o">=</span> <span class="n">create_sphere</span><span class="p">(</span><span class="n">point_size</span><span class="p">)</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="n">orbital</span><span class="o">.</span><span class="n">glyph</span><span class="p">(</span><span class="n">orient</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">factor</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">geom</span><span class="o">=</span><span class="n">g</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">obj</span></div>
+
+
+
+<span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="create_stream_data">
+<a class="viewcode-back" href="../../../src/api_util.html#qtdraw.util.basic_object.create_stream_data">[docs]</a>
+<span class="k">def</span> <span class="nf">create_stream_data</span><span class="p">(</span>
+    <span class="n">shape</span><span class="p">,</span>
+    <span class="n">surface</span><span class="p">,</span>
+    <span class="n">vector</span><span class="p">,</span>
+    <span class="n">size</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+    <span class="n">length</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+    <span class="n">width</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+    <span class="n">offset</span><span class="o">=-</span><span class="mf">0.43</span><span class="p">,</span>
+    <span class="n">abs_scale</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">shaft_radius</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+    <span class="n">tip_radius</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span>
+    <span class="n">tip_length</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span>
+    <span class="n">spherical_plot</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Create steam vector object.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        shape (ndarray): f(x,y,z) shape (cartesian).</span>
+<span class="sd">        surface (ndarray, optional): (x,y,z) surface color (cartesian).</span>
+<span class="sd">        vector (ndarray): stream vector [vx(x,y,z),vy(x,y,z),vz(x,y,z)] (cartesina).</span>
+<span class="sd">        size (float, optional): shape size.</span>
+<span class="sd">        length (float, optional): length.</span>
+<span class="sd">        width (float, optional): width.</span>
+<span class="sd">        offset (float, optional): offest ratio.</span>
+<span class="sd">        abs_scale (bool, optional): use \|v(x,y,z)\| * length ?</span>
+<span class="sd">        shaft_radius (float, optional) :shaft radius.</span>
+<span class="sd">        tip_radius (float, optional): tip radius.</span>
+<span class="sd">        tip_length (float, optional): tip length.</span>
+<span class="sd">        spherical_plot (bool, optional): spherical-like plot ?</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        - (vtk.PolyData) -- orbital object with &quot;vector&quot; and &quot;vector_abs&quot;.</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        - if size is negative, shape is normalized.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">stream_vec</span> <span class="o">=</span> <span class="n">create_orbital_data</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">surface</span><span class="o">=</span><span class="n">surface</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">size</span><span class="p">,</span> <span class="n">spherical_plot</span><span class="o">=</span><span class="n">spherical_plot</span><span class="p">,</span> <span class="n">point_size</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+    <span class="n">vec_norm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">vector</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># eliminate zero length points.</span>
+    <span class="n">idx</span> <span class="o">=</span> <span class="n">vec_norm</span> <span class="o">&gt;</span> <span class="n">CHOP</span>
+    <span class="n">stream_vec</span> <span class="o">=</span> <span class="n">stream_vec</span><span class="o">.</span><span class="n">extract_points</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
+    <span class="n">stream_vec</span><span class="p">[</span><span class="s2">&quot;vector&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">vector</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+    <span class="n">stream_vec</span><span class="p">[</span><span class="s2">&quot;vector_abs&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">vec_norm</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+
+    <span class="n">g</span> <span class="o">=</span> <span class="n">create_vector</span><span class="p">(</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]),</span>
+        <span class="n">length</span><span class="o">=</span><span class="n">length</span><span class="p">,</span>
+        <span class="n">width</span><span class="o">=</span><span class="n">width</span><span class="p">,</span>
+        <span class="n">offset</span><span class="o">=</span><span class="n">offset</span><span class="p">,</span>
+        <span class="n">shaft_radius</span><span class="o">=</span><span class="n">shaft_radius</span><span class="p">,</span>
+        <span class="n">tip_radius</span><span class="o">=</span><span class="n">tip_radius</span><span class="p">,</span>
+        <span class="n">tip_length</span><span class="o">=</span><span class="n">tip_length</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">scale</span> <span class="o">=</span> <span class="s2">&quot;vector_abs&quot;</span> <span class="k">if</span> <span class="n">abs_scale</span> <span class="k">else</span> <span class="kc">None</span>
+    <span class="n">obj</span> <span class="o">=</span> <span class="n">stream_vec</span><span class="o">.</span><span class="n">glyph</span><span class="p">(</span><span class="n">orient</span><span class="o">=</span><span class="s2">&quot;vector&quot;</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">scale</span><span class="p">,</span> <span class="n">factor</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">geom</span><span class="o">=</span><span class="n">g</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">obj</span></div>
+
+</pre></div>
+
+                </article>
+              
+
+              
+              
+              
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Hiroaki Kusunose
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2021-2024.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

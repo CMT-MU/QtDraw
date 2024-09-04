@@ -1,0 +1,837 @@
+
+<!DOCTYPE html>
+
+
+<html lang="jp" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>qtdraw.multipie.dialog_info &#8212; QtDraw</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../../_static/documentation_options.js?v=8cf54648"></script>
+    <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/qtdraw/multipie/dialog_info';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="jp"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../README.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/qtdraw_logo.png" class="logo__image only-light" alt="QtDraw - Home"/>
+    <script>document.write(`<img src="../../../_static/qtdraw_logo.png" class="logo__image only-dark" alt="QtDraw - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../src/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../src/install.html">Install QtDraw (and MultiPie)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../src/getting_started.html">Getting Started</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../src/user_guide.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../src/example.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../src/from_python.html">Usage from Python code</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../src/api_summary.html">API Reference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../src/api_core.html">Core</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../src/api_multipie.html">MultiPie</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../src/api_parser.html">Parser</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../src/api_script.html">Script</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../src/api_util.html">Utility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../src/api_widget.html">Widget</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../src/function_table.html">Function Summary</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/CMT-MU/QtDraw.git" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/CMT-MU/QtDraw.git/issues/new?title=Issue%20on%20page%20%2F_modules/qtdraw/multipie/dialog_info.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for qtdraw.multipie.dialog_info</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Info. dialog.</span>
+
+<span class="sd">This module provides a dialog for group info. in MultiPie dialog.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">sympy</span> <span class="k">as</span> <span class="nn">sp</span>
+<span class="kn">from</span> <span class="nn">PySide6.QtWidgets</span> <span class="kn">import</span> <span class="n">QDialog</span>
+<span class="kn">from</span> <span class="nn">gcoreutils.list_util</span> <span class="kn">import</span> <span class="n">list_to_table</span>
+<span class="kn">from</span> <span class="nn">gcoreutils.nsarray</span> <span class="kn">import</span> <span class="n">NSArray</span>
+<span class="kn">from</span> <span class="nn">multipie.tag.tag_multipole</span> <span class="kn">import</span> <span class="n">TagMultipole</span>
+<span class="kn">from</span> <span class="nn">multipie.tag.tag_irrep</span> <span class="kn">import</span> <span class="n">TagIrrep</span>
+<span class="kn">from</span> <span class="nn">qtdraw.widget.custom_widget</span> <span class="kn">import</span> <span class="n">Layout</span>
+<span class="kn">from</span> <span class="nn">qtdraw.widget.table_view</span> <span class="kn">import</span> <span class="n">TableView</span>
+
+
+<span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="InfoPanel">
+<a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.dialog_info.InfoPanel">[docs]</a>
+<span class="k">class</span> <span class="nc">InfoPanel</span><span class="p">(</span><span class="n">QDialog</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">header</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">vertical</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Info panel.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            parent (QWidget): parent.</span>
+<span class="sd">            data (list): list of latex string without &quot;$&quot;, [[str]].</span>
+<span class="sd">            header (list): header. None is for no header.</span>
+<span class="sd">            title (str): title of window.</span>
+<span class="sd">            vertical (bool): show vertical (sequential number) header ?</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+        <span class="n">latex</span> <span class="o">=</span> <span class="n">parent</span><span class="o">.</span><span class="n">plugin</span><span class="o">.</span><span class="n">_pvw</span><span class="o">.</span><span class="n">_preference</span><span class="p">[</span><span class="s2">&quot;latex&quot;</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">800</span><span class="p">,</span> <span class="mi">600</span><span class="p">)</span>
+
+        <span class="n">layout</span> <span class="o">=</span> <span class="n">Layout</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">layout</span><span class="o">.</span><span class="n">setContentsMargins</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+
+        <span class="n">color</span> <span class="o">=</span> <span class="n">latex</span><span class="p">[</span><span class="s2">&quot;color&quot;</span><span class="p">]</span>
+        <span class="n">size</span> <span class="o">=</span> <span class="n">latex</span><span class="p">[</span><span class="s2">&quot;size&quot;</span><span class="p">]</span>
+        <span class="n">dpi</span> <span class="o">=</span> <span class="n">latex</span><span class="p">[</span><span class="s2">&quot;dpi&quot;</span><span class="p">]</span>
+        <span class="n">table</span> <span class="o">=</span> <span class="n">TableView</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">header</span><span class="p">,</span> <span class="n">vertical</span><span class="p">,</span> <span class="n">color</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">dpi</span><span class="p">)</span>
+        <span class="n">layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">table</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
+
+
+
+<span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="show_group_info">
+<a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.dialog_info.show_group_info">[docs]</a>
+<span class="k">def</span> <span class="nf">show_group_info</span><span class="p">(</span>
+    <span class="n">group</span><span class="p">,</span>
+    <span class="n">name</span><span class="p">,</span>
+    <span class="n">header</span><span class="p">,</span>
+    <span class="n">data</span><span class="p">,</span>
+    <span class="n">vertical</span><span class="p">,</span>
+    <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Show group info.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        group (PointGroup or SpaceGroup): group.</span>
+<span class="sd">        name (str): title of dialog.</span>
+<span class="sd">        header (list): header string. None is for no header.</span>
+<span class="sd">        data (list): list of latex string without &quot;$&quot;, [[str]].</span>
+<span class="sd">        vertical (bool): show vertical (sequential number) header ?</span>
+<span class="sd">        parent (QWidget, optional): parent.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        - (InfoPanel) -- panel.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">no</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">IS</span><span class="p">,</span> <span class="n">setting</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">tag</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;No.</span><span class="si">{</span><span class="n">no</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">group</span><span class="p">)</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">IS</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="k">if</span> <span class="n">setting</span><span class="p">:</span>
+        <span class="n">s</span> <span class="o">+=</span> <span class="s2">&quot; (&quot;</span> <span class="o">+</span> <span class="n">setting</span> <span class="o">+</span> <span class="s2">&quot; setting)&quot;</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="n">name</span> <span class="o">+</span> <span class="s2">&quot; - &quot;</span> <span class="o">+</span> <span class="n">s</span>
+
+    <span class="k">return</span> <span class="n">InfoPanel</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">header</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">vertical</span><span class="p">)</span></div>
+
+
+
+<span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="show_symmetry_operation">
+<a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.dialog_info.show_symmetry_operation">[docs]</a>
+<span class="k">def</span> <span class="nf">show_symmetry_operation</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Show symmetry operation panel.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        group (PointGroup): point group.</span>
+<span class="sd">        parent (QWidget): parent.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        - (InfoPanel) -- symmetry operation panel.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">so</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">symmetry_operation</span>
+
+    <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;symmetry_operation&quot;</span>
+    <span class="n">header</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;symbol&quot;</span><span class="p">,</span> <span class="s2">&quot;polar vector&quot;</span><span class="p">,</span> <span class="s2">&quot;axial vector&quot;</span><span class="p">,</span> <span class="s2">&quot;det&quot;</span><span class="p">]</span>
+
+    <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">group</span><span class="o">.</span><span class="n">tag</span><span class="o">.</span><span class="n">is_point_group</span><span class="p">():</span>
+        <span class="n">ps</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;+&quot;</span> <span class="o">+</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">so</span><span class="o">.</span><span class="n">plus_set</span><span class="o">.</span><span class="n">latex</span><span class="p">()]</span>
+        <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ps</span> <span class="o">+</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="mi">4</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">ps</span><span class="p">)))</span>
+        <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">])</span>
+
+    <span class="n">pso</span> <span class="o">=</span> <span class="n">so</span><span class="o">.</span><span class="n">mat</span><span class="p">(</span><span class="n">axial</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">aso</span> <span class="o">=</span> <span class="n">so</span><span class="o">.</span><span class="n">mat</span><span class="p">(</span><span class="n">axial</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">no</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">so</span><span class="p">)):</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">pso</span><span class="p">[</span><span class="n">no</span><span class="p">][</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="p">:]</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="n">aso</span><span class="p">[</span><span class="n">no</span><span class="p">][</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="p">:]</span>
+        <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">so</span><span class="o">.</span><span class="n">full</span><span class="p">[</span><span class="n">no</span><span class="p">]</span><span class="o">.</span><span class="n">latex</span><span class="p">(),</span> <span class="n">p</span><span class="o">.</span><span class="n">latex</span><span class="p">(),</span> <span class="n">a</span><span class="o">.</span><span class="n">latex</span><span class="p">(),</span> <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">det</span><span class="p">()</span><span class="o">.</span><span class="n">latex</span><span class="p">()])</span>
+
+    <span class="k">return</span> <span class="n">show_group_info</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">header</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span></div>
+
+
+
+<span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="show_character_table">
+<a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.dialog_info.show_character_table">[docs]</a>
+<span class="k">def</span> <span class="nf">show_character_table</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Show character table panel.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        group (PointGroup): point group.</span>
+<span class="sd">        parent (QWidget): parent.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        - (InfoPanel) -- character table panel.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">ch</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">character</span>
+
+    <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;character&quot;</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">ch</span><span class="o">.</span><span class="n">symmetry_operation</span><span class="p">())</span>
+    <span class="n">header</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;irrep.&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;SO</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
+
+    <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="s2">&quot;&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">latex</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">ch</span><span class="o">.</span><span class="n">symmetry_operation</span><span class="p">()])</span>
+    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">ch</span><span class="o">.</span><span class="n">irrep_list</span><span class="p">:</span>
+        <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">r</span><span class="o">.</span><span class="n">latex</span><span class="p">()]</span> <span class="o">+</span> <span class="p">[</span><span class="n">sp</span><span class="o">.</span><span class="n">latex</span><span class="p">(</span><span class="n">j</span><span class="p">)</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">ch</span><span class="o">.</span><span class="n">character</span><span class="p">(</span><span class="n">r</span><span class="p">)])</span>
+
+    <span class="k">return</span> <span class="n">show_group_info</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">header</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span></div>
+
+
+
+<span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="show_wyckoff">
+<a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.dialog_info.show_wyckoff">[docs]</a>
+<span class="k">def</span> <span class="nf">show_wyckoff</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Show Wyckoff position panel.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        group (PointGroup): point group.</span>
+<span class="sd">        parent (QWidget): parent.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        - (InfoPanel) -- Wyckoff position panel.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">wp</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">wyckoff</span>
+    <span class="n">so</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">symmetry_operation</span>
+
+    <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;wyckoff_position&quot;</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">wp</span><span class="o">.</span><span class="n">keys</span><span class="p">())[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">n</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">group</span><span class="o">.</span><span class="n">tag</span><span class="o">.</span><span class="n">is_point_group</span><span class="p">():</span>
+        <span class="n">ns</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">so</span><span class="o">.</span><span class="n">plus_set</span><span class="p">)</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="n">n</span> <span class="o">//</span> <span class="n">ns</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+    <span class="n">header</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;WP&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
+
+    <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">group</span><span class="o">.</span><span class="n">tag</span><span class="o">.</span><span class="n">is_point_group</span><span class="p">():</span>
+        <span class="n">ps</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;+&quot;</span> <span class="o">+</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">so</span><span class="o">.</span><span class="n">plus_set</span><span class="o">.</span><span class="n">latex</span><span class="p">()]</span>
+        <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="s2">&quot;&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">ps</span> <span class="o">+</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">ps</span><span class="p">)))</span>
+        <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="s2">&quot;&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">ps</span><span class="p">)</span> <span class="o">+</span> <span class="mi">2</span><span class="p">))</span>
+
+    <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">wp</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="n">row</span> <span class="o">=</span> <span class="n">list_to_table</span><span class="p">(</span><span class="n">wp</span><span class="o">.</span><span class="n">position</span><span class="p">(</span><span class="n">w</span><span class="p">)</span><span class="o">.</span><span class="n">latex</span><span class="p">(),</span> <span class="n">n</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">row</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">w</span><span class="p">)]</span> <span class="o">+</span> <span class="n">r</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="s2">&quot;&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">r</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">show_group_info</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">header</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span></div>
+
+
+
+<span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="show_product_table">
+<a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.dialog_info.show_product_table">[docs]</a>
+<span class="k">def</span> <span class="nf">show_product_table</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Show product table panel.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        group (PointGroup): point group.</span>
+<span class="sd">        parent (QWidget): parent.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        - (InfoPanel) -- product table panel.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">so</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">symmetry_operation</span>
+
+    <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;product_table&quot;</span>
+    <span class="n">op</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">latex</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">so</span><span class="o">.</span><span class="n">keys</span><span class="p">()]</span>
+    <span class="n">header</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;SO&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;SO</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">op</span><span class="p">))]</span>
+
+    <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="s2">&quot;&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">op</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">so</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">i</span><span class="o">.</span><span class="n">latex</span><span class="p">()]</span> <span class="o">+</span> <span class="p">[</span><span class="n">so</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span><span class="o">.</span><span class="n">latex</span><span class="p">()</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">so</span><span class="o">.</span><span class="n">keys</span><span class="p">()])</span>
+
+    <span class="k">return</span> <span class="n">show_group_info</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">header</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span></div>
+
+
+
+<span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="show_harmonics">
+<a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.dialog_info.show_harmonics">[docs]</a>
+<span class="k">def</span> <span class="nf">show_harmonics</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">rank</span><span class="p">,</span> <span class="n">head</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Show harmonics panel.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        group (PointGroup): point group.</span>
+<span class="sd">        rank (int): harmonics rank.</span>
+<span class="sd">        head (str): harmonics type.</span>
+<span class="sd">        parent (QWidget): parent.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        - (InfoPanel) -- harmonics panel.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">pgh</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">harmonics</span>
+    <span class="n">head</span> <span class="o">=</span> <span class="n">head</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;T&quot;</span><span class="p">,</span> <span class="s2">&quot;Q&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;M&quot;</span><span class="p">,</span> <span class="s2">&quot;G&quot;</span><span class="p">)</span>
+    <span class="n">hs</span> <span class="o">=</span> <span class="n">pgh</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">rank</span><span class="o">=</span><span class="n">rank</span><span class="p">,</span> <span class="n">head</span><span class="o">=</span><span class="n">head</span><span class="p">)</span>
+
+    <span class="n">name</span> <span class="o">=</span> <span class="n">head</span> <span class="o">+</span> <span class="s2">&quot;_harmonics&quot;</span>
+    <span class="n">header</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;symbol&quot;</span><span class="p">,</span> <span class="s2">&quot;rank&quot;</span><span class="p">,</span> <span class="s2">&quot;irrep.&quot;</span><span class="p">,</span> <span class="s2">&quot;mul.&quot;</span><span class="p">,</span> <span class="s2">&quot;comp.&quot;</span><span class="p">,</span> <span class="s2">&quot;expression&quot;</span><span class="p">,</span> <span class="s2">&quot;definition&quot;</span><span class="p">]</span>
+
+    <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">hs</span><span class="p">:</span>
+        <span class="n">mul</span> <span class="o">=</span> <span class="n">h</span><span class="o">.</span><span class="n">tag</span><span class="o">.</span><span class="n">mul</span>
+        <span class="n">comp</span> <span class="o">=</span> <span class="n">h</span><span class="o">.</span><span class="n">tag</span><span class="o">.</span><span class="n">comp</span>
+        <span class="n">irrep</span> <span class="o">=</span> <span class="n">h</span><span class="o">.</span><span class="n">tag</span><span class="o">.</span><span class="n">tag_irrep</span><span class="p">()</span>
+        <span class="n">dim</span> <span class="o">=</span> <span class="n">irrep</span><span class="o">.</span><span class="n">dim</span>
+        <span class="k">if</span> <span class="n">mul</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">mul</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">dim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">comp</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="n">h</span><span class="o">.</span><span class="n">latex</span><span class="p">(),</span>
+                <span class="n">rank</span><span class="p">,</span>
+                <span class="n">irrep</span><span class="o">.</span><span class="n">latex</span><span class="p">(),</span>
+                <span class="n">mul</span><span class="p">,</span>
+                <span class="n">comp</span><span class="p">,</span>
+                <span class="n">h</span><span class="o">.</span><span class="n">expression</span><span class="p">(</span><span class="n">v</span><span class="o">=</span><span class="n">NSArray</span><span class="o">.</span><span class="n">vector3d</span><span class="p">(</span><span class="n">head</span><span class="p">))</span><span class="o">.</span><span class="n">latex</span><span class="p">(),</span>
+                <span class="n">h</span><span class="o">.</span><span class="n">definition</span><span class="p">()</span><span class="o">.</span><span class="n">latex</span><span class="p">(),</span>
+            <span class="p">]</span>
+        <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">show_group_info</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">header</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span></div>
+
+
+
+<span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="show_harmonics_decomp">
+<a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.dialog_info.show_harmonics_decomp">[docs]</a>
+<span class="k">def</span> <span class="nf">show_harmonics_decomp</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">rank</span><span class="p">,</span> <span class="n">head</span><span class="p">,</span> <span class="n">to_pg</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Show harmonics decomposition panel.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        group (PointGroup): point group.</span>
+<span class="sd">        rank (int): harmonics rank.</span>
+<span class="sd">        head (str): harmonics type.</span>
+<span class="sd">        to_pg (str): destination point group.</span>
+<span class="sd">        parent (QWidget): parent.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        - (InfoPanel) -- harmonics decomposition panel.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">pgh</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">harmonics</span>
+
+    <span class="k">if</span> <span class="n">to_pg</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">to_pg</span> <span class="o">=</span> <span class="n">to_pg</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="n">head</span> <span class="o">=</span> <span class="n">head</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;T&quot;</span><span class="p">,</span> <span class="s2">&quot;Q&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;M&quot;</span><span class="p">,</span> <span class="s2">&quot;G&quot;</span><span class="p">)</span>
+    <span class="n">axial</span> <span class="o">=</span> <span class="n">head</span> <span class="o">==</span> <span class="s2">&quot;G&quot;</span>
+    <span class="n">hs</span> <span class="o">=</span> <span class="n">pgh</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">rank</span><span class="o">=</span><span class="n">rank</span><span class="p">,</span> <span class="n">head</span><span class="o">=</span><span class="n">head</span><span class="p">)</span>
+    <span class="n">decomp</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">irrep_decomposition</span><span class="p">(</span><span class="n">to_pg</span><span class="p">,</span> <span class="n">rank</span><span class="p">,</span> <span class="n">axial</span><span class="p">)</span>
+
+    <span class="n">name</span> <span class="o">=</span> <span class="n">head</span> <span class="o">+</span> <span class="s2">&quot;_harmonics decomposition to &quot;</span> <span class="o">+</span> <span class="n">to_pg</span>
+    <span class="n">header</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">group</span><span class="p">),</span> <span class="s2">&quot; </span><span class="se">\u21d2</span><span class="s2"> &quot;</span> <span class="o">+</span> <span class="n">to_pg</span><span class="p">]</span>
+
+    <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">h</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">hs</span><span class="p">,</span> <span class="n">decomp</span><span class="p">):</span>
+        <span class="n">ex</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">S</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">c</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">d</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="n">ex</span> <span class="o">+=</span> <span class="n">c</span> <span class="o">*</span> <span class="n">TagMultipole</span><span class="p">(</span><span class="n">b</span><span class="p">)</span><span class="o">.</span><span class="n">symbol</span><span class="p">()</span>
+        <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">h</span><span class="o">.</span><span class="n">latex</span><span class="p">(),</span> <span class="n">sp</span><span class="o">.</span><span class="n">latex</span><span class="p">(</span><span class="n">ex</span><span class="p">)])</span>
+
+    <span class="k">return</span> <span class="n">show_group_info</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">header</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span></div>
+
+
+
+<span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="show_virtual_cluster">
+<a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.dialog_info.show_virtual_cluster">[docs]</a>
+<span class="k">def</span> <span class="nf">show_virtual_cluster</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">wp</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Show virtual cluster panel.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        group (PointGroup): point group.</span>
+<span class="sd">        wp (str): Wyckoff position.</span>
+<span class="sd">        parent (QWidget): parent.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        - (InfoPanel) -- virtual cluster panel.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">basis</span><span class="p">,</span> <span class="n">site</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">virtual_cluster_basis</span><span class="p">(</span><span class="n">wyckoff</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">site</span><span class="p">))</span>
+
+    <span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;virtual cluster (</span><span class="si">{</span><span class="n">wp</span><span class="si">}</span><span class="s2">)&quot;</span>
+    <span class="n">header</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;symbol&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;S</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
+
+    <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">row</span> <span class="o">=</span> <span class="n">list_to_table</span><span class="p">(</span><span class="n">site</span><span class="o">.</span><span class="n">latex</span><span class="p">(),</span> <span class="n">n</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">row</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="sa">r</span><span class="s2">&quot;\text{site (r.c.)}&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">r</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="s2">&quot;&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">r</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">tag</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">basis</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">row</span> <span class="o">=</span> <span class="n">list_to_table</span><span class="p">(</span><span class="n">NSArray</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span> <span class="s2">&quot;scalar&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">latex</span><span class="p">(),</span> <span class="n">n</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">row</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">t</span> <span class="o">=</span> <span class="n">tag</span><span class="o">.</span><span class="n">latex</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">t</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+            <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">t</span><span class="p">]</span> <span class="o">+</span> <span class="n">r</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">show_group_info</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">header</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span></div>
+
+
+
+<span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="show_atomic_multipole">
+<a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.dialog_info.show_atomic_multipole">[docs]</a>
+<span class="k">def</span> <span class="nf">show_atomic_multipole</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">bra</span><span class="p">,</span> <span class="n">ket</span><span class="p">,</span> <span class="n">am</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Show atomic multipole panel.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        group (PointGroup): point group.</span>
+<span class="sd">        bra (list): bra basis list.</span>
+<span class="sd">        ket (list): ket basis list.</span>
+<span class="sd">        am (dict): atomic multipoles.</span>
+<span class="sd">        parent (QWidget): parent.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        - (InfoPanel) -- symmetry operation panel.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;atomic multipole&quot;</span>
+    <span class="n">header</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;symbol&quot;</span><span class="p">,</span> <span class="s2">&quot;rank&quot;</span><span class="p">,</span> <span class="s2">&quot;irrep.&quot;</span><span class="p">,</span> <span class="s2">&quot;s&quot;</span><span class="p">,</span> <span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="s2">&quot;basis&quot;</span><span class="p">]</span>
+
+    <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;\langle &quot;</span> <span class="o">+</span> <span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">bra</span><span class="p">)</span> <span class="o">+</span> <span class="sa">r</span><span class="s2">&quot;|&quot;</span> <span class="o">+</span> <span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ket</span><span class="p">)</span> <span class="o">+</span> <span class="sa">r</span><span class="s2">&quot;\rangle&quot;</span>
+    <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="s2">&quot;&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">5</span> <span class="o">+</span> <span class="p">[</span><span class="n">s</span><span class="p">])</span>
+    <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="s2">&quot;&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">6</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">tag</span><span class="p">,</span> <span class="n">am1</span> <span class="ow">in</span> <span class="n">am</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="n">tag</span><span class="o">.</span><span class="n">latex</span><span class="p">(),</span>
+                <span class="n">tag</span><span class="o">.</span><span class="n">rank</span><span class="p">,</span>
+                <span class="n">TagIrrep</span><span class="p">(</span><span class="n">tag</span><span class="o">.</span><span class="n">irrep</span><span class="p">)</span><span class="o">.</span><span class="n">latex</span><span class="p">(),</span>
+                <span class="n">tag</span><span class="o">.</span><span class="n">s</span><span class="p">,</span>
+                <span class="n">tag</span><span class="o">.</span><span class="n">k</span><span class="p">,</span>
+                <span class="n">am1</span><span class="o">.</span><span class="n">latex</span><span class="p">(),</span>
+            <span class="p">]</span>
+        <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">show_group_info</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">header</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span></div>
+
+
+
+<span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="show_response">
+<a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.dialog_info.show_response">[docs]</a>
+<span class="k">def</span> <span class="nf">show_response</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">rank</span><span class="p">,</span> <span class="n">r_type</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Show response tensor panel.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        group (PointGroup): point group.</span>
+<span class="sd">        rank (int): response tensor rank.</span>
+<span class="sd">        r_type (str): response tensor type.</span>
+<span class="sd">        parent (QWidget): parent.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        - (InfoPanel) -- response tensor panel.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">dic</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Q&quot;</span><span class="p">:</span> <span class="s2">&quot;E_polar&quot;</span><span class="p">,</span> <span class="s2">&quot;T&quot;</span><span class="p">:</span> <span class="s2">&quot;M_polar&quot;</span><span class="p">,</span> <span class="s2">&quot;G&quot;</span><span class="p">:</span> <span class="s2">&quot;E_axial&quot;</span><span class="p">,</span> <span class="s2">&quot;M&quot;</span><span class="p">:</span> <span class="s2">&quot;M_axial&quot;</span><span class="p">}</span>
+    <span class="n">pgr</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">response</span>
+    <span class="n">head</span> <span class="o">=</span> <span class="n">r_type</span>
+    <span class="n">rt</span> <span class="o">=</span> <span class="n">pgr</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">rank</span><span class="o">=</span><span class="n">rank</span><span class="p">,</span> <span class="n">head</span><span class="o">=</span><span class="n">head</span><span class="p">)</span>
+
+    <span class="n">name</span> <span class="o">=</span> <span class="n">dic</span><span class="p">[</span><span class="n">head</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;_response&quot;</span>
+    <span class="n">header</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;symbol&quot;</span><span class="p">,</span> <span class="s2">&quot;tensor&quot;</span><span class="p">]</span>
+
+    <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">rt</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="n">M</span> <span class="o">=</span> <span class="n">rt</span><span class="p">[</span><span class="n">tag</span><span class="p">]</span>
+        <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">tag</span><span class="o">.</span><span class="n">latex</span><span class="p">(),</span> <span class="n">M</span><span class="o">.</span><span class="n">latex</span><span class="p">()])</span>
+
+    <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">])</span>
+    <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="sa">r</span><span class="s2">&quot;\text</span><span class="si">{component}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&quot;\text</span><span class="si">{multipole}</span><span class="s2">&quot;</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">rt</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="n">def_mul</span> <span class="o">=</span> <span class="n">rt</span><span class="o">.</span><span class="n">definition</span><span class="p">[</span><span class="n">tag</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">t</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">def_mul</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">sp</span><span class="o">.</span><span class="n">latex</span><span class="p">(</span><span class="n">t</span><span class="p">),</span> <span class="n">sp</span><span class="o">.</span><span class="n">latex</span><span class="p">(</span><span class="n">d</span><span class="p">)])</span>
+
+    <span class="k">return</span> <span class="n">show_group_info</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">header</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span></div>
+
+</pre></div>
+
+                </article>
+              
+
+              
+              
+              
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Hiroaki Kusunose
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2021-2024.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
