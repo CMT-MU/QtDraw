@@ -572,7 +572,7 @@ document.write(`
 <span class="sd">        - (vtk.PolyData) -- arrow object.</span>
 
 <span class="sd">    Note:</span>
-<span class="sd">        - if length is zero, vector is used as it is.</span>
+<span class="sd">        - if length is negative, norm of direction multiplied by |length| is used.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">shaft_resolution</span> <span class="o">=</span> <span class="n">detail</span><span class="p">[</span><span class="s2">&quot;shaft_resolution&quot;</span><span class="p">]</span>
     <span class="n">tip_resolution</span> <span class="o">=</span> <span class="n">detail</span><span class="p">[</span><span class="s2">&quot;tip_resolution&quot;</span><span class="p">]</span>
@@ -580,7 +580,7 @@ document.write(`
     <span class="n">direction</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">direction</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
     <span class="n">norm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">direction</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">length</span> <span class="o">&lt;</span> <span class="n">CHOP</span><span class="p">:</span>
-        <span class="n">length</span> <span class="o">=</span> <span class="n">norm</span>
+        <span class="n">length</span> <span class="o">=</span> <span class="n">norm</span> <span class="o">*</span> <span class="nb">abs</span><span class="p">(</span><span class="n">length</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">direction</span> <span class="o">=</span> <span class="n">length</span> <span class="o">*</span> <span class="n">direction</span> <span class="o">/</span> <span class="n">norm</span>
 
