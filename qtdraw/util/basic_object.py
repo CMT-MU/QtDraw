@@ -229,9 +229,8 @@ def create_vector(
     direction = np.array(direction, dtype=np.float64)
     norm = np.linalg.norm(direction)
     if length < CHOP:
-        length = norm * abs(length)
-    else:
-        direction = length * direction / norm
+        length = abs(length) * norm
+    direction = length * direction / norm
 
     obj = pv.Arrow(
         offset * direction,
