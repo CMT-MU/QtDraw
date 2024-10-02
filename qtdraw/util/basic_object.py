@@ -221,7 +221,7 @@ def create_vector(
         - (vtk.PolyData) -- arrow object.
 
     Note:
-        - if length is zero, vector is used as it is.
+        - if length is negative, norm of direction multiplied by |length| is used.
     """
     shaft_resolution = detail["shaft_resolution"]
     tip_resolution = detail["tip_resolution"]
@@ -229,7 +229,7 @@ def create_vector(
     direction = np.array(direction, dtype=np.float64)
     norm = np.linalg.norm(direction)
     if length < CHOP:
-        length = norm
+        length = norm * abs(length)
     else:
         direction = length * direction / norm
 

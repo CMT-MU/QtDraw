@@ -205,7 +205,7 @@ object_default = {
         "position": ("list", ((3,), [""], 4), "[0,0,0]"),
         "cell": ("ilist", (3,), "[0,0,0]"),
         "direction": ("list", ((3,), [""], 4), "[0,0,1]"),
-        "length": ("sympy_float", 4, "0.0"),
+        "length": ("sympy_float", 4, "0.1"),
         "width": ("float", (0.0, "*", 3), "0.02"),
         "offset": ("float", ("*", "*", 3), "-0.43"),
         "color": ("color", None, "orange"),
