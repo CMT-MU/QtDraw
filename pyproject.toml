@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "qtdraw"
 dependencies = [
-    "numpy==1.26.4",
+    "numpy",
     "Cython",
     "matplotlib",
     "PySide6",
@@ -14,7 +14,7 @@ dependencies = [
     "click",
     "black",
     "ipython",
-    "pymatgen>2023.3.10", # numpy 1.26.4 (pymatgen 2024.4.13)
+    "pymatgen",
     "gcoreutils",
     "multipie",
 ]
