@@ -360,6 +360,7 @@ document.write(`
 <span class="kn">from</span> <span class="nn">PySide6.QtGui</span> <span class="kn">import</span> <span class="n">QStandardItemModel</span><span class="p">,</span> <span class="n">QStandardItem</span>
 <span class="kn">from</span> <span class="nn">PySide6.QtCore</span> <span class="kn">import</span> <span class="n">Signal</span><span class="p">,</span> <span class="n">Qt</span><span class="p">,</span> <span class="n">QModelIndex</span><span class="p">,</span> <span class="n">QTimer</span>
 <span class="kn">from</span> <span class="nn">qtdraw.core.pyvista_widget_setting</span> <span class="kn">import</span> <span class="n">CUSTOM_WIDGET</span>
+<span class="kn">from</span> <span class="nn">qtdraw.core.pyvista_widget_setting</span> <span class="kn">import</span> <span class="n">COLUMN_NAME_ACTOR</span><span class="p">,</span> <span class="n">COLUMN_LABEL_ACTOR</span>
 
 
 <span class="c1"># ==================================================</span>
@@ -724,8 +725,12 @@ document.write(`
         <span class="k">if</span> <span class="n">index</span> <span class="o">!=</span> <span class="n">QModelIndex</span><span class="p">():</span>
             <span class="k">if</span> <span class="n">copy_row</span><span class="p">:</span>
                 <span class="n">row_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_row_data</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+                <span class="n">row_data</span><span class="p">[</span><span class="n">COLUMN_NAME_ACTOR</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+                <span class="n">row_data</span><span class="p">[</span><span class="n">COLUMN_LABEL_ACTOR</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">row_data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_row_data</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="n">row_data</span><span class="p">)</span>
 
         <span class="n">name</span> <span class="o">=</span> <span class="n">row_data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># assume tuple at first column.</span>
         <span class="n">parent_item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_item</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">child</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
