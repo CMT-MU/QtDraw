@@ -2067,7 +2067,7 @@ class QtDraw(Window):
 
         Args:
             data (str, optional): data (file) name for grid data. (default: "")
-            value (str, optional): isosurface values. (default: [0.0])
+            value (str, optional): isosurface values. (default: [0.5])
             surface (str, optional): surface value name. (default: "")
             color (str, optional): text color. (default: iron)
             opacity (float, optional): opacity, [0,1]. (default: 1.0)
