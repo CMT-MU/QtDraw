@@ -17,6 +17,7 @@ import copy
 from PySide6.QtGui import QStandardItemModel, QStandardItem
 from PySide6.QtCore import Signal, Qt, QModelIndex, QTimer
 from qtdraw.core.pyvista_widget_setting import CUSTOM_WIDGET
+from qtdraw.core.pyvista_widget_setting import COLUMN_NAME_ACTOR, COLUMN_LABEL_ACTOR
 
 
 # ==================================================
@@ -341,8 +342,12 @@ class GroupModel(QStandardItemModel):
         if index != QModelIndex():
             if copy_row:
                 row_data = self.get_row_data(index)
+                row_data[COLUMN_NAME_ACTOR] = ""
+                row_data[COLUMN_LABEL_ACTOR] = ""
             else:
                 row_data[0] = self.get_row_data(index, 0)
+
+        print(row_data)
 
         name = row_data[0]  # assume tuple at first column.
         parent_item = self.find_item(name, child=False)
