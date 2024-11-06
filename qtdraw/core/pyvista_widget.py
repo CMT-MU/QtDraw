@@ -1270,6 +1270,7 @@ class PyVistaWidget(QtInteractor):
         value=None,
         surface=None,
         color=None,
+        color_range=None,
         opacity=None,
         position=None,
         cell=None,
@@ -1285,6 +1286,7 @@ class PyVistaWidget(QtInteractor):
             value (str, optional): isosurface values. (default: [0.5])
             surface (str, optional): surface value name. (default: "")
             color (str, optional): text color. (default: iron)
+            color_range (str, optional): color range. (default: [0,1])
             opacity (float, optional): opacity, [0,1]. (default: 1.0)
             position (str, optional): position in cell, [x,y,z]. (default: [0,0,0])
             cell (str, optional): cell, [nx,ny,nz]. (default: [0,0,0])
@@ -1317,6 +1319,10 @@ class PyVistaWidget(QtInteractor):
             row_data["value"] = convert_to_str(value)
         if color is not None:
             row_data["color"] = convert_to_str(color)
+        if color_range is not None:
+            if isinstance(color_range, np.ndarray):
+                color_range = color_range.tolist()
+            row_data["color_range"] = convert_to_str(color_range)
 
         row_data = list(row_data.values())
         self._data["isosurface"].append_row(row_data)
@@ -3492,6 +3498,7 @@ class PyVistaWidget(QtInteractor):
         value = apply(float, text_to_list(data["value"]))
         surface = data["surface"]
         color = data["color"]
+        color_range = apply(float, text_to_list(data["color_range"]))
         opacity = float(data["opacity"])
 
         if data_name == "":
@@ -3518,11 +3525,7 @@ class PyVistaWidget(QtInteractor):
                 "show_scalar_bar": False,
             }
         else:
-            val = np.min(obj[surface])
-            if np.max(obj[surface]) - val < 1e-4:
-                clim = [val - 0.05, val + 0.05]
-            else:
-                clim = None
+            clim = color_range
             option_add = {
                 "cmap": color.strip("*"),
                 "clim": clim,

@@ -347,8 +347,6 @@ class GroupModel(QStandardItemModel):
             else:
                 row_data[0] = self.get_row_data(index, 0)
 
-        print(row_data)
-
         name = row_data[0]  # assume tuple at first column.
         parent_item = self.find_item(name, child=False)
         if len(parent_item) > 0:

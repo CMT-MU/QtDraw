@@ -303,3 +303,43 @@ def affine_trans(v, s=None, A=None, digit=None, check_var=None):
                 v = v + np.tile(s, (v.shape[0], 1))
 
     return v
+
+
+# ==================================================
+def str_to_sympy1(s, check_var=None, rational=True, subs=None):
+    """
+    Convert a string to a sympy (new version).
+
+    Args:
+        s (str): a string.
+        check_var (list, optional): variables to accept.
+        rational (bool, optional): use rational number ?
+        subs (dict, optional): replace dict for local variables.
+
+    Returns:
+        - (ndarray) -- (list of) sympy.
+
+    Notes:
+        - if format error occurs, raise ValueError.
+        - if s cannot be converted to a sympy, raise ValueError.
+    """
+    if check_var is None:
+        check_var = []
+
+    check_var = set(check_var)
+
+    transformations = standard_transformations + (implicit_multiplication,)
+    if rational:
+        transformations += (rationalize,)
+
+    try:
+        expression = parse_expr(s, transformations=transformations, local_dict=subs)
+    except (SympifyError, SyntaxError, TypeError):
+        raise ValueError(f"invalid string '{s}'.")
+    var = set(get_variable(expression))
+    if len(check_var) != 0 and not (var <= check_var):
+        raise ValueError(f"invalid variable in '{s}'.")
+
+    expression = np.asarray(expression)
+
+    return expression

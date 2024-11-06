@@ -10,6 +10,7 @@ import pyvista as pv
 import numpy as np
 import matplotlib.pyplot as plt
 from gcoreutils.convert_util import text_to_list, apply
+from qtdraw.util.util_str import str_to_sympy1
 
 
 # ==================================================
@@ -86,7 +87,7 @@ def convert_str_vector(vector, cell="[0,0,0]", transform=True, A=None):
         - (numpy.ndarray) -- transformed position.
     """
     cell = np.array(apply(int, text_to_list(cell)))
-    vector = np.array(apply(float, text_to_list(vector)))
+    vector = str_to_sympy1(vector).astype(float)
 
     vectorT = vector + cell
     if transform:
