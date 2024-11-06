@@ -36,7 +36,7 @@ win = QtDraw()
 
 # draw isosurface.
 win.set_cell("off")
-win.add_isosurface(data=("cubic.py", grid_data), surface="v", color="coolwarm")
+win.add_isosurface(data=("cubic.py", grid_data), value=[0.5], surface="v", color="coolwarm", color_range=[10, 24])
 win.set_view()
 
 win.exec()

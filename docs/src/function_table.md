@@ -659,6 +659,7 @@
 | str_to_sympy | Convert a string to a sympy. |
 | str_to_numpy | Convert a string (list) to a numpy array. |
 | affine_trans | Affine transformation, A.v + s. |
+| str_to_sympy1 | Convert a string to a sympy (new version). |
 
 
 ## <div class='my-heading' style='color: darkgreen;'>logging_util.py
