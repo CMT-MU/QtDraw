@@ -2055,6 +2055,7 @@ class QtDraw(Window):
         value=None,
         surface=None,
         color=None,
+        color_range=None,
         opacity=None,
         position=None,
         cell=None,
@@ -2070,6 +2071,7 @@ class QtDraw(Window):
             value (str, optional): isosurface values. (default: [0.5])
             surface (str, optional): surface value name. (default: "")
             color (str, optional): text color. (default: iron)
+            color_range (str, optional): color range. (default: [0,1])
             opacity (float, optional): opacity, [0,1]. (default: 1.0)
             position (str, optional): position in cell, [x,y,z]. (default: [0,0,0])
             cell (str, optional): cell, [nx,ny,nz]. (default: [0,0,0])
@@ -2082,7 +2084,7 @@ class QtDraw(Window):
             - if filename is tuple, (name, dict), use dict data as name.
             - if surface colormap is automatically adjusted by [min.max].
         """
-        self.pyvista_widget.add_isosurface(data, value, surface, color, opacity, position, cell, name, label, margin)
+        self.pyvista_widget.add_isosurface(data, value, surface, color, color_range, opacity, position, cell, name, label, margin)
 
     # ==================================================
     def add_caption(self, caption=None, size=None, bold=None, color=None, position=None, cell=None, name=None, margin=None):

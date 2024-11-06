@@ -526,6 +526,7 @@ object_default = {
         "value": ("list", ((0,), [""], 4), "[0.5]"),
         "surface": ("str", None, ""),
         "color": ("color_both", None, "white"),
+        "color_range": ("list", ((2,), [""], 3), "[0,1]"),
         "opacity": ("float", (0.0, 1.0, 2), "0.8"),
     },
     "caption": {
