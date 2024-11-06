@@ -488,6 +488,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util_str.str_to_list"><code class="docutils literal notranslate"><span class="pre">str_to_list()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util_str.str_to_numpy"><code class="docutils literal notranslate"><span class="pre">str_to_numpy()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util_str.str_to_sympy"><code class="docutils literal notranslate"><span class="pre">str_to_sympy()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util_str.str_to_sympy1"><code class="docutils literal notranslate"><span class="pre">str_to_sympy1()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util_str.to_fraction"><code class="docutils literal notranslate"><span class="pre">to_fraction()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util_axis.create_axes_widget"><code class="docutils literal notranslate"><span class="pre">create_axes_widget()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util_axis.create_grid"><code class="docutils literal notranslate"><span class="pre">create_grid()</span></code></a></li>
@@ -1821,6 +1822,33 @@ different directory (just by copying it).</p>
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="qtdraw.util.util_str.str_to_sympy1">
+<span class="sig-name descname"><span class="pre">str_to_sympy1</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check_var</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rational</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/util_str.html#str_to_sympy1"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.util_str.str_to_sympy1" title="Link to this definition">#</a></dt>
+<dd><p>Convert a string to a sympy (new version).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>s</strong> (<em>str</em>) -- a string.</p></li>
+<li><p><strong>check_var</strong> (<em>list</em><em>, </em><em>optional</em>) -- variables to accept.</p></li>
+<li><p><strong>rational</strong> (<em>bool</em><em>, </em><em>optional</em>) -- use rational number ?</p></li>
+<li><p><strong>subs</strong> (<em>dict</em><em>, </em><em>optional</em>) -- replace dict for local variables.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>(ndarray) -- (list of) sympy.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>if format error occurs, raise ValueError.</p></li>
+<li><p>if s cannot be converted to a sympy, raise ValueError.</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="qtdraw.util.util_str.to_fraction">
 <span class="sig-name descname"><span class="pre">to_fraction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_denominator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000000</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/util_str.html#to_fraction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.util_str.to_fraction" title="Link to this definition">#</a></dt>
 <dd><p>Convert a float number to a fractional one.</p>
@@ -2157,6 +2185,7 @@ different directory (just by copying it).</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util_str.str_to_list"><code class="docutils literal notranslate"><span class="pre">str_to_list()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util_str.str_to_numpy"><code class="docutils literal notranslate"><span class="pre">str_to_numpy()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util_str.str_to_sympy"><code class="docutils literal notranslate"><span class="pre">str_to_sympy()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util_str.str_to_sympy1"><code class="docutils literal notranslate"><span class="pre">str_to_sympy1()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util_str.to_fraction"><code class="docutils literal notranslate"><span class="pre">to_fraction()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util_axis.create_axes_widget"><code class="docutils literal notranslate"><span class="pre">create_axes_widget()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util_axis.create_grid"><code class="docutils literal notranslate"><span class="pre">create_grid()</span></code></a></li>

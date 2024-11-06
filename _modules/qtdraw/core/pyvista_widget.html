@@ -31,7 +31,7 @@
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -1677,6 +1677,7 @@ document.write(`
         <span class="n">value</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">surface</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">color</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">color_range</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">opacity</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">position</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">cell</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -1692,6 +1693,7 @@ document.write(`
 <span class="sd">            value (str, optional): isosurface values. (default: [0.5])</span>
 <span class="sd">            surface (str, optional): surface value name. (default: &quot;&quot;)</span>
 <span class="sd">            color (str, optional): text color. (default: iron)</span>
+<span class="sd">            color_range (str, optional): color range. (default: [0,1])</span>
 <span class="sd">            opacity (float, optional): opacity, [0,1]. (default: 1.0)</span>
 <span class="sd">            position (str, optional): position in cell, [x,y,z]. (default: [0,0,0])</span>
 <span class="sd">            cell (str, optional): cell, [nx,ny,nz]. (default: [0,0,0])</span>
@@ -1724,6 +1726,10 @@ document.write(`
             <span class="n">row_data</span><span class="p">[</span><span class="s2">&quot;value&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">convert_to_str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">color</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">row_data</span><span class="p">[</span><span class="s2">&quot;color&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">convert_to_str</span><span class="p">(</span><span class="n">color</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">color_range</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">color_range</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+                <span class="n">color_range</span> <span class="o">=</span> <span class="n">color_range</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+            <span class="n">row_data</span><span class="p">[</span><span class="s2">&quot;color_range&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">convert_to_str</span><span class="p">(</span><span class="n">color_range</span><span class="p">)</span>
 
         <span class="n">row_data</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">row_data</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">&quot;isosurface&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append_row</span><span class="p">(</span><span class="n">row_data</span><span class="p">)</span></div>
@@ -4133,6 +4139,7 @@ document.write(`
         <span class="n">value</span> <span class="o">=</span> <span class="n">apply</span><span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="n">text_to_list</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;value&quot;</span><span class="p">]))</span>
         <span class="n">surface</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;surface&quot;</span><span class="p">]</span>
         <span class="n">color</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;color&quot;</span><span class="p">]</span>
+        <span class="n">color_range</span> <span class="o">=</span> <span class="n">apply</span><span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="n">text_to_list</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;color_range&quot;</span><span class="p">]))</span>
         <span class="n">opacity</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;opacity&quot;</span><span class="p">])</span>
 
         <span class="k">if</span> <span class="n">data_name</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
@@ -4159,11 +4166,7 @@ document.write(`
                 <span class="s2">&quot;show_scalar_bar&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
             <span class="p">}</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">val</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="n">surface</span><span class="p">])</span>
-            <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="n">surface</span><span class="p">])</span> <span class="o">-</span> <span class="n">val</span> <span class="o">&lt;</span> <span class="mf">1e-4</span><span class="p">:</span>
-                <span class="n">clim</span> <span class="o">=</span> <span class="p">[</span><span class="n">val</span> <span class="o">-</span> <span class="mf">0.05</span><span class="p">,</span> <span class="n">val</span> <span class="o">+</span> <span class="mf">0.05</span><span class="p">]</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">clim</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="n">clim</span> <span class="o">=</span> <span class="n">color_range</span>
             <span class="n">option_add</span> <span class="o">=</span> <span class="p">{</span>
                 <span class="s2">&quot;cmap&quot;</span><span class="p">:</span> <span class="n">color</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s2">&quot;*&quot;</span><span class="p">),</span>
                 <span class="s2">&quot;clim&quot;</span><span class="p">:</span> <span class="n">clim</span><span class="p">,</span>

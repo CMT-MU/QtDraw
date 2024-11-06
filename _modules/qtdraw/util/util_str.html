@@ -31,7 +31,7 @@
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -672,6 +672,49 @@ document.write(`
                 <span class="n">v</span> <span class="o">=</span> <span class="n">v</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">))</span>
 
     <span class="k">return</span> <span class="n">v</span></div>
+
+
+
+<span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="str_to_sympy1">
+<a class="viewcode-back" href="../../../src/api_util.html#qtdraw.util.util_str.str_to_sympy1">[docs]</a>
+<span class="k">def</span> <span class="nf">str_to_sympy1</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">check_var</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">rational</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">subs</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert a string to a sympy (new version).</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        s (str): a string.</span>
+<span class="sd">        check_var (list, optional): variables to accept.</span>
+<span class="sd">        rational (bool, optional): use rational number ?</span>
+<span class="sd">        subs (dict, optional): replace dict for local variables.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        - (ndarray) -- (list of) sympy.</span>
+
+<span class="sd">    Notes:</span>
+<span class="sd">        - if format error occurs, raise ValueError.</span>
+<span class="sd">        - if s cannot be converted to a sympy, raise ValueError.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">check_var</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">check_var</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="n">check_var</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">check_var</span><span class="p">)</span>
+
+    <span class="n">transformations</span> <span class="o">=</span> <span class="n">standard_transformations</span> <span class="o">+</span> <span class="p">(</span><span class="n">implicit_multiplication</span><span class="p">,)</span>
+    <span class="k">if</span> <span class="n">rational</span><span class="p">:</span>
+        <span class="n">transformations</span> <span class="o">+=</span> <span class="p">(</span><span class="n">rationalize</span><span class="p">,)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">expression</span> <span class="o">=</span> <span class="n">parse_expr</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">transformations</span><span class="o">=</span><span class="n">transformations</span><span class="p">,</span> <span class="n">local_dict</span><span class="o">=</span><span class="n">subs</span><span class="p">)</span>
+    <span class="k">except</span> <span class="p">(</span><span class="n">SympifyError</span><span class="p">,</span> <span class="ne">SyntaxError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;invalid string &#39;</span><span class="si">{</span><span class="n">s</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span>
+    <span class="n">var</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">get_variable</span><span class="p">(</span><span class="n">expression</span><span class="p">))</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">check_var</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="ow">not</span> <span class="p">(</span><span class="n">var</span> <span class="o">&lt;=</span> <span class="n">check_var</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;invalid variable in &#39;</span><span class="si">{</span><span class="n">s</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span>
+
+    <span class="n">expression</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">expression</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">expression</span></div>
 
 </pre></div>
 
