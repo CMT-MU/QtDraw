@@ -1910,7 +1910,8 @@ class PyVistaWidget(QtInteractor):
                     idx = get_outside_box(point, lower, upper)
                     hide = name_actor[idx]
                     for actor_name in hide:
-                        self.actors[actor_name].SetVisibility(False)
+                        if actor_name != "":
+                            self.actors[actor_name].SetVisibility(False)
                     if object_type != "caption":
                         label_actor = value[:, COLUMN_LABEL_ACTOR][idx]
                         for i in label_actor:
@@ -1937,7 +1938,7 @@ class PyVistaWidget(QtInteractor):
         cell = "[" + cell + "]"
         point = convert_str_vector(point, cell, False)
         idx = get_outside_box(point, lower, upper)
-        if len(idx) > 0:
+        if len(idx) > 0 and name_actor != "":
             self.actors[name_actor].SetVisibility(False)
         if label_actor is not None and len(idx) > 0 and label_actor != "":
             self.actors[label_actor].SetVisibility(False)
