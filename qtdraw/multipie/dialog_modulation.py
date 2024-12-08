@@ -70,11 +70,13 @@ class ModulationDialog(QDialog):
         layout.setSpacing(5)
 
         # modulation view.
-        modulation_panel["basis"] = ("combo", self.basis, self.basis[0])
-        model = GroupModel("modulation", modulation_panel, self.widget)
+        mod_panel = copy.deepcopy(modulation_panel)
+        mod_panel["basis"] = ("combo", self.basis, self.basis[0])
+        model = GroupModel("modulation", mod_panel, self.widget)
         model.set_data(data)
         self.view = GroupView(model, parent)
         self.view.customContextMenuRequested.disconnect()
+        self.view.update_widget(force=True)
 
         # buttons.
         button_add = Button(parent, "add")
@@ -179,6 +181,7 @@ class ModulationDialog(QDialog):
                 self.parent().basis_edit_vector_modulation.setText(data)
         self.widget.restore()
         self.add_modulation()
+        self.close()
         super().accept()
 
     # ==================================================
@@ -187,6 +190,7 @@ class ModulationDialog(QDialog):
         Reject input.
         """
         self.widget.restore()
+        self.close()
         super().reject()
 
     # ==================================================

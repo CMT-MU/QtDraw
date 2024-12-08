@@ -9,6 +9,7 @@ The examples for **QtDraw**.
 ## from Jupyter Notebook
 - [QtDraw](examples/qtdraw.ipynb)
 - [PyVistaWidget](examples/pyvista_widget.ipynb)
+- [MultiPie](examples/multipie.ipynb)
 
 ## background plot
 ```{literalinclude} examples/background.py

@@ -2559,6 +2559,12 @@ class QtDraw(Window):
     # MultiPie interface
     # ==================================================
     def mp_set_group(self, tag=None):
+        """
+        MultiPie: Set point/sapce group.
+
+        Args:
+            tag (str, optional): group tag in Schoenflies notation [default: C1].
+        """
         if not check_multipie():
             raise Exception("MultiPie is not installed.")
 
@@ -2575,7 +2581,13 @@ class QtDraw(Window):
         self.misc_button_multipie.pressed.emit()
 
     # ==================================================
-    def mp_add_equivalent_site(self, site):
+    def mp_add_site(self, site):
+        """
+        MultiPie: Add equivalent sites.
+
+        Args:
+            site (str): representative site.
+        """
         if self.multipie_dialog is None:
             self.mp_set_group()
 
@@ -2583,7 +2595,13 @@ class QtDraw(Window):
         self.multipie_dialog.dialog.obj_add_site()
 
     # ==================================================
-    def mp_add_equivalent_bond(self, bond):
+    def mp_add_bond(self, bond):
+        """
+        MultiPie: Add equivalent bonds.
+
+        Args:
+            bond (str): representative bond.
+        """
         if self.multipie_dialog is None:
             self.mp_set_group()
 
@@ -2591,7 +2609,15 @@ class QtDraw(Window):
         self.multipie_dialog.dialog.obj_add_bond()
 
     # ==================================================
-    def mp_add_equivalent_vector(self, type, vector, site_bond):
+    def mp_add_vector(self, type, vector, site_bond):
+        """
+        MultiPie: Add vectors at equivalent sites or bonds.
+
+        Args:
+            type (str): type of vector, Q/G/T/M.
+            vector (str): vector (cartesian).
+            site_bond (str): representative site or bond.
+        """
         if self.multipie_dialog is None:
             self.mp_set_group()
 
@@ -2600,7 +2626,15 @@ class QtDraw(Window):
         self.multipie_dialog.dialog.obj_add_vector()
 
     # ==================================================
-    def mp_add_equivalent_orbital(self, type, orbital, site_bond):
+    def mp_add_orbital(self, type, orbital, site_bond):
+        """
+        MultiPie: Add orbitals at equivalent sites or bonds.
+
+        Args:
+            type (str): type of orbital, Q/G/T/M.
+            vector (str): orbital in terms of x,y,z,r (cartesian).
+            site_bond (str): representative site or bond.
+        """
         if self.multipie_dialog is None:
             self.mp_set_group()
 
@@ -2610,6 +2644,16 @@ class QtDraw(Window):
 
     # ==================================================
     def mp_create_harmonics(self, type, rank):
+        """
+        MultiPie: Create harmonics list.
+
+        Args:
+            type (str): type of harmonics, Q/G/T/M.
+            rank (int or str): rank.
+
+        Returns:
+            - (list) -- list of harmonics, [str].
+        """
         if self.multipie_dialog is None:
             self.mp_set_group()
 
@@ -2621,13 +2665,29 @@ class QtDraw(Window):
         return lst
 
     # ==================================================
-    def mp_add_equivalent_harmonics(self, irrep, site_bond):
-        self.multipie_dialog.dialog.object_combo_harmonics_irrep.setCurrentText(irrep)
+    def mp_add_harmonics(self, tag, site_bond):
+        """
+        MultiPie: Add harmonics at equivalent sites or bonds.
+
+        Args:
+            tag (str): harmonics tag, obtained by mp_create_harmonics.
+            site_bond (str): representative site or bond.
+        """
+        self.multipie_dialog.dialog.object_combo_harmonics_irrep.setCurrentText(tag)
         self.multipie_dialog.dialog.object_edit_harmonics.setText(site_bond)
         self.multipie_dialog.dialog.obj_add_harmonics()
 
     # ==================================================
-    def mp_create_basis_site(self, site):
+    def mp_create_site_samb(self, site):
+        """
+        MultiPie: Create site SAMB.
+
+        Args:
+            site (str): representative site.
+
+        Returns:
+            - (list) -- list of site SAMB, [str].
+        """
         if self.multipie_dialog is None:
             self.mp_set_group()
 
@@ -2637,12 +2697,27 @@ class QtDraw(Window):
         return d
 
     # ==================================================
-    def mp_add_basis_site(self, tag):
+    def mp_add_site_samb(self, tag):
+        """
+        MultiPie: Add site SAMB.
+
+        Args:
+            tag (str): site SAMB, obtained by mp_create_site_samb.
+        """
         self.multipie_dialog.dialog.basis_combo_site_samb.setCurrentText(tag)
         self.multipie_dialog.dialog.basis_add_site()
 
     # ==================================================
-    def mp_create_basis_bond(self, bond):
+    def mp_create_bond_samb(self, bond):
+        """
+        MultiPie: Create bond SAMB.
+
+        Args:
+            bond (str): representative bond.
+
+        Returns:
+            - (list) -- list of bond SAMB, [str].
+        """
         if self.multipie_dialog is None:
             self.mp_set_group()
 
@@ -2652,12 +2727,28 @@ class QtDraw(Window):
         return d
 
     # ==================================================
-    def mp_add_basis_bond(self, tag):
+    def mp_add_bond_samb(self, tag):
+        """
+        MultiPie: Add bond SAMB.
+
+        Args:
+            tag (str): bond SAMB, obtained by mp_create_bond_samb.
+        """
         self.multipie_dialog.dialog.basis_combo_bond_samb.setCurrentText(tag)
         self.multipie_dialog.dialog.basis_add_bond()
 
     # ==================================================
-    def mp_create_basis_vector(self, type, site_bond):
+    def mp_create_vector_samb(self, type, site_bond):
+        """
+        MultiPie: Create vector SAMB.
+
+        Args:
+            type (str): type of vector, Q/G/T/M.
+            site_bond (str): representative site or bond.
+
+        Returns:
+            - (list) -- list of vector SAMB, [str].
+        """
         if self.multipie_dialog is None:
             self.mp_set_group()
 
@@ -2673,7 +2764,13 @@ class QtDraw(Window):
         return d
 
     # ==================================================
-    def mp_add_basis_vector(self, lc):
+    def mp_add_vector_samb(self, lc):
+        """
+        MultiPie: Add vector SAMB.
+
+        Args:
+            lc (str): linear combination of vector SAMBs, obtained by mp_create_vector_samb.
+        """
         num = {k: lc.count(k) for k in ["Q", "G", "T", "M"]}
         z_type = "Q" if num["Q"] + num["G"] > 0 else "T"
         self.multipie_dialog.dialog.basis_combo_vector_samb_type.setCurrentText(z_type)
@@ -2681,14 +2778,33 @@ class QtDraw(Window):
         self.multipie_dialog.dialog.basis_add_vector_lc()
 
     # ==================================================
-    def mp_add_basis_vector_modulation(self, mod_list):
+    def mp_add_vector_samb_modulation(self, mod_list):
+        """
+        MultiPie: Add vector SAMB with modulation.
+
+        Args:
+            mod_list (str): modulation list, "[[tag, coeff, k_vector, cos/sin]]".
+        """
         num = {k: mod_list.count(k) for k in ["Q", "G", "T", "M"]}
         z_type = "Q,G" if num["Q"] + num["G"] > 0 else "T,M"
         self.multipie_dialog.dialog.basis_combo_vector_modulation_type.setCurrentText(z_type)
         self.multipie_dialog.dialog.basis_edit_vector_modulation.setText(mod_list)
+        self.multipie_dialog.dialog.basis_gen_vector_modulation()
+        self.multipie_dialog.dialog._vector_modulation_dialog.accept()
 
     # ==================================================
-    def mp_create_basis_orbital(self, type, rank, site_bond):
+    def mp_create_orbital_samb(self, type, rank, site_bond):
+        """
+        MultiPie: Create orbital SAMB.
+
+        Args:
+            type (str): type of orbital, Q/G/T/M.
+            rank (int or str): rank.
+            site_bond (str): representative site or bond.
+
+        Returns:
+            - (list) -- list of orbital SAMB, [str].
+        """
         if self.multipie_dialog is None:
             self.mp_set_group()
 
@@ -2705,7 +2821,13 @@ class QtDraw(Window):
         return d
 
     # ==================================================
-    def mp_add_basis_orbital(self, lc):
+    def mp_add_orbital_samb(self, lc):
+        """
+        MultiPie: Add orbital SAMB.
+
+        Args:
+            lc (str): linear combination of orbital SAMBs, obtained by mp_create_orbital_samb.
+        """
         num = {k: lc.count(k) for k in ["Q", "G", "T", "M"]}
         z_type = "Q" if num["Q"] + num["G"] > 0 else "T"
         self.multipie_dialog.dialog.basis_combo_orbital_samb_type.setCurrentText(z_type)
@@ -2713,14 +2835,28 @@ class QtDraw(Window):
         self.multipie_dialog.dialog.basis_add_orbital_lc()
 
     # ==================================================
-    def mp_add_basis_orbital_modulation(self, mod_list):
+    def mp_add_orbital_samb_modulation(self, mod_list):
+        """
+        MultiPie: Add orbital SAMB with modulation.
+
+        Args:
+            mod_list (str): modulation list, "[[tag, coeff, k_vector, cos/sin]]".
+        """
         num = {k: mod_list.count(k) for k in ["Q", "G", "T", "M"]}
         z_type = "Q,G" if num["Q"] + num["G"] > 0 else "T,M"
         self.multipie_dialog.dialog.basis_combo_orbital_modulation_type.setCurrentText(z_type)
         self.multipie_dialog.dialog.basis_edit_orbital_modulation.setText(mod_list)
+        self.multipie_dialog.dialog.basis_gen_orbital_modulation()
+        self.multipie_dialog.dialog._orbital_modulation_dialog.accept()
 
     # ==================================================
-    def mp_add_basis_hopping(self, bond):
+    def mp_add_hopping(self, bond):
+        """
+        MultiPie: Add hopping bond directions.
+
+        Args:
+            bond (str): representative bond.
+        """
         if self.multipie_dialog is None:
             self.mp_set_group()
 
