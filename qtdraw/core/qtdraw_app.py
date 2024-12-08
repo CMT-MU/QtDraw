@@ -2554,3 +2554,175 @@ class QtDraw(Window):
             filename (str): full file name.
         """
         self.pyvista_widget.save(filename)
+
+    # ==================================================
+    # MultiPie interface
+    # ==================================================
+    def mp_set_group(self, tag=None):
+        if not check_multipie():
+            raise Exception("MultiPie is not installed.")
+
+        if self.multipie_dialog is not None:
+            self.multipie_dialog.dialog.close()
+            del self.multipie_dialog
+            self.multipie_dialog = None
+
+        if tag is None:
+            tag = "C1"
+
+        multipie = {"group": {"group": tag}}
+        self.pyvista_widget.update_status("multipie", multipie)
+        self.misc_button_multipie.pressed.emit()
+
+    # ==================================================
+    def mp_add_equivalent_site(self, site):
+        if self.multipie_dialog is None:
+            self.mp_set_group()
+
+        self.multipie_dialog.dialog.object_edit_site.setText(site)
+        self.multipie_dialog.dialog.obj_add_site()
+
+    # ==================================================
+    def mp_add_equivalent_bond(self, bond):
+        if self.multipie_dialog is None:
+            self.mp_set_group()
+
+        self.multipie_dialog.dialog.object_edit_bond.setText(bond)
+        self.multipie_dialog.dialog.obj_add_bond()
+
+    # ==================================================
+    def mp_add_equivalent_vector(self, type, vector, site_bond):
+        if self.multipie_dialog is None:
+            self.mp_set_group()
+
+        self.multipie_dialog.dialog.object_combo_vector_type.setCurrentText(type)
+        self.multipie_dialog.dialog.object_edit_vector.setText(vector + " # " + site_bond)
+        self.multipie_dialog.dialog.obj_add_vector()
+
+    # ==================================================
+    def mp_add_equivalent_orbital(self, type, orbital, site_bond):
+        if self.multipie_dialog is None:
+            self.mp_set_group()
+
+        self.multipie_dialog.dialog.object_combo_orbital_type.setCurrentText(type)
+        self.multipie_dialog.dialog.object_edit_orbital.setText(orbital + " # " + site_bond)
+        self.multipie_dialog.dialog.obj_add_orbital()
+
+    # ==================================================
+    def mp_create_harmonics(self, type, rank):
+        if self.multipie_dialog is None:
+            self.mp_set_group()
+
+        self.multipie_dialog.dialog.object_combo_harmonics_type.setCurrentText(type)
+        self.multipie_dialog.dialog.object_combo_harmonics_rank.setCurrentText(str(rank))
+
+        lst = self.multipie_dialog.dialog.object_combo_harmonics_irrep.get_item()
+
+        return lst
+
+    # ==================================================
+    def mp_add_equivalent_harmonics(self, irrep, site_bond):
+        self.multipie_dialog.dialog.object_combo_harmonics_irrep.setCurrentText(irrep)
+        self.multipie_dialog.dialog.object_edit_harmonics.setText(site_bond)
+        self.multipie_dialog.dialog.obj_add_harmonics()
+
+    # ==================================================
+    def mp_create_basis_site(self, site):
+        if self.multipie_dialog is None:
+            self.mp_set_group()
+
+        self.multipie_dialog.dialog.basis_edit_site.setText(site)
+        d = self.multipie_dialog.dialog.basis_gen_site()
+
+        return d
+
+    # ==================================================
+    def mp_add_basis_site(self, tag):
+        self.multipie_dialog.dialog.basis_combo_site_samb.setCurrentText(tag)
+        self.multipie_dialog.dialog.basis_add_site()
+
+    # ==================================================
+    def mp_create_basis_bond(self, bond):
+        if self.multipie_dialog is None:
+            self.mp_set_group()
+
+        self.multipie_dialog.dialog.basis_edit_bond.setText(bond)
+        d = self.multipie_dialog.dialog.basis_gen_bond()
+
+        return d
+
+    # ==================================================
+    def mp_add_basis_bond(self, tag):
+        self.multipie_dialog.dialog.basis_combo_bond_samb.setCurrentText(tag)
+        self.multipie_dialog.dialog.basis_add_bond()
+
+    # ==================================================
+    def mp_create_basis_vector(self, type, site_bond):
+        if self.multipie_dialog is None:
+            self.mp_set_group()
+
+        self.multipie_dialog.dialog.basis_combo_vector_type.setCurrentText(type)
+        self.multipie_dialog.dialog.basis_edit_vector.setText(site_bond)
+        self.multipie_dialog.dialog.basis_gen_vector()
+
+        z_samb = self.multipie_dialog.dialog.plus["vector_z_samb"]
+        d = []
+        for select in z_samb.values():
+            d += [f"{i[0][0]}{no+1:02d}: {i[0]}" for no, i in enumerate(select)]
+
+        return d
+
+    # ==================================================
+    def mp_add_basis_vector(self, lc):
+        num = {k: lc.count(k) for k in ["Q", "G", "T", "M"]}
+        z_type = "Q" if num["Q"] + num["G"] > 0 else "T"
+        self.multipie_dialog.dialog.basis_combo_vector_samb_type.setCurrentText(z_type)
+        self.multipie_dialog.dialog.basis_edit_vector_lc.setText(lc)
+        self.multipie_dialog.dialog.basis_add_vector_lc()
+
+    # ==================================================
+    def mp_add_basis_vector_modulation(self, mod_list):
+        num = {k: mod_list.count(k) for k in ["Q", "G", "T", "M"]}
+        z_type = "Q,G" if num["Q"] + num["G"] > 0 else "T,M"
+        self.multipie_dialog.dialog.basis_combo_vector_modulation_type.setCurrentText(z_type)
+        self.multipie_dialog.dialog.basis_edit_vector_modulation.setText(mod_list)
+
+    # ==================================================
+    def mp_create_basis_orbital(self, type, rank, site_bond):
+        if self.multipie_dialog is None:
+            self.mp_set_group()
+
+        self.multipie_dialog.dialog.basis_combo_orbital_type.setCurrentText(type)
+        self.multipie_dialog.dialog.basis_combo_orbital_rank.setCurrentText(str(rank))
+        self.multipie_dialog.dialog.basis_edit_orbital.setText(site_bond)
+        self.multipie_dialog.dialog.basis_gen_orbital()
+
+        z_samb = self.multipie_dialog.dialog.plus["orbital_z_samb"]
+        d = []
+        for select in z_samb.values():
+            d += [f"{i[0][0]}{no+1:02d}: {i[0]}" for no, i in enumerate(select)]
+
+        return d
+
+    # ==================================================
+    def mp_add_basis_orbital(self, lc):
+        num = {k: lc.count(k) for k in ["Q", "G", "T", "M"]}
+        z_type = "Q" if num["Q"] + num["G"] > 0 else "T"
+        self.multipie_dialog.dialog.basis_combo_orbital_samb_type.setCurrentText(z_type)
+        self.multipie_dialog.dialog.basis_edit_orbital_lc.setText(lc)
+        self.multipie_dialog.dialog.basis_add_orbital_lc()
+
+    # ==================================================
+    def mp_add_basis_orbital_modulation(self, mod_list):
+        num = {k: mod_list.count(k) for k in ["Q", "G", "T", "M"]}
+        z_type = "Q,G" if num["Q"] + num["G"] > 0 else "T,M"
+        self.multipie_dialog.dialog.basis_combo_orbital_modulation_type.setCurrentText(z_type)
+        self.multipie_dialog.dialog.basis_edit_orbital_modulation.setText(mod_list)
+
+    # ==================================================
+    def mp_add_basis_hopping(self, bond):
+        if self.multipie_dialog is None:
+            self.mp_set_group()
+
+        self.multipie_dialog.dialog.basis_edit_hopping.setText(bond)
+        self.multipie_dialog.dialog.basis_add_hopping()
