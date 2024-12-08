@@ -1261,7 +1261,7 @@ class MultiPieDialog(QDialog):
         pos = self.plugin.gen_site_samb(pos)
         self.basis["site"] = pos
 
-        self.basis_set_site_select()
+        return self.basis_set_site_select()
 
     # ==================================================
     def basis_set_site_select(self):
@@ -1278,6 +1278,8 @@ class MultiPieDialog(QDialog):
 
         self.basis_combo_site_samb.set_item(lst)
         self.basis_combo_site_samb.setCurrentIndex(0)
+
+        return lst
 
     # ==================================================
     def basis_add_site(self):
@@ -1316,7 +1318,7 @@ class MultiPieDialog(QDialog):
         pos = self.plugin.gen_bond_samb(pos)
         self.basis["bond"] = pos
 
-        self.basis_set_bond_select()
+        return self.basis_set_bond_select()
 
     # ==================================================
     def basis_set_bond_select(self):
@@ -1334,6 +1336,8 @@ class MultiPieDialog(QDialog):
 
         self.basis_combo_bond_samb.set_item(lst)
         self.basis_combo_bond_samb.setCurrentIndex(0)
+
+        return lst
 
     # ==================================================
     def basis_add_bond(self):
@@ -1441,7 +1445,7 @@ class MultiPieDialog(QDialog):
         if len(z_samb) == 0:
             return
 
-        z_type = self.basis_combo_vector_type.currentText()
+        z_type = self.basis_combo_vector_samb_type.currentText()
         r_site_bond = self.basis_edit_vector.text()
         lc = self.basis_edit_vector_lc.text()
         cluster = self.plus["vector_cluster"]

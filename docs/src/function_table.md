@@ -98,6 +98,24 @@
 | remove_actor | Remove actor. |
 | load | Load all info. |
 | save | save all info. |
+| mp_set_group | MultiPie: Set point/sapce group. |
+| mp_add_site | MultiPie: Add equivalent sites. |
+| mp_add_bond | MultiPie: Add equivalent bonds. |
+| mp_add_vector | MultiPie: Add vectors at equivalent sites or bonds. |
+| mp_add_orbital | MultiPie: Add orbitals at equivalent sites or bonds. |
+| mp_create_harmonics | MultiPie: Create harmonics list. |
+| mp_add_harmonics | MultiPie: Add harmonics at equivalent sites or bonds. |
+| mp_create_site_samb | MultiPie: Create site SAMB. |
+| mp_add_site_samb | MultiPie: Add site SAMB. |
+| mp_create_bond_samb | MultiPie: Create bond SAMB. |
+| mp_add_bond_samb | MultiPie: Add bond SAMB. |
+| mp_create_vector_samb | MultiPie: Create vector SAMB. |
+| mp_add_vector_samb | MultiPie: Add vector SAMB. |
+| mp_add_vector_samb_modulation | MultiPie: Add vector SAMB with modulation. |
+| mp_create_orbital_samb | MultiPie: Create orbital SAMB. |
+| mp_add_orbital_samb | MultiPie: Add orbital SAMB. |
+| mp_add_orbital_samb_modulation | MultiPie: Add orbital SAMB with modulation. |
+| mp_add_hopping | MultiPie: Add hopping bond directions. |
 
 
 ## <div class='my-heading' style='color: darkgreen;'>dialog_about.py
