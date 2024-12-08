@@ -19,7 +19,7 @@
 - Restart shell
 - [MacOS] Install [Homebrew](https://brew.sh/index_ja)
     ```bash
-    $ brew install python@3.11
+    $ brew install python@3.12
     ```
 - [Windows] Install PowerShell & Python [https://www.python.jp/install/windows/install.html](https://www.python.jp/install/windows/install.html)
 
@@ -29,7 +29,7 @@
     ```bash
     $ pip install -U pip
     $ pip install Cython
-    $ pip install numpy==1.26.4 # not ver.2 due to pymatgen
+    $ pip install numpy
     $ pip install sympy
     $ pip install scipy
     $ pip install matplotlib

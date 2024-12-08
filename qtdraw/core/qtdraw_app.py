@@ -2,9 +2,6 @@
 Application of QtDraw.
 
 This module provides application of QtDraw.
-
-To Do
-- add interface for MultiPie functionality.
 """
 
 import os
@@ -2632,7 +2629,7 @@ class QtDraw(Window):
 
         Args:
             type (str): type of orbital, Q/G/T/M.
-            vector (str): orbital in terms of x,y,z,r (cartesian).
+            orbital (str): orbital in terms of x,y,z,r (cartesian).
             site_bond (str): representative site or bond.
         """
         if self.multipie_dialog is None:
