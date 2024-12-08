@@ -417,11 +417,13 @@ document.write(`
         <span class="n">layout</span><span class="o">.</span><span class="n">setSpacing</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 
         <span class="c1"># modulation view.</span>
-        <span class="n">modulation_panel</span><span class="p">[</span><span class="s2">&quot;basis&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;combo&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">basis</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">basis</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-        <span class="n">model</span> <span class="o">=</span> <span class="n">GroupModel</span><span class="p">(</span><span class="s2">&quot;modulation&quot;</span><span class="p">,</span> <span class="n">modulation_panel</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">widget</span><span class="p">)</span>
+        <span class="n">mod_panel</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">modulation_panel</span><span class="p">)</span>
+        <span class="n">mod_panel</span><span class="p">[</span><span class="s2">&quot;basis&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;combo&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">basis</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">basis</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">GroupModel</span><span class="p">(</span><span class="s2">&quot;modulation&quot;</span><span class="p">,</span> <span class="n">mod_panel</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">widget</span><span class="p">)</span>
         <span class="n">model</span><span class="o">.</span><span class="n">set_data</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">view</span> <span class="o">=</span> <span class="n">GroupView</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="n">customContextMenuRequested</span><span class="o">.</span><span class="n">disconnect</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="n">update_widget</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
         <span class="c1"># buttons.</span>
         <span class="n">button_add</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;add&quot;</span><span class="p">)</span>
@@ -541,6 +543,7 @@ document.write(`
                 <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="p">()</span><span class="o">.</span><span class="n">basis_edit_vector_modulation</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">widget</span><span class="o">.</span><span class="n">restore</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">add_modulation</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">accept</span><span class="p">()</span></div>
 
 
@@ -552,6 +555,7 @@ document.write(`
 <span class="sd">        Reject input.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">widget</span><span class="o">.</span><span class="n">restore</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">reject</span><span class="p">()</span></div>
 
 
