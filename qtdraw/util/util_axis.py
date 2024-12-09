@@ -187,8 +187,6 @@ def create_axes_widget(
         label_color (list, optional): axes label color names, [str].
         viewport (bool, optional): set viewport ?
 
-    Returns:
-        - (vtk.vtkOrientationMarkerWidget) -- axes widget.
     Note:
         - if label is None, no label is used.
     """
@@ -229,10 +227,8 @@ def create_axes_widget(
     )
 
     # create axes widget.
-    axes_widget = pv_widget.add_orientation_widget(marker, interactive=pickable, viewport=viewport)
-    axes_widget.SetZoom(scale)
-
-    return axes_widget
+    pv_widget.add_orientation_widget(marker, interactive=pickable, viewport=viewport)
+    pv_widget.renderer.axes_widget.SetZoom(scale)
 
 
 # ==================================================
