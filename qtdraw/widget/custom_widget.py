@@ -247,10 +247,6 @@ class LineEdit(QLineEdit):
         Args:
             text (str): text.
         """
-        if self.read_only:
-            super().setText(text)
-            return
-
         if self._validator is None:
             s = text
         else:
@@ -260,6 +256,9 @@ class LineEdit(QLineEdit):
             self.setStyleSheet(self._invalid_style)
             self._valid = False
         else:
+            if self.read_only:
+                super().setText(s)
+                return
             self.setStyleSheet(self._valid_style)
             self._backup = text
             self._raw = text
