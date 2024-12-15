@@ -13,7 +13,7 @@ The examples for **QtDraw**.
 - [Graphene with MultiPie](examples/mp_graphene.ipynb)
 - [Te with MultiPie](examples/mp_Te.ipynb)
 - [PyVistaWidget](examples/pyvista_widget.ipynb)
-- [MultiPie](examples/multipie.ipynb)
+- [with MultiPie](examples/multipie.ipynb)
 
 ## background plot
 
