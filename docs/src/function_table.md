@@ -237,6 +237,7 @@
 | set_camera_info | Get camera info. |
 | add_data | Add data. |
 | repeat_data | Repeat data. |
+| set_nonrepeat | Transform data to non-repeat data. |
 | nonrepeat_data | Transform data to non-repeat data. |
 | set_actor | Set actor. |
 | delete_actor | Remove actor. |

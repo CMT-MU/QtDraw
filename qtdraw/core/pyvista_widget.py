@@ -83,6 +83,8 @@ class Window(QMainWindow):
 
         Args:
             level (Level): log level.
+
+        :meta private:
         """
         self.app = get_qt_application()
         self.logger = LogWidget(level=level)
@@ -124,7 +126,11 @@ def convert_qtdraw_v2(filename):
 
 # ==================================================
 class PlotSignal(QObject):
-    """:meta private:"""
+    """
+    Plot signal.
+
+    :meta private:
+    """
 
     # signal for plotting an object.
     plot = Signal(QModelIndex, dict, np.ndarray)  # index, data, pointT.
@@ -2462,6 +2468,13 @@ class PyVistaWidget(QtInteractor):
                     data[object_type] = model.tolist()
 
         self.reload(data)
+
+    # ==================================================
+    def set_nonrepeat(self):
+        """
+        Transform data to non-repeat data.
+        """
+        self.nonrepeat_data()
 
     # ==================================================
     def nonrepeat_data(self):
