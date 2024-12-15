@@ -232,6 +232,7 @@ def create_style_sheet(size):
 
     QComboBox {{
         font-size: {size}pt;
+        min-width: 40px;
     }}
 
     QLabel {{

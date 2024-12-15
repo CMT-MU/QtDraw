@@ -2227,6 +2227,20 @@ class QtDraw(Window):
         )
 
     # ==================================================
+    def set_model(self, name=None):
+        """
+        Set model name.
+
+        Args:
+            name (str, optional): model name.
+
+        Note:
+            - if name is None, default is used.
+        """
+        self.pyvista_widget.set_model(name)
+        self._update_title()
+
+    # ==================================================
     def set_unit_cell(self, cell=None):
         """
         Set unit cell.
@@ -2238,7 +2252,11 @@ class QtDraw(Window):
             - if cell is None, default is used.
             - set cell.
         """
+        view = self.pyvista_widget._status["view"]
         self.pyvista_widget.set_unit_cell(cell)
+        self._update_unit_cell()
+        self._update_view()
+        self.set_view(view)
 
     # ==================================================
     def set_crystal(self, crystal=None):
@@ -2252,7 +2270,10 @@ class QtDraw(Window):
             - if crystal is None, default is used.
             - set unit cell.
         """
+        view = self.pyvista_widget._status["view"]
         self.pyvista_widget.set_crystal(crystal)
+        self._update_view()
+        self.set_view(view)
 
     # ==================================================
     def set_origin(self, origin=None):
@@ -2266,7 +2287,10 @@ class QtDraw(Window):
             - if origin is None, default is used.
             - set cell.
         """
+        view = self.pyvista_widget._status["view"]
         self.pyvista_widget.set_origin(origin)
+        self._update_view()
+        self.set_view(view)
 
     # ==================================================
     def set_clip(self, mode=None):
@@ -2279,7 +2303,7 @@ class QtDraw(Window):
         Note:
             - if mode is None, default is used.
         """
-        self.pyvista_widget.set_clip(mode)
+        self._set_clip(mode)
 
     # ==================================================
     def set_repeat(self, mode=None):
@@ -2293,10 +2317,10 @@ class QtDraw(Window):
             - if mode is None, default is used.
             - repeat data.
         """
-        self.pyvista_widget.set_repeat(mode)
+        self._set_repeat(mode)
 
     # ==================================================
-    def nonrepeat_data(self):
+    def set_nonrepeat(self):
         """
         Transform data to non-repeat data.
         """
@@ -2315,7 +2339,10 @@ class QtDraw(Window):
             - if lower/upper is None, default is used.
             - set cell.
         """
+        view = self.pyvista_widget._status["view"]
         self.pyvista_widget.set_range(lower, upper)
+        self._update_view()
+        self.set_view(view)
 
     # ==================================================
     def set_view(self, view=None):
@@ -2328,7 +2355,15 @@ class QtDraw(Window):
         Note:
             - if view is None, default is used.
         """
-        self.pyvista_widget.set_view(view)
+        if view is None:
+            self._set_view_default()
+            return
+
+        if type(view) == str:
+            view = view.strip("[]").split(",")
+        self.view_combo_a.setCurrentText(str(view[0]))
+        self.view_combo_b.setCurrentText(str(view[1]))
+        self.view_combo_c.setCurrentText(str(view[2]))
 
     # ==================================================
     def set_parallel_projection(self, mode=None):
@@ -2341,7 +2376,9 @@ class QtDraw(Window):
         Note:
             - if mode is None, default is used.
         """
-        self.pyvista_widget.set_parallel_projection(mode)
+        view = self.pyvista_widget._status["view"]
+        self._set_parallel(mode)
+        self.set_view(view)
 
     # ==================================================
     def set_grid(self, mode=None):
@@ -2354,7 +2391,7 @@ class QtDraw(Window):
         Note:
             - if mode is None, default is used.
         """
-        self.pyvista_widget.set_grid(mode)
+        self._set_grid(mode)
 
     # ==================================================
     def set_bar(self, mode=None):
@@ -2367,7 +2404,7 @@ class QtDraw(Window):
         Note:
             - if mode is None, default is used.
         """
-        self.pyvista_widget.set_bar(mode)
+        self._set_bar(mode)
 
     # ==================================================
     def set_axis(self, axis_type=None):
@@ -2380,7 +2417,7 @@ class QtDraw(Window):
         Note:
             - if axis_type is None, default is used.
         """
-        self.pyvista_widget.set_axis(axis_type)
+        self._set_axis_type(axis_type)
 
     # ==================================================
     def set_cell(self, mode=None):
@@ -2393,7 +2430,7 @@ class QtDraw(Window):
         Note:
             - if mode is None, default is used.
         """
-        self.pyvista_widget.set_cell(mode)
+        self._set_cell_mode(mode)
 
     # ==================================================
     def add_mesh(
@@ -2576,37 +2613,43 @@ class QtDraw(Window):
         multipie = {"group": {"group": tag}}
         self.pyvista_widget.update_status("multipie", multipie)
         self.misc_button_multipie.pressed.emit()
+        self._set_axis_type()
 
     # ==================================================
-    def mp_add_site(self, site):
+    def mp_add_site(self, site, scale=1.0, color=None):
         """
         MultiPie: Add equivalent sites.
 
         Args:
             site (str): representative site.
+            scale (float, optional): size scale.
+            color (str, optional): color.
         """
         if self.multipie_dialog is None:
             self.mp_set_group()
 
         self.multipie_dialog.dialog.object_edit_site.setText(site)
-        self.multipie_dialog.dialog.obj_add_site()
+        self.multipie_dialog.dialog.obj_add_site(scale, color)
 
     # ==================================================
-    def mp_add_bond(self, bond):
+    def mp_add_bond(self, bond, scale=1.0, color=None, color2=None):
         """
         MultiPie: Add equivalent bonds.
 
         Args:
             bond (str): representative bond.
+            scale (float, optional): width scale.
+            color (str, optional): color.
+            color2 (str, optional): color2.
         """
         if self.multipie_dialog is None:
             self.mp_set_group()
 
         self.multipie_dialog.dialog.object_edit_bond.setText(bond)
-        self.multipie_dialog.dialog.obj_add_bond()
+        self.multipie_dialog.dialog.obj_add_bond(scale, color, color2)
 
     # ==================================================
-    def mp_add_vector(self, type, vector, site_bond):
+    def mp_add_vector(self, type, vector, site_bond, scale=1.0):
         """
         MultiPie: Add vectors at equivalent sites or bonds.
 
@@ -2614,16 +2657,17 @@ class QtDraw(Window):
             type (str): type of vector, Q/G/T/M.
             vector (str): vector (cartesian).
             site_bond (str): representative site or bond.
+            scale (float, optional): length scale.
         """
         if self.multipie_dialog is None:
             self.mp_set_group()
 
         self.multipie_dialog.dialog.object_combo_vector_type.setCurrentText(type)
         self.multipie_dialog.dialog.object_edit_vector.setText(vector + " # " + site_bond)
-        self.multipie_dialog.dialog.obj_add_vector()
+        self.multipie_dialog.dialog.obj_add_vector(scale)
 
     # ==================================================
-    def mp_add_orbital(self, type, orbital, site_bond):
+    def mp_add_orbital(self, type, orbital, site_bond, scale=1.0):
         """
         MultiPie: Add orbitals at equivalent sites or bonds.
 
@@ -2631,13 +2675,14 @@ class QtDraw(Window):
             type (str): type of orbital, Q/G/T/M.
             orbital (str): orbital in terms of x,y,z,r (cartesian).
             site_bond (str): representative site or bond.
+            scale (float, optional): size scale.
         """
         if self.multipie_dialog is None:
             self.mp_set_group()
 
         self.multipie_dialog.dialog.object_combo_orbital_type.setCurrentText(type)
         self.multipie_dialog.dialog.object_edit_orbital.setText(orbital + " # " + site_bond)
-        self.multipie_dialog.dialog.obj_add_orbital()
+        self.multipie_dialog.dialog.obj_add_orbital(scale)
 
     # ==================================================
     def mp_create_harmonics(self, type, rank):
@@ -2662,17 +2707,18 @@ class QtDraw(Window):
         return lst
 
     # ==================================================
-    def mp_add_harmonics(self, tag, site_bond):
+    def mp_add_harmonics(self, tag, site_bond, scale=1.0):
         """
         MultiPie: Add harmonics at equivalent sites or bonds.
 
         Args:
             tag (str): harmonics tag, obtained by mp_create_harmonics.
             site_bond (str): representative site or bond.
+            scale (float, optional): size scale.
         """
         self.multipie_dialog.dialog.object_combo_harmonics_irrep.setCurrentText(tag)
         self.multipie_dialog.dialog.object_edit_harmonics.setText(site_bond)
-        self.multipie_dialog.dialog.obj_add_harmonics()
+        self.multipie_dialog.dialog.obj_add_harmonics(scale)
 
     # ==================================================
     def mp_create_site_samb(self, site):
@@ -2694,15 +2740,16 @@ class QtDraw(Window):
         return d
 
     # ==================================================
-    def mp_add_site_samb(self, tag):
+    def mp_add_site_samb(self, tag, scale=1.0):
         """
         MultiPie: Add site SAMB.
 
         Args:
             tag (str): site SAMB, obtained by mp_create_site_samb.
+            scale (float, optional): size scale.
         """
         self.multipie_dialog.dialog.basis_combo_site_samb.setCurrentText(tag)
-        self.multipie_dialog.dialog.basis_add_site()
+        self.multipie_dialog.dialog.basis_add_site(scale)
 
     # ==================================================
     def mp_create_bond_samb(self, bond):
@@ -2724,15 +2771,16 @@ class QtDraw(Window):
         return d
 
     # ==================================================
-    def mp_add_bond_samb(self, tag):
+    def mp_add_bond_samb(self, tag, scale=1.0):
         """
         MultiPie: Add bond SAMB.
 
         Args:
             tag (str): bond SAMB, obtained by mp_create_bond_samb.
+            scale (float, optional): width scale.
         """
         self.multipie_dialog.dialog.basis_combo_bond_samb.setCurrentText(tag)
-        self.multipie_dialog.dialog.basis_add_bond()
+        self.multipie_dialog.dialog.basis_add_bond(scale)
 
     # ==================================================
     def mp_create_vector_samb(self, type, site_bond):
@@ -2761,18 +2809,19 @@ class QtDraw(Window):
         return d
 
     # ==================================================
-    def mp_add_vector_samb(self, lc):
+    def mp_add_vector_samb(self, lc, scale=1.0):
         """
         MultiPie: Add vector SAMB.
 
         Args:
             lc (str): linear combination of vector SAMBs, obtained by mp_create_vector_samb.
+            scale (float, optional): length scale.
         """
         num = {k: lc.count(k) for k in ["Q", "G", "T", "M"]}
         z_type = "Q" if num["Q"] + num["G"] > 0 else "T"
         self.multipie_dialog.dialog.basis_combo_vector_samb_type.setCurrentText(z_type)
         self.multipie_dialog.dialog.basis_edit_vector_lc.setText(lc)
-        self.multipie_dialog.dialog.basis_add_vector_lc()
+        self.multipie_dialog.dialog.basis_add_vector_lc(scale)
 
     # ==================================================
     def mp_add_vector_samb_modulation(self, mod_list):
@@ -2818,18 +2867,19 @@ class QtDraw(Window):
         return d
 
     # ==================================================
-    def mp_add_orbital_samb(self, lc):
+    def mp_add_orbital_samb(self, lc, scale=1.0):
         """
         MultiPie: Add orbital SAMB.
 
         Args:
             lc (str): linear combination of orbital SAMBs, obtained by mp_create_orbital_samb.
+            scale (float, optional): size scale.
         """
         num = {k: lc.count(k) for k in ["Q", "G", "T", "M"]}
         z_type = "Q" if num["Q"] + num["G"] > 0 else "T"
         self.multipie_dialog.dialog.basis_combo_orbital_samb_type.setCurrentText(z_type)
         self.multipie_dialog.dialog.basis_edit_orbital_lc.setText(lc)
-        self.multipie_dialog.dialog.basis_add_orbital_lc()
+        self.multipie_dialog.dialog.basis_add_orbital_lc(scale)
 
     # ==================================================
     def mp_add_orbital_samb_modulation(self, mod_list):
@@ -2847,15 +2897,16 @@ class QtDraw(Window):
         self.multipie_dialog.dialog._orbital_modulation_dialog.accept()
 
     # ==================================================
-    def mp_add_hopping(self, bond):
+    def mp_add_hopping(self, bond, scale=1.0):
         """
         MultiPie: Add hopping bond directions.
 
         Args:
             bond (str): representative bond.
+            scale (float, optional): length scale.
         """
         if self.multipie_dialog is None:
             self.mp_set_group()
 
         self.multipie_dialog.dialog.basis_edit_hopping.setText(bond)
-        self.multipie_dialog.dialog.basis_add_hopping()
+        self.multipie_dialog.dialog.basis_add_hopping(scale)
