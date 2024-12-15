@@ -274,12 +274,14 @@ class MultiPiePlugin:
         return wp, sym
 
     # ==================================================
-    def add_equivalent_site(self, site):
+    def add_equivalent_site(self, site, scale=1.0, color=None):
         """
         Add equivalent sites.
 
         Args:
             site (str): representative site.
+            scale (float, optional): size scale.
+            color (str, optional): color.
 
         Returns:
             - (str) -- representative site.
@@ -297,7 +299,8 @@ class MultiPiePlugin:
 
         count = self.counter("site") + 1
         name0 = f"S{count:02}"
-        color = detail["general"]["site_color"]
+        if color is None:
+            color = detail["general"]["site_color"]
         size = detail["object"]["site_size"]
         primitive_num = len(site) // n_pset
 
@@ -310,17 +313,20 @@ class MultiPiePlugin:
             if n_pset > 1:
                 name += f"({pset+1})"
             label = f"s{idx+1:02}:{mp}"
-            self._pvw.add_site(position=s.value(), size=size, color=color, name=name, label=label)
+            self._pvw.add_site(position=s.value(), size=size * scale, color=color, name=name, label=label)
 
         return str(r_site)
 
     # ==================================================
-    def add_equivalent_bond(self, bond):
+    def add_equivalent_bond(self, bond, scale=1.0, color=None, color2=None):
         """
         Add equivalent bonds.
 
         Args:
             bond (str): representative bond.
+            scale (float, optional): size scale.
+            color (str, optional): color.
+            color2 (str, optional): color2.
 
         Returns:
             - (str) -- representative bond.
@@ -338,11 +344,15 @@ class MultiPiePlugin:
 
         count = self.counter("bond") + 1
         name0 = f"B{count:02}"
-        color1 = detail["general"]["bond_color1"]
+        if color is None:
+            color1 = detail["general"]["bond_color1"]
+        else:
+            color1 = color
         if nondirectional:
             color2 = color1
         else:
-            color2 = detail["general"]["bond_color2"]
+            if color2 is None:
+                color2 = detail["general"]["bond_color2"]
         primitive_num = len(bond) // n_pset
         width = detail["object"]["bond_width"]
 
@@ -357,19 +367,20 @@ class MultiPiePlugin:
                 name += f"({pset+1})"
             label = f"b{idx+1:02}:{mp}"
             self._pvw.add_bond(
-                position=c.value(), direction=v.value(), color=color1, color2=color2, width=width, name=name, label=label
+                position=c.value(), direction=v.value(), color=color1, color2=color2, width=width * scale, name=name, label=label
             )
 
         return str(r_bond)
 
     # ==================================================
-    def add_vector_equivalent_site(self, v_type, pos):
+    def add_vector_equivalent_site(self, v_type, pos, scale=1.0):
         """
         Add vectors at equivalent sites.
 
         Args:
             v_type (str): vector type.
             pos (str): vector # position.
+            scale (float, optional): length scale.
 
         Returns:
             - (str) -- vector # position.
@@ -409,18 +420,19 @@ class MultiPiePlugin:
             if n_pset > 1:
                 name += f"({pset+1})"
             label = f"v{idx+1:02}"
-            self._pvw.add_vector(position=s.value(), direction=vector, length=length, color=color, name=name, label=label)
+            self._pvw.add_vector(position=s.value(), direction=vector, length=length * scale, color=color, name=name, label=label)
 
         return str(vector) + "#" + str(r_site)
 
     # ==================================================
-    def add_orbital_equivalent_site(self, o_type, pos):
+    def add_orbital_equivalent_site(self, o_type, pos, scale=1.0):
         """
         Add orbitals at equivalent sites.
 
         Args:
             o_type (str): orbital type.
             pos (str): orbital # position.
+            scale (float, optional): size scale.
 
         Returns:
             - (str) -- orbital # position.
@@ -456,7 +468,7 @@ class MultiPiePlugin:
             if n_pset > 1:
                 name += f"({pset+1})"
             label = f"o{idx+1:02}"
-            self._pvw.add_orbital(position=s.value(), shape=orbital, size=size, color=color, name=name, label=label)
+            self._pvw.add_orbital(position=s.value(), shape=orbital, size=size * scale, color=color, name=name, label=label)
 
         return str(orbital) + "#" + str(r_site)
 
@@ -661,7 +673,7 @@ class MultiPiePlugin:
         return new_bonds
 
     # ==================================================
-    def add_site_samb(self, site, obj, label):
+    def add_site_samb(self, site, obj, label, scale=1.0):
         """
         Add site cluster SAMB.
 
@@ -669,6 +681,7 @@ class MultiPiePlugin:
             site (NSArray): equivalent sites.
             obj (NSArray): SAMB weight.
             label (str): label.
+            scale (float, optional): size scale.
         """
         pset = NSArray(self.plus["pset"])
         pg = self.plus["point_group"]
@@ -698,10 +711,10 @@ class MultiPiePlugin:
                     s = (s + p).shift()
                 if cl == "silver":
                     w = 1
-                self._pvw.add_site(position=s.value(), size=size * abs(w), color=cl, name=name1, label=label)
+                self._pvw.add_site(position=s.value(), size=size * abs(w) * scale, color=cl, name=name1, label=label)
 
     # ==================================================
-    def add_bond_samb(self, bond, obj, label, z_type):
+    def add_bond_samb(self, bond, obj, label, z_type, scale=1.0):
         """
         Add bond cluster SAMB.
 
@@ -710,6 +723,7 @@ class MultiPiePlugin:
             obj (NSArray): SAMB weight.
             label (str): label.
             z_type (str): SAMB type.
+            scale (float, optional): width scale.
         """
         pset = NSArray(self.plus["pset"])
         pg = self.plus["point_group"]
@@ -756,7 +770,7 @@ class MultiPiePlugin:
                         direction=v.value(),
                         color=cl,
                         color2=cl,
-                        width=width * abs(w),
+                        width=width * abs(w) * scale,
                         name=name1,
                         label=label,
                     )
@@ -776,7 +790,7 @@ class MultiPiePlugin:
                             direction=v.value(),
                             color=cl,
                             color2=cl,
-                            width=width * abs(w),
+                            width=width * abs(w) * scale,
                             name=name1,
                             label=label,
                         )
@@ -789,7 +803,7 @@ class MultiPiePlugin:
                             position=c.value(),
                             direction=v.value(),
                             color=cl,
-                            width=width * abs(w),
+                            width=width * abs(w) * scale,
                             length=norm,
                             offset=-0.5,
                             name=name1,
@@ -797,7 +811,7 @@ class MultiPiePlugin:
                         )
 
     # ==================================================
-    def add_vector_samb(self, site, obj, label, z_type, v):
+    def add_vector_samb(self, site, obj, label, z_type, v, scale=1.0):
         """
         Add vector cluster SAMB.
 
@@ -807,6 +821,7 @@ class MultiPiePlugin:
             label (str): label.
             z_type (str): SAMB type.
             v (NSArray): vector variable.
+            scale (float, optional): length scale.
         """
         pset = NSArray(self.plus["pset"])
         pg = self.plus["point_group"]
@@ -837,14 +852,14 @@ class MultiPiePlugin:
                         position=s.value(),
                         direction=c.value(),
                         width=width,
-                        length=d.value(),
+                        length=d.value() * scale,
                         color=color,
                         name=name1,
                         label=label,
                     )
 
     # ==================================================
-    def add_orbital_samb(self, site, obj, label, z_type):
+    def add_orbital_samb(self, site, obj, label, z_type, scale=1.0):
         """
         Add orbital cluster SAMB.
 
@@ -853,6 +868,7 @@ class MultiPiePlugin:
             obj (NSArray): SAMB weight.
             label (str): label.
             z_type (str): SAMB type.
+            scale (float, optional): size scale.
         """
         pset = NSArray(self.plus["pset"])
         pg = self.plus["point_group"]
@@ -873,7 +889,7 @@ class MultiPiePlugin:
                 self._pvw.add_orbital(
                     position=s.value(),
                     shape=orb,
-                    size=size,
+                    size=size * scale,
                     color=color,
                     name=name1,
                     label=label,
@@ -955,13 +971,14 @@ class MultiPiePlugin:
                     )
 
     # ==================================================
-    def add_hopping_samb(self, bond, label):
+    def add_hopping_samb(self, bond, label, scale=1.0):
         """
         Add normal hopping direction.
 
         Args:
             bond (NSArray): equivalent bonds.
             label (str): label.
+            scale (float, optional): length scale.
         """
         pset = NSArray(self.plus["pset"])
         pg = self.plus["point_group"]
@@ -984,7 +1001,13 @@ class MultiPiePlugin:
                 v = v.transform(A)
                 norm = v.norm() * scale
                 self._pvw.add_vector(
-                    position=c.value(), direction=v.value(), color=color, length=norm, offset=-0.5, name=name1, label=label
+                    position=c.value(),
+                    direction=v.value(),
+                    color=color,
+                    length=norm * scale,
+                    offset=-0.5,
+                    name=name1,
+                    label=label,
                 )
 
     # ==================================================

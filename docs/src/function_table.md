@@ -81,12 +81,13 @@
 | add_text2d | Add text 2d. |
 | plot_orbital_from_data | Plot orbital from data. |
 | plot_stream_from_data | Plot stream from data (vectors in cartesian coordinate). |
+| set_model | Set model name. |
 | set_unit_cell | Set unit cell. |
 | set_crystal | Set crystal. |
 | set_origin | Set origin. |
 | set_clip | Set clip mode. |
 | set_repeat | Set repeat mode. |
-| nonrepeat_data | Transform data to non-repeat data. |
+| set_nonrepeat | Transform data to non-repeat data. |
 | set_range | Set cell range. |
 | set_view | Set view point. |
 | set_parallel_projection | Set parallel projection mode. |
@@ -164,7 +165,7 @@
 | Function | Summary |
 |--------|----------|
 | PyVistaWidget | Widget for 3d plot layer using PyVista. |
-| clear_info |  |
+| clear_info | Clear info. |
 | set_additional_status | Set additional status. |
 | add_site | Add site. |
 | add_bond | Add bond. |
@@ -236,6 +237,7 @@
 | set_camera_info | Get camera info. |
 | add_data | Add data. |
 | repeat_data | Repeat data. |
+| set_nonrepeat | Transform data to non-repeat data. |
 | nonrepeat_data | Transform data to non-repeat data. |
 | set_actor | Set actor. |
 | delete_actor | Remove actor. |

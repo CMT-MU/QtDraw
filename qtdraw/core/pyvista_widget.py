@@ -83,6 +83,8 @@ class Window(QMainWindow):
 
         Args:
             level (Level): log level.
+
+        :meta private:
         """
         self.app = get_qt_application()
         self.logger = LogWidget(level=level)
@@ -124,7 +126,11 @@ def convert_qtdraw_v2(filename):
 
 # ==================================================
 class PlotSignal(QObject):
-    """:meta private:"""
+    """
+    Plot signal.
+
+    :meta private:
+    """
 
     # signal for plotting an object.
     plot = Signal(QModelIndex, dict, np.ndarray)  # index, data, pointT.
@@ -224,6 +230,11 @@ class PyVistaWidget(QtInteractor):
 
     # ==================================================
     def clear_info(self):
+        """
+        Clear info.
+
+        :meta private:
+        """
         self.set_theme()
         self._status = copy.deepcopy(default_status)
         self._status["multipie"] = {"plus": {}}  # for multipie.
@@ -239,6 +250,8 @@ class PyVistaWidget(QtInteractor):
     def set_additional_status(self):
         """
         Set additional status.
+
+        :meta private:
         """
         cell, A = get_lattice_vector(self._status["crystal"], self._status["cell"])
         i1, dims = get_repeat_range(self._status["lower"], self._status["upper"])
@@ -1461,6 +1474,8 @@ class PyVistaWidget(QtInteractor):
 
         Returns:
             - (dict) -- data dict, {object_type: [[data]]}.
+
+        :meta private:
         """
         center_cell = "[0,0,0]"
 
@@ -1480,6 +1495,8 @@ class PyVistaWidget(QtInteractor):
     def restore(self):
         """
         Restore data and status from backup.
+
+        :meta private:
         """
         if self._backup is None:
             return
@@ -1495,6 +1512,8 @@ class PyVistaWidget(QtInteractor):
     def save_current(self):
         """
         Save current data and stutus into self._backup.
+
+        :meta private:
         """
         all_data = {
             "version": __version__,
@@ -1578,6 +1597,8 @@ class PyVistaWidget(QtInteractor):
 
         Args:
             text (str): message.
+
+        :meta private:
         """
         self.message.emit(text)
 
@@ -1591,6 +1612,8 @@ class PyVistaWidget(QtInteractor):
         Args:
             status (dict, optional): status.
             preference (dict, optional): preference.
+
+        :meta private:
         """
         if status is not None:
             self._status.update(status)
@@ -1613,6 +1636,8 @@ class PyVistaWidget(QtInteractor):
         Args:
             key (str): status key.
             value (Any): value.
+
+        :meta private:
         """
         self.set_property(status={key: value})
 
@@ -1625,6 +1650,8 @@ class PyVistaWidget(QtInteractor):
             category (str): category.
             key (str): status key.
             value (Any): value.
+
+        :meta private:
         """
         self.set_property(preference={category: {key: value}})
 
@@ -1635,6 +1662,8 @@ class PyVistaWidget(QtInteractor):
 
         Args:
             data (dict, optional): object data.
+
+        :meta private:
         """
         self._block_remove_isosurface = True
         for model in self._data.values():
@@ -1652,6 +1681,8 @@ class PyVistaWidget(QtInteractor):
     def refresh(self):
         """
         Refresh widget setting.
+
+        :meta private:
         """
         self.set_parallel_projection()
         self.set_grid()
@@ -1896,6 +1927,8 @@ class PyVistaWidget(QtInteractor):
     def hide_outside_actor(self):
         """
         Hide actors outside the range.
+
+        :meta private:
         """
         lower = self._status["lower"]
         upper = self._status["upper"]
@@ -1928,6 +1961,8 @@ class PyVistaWidget(QtInteractor):
             cell (str): cell.
             name_actor (str): name actor.
             label_actor (str): label actor.
+
+        :meta private:
         """
         if not self._status["clip"]:
             return
@@ -1947,6 +1982,8 @@ class PyVistaWidget(QtInteractor):
     def show_outside_actor(self):
         """
         Show actors outside the range.
+
+        :meta private:
         """
         for object_type, model in self._data.items():
             if object_type != "text2d":
@@ -2200,6 +2237,8 @@ class PyVistaWidget(QtInteractor):
     def init_data_model(self):
         """
         Initialize data model.
+
+        :meta private:
         """
         self._selected_actor = {}  # actor selection, {actor_name: property}.
 
@@ -2215,6 +2254,8 @@ class PyVistaWidget(QtInteractor):
 
         Args:
             theme (str): pyvista theme, "document/dark/paraview".
+
+        :meta private:
         """
         if theme is None:
             theme = detail["theme"]
@@ -2237,6 +2278,8 @@ class PyVistaWidget(QtInteractor):
 
         Note:
             - if lower/dimensions is None, default is used.
+
+        :meta private:
         """
         origin = self.origin
         if lower is None:
@@ -2269,6 +2312,8 @@ class PyVistaWidget(QtInteractor):
 
         Note:
             - if light_type/color/intensity is None, default is used.
+
+        :meta private:
         """
         preference = self._preference["light"]
         if light_type is None:
@@ -2308,6 +2353,8 @@ class PyVistaWidget(QtInteractor):
     def set_latex(self):
         """
         Set LaTeX environment.
+
+        :meta private:
         """
         pass
 
@@ -2339,6 +2386,8 @@ class PyVistaWidget(QtInteractor):
 
         Returns:
             - (dict) -- camera info.
+
+        :meta private:
         """
         camera = self.camera
         position = np.array(camera.position).round(DIGIT).tolist()
@@ -2368,6 +2417,8 @@ class PyVistaWidget(QtInteractor):
 
         Args:
             info (dict): camera info.
+
+        :meta private:
         """
         self.camera.position = info["position"]
         self.camera.up = info["viewup"]
@@ -2387,6 +2438,8 @@ class PyVistaWidget(QtInteractor):
 
         Args:
             data (dict): all object data, {object_type: [[data]]}.
+
+        :meta private:
         """
         if sum(len(i) for i in data.values()) == 0:
             return
@@ -2400,6 +2453,8 @@ class PyVistaWidget(QtInteractor):
     def repeat_data(self):
         """
         Repeat data.
+
+        :meta private:
         """
         data = self.get_data_dict(home_cell=True)
         if self._status["repeat"]:
@@ -2415,9 +2470,18 @@ class PyVistaWidget(QtInteractor):
         self.reload(data)
 
     # ==================================================
+    def set_nonrepeat(self):
+        """
+        Transform data to non-repeat data.
+        """
+        self.nonrepeat_data()
+
+    # ==================================================
     def nonrepeat_data(self):
         """
         Transform data to non-repeat data.
+
+        :meta private:
         """
         data = self.get_data_dict()
         for object_type, model in data.items():
@@ -2444,6 +2508,8 @@ class PyVistaWidget(QtInteractor):
             index (QModelIndex): index.
             actor_name (str): actor name.
             column (int, optional): column.
+
+        :meta private:
         """
         model = self._data[object_type]
         model.set_row_data(index, column, actor_name)
@@ -2462,6 +2528,8 @@ class PyVistaWidget(QtInteractor):
 
         Args:
             actor_name (str): actor name.
+
+        :meta private:
         """
         if actor_name != "":
             self.remove_actor(actor_name)
@@ -2477,6 +2545,8 @@ class PyVistaWidget(QtInteractor):
             object_type (str): object type.
             row_data (list): row data.
             index (QModelIndex): index.
+
+        :meta private:
         """
         UNCHECK = 0  # Qt.Uncheck.
         if object_type not in ["caption", "text2d"] and index.column() == 0:
@@ -2491,6 +2561,8 @@ class PyVistaWidget(QtInteractor):
     def open_tab_group_view(self):
         """
         Open tab group view.
+
+        :meta private:
         """
         self._tab_group_view.show()
         self._tab_group_view.update_widget()
@@ -2554,6 +2626,8 @@ class PyVistaWidget(QtInteractor):
             object_type (str): object type.
             row_data (list): row data.
             index (QIndexModel): index.
+
+        :meta private:
         """
         actor_name = row_data[COLUMN_NAME_ACTOR]
         self.delete_actor(actor_name)
@@ -2579,6 +2653,8 @@ class PyVistaWidget(QtInteractor):
 
         Note:
             - connect to open_selected, hide_selected, remove_selected signals are required.
+
+        :meta private:
         """
         self.select_actor(actor.name)
 
@@ -2610,6 +2686,8 @@ class PyVistaWidget(QtInteractor):
 
         Args:
             actor (pv.Actor): actor.
+
+        :meta private:
         """
         object_type, index = self.find_index(actor)
         self.open_tab_group_view()
@@ -2623,6 +2701,8 @@ class PyVistaWidget(QtInteractor):
 
         Args:
             actor (pv.Actor): actor.
+
+        :meta private:
         """
         object_type, index = self.find_index(actor)
         UNCHECK = 0  # Qt.Uncheck.
@@ -2635,6 +2715,8 @@ class PyVistaWidget(QtInteractor):
 
         Args:
             actor (pv.Actor): actor.
+
+        :meta private:
         """
         object_type, index = self.find_index(actor)
         self._data[object_type].remove_row(index)
@@ -2647,6 +2729,8 @@ class PyVistaWidget(QtInteractor):
 
         Args:
             actor_name (str): actor name.
+
+        :meta private:
         """
         # already selected.
         if actor_name in self._selected_actor.keys():
@@ -2670,6 +2754,8 @@ class PyVistaWidget(QtInteractor):
 
         Args:
             actor_name (str): actor name.
+
+        :meta private:
         """
         if actor_name in self.actors.keys() and actor_name in self._selected_actor.keys():
             actor = self.actors[actor_name]
@@ -2682,6 +2768,8 @@ class PyVistaWidget(QtInteractor):
     def deselect_actor_all(self):
         """
         Deselect all selected actors.
+
+        :meta private:
         """
         for actor_name, prop in self._selected_actor.items():
             if actor_name in self.actors.keys():
@@ -2699,6 +2787,8 @@ class PyVistaWidget(QtInteractor):
             object_type (str): object type.
             deselect (list): deselected rows.
             select (list): selected rows.
+
+        :meta private:
         """
         # skip for caption and text2d.
         if object_type in ["caption", "text2d"]:
@@ -2729,6 +2819,8 @@ class PyVistaWidget(QtInteractor):
         Returns:
             - (str) -- object type.
             - (QModelIndex) -- index.
+
+        :meta private:
         """
         actor_name = actor.name
         object_type = self._actor_object_type[actor_name]
@@ -2756,6 +2848,8 @@ class PyVistaWidget(QtInteractor):
 
         Returns:
             - (dict) -- row data.
+
+        :meta private:
         """
         data = self._data[object_type].column_default
         header = self._data[object_type].header
@@ -2792,6 +2886,8 @@ class PyVistaWidget(QtInteractor):
             object_type (str): object type.
             row_data (list): row data.
             index (QIndexModel): index.
+
+        :meta private:
         """
         tag = self._data[object_type].header
         no_label = object_type in ["caption", "text2d"]
@@ -2809,6 +2905,8 @@ class PyVistaWidget(QtInteractor):
     def redraw(self):
         """
         Redraw all object.
+
+        :meta private:
         """
         for model in self._data.values():
             model.emit_update_all()
@@ -2825,6 +2923,8 @@ class PyVistaWidget(QtInteractor):
 
         Returns:
             - (dict) -- common option.
+
+        :meta private:
         """
         if actor == "":
             actor = None
@@ -2856,6 +2956,8 @@ class PyVistaWidget(QtInteractor):
 
         Returns:
             - (dict) -- label option.
+
+        :meta private:
         """
         option = {
             "points": positionT,
@@ -2884,6 +2986,8 @@ class PyVistaWidget(QtInteractor):
         Returns:
             - (bool) -- display name ?
             - (bool) -- display label ?
+
+        :meta private:
         """
         name_check = row_data["name_check"]
         if not no_label:
@@ -2918,6 +3022,8 @@ class PyVistaWidget(QtInteractor):
             index (QModelIndex): index.
             data (dict): data list.
             positionT (numpy.ndarray): position (transformed).
+
+        :meta private:
         """
         actor = data["name_actor"]
         size = float(data["size"])
@@ -2943,6 +3049,8 @@ class PyVistaWidget(QtInteractor):
             index (QModelIndex): index.
             data (dict): data list.
             positionT (numpy.ndarray): position (transformed).
+
+        :meta private:
         """
         actor = data["name_actor"]
         direction = data["direction"]
@@ -2978,6 +3086,8 @@ class PyVistaWidget(QtInteractor):
             index (QModelIndex): index.
             data (dict): data list.
             positionT (numpy.ndarray): position (transformed).
+
+        :meta private:
         """
         actor = data["name_actor"]
         direction = data["direction"]
@@ -3020,6 +3130,8 @@ class PyVistaWidget(QtInteractor):
             index (QModelIndex): index.
             data (dict): data list.
             positionT (numpy.ndarray): position (transformed).
+
+        :meta private:
         """
         actor = data["name_actor"]
         shape = data["shape"]
@@ -3066,6 +3178,8 @@ class PyVistaWidget(QtInteractor):
             index (QModelIndex): index.
             data (dict): data list.
             positionT (numpy.ndarray): position (transformed).
+
+        :meta private:
         """
         component_str = {"abs": None, "x": 0, "y": 1, "z": 2}
 
@@ -3141,6 +3255,8 @@ class PyVistaWidget(QtInteractor):
             index (QModelIndex): index.
             data (dict): data list.
             positionT (numpy.ndarray): position (transformed).
+
+        :meta private:
         """
         actor = data["name_actor"]
         direction = data["direction"]
@@ -3176,6 +3292,8 @@ class PyVistaWidget(QtInteractor):
             index (QModelIndex): index.
             data (dict): data list.
             positionT (numpy.ndarray): position (transformed).
+
+        :meta private:
         """
         actor = data["name_actor"]
         normal = data["normal"]
@@ -3215,6 +3333,8 @@ class PyVistaWidget(QtInteractor):
             index (QModelIndex): index.
             data (dict): data list.
             positionT (numpy.ndarray): position (transformed).
+
+        :meta private:
         """
         actor = data["name_actor"]
         normal = data["normal"]
@@ -3253,6 +3373,8 @@ class PyVistaWidget(QtInteractor):
             index (QModelIndex): index.
             data (dict): data list.
             positionT (numpy.ndarray): position (transformed).
+
+        :meta private:
         """
         actor = data["name_actor"]
         normal = data["normal"]
@@ -3283,6 +3405,8 @@ class PyVistaWidget(QtInteractor):
             index (QModelIndex): index.
             data (dict): data list.
             positionT (numpy.ndarray): position (transformed).
+
+        :meta private:
         """
         actor = data["name_actor"]
         normal = data["normal"]
@@ -3314,6 +3438,8 @@ class PyVistaWidget(QtInteractor):
             index (QModelIndex): index.
             data (dict): data list.
             positionT (numpy.ndarray): position (transformed).
+
+        :meta private:
         """
         actor = data["name_actor"]
         normal = data["normal"]
@@ -3358,6 +3484,8 @@ class PyVistaWidget(QtInteractor):
             index (QModelIndex): index.
             data (dict): data list.
             positionT (numpy.ndarray): position (transformed).
+
+        :meta private:
         """
         actor = data["name_actor"]
         a1 = data["a1"]
@@ -3408,6 +3536,8 @@ class PyVistaWidget(QtInteractor):
             index (QModelIndex): index.
             data (dict): data list.
             positionT (numpy.ndarray): position (transformed).
+
+        :meta private:
         """
         actor = data["name_actor"]
         point = data["point"]
@@ -3456,6 +3586,8 @@ class PyVistaWidget(QtInteractor):
             index (QModelIndex): index.
             data (dict): data list.
             positionT (numpy.ndarray): position (transformed).
+
+        :meta private:
         """
         actor = data["name_actor"]
         text = data["text"]
@@ -3495,6 +3627,8 @@ class PyVistaWidget(QtInteractor):
             index (QModelIndex): index.
             data (dict): data list.
             positionT (numpy.ndarray): position (transformed).
+
+        :meta private:
         """
         actor = data["name_actor"]
         data_name = data["data"]
@@ -3553,6 +3687,8 @@ class PyVistaWidget(QtInteractor):
             index (QModelIndex): index.
             data (dict): data list.
             positionT (numpy.ndarray): position (transformed).
+
+        :meta private:
         """
         actor = data["name_actor"]
         point = data["point"]
@@ -3599,6 +3735,8 @@ class PyVistaWidget(QtInteractor):
             index (QModelIndex): index.
             data (dict): data list.
             positionT (numpy.ndarray): position (transformed).
+
+        :meta private:
         """
         actor = data["name_actor"]
         point = data["point"]
@@ -3637,6 +3775,8 @@ class PyVistaWidget(QtInteractor):
             index (QModelIndex): index.
             data (dict): data list.
             positionT (numpy.ndarray): position (transformed).
+
+        :meta private:
         """
         actor = data["name_actor"]
         margin = int(data["margin"])
@@ -3676,6 +3816,8 @@ class PyVistaWidget(QtInteractor):
             index (QModelIndex): index.
             data (dict): data list.
             positionT (numpy.ndarray): position (transformed).
+
+        :meta private:
         """
         actor = data["name_actor"]
         position = data["position"]
@@ -3712,6 +3854,8 @@ class PyVistaWidget(QtInteractor):
             index (QModelIndex): index.
             data (dict): data list.
             positionT (numpy.ndarray): position (transformed).
+
+        :meta private:
         """
         label = data["label"]
         actor = data["label_actor"]
@@ -3737,6 +3881,8 @@ class PyVistaWidget(QtInteractor):
 
         Returns:
             - (str) -- valid file name.
+
+        :meta private:
         """
         path_abs, path_rel, base, ext, folder = split_filename(filename)
         if os.path.exists(path_abs):

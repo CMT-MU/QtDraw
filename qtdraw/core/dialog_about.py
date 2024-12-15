@@ -79,8 +79,10 @@ class AboutDialog(QDialog):
         label_numpy = Label(parent, f"{indent}NumPy: Ver. {numpy_ver}")
         label_sympy = Label(parent, f"{indent}SymPy: Ver. {sympy_ver}")
         label_matplotlib = Label(parent, f"{indent}Matplotlib: Ver. {matplot_ver}")
+        multipie = check_multipie()
         if multipie:
-            multipie_ver = self.pvw._status["multipie"]["version"]
+            from multipie import __version__ as multipie_ver
+
             label_multipie = Label(parent, f"{indent}MultiPie: Ver. {multipie_ver}")
 
         panel1 = QWidget(parent)
