@@ -409,6 +409,7 @@ class Combo(QComboBox):
         self.set_item(item)
         if init is not None:
             self.setCurrentText(init)
+        self.setSizeAdjustPolicy(QComboBox.AdjustToContents)
 
     # ==================================================
     def get_item(self):

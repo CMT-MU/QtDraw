@@ -1,6 +1,7 @@
 # API Reference
 
 ## Core
+
 ```{eval-rst}
 .. autosummary::
     qtdraw.core.pyvista_widget
@@ -10,6 +11,7 @@
 ```
 
 ## MultiPie
+
 ```{eval-rst}
 .. autosummary::
     qtdraw.multipie.plugin_multipie
@@ -20,6 +22,7 @@
 ```
 
 ## Parser
+
 ```{eval-rst}
 .. autosummary::
     qtdraw.parser.read_material
@@ -32,6 +35,7 @@
 ```
 
 ## Script
+
 ```{eval-rst}
 .. autosummary::
     qtdraw.scripts.qtdraw
@@ -39,6 +43,7 @@
 ```
 
 ## Utility
+
 ```{eval-rst}
 .. autosummary::
     qtdraw.util.basic_object
@@ -54,6 +59,7 @@
 ```
 
 ## Widget
+
 ```{eval-rst}
 .. autosummary::
     qtdraw.widget.custom_widget

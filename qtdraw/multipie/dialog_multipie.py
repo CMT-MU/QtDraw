@@ -1198,57 +1198,75 @@ class MultiPieDialog(QDialog):
         self._response_dialog = show_response(self.plugin._point_group, rank, r_type, self)
 
     # ==================================================
-    def obj_add_site(self):
+    def obj_add_site(self, scale=1.0, color=None):
         """
         Add representative site in object dict.
+
+        Args:
+            scale (float, optional): size scale.
+            color (str, optional): color.
         """
         site = self.object_edit_site.text()
-        r_site = self.plugin.add_equivalent_site(site)
+        r_site = self.plugin.add_equivalent_site(site, scale, color)
         if r_site is not None:
             self.obj["site"] = r_site
 
     # ==================================================
-    def obj_add_bond(self):
+    def obj_add_bond(self, scale=1.0, color=None, color2=None):
         """
         Add representative bond in object dict.
+
+        Args:
+            scale (float, optional): width scale.
+            color (str, optional): color.
+            color2 (str, optional): color2.
         """
         bond = self.object_edit_bond.text()
-        r_bond = self.plugin.add_equivalent_bond(bond)
+        r_bond = self.plugin.add_equivalent_bond(bond, scale, color, color2)
         if r_bond is not None:
             self.obj["bond"] = r_bond
 
     # ==================================================
-    def obj_add_vector(self):
+    def obj_add_vector(self, scale=1.0):
         """
         Add equivalent vectors in object dict.
+
+        Args:
+            scale (float, optional): length scale.
         """
         v_type = self.object_combo_vector_type.currentText()
         pos = self.object_edit_vector.text()
-        pos = self.plugin.add_vector_equivalent_site(v_type, pos)
+        pos = self.plugin.add_vector_equivalent_site(v_type, pos, scale)
         if pos is not None:
             self.obj["vector"] = pos
 
     # ==================================================
-    def obj_add_orbital(self):
+    def obj_add_orbital(self, scale=1.0):
         """
         Add equivalent orbitals in object dict.
+
+        Args:
+            scale (float, optional): size scale.
         """
         o_type = self.object_combo_orbital_type.currentText()
         pos = self.object_edit_orbital.text()
-        pos = self.plugin.add_orbital_equivalent_site(o_type, pos)
+        pos = self.plugin.add_orbital_equivalent_site(o_type, pos, scale)
         if pos is not None:
             self.obj["orbital"] = pos
 
     # ==================================================
-    def obj_add_harmonics(self):
+    def obj_add_harmonics(self, scale=1.0):
         """
         Add equivalent poing-group harmonics in object dict.
+
+        Args:
+            scale (float, optional): size scale.
         """
         o_type = self.object_combo_harmonics_type.currentText()
         orbital = self.plugin.get_harmonics()
         txt = self.object_edit_harmonics.text()
         pos = orbital + "#" + txt
-        pos = self.plugin.add_orbital_equivalent_site(o_type, pos)
+        pos = self.plugin.add_orbital_equivalent_site(o_type, pos, scale)
         if pos is not None:
             self.obj["harmonics"] = pos
 
@@ -1282,9 +1300,12 @@ class MultiPieDialog(QDialog):
         return lst
 
     # ==================================================
-    def basis_add_site(self):
+    def basis_add_site(self, scale=1.0):
         """
         Add site cluster SAMB.
+
+        Args:
+            scale (float, optional): size scale.
         """
         z_samb = self.plus["site_z_samb"]
         if len(z_samb) == 0:
@@ -1307,7 +1328,7 @@ class MultiPieDialog(QDialog):
             False,
         )
         label = samb_str[:3] + " \u21d0 " + remove_space(r_site)
-        self.plugin.add_site_samb(cluster, cluster_obj, label)
+        self.plugin.add_site_samb(cluster, cluster_obj, label, scale)
 
     # ==================================================
     def basis_gen_bond(self):
@@ -1340,9 +1361,12 @@ class MultiPieDialog(QDialog):
         return lst
 
     # ==================================================
-    def basis_add_bond(self):
+    def basis_add_bond(self, scale=1.0):
         """
         Add bond cluster SAMB.
+
+        Args:
+            scale (float, optional): width scale.
         """
         z_samb = self.plus["bond_z_samb"]
         if len(z_samb) == 0:
@@ -1370,7 +1394,7 @@ class MultiPieDialog(QDialog):
             t_odd,
         )
         label = samb_str[:3] + " \u21d0 " + remove_space(r_bond)
-        self.plugin.add_bond_samb(cluster, cluster_obj, label, z_type)
+        self.plugin.add_bond_samb(cluster, cluster_obj, label, z_type, scale)
 
     # ==================================================
     def basis_gen_vector(self):
@@ -1437,9 +1461,12 @@ class MultiPieDialog(QDialog):
         self.plugin.add_vector_samb(cluster, cluster_obj, label, v_type, v)
 
     # ==================================================
-    def basis_add_vector_lc(self):
+    def basis_add_vector_lc(self, scale=1.0):
         """
         Add linear combination of vector cluster SAMB.
+
+        Args:
+            scale (float, optional): length scale.
         """
         z_samb = self.plus["vector_z_samb"]
         if len(z_samb) == 0:
@@ -1475,7 +1502,7 @@ class MultiPieDialog(QDialog):
 
         label = remove_space(lc) + " \u21d0 " + z_type + ", " + remove_space(r_site_bond)
 
-        self.plugin.add_vector_samb(cluster, cluster_obj, label, z_type, v)
+        self.plugin.add_vector_samb(cluster, cluster_obj, label, z_type, v, scale)
 
     # ==================================================
     def basis_gen_vector_modulation(self):
@@ -1565,9 +1592,12 @@ class MultiPieDialog(QDialog):
         self.plugin.add_orbital_samb(cluster, cluster_obj, label, o_type)
 
     # ==================================================
-    def basis_add_orbital_lc(self):
+    def basis_add_orbital_lc(self, scale=1.0):
         """
         Add linear combination of orbital cluster SAMB.
+
+        Args:
+            scale (float, optional): size scale.
         """
         z_samb = self.plus["orbital_z_samb"]
         if len(z_samb) == 0:
@@ -1603,7 +1633,7 @@ class MultiPieDialog(QDialog):
         cluster_obj = NSArray(str(NSArray(form).subs(lc_basis).tolist().T.tolist()[0]))
 
         label = remove_space(lc) + " \u21d0 " + z_type + rank + ", " + remove_space(r_site_bond)
-        self.plugin.add_orbital_samb(cluster, cluster_obj, label, z_type)
+        self.plugin.add_orbital_samb(cluster, cluster_obj, label, z_type, scale)
 
     # ==================================================
     def basis_gen_orbital_modulation(self):
@@ -1627,9 +1657,12 @@ class MultiPieDialog(QDialog):
         self._orbital_modulation_dialog = ModulationDialog(self.plugin._pvw, basis, modulation, head, True, self)
 
     # ==================================================
-    def basis_add_hopping(self):
+    def basis_add_hopping(self, scale=1.0):
         """
         Add hopping SAMB.
+
+        Args:
+            scale (float, optional): length scale.
         """
         pos = self.basis_edit_hopping.text()
         pos = self.plugin.gen_hopping_samb(pos)
@@ -1639,7 +1672,7 @@ class MultiPieDialog(QDialog):
             bond = self.plugin.create_hopping_direction(pos)
             label = "T \u21d0 " + remove_space(str(pos))
 
-            self.plugin.add_hopping_samb(bond, label)
+            self.plugin.add_hopping_samb(bond, label, scale)
 
     # ==================================================
     def close(self):
