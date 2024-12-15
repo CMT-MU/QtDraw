@@ -175,7 +175,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../src/api_multipie.html">MultiPie</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../src/api_parser.html">Parser</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../src/api_script.html">Script</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../src/api_util.html">Utility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../src/api_util.html">Utilities</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../src/api_widget.html">Widget</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../src/function_table.html">Function Summary</a></li>
 </ul>
@@ -513,8 +513,6 @@
 <span class="sd">        label_color (list, optional): axes label color names, [str].</span>
 <span class="sd">        viewport (bool, optional): set viewport ?</span>
 
-<span class="sd">    Returns:</span>
-<span class="sd">        - (vtk.vtkOrientationMarkerWidget) -- axes widget.</span>
 <span class="sd">    Note:</span>
 <span class="sd">        - if label is None, no label is used.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -555,10 +553,8 @@
     <span class="p">)</span>
 
     <span class="c1"># create axes widget.</span>
-    <span class="n">axes_widget</span> <span class="o">=</span> <span class="n">pv_widget</span><span class="o">.</span><span class="n">add_orientation_widget</span><span class="p">(</span><span class="n">marker</span><span class="p">,</span> <span class="n">interactive</span><span class="o">=</span><span class="n">pickable</span><span class="p">,</span> <span class="n">viewport</span><span class="o">=</span><span class="n">viewport</span><span class="p">)</span>
-    <span class="n">axes_widget</span><span class="o">.</span><span class="n">SetZoom</span><span class="p">(</span><span class="n">scale</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">axes_widget</span></div>
+    <span class="n">pv_widget</span><span class="o">.</span><span class="n">add_orientation_widget</span><span class="p">(</span><span class="n">marker</span><span class="p">,</span> <span class="n">interactive</span><span class="o">=</span><span class="n">pickable</span><span class="p">,</span> <span class="n">viewport</span><span class="o">=</span><span class="n">viewport</span><span class="p">)</span>
+    <span class="n">pv_widget</span><span class="o">.</span><span class="n">renderer</span><span class="o">.</span><span class="n">axes_widget</span><span class="o">.</span><span class="n">SetZoom</span><span class="p">(</span><span class="n">scale</span><span class="p">)</span></div>
 
 
 

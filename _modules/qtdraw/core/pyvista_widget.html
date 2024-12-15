@@ -33,7 +33,7 @@
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -175,7 +175,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../src/api_multipie.html">MultiPie</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../src/api_parser.html">Parser</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../src/api_script.html">Script</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../src/api_util.html">Utility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../src/api_util.html">Utilities</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../src/api_widget.html">Widget</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../src/function_table.html">Function Summary</a></li>
 </ul>
@@ -409,6 +409,8 @@
 
 <span class="sd">        Args:</span>
 <span class="sd">            level (Level): log level.</span>
+
+<span class="sd">        :meta private:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">app</span> <span class="o">=</span> <span class="n">get_qt_application</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">LogWidget</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">level</span><span class="p">)</span>
@@ -457,7 +459,11 @@
 
 <span class="c1"># ==================================================</span>
 <span class="k">class</span> <span class="nc">PlotSignal</span><span class="p">(</span><span class="n">QObject</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;:meta private:&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Plot signal.</span>
+
+<span class="sd">    :meta private:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1"># signal for plotting an object.</span>
     <span class="n">plot</span> <span class="o">=</span> <span class="n">Signal</span><span class="p">(</span><span class="n">QModelIndex</span><span class="p">,</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span>  <span class="c1"># index, data, pointT.</span>
@@ -559,6 +565,11 @@
 
     <span class="c1"># ==================================================</span>
     <span class="k">def</span> <span class="nf">clear_info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Clear info.</span>
+
+<span class="sd">        :meta private:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">set_theme</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_status</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">default_status</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_status</span><span class="p">[</span><span class="s2">&quot;multipie&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;plus&quot;</span><span class="p">:</span> <span class="p">{}}</span>  <span class="c1"># for multipie.</span>
@@ -571,19 +582,18 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_block_remove_isosurface</span> <span class="o">=</span> <span class="kc">False</span>
 
     <span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="PyVistaWidget.set_additional_status">
-<a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.set_additional_status">[docs]</a>
     <span class="k">def</span> <span class="nf">set_additional_status</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set additional status.</span>
+
+<span class="sd">        :meta private:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">cell</span><span class="p">,</span> <span class="n">A</span> <span class="o">=</span> <span class="n">get_lattice_vector</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_status</span><span class="p">[</span><span class="s2">&quot;crystal&quot;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">_status</span><span class="p">[</span><span class="s2">&quot;cell&quot;</span><span class="p">])</span>
         <span class="n">i1</span><span class="p">,</span> <span class="n">dims</span> <span class="o">=</span> <span class="n">get_repeat_range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_status</span><span class="p">[</span><span class="s2">&quot;lower&quot;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">_status</span><span class="p">[</span><span class="s2">&quot;upper&quot;</span><span class="p">])</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_status</span><span class="p">[</span><span class="s2">&quot;cell&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cell</span>  <span class="c1"># update.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_status</span><span class="p">[</span><span class="s2">&quot;plus&quot;</span><span class="p">][</span><span class="s2">&quot;A&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">A</span>  <span class="c1"># addition.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_status</span><span class="p">[</span><span class="s2">&quot;plus&quot;</span><span class="p">][</span><span class="s2">&quot;ilower&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">i1</span>  <span class="c1"># addition.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_status</span><span class="p">[</span><span class="s2">&quot;plus&quot;</span><span class="p">][</span><span class="s2">&quot;dims&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dims</span>  <span class="c1"># addition.</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">_status</span><span class="p">[</span><span class="s2">&quot;plus&quot;</span><span class="p">][</span><span class="s2">&quot;dims&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dims</span>  <span class="c1"># addition.</span>
 
     <span class="c1"># ==================================================</span>
     <span class="c1"># add_object_type</span>
@@ -1850,8 +1860,6 @@
 
 
     <span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="PyVistaWidget.get_data_dict">
-<a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.get_data_dict">[docs]</a>
     <span class="k">def</span> <span class="nf">get_data_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">home_cell</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get data dict.</span>
@@ -1861,6 +1869,8 @@
 
 <span class="sd">        Returns:</span>
 <span class="sd">            - (dict) -- data dict, {object_type: [[data]]}.</span>
+
+<span class="sd">        :meta private:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">center_cell</span> <span class="o">=</span> <span class="s2">&quot;[0,0,0]&quot;</span>
 
@@ -1874,15 +1884,14 @@
                 <span class="n">lst</span><span class="p">[:,</span> <span class="n">COLUMN_LABEL_ACTOR</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
                 <span class="n">data</span><span class="p">[</span><span class="n">object_type</span><span class="p">]</span> <span class="o">=</span> <span class="n">lst</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
 
-        <span class="k">return</span> <span class="n">data</span></div>
-
+        <span class="k">return</span> <span class="n">data</span>
 
     <span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="PyVistaWidget.restore">
-<a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.restore">[docs]</a>
     <span class="k">def</span> <span class="nf">restore</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Restore data and status from backup.</span>
+
+<span class="sd">        :meta private:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_backup</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span>
@@ -1892,15 +1901,14 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">set_property</span><span class="p">(</span><span class="n">all_data</span><span class="p">[</span><span class="s2">&quot;status&quot;</span><span class="p">],</span> <span class="n">all_data</span><span class="p">[</span><span class="s2">&quot;preference&quot;</span><span class="p">])</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">set_camera_info</span><span class="p">(</span><span class="n">all_data</span><span class="p">[</span><span class="s2">&quot;camera&quot;</span><span class="p">])</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">reload</span><span class="p">(</span><span class="n">all_data</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">])</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
 
     <span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="PyVistaWidget.save_current">
-<a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.save_current">[docs]</a>
     <span class="k">def</span> <span class="nf">save_current</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Save current data and stutus into self._backup.</span>
+
+<span class="sd">        :meta private:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">all_data</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s2">&quot;version&quot;</span><span class="p">:</span> <span class="n">__version__</span><span class="p">,</span>
@@ -1910,8 +1918,7 @@
             <span class="s2">&quot;camera&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_camera_info</span><span class="p">(),</span>
         <span class="p">}</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_backup</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">all_data</span><span class="p">)</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">_backup</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">all_data</span><span class="p">)</span>
 
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="PyVistaWidget.save">
@@ -1985,23 +1992,20 @@
 
 
     <span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="PyVistaWidget.write_info">
-<a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.write_info">[docs]</a>
     <span class="k">def</span> <span class="nf">write_info</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Write text message (emit message signal).</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            text (str): message.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">text</span><span class="p">)</span></div>
 
+<span class="sd">        :meta private:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
 
     <span class="c1"># ==================================================</span>
     <span class="c1"># widget control.</span>
     <span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="PyVistaWidget.set_property">
-<a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.set_property">[docs]</a>
     <span class="k">def</span> <span class="nf">set_property</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">preference</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set status and preference.</span>
@@ -2009,6 +2013,8 @@
 <span class="sd">        Args:</span>
 <span class="sd">            status (dict, optional): status.</span>
 <span class="sd">            preference (dict, optional): preference.</span>
+
+<span class="sd">        :meta private:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">status</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_status</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">status</span><span class="p">)</span>
@@ -2021,12 +2027,9 @@
 
         <span class="k">if</span> <span class="n">status</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">preference</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">redraw</span><span class="p">()</span></div>
-
+            <span class="bp">self</span><span class="o">.</span><span class="n">redraw</span><span class="p">()</span>
 
     <span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="PyVistaWidget.update_status">
-<a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.update_status">[docs]</a>
     <span class="k">def</span> <span class="nf">update_status</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Update status.</span>
@@ -2034,13 +2037,12 @@
 <span class="sd">        Args:</span>
 <span class="sd">            key (str): status key.</span>
 <span class="sd">            value (Any): value.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">set_property</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="n">value</span><span class="p">})</span></div>
 
+<span class="sd">        :meta private:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_property</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="n">value</span><span class="p">})</span>
 
     <span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="PyVistaWidget.update_preference">
-<a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.update_preference">[docs]</a>
     <span class="k">def</span> <span class="nf">update_preference</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">category</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Update preference.</span>
@@ -2049,19 +2051,20 @@
 <span class="sd">            category (str): category.</span>
 <span class="sd">            key (str): status key.</span>
 <span class="sd">            value (Any): value.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">set_property</span><span class="p">(</span><span class="n">preference</span><span class="o">=</span><span class="p">{</span><span class="n">category</span><span class="p">:</span> <span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="n">value</span><span class="p">}})</span></div>
 
+<span class="sd">        :meta private:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_property</span><span class="p">(</span><span class="n">preference</span><span class="o">=</span><span class="p">{</span><span class="n">category</span><span class="p">:</span> <span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="n">value</span><span class="p">}})</span>
 
     <span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="PyVistaWidget.reload">
-<a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.reload">[docs]</a>
     <span class="k">def</span> <span class="nf">reload</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Reload data and draw object.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            data (dict, optional): object data.</span>
+
+<span class="sd">        :meta private:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_block_remove_isosurface</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
@@ -2073,15 +2076,14 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">add_data</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">reset_camera</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_block_remove_isosurface</span> <span class="o">=</span> <span class="kc">False</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">_block_remove_isosurface</span> <span class="o">=</span> <span class="kc">False</span>
 
     <span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="PyVistaWidget.refresh">
-<a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.refresh">[docs]</a>
     <span class="k">def</span> <span class="nf">refresh</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Refresh widget setting.</span>
+
+<span class="sd">        :meta private:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">set_parallel_projection</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">set_grid</span><span class="p">()</span>
@@ -2089,8 +2091,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">set_cell</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">set_light</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">set_latex</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">set_bar</span><span class="p">()</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_bar</span><span class="p">()</span>
 
     <span class="c1"># ==================================================</span>
     <span class="c1"># propery</span>
@@ -2339,11 +2340,11 @@
 
 
     <span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="PyVistaWidget.hide_outside_actor">
-<a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.hide_outside_actor">[docs]</a>
     <span class="k">def</span> <span class="nf">hide_outside_actor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Hide actors outside the range.</span>
+
+<span class="sd">        :meta private:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">lower</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_status</span><span class="p">[</span><span class="s2">&quot;lower&quot;</span><span class="p">]</span>
         <span class="n">upper</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_status</span><span class="p">[</span><span class="s2">&quot;upper&quot;</span><span class="p">]</span>
@@ -2364,12 +2365,9 @@
                         <span class="n">label_actor</span> <span class="o">=</span> <span class="n">value</span><span class="p">[:,</span> <span class="n">COLUMN_LABEL_ACTOR</span><span class="p">][</span><span class="n">idx</span><span class="p">]</span>
                         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">label_actor</span><span class="p">:</span>
                             <span class="k">if</span> <span class="n">i</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
-                                <span class="bp">self</span><span class="o">.</span><span class="n">actors</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">SetVisibility</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span></div>
-
+                                <span class="bp">self</span><span class="o">.</span><span class="n">actors</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">SetVisibility</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
 
     <span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="PyVistaWidget.clip_actor">
-<a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.clip_actor">[docs]</a>
     <span class="k">def</span> <span class="nf">clip_actor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">cell</span><span class="p">,</span> <span class="n">name_actor</span><span class="p">,</span> <span class="n">label_actor</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Clip actor.</span>
@@ -2379,6 +2377,8 @@
 <span class="sd">            cell (str): cell.</span>
 <span class="sd">            name_actor (str): name actor.</span>
 <span class="sd">            label_actor (str): label actor.</span>
+
+<span class="sd">        :meta private:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_status</span><span class="p">[</span><span class="s2">&quot;clip&quot;</span><span class="p">]:</span>
             <span class="k">return</span>
@@ -2392,15 +2392,14 @@
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">name_actor</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">actors</span><span class="p">[</span><span class="n">name_actor</span><span class="p">]</span><span class="o">.</span><span class="n">SetVisibility</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">label_actor</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">label_actor</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">actors</span><span class="p">[</span><span class="n">label_actor</span><span class="p">]</span><span class="o">.</span><span class="n">SetVisibility</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span></div>
-
+            <span class="bp">self</span><span class="o">.</span><span class="n">actors</span><span class="p">[</span><span class="n">label_actor</span><span class="p">]</span><span class="o">.</span><span class="n">SetVisibility</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
 
     <span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="PyVistaWidget.show_outside_actor">
-<a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.show_outside_actor">[docs]</a>
     <span class="k">def</span> <span class="nf">show_outside_actor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Show actors outside the range.</span>
+
+<span class="sd">        :meta private:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">object_type</span><span class="p">,</span> <span class="n">model</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="k">if</span> <span class="n">object_type</span> <span class="o">!=</span> <span class="s2">&quot;text2d&quot;</span><span class="p">:</span>
@@ -2418,8 +2417,7 @@
                         <span class="n">label_actor</span> <span class="o">=</span> <span class="n">value</span><span class="p">[:,</span> <span class="n">COLUMN_LABEL_ACTOR</span><span class="p">][</span><span class="n">idx</span><span class="p">]</span>
                         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">label_actor</span><span class="p">:</span>
                             <span class="k">if</span> <span class="n">i</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
-                                <span class="bp">self</span><span class="o">.</span><span class="n">actors</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">SetVisibility</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span></div>
-
+                                <span class="bp">self</span><span class="o">.</span><span class="n">actors</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">SetVisibility</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="PyVistaWidget.set_repeat">
@@ -2618,6 +2616,9 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_status</span><span class="p">[</span><span class="s2">&quot;axis_type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">axis_type</span>
 
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">renderer</span><span class="p">,</span> <span class="s2">&quot;axes_widget&quot;</span><span class="p">):</span>
+            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">renderer</span><span class="o">.</span><span class="n">axes_widget</span>
+
         <span class="n">viewport</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">if</span> <span class="n">axis_type</span> <span class="o">==</span> <span class="s2">&quot;on&quot;</span><span class="p">:</span>
             <span class="n">label</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_preference</span><span class="p">[</span><span class="s2">&quot;axis&quot;</span><span class="p">][</span><span class="s2">&quot;label&quot;</span><span class="p">]</span>
@@ -2627,7 +2628,6 @@
             <span class="n">label</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="n">viewport</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">hide_axes_all</span><span class="p">()</span>
             <span class="k">return</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_off_screen</span><span class="p">:</span>
@@ -2674,29 +2674,28 @@
     <span class="c1"># ==================================================</span>
     <span class="c1"># internal use (general).</span>
     <span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="PyVistaWidget.init_data_model">
-<a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.init_data_model">[docs]</a>
     <span class="k">def</span> <span class="nf">init_data_model</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initialize data model.</span>
+
+<span class="sd">        :meta private:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_selected_actor</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># actor selection, {actor_name: property}.</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_actor_object_type</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># from actor_name to (object_type).</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">object_type</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">object_default</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="n">object_type</span><span class="p">]</span> <span class="o">=</span> <span class="n">GroupModel</span><span class="p">(</span><span class="n">object_type</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span></div>
-
+            <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="n">object_type</span><span class="p">]</span> <span class="o">=</span> <span class="n">GroupModel</span><span class="p">(</span><span class="n">object_type</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
 
     <span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="PyVistaWidget.set_theme">
-<a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.set_theme">[docs]</a>
     <span class="k">def</span> <span class="nf">set_theme</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">theme</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set pyvista theme.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            theme (str): pyvista theme, &quot;document/dark/paraview&quot;.</span>
+
+<span class="sd">        :meta private:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">theme</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">theme</span> <span class="o">=</span> <span class="n">detail</span><span class="p">[</span><span class="s2">&quot;theme&quot;</span><span class="p">]</span>
@@ -2706,12 +2705,9 @@
         <span class="n">pv</span><span class="o">.</span><span class="n">global_theme</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">box</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="n">pv</span><span class="o">.</span><span class="n">global_theme</span><span class="o">.</span><span class="n">cmap</span> <span class="o">=</span> <span class="s2">&quot;bwr&quot;</span>
         <span class="n">pv</span><span class="o">.</span><span class="n">global_theme</span><span class="o">.</span><span class="n">show_scalar_bar</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="n">pv</span><span class="o">.</span><span class="n">global_theme</span><span class="o">.</span><span class="n">allow_empty_mesh</span> <span class="o">=</span> <span class="kc">True</span></div>
-
+        <span class="n">pv</span><span class="o">.</span><span class="n">global_theme</span><span class="o">.</span><span class="n">allow_empty_mesh</span> <span class="o">=</span> <span class="kc">True</span>
 
     <span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="PyVistaWidget.show_cell">
-<a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.show_cell">[docs]</a>
     <span class="k">def</span> <span class="nf">show_cell</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dimensions</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Show unit cell.</span>
@@ -2722,6 +2718,8 @@
 
 <span class="sd">        Note:</span>
 <span class="sd">            - if lower/dimensions is None, default is used.</span>
+
+<span class="sd">        :meta private:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">origin</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">origin</span>
         <span class="k">if</span> <span class="n">lower</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -2740,12 +2738,9 @@
             <span class="n">name</span><span class="o">=</span><span class="s2">&quot;unit_cell&quot;</span><span class="p">,</span>
             <span class="n">pickable</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">screen_on</span><span class="p">()</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">screen_on</span><span class="p">()</span>
 
     <span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="PyVistaWidget.set_light">
-<a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.set_light">[docs]</a>
     <span class="k">def</span> <span class="nf">set_light</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">light_type</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">intensity</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set light.</span>
@@ -2757,6 +2752,8 @@
 
 <span class="sd">        Note:</span>
 <span class="sd">            - if light_type/color/intensity is None, default is used.</span>
+
+<span class="sd">        :meta private:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">preference</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_preference</span><span class="p">[</span><span class="s2">&quot;light&quot;</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">light_type</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -2790,18 +2787,16 @@
             <span class="n">light</span> <span class="o">=</span> <span class="n">pv</span><span class="o">.</span><span class="n">Light</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">intensity</span><span class="o">=</span><span class="n">intensity</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">light</span> <span class="o">=</span> <span class="n">pv</span><span class="o">.</span><span class="n">Light</span><span class="p">(</span><span class="n">light_type</span><span class="o">=</span><span class="s2">&quot;headlight&quot;</span><span class="p">,</span> <span class="n">intensity</span><span class="o">=</span><span class="n">intensity</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">add_light</span><span class="p">(</span><span class="n">light</span><span class="p">)</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_light</span><span class="p">(</span><span class="n">light</span><span class="p">)</span>
 
     <span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="PyVistaWidget.set_latex">
-<a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.set_latex">[docs]</a>
     <span class="k">def</span> <span class="nf">set_latex</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set LaTeX environment.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">pass</span></div>
 
+<span class="sd">        :meta private:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span>
 
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="PyVistaWidget.screen_off">
@@ -2834,14 +2829,14 @@
 
 
     <span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="PyVistaWidget.get_camera_info">
-<a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.get_camera_info">[docs]</a>
     <span class="k">def</span> <span class="nf">get_camera_info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get camera info.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            - (dict) -- camera info.</span>
+
+<span class="sd">        :meta private:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">camera</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">camera</span>
         <span class="n">position</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">camera</span><span class="o">.</span><span class="n">position</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">DIGIT</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
@@ -2862,18 +2857,17 @@
             <span class="s2">&quot;scale&quot;</span><span class="p">:</span> <span class="n">scale</span><span class="p">,</span>
         <span class="p">}</span>
 
-        <span class="k">return</span> <span class="n">dic</span></div>
-
+        <span class="k">return</span> <span class="n">dic</span>
 
     <span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="PyVistaWidget.set_camera_info">
-<a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.set_camera_info">[docs]</a>
     <span class="k">def</span> <span class="nf">set_camera_info</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">info</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get camera info.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            info (dict): camera info.</span>
+
+<span class="sd">        :meta private:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">camera</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="n">info</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">camera</span><span class="o">.</span><span class="n">up</span> <span class="o">=</span> <span class="n">info</span><span class="p">[</span><span class="s2">&quot;viewup&quot;</span><span class="p">]</span>
@@ -2882,20 +2876,19 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">camera</span><span class="o">.</span><span class="n">clipping_range</span> <span class="o">=</span> <span class="n">info</span><span class="p">[</span><span class="s2">&quot;clipping_range&quot;</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">camera</span><span class="o">.</span><span class="n">distance</span> <span class="o">=</span> <span class="n">info</span><span class="p">[</span><span class="s2">&quot;distance&quot;</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">camera</span><span class="o">.</span><span class="n">parallel_scale</span> <span class="o">=</span> <span class="mf">1.0</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">camera</span><span class="o">.</span><span class="n">zoom</span><span class="p">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">info</span><span class="p">[</span><span class="s2">&quot;scale&quot;</span><span class="p">])</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">camera</span><span class="o">.</span><span class="n">zoom</span><span class="p">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">info</span><span class="p">[</span><span class="s2">&quot;scale&quot;</span><span class="p">])</span>
 
     <span class="c1"># ==================================================</span>
     <span class="c1"># internal use (access data).</span>
     <span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="PyVistaWidget.add_data">
-<a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.add_data">[docs]</a>
     <span class="k">def</span> <span class="nf">add_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add data.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            data (dict): all object data, {object_type: [[data]]}.</span>
+
+<span class="sd">        :meta private:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">values</span><span class="p">())</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">return</span>
@@ -2903,15 +2896,14 @@
         <span class="k">for</span> <span class="n">object_type</span><span class="p">,</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="n">object_type</span><span class="p">]</span><span class="o">.</span><span class="n">block_update_widget</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="n">object_type</span><span class="p">]</span><span class="o">.</span><span class="n">set_data</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="n">object_type</span><span class="p">]</span><span class="o">.</span><span class="n">block_update_widget</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span></div>
-
+            <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="n">object_type</span><span class="p">]</span><span class="o">.</span><span class="n">block_update_widget</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
 
     <span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="PyVistaWidget.repeat_data">
-<a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.repeat_data">[docs]</a>
     <span class="k">def</span> <span class="nf">repeat_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Repeat data.</span>
+
+<span class="sd">        :meta private:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_data_dict</span><span class="p">(</span><span class="n">home_cell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_status</span><span class="p">[</span><span class="s2">&quot;repeat&quot;</span><span class="p">]:</span>
@@ -2924,15 +2916,24 @@
                         <span class="n">model</span><span class="p">[</span><span class="n">n</span> <span class="o">*</span> <span class="n">i</span> <span class="p">:</span> <span class="n">n</span> <span class="o">*</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="n">COLUMN_CELL</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
                     <span class="n">data</span><span class="p">[</span><span class="n">object_type</span><span class="p">]</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">reload</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reload</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+    <span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="PyVistaWidget.set_nonrepeat">
+<a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.set_nonrepeat">[docs]</a>
+    <span class="k">def</span> <span class="nf">set_nonrepeat</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Transform data to non-repeat data.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nonrepeat_data</span><span class="p">()</span></div>
 
 
     <span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="PyVistaWidget.nonrepeat_data">
-<a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.nonrepeat_data">[docs]</a>
     <span class="k">def</span> <span class="nf">nonrepeat_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Transform data to non-repeat data.</span>
+
+<span class="sd">        :meta private:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_data_dict</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">object_type</span><span class="p">,</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
@@ -2947,12 +2948,9 @@
                 <span class="n">model</span><span class="p">[:,</span> <span class="n">COLUMN_CELL</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;[0,0,0]&quot;</span>
                 <span class="n">data</span><span class="p">[</span><span class="n">object_type</span><span class="p">]</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">reload</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">reload</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 
     <span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="PyVistaWidget.set_actor">
-<a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.set_actor">[docs]</a>
     <span class="k">def</span> <span class="nf">set_actor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">object_type</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">actor_name</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="n">COLUMN_NAME_ACTOR</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set actor.</span>
@@ -2962,6 +2960,8 @@
 <span class="sd">            index (QModelIndex): index.</span>
 <span class="sd">            actor_name (str): actor name.</span>
 <span class="sd">            column (int, optional): column.</span>
+
+<span class="sd">        :meta private:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="n">object_type</span><span class="p">]</span>
         <span class="n">model</span><span class="o">.</span><span class="n">set_row_data</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">column</span><span class="p">,</span> <span class="n">actor_name</span><span class="p">)</span>
@@ -2971,28 +2971,24 @@
         <span class="c1"># set saved property.</span>
         <span class="k">if</span> <span class="n">actor_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_selected_actor</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
             <span class="n">actor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">actors</span><span class="p">[</span><span class="n">actor_name</span><span class="p">]</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_selected_actor</span><span class="p">[</span><span class="n">actor_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">actor</span><span class="o">.</span><span class="n">prop</span><span class="o">.</span><span class="n">show_edges</span><span class="p">,</span> <span class="n">actor</span><span class="o">.</span><span class="n">prop</span><span class="o">.</span><span class="n">edge_color</span><span class="p">)</span></div>
-
+            <span class="bp">self</span><span class="o">.</span><span class="n">_selected_actor</span><span class="p">[</span><span class="n">actor_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">actor</span><span class="o">.</span><span class="n">prop</span><span class="o">.</span><span class="n">show_edges</span><span class="p">,</span> <span class="n">actor</span><span class="o">.</span><span class="n">prop</span><span class="o">.</span><span class="n">edge_color</span><span class="p">)</span>
 
     <span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="PyVistaWidget.delete_actor">
-<a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.delete_actor">[docs]</a>
     <span class="k">def</span> <span class="nf">delete_actor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">actor_name</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Remove actor.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            actor_name (str): actor name.</span>
+
+<span class="sd">        :meta private:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">actor_name</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">remove_actor</span><span class="p">(</span><span class="n">actor_name</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">actor_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_actor_object_type</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-                <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_actor_object_type</span><span class="p">[</span><span class="n">actor_name</span><span class="p">]</span></div>
-
+                <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_actor_object_type</span><span class="p">[</span><span class="n">actor_name</span><span class="p">]</span>
 
     <span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="PyVistaWidget.change_check_state">
-<a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.change_check_state">[docs]</a>
     <span class="k">def</span> <span class="nf">change_check_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">object_type</span><span class="p">,</span> <span class="n">row_data</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Change check state (when name is off, label is also off).</span>
@@ -3001,27 +2997,27 @@
 <span class="sd">            object_type (str): object type.</span>
 <span class="sd">            row_data (list): row data.</span>
 <span class="sd">            index (QModelIndex): index.</span>
+
+<span class="sd">        :meta private:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">UNCHECK</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># Qt.Uncheck.</span>
         <span class="k">if</span> <span class="n">object_type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;caption&quot;</span><span class="p">,</span> <span class="s2">&quot;text2d&quot;</span><span class="p">]</span> <span class="ow">and</span> <span class="n">index</span><span class="o">.</span><span class="n">column</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">state</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">CheckStateRole</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">state</span> <span class="o">==</span> <span class="n">UNCHECK</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="n">object_type</span><span class="p">]</span><span class="o">.</span><span class="n">set_check</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">COLUMN_LABEL</span><span class="p">,</span> <span class="n">UNCHECK</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">plot_data</span><span class="p">(</span><span class="n">object_type</span><span class="p">,</span> <span class="n">row_data</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">plot_data</span><span class="p">(</span><span class="n">object_type</span><span class="p">,</span> <span class="n">row_data</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
 
     <span class="c1"># ==================================================</span>
     <span class="c1"># internal use (gui interface).</span>
     <span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="PyVistaWidget.open_tab_group_view">
-<a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.open_tab_group_view">[docs]</a>
     <span class="k">def</span> <span class="nf">open_tab_group_view</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Open tab group view.</span>
+
+<span class="sd">        :meta private:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_tab_group_view</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_tab_group_view</span><span class="o">.</span><span class="n">update_widget</span><span class="p">()</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tab_group_view</span><span class="o">.</span><span class="n">update_widget</span><span class="p">()</span>
 
     <span class="c1"># ==================================================</span>
     <span class="k">def</span> <span class="nf">release_mouse</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -3074,8 +3070,6 @@
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
     <span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="PyVistaWidget.remove_data">
-<a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.remove_data">[docs]</a>
     <span class="k">def</span> <span class="nf">remove_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">object_type</span><span class="p">,</span> <span class="n">row_data</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Remove data.</span>
@@ -3084,6 +3078,8 @@
 <span class="sd">            object_type (str): object type.</span>
 <span class="sd">            row_data (list): row data.</span>
 <span class="sd">            index (QIndexModel): index.</span>
+
+<span class="sd">        :meta private:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">actor_name</span> <span class="o">=</span> <span class="n">row_data</span><span class="p">[</span><span class="n">COLUMN_NAME_ACTOR</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">delete_actor</span><span class="p">(</span><span class="n">actor_name</span><span class="p">)</span>
@@ -3095,14 +3091,11 @@
         <span class="k">if</span> <span class="n">object_type</span> <span class="o">==</span> <span class="s2">&quot;isosurface&quot;</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_block_remove_isosurface</span><span class="p">:</span>
             <span class="n">filename</span> <span class="o">=</span> <span class="n">row_data</span><span class="p">[</span><span class="n">COLUMN_ISOSURFACE_FILE</span><span class="p">]</span>
             <span class="k">if</span> <span class="n">filename</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_isosurface_data</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-                <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_isosurface_data</span><span class="p">[</span><span class="n">filename</span><span class="p">]</span></div>
-
+                <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_isosurface_data</span><span class="p">[</span><span class="n">filename</span><span class="p">]</span>
 
     <span class="c1"># ==================================================</span>
     <span class="c1"># internal use (context menu).</span>
     <span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="PyVistaWidget.show_context_menu">
-<a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.show_context_menu">[docs]</a>
     <span class="k">def</span> <span class="nf">show_context_menu</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">actor</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Show context menu.</span>
@@ -3112,6 +3105,8 @@
 
 <span class="sd">        Note:</span>
 <span class="sd">            - connect to open_selected, hide_selected, remove_selected signals are required.</span>
+
+<span class="sd">        :meta private:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">select_actor</span><span class="p">(</span><span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
 
@@ -3134,64 +3129,60 @@
         <span class="n">menu</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="n">QCursor</span><span class="p">()</span><span class="o">.</span><span class="n">pos</span><span class="p">())</span>
 
         <span class="c1"># restore actor property.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">deselect_actor</span><span class="p">(</span><span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">)</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">deselect_actor</span><span class="p">(</span><span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
 
     <span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="PyVistaWidget.open_action">
-<a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.open_action">[docs]</a>
     <span class="k">def</span> <span class="nf">open_action</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">actor</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Action for open in context menum.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            actor (pv.Actor): actor.</span>
+
+<span class="sd">        :meta private:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">object_type</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_index</span><span class="p">(</span><span class="n">actor</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">open_tab_group_view</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_tab_group_view</span><span class="o">.</span><span class="n">select_tab</span><span class="p">(</span><span class="n">object_type</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_tab_group_view</span><span class="o">.</span><span class="n">view</span><span class="p">[</span><span class="n">object_type</span><span class="p">]</span><span class="o">.</span><span class="n">select_row</span><span class="p">(</span><span class="n">index</span><span class="p">)</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tab_group_view</span><span class="o">.</span><span class="n">view</span><span class="p">[</span><span class="n">object_type</span><span class="p">]</span><span class="o">.</span><span class="n">select_row</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
 
     <span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="PyVistaWidget.hide_action">
-<a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.hide_action">[docs]</a>
     <span class="k">def</span> <span class="nf">hide_action</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">actor</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Action for hide in context menu.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            actor (pv.Actor): actor.</span>
+
+<span class="sd">        :meta private:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">object_type</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_index</span><span class="p">(</span><span class="n">actor</span><span class="p">)</span>
         <span class="n">UNCHECK</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># Qt.Uncheck.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="n">object_type</span><span class="p">]</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">UNCHECK</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">CheckStateRole</span><span class="p">)</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="n">object_type</span><span class="p">]</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">UNCHECK</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">CheckStateRole</span><span class="p">)</span>
 
     <span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="PyVistaWidget.remove_action">
-<a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.remove_action">[docs]</a>
     <span class="k">def</span> <span class="nf">remove_action</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">actor</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Action for remove in context menu.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            actor (pv.Actor): actor.</span>
+
+<span class="sd">        :meta private:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">object_type</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_index</span><span class="p">(</span><span class="n">actor</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="n">object_type</span><span class="p">]</span><span class="o">.</span><span class="n">remove_row</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">deselect_actor_all</span><span class="p">()</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">deselect_actor_all</span><span class="p">()</span>
 
     <span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="PyVistaWidget.select_actor">
-<a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.select_actor">[docs]</a>
     <span class="k">def</span> <span class="nf">select_actor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">actor_name</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Select actor with spotlight.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            actor_name (str): actor name.</span>
+
+<span class="sd">        :meta private:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># already selected.</span>
         <span class="k">if</span> <span class="n">actor_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_selected_actor</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
@@ -3206,45 +3197,40 @@
         <span class="c1"># set selected.</span>
         <span class="n">color</span> <span class="o">=</span> <span class="n">all_colors</span><span class="p">[</span><span class="n">detail</span><span class="p">[</span><span class="s2">&quot;spotlight_color&quot;</span><span class="p">]][</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># hex</span>
         <span class="n">actor</span><span class="o">.</span><span class="n">prop</span><span class="o">.</span><span class="n">show_edges</span> <span class="o">=</span> <span class="kc">True</span>
-        <span class="n">actor</span><span class="o">.</span><span class="n">prop</span><span class="o">.</span><span class="n">edge_color</span> <span class="o">=</span> <span class="n">color</span></div>
-
+        <span class="n">actor</span><span class="o">.</span><span class="n">prop</span><span class="o">.</span><span class="n">edge_color</span> <span class="o">=</span> <span class="n">color</span>
 
     <span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="PyVistaWidget.deselect_actor">
-<a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.deselect_actor">[docs]</a>
     <span class="k">def</span> <span class="nf">deselect_actor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">actor_name</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Deselect actor with reset of spotlight.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            actor_name (str): actor name.</span>
+
+<span class="sd">        :meta private:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">actor_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">actors</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="ow">and</span> <span class="n">actor_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_selected_actor</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
             <span class="n">actor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">actors</span><span class="p">[</span><span class="n">actor_name</span><span class="p">]</span>
             <span class="n">prop</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_selected_actor</span><span class="p">[</span><span class="n">actor_name</span><span class="p">]</span>
             <span class="n">actor</span><span class="o">.</span><span class="n">prop</span><span class="o">.</span><span class="n">show_edges</span> <span class="o">=</span> <span class="n">prop</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
             <span class="n">actor</span><span class="o">.</span><span class="n">prop</span><span class="o">.</span><span class="n">edge_color</span> <span class="o">=</span> <span class="n">prop</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_selected_actor</span><span class="p">[</span><span class="n">actor_name</span><span class="p">]</span></div>
-
+            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_selected_actor</span><span class="p">[</span><span class="n">actor_name</span><span class="p">]</span>
 
     <span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="PyVistaWidget.deselect_actor_all">
-<a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.deselect_actor_all">[docs]</a>
     <span class="k">def</span> <span class="nf">deselect_actor_all</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Deselect all selected actors.</span>
+
+<span class="sd">        :meta private:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">actor_name</span><span class="p">,</span> <span class="n">prop</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_selected_actor</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="k">if</span> <span class="n">actor_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">actors</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
                 <span class="n">actor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">actors</span><span class="p">[</span><span class="n">actor_name</span><span class="p">]</span>
                 <span class="n">actor</span><span class="o">.</span><span class="n">prop</span><span class="o">.</span><span class="n">show_edges</span> <span class="o">=</span> <span class="n">prop</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
                 <span class="n">actor</span><span class="o">.</span><span class="n">prop</span><span class="o">.</span><span class="n">edge_color</span> <span class="o">=</span> <span class="n">prop</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_selected_actor</span> <span class="o">=</span> <span class="p">{}</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">_selected_actor</span> <span class="o">=</span> <span class="p">{}</span>
 
     <span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="PyVistaWidget.change_selection">
-<a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.change_selection">[docs]</a>
     <span class="k">def</span> <span class="nf">change_selection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">object_type</span><span class="p">,</span> <span class="n">deselect</span><span class="p">,</span> <span class="n">select</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Change selection for spotlight.</span>
@@ -3253,6 +3239,8 @@
 <span class="sd">            object_type (str): object type.</span>
 <span class="sd">            deselect (list): deselected rows.</span>
 <span class="sd">            select (list): selected rows.</span>
+
+<span class="sd">        :meta private:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># skip for caption and text2d.</span>
         <span class="k">if</span> <span class="n">object_type</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;caption&quot;</span><span class="p">,</span> <span class="s2">&quot;text2d&quot;</span><span class="p">]:</span>
@@ -3269,12 +3257,9 @@
             <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">select</span><span class="p">:</span>
                 <span class="n">actor_name</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="n">COLUMN_NAME_ACTOR</span><span class="p">]</span>
                 <span class="k">if</span> <span class="n">actor_name</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">select_actor</span><span class="p">(</span><span class="n">actor_name</span><span class="p">)</span></div>
-
+                    <span class="bp">self</span><span class="o">.</span><span class="n">select_actor</span><span class="p">(</span><span class="n">actor_name</span><span class="p">)</span>
 
     <span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="PyVistaWidget.find_index">
-<a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.find_index">[docs]</a>
     <span class="k">def</span> <span class="nf">find_index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">actor</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Find index from actor.</span>
@@ -3286,6 +3271,8 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            - (str) -- object type.</span>
 <span class="sd">            - (QModelIndex) -- index.</span>
+
+<span class="sd">        :meta private:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">actor_name</span> <span class="o">=</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span>
         <span class="n">object_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_actor_object_type</span><span class="p">[</span><span class="n">actor_name</span><span class="p">]</span>
@@ -3293,14 +3280,11 @@
         <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">index</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">3</span>
         <span class="c1"># when parent=child[0], take child one.</span>
         <span class="n">index</span> <span class="o">=</span> <span class="n">index</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">()</span><span class="o">.</span><span class="n">siblingAtColumn</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">object_type</span><span class="p">,</span> <span class="n">index</span></div>
-
+        <span class="k">return</span> <span class="n">object_type</span><span class="p">,</span> <span class="n">index</span>
 
     <span class="c1"># ==================================================</span>
     <span class="c1"># internal use (add object utility).</span>
     <span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="PyVistaWidget.set_common_row_data">
-<a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.set_common_row_data">[docs]</a>
     <span class="k">def</span> <span class="nf">set_common_row_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">object_type</span><span class="p">,</span> <span class="n">opacity</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">cell</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">margin</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set common row data.</span>
@@ -3316,6 +3300,8 @@
 
 <span class="sd">        Returns:</span>
 <span class="sd">            - (dict) -- row data.</span>
+
+<span class="sd">        :meta private:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="n">object_type</span><span class="p">]</span><span class="o">.</span><span class="n">column_default</span>
         <span class="n">header</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="n">object_type</span><span class="p">]</span><span class="o">.</span><span class="n">header</span>
@@ -3339,14 +3325,11 @@
         <span class="k">if</span> <span class="n">margin</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">row_data</span><span class="p">[</span><span class="s2">&quot;margin&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">convert_to_str</span><span class="p">(</span><span class="n">margin</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">row_data</span></div>
-
+        <span class="k">return</span> <span class="n">row_data</span>
 
     <span class="c1"># ==================================================</span>
     <span class="c1"># internal use (plot object utility).</span>
     <span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="PyVistaWidget.plot_data">
-<a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.plot_data">[docs]</a>
     <span class="k">def</span> <span class="nf">plot_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">object_type</span><span class="p">,</span> <span class="n">row_data</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Plot mesh from data.</span>
@@ -3355,6 +3338,8 @@
 <span class="sd">            object_type (str): object type.</span>
 <span class="sd">            row_data (list): row data.</span>
 <span class="sd">            index (QIndexModel): index.</span>
+
+<span class="sd">        :meta private:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">tag</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="n">object_type</span><span class="p">]</span><span class="o">.</span><span class="n">header</span>
         <span class="n">no_label</span> <span class="o">=</span> <span class="n">object_type</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;caption&quot;</span><span class="p">,</span> <span class="s2">&quot;text2d&quot;</span><span class="p">]</span>
@@ -3366,23 +3351,19 @@
         <span class="k">if</span> <span class="n">name_check</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_plot_signal</span><span class="p">[</span><span class="n">object_type</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">row_info</span><span class="p">,</span> <span class="n">positionT</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">label_check</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">no_label</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">plot_label</span><span class="p">(</span><span class="n">object_type</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">row_info</span><span class="p">,</span> <span class="n">positionT</span><span class="p">)</span></div>
-
+            <span class="bp">self</span><span class="o">.</span><span class="n">plot_label</span><span class="p">(</span><span class="n">object_type</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">row_info</span><span class="p">,</span> <span class="n">positionT</span><span class="p">)</span>
 
     <span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="PyVistaWidget.redraw">
-<a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.redraw">[docs]</a>
     <span class="k">def</span> <span class="nf">redraw</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Redraw all object.</span>
+
+<span class="sd">        :meta private:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
-            <span class="n">model</span><span class="o">.</span><span class="n">emit_update_all</span><span class="p">()</span></div>
-
+            <span class="n">model</span><span class="o">.</span><span class="n">emit_update_all</span><span class="p">()</span>
 
     <span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="PyVistaWidget.common_option">
-<a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.common_option">[docs]</a>
     <span class="k">def</span> <span class="nf">common_option</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">actor</span><span class="p">,</span> <span class="n">positionT</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create common option to plot.</span>
@@ -3394,6 +3375,8 @@
 
 <span class="sd">        Returns:</span>
 <span class="sd">            - (dict) -- common option.</span>
+
+<span class="sd">        :meta private:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">actor</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
             <span class="n">actor</span> <span class="o">=</span> <span class="kc">None</span>
@@ -3411,12 +3394,9 @@
             <span class="s2">&quot;show_edges&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
         <span class="p">}</span>
 
-        <span class="k">return</span> <span class="n">option</span></div>
-
+        <span class="k">return</span> <span class="n">option</span>
 
     <span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="PyVistaWidget.label_option">
-<a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.label_option">[docs]</a>
     <span class="k">def</span> <span class="nf">label_option</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">positionT</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">margin</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create common option to plot.</span>
@@ -3428,6 +3408,8 @@
 
 <span class="sd">        Returns:</span>
 <span class="sd">            - (dict) -- label option.</span>
+
+<span class="sd">        :meta private:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">option</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s2">&quot;points&quot;</span><span class="p">:</span> <span class="n">positionT</span><span class="p">,</span>
@@ -3442,12 +3424,9 @@
             <span class="s2">&quot;always_visible&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
         <span class="p">}</span>
 
-        <span class="k">return</span> <span class="n">option</span></div>
-
+        <span class="k">return</span> <span class="n">option</span>
 
     <span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="PyVistaWidget.check_hide">
-<a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.check_hide">[docs]</a>
     <span class="k">def</span> <span class="nf">check_hide</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row_data</span><span class="p">,</span> <span class="n">no_label</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Check hide state.</span>
@@ -3459,6 +3438,8 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            - (bool) -- display name ?</span>
 <span class="sd">            - (bool) -- display label ?</span>
+
+<span class="sd">        :meta private:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">name_check</span> <span class="o">=</span> <span class="n">row_data</span><span class="p">[</span><span class="s2">&quot;name_check&quot;</span><span class="p">]</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">no_label</span><span class="p">:</span>
@@ -3480,14 +3461,11 @@
                 <span class="n">actor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">actors</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
                 <span class="n">actor</span><span class="o">.</span><span class="n">SetVisibility</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">name_check</span><span class="p">,</span> <span class="n">label_check</span></div>
-
+        <span class="k">return</span> <span class="n">name_check</span><span class="p">,</span> <span class="n">label_check</span>
 
     <span class="c1"># ==================================================</span>
     <span class="c1"># internal use (plot each object).</span>
     <span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="PyVistaWidget.plot_data_site">
-<a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.plot_data_site">[docs]</a>
     <span class="k">def</span> <span class="nf">plot_data_site</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">positionT</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Plot site.</span>
@@ -3496,6 +3474,8 @@
 <span class="sd">            index (QModelIndex): index.</span>
 <span class="sd">            data (dict): data list.</span>
 <span class="sd">            positionT (numpy.ndarray): position (transformed).</span>
+
+<span class="sd">        :meta private:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">actor</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;name_actor&quot;</span><span class="p">]</span>
         <span class="n">size</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;size&quot;</span><span class="p">])</span>
@@ -3510,12 +3490,9 @@
 
         <span class="n">actor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="o">**</span><span class="n">option</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">set_actor</span><span class="p">(</span><span class="s2">&quot;site&quot;</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">clip_actor</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;cell&quot;</span><span class="p">],</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;label_actor&quot;</span><span class="p">])</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">clip_actor</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;cell&quot;</span><span class="p">],</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;label_actor&quot;</span><span class="p">])</span>
 
     <span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="PyVistaWidget.plot_data_bond">
-<a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.plot_data_bond">[docs]</a>
     <span class="k">def</span> <span class="nf">plot_data_bond</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">positionT</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Plot bond.</span>
@@ -3524,6 +3501,8 @@
 <span class="sd">            index (QModelIndex): index.</span>
 <span class="sd">            data (dict): data list.</span>
 <span class="sd">            positionT (numpy.ndarray): position (transformed).</span>
+
+<span class="sd">        :meta private:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">actor</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;name_actor&quot;</span><span class="p">]</span>
         <span class="n">direction</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;direction&quot;</span><span class="p">]</span>
@@ -3548,12 +3527,9 @@
 
         <span class="n">actor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="o">**</span><span class="n">option</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">set_actor</span><span class="p">(</span><span class="s2">&quot;bond&quot;</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">clip_actor</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;cell&quot;</span><span class="p">],</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;label_actor&quot;</span><span class="p">])</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">clip_actor</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;cell&quot;</span><span class="p">],</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;label_actor&quot;</span><span class="p">])</span>
 
     <span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="PyVistaWidget.plot_data_vector">
-<a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.plot_data_vector">[docs]</a>
     <span class="k">def</span> <span class="nf">plot_data_vector</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">positionT</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Plot vector.</span>
@@ -3562,6 +3538,8 @@
 <span class="sd">            index (QModelIndex): index.</span>
 <span class="sd">            data (dict): data list.</span>
 <span class="sd">            positionT (numpy.ndarray): position (transformed).</span>
+
+<span class="sd">        :meta private:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">actor</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;name_actor&quot;</span><span class="p">]</span>
         <span class="n">direction</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;direction&quot;</span><span class="p">]</span>
@@ -3593,12 +3571,9 @@
 
         <span class="n">actor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="o">**</span><span class="n">option</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">set_actor</span><span class="p">(</span><span class="s2">&quot;vector&quot;</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">clip_actor</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;cell&quot;</span><span class="p">],</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;label_actor&quot;</span><span class="p">])</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">clip_actor</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;cell&quot;</span><span class="p">],</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;label_actor&quot;</span><span class="p">])</span>
 
     <span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="PyVistaWidget.plot_data_orbital">
-<a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.plot_data_orbital">[docs]</a>
     <span class="k">def</span> <span class="nf">plot_data_orbital</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">positionT</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Plot orbital.</span>
@@ -3607,6 +3582,8 @@
 <span class="sd">            index (QModelIndex): index.</span>
 <span class="sd">            data (dict): data list.</span>
 <span class="sd">            positionT (numpy.ndarray): position (transformed).</span>
+
+<span class="sd">        :meta private:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">actor</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;name_actor&quot;</span><span class="p">]</span>
         <span class="n">shape</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;shape&quot;</span><span class="p">]</span>
@@ -3642,12 +3619,9 @@
 
         <span class="n">actor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="o">**</span><span class="n">option</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">set_actor</span><span class="p">(</span><span class="s2">&quot;orbital&quot;</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">clip_actor</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;cell&quot;</span><span class="p">],</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;label_actor&quot;</span><span class="p">])</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">clip_actor</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;cell&quot;</span><span class="p">],</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;label_actor&quot;</span><span class="p">])</span>
 
     <span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="PyVistaWidget.plot_data_stream">
-<a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.plot_data_stream">[docs]</a>
     <span class="k">def</span> <span class="nf">plot_data_stream</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">positionT</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Plot stream (vectors in cartesian coordinate).</span>
@@ -3656,6 +3630,8 @@
 <span class="sd">            index (QModelIndex): index.</span>
 <span class="sd">            data (dict): data list.</span>
 <span class="sd">            positionT (numpy.ndarray): position (transformed).</span>
+
+<span class="sd">        :meta private:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">component_str</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;abs&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;z&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
 
@@ -3720,12 +3696,9 @@
 
         <span class="n">actor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="o">**</span><span class="n">option</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">set_actor</span><span class="p">(</span><span class="s2">&quot;stream&quot;</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">clip_actor</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;cell&quot;</span><span class="p">],</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;label_actor&quot;</span><span class="p">])</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">clip_actor</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;cell&quot;</span><span class="p">],</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;label_actor&quot;</span><span class="p">])</span>
 
     <span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="PyVistaWidget.plot_data_line">
-<a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.plot_data_line">[docs]</a>
     <span class="k">def</span> <span class="nf">plot_data_line</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">positionT</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Plot line.</span>
@@ -3734,6 +3707,8 @@
 <span class="sd">            index (QModelIndex): index.</span>
 <span class="sd">            data (dict): data list.</span>
 <span class="sd">            positionT (numpy.ndarray): position (transformed).</span>
+
+<span class="sd">        :meta private:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">actor</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;name_actor&quot;</span><span class="p">]</span>
         <span class="n">direction</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;direction&quot;</span><span class="p">]</span>
@@ -3758,12 +3733,9 @@
 
         <span class="n">actor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="o">**</span><span class="n">option</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">set_actor</span><span class="p">(</span><span class="s2">&quot;line&quot;</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">clip_actor</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;cell&quot;</span><span class="p">],</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;label_actor&quot;</span><span class="p">])</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">clip_actor</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;cell&quot;</span><span class="p">],</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;label_actor&quot;</span><span class="p">])</span>
 
     <span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="PyVistaWidget.plot_data_plane">
-<a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.plot_data_plane">[docs]</a>
     <span class="k">def</span> <span class="nf">plot_data_plane</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">positionT</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Plot plane.</span>
@@ -3772,6 +3744,8 @@
 <span class="sd">            index (QModelIndex): index.</span>
 <span class="sd">            data (dict): data list.</span>
 <span class="sd">            positionT (numpy.ndarray): position (transformed).</span>
+
+<span class="sd">        :meta private:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">actor</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;name_actor&quot;</span><span class="p">]</span>
         <span class="n">normal</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;normal&quot;</span><span class="p">]</span>
@@ -3800,12 +3774,9 @@
 
         <span class="n">actor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="o">**</span><span class="n">option</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">set_actor</span><span class="p">(</span><span class="s2">&quot;plane&quot;</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">clip_actor</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;cell&quot;</span><span class="p">],</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;label_actor&quot;</span><span class="p">])</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">clip_actor</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;cell&quot;</span><span class="p">],</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;label_actor&quot;</span><span class="p">])</span>
 
     <span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="PyVistaWidget.plot_data_circle">
-<a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.plot_data_circle">[docs]</a>
     <span class="k">def</span> <span class="nf">plot_data_circle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">positionT</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Plot circle.</span>
@@ -3814,6 +3785,8 @@
 <span class="sd">            index (QModelIndex): index.</span>
 <span class="sd">            data (dict): data list.</span>
 <span class="sd">            positionT (numpy.ndarray): position (transformed).</span>
+
+<span class="sd">        :meta private:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">actor</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;name_actor&quot;</span><span class="p">]</span>
         <span class="n">normal</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;normal&quot;</span><span class="p">]</span>
@@ -3841,12 +3814,9 @@
 
         <span class="n">actor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="o">**</span><span class="n">option</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">set_actor</span><span class="p">(</span><span class="s2">&quot;circle&quot;</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">clip_actor</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;cell&quot;</span><span class="p">],</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;label_actor&quot;</span><span class="p">])</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">clip_actor</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;cell&quot;</span><span class="p">],</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;label_actor&quot;</span><span class="p">])</span>
 
     <span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="PyVistaWidget.plot_data_torus">
-<a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.plot_data_torus">[docs]</a>
     <span class="k">def</span> <span class="nf">plot_data_torus</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">positionT</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Plot torus.</span>
@@ -3855,6 +3825,8 @@
 <span class="sd">            index (QModelIndex): index.</span>
 <span class="sd">            data (dict): data list.</span>
 <span class="sd">            positionT (numpy.ndarray): position (transformed).</span>
+
+<span class="sd">        :meta private:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">actor</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;name_actor&quot;</span><span class="p">]</span>
         <span class="n">normal</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;normal&quot;</span><span class="p">]</span>
@@ -3874,12 +3846,9 @@
 
         <span class="n">actor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="o">**</span><span class="n">option</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">set_actor</span><span class="p">(</span><span class="s2">&quot;torus&quot;</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">clip_actor</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;cell&quot;</span><span class="p">],</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;label_actor&quot;</span><span class="p">])</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">clip_actor</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;cell&quot;</span><span class="p">],</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;label_actor&quot;</span><span class="p">])</span>
 
     <span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="PyVistaWidget.plot_data_ellipsoid">
-<a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.plot_data_ellipsoid">[docs]</a>
     <span class="k">def</span> <span class="nf">plot_data_ellipsoid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">positionT</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Plot ellipsoid.</span>
@@ -3888,6 +3857,8 @@
 <span class="sd">            index (QModelIndex): index.</span>
 <span class="sd">            data (dict): data list.</span>
 <span class="sd">            positionT (numpy.ndarray): position (transformed).</span>
+
+<span class="sd">        :meta private:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">actor</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;name_actor&quot;</span><span class="p">]</span>
         <span class="n">normal</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;normal&quot;</span><span class="p">]</span>
@@ -3908,12 +3879,9 @@
 
         <span class="n">actor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="o">**</span><span class="n">option</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">set_actor</span><span class="p">(</span><span class="s2">&quot;ellipsoid&quot;</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">clip_actor</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;cell&quot;</span><span class="p">],</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;label_actor&quot;</span><span class="p">])</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">clip_actor</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;cell&quot;</span><span class="p">],</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;label_actor&quot;</span><span class="p">])</span>
 
     <span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="PyVistaWidget.plot_data_toroid">
-<a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.plot_data_toroid">[docs]</a>
     <span class="k">def</span> <span class="nf">plot_data_toroid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">positionT</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Plot toroid.</span>
@@ -3922,6 +3890,8 @@
 <span class="sd">            index (QModelIndex): index.</span>
 <span class="sd">            data (dict): data list.</span>
 <span class="sd">            positionT (numpy.ndarray): position (transformed).</span>
+
+<span class="sd">        :meta private:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">actor</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;name_actor&quot;</span><span class="p">]</span>
         <span class="n">normal</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;normal&quot;</span><span class="p">]</span>
@@ -3955,12 +3925,9 @@
 
         <span class="n">actor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="o">**</span><span class="n">option</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">set_actor</span><span class="p">(</span><span class="s2">&quot;toroid&quot;</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">clip_actor</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;cell&quot;</span><span class="p">],</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;label_actor&quot;</span><span class="p">])</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">clip_actor</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;cell&quot;</span><span class="p">],</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;label_actor&quot;</span><span class="p">])</span>
 
     <span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="PyVistaWidget.plot_data_box">
-<a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.plot_data_box">[docs]</a>
     <span class="k">def</span> <span class="nf">plot_data_box</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">positionT</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Plot box.</span>
@@ -3969,6 +3936,8 @@
 <span class="sd">            index (QModelIndex): index.</span>
 <span class="sd">            data (dict): data list.</span>
 <span class="sd">            positionT (numpy.ndarray): position (transformed).</span>
+
+<span class="sd">        :meta private:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">actor</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;name_actor&quot;</span><span class="p">]</span>
         <span class="n">a1</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;a1&quot;</span><span class="p">]</span>
@@ -4008,12 +3977,9 @@
 
         <span class="n">actor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="o">**</span><span class="n">option</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">set_actor</span><span class="p">(</span><span class="s2">&quot;box&quot;</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">clip_actor</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;cell&quot;</span><span class="p">],</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;label_actor&quot;</span><span class="p">])</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">clip_actor</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;cell&quot;</span><span class="p">],</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;label_actor&quot;</span><span class="p">])</span>
 
     <span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="PyVistaWidget.plot_data_polygon">
-<a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.plot_data_polygon">[docs]</a>
     <span class="k">def</span> <span class="nf">plot_data_polygon</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">positionT</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Plot polygon.</span>
@@ -4022,6 +3988,8 @@
 <span class="sd">            index (QModelIndex): index.</span>
 <span class="sd">            data (dict): data list.</span>
 <span class="sd">            positionT (numpy.ndarray): position (transformed).</span>
+
+<span class="sd">        :meta private:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">actor</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;name_actor&quot;</span><span class="p">]</span>
         <span class="n">point</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;point&quot;</span><span class="p">]</span>
@@ -4059,12 +4027,9 @@
 
         <span class="n">actor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="o">**</span><span class="n">option</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">set_actor</span><span class="p">(</span><span class="s2">&quot;polygon&quot;</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">clip_actor</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;cell&quot;</span><span class="p">],</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;label_actor&quot;</span><span class="p">])</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">clip_actor</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;cell&quot;</span><span class="p">],</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;label_actor&quot;</span><span class="p">])</span>
 
     <span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="PyVistaWidget.plot_data_text3d">
-<a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.plot_data_text3d">[docs]</a>
     <span class="k">def</span> <span class="nf">plot_data_text3d</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">positionT</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Plot text3d (view and offset in reduced coordinate).</span>
@@ -4073,6 +4038,8 @@
 <span class="sd">            index (QModelIndex): index.</span>
 <span class="sd">            data (dict): data list.</span>
 <span class="sd">            positionT (numpy.ndarray): position (transformed).</span>
+
+<span class="sd">        :meta private:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">actor</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;name_actor&quot;</span><span class="p">]</span>
         <span class="n">text</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">]</span>
@@ -4101,12 +4068,9 @@
 
         <span class="n">actor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="o">**</span><span class="n">option</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">set_actor</span><span class="p">(</span><span class="s2">&quot;text3d&quot;</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">clip_actor</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;cell&quot;</span><span class="p">],</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;label_actor&quot;</span><span class="p">])</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">clip_actor</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;cell&quot;</span><span class="p">],</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;label_actor&quot;</span><span class="p">])</span>
 
     <span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="PyVistaWidget.plot_data_isosurface">
-<a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.plot_data_isosurface">[docs]</a>
     <span class="k">def</span> <span class="nf">plot_data_isosurface</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">positionT</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Plot isosurface.</span>
@@ -4115,6 +4079,8 @@
 <span class="sd">            index (QModelIndex): index.</span>
 <span class="sd">            data (dict): data list.</span>
 <span class="sd">            positionT (numpy.ndarray): position (transformed).</span>
+
+<span class="sd">        :meta private:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">actor</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;name_actor&quot;</span><span class="p">]</span>
         <span class="n">data_name</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">]</span>
@@ -4162,12 +4128,9 @@
 
         <span class="n">actor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="o">**</span><span class="n">option</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">set_actor</span><span class="p">(</span><span class="s2">&quot;isosurface&quot;</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">clip_actor</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;cell&quot;</span><span class="p">],</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;label_actor&quot;</span><span class="p">])</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">clip_actor</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;cell&quot;</span><span class="p">],</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;label_actor&quot;</span><span class="p">])</span>
 
     <span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="PyVistaWidget.plot_data_spline">
-<a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.plot_data_spline">[docs]</a>
     <span class="k">def</span> <span class="nf">plot_data_spline</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">positionT</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Plot spline.</span>
@@ -4176,6 +4139,8 @@
 <span class="sd">            index (QModelIndex): index.</span>
 <span class="sd">            data (dict): data list.</span>
 <span class="sd">            positionT (numpy.ndarray): position (transformed).</span>
+
+<span class="sd">        :meta private:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">actor</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;name_actor&quot;</span><span class="p">]</span>
         <span class="n">point</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;point&quot;</span><span class="p">]</span>
@@ -4211,12 +4176,9 @@
 
         <span class="n">actor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="o">**</span><span class="n">option</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">set_actor</span><span class="p">(</span><span class="s2">&quot;spline&quot;</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">clip_actor</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;cell&quot;</span><span class="p">],</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;label_actor&quot;</span><span class="p">])</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">clip_actor</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;cell&quot;</span><span class="p">],</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;label_actor&quot;</span><span class="p">])</span>
 
     <span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="PyVistaWidget.plot_data_spline_t">
-<a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.plot_data_spline_t">[docs]</a>
     <span class="k">def</span> <span class="nf">plot_data_spline_t</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">positionT</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Plot spline (parametric).</span>
@@ -4225,6 +4187,8 @@
 <span class="sd">            index (QModelIndex): index.</span>
 <span class="sd">            data (dict): data list.</span>
 <span class="sd">            positionT (numpy.ndarray): position (transformed).</span>
+
+<span class="sd">        :meta private:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">actor</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;name_actor&quot;</span><span class="p">]</span>
         <span class="n">point</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;point&quot;</span><span class="p">]</span>
@@ -4252,12 +4216,9 @@
 
         <span class="n">actor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="o">**</span><span class="n">option</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">set_actor</span><span class="p">(</span><span class="s2">&quot;spline_t&quot;</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">clip_actor</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;cell&quot;</span><span class="p">],</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;label_actor&quot;</span><span class="p">])</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">clip_actor</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;cell&quot;</span><span class="p">],</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;label_actor&quot;</span><span class="p">])</span>
 
     <span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="PyVistaWidget.plot_data_caption">
-<a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.plot_data_caption">[docs]</a>
     <span class="k">def</span> <span class="nf">plot_data_caption</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">positionT</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Plot caption.</span>
@@ -4266,6 +4227,8 @@
 <span class="sd">            index (QModelIndex): index.</span>
 <span class="sd">            data (dict): data list.</span>
 <span class="sd">            positionT (numpy.ndarray): position (transformed).</span>
+
+<span class="sd">        :meta private:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">actor</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;name_actor&quot;</span><span class="p">]</span>
         <span class="n">margin</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;margin&quot;</span><span class="p">])</span>
@@ -4293,13 +4256,10 @@
 
         <span class="n">actor</span> <span class="o">=</span> <span class="n">actor</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;-labels&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">add_point_labels</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">actor</span><span class="p">,</span> <span class="o">**</span><span class="n">option</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">set_actor</span><span class="p">(</span><span class="s2">&quot;caption&quot;</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">actor</span> <span class="o">+</span> <span class="s2">&quot;-labels&quot;</span><span class="p">)</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_actor</span><span class="p">(</span><span class="s2">&quot;caption&quot;</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">actor</span> <span class="o">+</span> <span class="s2">&quot;-labels&quot;</span><span class="p">)</span>
         <span class="c1"># no implementation for clip_actor</span>
 
     <span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="PyVistaWidget.plot_data_text2d">
-<a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.plot_data_text2d">[docs]</a>
     <span class="k">def</span> <span class="nf">plot_data_text2d</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">positionT</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Plot text 2d.</span>
@@ -4308,6 +4268,8 @@
 <span class="sd">            index (QModelIndex): index.</span>
 <span class="sd">            data (dict): data list.</span>
 <span class="sd">            positionT (numpy.ndarray): position (transformed).</span>
+
+<span class="sd">        :meta private:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">actor</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;name_actor&quot;</span><span class="p">]</span>
         <span class="n">position</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">]</span>
@@ -4332,12 +4294,9 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_label_counter</span> <span class="o">+=</span> <span class="mi">1</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">add_text</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">actor</span><span class="p">,</span> <span class="o">**</span><span class="n">option</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">set_actor</span><span class="p">(</span><span class="s2">&quot;text2d&quot;</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">actor</span><span class="p">)</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_actor</span><span class="p">(</span><span class="s2">&quot;text2d&quot;</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">actor</span><span class="p">)</span>
 
     <span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="PyVistaWidget.plot_label">
-<a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.plot_label">[docs]</a>
     <span class="k">def</span> <span class="nf">plot_label</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">object_type</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">positionT</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Plot label.</span>
@@ -4347,6 +4306,8 @@
 <span class="sd">            index (QModelIndex): index.</span>
 <span class="sd">            data (dict): data list.</span>
 <span class="sd">            positionT (numpy.ndarray): position (transformed).</span>
+
+<span class="sd">        :meta private:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">label</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;label&quot;</span><span class="p">]</span>
         <span class="n">actor</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;label_actor&quot;</span><span class="p">]</span>
@@ -4360,12 +4321,9 @@
 
         <span class="n">actor</span> <span class="o">=</span> <span class="n">actor</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;-labels&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">add_point_labels</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">actor</span><span class="p">,</span> <span class="o">**</span><span class="n">option</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">set_actor</span><span class="p">(</span><span class="n">object_type</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">actor</span> <span class="o">+</span> <span class="s2">&quot;-labels&quot;</span><span class="p">,</span> <span class="n">COLUMN_LABEL_ACTOR</span><span class="p">)</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_actor</span><span class="p">(</span><span class="n">object_type</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">actor</span> <span class="o">+</span> <span class="s2">&quot;-labels&quot;</span><span class="p">,</span> <span class="n">COLUMN_LABEL_ACTOR</span><span class="p">)</span>
 
     <span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="PyVistaWidget.set_isosurface_data">
-<a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.set_isosurface_data">[docs]</a>
     <span class="k">def</span> <span class="nf">set_isosurface_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set isosurface data.</span>
@@ -4375,6 +4333,8 @@
 
 <span class="sd">        Returns:</span>
 <span class="sd">            - (str) -- valid file name.</span>
+
+<span class="sd">        :meta private:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">path_abs</span><span class="p">,</span> <span class="n">path_rel</span><span class="p">,</span> <span class="n">base</span><span class="p">,</span> <span class="n">ext</span><span class="p">,</span> <span class="n">folder</span> <span class="o">=</span> <span class="n">split_filename</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path_abs</span><span class="p">):</span>
@@ -4389,8 +4349,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="n">fname</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
 
-        <span class="k">return</span> <span class="n">fname</span></div>
-
+        <span class="k">return</span> <span class="n">fname</span>
 
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="PyVistaWidget.plot_orbital_from_data">

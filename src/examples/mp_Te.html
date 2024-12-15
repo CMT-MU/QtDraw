@@ -60,7 +60,7 @@
     <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'src/examples/pyvista_widget';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'src/examples/mp_Te';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -252,7 +252,7 @@
       
       
       
-      <li><a href="https://github.com/CMT-MU/QtDraw.git/edit/main/docs/src/examples/pyvista_widget.ipynb" target="_blank"
+      <li><a href="https://github.com/CMT-MU/QtDraw.git/edit/main/docs/src/examples/mp_Te.ipynb" target="_blank"
    class="btn btn-sm btn-source-edit-button dropdown-item"
    title="Suggest edit"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -269,7 +269,7 @@
       
       
       
-      <li><a href="https://github.com/CMT-MU/QtDraw.git/issues/new?title=Issue%20on%20page%20%2Fsrc/examples/pyvista_widget.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/CMT-MU/QtDraw.git/issues/new?title=Issue%20on%20page%20%2Fsrc/examples/mp_Te.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -400,52 +400,35 @@
   <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#</span>
-<span class="c1"># pyvista_widget.ipynb</span>
+<span class="c1"># mp_Te.ipynb</span>
 <span class="c1">#</span>
-<span class="kn">from</span> <span class="nn">qtdraw.util.qt_event_util</span> <span class="kn">import</span> <span class="n">get_qt_application</span>
-<span class="kn">from</span> <span class="nn">qtdraw.core.pyvista_widget</span> <span class="kn">import</span> <span class="n">create_qtdraw_file</span><span class="p">,</span> <span class="n">PyVistaWidget</span>
+<span class="kn">from</span> <span class="nn">qtdraw.core.qtdraw_app</span> <span class="kn">import</span> <span class="n">QtDraw</span>
 
-<span class="c1"># callback function to draw all objects.</span>
-<span class="k">def</span> <span class="nf">draw</span><span class="p">(</span><span class="n">widget</span><span class="p">:</span> <span class="n">PyVistaWidget</span><span class="p">):</span>
-    <span class="n">widget</span><span class="o">.</span><span class="n">update_preference</span><span class="p">(</span><span class="s2">&quot;label&quot;</span><span class="p">,</span><span class="s2">&quot;default_check&quot;</span><span class="p">,</span><span class="kc">True</span><span class="p">)</span>
+<span class="c1"># initialization.</span>
+<span class="n">win</span> <span class="o">=</span> <span class="n">QtDraw</span><span class="p">()</span> <span class="c1"># create QtDraw application.</span>
+<span class="n">win</span><span class="o">.</span><span class="n">mp_set_group</span><span class="p">(</span><span class="s2">&quot;D3^4&quot;</span><span class="p">)</span> <span class="c1"># set space group.</span>
+<span class="n">win</span><span class="o">.</span><span class="n">set_model</span><span class="p">(</span><span class="s2">&quot;Te&quot;</span><span class="p">)</span> <span class="c1"># set model name.</span>
+<span class="n">win</span><span class="o">.</span><span class="n">set_unit_cell</span><span class="p">({</span><span class="s2">&quot;a&quot;</span><span class="p">:</span><span class="mf">4.458</span><span class="p">,</span> <span class="s2">&quot;c&quot;</span><span class="p">:</span><span class="mf">5.925</span><span class="p">})</span>
 
-    <span class="n">widget</span><span class="o">.</span><span class="n">add_site</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="s2">&quot;[0,0,0]&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;site&quot;</span><span class="p">)</span>
-    <span class="n">widget</span><span class="o">.</span><span class="n">add_bond</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="s2">&quot;[3,0,0]&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;bond&quot;</span><span class="p">)</span>
-    <span class="n">widget</span><span class="o">.</span><span class="n">add_vector</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="s2">&quot;[6,0,0]&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;vector&quot;</span><span class="p">)</span>
-    <span class="n">widget</span><span class="o">.</span><span class="n">add_orbital</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="s2">&quot;[0,3,0]&quot;</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;orbital&quot;</span><span class="p">)</span>
-    <span class="n">widget</span><span class="o">.</span><span class="n">add_stream</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="s2">&quot;[3,3,0]&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;stream&quot;</span><span class="p">)</span>
-    <span class="n">widget</span><span class="o">.</span><span class="n">add_line</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="s2">&quot;[6,3,0]&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;line&quot;</span><span class="p">,</span> <span class="n">arrow1</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">arrow2</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">widget</span><span class="o">.</span><span class="n">add_plane</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="s2">&quot;[0,6,0]&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;plane&quot;</span><span class="p">)</span>
-    <span class="n">widget</span><span class="o">.</span><span class="n">add_circle</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="s2">&quot;[3,6,0]&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;circle&quot;</span><span class="p">)</span>
-    <span class="n">widget</span><span class="o">.</span><span class="n">add_torus</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="s2">&quot;[6,6,0]&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;torus&quot;</span><span class="p">)</span>
-    <span class="n">widget</span><span class="o">.</span><span class="n">add_ellipsoid</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="s2">&quot;[0,0,5]&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;ellipsoid&quot;</span><span class="p">)</span>
-    <span class="n">widget</span><span class="o">.</span><span class="n">add_toroid</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="s2">&quot;[3,0,5]&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;toroid&quot;</span><span class="p">)</span>
-    <span class="n">widget</span><span class="o">.</span><span class="n">add_box</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="s2">&quot;[6,0,5]&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;box&quot;</span><span class="p">)</span>
-    <span class="n">widget</span><span class="o">.</span><span class="n">add_polygon</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="s2">&quot;[0,3,5]&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;polygon&quot;</span><span class="p">)</span>
-    <span class="n">widget</span><span class="o">.</span><span class="n">add_spline</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="s2">&quot;[3,3,5]&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;spline&quot;</span><span class="p">,</span> <span class="n">arrow1</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">widget</span><span class="o">.</span><span class="n">add_spline_t</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="s2">&quot;[6,3,5]&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;spline_t&quot;</span><span class="p">,</span> <span class="n">arrow1</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">widget</span><span class="o">.</span><span class="n">add_text3d</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="s2">&quot;[0,6,5]&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;text3d&quot;</span><span class="p">)</span>
-    <span class="n">widget</span><span class="o">.</span><span class="n">add_caption</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="s2">&quot;[[3,6,5],[6,6,5]]&quot;</span><span class="p">,</span><span class="n">caption</span><span class="o">=</span><span class="s2">&quot;[cap. 1,cap. 2]&quot;</span><span class="p">)</span>
-    <span class="n">widget</span><span class="o">.</span><span class="n">add_text2d</span><span class="p">(</span><span class="n">caption</span><span class="o">=</span><span class="s2">&quot;text2d&quot;</span><span class="p">)</span>
+<span class="c1"># draw site and bond.</span>
+<span class="n">r</span> <span class="o">=</span> <span class="mf">0.2740</span>
+<span class="n">site</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;[</span><span class="si">{</span><span class="n">r</span><span class="si">}</span><span class="s2">,0,1/3]&quot;</span>
+<span class="n">bond</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;[</span><span class="si">{</span><span class="n">r</span><span class="si">}</span><span class="s2">,0,1/3];[0,</span><span class="si">{</span><span class="n">r</span><span class="si">}</span><span class="s2">,2/3]&quot;</span>
+<span class="n">win</span><span class="o">.</span><span class="n">mp_add_site</span><span class="p">(</span><span class="n">site</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">5.0</span><span class="p">)</span>
+<span class="n">win</span><span class="o">.</span><span class="n">mp_add_bond</span><span class="p">(</span><span class="n">bond</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">4.0</span><span class="p">)</span>
 
-    <span class="n">widget</span><span class="o">.</span><span class="n">add_plane</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="s2">&quot;[3,3,-0.3]&quot;</span><span class="p">,</span><span class="n">x_size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span><span class="n">y_size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span><span class="n">opacity</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
-    <span class="n">widget</span><span class="o">.</span><span class="n">add_plane</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="s2">&quot;[3,3,4.7]&quot;</span><span class="p">,</span><span class="n">x_size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span><span class="n">y_size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span><span class="n">opacity</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="c1"># draw E-quadrupole SAMB (G3-A1 type).</span>
+<span class="n">lst</span> <span class="o">=</span> <span class="n">win</span><span class="o">.</span><span class="n">mp_create_orbital_samb</span><span class="p">(</span><span class="s2">&quot;Q&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">bond</span><span class="p">)</span>
+<span class="n">win</span><span class="o">.</span><span class="n">mp_add_orbital_samb</span><span class="p">(</span><span class="s2">&quot;G04&quot;</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">5.0</span><span class="p">)</span>
 
-    <span class="n">widget</span><span class="o">.</span><span class="n">set_view</span><span class="p">()</span>
+<span class="c1"># set range, repeat, and convert to nonrepeat.</span>
+<span class="n">win</span><span class="o">.</span><span class="n">set_range</span><span class="p">([</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">1.0</span><span class="p">])</span>
+<span class="n">win</span><span class="o">.</span><span class="n">set_repeat</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">win</span><span class="o">.</span><span class="n">set_clip</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 
-<span class="c1"># === example 1 (create qtdw file as background) ===</span>
-<span class="k">def</span> <span class="nf">ex1</span><span class="p">():</span>
-    <span class="n">create_qtdraw_file</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s2">&quot;example_output.qtdw&quot;</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">draw</span><span class="p">)</span>
-
-<span class="c1"># === example 2 (create widget) ===</span>
-<span class="k">def</span> <span class="nf">ex2</span><span class="p">():</span>
-    <span class="n">get_qt_application</span><span class="p">()</span> <span class="c1"># create Qt event loop.</span>
-    <span class="n">widget</span> <span class="o">=</span> <span class="n">PyVistaWidget</span><span class="p">()</span> <span class="c1"># create PyVista widget.</span>
-    <span class="n">draw</span><span class="p">(</span><span class="n">widget</span><span class="p">)</span> <span class="c1"># draw all objects.</span>
-    <span class="n">widget</span><span class="o">.</span><span class="n">show</span><span class="p">()</span> <span class="c1"># show widget.</span>
-
-<span class="c1"># ex1()</span>
-<span class="n">ex2</span><span class="p">()</span>
+<span class="c1"># set cell and view.</span>
+<span class="n">win</span><span class="o">.</span><span class="n">set_cell</span><span class="p">(</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>
+<span class="n">win</span><span class="o">.</span><span class="n">set_view</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>

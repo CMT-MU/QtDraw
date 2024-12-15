@@ -176,7 +176,7 @@
 <li class="toctree-l2"><a class="reference internal" href="api_multipie.html">MultiPie</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api_parser.html">Parser</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api_script.html">Script</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api_util.html">Utility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_util.html">Utilities</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api_widget.html">Widget</a></li>
 <li class="toctree-l2"><a class="reference internal" href="function_table.html">Function Summary</a></li>
 </ul>
@@ -427,7 +427,6 @@
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.mp_create_site_samb"><code class="docutils literal notranslate"><span class="pre">QtDraw.mp_create_site_samb()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.mp_create_vector_samb"><code class="docutils literal notranslate"><span class="pre">QtDraw.mp_create_vector_samb()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.mp_set_group"><code class="docutils literal notranslate"><span class="pre">QtDraw.mp_set_group()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.nonrepeat_data"><code class="docutils literal notranslate"><span class="pre">QtDraw.nonrepeat_data()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.plot_orbital_from_data"><code class="docutils literal notranslate"><span class="pre">QtDraw.plot_orbital_from_data()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.plot_stream_from_data"><code class="docutils literal notranslate"><span class="pre">QtDraw.plot_stream_from_data()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.remove_actor"><code class="docutils literal notranslate"><span class="pre">QtDraw.remove_actor()</span></code></a></li>
@@ -438,6 +437,8 @@
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.set_clip"><code class="docutils literal notranslate"><span class="pre">QtDraw.set_clip()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.set_crystal"><code class="docutils literal notranslate"><span class="pre">QtDraw.set_crystal()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.set_grid"><code class="docutils literal notranslate"><span class="pre">QtDraw.set_grid()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.set_model"><code class="docutils literal notranslate"><span class="pre">QtDraw.set_model()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.set_nonrepeat"><code class="docutils literal notranslate"><span class="pre">QtDraw.set_nonrepeat()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.set_origin"><code class="docutils literal notranslate"><span class="pre">QtDraw.set_origin()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.set_parallel_projection"><code class="docutils literal notranslate"><span class="pre">QtDraw.set_parallel_projection()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.set_range"><code class="docutils literal notranslate"><span class="pre">QtDraw.set_range()</span></code></a></li>
@@ -1103,35 +1104,44 @@ The following API is avalilable to draw objects.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="qtdraw.core.qtdraw_app.QtDraw.mp_add_bond">
-<span class="sig-name descname"><span class="pre">mp_add_bond</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bond</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/qtdraw_app.html#QtDraw.mp_add_bond"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.qtdraw_app.QtDraw.mp_add_bond" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">mp_add_bond</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bond</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/qtdraw_app.html#QtDraw.mp_add_bond"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.qtdraw_app.QtDraw.mp_add_bond" title="Link to this definition">#</a></dt>
 <dd><p>MultiPie: Add equivalent bonds.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>bond</strong> (<em>str</em>) -- representative bond.</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>bond</strong> (<em>str</em>) -- representative bond.</p></li>
+<li><p><strong>scale</strong> (<em>float</em><em>, </em><em>optional</em>) -- width scale.</p></li>
+<li><p><strong>color</strong> (<em>str</em><em>, </em><em>optional</em>) -- color.</p></li>
+<li><p><strong>color2</strong> (<em>str</em><em>, </em><em>optional</em>) -- color2.</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="qtdraw.core.qtdraw_app.QtDraw.mp_add_bond_samb">
-<span class="sig-name descname"><span class="pre">mp_add_bond_samb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tag</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/qtdraw_app.html#QtDraw.mp_add_bond_samb"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.qtdraw_app.QtDraw.mp_add_bond_samb" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">mp_add_bond_samb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tag</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/qtdraw_app.html#QtDraw.mp_add_bond_samb"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.qtdraw_app.QtDraw.mp_add_bond_samb" title="Link to this definition">#</a></dt>
 <dd><p>MultiPie: Add bond SAMB.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>tag</strong> (<em>str</em>) -- bond SAMB, obtained by mp_create_bond_samb.</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tag</strong> (<em>str</em>) -- bond SAMB, obtained by mp_create_bond_samb.</p></li>
+<li><p><strong>scale</strong> (<em>float</em><em>, </em><em>optional</em>) -- width scale.</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="qtdraw.core.qtdraw_app.QtDraw.mp_add_harmonics">
-<span class="sig-name descname"><span class="pre">mp_add_harmonics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tag</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">site_bond</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/qtdraw_app.html#QtDraw.mp_add_harmonics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.qtdraw_app.QtDraw.mp_add_harmonics" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">mp_add_harmonics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tag</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">site_bond</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/qtdraw_app.html#QtDraw.mp_add_harmonics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.qtdraw_app.QtDraw.mp_add_harmonics" title="Link to this definition">#</a></dt>
 <dd><p>MultiPie: Add harmonics at equivalent sites or bonds.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>tag</strong> (<em>str</em>) -- harmonics tag, obtained by mp_create_harmonics.</p></li>
 <li><p><strong>site_bond</strong> (<em>str</em>) -- representative site or bond.</p></li>
+<li><p><strong>scale</strong> (<em>float</em><em>, </em><em>optional</em>) -- size scale.</p></li>
 </ul>
 </dd>
 </dl>
@@ -1139,18 +1149,21 @@ The following API is avalilable to draw objects.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="qtdraw.core.qtdraw_app.QtDraw.mp_add_hopping">
-<span class="sig-name descname"><span class="pre">mp_add_hopping</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bond</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/qtdraw_app.html#QtDraw.mp_add_hopping"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.qtdraw_app.QtDraw.mp_add_hopping" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">mp_add_hopping</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bond</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/qtdraw_app.html#QtDraw.mp_add_hopping"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.qtdraw_app.QtDraw.mp_add_hopping" title="Link to this definition">#</a></dt>
 <dd><p>MultiPie: Add hopping bond directions.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>bond</strong> (<em>str</em>) -- representative bond.</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>bond</strong> (<em>str</em>) -- representative bond.</p></li>
+<li><p><strong>scale</strong> (<em>float</em><em>, </em><em>optional</em>) -- length scale.</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="qtdraw.core.qtdraw_app.QtDraw.mp_add_orbital">
-<span class="sig-name descname"><span class="pre">mp_add_orbital</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">orbital</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">site_bond</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/qtdraw_app.html#QtDraw.mp_add_orbital"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.qtdraw_app.QtDraw.mp_add_orbital" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">mp_add_orbital</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">orbital</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">site_bond</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/qtdraw_app.html#QtDraw.mp_add_orbital"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.qtdraw_app.QtDraw.mp_add_orbital" title="Link to this definition">#</a></dt>
 <dd><p>MultiPie: Add orbitals at equivalent sites or bonds.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -1158,6 +1171,7 @@ The following API is avalilable to draw objects.</p>
 <li><p><strong>type</strong> (<em>str</em>) -- type of orbital, Q/G/T/M.</p></li>
 <li><p><strong>orbital</strong> (<em>str</em>) -- orbital in terms of x,y,z,r (cartesian).</p></li>
 <li><p><strong>site_bond</strong> (<em>str</em>) -- representative site or bond.</p></li>
+<li><p><strong>scale</strong> (<em>float</em><em>, </em><em>optional</em>) -- size scale.</p></li>
 </ul>
 </dd>
 </dl>
@@ -1165,11 +1179,14 @@ The following API is avalilable to draw objects.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="qtdraw.core.qtdraw_app.QtDraw.mp_add_orbital_samb">
-<span class="sig-name descname"><span class="pre">mp_add_orbital_samb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lc</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/qtdraw_app.html#QtDraw.mp_add_orbital_samb"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.qtdraw_app.QtDraw.mp_add_orbital_samb" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">mp_add_orbital_samb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/qtdraw_app.html#QtDraw.mp_add_orbital_samb"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.qtdraw_app.QtDraw.mp_add_orbital_samb" title="Link to this definition">#</a></dt>
 <dd><p>MultiPie: Add orbital SAMB.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>lc</strong> (<em>str</em>) -- linear combination of orbital SAMBs, obtained by mp_create_orbital_samb.</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>lc</strong> (<em>str</em>) -- linear combination of orbital SAMBs, obtained by mp_create_orbital_samb.</p></li>
+<li><p><strong>scale</strong> (<em>float</em><em>, </em><em>optional</em>) -- size scale.</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
@@ -1187,29 +1204,36 @@ The following API is avalilable to draw objects.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="qtdraw.core.qtdraw_app.QtDraw.mp_add_site">
-<span class="sig-name descname"><span class="pre">mp_add_site</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">site</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/qtdraw_app.html#QtDraw.mp_add_site"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.qtdraw_app.QtDraw.mp_add_site" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">mp_add_site</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">site</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/qtdraw_app.html#QtDraw.mp_add_site"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.qtdraw_app.QtDraw.mp_add_site" title="Link to this definition">#</a></dt>
 <dd><p>MultiPie: Add equivalent sites.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>site</strong> (<em>str</em>) -- representative site.</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>site</strong> (<em>str</em>) -- representative site.</p></li>
+<li><p><strong>scale</strong> (<em>float</em><em>, </em><em>optional</em>) -- size scale.</p></li>
+<li><p><strong>color</strong> (<em>str</em><em>, </em><em>optional</em>) -- color.</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="qtdraw.core.qtdraw_app.QtDraw.mp_add_site_samb">
-<span class="sig-name descname"><span class="pre">mp_add_site_samb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tag</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/qtdraw_app.html#QtDraw.mp_add_site_samb"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.qtdraw_app.QtDraw.mp_add_site_samb" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">mp_add_site_samb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tag</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/qtdraw_app.html#QtDraw.mp_add_site_samb"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.qtdraw_app.QtDraw.mp_add_site_samb" title="Link to this definition">#</a></dt>
 <dd><p>MultiPie: Add site SAMB.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>tag</strong> (<em>str</em>) -- site SAMB, obtained by mp_create_site_samb.</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tag</strong> (<em>str</em>) -- site SAMB, obtained by mp_create_site_samb.</p></li>
+<li><p><strong>scale</strong> (<em>float</em><em>, </em><em>optional</em>) -- size scale.</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="qtdraw.core.qtdraw_app.QtDraw.mp_add_vector">
-<span class="sig-name descname"><span class="pre">mp_add_vector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vector</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">site_bond</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/qtdraw_app.html#QtDraw.mp_add_vector"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.qtdraw_app.QtDraw.mp_add_vector" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">mp_add_vector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vector</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">site_bond</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/qtdraw_app.html#QtDraw.mp_add_vector"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.qtdraw_app.QtDraw.mp_add_vector" title="Link to this definition">#</a></dt>
 <dd><p>MultiPie: Add vectors at equivalent sites or bonds.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -1217,6 +1241,7 @@ The following API is avalilable to draw objects.</p>
 <li><p><strong>type</strong> (<em>str</em>) -- type of vector, Q/G/T/M.</p></li>
 <li><p><strong>vector</strong> (<em>str</em>) -- vector (cartesian).</p></li>
 <li><p><strong>site_bond</strong> (<em>str</em>) -- representative site or bond.</p></li>
+<li><p><strong>scale</strong> (<em>float</em><em>, </em><em>optional</em>) -- length scale.</p></li>
 </ul>
 </dd>
 </dl>
@@ -1224,11 +1249,14 @@ The following API is avalilable to draw objects.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="qtdraw.core.qtdraw_app.QtDraw.mp_add_vector_samb">
-<span class="sig-name descname"><span class="pre">mp_add_vector_samb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lc</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/qtdraw_app.html#QtDraw.mp_add_vector_samb"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.qtdraw_app.QtDraw.mp_add_vector_samb" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">mp_add_vector_samb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/qtdraw_app.html#QtDraw.mp_add_vector_samb"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.qtdraw_app.QtDraw.mp_add_vector_samb" title="Link to this definition">#</a></dt>
 <dd><p>MultiPie: Add vector SAMB.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>lc</strong> (<em>str</em>) -- linear combination of vector SAMBs, obtained by mp_create_vector_samb.</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>lc</strong> (<em>str</em>) -- linear combination of vector SAMBs, obtained by mp_create_vector_samb.</p></li>
+<li><p><strong>scale</strong> (<em>float</em><em>, </em><em>optional</em>) -- length scale.</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
@@ -1348,12 +1376,6 @@ The following API is avalilable to draw objects.</p>
 <dd class="field-odd"><p><strong>tag</strong> (<em>str</em><em>, </em><em>optional</em>) -- group tag in Schoenflies notation [default: C1].</p>
 </dd>
 </dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="qtdraw.core.qtdraw_app.QtDraw.nonrepeat_data">
-<span class="sig-name descname"><span class="pre">nonrepeat_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/qtdraw_app.html#QtDraw.nonrepeat_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.qtdraw_app.QtDraw.nonrepeat_data" title="Link to this definition">#</a></dt>
-<dd><p>Transform data to non-repeat data.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -1559,6 +1581,29 @@ The following API is avalilable to draw objects.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.core.qtdraw_app.QtDraw.set_model">
+<span class="sig-name descname"><span class="pre">set_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/qtdraw_app.html#QtDraw.set_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.qtdraw_app.QtDraw.set_model" title="Link to this definition">#</a></dt>
+<dd><p>Set model name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em><em>, </em><em>optional</em>) -- model name.</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>if name is None, default is used.</p></li>
+</ul>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.core.qtdraw_app.QtDraw.set_nonrepeat">
+<span class="sig-name descname"><span class="pre">set_nonrepeat</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/qtdraw_app.html#QtDraw.set_nonrepeat"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.qtdraw_app.QtDraw.set_nonrepeat" title="Link to this definition">#</a></dt>
+<dd><p>Transform data to non-repeat data.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="qtdraw.core.qtdraw_app.QtDraw.set_origin">
 <span class="sig-name descname"><span class="pre">set_origin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">origin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/qtdraw_app.html#QtDraw.set_origin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.qtdraw_app.QtDraw.set_origin" title="Link to this definition">#</a></dt>
 <dd><p>Set origin.</p>
@@ -1755,7 +1800,6 @@ The following API is avalilable to draw objects.</p>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.mp_create_site_samb"><code class="docutils literal notranslate"><span class="pre">QtDraw.mp_create_site_samb()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.mp_create_vector_samb"><code class="docutils literal notranslate"><span class="pre">QtDraw.mp_create_vector_samb()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.mp_set_group"><code class="docutils literal notranslate"><span class="pre">QtDraw.mp_set_group()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.nonrepeat_data"><code class="docutils literal notranslate"><span class="pre">QtDraw.nonrepeat_data()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.plot_orbital_from_data"><code class="docutils literal notranslate"><span class="pre">QtDraw.plot_orbital_from_data()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.plot_stream_from_data"><code class="docutils literal notranslate"><span class="pre">QtDraw.plot_stream_from_data()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.remove_actor"><code class="docutils literal notranslate"><span class="pre">QtDraw.remove_actor()</span></code></a></li>
@@ -1766,6 +1810,8 @@ The following API is avalilable to draw objects.</p>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.set_clip"><code class="docutils literal notranslate"><span class="pre">QtDraw.set_clip()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.set_crystal"><code class="docutils literal notranslate"><span class="pre">QtDraw.set_crystal()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.set_grid"><code class="docutils literal notranslate"><span class="pre">QtDraw.set_grid()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.set_model"><code class="docutils literal notranslate"><span class="pre">QtDraw.set_model()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.set_nonrepeat"><code class="docutils literal notranslate"><span class="pre">QtDraw.set_nonrepeat()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.set_origin"><code class="docutils literal notranslate"><span class="pre">QtDraw.set_origin()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.set_parallel_projection"><code class="docutils literal notranslate"><span class="pre">QtDraw.set_parallel_projection()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.set_range"><code class="docutils literal notranslate"><span class="pre">QtDraw.set_range()</span></code></a></li>

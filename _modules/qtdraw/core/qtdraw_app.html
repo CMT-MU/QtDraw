@@ -33,7 +33,7 @@
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -175,7 +175,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../src/api_multipie.html">MultiPie</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../src/api_parser.html">Parser</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../src/api_script.html">Script</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../src/api_util.html">Utility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../src/api_util.html">Utilities</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../src/api_widget.html">Widget</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../src/function_table.html">Function Summary</a></li>
 </ul>
@@ -2619,6 +2619,23 @@
 
 
     <span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="QtDraw.set_model">
+<a class="viewcode-back" href="../../../src/from_python.html#qtdraw.core.qtdraw_app.QtDraw.set_model">[docs]</a>
+    <span class="k">def</span> <span class="nf">set_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set model name.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            name (str, optional): model name.</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            - if name is None, default is used.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pyvista_widget</span><span class="o">.</span><span class="n">set_model</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_title</span><span class="p">()</span></div>
+
+
+    <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="QtDraw.set_unit_cell">
 <a class="viewcode-back" href="../../../src/from_python.html#qtdraw.core.qtdraw_app.QtDraw.set_unit_cell">[docs]</a>
     <span class="k">def</span> <span class="nf">set_unit_cell</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cell</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -2632,7 +2649,11 @@
 <span class="sd">            - if cell is None, default is used.</span>
 <span class="sd">            - set cell.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">pyvista_widget</span><span class="o">.</span><span class="n">set_unit_cell</span><span class="p">(</span><span class="n">cell</span><span class="p">)</span></div>
+        <span class="n">view</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pyvista_widget</span><span class="o">.</span><span class="n">_status</span><span class="p">[</span><span class="s2">&quot;view&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pyvista_widget</span><span class="o">.</span><span class="n">set_unit_cell</span><span class="p">(</span><span class="n">cell</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_unit_cell</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_view</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_view</span><span class="p">(</span><span class="n">view</span><span class="p">)</span></div>
 
 
     <span class="c1"># ==================================================</span>
@@ -2649,7 +2670,10 @@
 <span class="sd">            - if crystal is None, default is used.</span>
 <span class="sd">            - set unit cell.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">pyvista_widget</span><span class="o">.</span><span class="n">set_crystal</span><span class="p">(</span><span class="n">crystal</span><span class="p">)</span></div>
+        <span class="n">view</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pyvista_widget</span><span class="o">.</span><span class="n">_status</span><span class="p">[</span><span class="s2">&quot;view&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pyvista_widget</span><span class="o">.</span><span class="n">set_crystal</span><span class="p">(</span><span class="n">crystal</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_view</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_view</span><span class="p">(</span><span class="n">view</span><span class="p">)</span></div>
 
 
     <span class="c1"># ==================================================</span>
@@ -2666,7 +2690,10 @@
 <span class="sd">            - if origin is None, default is used.</span>
 <span class="sd">            - set cell.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">pyvista_widget</span><span class="o">.</span><span class="n">set_origin</span><span class="p">(</span><span class="n">origin</span><span class="p">)</span></div>
+        <span class="n">view</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pyvista_widget</span><span class="o">.</span><span class="n">_status</span><span class="p">[</span><span class="s2">&quot;view&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pyvista_widget</span><span class="o">.</span><span class="n">set_origin</span><span class="p">(</span><span class="n">origin</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_view</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_view</span><span class="p">(</span><span class="n">view</span><span class="p">)</span></div>
 
 
     <span class="c1"># ==================================================</span>
@@ -2682,7 +2709,7 @@
 <span class="sd">        Note:</span>
 <span class="sd">            - if mode is None, default is used.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">pyvista_widget</span><span class="o">.</span><span class="n">set_clip</span><span class="p">(</span><span class="n">mode</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_set_clip</span><span class="p">(</span><span class="n">mode</span><span class="p">)</span></div>
 
 
     <span class="c1"># ==================================================</span>
@@ -2699,13 +2726,13 @@
 <span class="sd">            - if mode is None, default is used.</span>
 <span class="sd">            - repeat data.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">pyvista_widget</span><span class="o">.</span><span class="n">set_repeat</span><span class="p">(</span><span class="n">mode</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_set_repeat</span><span class="p">(</span><span class="n">mode</span><span class="p">)</span></div>
 
 
     <span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="QtDraw.nonrepeat_data">
-<a class="viewcode-back" href="../../../src/from_python.html#qtdraw.core.qtdraw_app.QtDraw.nonrepeat_data">[docs]</a>
-    <span class="k">def</span> <span class="nf">nonrepeat_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="QtDraw.set_nonrepeat">
+<a class="viewcode-back" href="../../../src/from_python.html#qtdraw.core.qtdraw_app.QtDraw.set_nonrepeat">[docs]</a>
+    <span class="k">def</span> <span class="nf">set_nonrepeat</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Transform data to non-repeat data.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -2727,7 +2754,10 @@
 <span class="sd">            - if lower/upper is None, default is used.</span>
 <span class="sd">            - set cell.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">pyvista_widget</span><span class="o">.</span><span class="n">set_range</span><span class="p">(</span><span class="n">lower</span><span class="p">,</span> <span class="n">upper</span><span class="p">)</span></div>
+        <span class="n">view</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pyvista_widget</span><span class="o">.</span><span class="n">_status</span><span class="p">[</span><span class="s2">&quot;view&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pyvista_widget</span><span class="o">.</span><span class="n">set_range</span><span class="p">(</span><span class="n">lower</span><span class="p">,</span> <span class="n">upper</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_view</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_view</span><span class="p">(</span><span class="n">view</span><span class="p">)</span></div>
 
 
     <span class="c1"># ==================================================</span>
@@ -2743,7 +2773,15 @@
 <span class="sd">        Note:</span>
 <span class="sd">            - if view is None, default is used.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">pyvista_widget</span><span class="o">.</span><span class="n">set_view</span><span class="p">(</span><span class="n">view</span><span class="p">)</span></div>
+        <span class="k">if</span> <span class="n">view</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_set_view_default</span><span class="p">()</span>
+            <span class="k">return</span>
+
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">view</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span><span class="p">:</span>
+            <span class="n">view</span> <span class="o">=</span> <span class="n">view</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s2">&quot;[]&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">view_combo_a</span><span class="o">.</span><span class="n">setCurrentText</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">view</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">view_combo_b</span><span class="o">.</span><span class="n">setCurrentText</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">view</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">view_combo_c</span><span class="o">.</span><span class="n">setCurrentText</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">view</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span></div>
 
 
     <span class="c1"># ==================================================</span>
@@ -2759,7 +2797,9 @@
 <span class="sd">        Note:</span>
 <span class="sd">            - if mode is None, default is used.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">pyvista_widget</span><span class="o">.</span><span class="n">set_parallel_projection</span><span class="p">(</span><span class="n">mode</span><span class="p">)</span></div>
+        <span class="n">view</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pyvista_widget</span><span class="o">.</span><span class="n">_status</span><span class="p">[</span><span class="s2">&quot;view&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_set_parallel</span><span class="p">(</span><span class="n">mode</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_view</span><span class="p">(</span><span class="n">view</span><span class="p">)</span></div>
 
 
     <span class="c1"># ==================================================</span>
@@ -2775,7 +2815,7 @@
 <span class="sd">        Note:</span>
 <span class="sd">            - if mode is None, default is used.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">pyvista_widget</span><span class="o">.</span><span class="n">set_grid</span><span class="p">(</span><span class="n">mode</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_set_grid</span><span class="p">(</span><span class="n">mode</span><span class="p">)</span></div>
 
 
     <span class="c1"># ==================================================</span>
@@ -2791,7 +2831,7 @@
 <span class="sd">        Note:</span>
 <span class="sd">            - if mode is None, default is used.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">pyvista_widget</span><span class="o">.</span><span class="n">set_bar</span><span class="p">(</span><span class="n">mode</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_set_bar</span><span class="p">(</span><span class="n">mode</span><span class="p">)</span></div>
 
 
     <span class="c1"># ==================================================</span>
@@ -2807,7 +2847,7 @@
 <span class="sd">        Note:</span>
 <span class="sd">            - if axis_type is None, default is used.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">pyvista_widget</span><span class="o">.</span><span class="n">set_axis</span><span class="p">(</span><span class="n">axis_type</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_set_axis_type</span><span class="p">(</span><span class="n">axis_type</span><span class="p">)</span></div>
 
 
     <span class="c1"># ==================================================</span>
@@ -2823,7 +2863,7 @@
 <span class="sd">        Note:</span>
 <span class="sd">            - if mode is None, default is used.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">pyvista_widget</span><span class="o">.</span><span class="n">set_cell</span><span class="p">(</span><span class="n">mode</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_set_cell_mode</span><span class="p">(</span><span class="n">mode</span><span class="p">)</span></div>
 
 
     <span class="c1"># ==================================================</span>
@@ -3020,47 +3060,53 @@
 
         <span class="n">multipie</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;group&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;group&quot;</span><span class="p">:</span> <span class="n">tag</span><span class="p">}}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pyvista_widget</span><span class="o">.</span><span class="n">update_status</span><span class="p">(</span><span class="s2">&quot;multipie&quot;</span><span class="p">,</span> <span class="n">multipie</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">misc_button_multipie</span><span class="o">.</span><span class="n">pressed</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">misc_button_multipie</span><span class="o">.</span><span class="n">pressed</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_set_axis_type</span><span class="p">()</span></div>
 
 
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="QtDraw.mp_add_site">
 <a class="viewcode-back" href="../../../src/from_python.html#qtdraw.core.qtdraw_app.QtDraw.mp_add_site">[docs]</a>
-    <span class="k">def</span> <span class="nf">mp_add_site</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">site</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">mp_add_site</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">site</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        MultiPie: Add equivalent sites.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            site (str): representative site.</span>
+<span class="sd">            scale (float, optional): size scale.</span>
+<span class="sd">            color (str, optional): color.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">multipie_dialog</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">mp_set_group</span><span class="p">()</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">multipie_dialog</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">object_edit_site</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">site</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">multipie_dialog</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">obj_add_site</span><span class="p">()</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">multipie_dialog</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">obj_add_site</span><span class="p">(</span><span class="n">scale</span><span class="p">,</span> <span class="n">color</span><span class="p">)</span></div>
 
 
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="QtDraw.mp_add_bond">
 <a class="viewcode-back" href="../../../src/from_python.html#qtdraw.core.qtdraw_app.QtDraw.mp_add_bond">[docs]</a>
-    <span class="k">def</span> <span class="nf">mp_add_bond</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bond</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">mp_add_bond</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bond</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">color2</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        MultiPie: Add equivalent bonds.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            bond (str): representative bond.</span>
+<span class="sd">            scale (float, optional): width scale.</span>
+<span class="sd">            color (str, optional): color.</span>
+<span class="sd">            color2 (str, optional): color2.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">multipie_dialog</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">mp_set_group</span><span class="p">()</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">multipie_dialog</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">object_edit_bond</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">bond</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">multipie_dialog</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">obj_add_bond</span><span class="p">()</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">multipie_dialog</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">obj_add_bond</span><span class="p">(</span><span class="n">scale</span><span class="p">,</span> <span class="n">color</span><span class="p">,</span> <span class="n">color2</span><span class="p">)</span></div>
 
 
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="QtDraw.mp_add_vector">
 <a class="viewcode-back" href="../../../src/from_python.html#qtdraw.core.qtdraw_app.QtDraw.mp_add_vector">[docs]</a>
-    <span class="k">def</span> <span class="nf">mp_add_vector</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">type</span><span class="p">,</span> <span class="n">vector</span><span class="p">,</span> <span class="n">site_bond</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">mp_add_vector</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">type</span><span class="p">,</span> <span class="n">vector</span><span class="p">,</span> <span class="n">site_bond</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        MultiPie: Add vectors at equivalent sites or bonds.</span>
 
@@ -3068,19 +3114,20 @@
 <span class="sd">            type (str): type of vector, Q/G/T/M.</span>
 <span class="sd">            vector (str): vector (cartesian).</span>
 <span class="sd">            site_bond (str): representative site or bond.</span>
+<span class="sd">            scale (float, optional): length scale.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">multipie_dialog</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">mp_set_group</span><span class="p">()</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">multipie_dialog</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">object_combo_vector_type</span><span class="o">.</span><span class="n">setCurrentText</span><span class="p">(</span><span class="nb">type</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">multipie_dialog</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">object_edit_vector</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">vector</span> <span class="o">+</span> <span class="s2">&quot; # &quot;</span> <span class="o">+</span> <span class="n">site_bond</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">multipie_dialog</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">obj_add_vector</span><span class="p">()</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">multipie_dialog</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">obj_add_vector</span><span class="p">(</span><span class="n">scale</span><span class="p">)</span></div>
 
 
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="QtDraw.mp_add_orbital">
 <a class="viewcode-back" href="../../../src/from_python.html#qtdraw.core.qtdraw_app.QtDraw.mp_add_orbital">[docs]</a>
-    <span class="k">def</span> <span class="nf">mp_add_orbital</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">type</span><span class="p">,</span> <span class="n">orbital</span><span class="p">,</span> <span class="n">site_bond</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">mp_add_orbital</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">type</span><span class="p">,</span> <span class="n">orbital</span><span class="p">,</span> <span class="n">site_bond</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        MultiPie: Add orbitals at equivalent sites or bonds.</span>
 
@@ -3088,13 +3135,14 @@
 <span class="sd">            type (str): type of orbital, Q/G/T/M.</span>
 <span class="sd">            orbital (str): orbital in terms of x,y,z,r (cartesian).</span>
 <span class="sd">            site_bond (str): representative site or bond.</span>
+<span class="sd">            scale (float, optional): size scale.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">multipie_dialog</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">mp_set_group</span><span class="p">()</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">multipie_dialog</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">object_combo_orbital_type</span><span class="o">.</span><span class="n">setCurrentText</span><span class="p">(</span><span class="nb">type</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">multipie_dialog</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">object_edit_orbital</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">orbital</span> <span class="o">+</span> <span class="s2">&quot; # &quot;</span> <span class="o">+</span> <span class="n">site_bond</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">multipie_dialog</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">obj_add_orbital</span><span class="p">()</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">multipie_dialog</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">obj_add_orbital</span><span class="p">(</span><span class="n">scale</span><span class="p">)</span></div>
 
 
     <span class="c1"># ==================================================</span>
@@ -3125,17 +3173,18 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="QtDraw.mp_add_harmonics">
 <a class="viewcode-back" href="../../../src/from_python.html#qtdraw.core.qtdraw_app.QtDraw.mp_add_harmonics">[docs]</a>
-    <span class="k">def</span> <span class="nf">mp_add_harmonics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tag</span><span class="p">,</span> <span class="n">site_bond</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">mp_add_harmonics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tag</span><span class="p">,</span> <span class="n">site_bond</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        MultiPie: Add harmonics at equivalent sites or bonds.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            tag (str): harmonics tag, obtained by mp_create_harmonics.</span>
 <span class="sd">            site_bond (str): representative site or bond.</span>
+<span class="sd">            scale (float, optional): size scale.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">multipie_dialog</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">object_combo_harmonics_irrep</span><span class="o">.</span><span class="n">setCurrentText</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">multipie_dialog</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">object_edit_harmonics</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">site_bond</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">multipie_dialog</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">obj_add_harmonics</span><span class="p">()</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">multipie_dialog</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">obj_add_harmonics</span><span class="p">(</span><span class="n">scale</span><span class="p">)</span></div>
 
 
     <span class="c1"># ==================================================</span>
@@ -3163,15 +3212,16 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="QtDraw.mp_add_site_samb">
 <a class="viewcode-back" href="../../../src/from_python.html#qtdraw.core.qtdraw_app.QtDraw.mp_add_site_samb">[docs]</a>
-    <span class="k">def</span> <span class="nf">mp_add_site_samb</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tag</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">mp_add_site_samb</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tag</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        MultiPie: Add site SAMB.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            tag (str): site SAMB, obtained by mp_create_site_samb.</span>
+<span class="sd">            scale (float, optional): size scale.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">multipie_dialog</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">basis_combo_site_samb</span><span class="o">.</span><span class="n">setCurrentText</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">multipie_dialog</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">basis_add_site</span><span class="p">()</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">multipie_dialog</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">basis_add_site</span><span class="p">(</span><span class="n">scale</span><span class="p">)</span></div>
 
 
     <span class="c1"># ==================================================</span>
@@ -3199,15 +3249,16 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="QtDraw.mp_add_bond_samb">
 <a class="viewcode-back" href="../../../src/from_python.html#qtdraw.core.qtdraw_app.QtDraw.mp_add_bond_samb">[docs]</a>
-    <span class="k">def</span> <span class="nf">mp_add_bond_samb</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tag</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">mp_add_bond_samb</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tag</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        MultiPie: Add bond SAMB.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            tag (str): bond SAMB, obtained by mp_create_bond_samb.</span>
+<span class="sd">            scale (float, optional): width scale.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">multipie_dialog</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">basis_combo_bond_samb</span><span class="o">.</span><span class="n">setCurrentText</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">multipie_dialog</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">basis_add_bond</span><span class="p">()</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">multipie_dialog</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">basis_add_bond</span><span class="p">(</span><span class="n">scale</span><span class="p">)</span></div>
 
 
     <span class="c1"># ==================================================</span>
@@ -3242,18 +3293,19 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="QtDraw.mp_add_vector_samb">
 <a class="viewcode-back" href="../../../src/from_python.html#qtdraw.core.qtdraw_app.QtDraw.mp_add_vector_samb">[docs]</a>
-    <span class="k">def</span> <span class="nf">mp_add_vector_samb</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lc</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">mp_add_vector_samb</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lc</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        MultiPie: Add vector SAMB.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            lc (str): linear combination of vector SAMBs, obtained by mp_create_vector_samb.</span>
+<span class="sd">            scale (float, optional): length scale.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">num</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">lc</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;Q&quot;</span><span class="p">,</span> <span class="s2">&quot;G&quot;</span><span class="p">,</span> <span class="s2">&quot;T&quot;</span><span class="p">,</span> <span class="s2">&quot;M&quot;</span><span class="p">]}</span>
         <span class="n">z_type</span> <span class="o">=</span> <span class="s2">&quot;Q&quot;</span> <span class="k">if</span> <span class="n">num</span><span class="p">[</span><span class="s2">&quot;Q&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">num</span><span class="p">[</span><span class="s2">&quot;G&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="s2">&quot;T&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">multipie_dialog</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">basis_combo_vector_samb_type</span><span class="o">.</span><span class="n">setCurrentText</span><span class="p">(</span><span class="n">z_type</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">multipie_dialog</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">basis_edit_vector_lc</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">lc</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">multipie_dialog</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">basis_add_vector_lc</span><span class="p">()</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">multipie_dialog</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">basis_add_vector_lc</span><span class="p">(</span><span class="n">scale</span><span class="p">)</span></div>
 
 
     <span class="c1"># ==================================================</span>
@@ -3308,18 +3360,19 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="QtDraw.mp_add_orbital_samb">
 <a class="viewcode-back" href="../../../src/from_python.html#qtdraw.core.qtdraw_app.QtDraw.mp_add_orbital_samb">[docs]</a>
-    <span class="k">def</span> <span class="nf">mp_add_orbital_samb</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lc</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">mp_add_orbital_samb</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lc</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        MultiPie: Add orbital SAMB.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            lc (str): linear combination of orbital SAMBs, obtained by mp_create_orbital_samb.</span>
+<span class="sd">            scale (float, optional): size scale.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">num</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">lc</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;Q&quot;</span><span class="p">,</span> <span class="s2">&quot;G&quot;</span><span class="p">,</span> <span class="s2">&quot;T&quot;</span><span class="p">,</span> <span class="s2">&quot;M&quot;</span><span class="p">]}</span>
         <span class="n">z_type</span> <span class="o">=</span> <span class="s2">&quot;Q&quot;</span> <span class="k">if</span> <span class="n">num</span><span class="p">[</span><span class="s2">&quot;Q&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">num</span><span class="p">[</span><span class="s2">&quot;G&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="s2">&quot;T&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">multipie_dialog</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">basis_combo_orbital_samb_type</span><span class="o">.</span><span class="n">setCurrentText</span><span class="p">(</span><span class="n">z_type</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">multipie_dialog</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">basis_edit_orbital_lc</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">lc</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">multipie_dialog</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">basis_add_orbital_lc</span><span class="p">()</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">multipie_dialog</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">basis_add_orbital_lc</span><span class="p">(</span><span class="n">scale</span><span class="p">)</span></div>
 
 
     <span class="c1"># ==================================================</span>
@@ -3343,18 +3396,19 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="QtDraw.mp_add_hopping">
 <a class="viewcode-back" href="../../../src/from_python.html#qtdraw.core.qtdraw_app.QtDraw.mp_add_hopping">[docs]</a>
-    <span class="k">def</span> <span class="nf">mp_add_hopping</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bond</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">mp_add_hopping</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bond</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        MultiPie: Add hopping bond directions.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            bond (str): representative bond.</span>
+<span class="sd">            scale (float, optional): length scale.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">multipie_dialog</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">mp_set_group</span><span class="p">()</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">multipie_dialog</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">basis_edit_hopping</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">bond</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">multipie_dialog</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">basis_add_hopping</span><span class="p">()</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">multipie_dialog</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">basis_add_hopping</span><span class="p">(</span><span class="n">scale</span><span class="p">)</span></div>
 </div>
 
 </pre></div>
