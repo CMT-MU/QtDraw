@@ -91,7 +91,7 @@ widget_detail = {
     "extension": ".qtdw",
     "ext_material": [".vesta", ".cif", ".xsf"],
     "log_level": "error",  # debug/info/warning/error/critical.
-    "default_view": [4, 5, 2],
+    "default_view": [6, 5, 1],
     "image_file": [".png", ".bmp", ".tif", ".tiff"],
     "vector_file": [".svg", ".eps", ".ps", ".pdf"],
     # axis.
