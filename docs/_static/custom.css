@@ -1,0 +1,8 @@
+.py.class,
+.py.function {
+    border-top: 3px solid #ff6600;
+    padding-top: 15px;
+    margin-top: 20px;
+    background-color: #fffef2;
+    padding: 10px;
+}

@@ -738,15 +738,14 @@ def create_spline_t(
         A = np.eye(4)
 
     point = text_to_list(point)
+    tp = np.arange(t_range[0], t_range[1], t_range[2])
 
     t = sp.symbols("t", real=True)
     ex = [text_to_sympy(i, local={"t": t}) for i in point]
-    f = sp.lambdify(t, ex, modules="numpy")
 
-    tp = np.arange(t_range[0], t_range[1], t_range[2])
-
-    pts = np.array(f(tp))
+    pts = np.asarray([np.full(tp.shape, i) if i.is_Number else sp.lambdify(t, i, modules="numpy")(tp) for i in ex])
     pointA = np.dot(A[0:3, 0:3], pts).T
+
     obj = create_spline(pointA, width, n_interp, closed, natural, arrow1, arrow2, tip_radius, tip_length)
 
     return obj
