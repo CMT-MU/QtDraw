@@ -15,8 +15,8 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
-  <!-- 
-    this give us a css class that will be invisible only if js is disabled 
+  <!--
+    this give us a css class that will be invisible only if js is disabled
   -->
   <noscript>
     <style>
@@ -26,22 +26,23 @@
   </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
-<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+  <link href="../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=5f1b4820" />
   
   <!-- So that users can add custom icons -->
-  <script src="../../../_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
+  <script src="../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
-<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
     <script src="../../../_static/documentation_options.js?v=8cf54648"></script>
     <script src="../../../_static/doctools.js?v=9bcbadda"></script>
@@ -188,9 +189,14 @@
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
   </div>
-  
-  <div id="rtd-footer-container"></div>
 
 
       </div>
@@ -328,16 +334,16 @@
 <span class="sd">This module provides a dialog for drawing objects with the help of MultiPie.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">import</span> <span class="nn">sympy</span> <span class="k">as</span> <span class="nn">sp</span>
-<span class="kn">from</span> <span class="nn">PySide6.QtWidgets</span> <span class="kn">import</span> <span class="n">QDialog</span><span class="p">,</span> <span class="n">QTabWidget</span><span class="p">,</span> <span class="n">QWidget</span>
-<span class="kn">from</span> <span class="nn">PySide6.QtCore</span> <span class="kn">import</span> <span class="n">Qt</span>
-<span class="kn">from</span> <span class="nn">gcoreutils.nsarray</span> <span class="kn">import</span> <span class="n">NSArray</span>
-<span class="kn">from</span> <span class="nn">gcoreutils.string_util</span> <span class="kn">import</span> <span class="n">remove_space</span>
-<span class="kn">from</span> <span class="nn">multipie.multipole.util.atomic_orbital_util</span> <span class="kn">import</span> <span class="n">parse_orb_list</span>
-<span class="kn">from</span> <span class="nn">qtdraw.widget.custom_widget</span> <span class="kn">import</span> <span class="n">Label</span><span class="p">,</span> <span class="n">Layout</span><span class="p">,</span> <span class="n">Button</span><span class="p">,</span> <span class="n">Combo</span><span class="p">,</span> <span class="n">LineEdit</span><span class="p">,</span> <span class="n">Check</span><span class="p">,</span> <span class="n">VSpacer</span><span class="p">,</span> <span class="n">HSpacer</span><span class="p">,</span> <span class="n">HBar</span>
-<span class="kn">from</span> <span class="nn">qtdraw.multipie.util</span> <span class="kn">import</span> <span class="n">create_samb_object</span><span class="p">,</span> <span class="n">check_linear_combination</span>
-<span class="kn">from</span> <span class="nn">qtdraw.multipie.plugin_multipie_setting</span> <span class="kn">import</span> <span class="n">crystal_list</span><span class="p">,</span> <span class="n">point_group_list</span><span class="p">,</span> <span class="n">space_group_list</span><span class="p">,</span> <span class="n">point_group_all_list</span>
-<span class="kn">from</span> <span class="nn">qtdraw.multipie.dialog_info</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sympy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sp</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">PySide6.QtWidgets</span><span class="w"> </span><span class="kn">import</span> <span class="n">QDialog</span><span class="p">,</span> <span class="n">QTabWidget</span><span class="p">,</span> <span class="n">QWidget</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">PySide6.QtCore</span><span class="w"> </span><span class="kn">import</span> <span class="n">Qt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">gcoreutils.nsarray</span><span class="w"> </span><span class="kn">import</span> <span class="n">NSArray</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">gcoreutils.string_util</span><span class="w"> </span><span class="kn">import</span> <span class="n">remove_space</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">multipie.multipole.util.atomic_orbital_util</span><span class="w"> </span><span class="kn">import</span> <span class="n">parse_orb_list</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw.widget.custom_widget</span><span class="w"> </span><span class="kn">import</span> <span class="n">Label</span><span class="p">,</span> <span class="n">Layout</span><span class="p">,</span> <span class="n">Button</span><span class="p">,</span> <span class="n">Combo</span><span class="p">,</span> <span class="n">LineEdit</span><span class="p">,</span> <span class="n">Check</span><span class="p">,</span> <span class="n">VSpacer</span><span class="p">,</span> <span class="n">HSpacer</span><span class="p">,</span> <span class="n">HBar</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw.multipie.util</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_samb_object</span><span class="p">,</span> <span class="n">check_linear_combination</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw.multipie.plugin_multipie_setting</span><span class="w"> </span><span class="kn">import</span> <span class="n">crystal_list</span><span class="p">,</span> <span class="n">point_group_list</span><span class="p">,</span> <span class="n">space_group_list</span><span class="p">,</span> <span class="n">point_group_all_list</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw.multipie.dialog_info</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">show_symmetry_operation</span><span class="p">,</span>
     <span class="n">show_character_table</span><span class="p">,</span>
     <span class="n">show_wyckoff</span><span class="p">,</span>
@@ -348,15 +354,15 @@
     <span class="n">show_atomic_multipole</span><span class="p">,</span>
     <span class="n">show_response</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span> <span class="nn">qtdraw.multipie.dialog_modulation</span> <span class="kn">import</span> <span class="n">ModulationDialog</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw.multipie.dialog_modulation</span><span class="w"> </span><span class="kn">import</span> <span class="n">ModulationDialog</span>
 
 
 <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="MultiPieDialog">
 <a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog">[docs]</a>
-<span class="k">class</span> <span class="nc">MultiPieDialog</span><span class="p">(</span><span class="n">QDialog</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">MultiPieDialog</span><span class="p">(</span><span class="n">QDialog</span><span class="p">):</span>
     <span class="c1"># ==================================================</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        MultiPie dialog.</span>
 
@@ -409,7 +415,7 @@
 
     <span class="c1"># ==================================================</span>
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">group</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">group</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Group status dict.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -417,7 +423,7 @@
 
     <span class="c1"># ==================================================</span>
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">obj</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">obj</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Object status dict.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -425,7 +431,7 @@
 
     <span class="c1"># ==================================================</span>
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">basis</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">basis</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Basis status dict.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -433,7 +439,7 @@
 
     <span class="c1"># ==================================================</span>
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">plus</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">plus</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Plus status dict.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -442,7 +448,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="MultiPieDialog.set_group_panel_value">
 <a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_group_panel_value">[docs]</a>
-    <span class="k">def</span> <span class="nf">set_group_panel_value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_group_panel_value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set initial values in group panel.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -488,7 +494,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="MultiPieDialog.set_object_panel_value">
 <a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_object_panel_value">[docs]</a>
-    <span class="k">def</span> <span class="nf">set_object_panel_value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_object_panel_value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set initial values in object panel.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -520,7 +526,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="MultiPieDialog.set_basis_panel_value">
 <a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_basis_panel_value">[docs]</a>
-    <span class="k">def</span> <span class="nf">set_basis_panel_value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_basis_panel_value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set initial values in basis panel.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -553,7 +559,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="MultiPieDialog.create_sub_group_panel">
 <a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.create_sub_group_panel">[docs]</a>
-    <span class="k">def</span> <span class="nf">create_sub_group_panel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">create_sub_group_panel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create subgroup panel.</span>
 
@@ -608,7 +614,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="MultiPieDialog.create_group_panel">
 <a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.create_group_panel">[docs]</a>
-    <span class="k">def</span> <span class="nf">create_group_panel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">create_group_panel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create group panel.</span>
 
@@ -762,7 +768,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="MultiPieDialog.create_object_panel">
 <a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.create_object_panel">[docs]</a>
-    <span class="k">def</span> <span class="nf">create_object_panel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">create_object_panel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create object panel.</span>
 
@@ -890,7 +896,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="MultiPieDialog.create_basis_panel">
 <a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.create_basis_panel">[docs]</a>
-    <span class="k">def</span> <span class="nf">create_basis_panel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">create_basis_panel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create basis panel.</span>
 
@@ -1041,7 +1047,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="MultiPieDialog.set_group_connection">
 <a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_group_connection">[docs]</a>
-    <span class="k">def</span> <span class="nf">set_group_connection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_group_connection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set connections in group panel.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1082,7 +1088,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="MultiPieDialog.set_object_connection">
 <a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_object_connection">[docs]</a>
-    <span class="k">def</span> <span class="nf">set_object_connection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_object_connection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set connections in object panel.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1108,7 +1114,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="MultiPieDialog.set_basis_connection">
 <a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_basis_connection">[docs]</a>
-    <span class="k">def</span> <span class="nf">set_basis_connection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_basis_connection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set connections in basis panel.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1145,7 +1151,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="MultiPieDialog.set_group_item">
 <a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_group_item">[docs]</a>
-    <span class="k">def</span> <span class="nf">set_group_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">point_group</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_group_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">point_group</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set group widgets.</span>
 
@@ -1167,7 +1173,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="MultiPieDialog.set_irrep_item">
 <a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_irrep_item">[docs]</a>
-    <span class="k">def</span> <span class="nf">set_irrep_item</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_irrep_item</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set irrep widgets.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1179,7 +1185,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="MultiPieDialog.set_wyckoff_item">
 <a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_wyckoff_item">[docs]</a>
-    <span class="k">def</span> <span class="nf">set_wyckoff_item</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_wyckoff_item</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set Wyckoff list.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1189,7 +1195,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="MultiPieDialog.set_basis_item">
 <a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_basis_item">[docs]</a>
-    <span class="k">def</span> <span class="nf">set_basis_item</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_basis_item</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set basis widgets.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1212,7 +1218,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="MultiPieDialog.set_harmonics_item">
 <a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_harmonics_item">[docs]</a>
-    <span class="k">def</span> <span class="nf">set_harmonics_item</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_harmonics_item</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set harmonics widgets.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1223,7 +1229,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="MultiPieDialog.set_group_type">
 <a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_group_type">[docs]</a>
-    <span class="k">def</span> <span class="nf">set_group_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_group_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set group type.</span>
 
@@ -1252,7 +1258,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="MultiPieDialog.set_crystal_type">
 <a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_crystal_type">[docs]</a>
-    <span class="k">def</span> <span class="nf">set_crystal_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">crystal</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_crystal_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">crystal</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set crystal type.</span>
 
@@ -1274,7 +1280,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="MultiPieDialog.set_group">
 <a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_group">[docs]</a>
-    <span class="k">def</span> <span class="nf">set_group</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tag</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_group</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tag</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set current group.</span>
 
@@ -1299,7 +1305,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="MultiPieDialog.set_irrep_decomp">
 <a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_irrep_decomp">[docs]</a>
-    <span class="k">def</span> <span class="nf">set_irrep_decomp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_irrep_decomp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set decomposition of product of irreps.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1320,7 +1326,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="MultiPieDialog.set_harmonics_type">
 <a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_harmonics_type">[docs]</a>
-    <span class="k">def</span> <span class="nf">set_harmonics_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">h_type</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_harmonics_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">h_type</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set harmonics type.</span>
 
@@ -1333,7 +1339,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="MultiPieDialog.set_harmonics_rank">
 <a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_harmonics_rank">[docs]</a>
-    <span class="k">def</span> <span class="nf">set_harmonics_rank</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rank</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_harmonics_rank</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rank</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set harmonics rank.</span>
 
@@ -1346,7 +1352,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="MultiPieDialog.set_harmonics_decomp">
 <a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_harmonics_decomp">[docs]</a>
-    <span class="k">def</span> <span class="nf">set_harmonics_decomp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">to_pg</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_harmonics_decomp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">to_pg</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set harmonics decomposition.</span>
 
@@ -1361,7 +1367,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="MultiPieDialog.set_vc_wyckoff">
 <a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_vc_wyckoff">[docs]</a>
-    <span class="k">def</span> <span class="nf">set_vc_wyckoff</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wp</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_vc_wyckoff</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wp</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set wyckoff in virtual cluster.</span>
 
@@ -1374,7 +1380,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="MultiPieDialog.set_vc_neighbor">
 <a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_vc_neighbor">[docs]</a>
-    <span class="k">def</span> <span class="nf">set_vc_neighbor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_vc_neighbor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set neighbor list in virtual cluster.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1384,7 +1390,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="MultiPieDialog.set_atomic_type">
 <a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_atomic_type">[docs]</a>
-    <span class="k">def</span> <span class="nf">set_atomic_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a_type</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_atomic_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a_type</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set atomic multipole type.</span>
 
@@ -1397,7 +1403,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="MultiPieDialog.set_atomic_basis_type">
 <a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_atomic_basis_type">[docs]</a>
-    <span class="k">def</span> <span class="nf">set_atomic_basis_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">basis_type</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_atomic_basis_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">basis_type</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set atomic multipole basis type.</span>
 
@@ -1418,7 +1424,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="MultiPieDialog.set_atomic_bra_ket">
 <a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_atomic_bra_ket">[docs]</a>
-    <span class="k">def</span> <span class="nf">set_atomic_bra_ket</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_atomic_bra_ket</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set bra and ket basis of atomic multipole.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1429,7 +1435,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="MultiPieDialog.set_response_type">
 <a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_response_type">[docs]</a>
-    <span class="k">def</span> <span class="nf">set_response_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">r_type</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_response_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">r_type</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set type of response tensor.</span>
 
@@ -1442,7 +1448,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="MultiPieDialog.set_response_rank">
 <a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_response_rank">[docs]</a>
-    <span class="k">def</span> <span class="nf">set_response_rank</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rank</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_response_rank</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rank</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set rank of response tensor.</span>
 
@@ -1455,7 +1461,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="MultiPieDialog.set_obj_vector_type">
 <a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_obj_vector_type">[docs]</a>
-    <span class="k">def</span> <span class="nf">set_obj_vector_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v_type</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_obj_vector_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v_type</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set vector type in object panel.</span>
 
@@ -1468,7 +1474,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="MultiPieDialog.set_obj_orbital_type">
 <a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_obj_orbital_type">[docs]</a>
-    <span class="k">def</span> <span class="nf">set_obj_orbital_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">o_type</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_obj_orbital_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">o_type</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set orbital type in object panel.</span>
 
@@ -1481,7 +1487,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="MultiPieDialog.set_obj_harmonics_type">
 <a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_obj_harmonics_type">[docs]</a>
-    <span class="k">def</span> <span class="nf">set_obj_harmonics_type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_obj_harmonics_type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set harmonics type in object panel.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1496,7 +1502,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="MultiPieDialog.set_obj_harmonics_rank">
 <a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_obj_harmonics_rank">[docs]</a>
-    <span class="k">def</span> <span class="nf">set_obj_harmonics_rank</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_obj_harmonics_rank</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set harmonics rank in object panel.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1511,7 +1517,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="MultiPieDialog.set_obj_harmonics">
 <a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_obj_harmonics">[docs]</a>
-    <span class="k">def</span> <span class="nf">set_obj_harmonics</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_obj_harmonics</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set harmonics in object panel.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1527,7 +1533,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="MultiPieDialog.set_obj_wyckoff">
 <a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_obj_wyckoff">[docs]</a>
-    <span class="k">def</span> <span class="nf">set_obj_wyckoff</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_obj_wyckoff</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set Wyckoff position in object panel.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1543,7 +1549,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="MultiPieDialog.show_symmetry_operation">
 <a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.show_symmetry_operation">[docs]</a>
-    <span class="k">def</span> <span class="nf">show_symmetry_operation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">show_symmetry_operation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Show symmetry operation panel.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1553,7 +1559,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="MultiPieDialog.show_character_table">
 <a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.show_character_table">[docs]</a>
-    <span class="k">def</span> <span class="nf">show_character_table</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">show_character_table</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Show character table panel.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1563,7 +1569,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="MultiPieDialog.show_wyckoff">
 <a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.show_wyckoff">[docs]</a>
-    <span class="k">def</span> <span class="nf">show_wyckoff</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">show_wyckoff</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Show Wyckoff position panel.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1573,7 +1579,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="MultiPieDialog.show_product_table">
 <a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.show_product_table">[docs]</a>
-    <span class="k">def</span> <span class="nf">show_product_table</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">show_product_table</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Show product table panel.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1583,7 +1589,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="MultiPieDialog.show_harmonics">
 <a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.show_harmonics">[docs]</a>
-    <span class="k">def</span> <span class="nf">show_harmonics</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">show_harmonics</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Show harmonics panel.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1597,7 +1603,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="MultiPieDialog.show_harmonics_decomp">
 <a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.show_harmonics_decomp">[docs]</a>
-    <span class="k">def</span> <span class="nf">show_harmonics_decomp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">show_harmonics_decomp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Show harmonics decomposition panel.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1610,7 +1616,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="MultiPieDialog.show_virtual_cluster">
 <a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.show_virtual_cluster">[docs]</a>
-    <span class="k">def</span> <span class="nf">show_virtual_cluster</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">show_virtual_cluster</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Show virtual cluster panel.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1624,7 +1630,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="MultiPieDialog.show_atomic">
 <a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.show_atomic">[docs]</a>
-    <span class="k">def</span> <span class="nf">show_atomic</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">show_atomic</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Show atomic multipole panel.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1646,7 +1652,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="MultiPieDialog.show_response">
 <a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.show_response">[docs]</a>
-    <span class="k">def</span> <span class="nf">show_response</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">show_response</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Show response tensor panel.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1658,7 +1664,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="MultiPieDialog.obj_add_site">
 <a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.obj_add_site">[docs]</a>
-    <span class="k">def</span> <span class="nf">obj_add_site</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">obj_add_site</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add representative site in object dict.</span>
 
@@ -1675,7 +1681,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="MultiPieDialog.obj_add_bond">
 <a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.obj_add_bond">[docs]</a>
-    <span class="k">def</span> <span class="nf">obj_add_bond</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">color2</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">obj_add_bond</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">color2</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add representative bond in object dict.</span>
 
@@ -1693,7 +1699,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="MultiPieDialog.obj_add_vector">
 <a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.obj_add_vector">[docs]</a>
-    <span class="k">def</span> <span class="nf">obj_add_vector</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">obj_add_vector</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add equivalent vectors in object dict.</span>
 
@@ -1710,7 +1716,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="MultiPieDialog.obj_add_orbital">
 <a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.obj_add_orbital">[docs]</a>
-    <span class="k">def</span> <span class="nf">obj_add_orbital</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">obj_add_orbital</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add equivalent orbitals in object dict.</span>
 
@@ -1727,7 +1733,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="MultiPieDialog.obj_add_harmonics">
 <a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.obj_add_harmonics">[docs]</a>
-    <span class="k">def</span> <span class="nf">obj_add_harmonics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">obj_add_harmonics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add equivalent poing-group harmonics in object dict.</span>
 
@@ -1746,7 +1752,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="MultiPieDialog.basis_gen_site">
 <a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_gen_site">[docs]</a>
-    <span class="k">def</span> <span class="nf">basis_gen_site</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">basis_gen_site</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate site cluster SAMB.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1760,7 +1766,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="MultiPieDialog.basis_set_site_select">
 <a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_set_site_select">[docs]</a>
-    <span class="k">def</span> <span class="nf">basis_set_site_select</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">basis_set_site_select</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set site cluster SAMB selection list.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1781,7 +1787,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="MultiPieDialog.basis_add_site">
 <a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_add_site">[docs]</a>
-    <span class="k">def</span> <span class="nf">basis_add_site</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">basis_add_site</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add site cluster SAMB.</span>
 
@@ -1815,7 +1821,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="MultiPieDialog.basis_gen_bond">
 <a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_gen_bond">[docs]</a>
-    <span class="k">def</span> <span class="nf">basis_gen_bond</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">basis_gen_bond</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate bond cluster SAMB.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1829,7 +1835,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="MultiPieDialog.basis_set_bond_select">
 <a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_set_bond_select">[docs]</a>
-    <span class="k">def</span> <span class="nf">basis_set_bond_select</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">basis_set_bond_select</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set bond cluster SAMB selection list.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1851,7 +1857,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="MultiPieDialog.basis_add_bond">
 <a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_add_bond">[docs]</a>
-    <span class="k">def</span> <span class="nf">basis_add_bond</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">basis_add_bond</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add bond cluster SAMB.</span>
 
@@ -1890,7 +1896,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="MultiPieDialog.basis_gen_vector">
 <a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_gen_vector">[docs]</a>
-    <span class="k">def</span> <span class="nf">basis_gen_vector</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">basis_gen_vector</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate vector cluster SAMB.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1905,7 +1911,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="MultiPieDialog.basis_set_vector_select">
 <a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_set_vector_select">[docs]</a>
-    <span class="k">def</span> <span class="nf">basis_set_vector_select</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">basis_set_vector_select</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set vector cluster SAMB selection list.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1927,7 +1933,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="MultiPieDialog.basis_add_vector">
 <a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_add_vector">[docs]</a>
-    <span class="k">def</span> <span class="nf">basis_add_vector</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">basis_add_vector</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add vector cluster SAMB.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1963,7 +1969,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="MultiPieDialog.basis_add_vector_lc">
 <a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_add_vector_lc">[docs]</a>
-    <span class="k">def</span> <span class="nf">basis_add_vector_lc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">basis_add_vector_lc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add linear combination of vector cluster SAMB.</span>
 
@@ -2010,7 +2016,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="MultiPieDialog.basis_gen_vector_modulation">
 <a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_gen_vector_modulation">[docs]</a>
-    <span class="k">def</span> <span class="nf">basis_gen_vector_modulation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">basis_gen_vector_modulation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate vector modulation.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -2034,7 +2040,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="MultiPieDialog.basis_gen_orbital">
 <a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_gen_orbital">[docs]</a>
-    <span class="k">def</span> <span class="nf">basis_gen_orbital</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">basis_gen_orbital</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate orbital cluster SAMB.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -2050,7 +2056,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="MultiPieDialog.basis_set_orbital_select">
 <a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_set_orbital_select">[docs]</a>
-    <span class="k">def</span> <span class="nf">basis_set_orbital_select</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">basis_set_orbital_select</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set orbital cluster SAMB selection list.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -2072,7 +2078,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="MultiPieDialog.basis_add_orbital">
 <a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_add_orbital">[docs]</a>
-    <span class="k">def</span> <span class="nf">basis_add_orbital</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">basis_add_orbital</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add orbital cluster SAMB.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -2109,7 +2115,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="MultiPieDialog.basis_add_orbital_lc">
 <a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_add_orbital_lc">[docs]</a>
-    <span class="k">def</span> <span class="nf">basis_add_orbital_lc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">basis_add_orbital_lc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add linear combination of orbital cluster SAMB.</span>
 
@@ -2156,7 +2162,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="MultiPieDialog.basis_gen_orbital_modulation">
 <a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_gen_orbital_modulation">[docs]</a>
-    <span class="k">def</span> <span class="nf">basis_gen_orbital_modulation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">basis_gen_orbital_modulation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate orbital modulation.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -2180,7 +2186,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="MultiPieDialog.basis_add_hopping">
 <a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_add_hopping">[docs]</a>
-    <span class="k">def</span> <span class="nf">basis_add_hopping</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">basis_add_hopping</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add hopping SAMB.</span>
 
@@ -2201,7 +2207,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="MultiPieDialog.close">
 <a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.close">[docs]</a>
-    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Close dialogs.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -2286,8 +2292,8 @@ By Hiroaki Kusunose
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="../../../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
-<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
 
   <footer class="bd-footer">
   </footer>

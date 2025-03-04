@@ -15,8 +15,8 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
-  <!-- 
-    this give us a css class that will be invisible only if js is disabled 
+  <!--
+    this give us a css class that will be invisible only if js is disabled
   -->
   <noscript>
     <style>
@@ -26,22 +26,23 @@
   </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
-<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+  <link href="../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=5f1b4820" />
   
   <!-- So that users can add custom icons -->
-  <script src="../../../_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
+  <script src="../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
-<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
     <script src="../../../_static/documentation_options.js?v=8cf54648"></script>
     <script src="../../../_static/doctools.js?v=9bcbadda"></script>
@@ -188,9 +189,14 @@
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
   </div>
-  
-  <div id="rtd-footer-container"></div>
 
 
       </div>
@@ -329,20 +335,20 @@
 <span class="sd">By clicking right button of mouse, the context menu appears.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">from</span> <span class="nn">PySide6.QtWidgets</span> <span class="kn">import</span> <span class="n">QMenu</span><span class="p">,</span> <span class="n">QTreeView</span><span class="p">,</span> <span class="n">QHeaderView</span>
-<span class="kn">from</span> <span class="nn">PySide6.QtCore</span> <span class="kn">import</span> <span class="n">Qt</span><span class="p">,</span> <span class="n">Signal</span><span class="p">,</span> <span class="n">QPoint</span><span class="p">,</span> <span class="n">QModelIndex</span><span class="p">,</span> <span class="n">QItemSelection</span><span class="p">,</span> <span class="n">QItemSelectionModel</span><span class="p">,</span> <span class="n">QObject</span><span class="p">,</span> <span class="n">QEvent</span>
-<span class="kn">from</span> <span class="nn">qtdraw.core.pyvista_widget_setting</span> <span class="kn">import</span> <span class="n">COLOR_WIDGET</span><span class="p">,</span> <span class="n">COMBO_WIDGET</span><span class="p">,</span> <span class="n">EDITOR_WIDGET</span><span class="p">,</span> <span class="n">HIDE_TYPE</span>
-<span class="kn">from</span> <span class="nn">qtdraw.widget.delegate</span> <span class="kn">import</span> <span class="n">ColorDelegate</span><span class="p">,</span> <span class="n">ComboDelegate</span><span class="p">,</span> <span class="n">EditorDelegate</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">PySide6.QtWidgets</span><span class="w"> </span><span class="kn">import</span> <span class="n">QMenu</span><span class="p">,</span> <span class="n">QTreeView</span><span class="p">,</span> <span class="n">QHeaderView</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">PySide6.QtCore</span><span class="w"> </span><span class="kn">import</span> <span class="n">Qt</span><span class="p">,</span> <span class="n">Signal</span><span class="p">,</span> <span class="n">QPoint</span><span class="p">,</span> <span class="n">QModelIndex</span><span class="p">,</span> <span class="n">QItemSelection</span><span class="p">,</span> <span class="n">QItemSelectionModel</span><span class="p">,</span> <span class="n">QObject</span><span class="p">,</span> <span class="n">QEvent</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw.core.pyvista_widget_setting</span><span class="w"> </span><span class="kn">import</span> <span class="n">COLOR_WIDGET</span><span class="p">,</span> <span class="n">COMBO_WIDGET</span><span class="p">,</span> <span class="n">EDITOR_WIDGET</span><span class="p">,</span> <span class="n">HIDE_TYPE</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw.widget.delegate</span><span class="w"> </span><span class="kn">import</span> <span class="n">ColorDelegate</span><span class="p">,</span> <span class="n">ComboDelegate</span><span class="p">,</span> <span class="n">EditorDelegate</span>
 
 
 <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="GroupView">
 <a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.group_view.GroupView">[docs]</a>
-<span class="k">class</span> <span class="nc">GroupView</span><span class="p">(</span><span class="n">QTreeView</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">GroupView</span><span class="p">(</span><span class="n">QTreeView</span><span class="p">):</span>
     <span class="n">selectionChanged</span> <span class="o">=</span> <span class="n">Signal</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span>  <span class="c1"># name, deselect, select.</span>
 
     <span class="c1"># ==================================================</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Group view.</span>
 
@@ -397,7 +403,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="GroupView.clear_selection">
 <a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.group_view.GroupView.clear_selection">[docs]</a>
-    <span class="k">def</span> <span class="nf">clear_selection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">clear_selection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Clear selection.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -410,7 +416,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="GroupView.mousePressEvent">
 <a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.group_view.GroupView.mousePressEvent">[docs]</a>
-    <span class="k">def</span> <span class="nf">mousePressEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">mousePressEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Mouse press event for focus or clear selection.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -427,7 +433,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="GroupView.keyPressEvent">
 <a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.group_view.GroupView.keyPressEvent">[docs]</a>
-    <span class="k">def</span> <span class="nf">keyPressEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">keyPressEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Key press event for ESC and up and down keys.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -463,7 +469,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="GroupView.context_menu">
 <a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.group_view.GroupView.context_menu">[docs]</a>
-    <span class="k">def</span> <span class="nf">context_menu</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">position</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">context_menu</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">position</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Context menu.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -482,7 +488,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="GroupView.insert_row">
 <a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.group_view.GroupView.insert_row">[docs]</a>
-    <span class="k">def</span> <span class="nf">insert_row</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">insert_row</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Insert row.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -495,7 +501,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="GroupView.copy_row">
 <a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.group_view.GroupView.copy_row">[docs]</a>
-    <span class="k">def</span> <span class="nf">copy_row</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">copy_row</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Copy row.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -506,7 +512,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="GroupView.remove_row">
 <a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.group_view.GroupView.remove_row">[docs]</a>
-    <span class="k">def</span> <span class="nf">remove_row</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">remove_row</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Remove row.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -517,7 +523,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="GroupView.update_widget">
 <a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.group_view.GroupView.update_widget">[docs]</a>
-    <span class="k">def</span> <span class="nf">update_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">update_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Update widget.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -534,7 +540,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="GroupView.set_widget">
 <a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.group_view.GroupView.set_widget">[docs]</a>
-    <span class="k">def</span> <span class="nf">set_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set widget.</span>
 
@@ -554,7 +560,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="GroupView.selection_changed">
 <a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.group_view.GroupView.selection_changed">[docs]</a>
-    <span class="k">def</span> <span class="nf">selection_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">selected</span><span class="p">,</span> <span class="n">deselected</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">selection_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">selected</span><span class="p">,</span> <span class="n">deselected</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        For Selection changed.</span>
 
@@ -596,7 +602,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="GroupView.select_row">
 <a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.group_view.GroupView.select_row">[docs]</a>
-    <span class="k">def</span> <span class="nf">select_row</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">select_row</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Select row.</span>
 
@@ -667,8 +673,8 @@ By Hiroaki Kusunose
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="../../../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
-<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
 
   <footer class="bd-footer">
   </footer>

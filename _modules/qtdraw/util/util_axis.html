@@ -15,8 +15,8 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
-  <!-- 
-    this give us a css class that will be invisible only if js is disabled 
+  <!--
+    this give us a css class that will be invisible only if js is disabled
   -->
   <noscript>
     <style>
@@ -26,22 +26,23 @@
   </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
-<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+  <link href="../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=5f1b4820" />
   
   <!-- So that users can add custom icons -->
-  <script src="../../../_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
+  <script src="../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
-<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
     <script src="../../../_static/documentation_options.js?v=8cf54648"></script>
     <script src="../../../_static/doctools.js?v=9bcbadda"></script>
@@ -188,9 +189,14 @@
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
   </div>
-  
-  <div id="rtd-footer-container"></div>
 
 
       </div>
@@ -328,18 +334,18 @@
 <span class="sd">This module contains utility for axis, etc.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">import</span> <span class="nn">vtk</span>
-<span class="kn">import</span> <span class="nn">pyvista</span> <span class="k">as</span> <span class="nn">pv</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">floor</span><span class="p">,</span> <span class="n">ceil</span>
-<span class="kn">from</span> <span class="nn">gcoreutils.color_palette</span> <span class="kn">import</span> <span class="n">all_colors</span>
-<span class="kn">from</span> <span class="nn">gcoreutils.convert_util</span> <span class="kn">import</span> <span class="n">text_to_list</span>
-<span class="kn">from</span> <span class="nn">qtdraw.core.pyvista_widget_setting</span> <span class="kn">import</span> <span class="n">widget_detail</span> <span class="k">as</span> <span class="n">detail</span>
-<span class="kn">from</span> <span class="nn">qtdraw.core.pyvista_widget_setting</span> <span class="kn">import</span> <span class="n">CHOP</span><span class="p">,</span> <span class="n">DIGIT</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">vtk</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pyvista</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pv</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">math</span><span class="w"> </span><span class="kn">import</span> <span class="n">floor</span><span class="p">,</span> <span class="n">ceil</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">gcoreutils.color_palette</span><span class="w"> </span><span class="kn">import</span> <span class="n">all_colors</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">gcoreutils.convert_util</span><span class="w"> </span><span class="kn">import</span> <span class="n">text_to_list</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw.core.pyvista_widget_setting</span><span class="w"> </span><span class="kn">import</span> <span class="n">widget_detail</span> <span class="k">as</span> <span class="n">detail</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw.core.pyvista_widget_setting</span><span class="w"> </span><span class="kn">import</span> <span class="n">CHOP</span><span class="p">,</span> <span class="n">DIGIT</span>
 
 
 <span class="c1"># ==================================================</span>
-<span class="k">def</span> <span class="nf">_create_label_axes_actor</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">bold</span><span class="p">,</span> <span class="n">italic</span><span class="p">,</span> <span class="n">color</span><span class="p">,</span> <span class="n">scale</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_create_label_axes_actor</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">bold</span><span class="p">,</span> <span class="n">italic</span><span class="p">,</span> <span class="n">color</span><span class="p">,</span> <span class="n">scale</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Create label only orientation axes actor.</span>
 
@@ -398,7 +404,7 @@
 
 
 <span class="c1"># ==================================================</span>
-<span class="k">def</span> <span class="nf">_create_axes_actor</span><span class="p">(</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_create_axes_actor</span><span class="p">(</span>
     <span class="n">A</span><span class="p">,</span>
     <span class="n">label</span><span class="p">,</span>
     <span class="n">label_size</span><span class="p">,</span>
@@ -490,7 +496,7 @@
 <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="create_axes_widget">
 <a class="viewcode-back" href="../../../src/api_util.html#qtdraw.util.util_axis.create_axes_widget">[docs]</a>
-<span class="k">def</span> <span class="nf">create_axes_widget</span><span class="p">(</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">create_axes_widget</span><span class="p">(</span>
     <span class="n">pv_widget</span><span class="p">,</span>
     <span class="n">A</span><span class="p">,</span>
     <span class="n">label</span><span class="o">=</span><span class="s2">&quot;[x,y,z]&quot;</span><span class="p">,</span>
@@ -561,7 +567,7 @@
 <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="create_unit_cell">
 <a class="viewcode-back" href="../../../src/api_util.html#qtdraw.util.util_axis.create_unit_cell">[docs]</a>
-<span class="k">def</span> <span class="nf">create_unit_cell</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">origin</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dimensions</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">create_unit_cell</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">origin</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dimensions</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Create unit cell mesh.</span>
 
@@ -611,7 +617,7 @@
 <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="get_view_vector">
 <a class="viewcode-back" href="../../../src/api_util.html#qtdraw.util.util_axis.get_view_vector">[docs]</a>
-<span class="k">def</span> <span class="nf">get_view_vector</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">A</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_view_vector</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">A</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Get view and viewup.</span>
 
@@ -646,7 +652,7 @@
 <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="create_grid">
 <a class="viewcode-back" href="../../../src/api_util.html#qtdraw.util.util_axis.create_grid">[docs]</a>
-<span class="k">def</span> <span class="nf">create_grid</span><span class="p">(</span><span class="n">ilower</span><span class="p">,</span> <span class="n">dims</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">create_grid</span><span class="p">(</span><span class="n">ilower</span><span class="p">,</span> <span class="n">dims</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Create grid point.</span>
 
@@ -678,7 +684,7 @@
 <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="get_lattice_vector">
 <a class="viewcode-back" href="../../../src/api_util.html#qtdraw.util.util_axis.get_lattice_vector">[docs]</a>
-<span class="k">def</span> <span class="nf">get_lattice_vector</span><span class="p">(</span><span class="n">crystal</span><span class="p">,</span> <span class="n">cell</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_lattice_vector</span><span class="p">(</span><span class="n">crystal</span><span class="p">,</span> <span class="n">cell</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Get lattice vector.</span>
 
@@ -747,7 +753,7 @@
 <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="get_repeat_range">
 <a class="viewcode-back" href="../../../src/api_util.html#qtdraw.util.util_axis.get_repeat_range">[docs]</a>
-<span class="k">def</span> <span class="nf">get_repeat_range</span><span class="p">(</span><span class="n">lower</span><span class="p">,</span> <span class="n">upper</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_repeat_range</span><span class="p">(</span><span class="n">lower</span><span class="p">,</span> <span class="n">upper</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Get repeart range.</span>
 
@@ -772,7 +778,7 @@
 <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="get_outside_box">
 <a class="viewcode-back" href="../../../src/api_util.html#qtdraw.util.util_axis.get_outside_box">[docs]</a>
-<span class="k">def</span> <span class="nf">get_outside_box</span><span class="p">(</span><span class="n">point</span><span class="p">,</span> <span class="n">lower</span><span class="p">,</span> <span class="n">upper</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_outside_box</span><span class="p">(</span><span class="n">point</span><span class="p">,</span> <span class="n">lower</span><span class="p">,</span> <span class="n">upper</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Get indices outside range.</span>
 
@@ -852,8 +858,8 @@ By Hiroaki Kusunose
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="../../../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
-<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
 
   <footer class="bd-footer">
   </footer>

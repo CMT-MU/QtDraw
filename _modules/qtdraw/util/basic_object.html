@@ -15,8 +15,8 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
-  <!-- 
-    this give us a css class that will be invisible only if js is disabled 
+  <!--
+    this give us a css class that will be invisible only if js is disabled
   -->
   <noscript>
     <style>
@@ -26,22 +26,23 @@
   </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
-<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+  <link href="../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=5f1b4820" />
   
   <!-- So that users can add custom icons -->
-  <script src="../../../_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
+  <script src="../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
-<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
     <script src="../../../_static/documentation_options.js?v=8cf54648"></script>
     <script src="../../../_static/doctools.js?v=9bcbadda"></script>
@@ -188,9 +189,14 @@
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
   </div>
-  
-  <div id="rtd-footer-container"></div>
 
 
       </div>
@@ -347,20 +353,20 @@
 <span class="sd">- isosurface</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">sympy</span> <span class="k">as</span> <span class="nn">sp</span>
-<span class="kn">from</span> <span class="nn">vtk</span> <span class="kn">import</span> <span class="n">vtkParametricSpline</span>
-<span class="kn">import</span> <span class="nn">pyvista</span> <span class="k">as</span> <span class="nn">pv</span>
-<span class="kn">from</span> <span class="nn">pyvista.core.utilities</span> <span class="kn">import</span> <span class="n">surface_from_para</span><span class="p">,</span> <span class="n">geometric_sources</span>
-<span class="kn">from</span> <span class="nn">gcoreutils.convert_util</span> <span class="kn">import</span> <span class="n">text_to_sympy</span><span class="p">,</span> <span class="n">text_to_list</span>
-<span class="kn">from</span> <span class="nn">qtdraw.util.util_axis</span> <span class="kn">import</span> <span class="n">get_view_vector</span>
-<span class="kn">from</span> <span class="nn">qtdraw.util.util</span> <span class="kn">import</span> <span class="n">create_grid</span>
-<span class="kn">from</span> <span class="nn">qtdraw.core.pyvista_widget_setting</span> <span class="kn">import</span> <span class="n">widget_detail</span> <span class="k">as</span> <span class="n">detail</span>
-<span class="kn">from</span> <span class="nn">qtdraw.core.pyvista_widget_setting</span> <span class="kn">import</span> <span class="n">CHOP</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sympy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sp</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">vtk</span><span class="w"> </span><span class="kn">import</span> <span class="n">vtkParametricSpline</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pyvista</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pv</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyvista.core.utilities</span><span class="w"> </span><span class="kn">import</span> <span class="n">surface_from_para</span><span class="p">,</span> <span class="n">geometric_sources</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">gcoreutils.convert_util</span><span class="w"> </span><span class="kn">import</span> <span class="n">text_to_sympy</span><span class="p">,</span> <span class="n">text_to_list</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw.util.util_axis</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_view_vector</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw.util.util</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_grid</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw.core.pyvista_widget_setting</span><span class="w"> </span><span class="kn">import</span> <span class="n">widget_detail</span> <span class="k">as</span> <span class="n">detail</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw.core.pyvista_widget_setting</span><span class="w"> </span><span class="kn">import</span> <span class="n">CHOP</span>
 
 
 <span class="c1"># ==================================================</span>
-<span class="k">def</span> <span class="nf">_str_poly_array</span><span class="p">(</span><span class="n">poly</span><span class="p">,</span> <span class="n">xyz</span><span class="p">,</span> <span class="n">var</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="s2">&quot;z&quot;</span><span class="p">],</span> <span class="n">size</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_str_poly_array</span><span class="p">(</span><span class="n">poly</span><span class="p">,</span> <span class="n">xyz</span><span class="p">,</span> <span class="n">var</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="s2">&quot;z&quot;</span><span class="p">],</span> <span class="n">size</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Convert from polynomial string to scalar array.</span>
 
@@ -403,7 +409,7 @@
 
 
 <span class="c1"># ==================================================</span>
-<span class="k">def</span> <span class="nf">_str_vec_array</span><span class="p">(</span><span class="n">vec</span><span class="p">,</span> <span class="n">xyz</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">var</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="s2">&quot;z&quot;</span><span class="p">]):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_str_vec_array</span><span class="p">(</span><span class="n">vec</span><span class="p">,</span> <span class="n">xyz</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">var</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="s2">&quot;z&quot;</span><span class="p">]):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Convert from polynomial string (vector) to vector and scalar (abs.) arrays.</span>
 
@@ -437,7 +443,7 @@
 <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="create_sphere">
 <a class="viewcode-back" href="../../../src/api_util.html#qtdraw.util.basic_object.create_sphere">[docs]</a>
-<span class="k">def</span> <span class="nf">create_sphere</span><span class="p">(</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">create_sphere</span><span class="p">(</span>
     <span class="n">radius</span><span class="p">,</span>
     <span class="n">theta_phi_range</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">theta_phi_resolution</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -480,7 +486,7 @@
 <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="create_bond">
 <a class="viewcode-back" href="../../../src/api_util.html#qtdraw.util.basic_object.create_bond">[docs]</a>
-<span class="k">def</span> <span class="nf">create_bond</span><span class="p">(</span><span class="n">direction</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">twotone</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">create_bond</span><span class="p">(</span><span class="n">direction</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">twotone</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Create bond object.</span>
 
@@ -528,7 +534,7 @@
 <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="create_vector">
 <a class="viewcode-back" href="../../../src/api_util.html#qtdraw.util.basic_object.create_vector">[docs]</a>
-<span class="k">def</span> <span class="nf">create_vector</span><span class="p">(</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">create_vector</span><span class="p">(</span>
     <span class="n">direction</span><span class="p">,</span>
     <span class="n">length</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
     <span class="n">width</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
@@ -582,7 +588,7 @@
 <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="create_orbital">
 <a class="viewcode-back" href="../../../src/api_util.html#qtdraw.util.basic_object.create_orbital">[docs]</a>
-<span class="k">def</span> <span class="nf">create_orbital</span><span class="p">(</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">create_orbital</span><span class="p">(</span>
     <span class="n">shape</span><span class="p">,</span>
     <span class="n">surface</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
     <span class="n">size</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
@@ -632,7 +638,7 @@
 <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="create_stream">
 <a class="viewcode-back" href="../../../src/api_util.html#qtdraw.util.basic_object.create_stream">[docs]</a>
-<span class="k">def</span> <span class="nf">create_stream</span><span class="p">(</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">create_stream</span><span class="p">(</span>
     <span class="n">shape</span><span class="o">=</span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
     <span class="n">vector</span><span class="o">=</span><span class="s2">&quot;[x,y,z]&quot;</span><span class="p">,</span>
     <span class="n">size</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
@@ -711,7 +717,7 @@
 <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="create_line">
 <a class="viewcode-back" href="../../../src/api_util.html#qtdraw.util.basic_object.create_line">[docs]</a>
-<span class="k">def</span> <span class="nf">create_line</span><span class="p">(</span><span class="n">direction</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">arrow1</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">arrow2</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">tip_radius</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">tip_length</span><span class="o">=</span><span class="mf">0.1</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">create_line</span><span class="p">(</span><span class="n">direction</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">arrow1</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">arrow2</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">tip_radius</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">tip_length</span><span class="o">=</span><span class="mf">0.1</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Create line object.</span>
 
@@ -766,7 +772,7 @@
 <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="create_plane">
 <a class="viewcode-back" href="../../../src/api_util.html#qtdraw.util.basic_object.create_plane">[docs]</a>
-<span class="k">def</span> <span class="nf">create_plane</span><span class="p">(</span><span class="n">normal</span><span class="p">,</span> <span class="n">x_size</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">y_size</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">create_plane</span><span class="p">(</span><span class="n">normal</span><span class="p">,</span> <span class="n">x_size</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">y_size</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Create plane object.</span>
 
@@ -787,7 +793,7 @@
 <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="create_circle">
 <a class="viewcode-back" href="../../../src/api_util.html#qtdraw.util.basic_object.create_circle">[docs]</a>
-<span class="k">def</span> <span class="nf">create_circle</span><span class="p">(</span><span class="n">normal</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mf">0.5</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">create_circle</span><span class="p">(</span><span class="n">normal</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mf">0.5</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Create circle object.</span>
 
@@ -811,7 +817,7 @@
 <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="create_torus">
 <a class="viewcode-back" href="../../../src/api_util.html#qtdraw.util.basic_object.create_torus">[docs]</a>
-<span class="k">def</span> <span class="nf">create_torus</span><span class="p">(</span><span class="n">normal</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">0.15</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">create_torus</span><span class="p">(</span><span class="n">normal</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">0.15</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Create torus object.</span>
 
@@ -835,7 +841,7 @@
 <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="create_ellipsoid">
 <a class="viewcode-back" href="../../../src/api_util.html#qtdraw.util.basic_object.create_ellipsoid">[docs]</a>
-<span class="k">def</span> <span class="nf">create_ellipsoid</span><span class="p">(</span><span class="n">normal</span><span class="p">,</span> <span class="n">x_size</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">y_size</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">z_size</span><span class="o">=</span><span class="mf">0.3</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">create_ellipsoid</span><span class="p">(</span><span class="n">normal</span><span class="p">,</span> <span class="n">x_size</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">y_size</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">z_size</span><span class="o">=</span><span class="mf">0.3</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Create ellipsoid object.</span>
 
@@ -860,7 +866,7 @@
 <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="create_toroid">
 <a class="viewcode-back" href="../../../src/api_util.html#qtdraw.util.basic_object.create_toroid">[docs]</a>
-<span class="k">def</span> <span class="nf">create_toroid</span><span class="p">(</span><span class="n">normal</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">0.15</span><span class="p">,</span> <span class="n">x_scale</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">y_scale</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">z_scale</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">ring_shape</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">tube_shape</span><span class="o">=</span><span class="mf">0.3</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">create_toroid</span><span class="p">(</span><span class="n">normal</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">0.15</span><span class="p">,</span> <span class="n">x_scale</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">y_scale</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">z_scale</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">ring_shape</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">tube_shape</span><span class="o">=</span><span class="mf">0.3</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Create ellipsoid object.</span>
 
@@ -891,7 +897,7 @@
 <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="create_box">
 <a class="viewcode-back" href="../../../src/api_util.html#qtdraw.util.basic_object.create_box">[docs]</a>
-<span class="k">def</span> <span class="nf">create_box</span><span class="p">(</span><span class="n">a1</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">a2</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">a3</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">create_box</span><span class="p">(</span><span class="n">a1</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">a2</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">a3</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Create box object.</span>
 
@@ -928,7 +934,7 @@
 <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="create_polygon">
 <a class="viewcode-back" href="../../../src/api_util.html#qtdraw.util.basic_object.create_polygon">[docs]</a>
-<span class="k">def</span> <span class="nf">create_polygon</span><span class="p">(</span><span class="n">point</span><span class="p">,</span> <span class="n">connectivity</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">create_polygon</span><span class="p">(</span><span class="n">point</span><span class="p">,</span> <span class="n">connectivity</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Create polygon object.</span>
 
@@ -951,7 +957,7 @@
 <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="create_text3d">
 <a class="viewcode-back" href="../../../src/api_util.html#qtdraw.util.basic_object.create_text3d">[docs]</a>
-<span class="k">def</span> <span class="nf">create_text3d</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">view</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">depth</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">A</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">create_text3d</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">view</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">depth</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">A</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Create text3d object.</span>
 
@@ -995,7 +1001,7 @@
 <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="create_spline">
 <a class="viewcode-back" href="../../../src/api_util.html#qtdraw.util.basic_object.create_spline">[docs]</a>
-<span class="k">def</span> <span class="nf">create_spline</span><span class="p">(</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">create_spline</span><span class="p">(</span>
     <span class="n">point</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">n_interp</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">closed</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">natural</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">arrow1</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">arrow2</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">tip_radius</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">tip_length</span><span class="o">=</span><span class="mf">0.1</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
@@ -1066,7 +1072,7 @@
 <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="create_spline_t">
 <a class="viewcode-back" href="../../../src/api_util.html#qtdraw.util.basic_object.create_spline_t">[docs]</a>
-<span class="k">def</span> <span class="nf">create_spline_t</span><span class="p">(</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">create_spline_t</span><span class="p">(</span>
     <span class="n">point</span><span class="p">,</span>
     <span class="n">t_range</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">width</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
@@ -1109,15 +1115,14 @@
         <span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
 
     <span class="n">point</span> <span class="o">=</span> <span class="n">text_to_list</span><span class="p">(</span><span class="n">point</span><span class="p">)</span>
+    <span class="n">tp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">t_range</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">t_range</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">t_range</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
 
     <span class="n">t</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">symbols</span><span class="p">(</span><span class="s2">&quot;t&quot;</span><span class="p">,</span> <span class="n">real</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">ex</span> <span class="o">=</span> <span class="p">[</span><span class="n">text_to_sympy</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">local</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;t&quot;</span><span class="p">:</span> <span class="n">t</span><span class="p">})</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">point</span><span class="p">]</span>
-    <span class="n">f</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">lambdify</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">ex</span><span class="p">,</span> <span class="n">modules</span><span class="o">=</span><span class="s2">&quot;numpy&quot;</span><span class="p">)</span>
 
-    <span class="n">tp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">t_range</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">t_range</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">t_range</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
-
-    <span class="n">pts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">tp</span><span class="p">))</span>
+    <span class="n">pts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="n">tp</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span> <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">is_Number</span> <span class="k">else</span> <span class="n">sp</span><span class="o">.</span><span class="n">lambdify</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">modules</span><span class="o">=</span><span class="s2">&quot;numpy&quot;</span><span class="p">)(</span><span class="n">tp</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">ex</span><span class="p">])</span>
     <span class="n">pointA</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">],</span> <span class="n">pts</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+
     <span class="n">obj</span> <span class="o">=</span> <span class="n">create_spline</span><span class="p">(</span><span class="n">pointA</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">n_interp</span><span class="p">,</span> <span class="n">closed</span><span class="p">,</span> <span class="n">natural</span><span class="p">,</span> <span class="n">arrow1</span><span class="p">,</span> <span class="n">arrow2</span><span class="p">,</span> <span class="n">tip_radius</span><span class="p">,</span> <span class="n">tip_length</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">obj</span></div>
@@ -1127,7 +1132,7 @@
 <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="create_isosurface">
 <a class="viewcode-back" href="../../../src/api_util.html#qtdraw.util.basic_object.create_isosurface">[docs]</a>
-<span class="k">def</span> <span class="nf">create_isosurface</span><span class="p">(</span><span class="n">grid_data</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">surface_name</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">create_isosurface</span><span class="p">(</span><span class="n">grid_data</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">surface_name</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Create isosurface.</span>
 
@@ -1196,7 +1201,7 @@
 <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="create_orbital_data">
 <a class="viewcode-back" href="../../../src/api_util.html#qtdraw.util.basic_object.create_orbital_data">[docs]</a>
-<span class="k">def</span> <span class="nf">create_orbital_data</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">surface</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">spherical_plot</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">point_size</span><span class="o">=</span><span class="mf">0.03</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">create_orbital_data</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">surface</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">spherical_plot</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">point_size</span><span class="o">=</span><span class="mf">0.03</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Create orbital object from data.</span>
 
@@ -1247,7 +1252,7 @@
 <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="create_stream_data">
 <a class="viewcode-back" href="../../../src/api_util.html#qtdraw.util.basic_object.create_stream_data">[docs]</a>
-<span class="k">def</span> <span class="nf">create_stream_data</span><span class="p">(</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">create_stream_data</span><span class="p">(</span>
     <span class="n">shape</span><span class="p">,</span>
     <span class="n">surface</span><span class="p">,</span>
     <span class="n">vector</span><span class="p">,</span>
@@ -1364,8 +1369,8 @@ By Hiroaki Kusunose
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="../../../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
-<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
 
   <footer class="bd-footer">
   </footer>

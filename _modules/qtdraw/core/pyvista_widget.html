@@ -15,8 +15,8 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
-  <!-- 
-    this give us a css class that will be invisible only if js is disabled 
+  <!--
+    this give us a css class that will be invisible only if js is disabled
   -->
   <noscript>
     <style>
@@ -26,22 +26,23 @@
   </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
-<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+  <link href="../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=5f1b4820" />
   
   <!-- So that users can add custom icons -->
-  <script src="../../../_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
+  <script src="../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
-<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
     <script src="../../../_static/documentation_options.js?v=8cf54648"></script>
     <script src="../../../_static/doctools.js?v=9bcbadda"></script>
@@ -188,9 +189,14 @@
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
   </div>
-  
-  <div id="rtd-footer-container"></div>
 
 
       </div>
@@ -329,20 +335,20 @@
 <span class="sd">3d objects, and manage data, view, and so on.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">import</span> <span class="nn">ast</span>
-<span class="kn">import</span> <span class="nn">subprocess</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">copy</span>
-<span class="kn">from</span> <span class="nn">PySide6.QtWidgets</span> <span class="kn">import</span> <span class="n">QMainWindow</span><span class="p">,</span> <span class="n">QMenu</span><span class="p">,</span> <span class="n">QSizePolicy</span>
-<span class="kn">from</span> <span class="nn">PySide6.QtGui</span> <span class="kn">import</span> <span class="n">QCursor</span><span class="p">,</span> <span class="n">QMouseEvent</span>
-<span class="kn">from</span> <span class="nn">PySide6.QtCore</span> <span class="kn">import</span> <span class="n">QEvent</span><span class="p">,</span> <span class="n">Qt</span><span class="p">,</span> <span class="n">QCoreApplication</span><span class="p">,</span> <span class="n">Signal</span><span class="p">,</span> <span class="n">QSize</span><span class="p">,</span> <span class="n">QObject</span><span class="p">,</span> <span class="n">QModelIndex</span>
-<span class="kn">import</span> <span class="nn">pyvista</span> <span class="k">as</span> <span class="nn">pv</span>
-<span class="kn">from</span> <span class="nn">pyvistaqt</span> <span class="kn">import</span> <span class="n">QtInteractor</span>
-<span class="kn">from</span> <span class="nn">gcoreutils.color_palette</span> <span class="kn">import</span> <span class="n">all_colors</span><span class="p">,</span> <span class="n">custom_colormap</span><span class="p">,</span> <span class="n">check_color</span>
-<span class="kn">from</span> <span class="nn">gcoreutils.convert_util</span> <span class="kn">import</span> <span class="n">text_to_list</span><span class="p">,</span> <span class="n">apply</span>
-<span class="kn">from</span> <span class="nn">qtdraw.util.util_axis</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">ast</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">subprocess</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">copy</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">PySide6.QtWidgets</span><span class="w"> </span><span class="kn">import</span> <span class="n">QMainWindow</span><span class="p">,</span> <span class="n">QMenu</span><span class="p">,</span> <span class="n">QSizePolicy</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">PySide6.QtGui</span><span class="w"> </span><span class="kn">import</span> <span class="n">QCursor</span><span class="p">,</span> <span class="n">QMouseEvent</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">PySide6.QtCore</span><span class="w"> </span><span class="kn">import</span> <span class="n">QEvent</span><span class="p">,</span> <span class="n">Qt</span><span class="p">,</span> <span class="n">QCoreApplication</span><span class="p">,</span> <span class="n">Signal</span><span class="p">,</span> <span class="n">QSize</span><span class="p">,</span> <span class="n">QObject</span><span class="p">,</span> <span class="n">QModelIndex</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pyvista</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pv</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyvistaqt</span><span class="w"> </span><span class="kn">import</span> <span class="n">QtInteractor</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">gcoreutils.color_palette</span><span class="w"> </span><span class="kn">import</span> <span class="n">all_colors</span><span class="p">,</span> <span class="n">custom_colormap</span><span class="p">,</span> <span class="n">check_color</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">gcoreutils.convert_util</span><span class="w"> </span><span class="kn">import</span> <span class="n">text_to_list</span><span class="p">,</span> <span class="n">apply</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw.util.util_axis</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">create_axes_widget</span><span class="p">,</span>
     <span class="n">get_view_vector</span><span class="p">,</span>
     <span class="n">create_unit_cell</span><span class="p">,</span>
@@ -351,7 +357,7 @@
     <span class="n">get_repeat_range</span><span class="p">,</span>
     <span class="n">get_outside_box</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span> <span class="nn">qtdraw.core.pyvista_widget_setting</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw.core.pyvista_widget_setting</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">default_status</span><span class="p">,</span>
     <span class="n">default_preference</span><span class="p">,</span>
     <span class="n">object_default</span><span class="p">,</span>
@@ -364,11 +370,11 @@
     <span class="n">COLUMN_POSITION</span><span class="p">,</span>
     <span class="n">COLUMN_ISOSURFACE_FILE</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span> <span class="nn">qtdraw.core.pyvista_widget_setting</span> <span class="kn">import</span> <span class="n">widget_detail</span> <span class="k">as</span> <span class="n">detail</span>
-<span class="kn">from</span> <span class="nn">qtdraw.core.pyvista_widget_setting</span> <span class="kn">import</span> <span class="n">DIGIT</span>
-<span class="kn">from</span> <span class="nn">qtdraw.widget.group_model</span> <span class="kn">import</span> <span class="n">GroupModel</span>
-<span class="kn">from</span> <span class="nn">qtdraw.widget.tab_group_view</span> <span class="kn">import</span> <span class="n">TabGroupView</span>
-<span class="kn">from</span> <span class="nn">qtdraw.util.basic_object</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw.core.pyvista_widget_setting</span><span class="w"> </span><span class="kn">import</span> <span class="n">widget_detail</span> <span class="k">as</span> <span class="n">detail</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw.core.pyvista_widget_setting</span><span class="w"> </span><span class="kn">import</span> <span class="n">DIGIT</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw.widget.group_model</span><span class="w"> </span><span class="kn">import</span> <span class="n">GroupModel</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw.widget.tab_group_view</span><span class="w"> </span><span class="kn">import</span> <span class="n">TabGroupView</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw.util.basic_object</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">create_sphere</span><span class="p">,</span>
     <span class="n">create_bond</span><span class="p">,</span>
     <span class="n">create_vector</span><span class="p">,</span>
@@ -389,21 +395,21 @@
     <span class="n">create_orbital_data</span><span class="p">,</span>
     <span class="n">create_stream_data</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span> <span class="nn">qtdraw.util.util</span> <span class="kn">import</span> <span class="n">convert_to_str</span><span class="p">,</span> <span class="n">read_dict</span><span class="p">,</span> <span class="n">convert_str_vector</span><span class="p">,</span> <span class="n">split_filename</span><span class="p">,</span> <span class="n">cat_filename</span><span class="p">,</span> <span class="n">get_data_range</span>
-<span class="kn">from</span> <span class="nn">qtdraw.parser.read_material</span> <span class="kn">import</span> <span class="n">read_draw</span>
-<span class="kn">from</span> <span class="nn">qtdraw.parser.xsf</span> <span class="kn">import</span> <span class="n">extract_data_xsf</span>
-<span class="kn">from</span> <span class="nn">qtdraw.parser.converter</span> <span class="kn">import</span> <span class="n">convert_version2</span>
-<span class="kn">from</span> <span class="nn">qtdraw.util.logging_util</span> <span class="kn">import</span> <span class="n">LogWidget</span>
-<span class="kn">from</span> <span class="nn">qtdraw.util.qt_event_util</span> <span class="kn">import</span> <span class="n">get_qt_application</span>
-<span class="kn">from</span> <span class="nn">qtdraw.__init__</span> <span class="kn">import</span> <span class="n">__version__</span><span class="p">,</span> <span class="n">__date__</span><span class="p">,</span> <span class="n">__author__</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw.util.util</span><span class="w"> </span><span class="kn">import</span> <span class="n">convert_to_str</span><span class="p">,</span> <span class="n">read_dict</span><span class="p">,</span> <span class="n">convert_str_vector</span><span class="p">,</span> <span class="n">split_filename</span><span class="p">,</span> <span class="n">cat_filename</span><span class="p">,</span> <span class="n">get_data_range</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw.parser.read_material</span><span class="w"> </span><span class="kn">import</span> <span class="n">read_draw</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw.parser.xsf</span><span class="w"> </span><span class="kn">import</span> <span class="n">extract_data_xsf</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw.parser.converter</span><span class="w"> </span><span class="kn">import</span> <span class="n">convert_version2</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw.util.logging_util</span><span class="w"> </span><span class="kn">import</span> <span class="n">LogWidget</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw.util.qt_event_util</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_qt_application</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw.__init__</span><span class="w"> </span><span class="kn">import</span> <span class="n">__version__</span><span class="p">,</span> <span class="n">__date__</span><span class="p">,</span> <span class="n">__author__</span>
 
 
 <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="Window">
 <a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.Window">[docs]</a>
-<span class="k">class</span> <span class="nc">Window</span><span class="p">(</span><span class="n">QMainWindow</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Window</span><span class="p">(</span><span class="n">QMainWindow</span><span class="p">):</span>
     <span class="c1"># ==================================================</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">level</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">level</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Window with logging.</span>
 
@@ -421,7 +427,7 @@
 <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="create_qtdraw_file">
 <a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.create_qtdraw_file">[docs]</a>
-<span class="k">def</span> <span class="nf">create_qtdraw_file</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">callback</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">create_qtdraw_file</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">callback</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Create QtDraw file as background.</span>
 
@@ -440,7 +446,7 @@
 <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="convert_qtdraw_v2">
 <a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.convert_qtdraw_v2">[docs]</a>
-<span class="k">def</span> <span class="nf">convert_qtdraw_v2</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">convert_qtdraw_v2</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Convert qtdraw file to version 2.</span>
 
@@ -458,7 +464,7 @@
 
 
 <span class="c1"># ==================================================</span>
-<span class="k">class</span> <span class="nc">PlotSignal</span><span class="p">(</span><span class="n">QObject</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">PlotSignal</span><span class="p">(</span><span class="n">QObject</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Plot signal.</span>
 
@@ -468,7 +474,7 @@
     <span class="c1"># signal for plotting an object.</span>
     <span class="n">plot</span> <span class="o">=</span> <span class="n">Signal</span><span class="p">(</span><span class="n">QModelIndex</span><span class="p">,</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span>  <span class="c1"># index, data, pointT.</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">f</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">f</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        For dict type of signal.</span>
 
@@ -483,12 +489,12 @@
 <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="PyVistaWidget">
 <a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget">[docs]</a>
-<span class="k">class</span> <span class="nc">PyVistaWidget</span><span class="p">(</span><span class="n">QtInteractor</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">PyVistaWidget</span><span class="p">(</span><span class="n">QtInteractor</span><span class="p">):</span>
     <span class="c1"># signal for write info.</span>
     <span class="n">message</span> <span class="o">=</span> <span class="n">Signal</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>  <span class="c1"># messsage.</span>
 
     <span class="c1"># ==================================================</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">off_screen</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">off_screen</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Widget for 3d plot layer using PyVista.</span>
 
@@ -564,7 +570,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">set_view</span><span class="p">()</span>
 
     <span class="c1"># ==================================================</span>
-    <span class="k">def</span> <span class="nf">clear_info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">clear_info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Clear info.</span>
 
@@ -582,7 +588,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_block_remove_isosurface</span> <span class="o">=</span> <span class="kc">False</span>
 
     <span class="c1"># ==================================================</span>
-    <span class="k">def</span> <span class="nf">set_additional_status</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_additional_status</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set additional status.</span>
 
@@ -600,7 +606,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="PyVistaWidget.add_site">
 <a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.add_site">[docs]</a>
-    <span class="k">def</span> <span class="nf">add_site</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">opacity</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cell</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">margin</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_site</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">opacity</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cell</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">margin</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add site.</span>
 
@@ -631,7 +637,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="PyVistaWidget.add_bond">
 <a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.add_bond">[docs]</a>
-    <span class="k">def</span> <span class="nf">add_bond</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_bond</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">direction</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">width</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -687,7 +693,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="PyVistaWidget.add_vector">
 <a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.add_vector">[docs]</a>
-    <span class="k">def</span> <span class="nf">add_vector</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_vector</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">direction</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">length</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -759,7 +765,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="PyVistaWidget.add_orbital">
 <a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.add_orbital">[docs]</a>
-    <span class="k">def</span> <span class="nf">add_orbital</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_orbital</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">shape</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">surface</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -817,7 +823,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="PyVistaWidget.add_stream">
 <a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.add_stream">[docs]</a>
-    <span class="k">def</span> <span class="nf">add_stream</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_stream</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">shape</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">vector</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -911,7 +917,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="PyVistaWidget.add_line">
 <a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.add_line">[docs]</a>
-    <span class="k">def</span> <span class="nf">add_line</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_line</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">direction</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">width</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -976,7 +982,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="PyVistaWidget.add_plane">
 <a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.add_plane">[docs]</a>
-    <span class="k">def</span> <span class="nf">add_plane</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_plane</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">normal</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">x_size</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -1043,7 +1049,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="PyVistaWidget.add_circle">
 <a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.add_circle">[docs]</a>
-    <span class="k">def</span> <span class="nf">add_circle</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_circle</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">normal</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">size</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -1106,7 +1112,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="PyVistaWidget.add_torus">
 <a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.add_torus">[docs]</a>
-    <span class="k">def</span> <span class="nf">add_torus</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_torus</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">normal</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">size</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -1161,7 +1167,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="PyVistaWidget.add_ellipsoid">
 <a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.add_ellipsoid">[docs]</a>
-    <span class="k">def</span> <span class="nf">add_ellipsoid</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_ellipsoid</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">normal</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">x_size</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -1220,7 +1226,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="PyVistaWidget.add_toroid">
 <a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.add_toroid">[docs]</a>
-    <span class="k">def</span> <span class="nf">add_toroid</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_toroid</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">normal</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">size</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -1295,7 +1301,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="PyVistaWidget.add_box">
 <a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.add_box">[docs]</a>
-    <span class="k">def</span> <span class="nf">add_box</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_box</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">a1</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">a2</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -1370,7 +1376,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="PyVistaWidget.add_polygon">
 <a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.add_polygon">[docs]</a>
-    <span class="k">def</span> <span class="nf">add_polygon</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_polygon</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">point</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">connectivity</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -1439,7 +1445,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="PyVistaWidget.add_spline">
 <a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.add_spline">[docs]</a>
-    <span class="k">def</span> <span class="nf">add_spline</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_spline</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">point</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">width</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -1518,7 +1524,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="PyVistaWidget.add_spline_t">
 <a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.add_spline_t">[docs]</a>
-    <span class="k">def</span> <span class="nf">add_spline_t</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_spline_t</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">point</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">t_range</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -1601,7 +1607,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="PyVistaWidget.add_text3d">
 <a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.add_text3d">[docs]</a>
-    <span class="k">def</span> <span class="nf">add_text3d</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_text3d</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">text</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">size</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -1662,7 +1668,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="PyVistaWidget.add_isosurface">
 <a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.add_isosurface">[docs]</a>
-    <span class="k">def</span> <span class="nf">add_isosurface</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_isosurface</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">value</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -1729,7 +1735,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="PyVistaWidget.add_caption">
 <a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.add_caption">[docs]</a>
-    <span class="k">def</span> <span class="nf">add_caption</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_caption</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">caption</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">size</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -1774,7 +1780,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="PyVistaWidget.add_text2d">
 <a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.add_text2d">[docs]</a>
-    <span class="k">def</span> <span class="nf">add_text2d</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_text2d</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">caption</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">size</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -1817,7 +1823,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="PyVistaWidget.load">
 <a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.load">[docs]</a>
-    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">load</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Load all info.</span>
 
@@ -1860,7 +1866,7 @@
 
 
     <span class="c1"># ==================================================</span>
-    <span class="k">def</span> <span class="nf">get_data_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">home_cell</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_data_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">home_cell</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get data dict.</span>
 
@@ -1887,7 +1893,7 @@
         <span class="k">return</span> <span class="n">data</span>
 
     <span class="c1"># ==================================================</span>
-    <span class="k">def</span> <span class="nf">restore</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">restore</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Restore data and status from backup.</span>
 
@@ -1904,7 +1910,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
 
     <span class="c1"># ==================================================</span>
-    <span class="k">def</span> <span class="nf">save_current</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">save_current</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Save current data and stutus into self._backup.</span>
 
@@ -1923,7 +1929,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="PyVistaWidget.save">
 <a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.save">[docs]</a>
-    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        save all info.</span>
 
@@ -1973,7 +1979,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="PyVistaWidget.save_screenshot">
 <a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.save_screenshot">[docs]</a>
-    <span class="k">def</span> <span class="nf">save_screenshot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">save_screenshot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Save screenshot to file.</span>
 
@@ -1992,7 +1998,7 @@
 
 
     <span class="c1"># ==================================================</span>
-    <span class="k">def</span> <span class="nf">write_info</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">write_info</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Write text message (emit message signal).</span>
 
@@ -2006,7 +2012,7 @@
     <span class="c1"># ==================================================</span>
     <span class="c1"># widget control.</span>
     <span class="c1"># ==================================================</span>
-    <span class="k">def</span> <span class="nf">set_property</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">preference</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_property</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">preference</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set status and preference.</span>
 
@@ -2030,7 +2036,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">redraw</span><span class="p">()</span>
 
     <span class="c1"># ==================================================</span>
-    <span class="k">def</span> <span class="nf">update_status</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">update_status</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Update status.</span>
 
@@ -2043,7 +2049,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">set_property</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="n">value</span><span class="p">})</span>
 
     <span class="c1"># ==================================================</span>
-    <span class="k">def</span> <span class="nf">update_preference</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">category</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">update_preference</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">category</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Update preference.</span>
 
@@ -2057,7 +2063,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">set_property</span><span class="p">(</span><span class="n">preference</span><span class="o">=</span><span class="p">{</span><span class="n">category</span><span class="p">:</span> <span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="n">value</span><span class="p">}})</span>
 
     <span class="c1"># ==================================================</span>
-    <span class="k">def</span> <span class="nf">reload</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">reload</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Reload data and draw object.</span>
 
@@ -2079,7 +2085,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_block_remove_isosurface</span> <span class="o">=</span> <span class="kc">False</span>
 
     <span class="c1"># ==================================================</span>
-    <span class="k">def</span> <span class="nf">refresh</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">refresh</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Refresh widget setting.</span>
 
@@ -2097,7 +2103,7 @@
     <span class="c1"># propery</span>
     <span class="c1"># ==================================================</span>
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">a1</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">a1</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get a1 unit vector.</span>
 
@@ -2108,7 +2114,7 @@
 
     <span class="c1"># ==================================================</span>
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">a2</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">a2</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get a2 unit vector.</span>
 
@@ -2119,7 +2125,7 @@
 
     <span class="c1"># ==================================================</span>
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">a3</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">a3</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get a3 unit vector.</span>
 
@@ -2130,7 +2136,7 @@
 
     <span class="c1"># ==================================================</span>
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">origin</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">origin</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get origin.</span>
 
@@ -2141,7 +2147,7 @@
 
     <span class="c1"># ==================================================</span>
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">cell_volume</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">cell_volume</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get cell volume.</span>
 
@@ -2157,7 +2163,7 @@
 
     <span class="c1"># ==================================================</span>
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">A_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">A_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get transform matrix.</span>
 
@@ -2170,7 +2176,7 @@
 
     <span class="c1"># ==================================================</span>
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">A_matrix_norm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">A_matrix_norm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get transform matrix (normalized).</span>
 
@@ -2184,7 +2190,7 @@
 
     <span class="c1"># ==================================================</span>
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">G_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">G_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get metric matrix.</span>
 
@@ -2198,7 +2204,7 @@
 
     <span class="c1"># ==================================================</span>
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">actor_list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">actor_list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get list of actor.</span>
 
@@ -2209,7 +2215,7 @@
 
     <span class="c1"># ==================================================</span>
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">window_title</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">window_title</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get window title.</span>
 
@@ -2221,7 +2227,7 @@
 
     <span class="c1"># ==================================================</span>
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">copyright</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">copyright</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Copyright string.</span>
 
@@ -2236,7 +2242,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="PyVistaWidget.set_model">
 <a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.set_model">[docs]</a>
-    <span class="k">def</span> <span class="nf">set_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set model name.</span>
 
@@ -2253,7 +2259,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="PyVistaWidget.set_crystal">
 <a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.set_crystal">[docs]</a>
-    <span class="k">def</span> <span class="nf">set_crystal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">crystal</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_crystal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">crystal</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set crystal.</span>
 
@@ -2273,7 +2279,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="PyVistaWidget.set_origin">
 <a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.set_origin">[docs]</a>
-    <span class="k">def</span> <span class="nf">set_origin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_origin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set origin.</span>
 
@@ -2295,7 +2301,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="PyVistaWidget.set_unit_cell">
 <a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.set_unit_cell">[docs]</a>
-    <span class="k">def</span> <span class="nf">set_unit_cell</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cell</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_unit_cell</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cell</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set unit cell.</span>
 
@@ -2318,7 +2324,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="PyVistaWidget.set_clip">
 <a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.set_clip">[docs]</a>
-    <span class="k">def</span> <span class="nf">set_clip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_clip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set clip mode.</span>
 
@@ -2340,7 +2346,7 @@
 
 
     <span class="c1"># ==================================================</span>
-    <span class="k">def</span> <span class="nf">hide_outside_actor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">hide_outside_actor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Hide actors outside the range.</span>
 
@@ -2368,7 +2374,7 @@
                                 <span class="bp">self</span><span class="o">.</span><span class="n">actors</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">SetVisibility</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
 
     <span class="c1"># ==================================================</span>
-    <span class="k">def</span> <span class="nf">clip_actor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">cell</span><span class="p">,</span> <span class="n">name_actor</span><span class="p">,</span> <span class="n">label_actor</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">clip_actor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">cell</span><span class="p">,</span> <span class="n">name_actor</span><span class="p">,</span> <span class="n">label_actor</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Clip actor.</span>
 
@@ -2395,7 +2401,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">actors</span><span class="p">[</span><span class="n">label_actor</span><span class="p">]</span><span class="o">.</span><span class="n">SetVisibility</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
 
     <span class="c1"># ==================================================</span>
-    <span class="k">def</span> <span class="nf">show_outside_actor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">show_outside_actor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Show actors outside the range.</span>
 
@@ -2422,7 +2428,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="PyVistaWidget.set_repeat">
 <a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.set_repeat">[docs]</a>
-    <span class="k">def</span> <span class="nf">set_repeat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_repeat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set repeat mode.</span>
 
@@ -2442,7 +2448,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="PyVistaWidget.set_range">
 <a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.set_range">[docs]</a>
-    <span class="k">def</span> <span class="nf">set_range</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">upper</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_range</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">upper</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set cell range.</span>
 
@@ -2482,7 +2488,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="PyVistaWidget.set_view">
 <a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.set_view">[docs]</a>
-    <span class="k">def</span> <span class="nf">set_view</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">view</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_view</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">view</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set view point.</span>
 
@@ -2515,7 +2521,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="PyVistaWidget.set_parallel_projection">
 <a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.set_parallel_projection">[docs]</a>
-    <span class="k">def</span> <span class="nf">set_parallel_projection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_parallel_projection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set parallel projection mode.</span>
 
@@ -2539,7 +2545,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="PyVistaWidget.set_grid">
 <a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.set_grid">[docs]</a>
-    <span class="k">def</span> <span class="nf">set_grid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_grid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set grid mode.</span>
 
@@ -2564,7 +2570,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="PyVistaWidget.set_bar">
 <a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.set_bar">[docs]</a>
-    <span class="k">def</span> <span class="nf">set_bar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_bar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set scalar bar mode.</span>
 
@@ -2596,7 +2602,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="PyVistaWidget.set_axis">
 <a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.set_axis">[docs]</a>
-    <span class="k">def</span> <span class="nf">set_axis</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">axis_type</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_axis</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">axis_type</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set axis widget.</span>
 
@@ -2648,7 +2654,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="PyVistaWidget.set_cell">
 <a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.set_cell">[docs]</a>
-    <span class="k">def</span> <span class="nf">set_cell</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_cell</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set unit cell.</span>
 
@@ -2674,7 +2680,7 @@
     <span class="c1"># ==================================================</span>
     <span class="c1"># internal use (general).</span>
     <span class="c1"># ==================================================</span>
-    <span class="k">def</span> <span class="nf">init_data_model</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">init_data_model</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initialize data model.</span>
 
@@ -2688,7 +2694,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="n">object_type</span><span class="p">]</span> <span class="o">=</span> <span class="n">GroupModel</span><span class="p">(</span><span class="n">object_type</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
 
     <span class="c1"># ==================================================</span>
-    <span class="k">def</span> <span class="nf">set_theme</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">theme</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_theme</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">theme</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set pyvista theme.</span>
 
@@ -2708,7 +2714,7 @@
         <span class="n">pv</span><span class="o">.</span><span class="n">global_theme</span><span class="o">.</span><span class="n">allow_empty_mesh</span> <span class="o">=</span> <span class="kc">True</span>
 
     <span class="c1"># ==================================================</span>
-    <span class="k">def</span> <span class="nf">show_cell</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dimensions</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">show_cell</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dimensions</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Show unit cell.</span>
 
@@ -2741,7 +2747,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">screen_on</span><span class="p">()</span>
 
     <span class="c1"># ==================================================</span>
-    <span class="k">def</span> <span class="nf">set_light</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">light_type</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">intensity</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_light</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">light_type</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">intensity</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set light.</span>
 
@@ -2790,7 +2796,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">add_light</span><span class="p">(</span><span class="n">light</span><span class="p">)</span>
 
     <span class="c1"># ==================================================</span>
-    <span class="k">def</span> <span class="nf">set_latex</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_latex</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set LaTeX environment.</span>
 
@@ -2801,7 +2807,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="PyVistaWidget.screen_off">
 <a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.screen_off">[docs]</a>
-    <span class="k">def</span> <span class="nf">screen_off</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">screen_off</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Screen off.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -2811,7 +2817,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="PyVistaWidget.screen_on">
 <a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.screen_on">[docs]</a>
-    <span class="k">def</span> <span class="nf">screen_on</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">screen_on</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Screen on.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -2821,7 +2827,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="PyVistaWidget.clear_data">
 <a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.clear_data">[docs]</a>
-    <span class="k">def</span> <span class="nf">clear_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">clear_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Clear Data.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -2829,7 +2835,7 @@
 
 
     <span class="c1"># ==================================================</span>
-    <span class="k">def</span> <span class="nf">get_camera_info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_camera_info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get camera info.</span>
 
@@ -2860,7 +2866,7 @@
         <span class="k">return</span> <span class="n">dic</span>
 
     <span class="c1"># ==================================================</span>
-    <span class="k">def</span> <span class="nf">set_camera_info</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">info</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_camera_info</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">info</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get camera info.</span>
 
@@ -2881,7 +2887,7 @@
     <span class="c1"># ==================================================</span>
     <span class="c1"># internal use (access data).</span>
     <span class="c1"># ==================================================</span>
-    <span class="k">def</span> <span class="nf">add_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add data.</span>
 
@@ -2899,7 +2905,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="n">object_type</span><span class="p">]</span><span class="o">.</span><span class="n">block_update_widget</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
 
     <span class="c1"># ==================================================</span>
-    <span class="k">def</span> <span class="nf">repeat_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">repeat_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Repeat data.</span>
 
@@ -2921,7 +2927,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="PyVistaWidget.set_nonrepeat">
 <a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.set_nonrepeat">[docs]</a>
-    <span class="k">def</span> <span class="nf">set_nonrepeat</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_nonrepeat</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Transform data to non-repeat data.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -2929,7 +2935,7 @@
 
 
     <span class="c1"># ==================================================</span>
-    <span class="k">def</span> <span class="nf">nonrepeat_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">nonrepeat_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Transform data to non-repeat data.</span>
 
@@ -2951,7 +2957,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">reload</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 
     <span class="c1"># ==================================================</span>
-    <span class="k">def</span> <span class="nf">set_actor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">object_type</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">actor_name</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="n">COLUMN_NAME_ACTOR</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_actor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">object_type</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">actor_name</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="n">COLUMN_NAME_ACTOR</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set actor.</span>
 
@@ -2974,7 +2980,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_selected_actor</span><span class="p">[</span><span class="n">actor_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">actor</span><span class="o">.</span><span class="n">prop</span><span class="o">.</span><span class="n">show_edges</span><span class="p">,</span> <span class="n">actor</span><span class="o">.</span><span class="n">prop</span><span class="o">.</span><span class="n">edge_color</span><span class="p">)</span>
 
     <span class="c1"># ==================================================</span>
-    <span class="k">def</span> <span class="nf">delete_actor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">actor_name</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">delete_actor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">actor_name</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Remove actor.</span>
 
@@ -2989,7 +2995,7 @@
                 <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_actor_object_type</span><span class="p">[</span><span class="n">actor_name</span><span class="p">]</span>
 
     <span class="c1"># ==================================================</span>
-    <span class="k">def</span> <span class="nf">change_check_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">object_type</span><span class="p">,</span> <span class="n">row_data</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">change_check_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">object_type</span><span class="p">,</span> <span class="n">row_data</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Change check state (when name is off, label is also off).</span>
 
@@ -3010,7 +3016,7 @@
     <span class="c1"># ==================================================</span>
     <span class="c1"># internal use (gui interface).</span>
     <span class="c1"># ==================================================</span>
-    <span class="k">def</span> <span class="nf">open_tab_group_view</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">open_tab_group_view</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Open tab group view.</span>
 
@@ -3020,7 +3026,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_tab_group_view</span><span class="o">.</span><span class="n">update_widget</span><span class="p">()</span>
 
     <span class="c1"># ==================================================</span>
-    <span class="k">def</span> <span class="nf">release_mouse</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">release_mouse</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Release mouse button.</span>
 
@@ -3038,7 +3044,7 @@
         <span class="n">QCoreApplication</span><span class="o">.</span><span class="n">sendEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">)</span>
 
     <span class="c1"># ==================================================</span>
-    <span class="k">def</span> <span class="nf">keyPressEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">keyPressEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        In order to prevent default keys.</span>
 
@@ -3051,7 +3057,7 @@
             <span class="k">pass</span>
 
     <span class="c1"># ==================================================</span>
-    <span class="k">def</span> <span class="nf">closeEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">closeEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        In order to close QInteractor, and opened dialogs.</span>
 
@@ -3060,7 +3066,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
     <span class="c1"># ==================================================</span>
-    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        In order to close QInteractor, and opened dialogs.</span>
 
@@ -3070,7 +3076,7 @@
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
     <span class="c1"># ==================================================</span>
-    <span class="k">def</span> <span class="nf">remove_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">object_type</span><span class="p">,</span> <span class="n">row_data</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">remove_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">object_type</span><span class="p">,</span> <span class="n">row_data</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Remove data.</span>
 
@@ -3096,7 +3102,7 @@
     <span class="c1"># ==================================================</span>
     <span class="c1"># internal use (context menu).</span>
     <span class="c1"># ==================================================</span>
-    <span class="k">def</span> <span class="nf">show_context_menu</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">actor</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">show_context_menu</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">actor</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Show context menu.</span>
 
@@ -3132,7 +3138,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">deselect_actor</span><span class="p">(</span><span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
 
     <span class="c1"># ==================================================</span>
-    <span class="k">def</span> <span class="nf">open_action</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">actor</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">open_action</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">actor</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Action for open in context menum.</span>
 
@@ -3147,7 +3153,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_tab_group_view</span><span class="o">.</span><span class="n">view</span><span class="p">[</span><span class="n">object_type</span><span class="p">]</span><span class="o">.</span><span class="n">select_row</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
 
     <span class="c1"># ==================================================</span>
-    <span class="k">def</span> <span class="nf">hide_action</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">actor</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">hide_action</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">actor</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Action for hide in context menu.</span>
 
@@ -3161,7 +3167,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="n">object_type</span><span class="p">]</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">UNCHECK</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">CheckStateRole</span><span class="p">)</span>
 
     <span class="c1"># ==================================================</span>
-    <span class="k">def</span> <span class="nf">remove_action</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">actor</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">remove_action</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">actor</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Action for remove in context menu.</span>
 
@@ -3175,7 +3181,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">deselect_actor_all</span><span class="p">()</span>
 
     <span class="c1"># ==================================================</span>
-    <span class="k">def</span> <span class="nf">select_actor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">actor_name</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">select_actor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">actor_name</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Select actor with spotlight.</span>
 
@@ -3200,7 +3206,7 @@
         <span class="n">actor</span><span class="o">.</span><span class="n">prop</span><span class="o">.</span><span class="n">edge_color</span> <span class="o">=</span> <span class="n">color</span>
 
     <span class="c1"># ==================================================</span>
-    <span class="k">def</span> <span class="nf">deselect_actor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">actor_name</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">deselect_actor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">actor_name</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Deselect actor with reset of spotlight.</span>
 
@@ -3217,7 +3223,7 @@
             <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_selected_actor</span><span class="p">[</span><span class="n">actor_name</span><span class="p">]</span>
 
     <span class="c1"># ==================================================</span>
-    <span class="k">def</span> <span class="nf">deselect_actor_all</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">deselect_actor_all</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Deselect all selected actors.</span>
 
@@ -3231,7 +3237,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_selected_actor</span> <span class="o">=</span> <span class="p">{}</span>
 
     <span class="c1"># ==================================================</span>
-    <span class="k">def</span> <span class="nf">change_selection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">object_type</span><span class="p">,</span> <span class="n">deselect</span><span class="p">,</span> <span class="n">select</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">change_selection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">object_type</span><span class="p">,</span> <span class="n">deselect</span><span class="p">,</span> <span class="n">select</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Change selection for spotlight.</span>
 
@@ -3260,7 +3266,7 @@
                     <span class="bp">self</span><span class="o">.</span><span class="n">select_actor</span><span class="p">(</span><span class="n">actor_name</span><span class="p">)</span>
 
     <span class="c1"># ==================================================</span>
-    <span class="k">def</span> <span class="nf">find_index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">actor</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">find_index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">actor</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Find index from actor.</span>
 
@@ -3285,7 +3291,7 @@
     <span class="c1"># ==================================================</span>
     <span class="c1"># internal use (add object utility).</span>
     <span class="c1"># ==================================================</span>
-    <span class="k">def</span> <span class="nf">set_common_row_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">object_type</span><span class="p">,</span> <span class="n">opacity</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">cell</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">margin</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_common_row_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">object_type</span><span class="p">,</span> <span class="n">opacity</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">cell</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">margin</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set common row data.</span>
 
@@ -3330,7 +3336,7 @@
     <span class="c1"># ==================================================</span>
     <span class="c1"># internal use (plot object utility).</span>
     <span class="c1"># ==================================================</span>
-    <span class="k">def</span> <span class="nf">plot_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">object_type</span><span class="p">,</span> <span class="n">row_data</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">plot_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">object_type</span><span class="p">,</span> <span class="n">row_data</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Plot mesh from data.</span>
 
@@ -3354,7 +3360,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">plot_label</span><span class="p">(</span><span class="n">object_type</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">row_info</span><span class="p">,</span> <span class="n">positionT</span><span class="p">)</span>
 
     <span class="c1"># ==================================================</span>
-    <span class="k">def</span> <span class="nf">redraw</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">redraw</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Redraw all object.</span>
 
@@ -3364,7 +3370,7 @@
             <span class="n">model</span><span class="o">.</span><span class="n">emit_update_all</span><span class="p">()</span>
 
     <span class="c1"># ==================================================</span>
-    <span class="k">def</span> <span class="nf">common_option</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">actor</span><span class="p">,</span> <span class="n">positionT</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">common_option</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">actor</span><span class="p">,</span> <span class="n">positionT</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create common option to plot.</span>
 
@@ -3397,7 +3403,7 @@
         <span class="k">return</span> <span class="n">option</span>
 
     <span class="c1"># ==================================================</span>
-    <span class="k">def</span> <span class="nf">label_option</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">positionT</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">margin</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">label_option</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">positionT</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">margin</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create common option to plot.</span>
 
@@ -3427,7 +3433,7 @@
         <span class="k">return</span> <span class="n">option</span>
 
     <span class="c1"># ==================================================</span>
-    <span class="k">def</span> <span class="nf">check_hide</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row_data</span><span class="p">,</span> <span class="n">no_label</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">check_hide</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row_data</span><span class="p">,</span> <span class="n">no_label</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Check hide state.</span>
 
@@ -3466,7 +3472,7 @@
     <span class="c1"># ==================================================</span>
     <span class="c1"># internal use (plot each object).</span>
     <span class="c1"># ==================================================</span>
-    <span class="k">def</span> <span class="nf">plot_data_site</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">positionT</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">plot_data_site</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">positionT</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Plot site.</span>
 
@@ -3493,7 +3499,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">clip_actor</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;cell&quot;</span><span class="p">],</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;label_actor&quot;</span><span class="p">])</span>
 
     <span class="c1"># ==================================================</span>
-    <span class="k">def</span> <span class="nf">plot_data_bond</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">positionT</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">plot_data_bond</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">positionT</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Plot bond.</span>
 
@@ -3530,7 +3536,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">clip_actor</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;cell&quot;</span><span class="p">],</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;label_actor&quot;</span><span class="p">])</span>
 
     <span class="c1"># ==================================================</span>
-    <span class="k">def</span> <span class="nf">plot_data_vector</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">positionT</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">plot_data_vector</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">positionT</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Plot vector.</span>
 
@@ -3574,7 +3580,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">clip_actor</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;cell&quot;</span><span class="p">],</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;label_actor&quot;</span><span class="p">])</span>
 
     <span class="c1"># ==================================================</span>
-    <span class="k">def</span> <span class="nf">plot_data_orbital</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">positionT</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">plot_data_orbital</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">positionT</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Plot orbital.</span>
 
@@ -3622,7 +3628,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">clip_actor</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;cell&quot;</span><span class="p">],</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;label_actor&quot;</span><span class="p">])</span>
 
     <span class="c1"># ==================================================</span>
-    <span class="k">def</span> <span class="nf">plot_data_stream</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">positionT</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">plot_data_stream</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">positionT</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Plot stream (vectors in cartesian coordinate).</span>
 
@@ -3699,7 +3705,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">clip_actor</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;cell&quot;</span><span class="p">],</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;label_actor&quot;</span><span class="p">])</span>
 
     <span class="c1"># ==================================================</span>
-    <span class="k">def</span> <span class="nf">plot_data_line</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">positionT</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">plot_data_line</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">positionT</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Plot line.</span>
 
@@ -3736,7 +3742,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">clip_actor</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;cell&quot;</span><span class="p">],</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;label_actor&quot;</span><span class="p">])</span>
 
     <span class="c1"># ==================================================</span>
-    <span class="k">def</span> <span class="nf">plot_data_plane</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">positionT</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">plot_data_plane</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">positionT</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Plot plane.</span>
 
@@ -3777,7 +3783,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">clip_actor</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;cell&quot;</span><span class="p">],</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;label_actor&quot;</span><span class="p">])</span>
 
     <span class="c1"># ==================================================</span>
-    <span class="k">def</span> <span class="nf">plot_data_circle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">positionT</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">plot_data_circle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">positionT</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Plot circle.</span>
 
@@ -3817,7 +3823,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">clip_actor</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;cell&quot;</span><span class="p">],</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;label_actor&quot;</span><span class="p">])</span>
 
     <span class="c1"># ==================================================</span>
-    <span class="k">def</span> <span class="nf">plot_data_torus</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">positionT</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">plot_data_torus</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">positionT</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Plot torus.</span>
 
@@ -3849,7 +3855,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">clip_actor</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;cell&quot;</span><span class="p">],</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;label_actor&quot;</span><span class="p">])</span>
 
     <span class="c1"># ==================================================</span>
-    <span class="k">def</span> <span class="nf">plot_data_ellipsoid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">positionT</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">plot_data_ellipsoid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">positionT</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Plot ellipsoid.</span>
 
@@ -3882,7 +3888,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">clip_actor</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;cell&quot;</span><span class="p">],</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;label_actor&quot;</span><span class="p">])</span>
 
     <span class="c1"># ==================================================</span>
-    <span class="k">def</span> <span class="nf">plot_data_toroid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">positionT</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">plot_data_toroid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">positionT</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Plot toroid.</span>
 
@@ -3928,7 +3934,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">clip_actor</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;cell&quot;</span><span class="p">],</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;label_actor&quot;</span><span class="p">])</span>
 
     <span class="c1"># ==================================================</span>
-    <span class="k">def</span> <span class="nf">plot_data_box</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">positionT</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">plot_data_box</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">positionT</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Plot box.</span>
 
@@ -3980,7 +3986,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">clip_actor</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;cell&quot;</span><span class="p">],</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;label_actor&quot;</span><span class="p">])</span>
 
     <span class="c1"># ==================================================</span>
-    <span class="k">def</span> <span class="nf">plot_data_polygon</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">positionT</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">plot_data_polygon</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">positionT</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Plot polygon.</span>
 
@@ -4030,7 +4036,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">clip_actor</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;cell&quot;</span><span class="p">],</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;label_actor&quot;</span><span class="p">])</span>
 
     <span class="c1"># ==================================================</span>
-    <span class="k">def</span> <span class="nf">plot_data_text3d</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">positionT</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">plot_data_text3d</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">positionT</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Plot text3d (view and offset in reduced coordinate).</span>
 
@@ -4071,7 +4077,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">clip_actor</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;cell&quot;</span><span class="p">],</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;label_actor&quot;</span><span class="p">])</span>
 
     <span class="c1"># ==================================================</span>
-    <span class="k">def</span> <span class="nf">plot_data_isosurface</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">positionT</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">plot_data_isosurface</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">positionT</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Plot isosurface.</span>
 
@@ -4131,7 +4137,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">clip_actor</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;cell&quot;</span><span class="p">],</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;label_actor&quot;</span><span class="p">])</span>
 
     <span class="c1"># ==================================================</span>
-    <span class="k">def</span> <span class="nf">plot_data_spline</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">positionT</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">plot_data_spline</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">positionT</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Plot spline.</span>
 
@@ -4179,7 +4185,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">clip_actor</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;cell&quot;</span><span class="p">],</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;label_actor&quot;</span><span class="p">])</span>
 
     <span class="c1"># ==================================================</span>
-    <span class="k">def</span> <span class="nf">plot_data_spline_t</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">positionT</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">plot_data_spline_t</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">positionT</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Plot spline (parametric).</span>
 
@@ -4219,7 +4225,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">clip_actor</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;cell&quot;</span><span class="p">],</span> <span class="n">actor</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;label_actor&quot;</span><span class="p">])</span>
 
     <span class="c1"># ==================================================</span>
-    <span class="k">def</span> <span class="nf">plot_data_caption</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">positionT</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">plot_data_caption</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">positionT</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Plot caption.</span>
 
@@ -4260,7 +4266,7 @@
         <span class="c1"># no implementation for clip_actor</span>
 
     <span class="c1"># ==================================================</span>
-    <span class="k">def</span> <span class="nf">plot_data_text2d</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">positionT</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">plot_data_text2d</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">positionT</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Plot text 2d.</span>
 
@@ -4297,7 +4303,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">set_actor</span><span class="p">(</span><span class="s2">&quot;text2d&quot;</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">actor</span><span class="p">)</span>
 
     <span class="c1"># ==================================================</span>
-    <span class="k">def</span> <span class="nf">plot_label</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">object_type</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">positionT</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">plot_label</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">object_type</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">positionT</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Plot label.</span>
 
@@ -4324,7 +4330,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">set_actor</span><span class="p">(</span><span class="n">object_type</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">actor</span> <span class="o">+</span> <span class="s2">&quot;-labels&quot;</span><span class="p">,</span> <span class="n">COLUMN_LABEL_ACTOR</span><span class="p">)</span>
 
     <span class="c1"># ==================================================</span>
-    <span class="k">def</span> <span class="nf">set_isosurface_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_isosurface_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set isosurface data.</span>
 
@@ -4354,7 +4360,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="PyVistaWidget.plot_orbital_from_data">
 <a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.plot_orbital_from_data">[docs]</a>
-    <span class="k">def</span> <span class="nf">plot_orbital_from_data</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">plot_orbital_from_data</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">name</span><span class="p">,</span>
         <span class="n">shape</span><span class="p">,</span>
@@ -4420,7 +4426,7 @@
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="PyVistaWidget.plot_stream_from_data">
 <a class="viewcode-back" href="../../../src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.plot_stream_from_data">[docs]</a>
-    <span class="k">def</span> <span class="nf">plot_stream_from_data</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">plot_stream_from_data</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">name</span><span class="p">,</span>
         <span class="n">vector</span><span class="p">,</span>
@@ -4573,8 +4579,8 @@ By Hiroaki Kusunose
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="../../../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
-<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
 
   <footer class="bd-footer">
   </footer>

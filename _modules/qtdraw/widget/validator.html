@@ -15,8 +15,8 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
-  <!-- 
-    this give us a css class that will be invisible only if js is disabled 
+  <!--
+    this give us a css class that will be invisible only if js is disabled
   -->
   <noscript>
     <style>
@@ -26,22 +26,23 @@
   </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
-<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+  <link href="../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=5f1b4820" />
   
   <!-- So that users can add custom icons -->
-  <script src="../../../_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
+  <script src="../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
-<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
     <script src="../../../_static/documentation_options.js?v=8cf54648"></script>
     <script src="../../../_static/doctools.js?v=9bcbadda"></script>
@@ -188,9 +189,14 @@
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
   </div>
-  
-  <div id="rtd-footer-container"></div>
 
 
       </div>
@@ -339,15 +345,15 @@
 <span class="sd">    - orbital_site_bond: (use variable?)</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">sympy</span> <span class="k">as</span> <span class="nn">sp</span>
-<span class="kn">from</span> <span class="nn">qtdraw.util.util_str</span> <span class="kn">import</span> <span class="n">str_to_numpy</span><span class="p">,</span> <span class="n">apply_to_numpy</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sympy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sp</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw.util.util_str</span><span class="w"> </span><span class="kn">import</span> <span class="n">str_to_numpy</span><span class="p">,</span> <span class="n">apply_to_numpy</span>
 
 
 <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="validator_int">
 <a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.validator.validator_int">[docs]</a>
-<span class="k">def</span> <span class="nf">validator_int</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">opt</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">validator_int</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">opt</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Validator for int.</span>
 
@@ -379,7 +385,7 @@
 <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="validator_float">
 <a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.validator.validator_float">[docs]</a>
-<span class="k">def</span> <span class="nf">validator_float</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">opt</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">validator_float</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">opt</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Validator for float.</span>
 
@@ -413,7 +419,7 @@
 <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="validator_sympy_float">
 <a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.validator.validator_sympy_float">[docs]</a>
-<span class="k">def</span> <span class="nf">validator_sympy_float</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">opt</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">validator_sympy_float</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">opt</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Validator for sympy.</span>
 
@@ -446,7 +452,7 @@
 <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="validator_sympy">
 <a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.validator.validator_sympy">[docs]</a>
-<span class="k">def</span> <span class="nf">validator_sympy</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">opt</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">validator_sympy</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">opt</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Validator for sympy.</span>
 
@@ -476,7 +482,7 @@
 <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="validator_ilist">
 <a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.validator.validator_ilist">[docs]</a>
-<span class="k">def</span> <span class="nf">validator_ilist</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">opt</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">validator_ilist</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">opt</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Validator for int list.</span>
 
@@ -512,7 +518,7 @@
 <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="validator_list">
 <a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.validator.validator_list">[docs]</a>
-<span class="k">def</span> <span class="nf">validator_list</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">opt</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">validator_list</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">opt</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Validator for sympy list.</span>
 
@@ -544,7 +550,7 @@
 <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="validator_site">
 <a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.validator.validator_site">[docs]</a>
-<span class="k">def</span> <span class="nf">validator_site</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">use_var</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">validator_site</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">use_var</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Validator for site.</span>
 
@@ -573,7 +579,7 @@
 <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="validator_bond">
 <a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.validator.validator_bond">[docs]</a>
-<span class="k">def</span> <span class="nf">validator_bond</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">use_var</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">validator_bond</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">use_var</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Validator for bond.</span>
 
@@ -613,7 +619,7 @@
 <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="validator_site_bond">
 <a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.validator.validator_site_bond">[docs]</a>
-<span class="k">def</span> <span class="nf">validator_site_bond</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">use_var</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">validator_site_bond</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">use_var</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Validator for site or bond.</span>
 
@@ -637,7 +643,7 @@
 <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="validator_vector_site_bond">
 <a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.validator.validator_vector_site_bond">[docs]</a>
-<span class="k">def</span> <span class="nf">validator_vector_site_bond</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">use_var</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">validator_vector_site_bond</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">use_var</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Validator for vector on site or bond.</span>
 
@@ -672,7 +678,7 @@
 <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="validator_orbital_site_bond">
 <a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.validator.validator_orbital_site_bond">[docs]</a>
-<span class="k">def</span> <span class="nf">validator_orbital_site_bond</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">use_var</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">validator_orbital_site_bond</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">use_var</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Validator for orbital on site or bond.</span>
 
@@ -759,8 +765,8 @@ By Hiroaki Kusunose
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="../../../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
-<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
 
   <footer class="bd-footer">
   </footer>
