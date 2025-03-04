@@ -19,7 +19,7 @@ default_status = {
     "repeat": False,
     "lower": [0.0, 0.0, 0.0],
     "upper": [1.0, 1.0, 1.0],
-    "view": [4, 5, 2],  # indices of [a1,a2,a3] unit vectors.
+    "view": [6, 5, 1],  # indices of [a1,a2,a3] unit vectors.
     "parallel_projection": True,
     "grid": False,
     "bar": False,
@@ -56,7 +56,7 @@ default_preference = {
         "default_check": False,
     },
     "cell": {
-        "line_width": 1.0,
+        "line_width": 1.5,
         "color": "black",
         "opacity": 1.0,
     },
@@ -91,7 +91,7 @@ widget_detail = {
     "extension": ".qtdw",
     "ext_material": [".vesta", ".cif", ".xsf"],
     "log_level": "error",  # debug/info/warning/error/critical.
-    "default_view": [4, 5, 2],
+    "default_view": [6, 5, 1],
     "image_file": [".png", ".bmp", ".tif", ".tiff"],
     "vector_file": [".svg", ".eps", ".ps", ".pdf"],
     # axis.
