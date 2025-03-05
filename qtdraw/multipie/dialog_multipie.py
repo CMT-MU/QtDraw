@@ -1300,7 +1300,7 @@ class MultiPieDialog(QDialog):
         return lst
 
     # ==================================================
-    def basis_add_site(self, scale=1.0):
+    def basis_add_site(self, scale=None):
         """
         Add site cluster SAMB.
 
@@ -1361,7 +1361,7 @@ class MultiPieDialog(QDialog):
         return lst
 
     # ==================================================
-    def basis_add_bond(self, scale=1.0):
+    def basis_add_bond(self, scale=None):
         """
         Add bond cluster SAMB.
 
