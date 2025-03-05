@@ -699,6 +699,8 @@ class MultiPiePlugin:
         obj /= np.abs(obj).max()
         n_pset = len(pset)
         size = detail["samb"]["site_size"]
+        if scale is None or type(scale) == bool:
+            scale = detail["samb"]["site_scale"]
 
         count = self.counter("site_samb") + 1
         name = f"Z_{count:03}"
@@ -750,7 +752,8 @@ class MultiPiePlugin:
         obj /= np.abs(obj).max()
         n_pset = len(pset)
         width = detail["samb"]["bond_width"]
-        scale = detail["samb"]["bond_scale"]
+        if scale is None or type(scale) == bool:
+            scale = detail["samb"]["bond_scale"]
 
         count = self.counter("bond_samb") + 1
         name = f"Z_{count:02}"
@@ -985,7 +988,6 @@ class MultiPiePlugin:
 
         color = "salmon"
         n_pset = len(pset)
-        scale = detail["samb"]["hopping_scale"]
 
         count = self.counter("hopping") + 1
         name = f"Z_{count:02}"
