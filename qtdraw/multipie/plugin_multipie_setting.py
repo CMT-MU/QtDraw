@@ -129,12 +129,12 @@ plugin_detail = {
     },
     "samb": {
         "site_size": 0.05,
+        "site_scale": 0.7,
         "bond_width": 0.03,
         "bond_scale": 0.7,
         "vector_width": 0.02,
         "orbital_size": -0.2,
         "orbital_mod": -0.2,
-        "hopping_scale": 0.7,
     },
     "group": {"harmonics_size": 0.3},
 }
