@@ -33,7 +33,7 @@
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=5f1b4820" />
@@ -394,7 +394,7 @@
 
     <span class="n">f</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">lambdify</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">ex</span><span class="p">)</span>
     <span class="n">fv</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">ex</span><span class="o">.</span><span class="n">atoms</span><span class="p">(</span><span class="n">sp</span><span class="o">.</span><span class="n">Symbol</span><span class="p">))):</span>  <span class="c1"># for const.</span>
+    <span class="k">if</span> <span class="n">ex</span><span class="o">.</span><span class="n">is_Number</span><span class="p">:</span>  <span class="c1"># for const.</span>
         <span class="n">fv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">fv</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
 
     <span class="n">max_f</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">fv</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
@@ -692,10 +692,9 @@
     <span class="n">fv</span><span class="p">,</span> <span class="n">fva</span> <span class="o">=</span> <span class="n">_str_vec_array</span><span class="p">(</span><span class="n">vector</span><span class="p">,</span> <span class="n">stream_vec</span><span class="o">.</span><span class="n">points</span><span class="p">)</span>
 
     <span class="c1"># eliminate zero length points.</span>
-    <span class="n">idx</span> <span class="o">=</span> <span class="n">fva</span> <span class="o">&gt;</span> <span class="n">CHOP</span>
-    <span class="n">stream_vec</span> <span class="o">=</span> <span class="n">stream_vec</span><span class="o">.</span><span class="n">extract_points</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
-    <span class="n">stream_vec</span><span class="p">[</span><span class="s2">&quot;vector&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">fv</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
-    <span class="n">stream_vec</span><span class="p">[</span><span class="s2">&quot;vector_abs&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">fva</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+    <span class="n">stream_vec</span><span class="p">[</span><span class="s2">&quot;vector&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">fv</span>
+    <span class="n">stream_vec</span><span class="p">[</span><span class="s2">&quot;vector_abs&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">fva</span>
+    <span class="n">stream_vec</span> <span class="o">=</span> <span class="n">stream_vec</span><span class="o">.</span><span class="n">extract_points</span><span class="p">(</span><span class="n">fva</span> <span class="o">&gt;</span> <span class="n">CHOP</span><span class="p">,</span> <span class="n">include_cells</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
     <span class="n">g</span> <span class="o">=</span> <span class="n">create_vector</span><span class="p">(</span>
         <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]),</span>
@@ -1293,10 +1292,9 @@
     <span class="n">vec_norm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">vector</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
     <span class="c1"># eliminate zero length points.</span>
-    <span class="n">idx</span> <span class="o">=</span> <span class="n">vec_norm</span> <span class="o">&gt;</span> <span class="n">CHOP</span>
-    <span class="n">stream_vec</span> <span class="o">=</span> <span class="n">stream_vec</span><span class="o">.</span><span class="n">extract_points</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
-    <span class="n">stream_vec</span><span class="p">[</span><span class="s2">&quot;vector&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">vector</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
-    <span class="n">stream_vec</span><span class="p">[</span><span class="s2">&quot;vector_abs&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">vec_norm</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+    <span class="n">stream_vec</span><span class="p">[</span><span class="s2">&quot;vector&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">vector</span>
+    <span class="n">stream_vec</span><span class="p">[</span><span class="s2">&quot;vector_abs&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">vec_norm</span>
+    <span class="n">stream_vec</span> <span class="o">=</span> <span class="n">stream_vec</span><span class="o">.</span><span class="n">extract_points</span><span class="p">(</span><span class="n">vec_norm</span> <span class="o">&gt;</span> <span class="n">CHOP</span><span class="p">,</span> <span class="n">include_cells</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
     <span class="n">g</span> <span class="o">=</span> <span class="n">create_vector</span><span class="p">(</span>
         <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]),</span>

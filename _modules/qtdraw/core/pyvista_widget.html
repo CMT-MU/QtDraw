@@ -33,7 +33,7 @@
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=5f1b4820" />
@@ -1902,11 +1902,14 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_backup</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span>
 
-        <span class="n">all_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_backup</span>
+        <span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_backup</span><span class="p">[</span><span class="s2">&quot;status&quot;</span><span class="p">]</span>
+        <span class="n">preference</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_backup</span><span class="p">[</span><span class="s2">&quot;preference&quot;</span><span class="p">]</span>
+        <span class="n">camera</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_backup</span><span class="p">[</span><span class="s2">&quot;camera&quot;</span><span class="p">]</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_backup</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">]</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">set_property</span><span class="p">(</span><span class="n">all_data</span><span class="p">[</span><span class="s2">&quot;status&quot;</span><span class="p">],</span> <span class="n">all_data</span><span class="p">[</span><span class="s2">&quot;preference&quot;</span><span class="p">])</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">set_camera_info</span><span class="p">(</span><span class="n">all_data</span><span class="p">[</span><span class="s2">&quot;camera&quot;</span><span class="p">])</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">reload</span><span class="p">(</span><span class="n">all_data</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_property</span><span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="n">preference</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_camera_info</span><span class="p">(</span><span class="n">camera</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reload</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
 
     <span class="c1"># ==================================================</span>
