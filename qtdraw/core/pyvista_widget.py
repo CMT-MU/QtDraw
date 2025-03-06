@@ -1501,11 +1501,14 @@ class PyVistaWidget(QtInteractor):
         if self._backup is None:
             return
 
-        all_data = self._backup
+        status = self._backup["status"]
+        preference = self._backup["preference"]
+        camera = self._backup["camera"]
+        data = self._backup["data"]
 
-        self.set_property(all_data["status"], all_data["preference"])
-        self.set_camera_info(all_data["camera"])
-        self.reload(all_data["data"])
+        self.set_property(status, preference)
+        self.set_camera_info(camera)
+        self.reload(data)
         self.refresh()
 
     # ==================================================
