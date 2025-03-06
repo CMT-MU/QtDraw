@@ -8,7 +8,7 @@ import os
 import warnings
 from pathlib import Path
 import logging
-from PySide6.QtWidgets import QWidget, QMessageBox, QFileDialog
+from PySide6.QtWidgets import QWidget, QMessageBox, QFileDialog, QDialog
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QFont
 from qtdraw.widget.custom_widget import Label, Layout, LineEdit, HBar, Button, Combo, VSpacer
@@ -17,7 +17,7 @@ from qtdraw.util.logging_util import LogWidget
 from qtdraw.core.pyvista_widget_setting import widget_detail as detail
 from qtdraw.core.dialog_preference import PreferenceDialog
 from qtdraw.core.dialog_about import AboutDialog
-from qtdraw.util.util import check_multipie
+from qtdraw.util.util import check_multipie, create_style_sheet
 from qtdraw.core.dialog_about import get_version_info
 
 
@@ -291,13 +291,13 @@ class QtDraw(Window):
         label_c = Label(parent, "c")
         self.uc_edit_c = LineEdit(parent, "", ("sympy_float", 4))
 
-        label_alpha = Label(parent, "\u03B1")
+        label_alpha = Label(parent, "\u03b1")
         self.uc_edit_alpha = LineEdit(parent, "", ("sympy_float", 2))
 
-        label_beta = Label(parent, "\u03B2")
+        label_beta = Label(parent, "\u03b2")
         self.uc_edit_beta = LineEdit(parent, "", ("sympy_float", 2))
 
-        label_gamma = Label(parent, "\u03B3")
+        label_gamma = Label(parent, "\u03b3")
         self.uc_edit_gamma = LineEdit(parent, "", ("sympy_float", 2))
 
         panel1 = QWidget(parent)
@@ -1021,9 +1021,19 @@ class QtDraw(Window):
 
         :meta private:
         """
+        self.pyvista_widget.save_current()
         self.pref_dialog = PreferenceDialog(self.pyvista_widget, self)
-        self.pref_dialog.exec()  # open as modal mode.
+        status = self.pref_dialog.exec()  # open as modal mode.
         self.sender().setDown(False)  # reset push button.
+        if status == QDialog.Accepted:
+            self.app.setStyleSheet(create_style_sheet(self.pyvista_widget._preference["general"]["size"]))
+            self.pyvista_widget.refresh()
+            self.pyvista_widget.redraw()
+            self._update_panel()
+        else:
+            self.pyvista_widget.restore()
+            self.app.setStyleSheet(create_style_sheet(self.pyvista_widget._preference["general"]["size"]))
+            self._update_panel()
 
     # ==================================================
     def _show_about(self):
