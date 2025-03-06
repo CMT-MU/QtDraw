@@ -56,7 +56,7 @@ default_preference = {
         "default_check": False,
     },
     "cell": {
-        "line_width": 1.5,
+        "line_width": 2.0,
         "color": "black",
         "opacity": 1.0,
     },

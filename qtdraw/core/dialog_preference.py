@@ -27,7 +27,6 @@ class PreferenceDialog(QDialog):
 
         self.widget = widget
         self.preference = widget._preference
-        self.widget.save_current()
 
         panel_label = self.create_label_panel(self)
         panel_axis = self.create_axis_panel(self)
@@ -342,31 +341,6 @@ class PreferenceDialog(QDialog):
         spin_size.valueChanged.connect(lambda v: preference.update({"size": v}))
 
         return panel
-
-    # ==================================================
-    def accept(self):
-        """
-        Accept change.
-
-        :meta private:
-        """
-        self.parent().app.setStyleSheet(create_style_sheet(self.preference["general"]["size"]))
-        self.widget.refresh()
-        self.widget.redraw()
-        self.parent()._update_panel()
-        super().accept()
-
-    # ==================================================
-    def reject(self):
-        """
-        Reject change.
-
-        :meta private:
-        """
-        self.widget.restore()
-        self.parent().app.setStyleSheet(create_style_sheet(self.preference["general"]["size"]))
-        self.parent()._update_panel()
-        super().reject()
 
     # ==================================================
     def apply(self, button):
