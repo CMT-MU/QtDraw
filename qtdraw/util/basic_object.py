@@ -64,7 +64,7 @@ def _str_poly_array(poly, xyz, var=["x", "y", "z"], size=1.0):
 
     f = sp.lambdify(r, ex)
     fv = f(x, y, z)
-    if not sorted(map(str, ex.atoms(sp.Symbol))):  # for const.
+    if ex.is_Number:  # for const.
         fv = np.full(np.size(x), fv, dtype=np.float64)
 
     max_f = np.abs(fv).max()
@@ -348,10 +348,9 @@ def create_stream(
     fv, fva = _str_vec_array(vector, stream_vec.points)
 
     # eliminate zero length points.
-    idx = fva > CHOP
-    stream_vec = stream_vec.extract_points(idx)
-    stream_vec["vector"] = fv[idx]
-    stream_vec["vector_abs"] = fva[idx]
+    stream_vec["vector"] = fv
+    stream_vec["vector_abs"] = fva
+    stream_vec = stream_vec.extract_points(fva > CHOP, include_cells=False)
 
     g = create_vector(
         np.array([1.0, 0.0, 0.0]),
@@ -907,10 +906,9 @@ def create_stream_data(
     vec_norm = np.linalg.norm(vector, axis=1)
 
     # eliminate zero length points.
-    idx = vec_norm > CHOP
-    stream_vec = stream_vec.extract_points(idx)
-    stream_vec["vector"] = vector[idx]
-    stream_vec["vector_abs"] = vec_norm[idx]
+    stream_vec["vector"] = vector
+    stream_vec["vector_abs"] = vec_norm
+    stream_vec = stream_vec.extract_points(vec_norm > CHOP, include_cells=False)
 
     g = create_vector(
         np.array([1.0, 0.0, 0.0]),
