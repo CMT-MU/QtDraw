@@ -33,7 +33,7 @@
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=5f1b4820" />
@@ -338,7 +338,7 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">PySide6.QtWidgets</span><span class="w"> </span><span class="kn">import</span> <span class="n">QWidget</span><span class="p">,</span> <span class="n">QMessageBox</span><span class="p">,</span> <span class="n">QFileDialog</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">PySide6.QtWidgets</span><span class="w"> </span><span class="kn">import</span> <span class="n">QWidget</span><span class="p">,</span> <span class="n">QMessageBox</span><span class="p">,</span> <span class="n">QFileDialog</span><span class="p">,</span> <span class="n">QDialog</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">PySide6.QtCore</span><span class="w"> </span><span class="kn">import</span> <span class="n">Qt</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">PySide6.QtGui</span><span class="w"> </span><span class="kn">import</span> <span class="n">QFont</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw.widget.custom_widget</span><span class="w"> </span><span class="kn">import</span> <span class="n">Label</span><span class="p">,</span> <span class="n">Layout</span><span class="p">,</span> <span class="n">LineEdit</span><span class="p">,</span> <span class="n">HBar</span><span class="p">,</span> <span class="n">Button</span><span class="p">,</span> <span class="n">Combo</span><span class="p">,</span> <span class="n">VSpacer</span>
@@ -347,7 +347,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw.core.pyvista_widget_setting</span><span class="w"> </span><span class="kn">import</span> <span class="n">widget_detail</span> <span class="k">as</span> <span class="n">detail</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw.core.dialog_preference</span><span class="w"> </span><span class="kn">import</span> <span class="n">PreferenceDialog</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw.core.dialog_about</span><span class="w"> </span><span class="kn">import</span> <span class="n">AboutDialog</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw.util.util</span><span class="w"> </span><span class="kn">import</span> <span class="n">check_multipie</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw.util.util</span><span class="w"> </span><span class="kn">import</span> <span class="n">check_multipie</span><span class="p">,</span> <span class="n">create_style_sheet</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw.core.dialog_about</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_version_info</span>
 
 
@@ -623,13 +623,13 @@
         <span class="n">label_c</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;c&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">uc_edit_c</span> <span class="o">=</span> <span class="n">LineEdit</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="p">(</span><span class="s2">&quot;sympy_float&quot;</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
 
-        <span class="n">label_alpha</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\u03B1</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">label_alpha</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\u03b1</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">uc_edit_alpha</span> <span class="o">=</span> <span class="n">LineEdit</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="p">(</span><span class="s2">&quot;sympy_float&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
 
-        <span class="n">label_beta</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\u03B2</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">label_beta</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\u03b2</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">uc_edit_beta</span> <span class="o">=</span> <span class="n">LineEdit</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="p">(</span><span class="s2">&quot;sympy_float&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
 
-        <span class="n">label_gamma</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\u03B3</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">label_gamma</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\u03b3</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">uc_edit_gamma</span> <span class="o">=</span> <span class="n">LineEdit</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="p">(</span><span class="s2">&quot;sympy_float&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
 
         <span class="n">panel1</span> <span class="o">=</span> <span class="n">QWidget</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
@@ -1353,9 +1353,19 @@
 
 <span class="sd">        :meta private:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pyvista_widget</span><span class="o">.</span><span class="n">save_current</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pref_dialog</span> <span class="o">=</span> <span class="n">PreferenceDialog</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pyvista_widget</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">pref_dialog</span><span class="o">.</span><span class="n">exec</span><span class="p">()</span>  <span class="c1"># open as modal mode.</span>
+        <span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pref_dialog</span><span class="o">.</span><span class="n">exec</span><span class="p">()</span>  <span class="c1"># open as modal mode.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sender</span><span class="p">()</span><span class="o">.</span><span class="n">setDown</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>  <span class="c1"># reset push button.</span>
+        <span class="k">if</span> <span class="n">status</span> <span class="o">==</span> <span class="n">QDialog</span><span class="o">.</span><span class="n">Accepted</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="n">create_style_sheet</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pyvista_widget</span><span class="o">.</span><span class="n">_preference</span><span class="p">[</span><span class="s2">&quot;general&quot;</span><span class="p">][</span><span class="s2">&quot;size&quot;</span><span class="p">]))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pyvista_widget</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pyvista_widget</span><span class="o">.</span><span class="n">redraw</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_update_panel</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pyvista_widget</span><span class="o">.</span><span class="n">restore</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="n">create_style_sheet</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pyvista_widget</span><span class="o">.</span><span class="n">_preference</span><span class="p">[</span><span class="s2">&quot;general&quot;</span><span class="p">][</span><span class="s2">&quot;size&quot;</span><span class="p">]))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_update_panel</span><span class="p">()</span>
 
     <span class="c1"># ==================================================</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">_show_about</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
