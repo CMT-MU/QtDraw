@@ -40,11 +40,11 @@ default_preference = {
         "color_scheme": "Jmol",  # "VESTA/Jmol"
     },
     "light": {
-        "type": "five",  # "one/three/five/ver1"
-        "intensity": 0.0,
+        "type": "lightkit",  # "lightkit/3 lights/ver1"
+        "intensity": 0.5,
         "pbr": False,
         "metallic": 0.2,
-        "roughness": 0.5,
+        "roughness": 0.1,
         "color": "white",
     },
     "label": {

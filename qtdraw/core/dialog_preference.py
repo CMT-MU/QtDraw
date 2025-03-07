@@ -212,7 +212,7 @@ class PreferenceDialog(QDialog):
 
         # widgets.
         label_intensity = Label(parent, "intensity")
-        spin_intensity = DSpin(parent, 0.0, 1.0, 0.1)
+        spin_intensity = DSpin(parent, 0.0, 1.0, 0.05)
         check_pbr = Check(parent, "physics based rendering")
         label_metallic = Label(parent, "metallic")
         spin_metallic = DSpin(parent, 0.0, 1.0, 0.1)
@@ -221,7 +221,7 @@ class PreferenceDialog(QDialog):
         label_color = Label(parent, "color")
         combo_color = ColorSelector(parent, preference["color"], color_type="color")
         label_type = Label(parent, "type")
-        combo_type = Combo(parent, ["five", "three", "one", "ver1"])
+        combo_type = Combo(parent, ["lightkit", "3 lights", "ver1"])
 
         # set layout.
         layout.addWidget(label_type, 0, 0, 1, 1, Qt.AlignRight)
