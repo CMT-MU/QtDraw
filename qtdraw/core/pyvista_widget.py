@@ -2309,7 +2309,7 @@ class PyVistaWidget(QtInteractor):
         Set light.
 
         Args:
-            light_type (str, optional): light type, "one/three/five/ver1".
+            light_type (str, optional): light type, "lightkit/3 lights/ver1".
             color (str, optional): light color.
             intensity (float, optional): intensity of light.
 
@@ -2332,25 +2332,30 @@ class PyVistaWidget(QtInteractor):
         else:
             preference["intensity"] = intensity
 
-        if light_type == "five":
+        color = all_colors[color][1]
+
+        def set_light_prop(intensity, color):
+            for light in self.renderer.lights:
+                light.intensity = intensity
+                light.color = color
+                light.ambient_color = color
+                light.diffuse_color = color
+
+        if light_type == "lightkit":
+            self.remove_all_lights()
             self.enable_lightkit()
-        elif light_type == "three":
+            set_light_prop(intensity, color)
+        elif light_type == "3 lights":
+            self.remove_all_lights()
             self.enable_3_lights()
+            set_light_prop(intensity, color)
         elif light_type == "ver1":
             self.remove_all_lights()
             self.add_light(pv.Light(light_type="headlight", intensity=0.55))
-        else:
-            self.remove_all_lights()
-            intensity = intensity + 1.0
+            self.add_light(pv.Light(light_type="headlight", intensity=intensity))
 
         if preference["pbr"]:
-            intensity = intensity + 1.0
-
-        if light_type != "ver1":
-            light = pv.Light(color=color, intensity=intensity)
-        else:
-            light = pv.Light(light_type="headlight", intensity=intensity)
-        self.add_light(light)
+            self.add_light(pv.Light(color=color, light_type="headlight", intensity=1.0))
 
     # ==================================================
     def set_latex(self):
