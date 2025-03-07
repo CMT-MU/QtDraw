@@ -1358,7 +1358,7 @@ class QtDraw(Window):
 
         Args:
             direction (str, optional): vector direction. (default: [0,0,1])
-            length (float, optional): vector length. (default: 0.1)
+            length (float, optional): vector length. (default: 1.0)
             width (float, optional): vector width. (default: 0.02)
             offset (float, optional): vector offset. (default: -0.43)
             color (str, optional): vector color. (default: orange)
