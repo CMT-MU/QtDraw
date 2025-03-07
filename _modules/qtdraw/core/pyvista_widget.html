@@ -30,7 +30,7 @@
 <link href="../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
@@ -58,8 +58,6 @@
     <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script async="async" src="../../../_static/sphinx-thebe.js?v=c100c467"></script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>DOCUMENTATION_OPTIONS.pagename = '_modules/qtdraw/core/pyvista_widget';</script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
@@ -2755,7 +2753,7 @@
 <span class="sd">        Set light.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            light_type (str, optional): light type, &quot;one/three/five/ver1&quot;.</span>
+<span class="sd">            light_type (str, optional): light type, &quot;lightkit/3 lights/ver1&quot;.</span>
 <span class="sd">            color (str, optional): light color.</span>
 <span class="sd">            intensity (float, optional): intensity of light.</span>
 
@@ -2778,25 +2776,30 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="n">preference</span><span class="p">[</span><span class="s2">&quot;intensity&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">intensity</span>
 
-        <span class="k">if</span> <span class="n">light_type</span> <span class="o">==</span> <span class="s2">&quot;five&quot;</span><span class="p">:</span>
+        <span class="n">color</span> <span class="o">=</span> <span class="n">all_colors</span><span class="p">[</span><span class="n">color</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="k">def</span><span class="w"> </span><span class="nf">set_light_prop</span><span class="p">(</span><span class="n">intensity</span><span class="p">,</span> <span class="n">color</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">light</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">renderer</span><span class="o">.</span><span class="n">lights</span><span class="p">:</span>
+                <span class="n">light</span><span class="o">.</span><span class="n">intensity</span> <span class="o">=</span> <span class="n">intensity</span>
+                <span class="n">light</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="n">color</span>
+                <span class="n">light</span><span class="o">.</span><span class="n">ambient_color</span> <span class="o">=</span> <span class="n">color</span>
+                <span class="n">light</span><span class="o">.</span><span class="n">diffuse_color</span> <span class="o">=</span> <span class="n">color</span>
+
+        <span class="k">if</span> <span class="n">light_type</span> <span class="o">==</span> <span class="s2">&quot;lightkit&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">remove_all_lights</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">enable_lightkit</span><span class="p">()</span>
-        <span class="k">elif</span> <span class="n">light_type</span> <span class="o">==</span> <span class="s2">&quot;three&quot;</span><span class="p">:</span>
+            <span class="n">set_light_prop</span><span class="p">(</span><span class="n">intensity</span><span class="p">,</span> <span class="n">color</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">light_type</span> <span class="o">==</span> <span class="s2">&quot;3 lights&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">remove_all_lights</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">enable_3_lights</span><span class="p">()</span>
+            <span class="n">set_light_prop</span><span class="p">(</span><span class="n">intensity</span><span class="p">,</span> <span class="n">color</span><span class="p">)</span>
         <span class="k">elif</span> <span class="n">light_type</span> <span class="o">==</span> <span class="s2">&quot;ver1&quot;</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">remove_all_lights</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">add_light</span><span class="p">(</span><span class="n">pv</span><span class="o">.</span><span class="n">Light</span><span class="p">(</span><span class="n">light_type</span><span class="o">=</span><span class="s2">&quot;headlight&quot;</span><span class="p">,</span> <span class="n">intensity</span><span class="o">=</span><span class="mf">0.55</span><span class="p">))</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">remove_all_lights</span><span class="p">()</span>
-            <span class="n">intensity</span> <span class="o">=</span> <span class="n">intensity</span> <span class="o">+</span> <span class="mf">1.0</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">add_light</span><span class="p">(</span><span class="n">pv</span><span class="o">.</span><span class="n">Light</span><span class="p">(</span><span class="n">light_type</span><span class="o">=</span><span class="s2">&quot;headlight&quot;</span><span class="p">,</span> <span class="n">intensity</span><span class="o">=</span><span class="n">intensity</span><span class="p">))</span>
 
         <span class="k">if</span> <span class="n">preference</span><span class="p">[</span><span class="s2">&quot;pbr&quot;</span><span class="p">]:</span>
-            <span class="n">intensity</span> <span class="o">=</span> <span class="n">intensity</span> <span class="o">+</span> <span class="mf">1.0</span>
-
-        <span class="k">if</span> <span class="n">light_type</span> <span class="o">!=</span> <span class="s2">&quot;ver1&quot;</span><span class="p">:</span>
-            <span class="n">light</span> <span class="o">=</span> <span class="n">pv</span><span class="o">.</span><span class="n">Light</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">intensity</span><span class="o">=</span><span class="n">intensity</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">light</span> <span class="o">=</span> <span class="n">pv</span><span class="o">.</span><span class="n">Light</span><span class="p">(</span><span class="n">light_type</span><span class="o">=</span><span class="s2">&quot;headlight&quot;</span><span class="p">,</span> <span class="n">intensity</span><span class="o">=</span><span class="n">intensity</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">add_light</span><span class="p">(</span><span class="n">light</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">add_light</span><span class="p">(</span><span class="n">pv</span><span class="o">.</span><span class="n">Light</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">light_type</span><span class="o">=</span><span class="s2">&quot;headlight&quot;</span><span class="p">,</span> <span class="n">intensity</span><span class="o">=</span><span class="mf">1.0</span><span class="p">))</span>
 
     <span class="c1"># ==================================================</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">set_latex</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>

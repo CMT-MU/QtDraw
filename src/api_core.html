@@ -31,7 +31,7 @@
 <link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
@@ -59,8 +59,6 @@
     <script src="../_static/design-tabs.js?v=f930bc37"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'src/api_core';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -556,7 +554,7 @@
 3d objects, and manage data, view, and so on.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="qtdraw.core.pyvista_widget.PyVistaWidget">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PyVistaWidget</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">off_screen</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/pyvista_widget.html#PyVistaWidget"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.pyvista_widget.PyVistaWidget" title="Link to this definition">#</a></dt>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PyVistaWidget</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">off_screen</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/pyvista_widget.html#PyVistaWidget"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.pyvista_widget.PyVistaWidget" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">QtInteractor</span></code></p>
 <p>Widget for 3d plot layer using PyVista.</p>
 <dl class="field-list simple">
@@ -1518,7 +1516,7 @@
 
 <dl class="py property">
 <dt class="sig sig-object py" id="qtdraw.core.pyvista_widget.PyVistaWidget.A_matrix">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">A_matrix</span></span><a class="headerlink" href="#qtdraw.core.pyvista_widget.PyVistaWidget.A_matrix" title="Link to this definition">#</a></dt>
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">A_matrix</span></span><a class="headerlink" href="#qtdraw.core.pyvista_widget.PyVistaWidget.A_matrix" title="Link to this definition">#</a></dt>
 <dd><p>Get transform matrix.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -1532,7 +1530,7 @@
 
 <dl class="py property">
 <dt class="sig sig-object py" id="qtdraw.core.pyvista_widget.PyVistaWidget.A_matrix_norm">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">A_matrix_norm</span></span><a class="headerlink" href="#qtdraw.core.pyvista_widget.PyVistaWidget.A_matrix_norm" title="Link to this definition">#</a></dt>
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">A_matrix_norm</span></span><a class="headerlink" href="#qtdraw.core.pyvista_widget.PyVistaWidget.A_matrix_norm" title="Link to this definition">#</a></dt>
 <dd><p>Get transform matrix (normalized).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -1546,7 +1544,7 @@
 
 <dl class="py property">
 <dt class="sig sig-object py" id="qtdraw.core.pyvista_widget.PyVistaWidget.G_matrix">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">G_matrix</span></span><a class="headerlink" href="#qtdraw.core.pyvista_widget.PyVistaWidget.G_matrix" title="Link to this definition">#</a></dt>
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">G_matrix</span></span><a class="headerlink" href="#qtdraw.core.pyvista_widget.PyVistaWidget.G_matrix" title="Link to this definition">#</a></dt>
 <dd><p>Get metric matrix.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -1560,7 +1558,7 @@
 
 <dl class="py property">
 <dt class="sig sig-object py" id="qtdraw.core.pyvista_widget.PyVistaWidget.a1">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">a1</span></span><a class="headerlink" href="#qtdraw.core.pyvista_widget.PyVistaWidget.a1" title="Link to this definition">#</a></dt>
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">a1</span></span><a class="headerlink" href="#qtdraw.core.pyvista_widget.PyVistaWidget.a1" title="Link to this definition">#</a></dt>
 <dd><p>Get a1 unit vector.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -1574,7 +1572,7 @@
 
 <dl class="py property">
 <dt class="sig sig-object py" id="qtdraw.core.pyvista_widget.PyVistaWidget.a2">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">a2</span></span><a class="headerlink" href="#qtdraw.core.pyvista_widget.PyVistaWidget.a2" title="Link to this definition">#</a></dt>
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">a2</span></span><a class="headerlink" href="#qtdraw.core.pyvista_widget.PyVistaWidget.a2" title="Link to this definition">#</a></dt>
 <dd><p>Get a2 unit vector.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -1588,7 +1586,7 @@
 
 <dl class="py property">
 <dt class="sig sig-object py" id="qtdraw.core.pyvista_widget.PyVistaWidget.a3">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">a3</span></span><a class="headerlink" href="#qtdraw.core.pyvista_widget.PyVistaWidget.a3" title="Link to this definition">#</a></dt>
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">a3</span></span><a class="headerlink" href="#qtdraw.core.pyvista_widget.PyVistaWidget.a3" title="Link to this definition">#</a></dt>
 <dd><p>Get a3 unit vector.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -1602,7 +1600,7 @@
 
 <dl class="py property">
 <dt class="sig sig-object py" id="qtdraw.core.pyvista_widget.PyVistaWidget.actor_list">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">actor_list</span></span><a class="headerlink" href="#qtdraw.core.pyvista_widget.PyVistaWidget.actor_list" title="Link to this definition">#</a></dt>
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">actor_list</span></span><a class="headerlink" href="#qtdraw.core.pyvista_widget.PyVistaWidget.actor_list" title="Link to this definition">#</a></dt>
 <dd><p>Get list of actor.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -1616,7 +1614,7 @@
 
 <dl class="py property">
 <dt class="sig sig-object py" id="qtdraw.core.pyvista_widget.PyVistaWidget.cell_volume">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">cell_volume</span></span><a class="headerlink" href="#qtdraw.core.pyvista_widget.PyVistaWidget.cell_volume" title="Link to this definition">#</a></dt>
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">cell_volume</span></span><a class="headerlink" href="#qtdraw.core.pyvista_widget.PyVistaWidget.cell_volume" title="Link to this definition">#</a></dt>
 <dd><p>Get cell volume.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -1630,7 +1628,7 @@
 
 <dl class="py property">
 <dt class="sig sig-object py" id="qtdraw.core.pyvista_widget.PyVistaWidget.copyright">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">copyright</span></span><a class="headerlink" href="#qtdraw.core.pyvista_widget.PyVistaWidget.copyright" title="Link to this definition">#</a></dt>
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">copyright</span></span><a class="headerlink" href="#qtdraw.core.pyvista_widget.PyVistaWidget.copyright" title="Link to this definition">#</a></dt>
 <dd><p>Copyright string.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -1644,7 +1642,7 @@
 
 <dl class="py property">
 <dt class="sig sig-object py" id="qtdraw.core.pyvista_widget.PyVistaWidget.origin">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">origin</span></span><a class="headerlink" href="#qtdraw.core.pyvista_widget.PyVistaWidget.origin" title="Link to this definition">#</a></dt>
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">origin</span></span><a class="headerlink" href="#qtdraw.core.pyvista_widget.PyVistaWidget.origin" title="Link to this definition">#</a></dt>
 <dd><p>Get origin.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -1658,7 +1656,7 @@
 
 <dl class="py property">
 <dt class="sig sig-object py" id="qtdraw.core.pyvista_widget.PyVistaWidget.window_title">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">window_title</span></span><a class="headerlink" href="#qtdraw.core.pyvista_widget.PyVistaWidget.window_title" title="Link to this definition">#</a></dt>
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">window_title</span></span><a class="headerlink" href="#qtdraw.core.pyvista_widget.PyVistaWidget.window_title" title="Link to this definition">#</a></dt>
 <dd><p>Get window title.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -1674,7 +1672,7 @@
 
 <dl class="py class">
 <dt class="sig sig-object py" id="qtdraw.core.pyvista_widget.Window">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Window</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">level</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/pyvista_widget.html#Window"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.pyvista_widget.Window" title="Link to this definition">#</a></dt>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Window</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">level</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/pyvista_widget.html#Window"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.pyvista_widget.Window" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">QMainWindow</span></code></p>
 <p>Window with logging.</p>
 <dl class="field-list simple">
@@ -1716,7 +1714,7 @@
 <p>This module provides application of QtDraw.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="qtdraw.core.qtdraw_app.QtDraw">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">QtDraw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preference</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/qtdraw_app.html#QtDraw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.qtdraw_app.QtDraw" title="Link to this definition">#</a></dt>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">QtDraw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preference</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/qtdraw_app.html#QtDraw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.qtdraw_app.QtDraw" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#qtdraw.core.pyvista_widget.Window" title="qtdraw.core.pyvista_widget.Window"><code class="xref py py-class docutils literal notranslate"><span class="pre">Window</span></code></a></p>
 <p>3D drawing tool.</p>
 <dl class="field-list simple">
@@ -2967,7 +2965,7 @@
 <p>This module provides preference dialog for PyVistaWidget.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="qtdraw.core.dialog_preference.PreferenceDialog">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PreferenceDialog</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">widget</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/dialog_preference.html#PreferenceDialog"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.dialog_preference.PreferenceDialog" title="Link to this definition">#</a></dt>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PreferenceDialog</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">widget</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/dialog_preference.html#PreferenceDialog"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.dialog_preference.PreferenceDialog" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">QDialog</span></code></p>
 <p>Preference dialog.</p>
 <dl class="field-list simple">
@@ -3023,7 +3021,7 @@
 <p>This module provides about dialog for PyVistaWidget.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="qtdraw.core.dialog_about.AboutDialog">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">AboutDialog</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">widget</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/dialog_about.html#AboutDialog"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.dialog_about.AboutDialog" title="Link to this definition">#</a></dt>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">AboutDialog</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">widget</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/dialog_about.html#AboutDialog"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.dialog_about.AboutDialog" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">QDialog</span></code></p>
 <p>About dialog.</p>
 <dl class="field-list simple">
