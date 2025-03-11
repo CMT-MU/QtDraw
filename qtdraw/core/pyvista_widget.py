@@ -2334,21 +2334,26 @@ class PyVistaWidget(QtInteractor):
 
         color = all_colors[color][1]
 
-        def set_light_prop(intensity, color):
-            for light in self.renderer.lights:
-                light.intensity = intensity
-                light.color = color
-                light.ambient_color = color
+        def set_light_prop(color, lights):
+            for light in lights:
+                light.specular_color = color
                 light.diffuse_color = color
+                light.ambient_color = all_colors["black"][1]
 
         if light_type == "lightkit":
             self.remove_all_lights()
             self.enable_lightkit()
-            set_light_prop(intensity, color)
+            lights = self.renderer.lights
+            set_light_prop(color, lights)
+            for light in lights:
+                light.intensity = light.intensity + 0.2 * (intensity - 0.5) + 0.1
         elif light_type == "3 lights":
             self.remove_all_lights()
             self.enable_3_lights()
-            set_light_prop(intensity, color)
+            lights = self.renderer.lights
+            set_light_prop(color, lights)
+            for light in lights[1:]:
+                light.intensity = light.intensity + 0.4 * (intensity - 0.5)
         elif light_type == "ver1":
             self.remove_all_lights()
             self.add_light(pv.Light(light_type="headlight", intensity=0.55))
