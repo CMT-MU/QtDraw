@@ -43,8 +43,8 @@ default_preference = {
         "type": "lightkit",  # "lightkit/3 lights/ver1"
         "intensity": 0.5,
         "pbr": False,
-        "metallic": 0.2,
-        "roughness": 0.1,
+        "metallic": 0.0,
+        "roughness": 0.4,
         "color": "white",
     },
     "label": {

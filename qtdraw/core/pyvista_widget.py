@@ -2022,6 +2022,7 @@ class PyVistaWidget(QtInteractor):
             self._status["repeat"] = mode
 
         self.repeat_data()
+        self.set_clip()
 
     # ==================================================
     def set_range(self, lower=None, upper=None):
