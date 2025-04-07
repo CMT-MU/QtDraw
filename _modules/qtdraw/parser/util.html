@@ -345,27 +345,8 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw.parser.element</span><span class="w"> </span><span class="kn">import</span> <span class="n">element_color</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw.core.pyvista_widget_setting</span><span class="w"> </span><span class="kn">import</span> <span class="n">widget_detail</span> <span class="k">as</span> <span class="n">detail</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw.parser.vesta</span><span class="w"> </span><span class="kn">import</span> <span class="n">parse_vesta</span><span class="p">,</span> <span class="n">create_structure_vesta</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw.parser.data_group</span><span class="w"> </span><span class="kn">import</span> <span class="n">_shift_vectors</span><span class="p">,</span> <span class="n">_data_no_space_group</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw.parser.data_group</span><span class="w"> </span><span class="kn">import</span> <span class="n">_data_no_space_group</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw</span><span class="w"> </span><span class="kn">import</span> <span class="n">__version__</span>
-
-
-<span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="convert_to_origin_standard">
-<a class="viewcode-back" href="../../../src/api_parser.html#qtdraw.parser.util.convert_to_origin_standard">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">convert_to_origin_standard</span><span class="p">(</span><span class="n">structure</span><span class="p">,</span> <span class="n">sg_no</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Convert the orgin for choice 2.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        structure (Structure): structure.</span>
-<span class="sd">        sg_no (int): space group number.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">shift_vector</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">_shift_vectors</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">sg_no</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]))</span>
-
-    <span class="k">for</span> <span class="n">site</span> <span class="ow">in</span> <span class="n">structure</span><span class="o">.</span><span class="n">sites</span><span class="p">:</span>
-        <span class="n">site</span><span class="o">.</span><span class="n">frac_coords</span> <span class="o">+=</span> <span class="n">shift_vector</span>
-        <span class="n">site</span><span class="o">.</span><span class="n">frac_coords</span> <span class="o">%=</span> <span class="mf">1.0</span>  <span class="c1"># fractional coordinate -&gt; [0,1].</span></div>
-
 
 
 <span class="c1"># ==================================================</span>
@@ -552,7 +533,6 @@
     <span class="n">sga</span> <span class="o">=</span> <span class="n">SpacegroupAnalyzer</span><span class="p">(</span><span class="n">structure</span><span class="p">)</span>
     <span class="n">symmetrized</span> <span class="o">=</span> <span class="n">sga</span><span class="o">.</span><span class="n">get_symmetrized_structure</span><span class="p">()</span>
     <span class="n">sg_no</span> <span class="o">=</span> <span class="n">sga</span><span class="o">.</span><span class="n">get_space_group_number</span><span class="p">()</span>
-    <span class="n">convert_to_origin_standard</span><span class="p">(</span><span class="n">symmetrized</span><span class="p">,</span> <span class="n">sg_no</span><span class="p">)</span>
     <span class="n">env</span> <span class="o">=</span> <span class="n">MinimumDistanceNN</span><span class="p">()</span>
     <span class="n">graph</span> <span class="o">=</span> <span class="n">StructureGraph</span><span class="o">.</span><span class="n">with_local_env_strategy</span><span class="p">(</span><span class="n">symmetrized</span><span class="p">,</span> <span class="n">env</span><span class="p">)</span>
 
