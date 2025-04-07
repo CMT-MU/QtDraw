@@ -2077,9 +2077,9 @@ class QtDraw(Window):
             data (str, optional): data (file) name for grid data. (default: "")
             value (str, optional): isosurface values. (default: [0.5])
             surface (str, optional): surface value name. (default: "")
-            color (str, optional): text color. (default: iron)
+            color (str, optional): text color. (default: white)
             color_range (str, optional): color range. (default: [0,1])
-            opacity (float, optional): opacity, [0,1]. (default: 1.0)
+            opacity (float, optional): opacity, [0,1]. (default: 0.8)
             position (str, optional): position in cell, [x,y,z]. (default: [0,0,0])
             cell (str, optional): cell, [nx,ny,nz]. (default: [0,0,0])
             name (str, optional): name of group. (default: untitled)
@@ -2089,7 +2089,6 @@ class QtDraw(Window):
         Note:
             - if keyword is None, default value is used.
             - if filename is tuple, (name, dict), use dict data as name.
-            - if surface colormap is automatically adjusted by [min.max].
         """
         self.pyvista_widget.add_isosurface(data, value, surface, color, color_range, opacity, position, cell, name, label, margin)
 

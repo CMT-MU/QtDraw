@@ -17,24 +17,8 @@ from qtdraw.core.pyvista_widget_setting import DIGIT, default_preference, defaul
 from qtdraw.parser.element import element_color
 from qtdraw.core.pyvista_widget_setting import widget_detail as detail
 from qtdraw.parser.vesta import parse_vesta, create_structure_vesta
-from qtdraw.parser.data_group import _shift_vectors, _data_no_space_group
+from qtdraw.parser.data_group import _data_no_space_group
 from qtdraw import __version__
-
-
-# ==================================================
-def convert_to_origin_standard(structure, sg_no):
-    """
-    Convert the orgin for choice 2.
-
-    Args:
-        structure (Structure): structure.
-        sg_no (int): space group number.
-    """
-    shift_vector = np.array(_shift_vectors.get(sg_no, [0.0, 0.0, 0.0]))
-
-    for site in structure.sites:
-        site.frac_coords += shift_vector
-        site.frac_coords %= 1.0  # fractional coordinate -> [0,1].
 
 
 # ==================================================
@@ -207,7 +191,6 @@ def parse_material(filename):
     sga = SpacegroupAnalyzer(structure)
     symmetrized = sga.get_symmetrized_structure()
     sg_no = sga.get_space_group_number()
-    convert_to_origin_standard(symmetrized, sg_no)
     env = MinimumDistanceNN()
     graph = StructureGraph.with_local_env_strategy(symmetrized, env)
 
