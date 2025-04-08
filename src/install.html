@@ -423,10 +423,11 @@
 <li><p>Install Python</p></li>
 <li><p>[MacOS or Linux] Add path for LaTeX and Python in .zshrc.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span>/Library/TeX/texbin:<span class="nv">$PATH</span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span>/opt/homebrew/opt/python@3.11/libexec/bin:<span class="nv">$PATH</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span>/opt/homebrew/opt/python@3.12/libexec/bin:<span class="nv">$PATH</span>
 </pre></div>
 </div>
 </li>
+<li><p>If a virtual environment (e.g. <code class="docutils literal notranslate"><span class="pre">~/.venv</span></code>) is used, set PATH to <code class="docutils literal notranslate"><span class="pre">.venv/bin</span></code> prior to global one as well.</p></li>
 <li><p>Restart shell</p></li>
 <li><p>[MacOS] Install <a class="reference external" href="https://brew.sh/index_ja">Homebrew</a></p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>brew<span class="w"> </span>install<span class="w"> </span>python@3.12
@@ -478,8 +479,10 @@ sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> <
 </ul>
 <p>(Note) <code class="docutils literal notranslate"><span class="pre">QtDraw.app</span></code> is created by Automator with the following script:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span><span class="w"> </span>~/.zshrc
-nohup<span class="w"> </span>python<span class="w"> </span>-c<span class="w"> </span><span class="s1">&#39;from sys import argv; from qtdraw.core.qtdraw_app import QtDraw; filename = None if len(argv) == 1 else argv[1]; QtDraw(filename=filename).exec()&#39;</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$1</span><span class="s2">&quot;</span><span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null<span class="w"> </span><span class="p">&amp;</span>
-<span class="nb">exit</span><span class="w"> </span><span class="m">0</span>
+<span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-z<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$1</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span>nohup<span class="w"> </span>qtdraw<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null<span class="w"> </span><span class="p">&amp;</span>
+<span class="k">else</span>
+<span class="w">    </span>nohup<span class="w"> </span>qtdraw<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$1</span><span class="s2">&quot;</span><span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null<span class="w"> </span><span class="p">&amp;</span>
 </pre></div>
 </div>
 <p><img alt="automator.jpg" src="../_images/automator.jpg" /></p>

@@ -475,6 +475,21 @@
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">4</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1">#</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="c1"># multipie.ipynb</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="c1">#</span>
+<span class="ne">----&gt; </span><span class="mi">4</span> <span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw.core.qtdraw_app</span><span class="w"> </span><span class="kn">import</span> <span class="n">QtDraw</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="c1"># show tag list.</span>
+<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="k">def</span><span class="w"> </span><span class="nf">show_list</span><span class="p">(</span><span class="n">header</span><span class="p">,</span> <span class="n">lst</span><span class="p">):</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;qtdraw&#39;
+</pre></div>
+</div>
+</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -493,93 +508,15 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Harmonics:
-  Q(3,A1,,)
-  Q(3,A2,1,)
-  Q(3,A2,2,)
-  Q(3,E,1,0)
-  Q(3,E,1,1)
-  Q(3,E,2,0)
-  Q(3,E,2,1)
-site SAMB:
-  Q01: Q(0,A1,,) = Qa(0,A1,) x Qs(0,A1,)
-  Q02: Q(1,E,,0) = Qa(0,A1,) x Qs(1,E,)
-  Q03: Q(1,E,,1) = Qa(0,A1,) x Qs(1,E,)
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>bond SAMB:
-  Q01: Q(0,A1,,) = Qa(0,A1,) x Qb(0,A1,)
-  Q02: Q(2,E,1,0) = Qa(0,A1,) x Qb(2,E,1)
-  Q03: Q(2,E,1,1) = Qa(0,A1,) x Qb(2,E,1)
-  T01: T(0,A1,,) = Qa(0,A1,) x Tb(0,A1,)
-  T02: T(2,E,1,0) = Qa(0,A1,) x Tb(2,E,1)
-  T03: T(2,E,1,1) = Qa(0,A1,) x Tb(2,E,1)
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>vector SAMB:
-  Q01: Q(1,A2,,) = Qa(1,A2,) x Qs(0,A1,)
-  Q02: Q(1,A2,,) = Qa(1,E,) x Qs(2,E,1)
-  Q03: Q(1,E,,0) = Qa(1,A2,) x Qs(2,E,1)
-  Q04: Q(1,E,,0) = Qa(1,E,) x Qs(0,A1,)
-  Q05: Q(1,E,,1) = Qa(1,A2,) x Qs(2,E,1)
-  Q06: Q(1,E,,1) = Qa(1,E,) x Qs(0,A1,)
-  G01: G(2,A1,,) = Qa(1,E,) x Qs(2,E,1)
-  G02: G(2,E,2,0) = Qa(1,E,) x Qs(2,E,1)
-  G03: G(2,E,2,1) = Qa(1,E,) x Qs(2,E,1)
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>orital SAMB:
-  Q01: Q(1,A2,,) = Qa(1,A2,) x Qb(0,A1,)
-  Q02: Q(1,A2,,) = Qa(1,E,) x Qb(2,E,1)
-  Q03: Q(1,E,,0) = Qa(1,A2,) x Qb(2,E,1)
-  Q04: Q(1,E,,0) = Qa(1,E,) x Qb(0,A1,)
-  Q05: Q(1,E,,1) = Qa(1,A2,) x Qb(2,E,1)
-  Q06: Q(1,E,,1) = Qa(1,E,) x Qb(0,A1,)
-  G01: G(2,A1,,) = Qa(1,E,) x Qb(2,E,1)
-  G02: G(2,E,2,0) = Qa(1,E,) x Qb(2,E,1)
-  G03: G(2,E,2,1) = Qa(1,E,) x Qb(2,E,1)
-  T01: T(1,A2,,) = Qa(1,A2,) x Tb(0,A1,)
-  T02: T(1,A2,,) = Qa(1,E,) x Tb(2,E,1)
-  T03: T(1,E,,0) = Qa(1,A2,) x Tb(2,E,1)
-  T04: T(1,E,,0) = Qa(1,E,) x Tb(0,A1,)
-  T05: T(1,E,,1) = Qa(1,A2,) x Tb(2,E,1)
-  T06: T(1,E,,1) = Qa(1,E,) x Tb(0,A1,)
-  M01: M(2,A1,,) = Qa(1,E,) x Tb(2,E,1)
-  M02: M(2,E,2,0) = Qa(1,E,) x Tb(2,E,1)
-  M03: M(2,E,2,1) = Qa(1,E,) x Tb(2,E,1)
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>vector SAMB:
-  Q01: Q(1,A2,,) = Qa(1,A2,) x Qs(0,A1,)
-  Q02: Q(1,A2,,) = Qa(1,E,) x Qs(2,E,1)
-  Q03: Q(1,E,,0) = Qa(1,A2,) x Qs(2,E,1)
-  Q04: Q(1,E,,0) = Qa(1,E,) x Qs(0,A1,)
-  Q05: Q(1,E,,1) = Qa(1,A2,) x Qs(2,E,1)
-  Q06: Q(1,E,,1) = Qa(1,E,) x Qs(0,A1,)
-  G01: G(2,A1,,) = Qa(1,E,) x Qs(2,E,1)
-  G02: G(2,E,2,0) = Qa(1,E,) x Qs(2,E,1)
-  G03: G(2,E,2,1) = Qa(1,E,) x Qs(2,E,1)
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>orital SAMB:
-  Q01: Q(1,A2,,) = Qa(1,A2,) x Qb(0,A1,)
-  Q02: Q(1,A2,,) = Qa(1,E,) x Qb(2,E,1)
-  Q03: Q(1,E,,0) = Qa(1,A2,) x Qb(2,E,1)
-  Q04: Q(1,E,,0) = Qa(1,E,) x Qb(0,A1,)
-  Q05: Q(1,E,,1) = Qa(1,A2,) x Qb(2,E,1)
-  Q06: Q(1,E,,1) = Qa(1,E,) x Qb(0,A1,)
-  G01: G(2,A1,,) = Qa(1,E,) x Qb(2,E,1)
-  G02: G(2,E,2,0) = Qa(1,E,) x Qb(2,E,1)
-  G03: G(2,E,2,1) = Qa(1,E,) x Qb(2,E,1)
-  T01: T(1,A2,,) = Qa(1,A2,) x Tb(0,A1,)
-  T02: T(1,A2,,) = Qa(1,E,) x Tb(2,E,1)
-  T03: T(1,E,,0) = Qa(1,A2,) x Tb(2,E,1)
-  T04: T(1,E,,0) = Qa(1,E,) x Tb(0,A1,)
-  T05: T(1,E,,1) = Qa(1,A2,) x Tb(2,E,1)
-  T06: T(1,E,,1) = Qa(1,E,) x Tb(0,A1,)
-  M01: M(2,A1,,) = Qa(1,E,) x Tb(2,E,1)
-  M02: M(2,E,2,0) = Qa(1,E,) x Tb(2,E,1)
-  M03: M(2,E,2,1) = Qa(1,E,) x Tb(2,E,1)
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># === example ===</span>
+<span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">win</span><span class="o">.</span><span class="n">clear_data</span><span class="p">()</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">draw_equivalent</span><span class="p">(</span><span class="n">win</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="n">draw_harmonics</span><span class="p">(</span><span class="n">win</span><span class="p">)</span>
+
+<span class="ne">NameError</span>: name &#39;win&#39; is not defined
 </pre></div>
 </div>
 </div>
