@@ -389,11 +389,123 @@
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multipie-plugin">MultiPie Plugin</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multipie-dialog">MultiPie Dialog</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#info-dialog">Info Dialog</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modulation-dialog">Modulation Dialog</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#utility">Utility</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-qtdraw.multipie.plugin_multipie">MultiPie Plugin</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-qtdraw.multipie.dialog_multipie">MultiPie Dialog</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_add_bond"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.basis_add_bond()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_add_hopping"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.basis_add_hopping()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_add_orbital"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.basis_add_orbital()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_add_orbital_lc"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.basis_add_orbital_lc()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_add_site"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.basis_add_site()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_add_vector"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.basis_add_vector()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_add_vector_lc"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.basis_add_vector_lc()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_gen_bond"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.basis_gen_bond()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_gen_orbital"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.basis_gen_orbital()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_gen_orbital_modulation"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.basis_gen_orbital_modulation()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_gen_site"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.basis_gen_site()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_gen_vector"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.basis_gen_vector()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_gen_vector_modulation"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.basis_gen_vector_modulation()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_set_bond_select"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.basis_set_bond_select()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_set_orbital_select"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.basis_set_orbital_select()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_set_site_select"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.basis_set_site_select()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_set_vector_select"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.basis_set_vector_select()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.close"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.close()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.create_basis_panel"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.create_basis_panel()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.create_group_panel"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.create_group_panel()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.create_object_panel"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.create_object_panel()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.create_sub_group_panel"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.create_sub_group_panel()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.obj_add_bond"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.obj_add_bond()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.obj_add_harmonics"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.obj_add_harmonics()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.obj_add_orbital"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.obj_add_orbital()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.obj_add_site"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.obj_add_site()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.obj_add_vector"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.obj_add_vector()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_atomic_basis_type"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.set_atomic_basis_type()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_atomic_bra_ket"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.set_atomic_bra_ket()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_atomic_type"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.set_atomic_type()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_basis_connection"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.set_basis_connection()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_basis_item"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.set_basis_item()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_basis_panel_value"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.set_basis_panel_value()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_crystal_type"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.set_crystal_type()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_group"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.set_group()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_group_connection"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.set_group_connection()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_group_item"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.set_group_item()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_group_panel_value"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.set_group_panel_value()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_group_type"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.set_group_type()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_harmonics_decomp"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.set_harmonics_decomp()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_harmonics_item"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.set_harmonics_item()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_harmonics_rank"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.set_harmonics_rank()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_harmonics_type"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.set_harmonics_type()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_irrep_decomp"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.set_irrep_decomp()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_irrep_item"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.set_irrep_item()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_obj_harmonics"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.set_obj_harmonics()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_obj_harmonics_rank"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.set_obj_harmonics_rank()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_obj_harmonics_type"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.set_obj_harmonics_type()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_obj_orbital_type"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.set_obj_orbital_type()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_obj_vector_type"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.set_obj_vector_type()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_obj_wyckoff"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.set_obj_wyckoff()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_object_connection"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.set_object_connection()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_object_panel_value"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.set_object_panel_value()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_response_rank"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.set_response_rank()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_response_type"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.set_response_type()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_vc_neighbor"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.set_vc_neighbor()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_vc_wyckoff"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.set_vc_wyckoff()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_wyckoff_item"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.set_wyckoff_item()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.show_atomic"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.show_atomic()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.show_character_table"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.show_character_table()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.show_harmonics"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.show_harmonics()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.show_harmonics_decomp"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.show_harmonics_decomp()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.show_product_table"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.show_product_table()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.show_response"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.show_response()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.show_symmetry_operation"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.show_symmetry_operation()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.show_virtual_cluster"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.show_virtual_cluster()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.show_wyckoff"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.show_wyckoff()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.basis"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.basis</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.group"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.group</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.obj"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.obj</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.plus"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.plus</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-qtdraw.multipie.dialog_info">Info Dialog</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_info.InfoPanel"><code class="docutils literal notranslate"><span class="pre">InfoPanel</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_info.show_atomic_multipole"><code class="docutils literal notranslate"><span class="pre">show_atomic_multipole()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_info.show_character_table"><code class="docutils literal notranslate"><span class="pre">show_character_table()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_info.show_group_info"><code class="docutils literal notranslate"><span class="pre">show_group_info()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_info.show_harmonics"><code class="docutils literal notranslate"><span class="pre">show_harmonics()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_info.show_harmonics_decomp"><code class="docutils literal notranslate"><span class="pre">show_harmonics_decomp()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_info.show_product_table"><code class="docutils literal notranslate"><span class="pre">show_product_table()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_info.show_response"><code class="docutils literal notranslate"><span class="pre">show_response()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_info.show_symmetry_operation"><code class="docutils literal notranslate"><span class="pre">show_symmetry_operation()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_info.show_virtual_cluster"><code class="docutils literal notranslate"><span class="pre">show_virtual_cluster()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_info.show_wyckoff"><code class="docutils literal notranslate"><span class="pre">show_wyckoff()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-qtdraw.multipie.dialog_modulation">Modulation Dialog</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_modulation.ModulationDialog"><code class="docutils literal notranslate"><span class="pre">ModulationDialog</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_modulation.ModulationDialog.accept"><code class="docutils literal notranslate"><span class="pre">ModulationDialog.accept()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_modulation.ModulationDialog.add_data"><code class="docutils literal notranslate"><span class="pre">ModulationDialog.add_data()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_modulation.ModulationDialog.add_modulation"><code class="docutils literal notranslate"><span class="pre">ModulationDialog.add_modulation()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_modulation.ModulationDialog.apply"><code class="docutils literal notranslate"><span class="pre">ModulationDialog.apply()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_modulation.ModulationDialog.close"><code class="docutils literal notranslate"><span class="pre">ModulationDialog.close()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_modulation.ModulationDialog.create_panel"><code class="docutils literal notranslate"><span class="pre">ModulationDialog.create_panel()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_modulation.ModulationDialog.get_raw_data"><code class="docutils literal notranslate"><span class="pre">ModulationDialog.get_raw_data()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_modulation.ModulationDialog.reject"><code class="docutils literal notranslate"><span class="pre">ModulationDialog.reject()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_modulation.ModulationDialog.remove_data"><code class="docutils literal notranslate"><span class="pre">ModulationDialog.remove_data()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-qtdraw.multipie.util">Utility</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.util.check_get_bond"><code class="docutils literal notranslate"><span class="pre">check_get_bond()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.util.check_get_site"><code class="docutils literal notranslate"><span class="pre">check_get_site()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.util.check_get_site_bond"><code class="docutils literal notranslate"><span class="pre">check_get_site_bond()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.util.check_linear_combination"><code class="docutils literal notranslate"><span class="pre">check_linear_combination()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.util.combined_format"><code class="docutils literal notranslate"><span class="pre">combined_format()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.util.create_samb_object"><code class="docutils literal notranslate"><span class="pre">create_samb_object()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.util.parse_modulation_list"><code class="docutils literal notranslate"><span class="pre">parse_modulation_list()</span></code></a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -407,20 +519,1104 @@
                   
   <section class="tex2jax_ignore mathjax_ignore" id="multipie">
 <h1>MultiPie<a class="headerlink" href="#multipie" title="Link to this heading">#</a></h1>
-<section id="multipie-plugin">
-<h2>MultiPie Plugin<a class="headerlink" href="#multipie-plugin" title="Link to this heading">#</a></h2>
+<section id="module-qtdraw.multipie.plugin_multipie">
+<span id="multipie-plugin"></span><h2>MultiPie Plugin<a class="headerlink" href="#module-qtdraw.multipie.plugin_multipie" title="Link to this heading">#</a></h2>
+<p>Multipie plugin.</p>
+<p>This module provides MultiPie plugin.</p>
 </section>
-<section id="multipie-dialog">
-<h2>MultiPie Dialog<a class="headerlink" href="#multipie-dialog" title="Link to this heading">#</a></h2>
+<section id="module-qtdraw.multipie.dialog_multipie">
+<span id="multipie-dialog"></span><h2>MultiPie Dialog<a class="headerlink" href="#module-qtdraw.multipie.dialog_multipie" title="Link to this heading">#</a></h2>
+<p>Multipie dialog.</p>
+<p>This module provides a dialog for drawing objects with the help of MultiPie.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_multipie.MultiPieDialog">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MultiPieDialog</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_multipie.html#MultiPieDialog"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">QDialog</span></code></p>
+<p>MultiPie dialog.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>parent</strong> (<em>MultiPiePlugin</em>) -- parent.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_add_bond">
+<span class="sig-name descname"><span class="pre">basis_add_bond</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_multipie.html#MultiPieDialog.basis_add_bond"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_add_bond" title="Link to this definition">#</a></dt>
+<dd><p>Add bond cluster SAMB.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>scale</strong> (<em>float</em><em>, </em><em>optional</em>) -- width scale.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_add_hopping">
+<span class="sig-name descname"><span class="pre">basis_add_hopping</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_multipie.html#MultiPieDialog.basis_add_hopping"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_add_hopping" title="Link to this definition">#</a></dt>
+<dd><p>Add hopping SAMB.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>scale</strong> (<em>float</em><em>, </em><em>optional</em>) -- length scale.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_add_orbital">
+<span class="sig-name descname"><span class="pre">basis_add_orbital</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_multipie.html#MultiPieDialog.basis_add_orbital"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_add_orbital" title="Link to this definition">#</a></dt>
+<dd><p>Add orbital cluster SAMB.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_add_orbital_lc">
+<span class="sig-name descname"><span class="pre">basis_add_orbital_lc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_multipie.html#MultiPieDialog.basis_add_orbital_lc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_add_orbital_lc" title="Link to this definition">#</a></dt>
+<dd><p>Add linear combination of orbital cluster SAMB.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>scale</strong> (<em>float</em><em>, </em><em>optional</em>) -- size scale.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_add_site">
+<span class="sig-name descname"><span class="pre">basis_add_site</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_multipie.html#MultiPieDialog.basis_add_site"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_add_site" title="Link to this definition">#</a></dt>
+<dd><p>Add site cluster SAMB.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>scale</strong> (<em>float</em><em>, </em><em>optional</em>) -- size scale.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_add_vector">
+<span class="sig-name descname"><span class="pre">basis_add_vector</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_multipie.html#MultiPieDialog.basis_add_vector"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_add_vector" title="Link to this definition">#</a></dt>
+<dd><p>Add vector cluster SAMB.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_add_vector_lc">
+<span class="sig-name descname"><span class="pre">basis_add_vector_lc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_multipie.html#MultiPieDialog.basis_add_vector_lc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_add_vector_lc" title="Link to this definition">#</a></dt>
+<dd><p>Add linear combination of vector cluster SAMB.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>scale</strong> (<em>float</em><em>, </em><em>optional</em>) -- length scale.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_gen_bond">
+<span class="sig-name descname"><span class="pre">basis_gen_bond</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_multipie.html#MultiPieDialog.basis_gen_bond"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_gen_bond" title="Link to this definition">#</a></dt>
+<dd><p>Generate bond cluster SAMB.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_gen_orbital">
+<span class="sig-name descname"><span class="pre">basis_gen_orbital</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_multipie.html#MultiPieDialog.basis_gen_orbital"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_gen_orbital" title="Link to this definition">#</a></dt>
+<dd><p>Generate orbital cluster SAMB.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_gen_orbital_modulation">
+<span class="sig-name descname"><span class="pre">basis_gen_orbital_modulation</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_multipie.html#MultiPieDialog.basis_gen_orbital_modulation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_gen_orbital_modulation" title="Link to this definition">#</a></dt>
+<dd><p>Generate orbital modulation.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_gen_site">
+<span class="sig-name descname"><span class="pre">basis_gen_site</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_multipie.html#MultiPieDialog.basis_gen_site"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_gen_site" title="Link to this definition">#</a></dt>
+<dd><p>Generate site cluster SAMB.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_gen_vector">
+<span class="sig-name descname"><span class="pre">basis_gen_vector</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_multipie.html#MultiPieDialog.basis_gen_vector"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_gen_vector" title="Link to this definition">#</a></dt>
+<dd><p>Generate vector cluster SAMB.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_gen_vector_modulation">
+<span class="sig-name descname"><span class="pre">basis_gen_vector_modulation</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_multipie.html#MultiPieDialog.basis_gen_vector_modulation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_gen_vector_modulation" title="Link to this definition">#</a></dt>
+<dd><p>Generate vector modulation.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_set_bond_select">
+<span class="sig-name descname"><span class="pre">basis_set_bond_select</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_multipie.html#MultiPieDialog.basis_set_bond_select"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_set_bond_select" title="Link to this definition">#</a></dt>
+<dd><p>Set bond cluster SAMB selection list.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_set_orbital_select">
+<span class="sig-name descname"><span class="pre">basis_set_orbital_select</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_multipie.html#MultiPieDialog.basis_set_orbital_select"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_set_orbital_select" title="Link to this definition">#</a></dt>
+<dd><p>Set orbital cluster SAMB selection list.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_set_site_select">
+<span class="sig-name descname"><span class="pre">basis_set_site_select</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_multipie.html#MultiPieDialog.basis_set_site_select"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_set_site_select" title="Link to this definition">#</a></dt>
+<dd><p>Set site cluster SAMB selection list.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_set_vector_select">
+<span class="sig-name descname"><span class="pre">basis_set_vector_select</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_multipie.html#MultiPieDialog.basis_set_vector_select"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_set_vector_select" title="Link to this definition">#</a></dt>
+<dd><p>Set vector cluster SAMB selection list.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_multipie.MultiPieDialog.close">
+<span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_multipie.html#MultiPieDialog.close"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.close" title="Link to this definition">#</a></dt>
+<dd><p>Close dialogs.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_multipie.MultiPieDialog.create_basis_panel">
+<span class="sig-name descname"><span class="pre">create_basis_panel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_multipie.html#MultiPieDialog.create_basis_panel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.create_basis_panel" title="Link to this definition">#</a></dt>
+<dd><p>Create basis panel.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>parent</strong> (<em>QWidget</em>) -- parent.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>(QWidget) -- panel.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_multipie.MultiPieDialog.create_group_panel">
+<span class="sig-name descname"><span class="pre">create_group_panel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_multipie.html#MultiPieDialog.create_group_panel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.create_group_panel" title="Link to this definition">#</a></dt>
+<dd><p>Create group panel.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>parent</strong> (<em>QWidget</em>) -- parent.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>(QWidget) -- panel.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_multipie.MultiPieDialog.create_object_panel">
+<span class="sig-name descname"><span class="pre">create_object_panel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_multipie.html#MultiPieDialog.create_object_panel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.create_object_panel" title="Link to this definition">#</a></dt>
+<dd><p>Create object panel.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>parent</strong> (<em>QWidget</em>) -- parent.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>(QWidget) -- panel.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_multipie.MultiPieDialog.create_sub_group_panel">
+<span class="sig-name descname"><span class="pre">create_sub_group_panel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_multipie.html#MultiPieDialog.create_sub_group_panel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.create_sub_group_panel" title="Link to this definition">#</a></dt>
+<dd><p>Create subgroup panel.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>parent</strong> (<em>QWidget</em>) -- parent.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>(QWidget) -- panel.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_multipie.MultiPieDialog.obj_add_bond">
+<span class="sig-name descname"><span class="pre">obj_add_bond</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_multipie.html#MultiPieDialog.obj_add_bond"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.obj_add_bond" title="Link to this definition">#</a></dt>
+<dd><p>Add representative bond in object dict.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>scale</strong> (<em>float</em><em>, </em><em>optional</em>) -- width scale.</p></li>
+<li><p><strong>color</strong> (<em>str</em><em>, </em><em>optional</em>) -- color.</p></li>
+<li><p><strong>color2</strong> (<em>str</em><em>, </em><em>optional</em>) -- color2.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_multipie.MultiPieDialog.obj_add_harmonics">
+<span class="sig-name descname"><span class="pre">obj_add_harmonics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_multipie.html#MultiPieDialog.obj_add_harmonics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.obj_add_harmonics" title="Link to this definition">#</a></dt>
+<dd><p>Add equivalent poing-group harmonics in object dict.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>scale</strong> (<em>float</em><em>, </em><em>optional</em>) -- size scale.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_multipie.MultiPieDialog.obj_add_orbital">
+<span class="sig-name descname"><span class="pre">obj_add_orbital</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_multipie.html#MultiPieDialog.obj_add_orbital"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.obj_add_orbital" title="Link to this definition">#</a></dt>
+<dd><p>Add equivalent orbitals in object dict.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>scale</strong> (<em>float</em><em>, </em><em>optional</em>) -- size scale.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_multipie.MultiPieDialog.obj_add_site">
+<span class="sig-name descname"><span class="pre">obj_add_site</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_multipie.html#MultiPieDialog.obj_add_site"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.obj_add_site" title="Link to this definition">#</a></dt>
+<dd><p>Add representative site in object dict.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>scale</strong> (<em>float</em><em>, </em><em>optional</em>) -- size scale.</p></li>
+<li><p><strong>color</strong> (<em>str</em><em>, </em><em>optional</em>) -- color.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_multipie.MultiPieDialog.obj_add_vector">
+<span class="sig-name descname"><span class="pre">obj_add_vector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_multipie.html#MultiPieDialog.obj_add_vector"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.obj_add_vector" title="Link to this definition">#</a></dt>
+<dd><p>Add equivalent vectors in object dict.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>scale</strong> (<em>float</em><em>, </em><em>optional</em>) -- length scale.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_multipie.MultiPieDialog.set_atomic_basis_type">
+<span class="sig-name descname"><span class="pre">set_atomic_basis_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">basis_type</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_multipie.html#MultiPieDialog.set_atomic_basis_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_atomic_basis_type" title="Link to this definition">#</a></dt>
+<dd><p>Set atomic multipole basis type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>basis_type</strong> (<em>str</em>) -- basis type.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_multipie.MultiPieDialog.set_atomic_bra_ket">
+<span class="sig-name descname"><span class="pre">set_atomic_bra_ket</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_multipie.html#MultiPieDialog.set_atomic_bra_ket"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_atomic_bra_ket" title="Link to this definition">#</a></dt>
+<dd><p>Set bra and ket basis of atomic multipole.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_multipie.MultiPieDialog.set_atomic_type">
+<span class="sig-name descname"><span class="pre">set_atomic_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a_type</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_multipie.html#MultiPieDialog.set_atomic_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_atomic_type" title="Link to this definition">#</a></dt>
+<dd><p>Set atomic multipole type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>a_type</strong> (<em>str</em>) -- atomic multipole type.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_multipie.MultiPieDialog.set_basis_connection">
+<span class="sig-name descname"><span class="pre">set_basis_connection</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_multipie.html#MultiPieDialog.set_basis_connection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_basis_connection" title="Link to this definition">#</a></dt>
+<dd><p>Set connections in basis panel.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_multipie.MultiPieDialog.set_basis_item">
+<span class="sig-name descname"><span class="pre">set_basis_item</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_multipie.html#MultiPieDialog.set_basis_item"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_basis_item" title="Link to this definition">#</a></dt>
+<dd><p>Set basis widgets.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_multipie.MultiPieDialog.set_basis_panel_value">
+<span class="sig-name descname"><span class="pre">set_basis_panel_value</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_multipie.html#MultiPieDialog.set_basis_panel_value"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_basis_panel_value" title="Link to this definition">#</a></dt>
+<dd><p>Set initial values in basis panel.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_multipie.MultiPieDialog.set_crystal_type">
+<span class="sig-name descname"><span class="pre">set_crystal_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">crystal</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_multipie.html#MultiPieDialog.set_crystal_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_crystal_type" title="Link to this definition">#</a></dt>
+<dd><p>Set crystal type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>crystal</strong> (<em>str</em>) -- crystal type.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_multipie.MultiPieDialog.set_group">
+<span class="sig-name descname"><span class="pre">set_group</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tag</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_multipie.html#MultiPieDialog.set_group"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_group" title="Link to this definition">#</a></dt>
+<dd><p>Set current group.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>tag</strong> (<em>TagGroup</em><em> or </em><em>str</em>) -- group tag.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_multipie.MultiPieDialog.set_group_connection">
+<span class="sig-name descname"><span class="pre">set_group_connection</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_multipie.html#MultiPieDialog.set_group_connection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_group_connection" title="Link to this definition">#</a></dt>
+<dd><p>Set connections in group panel.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_multipie.MultiPieDialog.set_group_item">
+<span class="sig-name descname"><span class="pre">set_group_item</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">point_group</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_multipie.html#MultiPieDialog.set_group_item"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_group_item" title="Link to this definition">#</a></dt>
+<dd><p>Set group widgets.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>point_group</strong> (<em>str</em><em>, </em><em>optional</em>) -- point group.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_multipie.MultiPieDialog.set_group_panel_value">
+<span class="sig-name descname"><span class="pre">set_group_panel_value</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_multipie.html#MultiPieDialog.set_group_panel_value"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_group_panel_value" title="Link to this definition">#</a></dt>
+<dd><p>Set initial values in group panel.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_multipie.MultiPieDialog.set_group_type">
+<span class="sig-name descname"><span class="pre">set_group_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_multipie.html#MultiPieDialog.set_group_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_group_type" title="Link to this definition">#</a></dt>
+<dd><p>Set group type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>index</strong> (<em>int</em>) -- 0 (to SG), 1 (to PG).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_multipie.MultiPieDialog.set_harmonics_decomp">
+<span class="sig-name descname"><span class="pre">set_harmonics_decomp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">to_pg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_multipie.html#MultiPieDialog.set_harmonics_decomp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_harmonics_decomp" title="Link to this definition">#</a></dt>
+<dd><p>Set harmonics decomposition.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>to_pg</strong> (<em>str</em>) -- destination point group.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_multipie.MultiPieDialog.set_harmonics_item">
+<span class="sig-name descname"><span class="pre">set_harmonics_item</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_multipie.html#MultiPieDialog.set_harmonics_item"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_harmonics_item" title="Link to this definition">#</a></dt>
+<dd><p>Set harmonics widgets.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_multipie.MultiPieDialog.set_harmonics_rank">
+<span class="sig-name descname"><span class="pre">set_harmonics_rank</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rank</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_multipie.html#MultiPieDialog.set_harmonics_rank"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_harmonics_rank" title="Link to this definition">#</a></dt>
+<dd><p>Set harmonics rank.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>rank</strong> (<em>str</em>) -- harmonics rank.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_multipie.MultiPieDialog.set_harmonics_type">
+<span class="sig-name descname"><span class="pre">set_harmonics_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">h_type</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_multipie.html#MultiPieDialog.set_harmonics_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_harmonics_type" title="Link to this definition">#</a></dt>
+<dd><p>Set harmonics type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>h_type</strong> (<em>str</em>) -- harmonics type.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_multipie.MultiPieDialog.set_irrep_decomp">
+<span class="sig-name descname"><span class="pre">set_irrep_decomp</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_multipie.html#MultiPieDialog.set_irrep_decomp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_irrep_decomp" title="Link to this definition">#</a></dt>
+<dd><p>Set decomposition of product of irreps.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_multipie.MultiPieDialog.set_irrep_item">
+<span class="sig-name descname"><span class="pre">set_irrep_item</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_multipie.html#MultiPieDialog.set_irrep_item"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_irrep_item" title="Link to this definition">#</a></dt>
+<dd><p>Set irrep widgets.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_multipie.MultiPieDialog.set_obj_harmonics">
+<span class="sig-name descname"><span class="pre">set_obj_harmonics</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_multipie.html#MultiPieDialog.set_obj_harmonics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_obj_harmonics" title="Link to this definition">#</a></dt>
+<dd><p>Set harmonics in object panel.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_multipie.MultiPieDialog.set_obj_harmonics_rank">
+<span class="sig-name descname"><span class="pre">set_obj_harmonics_rank</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_multipie.html#MultiPieDialog.set_obj_harmonics_rank"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_obj_harmonics_rank" title="Link to this definition">#</a></dt>
+<dd><p>Set harmonics rank in object panel.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_multipie.MultiPieDialog.set_obj_harmonics_type">
+<span class="sig-name descname"><span class="pre">set_obj_harmonics_type</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_multipie.html#MultiPieDialog.set_obj_harmonics_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_obj_harmonics_type" title="Link to this definition">#</a></dt>
+<dd><p>Set harmonics type in object panel.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_multipie.MultiPieDialog.set_obj_orbital_type">
+<span class="sig-name descname"><span class="pre">set_obj_orbital_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">o_type</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_multipie.html#MultiPieDialog.set_obj_orbital_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_obj_orbital_type" title="Link to this definition">#</a></dt>
+<dd><p>Set orbital type in object panel.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>o_type</strong> (<em>str</em>) -- orbital type.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_multipie.MultiPieDialog.set_obj_vector_type">
+<span class="sig-name descname"><span class="pre">set_obj_vector_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v_type</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_multipie.html#MultiPieDialog.set_obj_vector_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_obj_vector_type" title="Link to this definition">#</a></dt>
+<dd><p>Set vector type in object panel.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>v_type</strong> (<em>str</em>) -- vector type.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_multipie.MultiPieDialog.set_obj_wyckoff">
+<span class="sig-name descname"><span class="pre">set_obj_wyckoff</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_multipie.html#MultiPieDialog.set_obj_wyckoff"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_obj_wyckoff" title="Link to this definition">#</a></dt>
+<dd><p>Set Wyckoff position in object panel.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_multipie.MultiPieDialog.set_object_connection">
+<span class="sig-name descname"><span class="pre">set_object_connection</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_multipie.html#MultiPieDialog.set_object_connection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_object_connection" title="Link to this definition">#</a></dt>
+<dd><p>Set connections in object panel.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_multipie.MultiPieDialog.set_object_panel_value">
+<span class="sig-name descname"><span class="pre">set_object_panel_value</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_multipie.html#MultiPieDialog.set_object_panel_value"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_object_panel_value" title="Link to this definition">#</a></dt>
+<dd><p>Set initial values in object panel.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_multipie.MultiPieDialog.set_response_rank">
+<span class="sig-name descname"><span class="pre">set_response_rank</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rank</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_multipie.html#MultiPieDialog.set_response_rank"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_response_rank" title="Link to this definition">#</a></dt>
+<dd><p>Set rank of response tensor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>rank</strong> (<em>str</em>) -- rank of response tensor.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_multipie.MultiPieDialog.set_response_type">
+<span class="sig-name descname"><span class="pre">set_response_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">r_type</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_multipie.html#MultiPieDialog.set_response_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_response_type" title="Link to this definition">#</a></dt>
+<dd><p>Set type of response tensor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>r_type</strong> (<em>str</em>) -- type of response tensor.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_multipie.MultiPieDialog.set_vc_neighbor">
+<span class="sig-name descname"><span class="pre">set_vc_neighbor</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_multipie.html#MultiPieDialog.set_vc_neighbor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_vc_neighbor" title="Link to this definition">#</a></dt>
+<dd><p>Set neighbor list in virtual cluster.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_multipie.MultiPieDialog.set_vc_wyckoff">
+<span class="sig-name descname"><span class="pre">set_vc_wyckoff</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wp</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_multipie.html#MultiPieDialog.set_vc_wyckoff"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_vc_wyckoff" title="Link to this definition">#</a></dt>
+<dd><p>Set wyckoff in virtual cluster.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>wp</strong> (<em>str</em>) -- Wyckoff position.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_multipie.MultiPieDialog.set_wyckoff_item">
+<span class="sig-name descname"><span class="pre">set_wyckoff_item</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_multipie.html#MultiPieDialog.set_wyckoff_item"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_wyckoff_item" title="Link to this definition">#</a></dt>
+<dd><p>Set Wyckoff list.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_multipie.MultiPieDialog.show_atomic">
+<span class="sig-name descname"><span class="pre">show_atomic</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_multipie.html#MultiPieDialog.show_atomic"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.show_atomic" title="Link to this definition">#</a></dt>
+<dd><p>Show atomic multipole panel.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_multipie.MultiPieDialog.show_character_table">
+<span class="sig-name descname"><span class="pre">show_character_table</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_multipie.html#MultiPieDialog.show_character_table"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.show_character_table" title="Link to this definition">#</a></dt>
+<dd><p>Show character table panel.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_multipie.MultiPieDialog.show_harmonics">
+<span class="sig-name descname"><span class="pre">show_harmonics</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_multipie.html#MultiPieDialog.show_harmonics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.show_harmonics" title="Link to this definition">#</a></dt>
+<dd><p>Show harmonics panel.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_multipie.MultiPieDialog.show_harmonics_decomp">
+<span class="sig-name descname"><span class="pre">show_harmonics_decomp</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_multipie.html#MultiPieDialog.show_harmonics_decomp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.show_harmonics_decomp" title="Link to this definition">#</a></dt>
+<dd><p>Show harmonics decomposition panel.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_multipie.MultiPieDialog.show_product_table">
+<span class="sig-name descname"><span class="pre">show_product_table</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_multipie.html#MultiPieDialog.show_product_table"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.show_product_table" title="Link to this definition">#</a></dt>
+<dd><p>Show product table panel.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_multipie.MultiPieDialog.show_response">
+<span class="sig-name descname"><span class="pre">show_response</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_multipie.html#MultiPieDialog.show_response"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.show_response" title="Link to this definition">#</a></dt>
+<dd><p>Show response tensor panel.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_multipie.MultiPieDialog.show_symmetry_operation">
+<span class="sig-name descname"><span class="pre">show_symmetry_operation</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_multipie.html#MultiPieDialog.show_symmetry_operation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.show_symmetry_operation" title="Link to this definition">#</a></dt>
+<dd><p>Show symmetry operation panel.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_multipie.MultiPieDialog.show_virtual_cluster">
+<span class="sig-name descname"><span class="pre">show_virtual_cluster</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_multipie.html#MultiPieDialog.show_virtual_cluster"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.show_virtual_cluster" title="Link to this definition">#</a></dt>
+<dd><p>Show virtual cluster panel.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_multipie.MultiPieDialog.show_wyckoff">
+<span class="sig-name descname"><span class="pre">show_wyckoff</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_multipie.html#MultiPieDialog.show_wyckoff"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.show_wyckoff" title="Link to this definition">#</a></dt>
+<dd><p>Show Wyckoff position panel.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_multipie.MultiPieDialog.basis">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">basis</span></span><a class="headerlink" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.basis" title="Link to this definition">#</a></dt>
+<dd><p>Basis status dict.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_multipie.MultiPieDialog.group">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">group</span></span><a class="headerlink" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.group" title="Link to this definition">#</a></dt>
+<dd><p>Group status dict.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_multipie.MultiPieDialog.obj">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">obj</span></span><a class="headerlink" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.obj" title="Link to this definition">#</a></dt>
+<dd><p>Object status dict.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_multipie.MultiPieDialog.plus">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">plus</span></span><a class="headerlink" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.plus" title="Link to this definition">#</a></dt>
+<dd><p>Plus status dict.</p>
+</dd></dl>
+
+</dd></dl>
+
 </section>
-<section id="info-dialog">
-<h2>Info Dialog<a class="headerlink" href="#info-dialog" title="Link to this heading">#</a></h2>
+<section id="module-qtdraw.multipie.dialog_info">
+<span id="info-dialog"></span><h2>Info Dialog<a class="headerlink" href="#module-qtdraw.multipie.dialog_info" title="Link to this heading">#</a></h2>
+<p>Info. dialog.</p>
+<p>This module provides a dialog for group info. in MultiPie dialog.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_info.InfoPanel">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">InfoPanel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">header</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertical</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_info.html#InfoPanel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_info.InfoPanel" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">QDialog</span></code></p>
+<p>Info panel.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parent</strong> (<em>QWidget</em>) -- parent.</p></li>
+<li><p><strong>data</strong> (<em>list</em>) -- list of latex string without &quot;$&quot;, [[str]].</p></li>
+<li><p><strong>header</strong> (<em>list</em>) -- header. None is for no header.</p></li>
+<li><p><strong>title</strong> (<em>str</em>) -- title of window.</p></li>
+<li><p><strong>vertical</strong> (<em>bool</em>) -- show vertical (sequential number) header ?</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_info.show_atomic_multipole">
+<span class="sig-name descname"><span class="pre">show_atomic_multipole</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">group</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bra</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ket</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">am</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_info.html#show_atomic_multipole"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_info.show_atomic_multipole" title="Link to this definition">#</a></dt>
+<dd><p>Show atomic multipole panel.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>group</strong> (<em>PointGroup</em>) -- point group.</p></li>
+<li><p><strong>bra</strong> (<em>list</em>) -- bra basis list.</p></li>
+<li><p><strong>ket</strong> (<em>list</em>) -- ket basis list.</p></li>
+<li><p><strong>am</strong> (<em>dict</em>) -- atomic multipoles.</p></li>
+<li><p><strong>parent</strong> (<em>QWidget</em>) -- parent.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>(InfoPanel) -- symmetry operation panel.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_info.show_character_table">
+<span class="sig-name descname"><span class="pre">show_character_table</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">group</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_info.html#show_character_table"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_info.show_character_table" title="Link to this definition">#</a></dt>
+<dd><p>Show character table panel.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>group</strong> (<em>PointGroup</em>) -- point group.</p></li>
+<li><p><strong>parent</strong> (<em>QWidget</em>) -- parent.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>(InfoPanel) -- character table panel.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_info.show_group_info">
+<span class="sig-name descname"><span class="pre">show_group_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">group</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">header</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertical</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_info.html#show_group_info"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_info.show_group_info" title="Link to this definition">#</a></dt>
+<dd><p>Show group info.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>group</strong> (<em>PointGroup</em><em> or </em><em>SpaceGroup</em>) -- group.</p></li>
+<li><p><strong>name</strong> (<em>str</em>) -- title of dialog.</p></li>
+<li><p><strong>header</strong> (<em>list</em>) -- header string. None is for no header.</p></li>
+<li><p><strong>data</strong> (<em>list</em>) -- list of latex string without &quot;$&quot;, [[str]].</p></li>
+<li><p><strong>vertical</strong> (<em>bool</em>) -- show vertical (sequential number) header ?</p></li>
+<li><p><strong>parent</strong> (<em>QWidget</em><em>, </em><em>optional</em>) -- parent.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>(InfoPanel) -- panel.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_info.show_harmonics">
+<span class="sig-name descname"><span class="pre">show_harmonics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">group</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rank</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">head</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_info.html#show_harmonics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_info.show_harmonics" title="Link to this definition">#</a></dt>
+<dd><p>Show harmonics panel.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>group</strong> (<em>PointGroup</em>) -- point group.</p></li>
+<li><p><strong>rank</strong> (<em>int</em>) -- harmonics rank.</p></li>
+<li><p><strong>head</strong> (<em>str</em>) -- harmonics type.</p></li>
+<li><p><strong>parent</strong> (<em>QWidget</em>) -- parent.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>(InfoPanel) -- harmonics panel.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_info.show_harmonics_decomp">
+<span class="sig-name descname"><span class="pre">show_harmonics_decomp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">group</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rank</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">head</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to_pg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_info.html#show_harmonics_decomp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_info.show_harmonics_decomp" title="Link to this definition">#</a></dt>
+<dd><p>Show harmonics decomposition panel.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>group</strong> (<em>PointGroup</em>) -- point group.</p></li>
+<li><p><strong>rank</strong> (<em>int</em>) -- harmonics rank.</p></li>
+<li><p><strong>head</strong> (<em>str</em>) -- harmonics type.</p></li>
+<li><p><strong>to_pg</strong> (<em>str</em>) -- destination point group.</p></li>
+<li><p><strong>parent</strong> (<em>QWidget</em>) -- parent.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>(InfoPanel) -- harmonics decomposition panel.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_info.show_product_table">
+<span class="sig-name descname"><span class="pre">show_product_table</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">group</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_info.html#show_product_table"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_info.show_product_table" title="Link to this definition">#</a></dt>
+<dd><p>Show product table panel.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>group</strong> (<em>PointGroup</em>) -- point group.</p></li>
+<li><p><strong>parent</strong> (<em>QWidget</em>) -- parent.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>(InfoPanel) -- product table panel.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_info.show_response">
+<span class="sig-name descname"><span class="pre">show_response</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">group</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rank</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_info.html#show_response"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_info.show_response" title="Link to this definition">#</a></dt>
+<dd><p>Show response tensor panel.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>group</strong> (<em>PointGroup</em>) -- point group.</p></li>
+<li><p><strong>rank</strong> (<em>int</em>) -- response tensor rank.</p></li>
+<li><p><strong>r_type</strong> (<em>str</em>) -- response tensor type.</p></li>
+<li><p><strong>parent</strong> (<em>QWidget</em>) -- parent.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>(InfoPanel) -- response tensor panel.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_info.show_symmetry_operation">
+<span class="sig-name descname"><span class="pre">show_symmetry_operation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">group</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_info.html#show_symmetry_operation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_info.show_symmetry_operation" title="Link to this definition">#</a></dt>
+<dd><p>Show symmetry operation panel.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>group</strong> (<em>PointGroup</em>) -- point group.</p></li>
+<li><p><strong>parent</strong> (<em>QWidget</em>) -- parent.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>(InfoPanel) -- symmetry operation panel.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_info.show_virtual_cluster">
+<span class="sig-name descname"><span class="pre">show_virtual_cluster</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">group</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_info.html#show_virtual_cluster"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_info.show_virtual_cluster" title="Link to this definition">#</a></dt>
+<dd><p>Show virtual cluster panel.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>group</strong> (<em>PointGroup</em>) -- point group.</p></li>
+<li><p><strong>wp</strong> (<em>str</em>) -- Wyckoff position.</p></li>
+<li><p><strong>parent</strong> (<em>QWidget</em>) -- parent.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>(InfoPanel) -- virtual cluster panel.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_info.show_wyckoff">
+<span class="sig-name descname"><span class="pre">show_wyckoff</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">group</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_info.html#show_wyckoff"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_info.show_wyckoff" title="Link to this definition">#</a></dt>
+<dd><p>Show Wyckoff position panel.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>group</strong> (<em>PointGroup</em>) -- point group.</p></li>
+<li><p><strong>parent</strong> (<em>QWidget</em>) -- parent.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>(InfoPanel) -- Wyckoff position panel.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
-<section id="modulation-dialog">
-<h2>Modulation Dialog<a class="headerlink" href="#modulation-dialog" title="Link to this heading">#</a></h2>
+<section id="module-qtdraw.multipie.dialog_modulation">
+<span id="modulation-dialog"></span><h2>Modulation Dialog<a class="headerlink" href="#module-qtdraw.multipie.dialog_modulation" title="Link to this heading">#</a></h2>
+<p>Modulation dialog.</p>
+<p>This module provides a dialog for modulation dialog.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_modulation.ModulationDialog">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ModulationDialog</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">widget</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">basis</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modulation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">head</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_orbital</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_modulation.html#ModulationDialog"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_modulation.ModulationDialog" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">QDialog</span></code></p>
+<p>Modulation dialog.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>widget</strong> (<a class="reference internal" href="api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget" title="qtdraw.core.pyvista_widget.PyVistaWidget"><em>PyVistaWidget</em></a>) -- widget.</p></li>
+<li><p><strong>basis</strong> (<em>list</em>) -- valid basis list.</p></li>
+<li><p><strong>modulation</strong> (<em>str</em>) -- modulation list.</p></li>
+<li><p><strong>head</strong> (<em>str</em>) -- multipole type.</p></li>
+<li><p><strong>is_orbital</strong> (<em>bool</em><em>, </em><em>optional</em>) -- orbital plot ?</p></li>
+<li><p><strong>parent</strong> (<em>QWidget</em><em>, </em><em>optional</em>) -- parent.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_modulation.ModulationDialog.accept">
+<span class="sig-name descname"><span class="pre">accept</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_modulation.html#ModulationDialog.accept"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_modulation.ModulationDialog.accept" title="Link to this definition">#</a></dt>
+<dd><p>Accept input.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_modulation.ModulationDialog.add_data">
+<span class="sig-name descname"><span class="pre">add_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_modulation.html#ModulationDialog.add_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_modulation.ModulationDialog.add_data" title="Link to this definition">#</a></dt>
+<dd><p>Add data in panel.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_modulation.ModulationDialog.add_modulation">
+<span class="sig-name descname"><span class="pre">add_modulation</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_modulation.html#ModulationDialog.add_modulation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_modulation.ModulationDialog.add_modulation" title="Link to this definition">#</a></dt>
+<dd><p>Add modulation.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_modulation.ModulationDialog.apply">
+<span class="sig-name descname"><span class="pre">apply</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">button</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_modulation.html#ModulationDialog.apply"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_modulation.ModulationDialog.apply" title="Link to this definition">#</a></dt>
+<dd><p>Apply input.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_modulation.ModulationDialog.close">
+<span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_modulation.html#ModulationDialog.close"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_modulation.ModulationDialog.close" title="Link to this definition">#</a></dt>
+<dd><p>Close.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_modulation.ModulationDialog.create_panel">
+<span class="sig-name descname"><span class="pre">create_panel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_modulation.html#ModulationDialog.create_panel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_modulation.ModulationDialog.create_panel" title="Link to this definition">#</a></dt>
+<dd><p>Create panel.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>list</em>) -- modulation data.</p></li>
+<li><p><strong>parent</strong> (<em>QWidget</em>) -- parent.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>(QWidget) -- panel widget.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_modulation.ModulationDialog.get_raw_data">
+<span class="sig-name descname"><span class="pre">get_raw_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_modulation.html#ModulationDialog.get_raw_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_modulation.ModulationDialog.get_raw_data" title="Link to this definition">#</a></dt>
+<dd><p>Get raw modulation list.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>(list) -- modulation list.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_modulation.ModulationDialog.reject">
+<span class="sig-name descname"><span class="pre">reject</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_modulation.html#ModulationDialog.reject"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_modulation.ModulationDialog.reject" title="Link to this definition">#</a></dt>
+<dd><p>Reject input.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.multipie.dialog_modulation.ModulationDialog.remove_data">
+<span class="sig-name descname"><span class="pre">remove_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/dialog_modulation.html#ModulationDialog.remove_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.dialog_modulation.ModulationDialog.remove_data" title="Link to this definition">#</a></dt>
+<dd><p>Remove data in panel.</p>
+</dd></dl>
+
+</dd></dl>
+
 </section>
-<section id="utility">
-<h2>Utility<a class="headerlink" href="#utility" title="Link to this heading">#</a></h2>
+<section id="module-qtdraw.multipie.util">
+<span id="utility"></span><h2>Utility<a class="headerlink" href="#module-qtdraw.multipie.util" title="Link to this heading">#</a></h2>
+<p>Utility.</p>
+<p>This module contains utilities for multipie plugin.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="qtdraw.multipie.util.check_get_bond">
+<span class="sig-name descname"><span class="pre">check_get_bond</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">txt</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/util.html#check_get_bond"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.util.check_get_bond" title="Link to this definition">#</a></dt>
+<dd><p>Check and get bond.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>txt</strong> (<em>str</em>) -- bond.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>(NSArray) -- bond or None if invalid.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qtdraw.multipie.util.check_get_site">
+<span class="sig-name descname"><span class="pre">check_get_site</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">txt</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/util.html#check_get_site"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.util.check_get_site" title="Link to this definition">#</a></dt>
+<dd><p>Check and get site.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>txt</strong> (<em>str</em>) -- site.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>(NSArray) -- site or None if invalid.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qtdraw.multipie.util.check_get_site_bond">
+<span class="sig-name descname"><span class="pre">check_get_site_bond</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">txt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ret_site</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/util.html#check_get_site_bond"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.util.check_get_site_bond" title="Link to this definition">#</a></dt>
+<dd><p>Check and get site (bond center) from site_bond.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>txt</strong> (<em>str</em>) -- site_bond.</p></li>
+<li><p><strong>ret_site</strong> (<em>bool</em><em>, </em><em>optional</em>) -- return site ?</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>(NSArray) -- site, bond or bond center, or None if invalid.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qtdraw.multipie.util.check_linear_combination">
+<span class="sig-name descname"><span class="pre">check_linear_combination</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z_samb</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">form</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">head</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/util.html#check_linear_combination"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.util.check_linear_combination" title="Link to this definition">#</a></dt>
+<dd><p>Check form of linear combination.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>z_samb</strong> (<em>dict</em>) -- combined SAMB.</p></li>
+<li><p><strong>form</strong> (<em>str</em>) -- expression of linear combination.</p></li>
+<li><p><strong>head</strong> (<em>str</em>) -- multipole type.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>(str) -- expression of linear combination (lower case).</p></li>
+<li><p>(set) -- used variables.</p></li>
+<li><p>(bool) -- magnetic bond ?</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qtdraw.multipie.util.combined_format">
+<span class="sig-name descname"><span class="pre">combined_format</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tag_list</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/util.html#combined_format"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.util.combined_format" title="Link to this definition">#</a></dt>
+<dd><p>Create formatted combined SAMB.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>tag_list</strong> (<em>tuple</em>) -- (Z,X,Y) tag.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>(str) -- formatted combined SAMB.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qtdraw.multipie.util.create_samb_object">
+<span class="sig-name descname"><span class="pre">create_samb_object</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z_samb</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">site</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c_samb</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z_head</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">irrep</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_odd</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/util.html#create_samb_object"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.util.create_samb_object" title="Link to this definition">#</a></dt>
+<dd><p>Create SAMB object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>z_samb</strong> (<em>dict</em>) -- combined SAMB.</p></li>
+<li><p><strong>site</strong> (<em>NSArray</em>) -- site.</p></li>
+<li><p><strong>c_samb</strong> (<em>dict</em>) -- cluster SAMB.</p></li>
+<li><p><strong>z_head</strong> (<em>str</em>) -- multipole type.</p></li>
+<li><p><strong>irrep</strong> (<em>int</em>) -- irrep. index.</p></li>
+<li><p><strong>pg</strong> (<em>PointGroup</em>) -- point group.</p></li>
+<li><p><strong>v</strong> (<em>NSArray</em>) -- vector variable.</p></li>
+<li><p><strong>t_odd</strong> (<em>bool</em>) -- magnetic bond ?</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>(NSArray) -- (xyz)-polynomial at each cluster site.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qtdraw.multipie.util.parse_modulation_list">
+<span class="sig-name descname"><span class="pre">parse_modulation_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lst</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/multipie/util.html#parse_modulation_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.multipie.util.parse_modulation_list" title="Link to this definition">#</a></dt>
+<dd><p>Parse modulation list.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>lst</strong> (<em>str</em>) -- modulation list in str, [[basis,coeff,k,cos/sin]]</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>(list) -- modulation list.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 </section>
 
@@ -465,11 +1661,123 @@
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multipie-plugin">MultiPie Plugin</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multipie-dialog">MultiPie Dialog</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#info-dialog">Info Dialog</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modulation-dialog">Modulation Dialog</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#utility">Utility</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-qtdraw.multipie.plugin_multipie">MultiPie Plugin</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-qtdraw.multipie.dialog_multipie">MultiPie Dialog</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_add_bond"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.basis_add_bond()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_add_hopping"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.basis_add_hopping()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_add_orbital"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.basis_add_orbital()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_add_orbital_lc"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.basis_add_orbital_lc()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_add_site"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.basis_add_site()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_add_vector"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.basis_add_vector()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_add_vector_lc"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.basis_add_vector_lc()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_gen_bond"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.basis_gen_bond()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_gen_orbital"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.basis_gen_orbital()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_gen_orbital_modulation"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.basis_gen_orbital_modulation()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_gen_site"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.basis_gen_site()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_gen_vector"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.basis_gen_vector()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_gen_vector_modulation"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.basis_gen_vector_modulation()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_set_bond_select"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.basis_set_bond_select()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_set_orbital_select"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.basis_set_orbital_select()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_set_site_select"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.basis_set_site_select()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_set_vector_select"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.basis_set_vector_select()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.close"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.close()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.create_basis_panel"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.create_basis_panel()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.create_group_panel"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.create_group_panel()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.create_object_panel"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.create_object_panel()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.create_sub_group_panel"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.create_sub_group_panel()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.obj_add_bond"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.obj_add_bond()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.obj_add_harmonics"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.obj_add_harmonics()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.obj_add_orbital"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.obj_add_orbital()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.obj_add_site"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.obj_add_site()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.obj_add_vector"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.obj_add_vector()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_atomic_basis_type"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.set_atomic_basis_type()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_atomic_bra_ket"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.set_atomic_bra_ket()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_atomic_type"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.set_atomic_type()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_basis_connection"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.set_basis_connection()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_basis_item"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.set_basis_item()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_basis_panel_value"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.set_basis_panel_value()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_crystal_type"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.set_crystal_type()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_group"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.set_group()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_group_connection"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.set_group_connection()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_group_item"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.set_group_item()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_group_panel_value"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.set_group_panel_value()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_group_type"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.set_group_type()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_harmonics_decomp"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.set_harmonics_decomp()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_harmonics_item"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.set_harmonics_item()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_harmonics_rank"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.set_harmonics_rank()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_harmonics_type"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.set_harmonics_type()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_irrep_decomp"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.set_irrep_decomp()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_irrep_item"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.set_irrep_item()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_obj_harmonics"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.set_obj_harmonics()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_obj_harmonics_rank"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.set_obj_harmonics_rank()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_obj_harmonics_type"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.set_obj_harmonics_type()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_obj_orbital_type"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.set_obj_orbital_type()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_obj_vector_type"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.set_obj_vector_type()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_obj_wyckoff"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.set_obj_wyckoff()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_object_connection"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.set_object_connection()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_object_panel_value"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.set_object_panel_value()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_response_rank"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.set_response_rank()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_response_type"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.set_response_type()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_vc_neighbor"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.set_vc_neighbor()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_vc_wyckoff"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.set_vc_wyckoff()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_wyckoff_item"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.set_wyckoff_item()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.show_atomic"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.show_atomic()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.show_character_table"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.show_character_table()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.show_harmonics"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.show_harmonics()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.show_harmonics_decomp"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.show_harmonics_decomp()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.show_product_table"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.show_product_table()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.show_response"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.show_response()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.show_symmetry_operation"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.show_symmetry_operation()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.show_virtual_cluster"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.show_virtual_cluster()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.show_wyckoff"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.show_wyckoff()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.basis"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.basis</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.group"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.group</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.obj"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.obj</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_multipie.MultiPieDialog.plus"><code class="docutils literal notranslate"><span class="pre">MultiPieDialog.plus</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-qtdraw.multipie.dialog_info">Info Dialog</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_info.InfoPanel"><code class="docutils literal notranslate"><span class="pre">InfoPanel</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_info.show_atomic_multipole"><code class="docutils literal notranslate"><span class="pre">show_atomic_multipole()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_info.show_character_table"><code class="docutils literal notranslate"><span class="pre">show_character_table()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_info.show_group_info"><code class="docutils literal notranslate"><span class="pre">show_group_info()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_info.show_harmonics"><code class="docutils literal notranslate"><span class="pre">show_harmonics()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_info.show_harmonics_decomp"><code class="docutils literal notranslate"><span class="pre">show_harmonics_decomp()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_info.show_product_table"><code class="docutils literal notranslate"><span class="pre">show_product_table()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_info.show_response"><code class="docutils literal notranslate"><span class="pre">show_response()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_info.show_symmetry_operation"><code class="docutils literal notranslate"><span class="pre">show_symmetry_operation()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_info.show_virtual_cluster"><code class="docutils literal notranslate"><span class="pre">show_virtual_cluster()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_info.show_wyckoff"><code class="docutils literal notranslate"><span class="pre">show_wyckoff()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-qtdraw.multipie.dialog_modulation">Modulation Dialog</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_modulation.ModulationDialog"><code class="docutils literal notranslate"><span class="pre">ModulationDialog</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_modulation.ModulationDialog.accept"><code class="docutils literal notranslate"><span class="pre">ModulationDialog.accept()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_modulation.ModulationDialog.add_data"><code class="docutils literal notranslate"><span class="pre">ModulationDialog.add_data()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_modulation.ModulationDialog.add_modulation"><code class="docutils literal notranslate"><span class="pre">ModulationDialog.add_modulation()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_modulation.ModulationDialog.apply"><code class="docutils literal notranslate"><span class="pre">ModulationDialog.apply()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_modulation.ModulationDialog.close"><code class="docutils literal notranslate"><span class="pre">ModulationDialog.close()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_modulation.ModulationDialog.create_panel"><code class="docutils literal notranslate"><span class="pre">ModulationDialog.create_panel()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_modulation.ModulationDialog.get_raw_data"><code class="docutils literal notranslate"><span class="pre">ModulationDialog.get_raw_data()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_modulation.ModulationDialog.reject"><code class="docutils literal notranslate"><span class="pre">ModulationDialog.reject()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.dialog_modulation.ModulationDialog.remove_data"><code class="docutils literal notranslate"><span class="pre">ModulationDialog.remove_data()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-qtdraw.multipie.util">Utility</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.util.check_get_bond"><code class="docutils literal notranslate"><span class="pre">check_get_bond()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.util.check_get_site"><code class="docutils literal notranslate"><span class="pre">check_get_site()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.util.check_get_site_bond"><code class="docutils literal notranslate"><span class="pre">check_get_site_bond()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.util.check_linear_combination"><code class="docutils literal notranslate"><span class="pre">check_linear_combination()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.util.combined_format"><code class="docutils literal notranslate"><span class="pre">combined_format()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.util.create_samb_object"><code class="docutils literal notranslate"><span class="pre">create_samb_object()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.multipie.util.parse_modulation_list"><code class="docutils literal notranslate"><span class="pre">parse_modulation_list()</span></code></a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 
