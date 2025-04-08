@@ -5,10 +5,8 @@ This module contains utilities for parsing.
 """
 
 import numpy as np
-import warnings
 import copy
 from pymatgen.core import Structure
-from pymatgen.core.periodic_table import Element
 from pymatgen.symmetry.analyzer import SpacegroupAnalyzer
 from pymatgen.analysis.graphs import StructureGraph
 from pymatgen.analysis.local_env import MinimumDistanceNN
@@ -63,24 +61,36 @@ def get_site_info(graph):
     eq_sites = structure.equivalent_sites
 
     # grouping equivalent sites.
-    dsites = {}
-    for es in eq_sites:
-        el = es[0].specie
-        if type(el) != type(Element):
-            el = str(el).replace("0+", "")
-        else:
-            el = el.symbol
-        dsites[el] = dsites.get(el, []) + [es]
+    MIN_RADIUS = 0.25
 
     site_info = []
-    for name, v in dsites.items():
-        for el_no, sl in enumerate(v):
-            el_name = name + str(el_no + 1)
-            for s_no, s in enumerate(sl):
-                s_name = el_name + "_" + str(s_no + 1)
-                frac_coords = s.frac_coords.round(DIGIT)
-                radius = float(s.specie.atomic_radius)
-                site_info.append((el_name, s_name, name, frac_coords, radius))
+
+    element0 = ""
+    group_index = 0
+    for group in eq_sites:
+        group_index += 1
+        for site_index, site in enumerate(group):
+            element = site.species.elements[0].symbol
+            if element != element0:
+                element0 = element
+                group_index = 0
+            symbols = ''.join([el.symbol for el in site.species.elements])
+            name = f"{symbols}{group_index+1}"
+            label = f"{name}_{site_index+1}"
+            frac_coords = site.frac_coords
+
+            radius = 0.0
+            for el, occu in site.species.items():
+                r = el.atomic_radius or MIN_RADIUS
+                radius += occu * r
+
+            site_info.append((
+                name,
+                label,
+                element,
+                frac_coords.round(DIGIT),
+                round(radius,DIGIT-2)
+            ))
 
     return site_info
 
@@ -173,14 +183,12 @@ def parse_material(filename):
         - (list) -- bond info. to draw.
         - (Structure) -- symmetrized structure.
     """
-    warnings.filterwarnings("ignore", category=UserWarning)
-
     if filename.endswith(".vesta"):
         vesta_dict = parse_vesta(filename)
         structure = create_structure_vesta(vesta_dict)
     elif filename.endswith(".cif"):
         parser = CifParser(filename)
-        structure = parser.get_structures(primitive=False, symmetrized=False)[0]
+        structure = parser.parse_structures(primitive=False, symmetrized=False)[0]
     elif filename.endswith(".xsf"):
         structure = Structure.from_file(filename)
         sga = SpacegroupAnalyzer(structure)
@@ -192,7 +200,7 @@ def parse_material(filename):
     symmetrized = sga.get_symmetrized_structure()
     sg_no = sga.get_space_group_number()
     env = MinimumDistanceNN()
-    graph = StructureGraph.with_local_env_strategy(symmetrized, env)
+    graph = StructureGraph.from_local_env_strategy(symmetrized, env)
 
     name, cell = get_model_cell(graph)
     crystal = sga.get_crystal_system()
