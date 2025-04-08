@@ -14,8 +14,9 @@
 - [MacOS or Linux] Add path for LaTeX and Python in .zshrc.
     ```bash
     export PATH=/Library/TeX/texbin:$PATH
-    export PATH=/opt/homebrew/opt/python@3.11/libexec/bin:$PATH
+    export PATH=/opt/homebrew/opt/python@3.12/libexec/bin:$PATH
     ```
+- If a virtual environment (e.g. `~/.venv`) is used, set PATH to `.venv/bin` prior to global one as well.
 - Restart shell
 - [MacOS] Install [Homebrew](https://brew.sh/index_ja)
     ```bash
@@ -69,8 +70,10 @@
     (Note) `QtDraw.app` is created by Automator with the following script:
     ```bash
     source ~/.zshrc
-    nohup python -c 'from sys import argv; from qtdraw.core.qtdraw_app import QtDraw; filename = None if len(argv) == 1 else argv[1]; QtDraw(filename=filename).exec()' "$1" &> /dev/null &
-    exit 0
+    if [ -z "$1" ]; then
+        nohup qtdraw &> /dev/null &
+    else
+        nohup qtdraw "$1" &> /dev/null &
     ```
     ![automator.jpg](fig/automator.jpg)
 
