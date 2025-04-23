@@ -149,7 +149,7 @@ def create_grid(grid_n, grid_min, grid_max, A=None, endpoint=False):
     else:
         s = [(ma - mi) / n for mi, ma, n in zip(grid_min, grid_max, grid_n)]
     grid = pv.ImageData(dimensions=grid_n, origin=grid_min, spacing=s).cast_to_unstructured_grid()
-    grid.transform(A)
+    grid.transform(A, inplace=True)
 
     return grid
 
