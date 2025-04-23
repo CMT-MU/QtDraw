@@ -268,11 +268,11 @@ def create_unit_cell(A, origin, lower=None, dimensions=None):
     pts = pts + shift
     lines = [5, 0, 1, 2, 3, 0, 5, 4, 5, 6, 7, 4, 2, 0, 4, 2, 1, 5, 2, 2, 6, 2, 3, 7]
     box = pv.PolyData(pts, lines=lines)
-    box.transform(A)
+    box.transform(A, inplace=True)
 
     # repeated boxes.
     m = pv.ImageData(dimensions=dimensions, origin=lower).cast_to_unstructured_grid()
-    m.transform(A)
+    m.transform(A, inplace=True)
     p = m.glyph(geom=box, factor=1.0, scale=False, orient=False)
 
     return p
