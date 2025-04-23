@@ -497,7 +497,7 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="n">s</span> <span class="o">=</span> <span class="p">[(</span><span class="n">ma</span> <span class="o">-</span> <span class="n">mi</span><span class="p">)</span> <span class="o">/</span> <span class="n">n</span> <span class="k">for</span> <span class="n">mi</span><span class="p">,</span> <span class="n">ma</span><span class="p">,</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">grid_min</span><span class="p">,</span> <span class="n">grid_max</span><span class="p">,</span> <span class="n">grid_n</span><span class="p">)]</span>
     <span class="n">grid</span> <span class="o">=</span> <span class="n">pv</span><span class="o">.</span><span class="n">ImageData</span><span class="p">(</span><span class="n">dimensions</span><span class="o">=</span><span class="n">grid_n</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="n">grid_min</span><span class="p">,</span> <span class="n">spacing</span><span class="o">=</span><span class="n">s</span><span class="p">)</span><span class="o">.</span><span class="n">cast_to_unstructured_grid</span><span class="p">()</span>
-    <span class="n">grid</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+    <span class="n">grid</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">grid</span></div>
 
