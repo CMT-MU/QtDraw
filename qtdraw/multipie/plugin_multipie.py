@@ -798,7 +798,7 @@ class MultiPiePlugin:
                             label=label,
                         )
                     else:
-                        v = v.transform(A)
+                        v = v.transform(A, inplace=True)
                         if w < 0:
                             v = -v
                         norm = v.norm() * scale
@@ -1000,7 +1000,7 @@ class MultiPiePlugin:
                 v, c = s.convert_bond("bond")
                 if not pg:
                     c = (c + p).shift()
-                v = v.transform(A)
+                v = v.transform(A, inplace=True)
                 norm = v.norm() * scale
                 self._pvw.add_vector(
                     position=c.value(),
