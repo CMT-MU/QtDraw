@@ -144,6 +144,7 @@
 |--------|----------|
 | create_qtdraw_file | Create QtDraw file as background. |
 | convert_qtdraw_v2 | Convert qtdraw file to version 2. |
+| set_light_prop |  |
 
 
 ### <div class='my-heading' style='color: royalblue;'>Window
@@ -301,8 +302,6 @@
 | create_light_panel | Create light panel. |
 | create_latex_panel | Create LaTeX panel. |
 | create_general_panel | Create general panel. |
-| accept | Accept change. |
-| reject | Reject change. |
 | apply | Apply change. |
 
 
