@@ -121,7 +121,7 @@ class ExceptionHook(QObject):
             handler = ultratb.VerboseTB(color_scheme="NoColor", long_header=False)
             log_msg = handler.text(type, value, traceback)
             log_msg += "\n" + bar
-            simple = "\n" + bar + "\n" + ultratb.SyntaxTB().text(type, value, traceback) + bar
+            simple = "\n" + bar + "\n" + ultratb.SyntaxTB(theme_name="NoColor").text(type, value, traceback) + bar
             self.msg_signal.emit(log_msg)
             logging.critical(simple)
 
