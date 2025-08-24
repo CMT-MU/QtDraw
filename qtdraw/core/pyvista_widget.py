@@ -2183,9 +2183,6 @@ class PyVistaWidget(QtInteractor):
         else:
             self._status["axis_type"] = axis_type
 
-        if hasattr(self.renderer, "axes_widget"):
-            del self.renderer.axes_widget
-
         viewport = True
         if axis_type == "on":
             label = self._preference["axis"]["label"]
@@ -2195,6 +2192,7 @@ class PyVistaWidget(QtInteractor):
             label = None
             viewport = False
         else:
+            self.renderer.hide_axes()
             return
 
         if not self._off_screen:
