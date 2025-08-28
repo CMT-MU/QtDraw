@@ -233,8 +233,8 @@ def create_vector(
     direction = length * direction / norm
 
     obj = pv.Arrow(
-        offset * direction,
-        direction,
+        start=offset * direction,
+        direction=direction,
         scale=length,
         shaft_radius=shaft_radius * width / length,
         tip_radius=tip_radius * width / length,
