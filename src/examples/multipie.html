@@ -34,7 +34,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=5f1b4820" />
@@ -475,21 +475,6 @@
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">4</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1">#</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="c1"># multipie.ipynb</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="c1">#</span>
-<span class="ne">----&gt; </span><span class="mi">4</span> <span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw.core.qtdraw_app</span><span class="w"> </span><span class="kn">import</span> <span class="n">QtDraw</span>
-<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="c1"># show tag list.</span>
-<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="k">def</span><span class="w"> </span><span class="nf">show_list</span><span class="p">(</span><span class="n">header</span><span class="p">,</span> <span class="n">lst</span><span class="p">):</span>
-
-<span class="ne">ModuleNotFoundError</span>: No module named &#39;qtdraw&#39;
-</pre></div>
-</div>
-</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -508,15 +493,75 @@
 </div>
 </div>
 <div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Harmonics:
+  Q(3,A1,,)
+  Q(3,A2,1,)
+  Q(3,A2,2,)
+  Q(3,E,1,0)
+  Q(3,E,1,1)
+  Q(3,E,2,0)
+  Q(3,E,2,1)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>site SAMB:
+  Q01: Q(0,A1,,) = Qa(0,A1,) x Qs(0,A1,)
+  Q02: Q(1,E,,0) = Qa(0,A1,) x Qs(1,E,)
+  Q03: Q(1,E,,1) = Qa(0,A1,) x Qs(1,E,)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>bond SAMB:
+  Q01: Q(0,A1,,) = Qa(0,A1,) x Qb(0,A1,)
+  Q02: Q(2,E,1,0) = Qa(0,A1,) x Qb(2,E,1)
+  Q03: Q(2,E,1,1) = Qa(0,A1,) x Qb(2,E,1)
+  T01: T(0,A1,,) = Qa(0,A1,) x Tb(0,A1,)
+  T02: T(2,E,1,0) = Qa(0,A1,) x Tb(2,E,1)
+  T03: T(2,E,1,1) = Qa(0,A1,) x Tb(2,E,1)
+</pre></div>
+</div>
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># === example ===</span>
-<span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">win</span><span class="o">.</span><span class="n">clear_data</span><span class="p">()</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">draw_equivalent</span><span class="p">(</span><span class="n">win</span><span class="p">)</span>
+<span class="ne">TypeError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">line</span> <span class="mi">6</span>
 <span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="n">draw_harmonics</span><span class="p">(</span><span class="n">win</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">draw_site</span><span class="p">(</span><span class="n">win</span><span class="p">)</span>
+<span class="ne">----&gt; </span><span class="mi">6</span> <span class="n">draw_bond</span><span class="p">(</span><span class="n">win</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="n">draw_vector</span><span class="p">(</span><span class="n">win</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="n">draw_orbital</span><span class="p">(</span><span class="n">win</span><span class="p">)</span>
 
-<span class="ne">NameError</span>: name &#39;win&#39; is not defined
+<span class="nn">Cell In[1], line 36,</span> in <span class="ni">draw_bond</span><span class="nt">(win)</span>
+<span class="g g-Whitespace">     </span><span class="mi">34</span> <span class="n">lst</span> <span class="o">=</span> <span class="n">win</span><span class="o">.</span><span class="n">mp_create_bond_samb</span><span class="p">(</span><span class="s2">&quot;[1/2,1/2,0]@[1/4,1/4,0]&quot;</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">35</span> <span class="n">show_list</span><span class="p">(</span><span class="s2">&quot;bond SAMB:&quot;</span><span class="p">,</span> <span class="n">lst</span><span class="p">)</span>
+<span class="ne">---&gt; </span><span class="mi">36</span> <span class="n">win</span><span class="o">.</span><span class="n">mp_add_bond_samb</span><span class="p">(</span><span class="n">lst</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+
+<span class="nn">File ~/Library/CloudStorage/Dropbox/working/GitHub/QtDraw/qtdraw/core/qtdraw_app.py:2792,</span> in <span class="ni">QtDraw.mp_add_bond_samb</span><span class="nt">(self, tag, scale)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2784</span><span class="w"> </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="g g-Whitespace">   </span><span class="mi">2785</span><span class="sd"> MultiPie: Add bond SAMB.</span>
+<span class="g g-Whitespace">   </span><span class="mi">2786</span><span class="sd"> </span>
+<span class="sd">   (...)   2789     scale (float, optional): width scale.</span>
+<span class="g g-Whitespace">   </span><span class="mi">2790</span><span class="sd"> &quot;&quot;&quot;</span>
+<span class="g g-Whitespace">   </span><span class="mi">2791</span> <span class="bp">self</span><span class="o">.</span><span class="n">multipie_dialog</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">basis_combo_bond_samb</span><span class="o">.</span><span class="n">setCurrentText</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span>
+<span class="ne">-&gt; </span><span class="mi">2792</span> <span class="bp">self</span><span class="o">.</span><span class="n">multipie_dialog</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">basis_add_bond</span><span class="p">(</span><span class="n">scale</span><span class="p">)</span>
+
+<span class="nn">File ~/Library/CloudStorage/Dropbox/working/GitHub/QtDraw/qtdraw/multipie/dialog_multipie.py:1397,</span> in <span class="ni">MultiPieDialog.basis_add_bond</span><span class="nt">(self, scale)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1386</span> <span class="n">cluster_obj</span> <span class="o">=</span> <span class="n">create_samb_object</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">1387</span>     <span class="n">z_samb</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1388</span>     <span class="n">cluster</span><span class="p">,</span>
+   <span class="p">(</span><span class="o">...</span><span class="p">)</span>   <span class="mi">1394</span>     <span class="n">t_odd</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1395</span> <span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1396</span> <span class="n">label</span> <span class="o">=</span> <span class="n">samb_str</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot; </span><span class="se">\u21d0</span><span class="s2"> &quot;</span> <span class="o">+</span> <span class="n">remove_space</span><span class="p">(</span><span class="n">r_bond</span><span class="p">)</span>
+<span class="ne">-&gt; </span><span class="mi">1397</span> <span class="bp">self</span><span class="o">.</span><span class="n">plugin</span><span class="o">.</span><span class="n">add_bond_samb</span><span class="p">(</span><span class="n">cluster</span><span class="p">,</span> <span class="n">cluster_obj</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">z_type</span><span class="p">,</span> <span class="n">scale</span><span class="p">)</span>
+
+<span class="nn">File ~/Library/CloudStorage/Dropbox/working/GitHub/QtDraw/qtdraw/multipie/plugin_multipie.py:801,</span> in <span class="ni">MultiPiePlugin.add_bond_samb</span><span class="nt">(self, bond, obj, label, z_type, scale)</span>
+<span class="g g-Whitespace">    </span><span class="mi">791</span>     <span class="bp">self</span><span class="o">.</span><span class="n">_pvw</span><span class="o">.</span><span class="n">add_bond</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">792</span>         <span class="n">position</span><span class="o">=</span><span class="n">c</span><span class="o">.</span><span class="n">value</span><span class="p">(),</span>
+<span class="g g-Whitespace">    </span><span class="mi">793</span>         <span class="n">direction</span><span class="o">=</span><span class="n">v</span><span class="o">.</span><span class="n">value</span><span class="p">(),</span>
+   <span class="p">(</span><span class="o">...</span><span class="p">)</span>    <span class="mi">798</span>         <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">799</span>     <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">800</span> <span class="k">else</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">801</span>     <span class="n">v</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">802</span>     <span class="k">if</span> <span class="n">w</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">803</span>         <span class="n">v</span> <span class="o">=</span> <span class="o">-</span><span class="n">v</span>
+
+<span class="ne">TypeError</span>: NSArray.transform() got an unexpected keyword argument &#39;inplace&#39;
 </pre></div>
 </div>
 </div>
