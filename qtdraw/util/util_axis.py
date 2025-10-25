@@ -136,13 +136,13 @@ def _create_axes_actor(
         assembly.AddPart(actor)
 
         # dummy axes to keep rotation center as origin.
-        g = pv.Sphere(0.0, -np.array(d))
+        g = pv.Sphere(radius=0.0, center=-np.array(d))
         actor = pv.Actor(mapper=pv.DataSetMapper(g))
         assembly.AddPart(actor)
 
     # center sphere (theta, phi are used differently).
     phi, theta = theta_phi_resolution
-    g0 = pv.Sphere(sphere_radius, theta_resolution=theta, phi_resolution=phi)
+    g0 = pv.Sphere(radius=sphere_radius, theta_resolution=theta, phi_resolution=phi)
     actor = pv.Actor(mapper=pv.DataSetMapper(g0))
     actor.GetProperty().SetColor(sphere_color)
     assembly.AddPart(actor)
