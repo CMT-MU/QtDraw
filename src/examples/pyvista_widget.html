@@ -443,7 +443,7 @@
 
 <span class="c1"># === example 2 (create widget) ===</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">ex2</span><span class="p">():</span>
-    <span class="n">get_qt_application</span><span class="p">()</span> <span class="c1"># create Qt event loop.</span>
+    <span class="n">app</span> <span class="o">=</span> <span class="n">get_qt_application</span><span class="p">()</span> <span class="c1"># create Qt event loop.</span>
     <span class="n">widget</span> <span class="o">=</span> <span class="n">PyVistaWidget</span><span class="p">()</span> <span class="c1"># create PyVista widget.</span>
     <span class="n">draw</span><span class="p">(</span><span class="n">widget</span><span class="p">)</span> <span class="c1"># draw all objects.</span>
     <span class="n">widget</span><span class="o">.</span><span class="n">show</span><span class="p">()</span> <span class="c1"># show widget.</span>
@@ -452,8 +452,6 @@
 <span class="n">ex2</span><span class="p">()</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
 </div>
 </div>
 

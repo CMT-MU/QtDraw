@@ -338,7 +338,9 @@
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">asyncio</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">IPython.core</span><span class="w"> </span><span class="kn">import</span> <span class="n">ultratb</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">PySide6.QtCore</span><span class="w"> </span><span class="kn">import</span> <span class="n">QObject</span><span class="p">,</span> <span class="n">Signal</span><span class="p">,</span> <span class="n">Qt</span><span class="p">,</span> <span class="n">QLoggingCategory</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">PySide6.QtGui</span><span class="w"> </span><span class="kn">import</span> <span class="n">QFont</span>
@@ -354,7 +356,7 @@
 <a class="viewcode-back" href="../../../src/api_util.html#qtdraw.util.qt_event_util.gui_qt">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">gui_qt</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Execute gui magic command for qtconsole.</span>
+<span class="sd">    Execute Qt GUI mode in IPython (if available).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="kn">from</span><span class="w"> </span><span class="nn">IPython</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_ipython</span>
@@ -363,8 +365,9 @@
 
     <span class="n">shell</span> <span class="o">=</span> <span class="n">get_ipython</span><span class="p">()</span>
 
-    <span class="k">if</span> <span class="n">shell</span> <span class="ow">and</span> <span class="n">shell</span><span class="o">.</span><span class="n">active_eventloop</span> <span class="o">!=</span> <span class="s2">&quot;qt&quot;</span><span class="p">:</span>
-        <span class="n">shell</span><span class="o">.</span><span class="n">enable_gui</span><span class="p">(</span><span class="s2">&quot;qt&quot;</span><span class="p">)</span></div>
+    <span class="k">if</span> <span class="n">shell</span> <span class="ow">and</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">shell</span><span class="p">,</span> <span class="s2">&quot;enable_gui&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">shell</span><span class="o">.</span><span class="n">active_eventloop</span> <span class="o">!=</span> <span class="s2">&quot;qt&quot;</span><span class="p">:</span>
+            <span class="n">shell</span><span class="o">.</span><span class="n">enable_gui</span><span class="p">(</span><span class="s2">&quot;qt&quot;</span><span class="p">)</span></div>
 
 
 
@@ -393,8 +396,9 @@
     <span class="k">if</span> <span class="n">latex</span><span class="p">:</span>
         <span class="n">set_latex_setting</span><span class="p">()</span>
 
-    <span class="n">gui_qt</span><span class="p">()</span>
+    <span class="n">gui_qt</span><span class="p">()</span>  <span class="c1"># does nothing in Jupyter7+.</span>
     <span class="n">app</span> <span class="o">=</span> <span class="n">QApplication</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span>
+
     <span class="k">if</span> <span class="n">app</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">app</span> <span class="o">=</span> <span class="n">QApplication</span><span class="p">([])</span>
 
@@ -402,12 +406,28 @@
     <span class="n">app</span><span class="o">.</span><span class="n">setAttribute</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">AA_EnableHighDpiScaling</span><span class="p">)</span>
     <span class="n">app</span><span class="o">.</span><span class="n">setAttribute</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">AA_UseHighDpiPixmaps</span><span class="p">)</span>
 
+    <span class="c1"># set general appearance.</span>
     <span class="n">style</span> <span class="o">=</span> <span class="n">default_preference</span><span class="p">[</span><span class="s2">&quot;general&quot;</span><span class="p">][</span><span class="s2">&quot;style&quot;</span><span class="p">]</span>
     <span class="n">font</span> <span class="o">=</span> <span class="n">default_preference</span><span class="p">[</span><span class="s2">&quot;general&quot;</span><span class="p">][</span><span class="s2">&quot;font&quot;</span><span class="p">]</span>
     <span class="n">size</span> <span class="o">=</span> <span class="n">default_preference</span><span class="p">[</span><span class="s2">&quot;general&quot;</span><span class="p">][</span><span class="s2">&quot;size&quot;</span><span class="p">]</span>
     <span class="n">app</span><span class="o">.</span><span class="n">setStyle</span><span class="p">(</span><span class="n">style</span><span class="p">)</span>
     <span class="n">app</span><span class="o">.</span><span class="n">setFont</span><span class="p">(</span><span class="n">QFont</span><span class="p">(</span><span class="n">font</span><span class="p">))</span>
     <span class="n">app</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="n">create_style_sheet</span><span class="p">(</span><span class="n">size</span><span class="p">))</span>
+
+    <span class="c1"># integrate qt event loop into asyncio for Jupyter environment.</span>
+    <span class="n">in_jupyter</span> <span class="o">=</span> <span class="s2">&quot;JPY_PARENT_PID&quot;</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span> <span class="ow">or</span> <span class="s2">&quot;ipykernel&quot;</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span>
+    <span class="k">if</span> <span class="n">in_jupyter</span><span class="p">:</span>
+
+        <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">_keep_qt_alive</span><span class="p">():</span>
+            <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="n">app</span><span class="o">.</span><span class="n">processEvents</span><span class="p">()</span>
+                <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.01</span><span class="p">)</span>
+
+        <span class="c1"># avoid double-scheduling.</span>
+        <span class="n">loop</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">get_event_loop</span><span class="p">()</span>
+        <span class="n">existing</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">all_tasks</span><span class="p">(</span><span class="n">loop</span><span class="p">)</span> <span class="k">if</span> <span class="n">t</span><span class="o">.</span><span class="n">_coro</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;_keep_qt_alive&quot;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">existing</span><span class="p">:</span>
+            <span class="n">asyncio</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="n">_keep_qt_alive</span><span class="p">())</span>
 
     <span class="k">return</span> <span class="n">app</span></div>
 
