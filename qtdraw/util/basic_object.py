@@ -618,7 +618,7 @@ def create_text3d(text, size=1.0, view=None, depth=1.0, offset=[0, 0, 0], A=None
     A[0:3, 2] = view
     A[0:3, 3] = np.array(offset, dtype=np.float64)
 
-    obj = pv.Text3D(text, depth)
+    obj = pv.Text3D(string=text, depth=depth)
     obj.scale([size] * 3, inplace=True)
     obj.transform(A, inplace=True)
 
@@ -648,7 +648,7 @@ def create_spline(
     """
     point = np.array(point, dtype=np.float64)
     spline_function = vtkParametricSpline()
-    spline_function.SetPoints(pv.vtk_points(point, False))
+    spline_function.SetPoints(pv.vtk_points(points=point, deep=False))
 
     if closed:
         spline_function.ClosedOn()
@@ -667,7 +667,7 @@ def create_spline(
         u_res = point.shape[0]
 
     u_res -= 1
-    spline = surface_from_para(spline_function, u_res)
+    spline = surface_from_para(parametric_function=spline_function, u_res=u_res)
     obj = spline.compute_arc_length()
     obj.tube(radius=width, inplace=True)
 

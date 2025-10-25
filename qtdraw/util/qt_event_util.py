@@ -10,7 +10,9 @@ See also,
 """
 
 import sys
+import os
 import logging
+import asyncio
 from IPython.core import ultratb
 from PySide6.QtCore import QObject, Signal, Qt, QLoggingCategory
 from PySide6.QtGui import QFont
@@ -24,7 +26,7 @@ from qtdraw import __top_dir__
 # ==================================================
 def gui_qt():
     """
-    Execute gui magic command for qtconsole.
+    Execute Qt GUI mode in IPython (if available).
     """
     try:
         from IPython import get_ipython
@@ -33,8 +35,9 @@ def gui_qt():
 
     shell = get_ipython()
 
-    if shell and shell.active_eventloop != "qt":
-        shell.enable_gui("qt")
+    if shell and getattr(shell, "enable_gui", None):
+        if shell.active_eventloop != "qt":
+            shell.enable_gui("qt")
 
 
 # ==================================================
@@ -60,8 +63,9 @@ def get_qt_application(latex=True):
     if latex:
         set_latex_setting()
 
-    gui_qt()
+    gui_qt()  # does nothing in Jupyter7+.
     app = QApplication.instance()
+
     if app is None:
         app = QApplication([])
 
@@ -69,12 +73,28 @@ def get_qt_application(latex=True):
     app.setAttribute(Qt.AA_EnableHighDpiScaling)
     app.setAttribute(Qt.AA_UseHighDpiPixmaps)
 
+    # set general appearance.
     style = default_preference["general"]["style"]
     font = default_preference["general"]["font"]
     size = default_preference["general"]["size"]
     app.setStyle(style)
     app.setFont(QFont(font))
     app.setStyleSheet(create_style_sheet(size))
+
+    # integrate qt event loop into asyncio for Jupyter environment.
+    in_jupyter = "JPY_PARENT_PID" in os.environ or "ipykernel" in sys.modules
+    if in_jupyter:
+
+        async def _keep_qt_alive():
+            while True:
+                app.processEvents()
+                await asyncio.sleep(0.01)
+
+        # avoid double-scheduling.
+        loop = asyncio.get_event_loop()
+        existing = [t for t in asyncio.all_tasks(loop) if t._coro.__name__ == "_keep_qt_alive"]
+        if not existing:
+            asyncio.create_task(_keep_qt_alive())
 
     return app
 

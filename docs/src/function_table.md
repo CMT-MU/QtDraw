@@ -746,7 +746,7 @@
 
 | Function | Summary |
 |--------|----------|
-| gui_qt | Execute gui magic command for qtconsole. |
+| gui_qt | Execute Qt GUI mode in IPython (if available). |
 | get_qt_application | Get Qt application. |
 
 
