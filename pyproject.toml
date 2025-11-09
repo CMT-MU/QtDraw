@@ -51,7 +51,6 @@ Issues = "https://github.com/CMT-MU/QtDraw/issues"
 dev = [
     "jupyter-book",
     "ghp-import",
-    "jupytext",
 ]
 
 [tool.setuptools.dynamic]
