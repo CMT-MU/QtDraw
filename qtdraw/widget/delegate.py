@@ -105,9 +105,11 @@ class ComboDelegate(Delegate):
         dd = index.model().column_default[c]
         opt = index.model().column_option[c]
         combo = Combo(parent, opt, dd)
-        combo.setStyleSheet("margin: 5px 10px 5px 10px; padding: 0px 5px 0px 5px;")
         combo.currentTextChanged.connect(lambda data: index.model().setData(index, data))
         return combo
+
+    def updateEditorGeometry(self, editor, option, index):
+        editor.setGeometry(option.rect.adjusted(5, 8, -5, 0))
 
 
 # ==================================================
@@ -139,10 +141,12 @@ class ColorDelegate(Delegate):
         dd = index.model().column_default[c]
         tp = index.model().column_type[c]
         color_selector = ColorSelector(parent, dd, tp)
-        color_selector.setStyleSheet("margin: 5px 10px 5px 10px; padding: 0px 5px 0px 5px;")
         color_selector.currentTextChanged.connect(lambda data: index.model().setData(index, data))
 
         return color_selector
+
+    def updateEditorGeometry(self, editor, option, index):
+        editor.setGeometry(option.rect.adjusted(5, 7, -5, 0))
 
 
 # ==================================================

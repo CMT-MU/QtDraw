@@ -408,7 +408,9 @@ class Combo(QComboBox):
         self.set_item(item)
         if init is not None:
             self.setCurrentText(init)
-        self.setSizeAdjustPolicy(QComboBox.AdjustToContents)
+
+        total_height = self.font().pointSize() * 1.6
+        self.setFixedHeight(total_height)
 
     # ==================================================
     def get_item(self):
@@ -701,33 +703,31 @@ class ColorSelector(QComboBox):
             - connect currentTextChanged.
         """
         super().__init__(parent=parent)
-        self.setContentsMargins(0, 0, 0, 0)
         self.setFocusPolicy(Qt.NoFocus)
+        self.setContentsMargins(0, 0, 0, 0)
 
-        size = self.font().pointSize()
-
-        color_pixmap, separator = color2pixmap(color_type, size)
+        color_pixmap, separator = color2pixmap(color_type, self.font().pointSize())
         names = list(color_pixmap.keys())
 
         if current == "":
-            current = names[0]
-        try:
-            current = names.index(current)
-        except ValueError:
-            current = 0
+            current_index = 0
+        else:
+            try:
+                current_index = names.index(current)
+            except ValueError:
+                current_index = 0
 
-        self.setSizeAdjustPolicy(QComboBox.AdjustToContents)
         self.blockSignals(True)
         for color, pixmap in color_pixmap.items():
-            self.addItem(QIcon(pixmap), color, self)
+            self.addItem(QIcon(pixmap), color)
         self.blockSignals(False)
-        self.setCurrentIndex(current)
+        self.setCurrentIndex(current_index)
 
-        size = next(iter(color_pixmap.values())).size()
+        icon_size = next(iter(color_pixmap.values())).size()
+        self.setIconSize(icon_size)
 
-        self.setIconSize(size)
-        self.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-        self.setFixedHeight(size.height() * 2.8)
+        total_height = icon_size.height() * 1.8
+        self.setFixedHeight(total_height)
 
         for i in separator:
             self.insertSeparator(i)
