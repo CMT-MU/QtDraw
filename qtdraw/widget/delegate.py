@@ -35,17 +35,7 @@ class Delegate(QStyledItemDelegate):
 
     # ==================================================
     def setModelData(self, editor, model, index):
-        """
-        Set model data.
-
-        Args:
-            editor (QWidget): editor.
-            model (QAbstractItemModel) model.
-            index (QModelIndex): index.
-        """
-        model.blockSignals(True)
-        model.setData(index, editor.currentText(), Qt.EditRole)
-        model.blockSignals(False)
+        return  # set model data by using signal.
 
     # ==================================================
     def updateEditorGeometry(self, editor, option, index):
@@ -57,12 +47,12 @@ class Delegate(QStyledItemDelegate):
             option (QStyleOptionViewItem) option.
             index (QModelIndex): index.
         """
-        editor.setGeometry(option.rect)
+        editor.setGeometry(option.rect.adjusted(5, 7, -5, 0))
 
     # ==================================================
     def paint(self, painter, option, index):
         """
-        Paint cell.
+        Paint cell (need to highlight selection).
 
         Args:
             painter (QPainter): painter.
@@ -109,9 +99,6 @@ class ComboDelegate(Delegate):
         combo.currentTextChanged.connect(lambda data: index.model().setData(index, data))
         return combo
 
-    def updateEditorGeometry(self, editor, option, index):
-        editor.setGeometry(option.rect.adjusted(5, 8, -5, 0))
-
 
 # ==================================================
 class ColorDelegate(Delegate):
@@ -146,9 +133,6 @@ class ColorDelegate(Delegate):
         color_selector.currentTextChanged.connect(lambda data: index.model().setData(index, data))
 
         return color_selector
-
-    def updateEditorGeometry(self, editor, option, index):
-        editor.setGeometry(option.rect.adjusted(5, 7, -5, 0))
 
 
 # ==================================================
@@ -192,3 +176,7 @@ class EditorDelegate(Delegate):
 
         editor.returnPressed.connect(lambda data: index.model().setData(index, data))
         return editor
+
+    # ==================================================
+    def updateEditorGeometry(self, editor, option, index):
+        editor.setGeometry(option.rect.adjusted(5, 0, -5, 0))
