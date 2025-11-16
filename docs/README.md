@@ -9,7 +9,7 @@ Drawings are associated with crystallographic symmetry operations provided by [M
     > Hiroaki Kusunose, Rikuto Oiwa, and Satoru Hayami, Symmetry-adapted modeling for molecules and crystals, Phys. Rev. B <b>107</b>, 195118 (2023).<br>
     > DOI: [https://doi.org/10.1103/PhysRevB.107.195118](https://doi.org/10.1103/PhysRevB.107.195118)
 
-- **Installation**: QtDraw can be installed from PyPI using pip on Python >= 3.9:
+- **Installation**: QtDraw can be installed from PyPI using pip on Python >= 3.11:
     ```
     pip install qtdraw
     ```

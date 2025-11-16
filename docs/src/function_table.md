@@ -381,6 +381,7 @@
 |--------|----------|
 | ComboDelegate | Create delegate for Combo. |
 | createEditor | Create combobox. |
+| updateEditorGeometry |  |
 
 
 ### <div class='my-heading' style='color: royalblue;'>ColorDelegate
@@ -389,6 +390,7 @@
 |--------|----------|
 | ColorDelegate | Create delegate for ColorSelector. |
 | createEditor | Create color selector. |
+| updateEditorGeometry |  |
 
 
 ### <div class='my-heading' style='color: royalblue;'>EditorDelegate
