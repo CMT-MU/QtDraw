@@ -27,3 +27,4 @@ Drawings are associated with crystallographic symmetry operations provided by [M
   - [MultiPie tutorial (in Japanese)](https://cmt-mu.github.io/MultiPieTutorial/)
   - [QtDraw tutorial (in Japanese)](https://cmt-mu.github.io/QtDrawTutorial/)
   - Source : [PyPI](https://pypi.org/project/qtdraw/) or [GitHub](https://github.com/CMT-MU/QtDraw)
+  - This project includes [MathJax](https://www.mathjax.org/), which is licensed under the Apache License 2.0.
