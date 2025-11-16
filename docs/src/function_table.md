@@ -166,6 +166,7 @@
 | Function | Summary |
 |--------|----------|
 | PyVistaWidget | Widget for 3d plot layer using PyVista. |
+| paintEvent |  |
 | clear_info | Clear info. |
 | set_additional_status | Set additional status. |
 | add_site | Add site. |
@@ -369,9 +370,9 @@
 |--------|----------|
 | Delegate | Base delegate. |
 | setEditorData | Set editor data. |
-| setModelData | Set model data. |
+| setModelData |  |
 | updateEditorGeometry | Update editor geometry. |
-| paint | Paint cell. |
+| paint | Paint cell (need to highlight selection). |
 
 
 ### <div class='my-heading' style='color: royalblue;'>ComboDelegate
@@ -396,6 +397,7 @@
 |--------|----------|
 | EditorDelegate | Create delegate for Editor. |
 | createEditor | Create editor. |
+| updateEditorGeometry |  |
 
 
 ## <div class='my-heading' style='color: darkgreen;'>message_box.py
