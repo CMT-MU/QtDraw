@@ -4,7 +4,7 @@ Test for group view and model.
 This module provides a test for group view.
 """
 
-from qtdraw.util.qt_event_util import get_qt_application
+from qtdraw.sandbox.qt_event_util import get_qt_application
 
 from qtdraw.sandbox.group_view import GroupView
 from qtdraw.sandbox.group_model import GroupModel
@@ -12,17 +12,17 @@ from qtdraw.sandbox.group_model import GroupModel
 # ================================================== main
 if __name__ == "__main__":
     site = {  # header: (type, option, default).
-        "name": ("check", None, "untitled"),
-        "name_check": ("bool", None, True),
-        "name_actor": ("actor", None, ""),
-        "label": ("check", None, "label"),
-        "label_check": ("bool", None, False),
-        "label_actor": ("actor", None, ""),
+        "name": ("check", {}, "untitled"),
+        "name_check": ("bool", {}, True),
+        "name_actor": ("actor", {}, ""),
+        "label": ("check", {}, "label"),
+        "label_check": ("bool", {}, False),
+        "label_actor": ("actor", {}, ""),
         "margin": ("int", {"min": 0, "max": "*"}, "3"),
         "position": ("list_float", {"shape": (3,), "var": [""], "digit": 4}, "[0,0,0]"),
         "cell": ("list_int", {"shape": (3,)}, "[0,0,0]"),
         "size": ("float", {"min": 0.0, "max": "*", "digit": 3}, "0.1"),
-        "color": ("color", None, "darkseagreen"),
+        "color": ("color", {}, "darkseagreen"),
         "shape": ("math", {"var": ["x", "y", "z", "r"]}, "1"),
         "combo": ("combo", ["x", "y", "z", "abs"], "abs"),
         "opacity": ("float", {"min": 0.0, "max": 1.0, "digit": 2}, "1.0"),

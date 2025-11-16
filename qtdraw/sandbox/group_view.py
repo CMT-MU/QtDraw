@@ -6,9 +6,10 @@ By clicking right button of mouse, the context menu appears.
 """
 
 from PySide6.QtWidgets import QMenu, QTreeView, QHeaderView
-from PySide6.QtCore import Qt, Signal, QPoint, QModelIndex, QItemSelection, QItemSelectionModel, QObject, QEvent
-from qtdraw.core.pyvista_widget_setting import COLOR_WIDGET, COMBO_WIDGET, EDITOR_WIDGET, HIDE_TYPE
-from qtdraw.widget.delegate import ColorDelegate, ComboDelegate, EditorDelegate
+from PySide6.QtCore import Qt, Signal, QPoint, QModelIndex, QItemSelection, QItemSelectionModel
+
+from qtdraw.sandbox.pyvista_widget_setting import COLOR_WIDGET, COMBO_WIDGET, EDITOR_WIDGET, HIDE_TYPE
+from qtdraw.sandbox.delegate import ColorDelegate, ComboDelegate, EditorDelegate
 
 
 # ==================================================
@@ -23,6 +24,7 @@ class GroupView(QTreeView):
         Args:
             model (GroupModel): group model.
             parent (QWidget, optional): parent.
+            use_delegate (bool, optional): use delegate or plain text ?
         """
         super().__init__(parent)
 
@@ -49,10 +51,9 @@ class GroupView(QTreeView):
                     if hasattr(model.parent(), "_preference"):
                         color = model.parent()._preference["latex"]["color"]
                         size = model.parent()._preference["latex"]["size"]
-                        dpi = model.parent()._preference["latex"]["dpi"]
                     else:
-                        color, size, dpi = "black", 11, 120
-                    self.setItemDelegateForColumn(c, EditorDelegate(self, default, option, t, color, size, dpi))
+                        color, size = "black", 11
+                    self.setItemDelegateForColumn(c, EditorDelegate(self, default, option, t, color, size))
 
         # set properties.
         self.setAlternatingRowColors(True)
@@ -67,6 +68,28 @@ class GroupView(QTreeView):
             for column, role in enumerate(self.model().column_type):
                 if role in HIDE_TYPE:
                     self.header().setSectionHidden(column, True)
+
+        style = f"""
+        QTreeView::item {{
+            padding: 10px 15px 10px 15px;
+            border: none;
+            outline: none;
+            background: none;
+        }}
+        QTreeView::item:selected {{
+            border: none;
+            outline: none;
+            color: black;
+            background: lightyellow;
+        }}
+        QTreeView::item:focus {{
+            border: none;
+            outline: none;
+            color: black;
+            background: lightyellow;
+        }}
+        """
+        self.setStyleSheet(style)
 
         # context menu.
         self.setContextMenuPolicy(Qt.CustomContextMenu)
@@ -145,14 +168,14 @@ class GroupView(QTreeView):
         """
         index = self.indexAt(position)
 
-        self.menu = QMenu(self)
-        self.menu.addAction("insert", self.insert_row)
+        menu = QMenu(self)
+        menu.addAction("insert", self.insert_row)
         if index.isValid():
-            self.menu.addAction("copy", self.copy_row)
-            self.menu.addAction("remove", self.remove_row)
+            menu.addAction("copy", self.copy_row)
+            menu.addAction("remove", self.remove_row)
         if self._debug["raw_data"]:
-            self.menu.addAction("raw_data", lambda: print(self.model().tolist()))
-        self.menu.exec(self.mapToGlobal(position))
+            menu.addAction("raw_data", lambda: print(self.model().tolist()))
+        menu.popup(self.mapToGlobal(position))
 
     # ==================================================
     def insert_row(self):
@@ -191,8 +214,7 @@ class GroupView(QTreeView):
             self.set_widget(self.model().invisibleRootItem())
             self.setUpdatesEnabled(True)
             self.blockSignals(False)
-            self.hide()  # in order to refresh widget.
-            self.show()
+            self.viewport().update()
 
     # ==================================================
     def set_widget(self, item):

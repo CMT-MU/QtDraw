@@ -41,6 +41,7 @@ from qtdraw.sandbox.validator import (
 from qtdraw.mathjax.latex_to_svg import latex_to_svg_string
 
 
+# ==================================================
 def _color_palette(name):
     palette = QPalette()
     palette.setColor(QPalette.WindowText, QColor(all_colors[name][0]))
@@ -119,7 +120,7 @@ class MathWidget(QWidget):
         self.setSizePolicy(QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred))
         self.setContentsMargins(0, 0, 0, 0)
 
-        self._size = size + 4
+        self._size = size + 5
         self._color = color
         self._text = ""
         self.renderer = None

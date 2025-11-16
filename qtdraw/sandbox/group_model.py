@@ -14,7 +14,7 @@ which is necessary to use other Qt functionalities.
 """
 
 import copy
-from PySide6.QtGui import QStandardItemModel, QStandardItem, QIcon, QBrush, QFont
+from PySide6.QtGui import QStandardItemModel, QStandardItem
 from PySide6.QtCore import Signal, Qt, QModelIndex, QTimer
 
 from qtdraw.sandbox.pyvista_widget_setting import CUSTOM_WIDGET, COLUMN_NAME_ACTOR, COLUMN_LABEL_ACTOR
