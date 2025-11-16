@@ -6,7 +6,7 @@ This module provides color selector widget.
 
 import numpy as np
 from matplotlib import cm
-from PySide6.QtGui import QPixmap, QColor, QImage
+from PySide6.QtGui import QPixmap, QColor, QImage, QPalette
 from PySide6.QtCore import Qt
 
 from qtdraw.sandbox.color_palette import all_colors, all_colormaps, check_color, name_sep
@@ -90,3 +90,19 @@ def color2pixmap(color_type, size, aspect_ratio=4, step=50):
     pixmap_dict = {name: value for name, value in zip(names, pixmap)}
 
     return pixmap_dict, sep
+
+
+# ==================================================
+def color_palette(name):
+    """
+    Color pallete.
+
+    Args:
+        name (str): color name.
+
+    Returns:
+        - (QPalette) -- color palette.
+    """
+    palette = QPalette()
+    palette.setColor(QPalette.WindowText, QColor(all_colors[name][0]))
+    return palette

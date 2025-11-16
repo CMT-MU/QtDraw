@@ -5,7 +5,7 @@ This module provides a view class to show object data.
 By clicking right button of mouse, the context menu appears.
 """
 
-from PySide6.QtWidgets import QMenu, QTreeView, QHeaderView
+from PySide6.QtWidgets import QMenu, QTreeView, QHeaderView, QSizePolicy
 from PySide6.QtCore import Qt, Signal, QPoint, QModelIndex, QItemSelection, QItemSelectionModel
 
 from qtdraw.sandbox.pyvista_widget_setting import COLOR_WIDGET, COMBO_WIDGET, EDITOR_WIDGET, HIDE_TYPE
@@ -27,6 +27,7 @@ class GroupView(QTreeView):
             use_delegate (bool, optional): use delegate or plain text ?
         """
         super().__init__(parent)
+        self.setSizePolicy(QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed))
 
         # for debug.
         self._debug = {"delegate": use_delegate, "hide": True, "raw_data": False}
@@ -55,14 +56,6 @@ class GroupView(QTreeView):
                         color, size = "black", 11
                     self.setItemDelegateForColumn(c, EditorDelegate(self, default, option, t, color, size))
 
-        # set properties.
-        self.setAlternatingRowColors(True)
-        self.header().setSectionsMovable(False)
-        self.setUniformRowHeights(False)
-        for column in range(self.model().columnCount()):
-            self.header().setSectionResizeMode(column, QHeaderView.ResizeToContents)
-        self.header().setDefaultAlignment(Qt.AlignHCenter | Qt.AlignVCenter)
-
         # hide columns.
         if self._debug["hide"]:
             for column, role in enumerate(self.model().column_type):
@@ -71,22 +64,16 @@ class GroupView(QTreeView):
 
         style = f"""
         QTreeView::item {{
-            padding: 10px 15px 10px 15px;
             border: none;
             outline: none;
+            padding: 10px 10px 10px 10px;
             background: none;
         }}
         QTreeView::item:selected {{
             border: none;
             outline: none;
             color: black;
-            background: lightyellow;
-        }}
-        QTreeView::item:focus {{
-            border: none;
-            outline: none;
-            color: black;
-            background: lightyellow;
+            background: LemonChiffon;
         }}
         """
         self.setStyleSheet(style)
@@ -99,6 +86,15 @@ class GroupView(QTreeView):
         if self._debug["delegate"]:
             self.model().updateWidget.connect(self.update_widget)
             self.update_widget(force=True)
+
+        # set properties.
+        self.setAlternatingRowColors(True)
+        self.header().setSectionsMovable(False)
+        self.setUniformRowHeights(False)
+
+        self.header().setDefaultAlignment(Qt.AlignHCenter | Qt.AlignVCenter)
+        for column in range(self.model().columnCount()):
+            self.header().setSectionResizeMode(column, QHeaderView.ResizeToContents)
 
         self.selectionModel().selectionChanged.connect(self.selection_changed)
 

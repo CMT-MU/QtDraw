@@ -19,13 +19,12 @@ from PySide6.QtWidgets import (
     QSpacerItem,
     QApplication,
 )
-from PySide6.QtGui import QPainter, QFont, Qt, QIcon, QPalette, QColor
-from PySide6.QtCore import Qt, Signal
+from PySide6.QtGui import QPainter, QFont, QIcon
+from PySide6.QtCore import Signal, QSize, Qt
 from PySide6.QtSvg import QSvgRenderer
 from xml.etree import ElementTree as ET
 
-from qtdraw.sandbox.color_palette import all_colors
-from qtdraw.sandbox.color_selector_util import color2pixmap
+from qtdraw.sandbox.color_selector_util import color2pixmap, color_palette
 from qtdraw.sandbox.validator import (
     validator_int,
     validator_float,
@@ -39,13 +38,6 @@ from qtdraw.sandbox.validator import (
     validator_orbital_site_bond,
 )
 from qtdraw.mathjax.latex_to_svg import latex_to_svg_string
-
-
-# ==================================================
-def _color_palette(name):
-    palette = QPalette()
-    palette.setColor(QPalette.WindowText, QColor(all_colors[name][0]))
-    return palette
 
 
 # ==================================================
@@ -94,7 +86,7 @@ class Label(QLabel):
         """
         super().__init__(parent)
 
-        self.setSizePolicy(QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred))
+        self.setSizePolicy(QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed))
         self.setContentsMargins(0, 0, 0, 0)
 
         font = QFont()
@@ -102,10 +94,16 @@ class Label(QLabel):
             font.setPointSize(size)
         font.setBold(bold)
         self.setFont(font)
-        self.setPalette(_color_palette(color))
+        self.setPalette(color_palette(color))
 
         self.setText(text)
         self.setIndent(6)
+
+    # ==================================================
+    def sizeHint(self):
+        sz = super().sizeHint()
+        extra = 10
+        return QSize(sz.width() + extra, sz.height())
 
 
 # ==================================================
@@ -117,13 +115,14 @@ class MathWidget(QWidget):
         if size is None:
             size = self.font().pointSize()
 
-        self.setSizePolicy(QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred))
+        self.setSizePolicy(QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed))
         self.setContentsMargins(0, 0, 0, 0)
 
         self._size = size + 5
         self._color = color
         self._text = ""
-        self.renderer = None
+        self._renderer = None
+        self._wsize = (0, 0)
 
         self.setText(text)
 
@@ -139,8 +138,9 @@ class MathWidget(QWidget):
         root.set("width", str(w * scale))
         root.set("height", str(h * scale))
         svg_bytes = ET.tostring(root, encoding="utf-8")
-        self.renderer = QSvgRenderer(svg_bytes)
-        self.setFixedSize(int(w * scale), int(h * scale))
+        self._renderer = QSvgRenderer(svg_bytes)
+        self._wsize = (int(w * scale), int(h * scale))
+        self.setFixedSize(*self._wsize)
         self.update()
 
     # ==================================================
@@ -149,10 +149,14 @@ class MathWidget(QWidget):
 
     # ==================================================
     def paintEvent(self, event):
-        if not self.renderer:
+        if not self._renderer:
             return
         painter = QPainter(self)
-        self.renderer.render(painter)
+        self._renderer.render(painter)
+
+    # ==================================================
+    def sizeHint(self):
+        return QSize(*self._wsize)
 
 
 # ==================================================
@@ -209,7 +213,7 @@ class ColorSelector(QComboBox):
             - connect currentTextChanged.
         """
         super().__init__(parent)
-        self.setMinimumWidth(40)
+        self.setSizePolicy(QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed))
 
         font = QFont()
         if size is not None:
@@ -241,7 +245,13 @@ class ColorSelector(QComboBox):
             self.insertSeparator(i)
 
         self.setCurrentIndex(current_index)
-        self.setSizeAdjustPolicy(QComboBox.AdjustToContents)
+        # self.setSizeAdjustPolicy(QComboBox.AdjustToContents)
+
+    # ==================================================
+    def sizeHint(self):
+        sz = super().sizeHint()
+        extra = 10
+        return QSize(sz.width() + extra, sz.height())
 
 
 # ==================================================
@@ -260,6 +270,7 @@ class Button(QPushButton):
         """
         super().__init__(text, parent)
         self.setCheckable(toggle)
+        self.setSizePolicy(QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed))
 
         font = QFont()
         if size is not None:
@@ -283,7 +294,7 @@ class Combo(QComboBox):
             bold (bool, optional): bold face ?
         """
         super().__init__(parent)
-        self.setMinimumWidth(40)
+        self.setSizePolicy(QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed))
 
         font = QFont()
         if size is not None:
@@ -301,7 +312,7 @@ class Combo(QComboBox):
 
         total_height = self.font().pointSize() * 1.6
         self.setFixedHeight(total_height)
-        self.setSizeAdjustPolicy(QComboBox.AdjustToContents)
+        # self.setSizeAdjustPolicy(QComboBox.AdjustToContents)
 
     # ==================================================
     def get_item(self):
@@ -342,6 +353,12 @@ class Combo(QComboBox):
         index = [idx for idx, s in enumerate(item) if key == s]
         return index
 
+    # ==================================================
+    def sizeHint(self):
+        sz = super().sizeHint()
+        extra = 10
+        return QSize(sz.width() + extra, sz.height())
+
 
 # ==================================================
 class Spin(QSpinBox):
@@ -360,6 +377,7 @@ class Spin(QSpinBox):
         super().__init__(parent)
         self.setMinimum(minimum)
         self.setMaximum(maximum)
+        self.setSizePolicy(QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed))
 
         font = QFont()
         if size is not None:
@@ -387,6 +405,7 @@ class DSpin(QDoubleSpinBox):
         self.setMinimum(minimum)
         self.setMaximum(maximum)
         self.setSingleStep(step)
+        self.setSizePolicy(QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed))
 
         font = QFont()
         if size is not None:
@@ -409,6 +428,7 @@ class Check(QCheckBox):
             bold (bool, optional): bold face ?
         """
         super().__init__(text, parent)
+        self.setSizePolicy(QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed))
 
         font = QFont()
         if size is not None:
@@ -577,8 +597,9 @@ class Editor(Panel):
             bold (bool, optional): bold face ?
         """
         super().__init__(parent)
+        self.setSizePolicy(QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed))
 
-        math_mode = validator and validator[0] == "math"
+        self._math_mode = validator is not None and validator[0] == "math"
 
         self._editor = LineEdit(parent=parent, text=text, validator=validator, bold=bold, size=size)
 
@@ -586,7 +607,7 @@ class Editor(Panel):
 
         self._display = (
             MathWidget(parent=parent, text=validated, color=color, size=size)
-            if math_mode
+            if self._math_mode
             else Label(parent=parent, text=validated, color=color, bold=bold, size=size)
         )
 
@@ -684,3 +705,7 @@ class Editor(Panel):
     # ==================================================
     def setCurrentText(self, text):
         self.setText(text)
+
+    # ==================================================
+    def sizeHint(self):
+        return self._display.sizeHint()
