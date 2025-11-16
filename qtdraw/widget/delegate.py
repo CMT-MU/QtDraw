@@ -179,10 +179,11 @@ class EditorDelegate(Delegate):
         dd = model.column_default[c]
         opt = model.column_option[c]
         tp = model.column_type[c]
-        color = model.parent()._preference["latex"]["color"]
-        size = model.parent()._preference["latex"]["size"]
-        dpi = model.parent()._preference["latex"]["dpi"]
-        editor = Editor(parent, dd, (tp, opt), color, size, dpi)
+        # color = model.parent()._preference["latex"]["color"]
+        # size = model.parent()._preference["latex"]["size"]
+        # dpi = model.parent()._preference["latex"]["dpi"]
+        # editor = Editor(parent, dd, (tp, opt), color, size, dpi)
+        editor = Editor(parent, dd, (tp, opt))
 
         editor.returnPressed.connect(lambda data: index.model().setData(index, data))
         return editor

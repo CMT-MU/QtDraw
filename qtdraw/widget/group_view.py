@@ -16,7 +16,7 @@ class GroupView(QTreeView):
     selectionChanged = Signal(str, list, list)  # name, deselect, select.
 
     # ==================================================
-    def __init__(self, model, parent=None):
+    def __init__(self, model, parent=None, use_delegate=True):
         """
         Group view.
 
@@ -27,7 +27,7 @@ class GroupView(QTreeView):
         super().__init__(parent)
 
         # for debug.
-        self._debug = {"delegate": True, "hide": True, "raw_data": False}
+        self._debug = {"delegate": use_delegate, "hide": True, "raw_data": False}
 
         # set model.
         self.setModel(model)
@@ -62,7 +62,7 @@ class GroupView(QTreeView):
         # connection to update widget.
         if self._debug["delegate"]:
             self.model().updateWidget.connect(self.update_widget)
-            self.update_widget()
+            self.update_widget(force=True)
 
         self.selectionModel().selectionChanged.connect(self.selection_changed)
 
