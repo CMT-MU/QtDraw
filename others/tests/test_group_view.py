@@ -127,6 +127,7 @@ if __name__ == "__main__":
         ["icon", True, "", "S", False, "", "7", "[0.0,0.0,1.2]", "[0,0,0]", "0.56", "cantaloupe", "1.0", "z", "x"],
     ]
 
+    use_delegate = True
     app = get_qt_application()
 
     model = GroupModel("site", site)
@@ -150,7 +151,7 @@ if __name__ == "__main__":
     index = model.index(0, 0)
     model.set_row_data(model.index(2, 0, index), 2, "add")
 
-    view = GroupView(model)
+    view = GroupView(model, use_delegate=use_delegate)
     view.resize(1200, 400)
     view.expandAll()
     view.selectionChanged.connect(show_select_change)

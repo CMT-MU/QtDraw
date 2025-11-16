@@ -35,17 +35,7 @@ class Delegate(QStyledItemDelegate):
 
     # ==================================================
     def setModelData(self, editor, model, index):
-        """
-        Set model data.
-
-        Args:
-            editor (QWidget): editor.
-            model (QAbstractItemModel) model.
-            index (QModelIndex): index.
-        """
-        model.blockSignals(True)
-        model.setData(index, editor.currentText(), Qt.EditRole)
-        model.blockSignals(False)
+        return  # set model data by using signal.
 
     # ==================================================
     def updateEditorGeometry(self, editor, option, index):
@@ -57,12 +47,12 @@ class Delegate(QStyledItemDelegate):
             option (QStyleOptionViewItem) option.
             index (QModelIndex): index.
         """
-        editor.setGeometry(option.rect)
+        editor.setGeometry(option.rect.adjusted(5, 7, -5, 0))
 
     # ==================================================
     def paint(self, painter, option, index):
         """
-        Paint cell.
+        Paint cell (need to highlight selection).
 
         Args:
             painter (QPainter): painter.
@@ -79,14 +69,18 @@ class Delegate(QStyledItemDelegate):
 # ==================================================
 class ComboDelegate(Delegate):
     # ==================================================
-    def __init__(self, parent):
+    def __init__(self, parent, default, option):
         """
         Create delegate for Combo.
 
         Args:
             parent (QWidget): parent.
+            default (str): Combo default.
+            option (tuple): Cobo option.
         """
         super().__init__(parent)
+        self.default = default
+        self.option = option
 
     # ==================================================
     def createEditor(self, parent, option, index):
@@ -101,28 +95,26 @@ class ComboDelegate(Delegate):
         Returns:
             - (Combo) -- combo widget.
         """
-        c = index.column()
-        dd = index.model().column_default[c]
-        opt = index.model().column_option[c]
-        combo = Combo(parent, opt, dd)
+        combo = Combo(parent, self.option, self.default)
         combo.currentTextChanged.connect(lambda data: index.model().setData(index, data))
         return combo
-
-    def updateEditorGeometry(self, editor, option, index):
-        editor.setGeometry(option.rect.adjusted(5, 8, -5, 0))
 
 
 # ==================================================
 class ColorDelegate(Delegate):
     # ==================================================
-    def __init__(self, parent):
+    def __init__(self, parent, default, option):
         """
         Create delegate for ColorSelector.
 
         Args:
             parent (QWidget): parent.
+            default (str): ColorSelector default.
+            option (tuple): ColorSelector option.
         """
         super().__init__(parent)
+        self.default = default
+        self.option = option
 
     # ==================================================
     def createEditor(self, parent, option, index):
@@ -137,29 +129,35 @@ class ColorDelegate(Delegate):
         Returns:
             - (ColorSelector) -- color selector widget.
         """
-        c = index.column()
-        dd = index.model().column_default[c]
-        tp = index.model().column_type[c]
-        color_selector = ColorSelector(parent, dd, tp)
+        color_selector = ColorSelector(parent, self.default, self.option)
         color_selector.currentTextChanged.connect(lambda data: index.model().setData(index, data))
 
         return color_selector
-
-    def updateEditorGeometry(self, editor, option, index):
-        editor.setGeometry(option.rect.adjusted(5, 7, -5, 0))
 
 
 # ==================================================
 class EditorDelegate(Delegate):
     # ==================================================
-    def __init__(self, parent):
+    def __init__(self, parent, default, option, t, color, size, dpi):
         """
         Create delegate for Editor.
 
         Args:
             parent (QWidget): parent.
+            default (str): Editor default.
+            option (tuple): Editor option.
+            t (str): Editor type.
+            color (str): Editor color.
+            size (int): Editor size.
+            dpi (int): Editor dpi.
         """
         super().__init__(parent)
+        self.default = default
+        self.option = option
+        self.type = t
+        self.color = color
+        self.size = size
+        self.dpi = dpi
 
     # ==================================================
     def createEditor(self, parent, option, index):
@@ -174,15 +172,11 @@ class EditorDelegate(Delegate):
         Returns:
             - (Editor) -- editor widget.
         """
-        model = index.model()
-        c = index.column()
-        dd = model.column_default[c]
-        opt = model.column_option[c]
-        tp = model.column_type[c]
-        color = model.parent()._preference["latex"]["color"]
-        size = model.parent()._preference["latex"]["size"]
-        dpi = model.parent()._preference["latex"]["dpi"]
-        editor = Editor(parent, dd, (tp, opt), color, size, dpi)
+        editor = Editor(parent, self.default, (self.type, self.option), self.color, self.size, self.dpi)
 
         editor.returnPressed.connect(lambda data: index.model().setData(index, data))
         return editor
+
+    # ==================================================
+    def updateEditorGeometry(self, editor, option, index):
+        editor.setGeometry(option.rect.adjusted(5, 0, -5, 0))
