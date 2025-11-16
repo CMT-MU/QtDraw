@@ -57,6 +57,7 @@ class GroupView(QTreeView):
         # set properties.
         self.setAlternatingRowColors(True)
         self.header().setSectionsMovable(False)
+        self.setUniformRowHeights(False)
         for column in range(self.model().columnCount()):
             self.header().setSectionResizeMode(column, QHeaderView.ResizeToContents)
         self.header().setDefaultAlignment(Qt.AlignHCenter | Qt.AlignVCenter)

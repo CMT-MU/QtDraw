@@ -2812,13 +2812,13 @@ class PyVistaWidget(QtInteractor):
             return
 
         # deselected.
-        if deselect is not None:
+        if deselect:
             for row in deselect:
                 actor_name = row[COLUMN_NAME_ACTOR]
                 self.deselect_actor(actor_name)
 
         # selected.
-        if select is not None:
+        if select:
             for row in select:
                 actor_name = row[COLUMN_NAME_ACTOR]
                 if actor_name != "":

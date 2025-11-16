@@ -36,7 +36,7 @@ default_preference = {
     "general": {
         "style": "fusion",  # "fusion/macos/windows"
         "font": "Osaka",  # "Monaco/Osaka/Arial/Times New Roman/Helvetica Neue"
-        "size": 18,  # pixel
+        "size": 12,  # pixel
         "color_scheme": "Jmol",  # "VESTA/Jmol"
     },
     "light": {
@@ -139,10 +139,10 @@ widget_detail = {
 CHOP = 1e-6
 DIGIT = 6
 HIDE_TYPE = ["actor", "bool", "hide"]
-CUSTOM_WIDGET = ["color", "colormap", "color_both", "combo", "int", "float", "list_float", "list_int", "math"]
 COLOR_WIDGET = ["color", "colormap", "color_both"]
 COMBO_WIDGET = ["combo"]
-EDITOR_WIDGET = ["int", "float", "list_float", "list_int", "math"]
+EDITOR_WIDGET = ["int", "float", "list_int", "list_float", "math"]
+CUSTOM_WIDGET = COLOR_WIDGET + COMBO_WIDGET + EDITOR_WIDGET
 
 COLUMN_NAME = 0
 COLUMN_NAME_CHECK = 1

@@ -18,7 +18,7 @@ from PySide6.QtCore import QObject, Signal, Qt, QLoggingCategory
 from PySide6.QtGui import QFont
 from PySide6.QtWidgets import QApplication
 
-from qtdraw.widget.message_box import MessageBox
+from qtdraw.sandbox.message_box import MessageBox
 from qtdraw.sandbox.pyvista_widget_setting import default_preference
 from qtdraw import __top_dir__
 
@@ -58,10 +58,6 @@ def get_qt_application(latex=True):
     """
     # suppress logging message concerning japanese IM.
     # QLoggingCategory.setFilterRules("qt.qpa.keymapper=false")
-
-    # initial LaTeX setting.
-    # if latex:
-    #    set_latex_setting()
 
     gui_qt()  # does nothing in Jupyter7+.
     app = QApplication.instance()
