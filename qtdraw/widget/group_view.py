@@ -16,7 +16,7 @@ class GroupView(QTreeView):
     selectionChanged = Signal(str, list, list)  # name, deselect, select.
 
     # ==================================================
-    def __init__(self, model, parent=None):
+    def __init__(self, model, parent=None, use_delegate=True):
         """
         Group view.
 
@@ -27,7 +27,7 @@ class GroupView(QTreeView):
         super().__init__(parent)
 
         # for debug.
-        self._debug = {"delegate": True, "hide": True, "raw_data": False}
+        self._debug = {"delegate": use_delegate, "hide": True, "raw_data": False}
 
         # set model.
         self.setModel(model)
@@ -36,11 +36,23 @@ class GroupView(QTreeView):
         if self._debug["delegate"]:
             for c, t in enumerate(self.model().column_type):
                 if t in COLOR_WIDGET:
-                    self.setItemDelegateForColumn(c, ColorDelegate(self))
+                    default = self.model().column_default[c]
+                    option = t
+                    self.setItemDelegateForColumn(c, ColorDelegate(self, default, option))
                 elif t in COMBO_WIDGET:
-                    self.setItemDelegateForColumn(c, ComboDelegate(self))
+                    default = self.model().column_default[c]
+                    option = self.model().column_option[c]
+                    self.setItemDelegateForColumn(c, ComboDelegate(self, default, option))
                 elif t in EDITOR_WIDGET:
-                    self.setItemDelegateForColumn(c, EditorDelegate(self))
+                    default = self.model().column_default[c]
+                    option = self.model().column_option[c]
+                    if hasattr(model.parent(), "_preference"):
+                        color = model.parent()._preference["latex"]["color"]
+                        size = model.parent()._preference["latex"]["size"]
+                        dpi = model.parent()._preference["latex"]["dpi"]
+                    else:
+                        color, size, dpi = "black", 11, 120
+                    self.setItemDelegateForColumn(c, EditorDelegate(self, default, option, t, color, size, dpi))
 
         # set properties.
         self.setAlternatingRowColors(True)
@@ -62,7 +74,7 @@ class GroupView(QTreeView):
         # connection to update widget.
         if self._debug["delegate"]:
             self.model().updateWidget.connect(self.update_widget)
-            self.update_widget()
+            self.update_widget(force=True)
 
         self.selectionModel().selectionChanged.connect(self.selection_changed)
 
