@@ -4,9 +4,9 @@ Validator type.
 - type: option.
     - int: (min, max)
     - float: (min, max, digit)
-    - sympy_float: (digit, shape, var)
-    - sympy_int: (shape, var)
-    - sympy_latex: (shape, var)
+    - list_int: (shape, var)
+    - list_float: (shape, var ,digit)
+    - math: (shape, var)
     - site: (use var?)
     - bond: (use var?)
     - site_bond: (use var?)
@@ -109,7 +109,7 @@ def validator_float(text, **opt):
     Validator for float.
 
     Args:
-        text (str): int string.
+        text (str): float string.
         opt (dict, optional): option, "min/max/digit". (default: "*","*",5)
 
     Returns:
@@ -131,12 +131,12 @@ def validator_float(text, **opt):
 
 
 # ==================================================
-def validator_sympy_float(text, **opt):
+def validator_list_float(text, **opt):
     """
-    Validator for sympy float.
+    Validator for list float.
 
     Args:
-        text (str): sympy string.
+        text (str): string with list.
         opt (dict, optional): option, "digit/shape/var". (default: 5,None,[""])
             e.g., 15, (), (n,), (n,m), ..., ["x", "y", ...].
 
@@ -166,12 +166,12 @@ def validator_sympy_float(text, **opt):
 
 
 # ==================================================
-def validator_sympy_int(text, **opt):
+def validator_list_int(text, **opt):
     """
-    Validator for sympy int.
+    Validator for list int.
 
     Args:
-        text (str): sympy int string (w/o variable).
+        text (str): string with list.
         opt (dict, optional): option, "shape/var". (default: None,[""])
             e.g., (), (n,), (n,m), ..., ["x", "y", ...].
 
@@ -203,9 +203,9 @@ def validator_sympy_int(text, **opt):
 
 
 # ==================================================
-def validator_sympy_latex(text, **opt):
+def validator_math(text, **opt):
     """
-    Validator for sympy.
+    Validator for math to LaTeX.
 
     Args:
         text (str): sympy string.
@@ -223,7 +223,7 @@ def validator_sympy_latex(text, **opt):
         return None
 
     if isinstance(s, np.ndarray):
-        s = str(to_latex(s)).replace("'", "").replace(" ", "")
+        s = str(to_latex(s).tolist()).replace("'", "").replace("\\\\", "\\")
     else:
         s = to_latex(s)
 
@@ -243,7 +243,7 @@ def validator_site(s, use_var=False):
         - (str) -- input s if it is valid, otherwise None.
     """
     var = ["x", "y", "z"] if use_var else [""]
-    return validator_sympy_float(s, shape=(3,), var=var)
+    return validator_list_float(s, shape=(3,), var=var)
 
 
 # ==================================================
@@ -335,7 +335,7 @@ def validator_orbital_site_bond(s, use_var=False):
         return None
 
     v, sb = s.split("#", 1)
-    v = validator_sympy_float(v, var=["x", "y", "z", "r"], shape=())
+    v = validator_list_float(v, var=["x", "y", "z", "r"], shape=())
     sb = validator_site_bond(sb, use_var)
 
     return None if v is None or sb is None else v + "#" + sb

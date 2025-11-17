@@ -25,6 +25,7 @@ def test_validator():
         "list_int ((3,), [x,y])",
         "list_int (2,3)",
         "list_float (2,3), 3",
+        "math ((3,), [x,y])",
     ]
 
     lbl = []
@@ -38,7 +39,8 @@ def test_validator():
     editor4 = LineEdit(panel, text="[0,0,0]", validator=("list_int", {"shape": (3,), "var": ["x", "y"]}))
     editor5 = LineEdit(panel, text="[[1,2,3],[4,5,6]]", validator=("list_int", {"shape": (2, 3)}))
     editor6 = LineEdit(panel, text="[[1,2,3],[4,5,6]]", validator=("list_float", {"shape": (2, 3), "digit": 3}))
-    editor = [editor1, editor2, editor3, editor4, editor5, editor6]
+    editor7 = LineEdit(panel, text=r"[2/3,sin(x),cos(y)]", validator=("math", {"shape": (3,), "var": ["x", "y"]}))
+    editor = [editor1, editor2, editor3, editor4, editor5, editor6, editor7]
 
     for i, (l, e) in enumerate(zip(lbl, editor)):
         panel.layout.addWidget(l, i, 0)

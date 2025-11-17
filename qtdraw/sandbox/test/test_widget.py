@@ -37,6 +37,7 @@ def test_widget():
     label3 = Label(widget, text="Red Label", color="red")
     label4 = Label(widget, text="Large Blue", color="blue", size=18)
     latex = r"\int_0^\infty e^{-x^2}\,dx = \frac{\sqrt{\pi}}{2}"
+    latex = "[\\frac{2}{3},\\sin{\\left(x\\right)},\\cos{\\left(y\\right)}]"
     label5 = MathWidget(widget, text=latex, color="green")
     label6 = MathWidget(widget, text="xyz", color="green")
     label9 = ColorSelector(widget, current="strawberry", color_type="color", bold=bold)
@@ -72,6 +73,8 @@ def test_widget():
     edit7.returnPressed.connect(lambda: print("display =", edit7.text(), "raw =", edit7._editor.raw_text()))
     edit8 = Editor(widget, text="3z**2-r**2", validator=("math", {}), bold=bold)
     edit8.returnPressed.connect(lambda: print("display =", edit8.text(), "raw =", edit8._editor.raw_text()))
+    edit9 = Editor(widget, text="[2/3,sin(x),cos(y)]", validator=("math", {"shape": (3,), "var": ["x", "y"]}))
+    edit9.returnPressed.connect(lambda: print("display =", edit9.text(), "raw =", edit9._editor.raw_text()))
 
     obj = [
         label1,
@@ -95,6 +98,7 @@ def test_widget():
         edit6,
         edit7,
         edit8,
+        edit9,
     ]
 
     for i, o in enumerate(obj):

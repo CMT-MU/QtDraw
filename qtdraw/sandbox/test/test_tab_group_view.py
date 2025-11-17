@@ -1,7 +1,7 @@
 from qtdraw.sandbox.qt_event_util import get_qt_application
 from qtdraw.sandbox.group_view import GroupModel
 from qtdraw.sandbox.tab_group_view import TabGroupView
-from test_group_view import site, model_list
+from qtdraw.sandbox.pyvista_widget_setting import object_default
 
 # ================================================== main
 if __name__ == "__main__":
@@ -9,9 +9,9 @@ if __name__ == "__main__":
 
     widget = None
 
-    models = {i: GroupModel(widget, name=i, column_info=site) for i in ["site1", "site2"]}
-    for model in models.values():
-        model.set_data(model_list)
+    models = {name: GroupModel(widget, name=name, column_info=d) for name, d in object_default.items()}
+    # for model in models.values():
+    #    model.set_data(model_list)
 
     tab = TabGroupView(widget, models=models)
     tab.resize(1000, 400)
