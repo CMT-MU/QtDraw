@@ -10,6 +10,7 @@ from PySide6.QtCore import Qt, Signal, QPoint, QModelIndex, QItemSelection, QIte
 
 from qtdraw.sandbox.pyvista_widget_setting import COLOR_WIDGET, COMBO_WIDGET, EDITOR_WIDGET, HIDE_TYPE
 from qtdraw.sandbox.delegate import ColorDelegate, ComboDelegate, EditorDelegate
+from qtdraw.sandbox.group_model import GroupModel
 
 
 # ==================================================
@@ -84,8 +85,8 @@ class GroupView(QTreeView):
 
         # connection to update widget.
         if self._debug["delegate"]:
-            self.model().updateWidget.connect(self.update_widget)
-            self.update_widget(force=True)
+            self.set_widget()
+            model.updateData.connect(self.on_insert_row)
 
         # set properties.
         self.setAlternatingRowColors(True)
@@ -99,6 +100,13 @@ class GroupView(QTreeView):
         self.selectionModel().selectionChanged.connect(self.selection_changed)
 
         self.clear_selection()
+
+    # ==================================================
+    def on_insert_row(self, n, d, r, i):
+        if r == GroupModel.AppendRow:
+            for column in self.model().column_widget:
+                index = i.siblingAtColumn(column)
+                self.openPersistentEditor(index)
 
     # ==================================================
     def clear_selection(self):
@@ -200,26 +208,16 @@ class GroupView(QTreeView):
         self.model().action_remove_row(indexes)
 
     # ==================================================
-    def update_widget(self, force=False):
-        """
-        Update widget.
-        """
-        if self.isVisible() or force:
-            self.blockSignals(True)
-            self.setUpdatesEnabled(False)
-            self.set_widget(self.model().invisibleRootItem())
-            self.setUpdatesEnabled(True)
-            self.blockSignals(False)
-            self.viewport().update()
-
-    # ==================================================
-    def set_widget(self, item):
+    def set_widget(self, item=None):
         """
         Set widget.
 
         Args:
-            item (QStandardItem): item.
+            item (QStandardItem, optional): item.
         """
+        if item is None:
+            item = self.model().invisibleRootItem()
+
         for row in range(item.rowCount()):
             child = item.child(row)
             if child:

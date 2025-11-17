@@ -22,7 +22,6 @@ from qtdraw.sandbox.pyvista_widget_setting import CUSTOM_WIDGET, COLUMN_NAME_ACT
 
 # ==================================================
 class GroupModel(QStandardItemModel):
-    updateWidget = Signal()  # update widget when append/remove rows.
     updateData = Signal(str, list, int, QModelIndex)  # name, row_data, role, index.
 
     # data/check state changed signal for user.
@@ -47,7 +46,6 @@ class GroupModel(QStandardItemModel):
         """
         super().__init__(parent)
         self._name = name
-        self._update_widget = True
 
         self.setHorizontalHeaderLabels(column_info.keys())
         self.column_type = []
@@ -84,21 +82,6 @@ class GroupModel(QStandardItemModel):
             - (list) -- header label.
         """
         return [self.headerData(c, Qt.Horizontal) for c in range(self.columnCount())]
-
-    # ==================================================
-    def block_update_widget(self, flag):
-        """
-        Block update widget.
-
-        Args:
-            flag (bool): block update ?
-
-        Note:
-            - in order to avoid unnecessary update of widget, otherwise it becomes very slow.
-        """
-        self._update_widget = not flag
-        if not flag:
-            self.updateWidget.emit()
 
     # ==================================================
     def is_parent(self, index):
@@ -373,9 +356,6 @@ class GroupModel(QStandardItemModel):
             parent_item.appendRow(item)
             self.updateData.emit(self.group_name, row_data, role, item[0].index())
 
-        if self._update_widget:
-            self.updateWidget.emit()
-
     # ==================================================
     def remove_row(self, index, role=None):
         """
@@ -418,9 +398,6 @@ class GroupModel(QStandardItemModel):
             if n == 0:
                 self.updateData.emit(self.group_name, self.get_row_data(index), role, index)
             self.removeRow(index.row(), index.parent())
-
-        if self._update_widget:
-            self.updateWidget.emit()
 
     # ==================================================
     def move_row(self, index, value):
@@ -689,11 +666,9 @@ class GroupModel(QStandardItemModel):
         """
         Clear data with keeping header and column info.
         """
-        self.block_update_widget(True)
         for row in reversed(range(self.rowCount())):
             index = self.index(row, 0)
             for row1 in reversed(range(self.rowCount(index))):
                 cindex = self.index(row1, 0, index)
                 self.remove_row(cindex)
             self.remove_row(index)
-        self.block_update_widget(False)
