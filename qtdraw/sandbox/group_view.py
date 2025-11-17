@@ -18,17 +18,21 @@ class GroupView(QTreeView):
     selectionChanged = Signal(str, list, list)  # name, deselect, select.
 
     # ==================================================
-    def __init__(self, model, parent=None, use_delegate=True):
+    def __init__(self, parent=None, model=None, use_delegate=True):
         """
         Group view.
 
         Args:
-            model (GroupModel): group model.
             parent (QWidget, optional): parent.
+            model (GroupModel, optional): group model.
             use_delegate (bool, optional): use delegate or plain text ?
         """
         super().__init__(parent)
-        self.setSizePolicy(QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed))
+
+        if model is None:
+            model = GroupModel(parent)
+
+        self.setSizePolicy(QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding))
 
         # for debug.
         self._debug = {"delegate": use_delegate, "hide": True, "raw_data": False}

@@ -35,16 +35,19 @@ class GroupModel(QStandardItemModel):
     MoveRow = Qt.UserRole + 13
 
     # ==================================================
-    def __init__(self, name, column_info, parent=None):
+    def __init__(self, parent=None, name="model", column_info=None):
         """
         Group data model (2 layer parent-child tree model).
 
         Args:
-            name (str): model name.
-            column_info (list): {header: (type,option,default)} for each column.
             parent (QWidget, optional): parent.
+            name (str, optional): model name.
+            column_info (list, optional): {header: (type,option,default)} for each column.
         """
         super().__init__(parent)
+        if column_info is None:
+            column_info = []
+
         self._name = name
 
         self.setHorizontalHeaderLabels(column_info.keys())

@@ -4,7 +4,7 @@ Delegate for GroupModel and GroupView.
 This module provides delegate for color selector, combo, and editor.
 """
 
-from PySide6.QtWidgets import QStyledItemDelegate, QStyle, QComboBox
+from PySide6.QtWidgets import QStyledItemDelegate, QStyle
 from PySide6.QtCore import Qt
 
 from qtdraw.sandbox.custom_widget import Combo, Editor, ColorSelector

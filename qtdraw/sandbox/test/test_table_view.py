@@ -4,10 +4,8 @@ Test for math table widget.
 This module provides a test for MathTable.
 """
 
-from PySide6.QtWidgets import QWidget
-
 from qtdraw.sandbox.qt_event_util import get_qt_application
-from qtdraw.sandbox.custom_widget import Layout
+from qtdraw.sandbox.custom_widget import Panel
 from qtdraw.sandbox.table_view import TableView
 
 
@@ -15,18 +13,17 @@ from qtdraw.sandbox.table_view import TableView
 def test_math_table():
     app = get_qt_application()
 
-    widget = QWidget()
+    widget = Panel()
     widget.setWindowTitle("Math Table test")
     widget.resize(800, 400)
-    layout = Layout(widget)
-    layout.setContentsMargins(10, 10, 10, 10)
+    widget.layout.setContentsMargins(10, 10, 10, 10)
 
     data = [
         [r"\frac{\sqrt{3}}{2}(x^2-y^2)", r"\begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix}"],
         [r"\left[\begin{array}{cc} 1 & 2 \\ 3 & 4 \end{array}\right]", r"f'(x) =\lim _{h\rightarrow 0}\dfrac{f(x+h) - f(x) }{h}"],
     ]
-    table = TableView(None, data=data, header=["eq1", "eq2"], size=16)
-    layout.addWidget(table)
+    table = TableView(widget, data=data, header=["eq1", "eq2"], size=16)
+    widget.layout.addWidget(table)
 
     widget.show()
 
