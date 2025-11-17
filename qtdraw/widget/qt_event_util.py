@@ -18,9 +18,10 @@ from PySide6.QtCore import QObject, Signal, Qt, QLoggingCategory
 from PySide6.QtGui import QFont
 from PySide6.QtWidgets import QApplication
 
-from qtdraw.sandbox.message_box import MessageBox
-from qtdraw.sandbox.pyvista_widget_setting import default_preference
+from qtdraw.core.pyvista_widget_setting import default_preference
 from qtdraw import __top_dir__
+
+from qtdraw.widget.message_box import MessageBox
 
 
 # ==================================================

@@ -16,13 +16,12 @@ which is necessary to use other Qt functionalities.
 import copy
 from PySide6.QtGui import QStandardItemModel, QStandardItem
 from PySide6.QtCore import Signal, Qt, QModelIndex, QTimer
-from qtdraw.core.pyvista_widget_setting import CUSTOM_WIDGET
-from qtdraw.core.pyvista_widget_setting import COLUMN_NAME_ACTOR, COLUMN_LABEL_ACTOR
+
+from qtdraw.core.pyvista_widget_setting import CUSTOM_WIDGET, COLUMN_NAME_ACTOR, COLUMN_LABEL_ACTOR
 
 
 # ==================================================
 class GroupModel(QStandardItemModel):
-    updateWidget = Signal()  # update widget when append/remove rows.
     updateData = Signal(str, list, int, QModelIndex)  # name, row_data, role, index.
 
     # data/check state changed signal for user.
@@ -36,18 +35,20 @@ class GroupModel(QStandardItemModel):
     MoveRow = Qt.UserRole + 13
 
     # ==================================================
-    def __init__(self, name, column_info, parent=None):
+    def __init__(self, parent=None, name="model", column_info=None):
         """
         Group data model (2 layer parent-child tree model).
 
         Args:
-            name (str): model name.
-            column_info (list): {header: (type,option,default)} for each column.
             parent (QWidget, optional): parent.
+            name (str, optional): model name.
+            column_info (list, optional): {header: (type,option,default)} for each column.
         """
         super().__init__(parent)
+        if column_info is None:
+            column_info = []
+
         self._name = name
-        self._update_widget = True
 
         self.setHorizontalHeaderLabels(column_info.keys())
         self.column_type = []
@@ -86,21 +87,6 @@ class GroupModel(QStandardItemModel):
         return [self.headerData(c, Qt.Horizontal) for c in range(self.columnCount())]
 
     # ==================================================
-    def block_update_widget(self, flag):
-        """
-        Block update widget.
-
-        Args:
-            flag (bool): block update ?
-
-        Note:
-            - in order to avoid unnecessary update of widget, otherwise it becomes very slow.
-        """
-        self._update_widget = not flag
-        if not flag:
-            self.updateWidget.emit()
-
-    # ==================================================
     def is_parent(self, index):
         """
         Is parent index ?
@@ -119,7 +105,7 @@ class GroupModel(QStandardItemModel):
         return depth == 1
 
     # ==================================================
-    def update_check_state(self, topLeft, bottomRight, roles=[]):
+    def update_check_state(self, topLeft, bottomRight, roles=None):
         """
         Update check state data.
 
@@ -131,6 +117,8 @@ class GroupModel(QStandardItemModel):
         Note:
             - set check state (bool) in column+1.
         """
+        if roles is None:
+            roles = []
         if not Qt.CheckStateRole in roles:
             return
 
@@ -247,8 +235,8 @@ class GroupModel(QStandardItemModel):
 
             if child:
                 item0 = parent_item.child(row, 0)
-                for row in range(item0.rowCount()):
-                    item1 = item0.child(row, column)
+                for crow in range(item0.rowCount()):
+                    item1 = item0.child(crow, column)
                     if item1 and item1.data(Qt.EditRole) == text:
                         found.append(item1)
 
@@ -292,11 +280,11 @@ class GroupModel(QStandardItemModel):
         """
         if column is None:
             row_data = [self.itemFromIndex(index.siblingAtColumn(c)).data(Qt.EditRole) for c in range(self.columnCount())]
-            row_data = [i == "True" if self.column_type[c] == "bool" else i for c, i in enumerate(row_data)]
+            row_data = [str(i) == "True" if self.column_type[c] == "bool" else i for c, i in enumerate(row_data)]
         else:
             row_data = self.itemFromIndex(index.siblingAtColumn(column)).data(Qt.EditRole)
             if self.column_type[column] == "bool":
-                row_data = row_data == "True"
+                row_data = str(row_data) == "True"
         return row_data
 
     # ==================================================
@@ -371,9 +359,6 @@ class GroupModel(QStandardItemModel):
             parent_item.appendRow(item)
             self.updateData.emit(self.group_name, row_data, role, item[0].index())
 
-        if self._update_widget:
-            self.updateWidget.emit()
-
     # ==================================================
     def remove_row(self, index, role=None):
         """
@@ -416,9 +401,6 @@ class GroupModel(QStandardItemModel):
             if n == 0:
                 self.updateData.emit(self.group_name, self.get_row_data(index), role, index)
             self.removeRow(index.row(), index.parent())
-
-        if self._update_widget:
-            self.updateWidget.emit()
 
     # ==================================================
     def move_row(self, index, value):
@@ -527,32 +509,41 @@ class GroupModel(QStandardItemModel):
         Returns:
             - (bool) -- success to set data ?
         """
-        # in case of no change.
+        if not index.isValid():
+            return False
+
+        # no change.
         if value == self.data(index, role):
             return False
 
-        # move.
+        # move (special case).
         if role == Qt.EditRole and index.column() == 0:
             # in order to close the editor, timer is used.
             QTimer.singleShot(0, lambda: self.move_row(index, value))
             return True
 
-        # for child.
+        # update all children.
         item = self.itemFromIndex(index.siblingAtColumn(0))
         if item.hasChildren():
-            for row in range(item.rowCount()):  # children.
+            # update children.
+            for row in range(item.rowCount()):
                 citem = item.child(row, index.column())
                 if citem:
-                    citem.setData(value, role)
-                cindex = self.indexFromItem(citem)
-                self.updateData.emit(self.group_name, self.get_row_data(cindex), role, cindex)
-            status = super().setData(index, value, role)  # parent.
+                    # update each child.
+                    super().setData(self.indexFromItem(citem), value, role)
+                    cindex = self.indexFromItem(citem)
+                    self.updateData.emit(self.group_name, self.get_row_data(cindex), role, cindex)
+            # update parent.
+            status = super().setData(index, value, role)
         else:
-            status = super().setData(index, value, role)  # parent or child.
+            # update as usual (parent w/o children or one child).
+            status = super().setData(index, value, role)
             self.updateData.emit(self.group_name, self.get_row_data(index), role, index)
+
+            # sync. with parent.
             if not self.is_parent(index) and index.row() == 0:
                 pindex = index.parent().siblingAtColumn(index.column())
-                status = super().setData(pindex, value, role)
+                super().setData(pindex, value, role)
 
         return status
 
@@ -568,7 +559,7 @@ class GroupModel(QStandardItemModel):
             bottomRight (QModelIndex): bottom right index.
             roles (list, optional): list of roles.
         """
-        roles = [self.get_role_str.get(i) for i in roles]
+        roles = [self.get_role_str(i) for i in roles]
 
         print("roles:", roles)
         data = self.tolist_index(topLeft, bottomRight)
@@ -669,7 +660,7 @@ class GroupModel(QStandardItemModel):
         if parent is None:
             parent = self.invisibleRootItem()
 
-        data = [self.get_row(parent.child(row).index()) for row in range(topLeft.row(), bottomRight.row() + 1)]
+        data = [self.get_row_data(parent.child(row).index()) for row in range(topLeft.row(), bottomRight.row() + 1)]
 
         return data
 
@@ -678,11 +669,9 @@ class GroupModel(QStandardItemModel):
         """
         Clear data with keeping header and column info.
         """
-        self.block_update_widget(True)
         for row in reversed(range(self.rowCount())):
             index = self.index(row, 0)
             for row1 in reversed(range(self.rowCount(index))):
                 cindex = self.index(row1, 0, index)
                 self.remove_row(cindex)
             self.remove_row(index)
-        self.block_update_widget(False)

@@ -29,12 +29,13 @@ from vtk import vtkParametricSpline
 import pyvista as pv
 from pyvista.core.utilities import surface_from_para, geometric_sources
 
-from gcoreutils.convert_util import text_to_sympy, text_to_list
+from qtdraw.core.pyvista_widget_setting import widget_detail as detail
+from qtdraw.core.pyvista_widget_setting import CHOP
 
 from qtdraw.sandbox.util_axis import get_view_vector
-from qtdraw.sandbox.pyvista_widget_setting import widget_detail as detail
-from qtdraw.sandbox.pyvista_widget_setting import CHOP
 from qtdraw.sandbox.util import create_grid
+
+from gcoreutils.convert_util import text_to_sympy, text_to_list
 
 
 # ==================================================

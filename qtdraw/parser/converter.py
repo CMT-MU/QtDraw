@@ -5,10 +5,12 @@ This module contains the converter for version 1 format.
 """
 
 import copy
+
 from qtdraw.core.pyvista_widget_setting import default_status, default_preference
+from qtdraw import __version__
+
 from qtdraw.multipie.plugin_multipie_setting import space_group_list, point_group_list, crystal_list
 from qtdraw.multipie.plugin_multipie_setting import default_status as multipie_default
-from qtdraw import __version__
 
 
 # ==================================================
@@ -417,15 +419,12 @@ def get_data(dic, widget):
     Returns:
         - (dict) -- updated data.
     """
-    widget._data["site"].block_update_widget(True)
     for row in dic["site"]:
         d = dict(zip(old_setting["site"], row))
         widget.add_site(
             0.07 * float(d["size"]), d["color"], d["opacity"], d["position"], d["cell"], d["name"], d["label"], d["space"]
         )
-    widget._data["site"].block_update_widget(False)
 
-    widget._data["bond"].block_update_widget(True)
     for row in dic["bond"]:
         d = dict(zip(old_setting["bond"], row))
         widget.add_bond(
@@ -441,9 +440,7 @@ def get_data(dic, widget):
             d["label"],
             d["space"],
         )
-    widget._data["bond"].block_update_widget(False)
 
-    widget._data["vector"].block_update_widget(True)
     for row in dic["vector"]:
         d = dict(zip(old_setting["vector"], row))
         widget.add_vector(
@@ -463,9 +460,7 @@ def get_data(dic, widget):
             d["label"],
             d["space"],
         )
-    widget._data["vector"].block_update_widget(False)
 
-    widget._data["orbital"].block_update_widget(True)
     for row in dic["orbital"]:
         d = dict(zip(old_setting["orbital"], row))
         size = -0.3 * abs(float(d["size"])) if d["scale"] else 0.3 * abs(float(d["size"]))
@@ -482,10 +477,8 @@ def get_data(dic, widget):
             d["label"],
             d["space"],
         )
-    widget._data["orbital"].block_update_widget(False)
 
     comp_str = {0: "x", 1: "y", 2: "z", 3: "abs"}
-    widget._data["stream"].block_update_widget(True)
     for row in dic["stream"]:
         d = dict(zip(old_setting["stream"], row))
         size = -float(d["size"]) if d["scale"] else float(d["size"])
@@ -511,9 +504,7 @@ def get_data(dic, widget):
             d["label"],
             d["space"],
         )
-    widget._data["stream"].block_update_widget(False)
 
-    widget._data["plane"].block_update_widget(True)
     for row in dic["plane"]:
         d = dict(zip(old_setting["plane"], row))
         widget.add_plane(
@@ -532,9 +523,7 @@ def get_data(dic, widget):
             d["label"],
             d["space"],
         )
-    widget._data["plane"].block_update_widget(False)
 
-    widget._data["box"].block_update_widget(True)
     for row in dic["box"]:
         d = dict(zip(old_setting["box"], row))
         widget.add_box(
@@ -554,9 +543,7 @@ def get_data(dic, widget):
             d["label"],
             d["space"],
         )
-    widget._data["box"].block_update_widget(False)
 
-    widget._data["polygon"].block_update_widget(True)
     for row in dic["polygon"]:
         d = dict(zip(old_setting["polygon"], row))
         widget.add_polygon(
@@ -575,9 +562,7 @@ def get_data(dic, widget):
             d["label"],
             d["space"],
         )
-    widget._data["polygon"].block_update_widget(False)
 
-    widget._data["text3d"].block_update_widget(True)
     for row in dic["text3d"]:
         d = dict(zip(old_setting["text3d"], row))
         widget.add_text3d(
@@ -594,9 +579,7 @@ def get_data(dic, widget):
             d["label"],
             d["space"],
         )
-    widget._data["text3d"].block_update_widget(False)
 
-    widget._data["spline"].block_update_widget(True)
     for row in dic["spline"]:
         d = dict(zip(old_setting["spline"], row))
         widget.add_spline(
@@ -618,9 +601,7 @@ def get_data(dic, widget):
             d["label"],
             d["space"],
         )
-    widget._data["spline"].block_update_widget(False)
 
-    widget._data["spline_t"].block_update_widget(True)
     for row in dic["spline_t"]:
         d = dict(zip(old_setting["spline_t"], row))
         widget.add_spline_t(
@@ -643,9 +624,7 @@ def get_data(dic, widget):
             d["label"],
             d["space"],
         )
-    widget._data["spline_t"].block_update_widget(False)
 
-    widget._data["caption"].block_update_widget(True)
     for row in dic["caption"]:
         d = dict(zip(old_setting["caption"], row))
         caption = "[" + ",".join(d["caption"]) + "]"
@@ -659,10 +638,8 @@ def get_data(dic, widget):
             d["name"],
             d["space"],
         )
-    widget._data["caption"].block_update_widget(False)
 
     font_str = {0: "arial", 1: "courier", 2: "times"}
-    widget._data["text2d"].block_update_widget(True)
     for row in dic["text"]:
         d = dict(zip(old_setting["text"], row))
         widget.add_text2d(
@@ -673,7 +650,6 @@ def get_data(dic, widget):
             d["position"] + [0],
             d["name"],
         )
-    widget._data["text2d"].block_update_widget(False)
 
     data = widget.get_data_dict()
 

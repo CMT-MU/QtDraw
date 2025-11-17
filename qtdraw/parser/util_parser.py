@@ -11,12 +11,14 @@ from pymatgen.symmetry.analyzer import SpacegroupAnalyzer
 from pymatgen.analysis.graphs import StructureGraph
 from pymatgen.analysis.local_env import MinimumDistanceNN
 from pymatgen.io.cif import CifParser
+
 from qtdraw.core.pyvista_widget_setting import DIGIT, default_preference, default_status
-from qtdraw.parser.element import element_color
 from qtdraw.core.pyvista_widget_setting import widget_detail as detail
-from qtdraw.parser.vesta import parse_vesta, create_structure_vesta
-from qtdraw.parser.data_group import _data_no_space_group
 from qtdraw import __version__
+
+from qtdraw.parser.element import element_color
+from qtdraw.parser.data_group import _data_no_space_group
+from qtdraw.parser.vesta import parse_vesta, create_structure_vesta
 
 
 # ==================================================
@@ -74,7 +76,7 @@ def get_site_info(graph):
             if element != element0:
                 element0 = element
                 group_index = 0
-            symbols = ''.join([el.symbol for el in site.species.elements])
+            symbols = "".join([el.symbol for el in site.species.elements])
             name = f"{symbols}{group_index+1}"
             label = f"{name}_{site_index+1}"
             frac_coords = site.frac_coords
@@ -84,13 +86,7 @@ def get_site_info(graph):
                 r = el.atomic_radius or MIN_RADIUS
                 radius += occu * r
 
-            site_info.append((
-                name,
-                label,
-                element,
-                frac_coords.round(DIGIT),
-                round(radius,DIGIT-2)
-            ))
+            site_info.append((name, label, element, frac_coords.round(DIGIT), round(radius, DIGIT - 2)))
 
     return site_info
 
@@ -146,14 +142,11 @@ def draw_site_bond(widget, name, site_info, bond_info):
     default_color = "silver"
 
     # draw sites.
-    widget._data["site"].block_update_widget(True)
     for name, label, element, frac_coords, radius in site_info:
         color = element_color[color_scheme].get(element, default_color)
         widget.add_site(position=str(frac_coords.tolist()), name=name, label=label, color=color, size=site_scale * radius)
-    widget._data["site"].block_update_widget(False)
 
     # draw bonds.
-    widget._data["bond"].block_update_widget(True)
     for name, label, center, vector, tail_element, head_element in bond_info:
         tail_color = element_color[color_scheme].get(tail_element, default_color)
         head_color = element_color[color_scheme].get(head_element, default_color)
@@ -166,7 +159,6 @@ def draw_site_bond(widget, name, site_info, bond_info):
             label=label,
             width=bond_scale,
         )
-    widget._data["bond"].block_update_widget(False)
 
 
 # ==================================================

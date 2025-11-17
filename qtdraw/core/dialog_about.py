@@ -14,9 +14,12 @@ import pyvista as pv
 from pyvistaqt import __version__ as pyvistaqt_ver
 from PySide6.QtWidgets import QDialog, QWidget, QDialogButtonBox, QSizePolicy
 from PySide6.QtGui import QPixmap
-from qtdraw.widget.custom_widget import Layout, Label, VSpacer
+
 from qtdraw.__init__ import __version__, __date__, __author__
-from qtdraw.util.util import check_multipie
+
+from qtdraw.widget.custom_widget import Layout, Label, VSpacer
+
+from qtdraw.sandbox.util import check_multipie
 
 
 # ==================================================

@@ -6,7 +6,8 @@ Note:
 """
 
 import numpy as np
-from qtdraw.util.util import create_grid
+
+from qtdraw.sandbox.util import create_grid
 
 
 # ==================================================

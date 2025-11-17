@@ -1,6 +1,7 @@
 """
-color palette : matplotlib CSS colors, mpl_colors = mcolors.CSS4_COLORS, apple colors
+Color palette : matplotlib CSS colors, mpl_colors = mcolors.CSS4_COLORS, apple colors
 """
+
 from matplotlib.colors import ListedColormap
 
 
@@ -194,15 +195,11 @@ matplotlib_colors = {
 
 # ==================================================
 # hex-code to color name (matplotlib name is used for the same color code)
-hex_colornames = {h[0]: name for name, h in apple_colors.items()} | {
-    h[0]: name for name, h in matplotlib_colors.items()
-}
+hex_colornames = {h[0]: name for name, h in apple_colors.items()} | {h[0]: name for name, h in matplotlib_colors.items()}
 
 # ==================================================
 # RGB to color name (matplotlib name is used for the same color code)
-rgb_colornames = {h[1]: name for name, h in apple_colors.items()} | {
-    h[1]: name for name, h in matplotlib_colors.items()
-}
+rgb_colornames = {h[1]: name for name, h in apple_colors.items()} | {h[1]: name for name, h in matplotlib_colors.items()}
 
 # ==================================================
 # all colors, separated by "--- apple" and "--- matplotlib"

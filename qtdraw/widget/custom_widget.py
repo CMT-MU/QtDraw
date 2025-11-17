@@ -19,25 +19,26 @@ from PySide6.QtWidgets import (
     QSpacerItem,
     QApplication,
 )
-from PySide6.QtGui import QFont, Qt, QPixmap, QColor, QIcon
-from PySide6.QtCore import Signal
-from gcoreutils.color_palette import all_colors
-from qtdraw.util.color_selector_util import _color2pixmap
+from PySide6.QtGui import QPainter, QFont, QIcon
+from PySide6.QtCore import Signal, QSize, Qt
+from PySide6.QtSvg import QSvgRenderer
+from xml.etree import ElementTree as ET
+
+from qtdraw.widget.color_selector_util import color2pixmap, color_palette
 from qtdraw.widget.validator import (
     validator_int,
     validator_float,
-    validator_sympy_float,
-    validator_sympy,
-    validator_ilist,
-    validator_list,
+    validator_list_int,
+    validator_list_float,
+    validator_math,
     validator_site,
     validator_bond,
     validator_site_bond,
     validator_vector_site_bond,
     validator_orbital_site_bond,
 )
-from qtdraw.util.latex_to_png import latex_to_png
-from qtdraw.util.color_selector_util import color2pixmap
+
+from qtdraw.mathjax.latex_to_svg import latex_to_svg_string
 
 
 # ==================================================
@@ -71,287 +72,92 @@ class Panel(QWidget):
 
 
 # ==================================================
-class Color(QColor):
-    # ==================================================
-    def __init__(self, color):
-        """
-        Color
-
-        Args:
-            color (str): color name.
-        """
-        super().__init__(all_colors[color][0])
-
-
-# ==================================================
 class Label(QLabel):
     # ==================================================
-    def __init__(self, parent=None, text="", bold=False, color="black", size=10, math=False, dpi=120):
+    def __init__(self, parent=None, text="", color="black", size=None, bold=False):
         """
         Label widget.
 
         Args:
             parent (QWidget, optional): parent.
             text (str, optional): text.
-            bold (bool, optional): bold font ?
             color (str, optional): font color.
-            size (int, optional): font size.
-            math (bool, optional): for math ?
-            dpi (int, optional): DPI for math.
-
-        Note:
-            - in math mode, text is given in LaTeX code without $.
-        """
-        super().__init__(parent=parent)
-        policy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
-        self.setSizePolicy(policy)
-        self.setContentsMargins(0, 0, 0, 0)
-        font = QFont()
-        font.setBold(bold)
-        self.setFont(font)
-        self.setFocusPolicy(Qt.NoFocus)
-        self.setIndent(6)
-
-        if math:
-            self.to_png = lambda text: latex_to_png(text, True, color, size, dpi)
-        else:
-            self.to_png = None
-
-        self.setText(text)
-
-    # ==================================================
-    def setText(self, text):
-        """
-        Set text.
-
-        Args:
-            text (xtr): text.
-        """
-        if self.to_png is None:
-            super().setText(text)
-        else:
-            s = self.to_png(text)
-            if s is None:
-                return
-            else:
-                pixmap = QPixmap()
-                pixmap.setDevicePixelRatio(1.0)
-                pixmap.loadFromData(s)
-                super().setPixmap(pixmap)
-
-
-# ==================================================
-class ColorLabel(Panel):
-    # ==================================================
-    def __init__(self, parent=None, color="", bold=False):
-        """
-        Color label widget.
-
-        Args:
-            parent (QWidget, optional): parent.
-            color (str, optional): color/colormap name.
+            size (int, optional): font size (pt).
             bold (bool, optional): bold font ?
         """
         super().__init__(parent)
 
-        label = Label(self, color, bold)
-        size = label.font().pointSize()
+        self.setSizePolicy(QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed))
+        self.setContentsMargins(0, 0, 0, 0)
 
-        colorbox = _color2pixmap(color, "color_both", size)
-        icon = Label(self)
-        icon.setPixmap(colorbox)
-        icon.setFrameStyle(QFrame.Box)
-        icon.setFixedSize(colorbox.size())
+        font = QFont()
+        if size is not None:
+            font.setPointSize(size)
+        font.setBold(bold)
+        self.setFont(font)
+        self.setPalette(color_palette(color))
 
-        self.layout.addWidget(icon, 0, 0)
-        self.layout.addWidget(label, 0, 1)
+        self.setText(text)
+        self.setIndent(6)
+
+    # ==================================================
+    def sizeHint(self):
+        sz = super().sizeHint()
+        extra = 10
+        return QSize(sz.width() + extra, sz.height())
 
 
 # ==================================================
-class LineEdit(QLineEdit):
-    _valid_style = "padding-left: 3px; background: none;"
-    _invalid_style = "padding-left: 3px; background: pink;"
-    _read_only_style = "padding-left: 3px; background: lightgray;"
-
-    focusOut = Signal()
-
+class MathWidget(QWidget):
     # ==================================================
-    def __init__(self, parent=None, text="", validator=None):
-        """
-        Line editor.
+    def __init__(self, parent=None, text="", color="black", size=None):
+        super().__init__(parent)
 
-        Args:
-            parent (QWidget, optional): parent.
-            text (str, optional): text.
-            validator (tuple, optional): (validator_type, option).
-        """
-        super().__init__(text, parent)
-        policy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
-        self.setSizePolicy(policy)
+        if size is None:
+            size = self.font().pointSize()
+
+        self.setSizePolicy(QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed))
         self.setContentsMargins(0, 0, 0, 0)
 
-        self.set_validator(validator)
-        self.set_read_only(False)
-        self._raw = text
-        self._backup = text
-        self._valid = True
+        self._size = size + 5
+        self._color = color
+        self._text = ""
+        self._renderer = None
+        self._wsize = (0, 0)
 
         self.setText(text)
 
     # ==================================================
-    @property
-    def validator(self):
-        """
-        Validator type.
-
-        Returns:
-            - (str) -- validator type.
-        """
-        return self._validator_type
-
-    # ==================================================
-    @property
-    def read_only(self):
-        """
-        Read only ?
-
-        Returns:
-            - (bool) -- read only ?
-        """
-        return self._read_only
-
-    # ==================================================
-    def close_edit(self):
-        """
-        Close editor.
-        """
-        if self._valid:
-            self.returnPressed.emit()
-            self.clearFocus()
-
-    # ==================================================
-    def raw_text(self):
-        """
-        Raw text.
-
-        Returns:
-            - (str) -- raw text.
-        """
-        return self._raw
-
-    # ==================================================
     def setText(self, text):
-        """
-        Set text.
+        self._text = text
+        text = "$$" + text + "$$"
+        s = latex_to_svg_string(text, self._color)
 
-        Args:
-            text (str): text.
-        """
-        if self._validator is None:
-            s = text
-        else:
-            s = self._validator(text)
-
-        if s is None:
-            self.setStyleSheet(self._invalid_style)
-            self._valid = False
-        else:
-            if self.read_only:
-                super().setText(s)
-                return
-            self.setStyleSheet(self._valid_style)
-            self._backup = text
-            self._raw = text
-            self._valid = True
-            super().setText(s)
+        root = ET.fromstring(s)
+        x, y, w, h = map(float, root.attrib["viewBox"].split())
+        scale = self._size / 1000.0
+        root.set("width", str(w * scale))
+        root.set("height", str(h * scale))
+        svg_bytes = ET.tostring(root, encoding="utf-8")
+        self._renderer = QSvgRenderer(svg_bytes)
+        self._wsize = (int(w * scale), int(h * scale))
+        self.setFixedSize(*self._wsize)
+        self.update()
 
     # ==================================================
-    def set_validator(self, validator):
-        """
-        Set validator.
-
-        Args:
-            validator (tuple): (validator_type, option).
-        """
-        validator_dict = {
-            "int": validator_int,
-            "float": validator_float,
-            "sympy_float": validator_sympy_float,
-            "sympy": validator_sympy,
-            "ilist": validator_ilist,
-            "list": validator_list,
-            "site": validator_site,
-            "bond": validator_bond,
-            "site_bond": validator_site_bond,
-            "vector_site_bond": validator_vector_site_bond,
-            "orbital_site_bond": validator_orbital_site_bond,
-        }
-        if validator is None:
-            self._validator = None
-        else:
-            self._validator_type, option = validator
-            self._validator = lambda text: validator_dict[self._validator_type](text, option)
+    def text(self):
+        return self._text
 
     # ==================================================
-    def set_read_only(self, flag):
-        """
-        Set read only.
-
-        Args:
-            flag (bool): read only ?
-        """
-        self._read_only = flag
-        if flag:
-            self.setStyleSheet(self._read_only_style)
-        else:
-            self.setStyleSheet(self._valid_style)
+    def paintEvent(self, event):
+        if not self._renderer:
+            return
+        painter = QPainter(self)
+        self._renderer.render(painter)
 
     # ==================================================
-    def focusInEvent(self, event):
-        """
-        Focus-out event.
-        """
-        super().setText(self._raw)
-        super().focusInEvent(event)
-        self.selectAll()
-
-    # ==================================================
-    def focusOutEvent(self, event):
-        """
-        Focus-out event.
-        """
-        self.clearFocus()
-        super().focusOutEvent(event)
-        self.focusOut.emit()
-
-    # ==================================================
-    def clearFocus(self):
-        """
-        Clear focus.
-        """
-        if not self.read_only:
-            if not self._valid:
-                self.setStyleSheet(self._valid_style)
-            self.setText(self._backup)
-        super().clearFocus()
-
-    # ==================================================
-    def keyPressEvent(self, event):
-        """
-        Key event.
-
-        Args:
-            event (str): event.
-        """
-        k = event.key()
-        if k == Qt.Key_Escape:
-            self.clearFocus()
-            self.setFocus()
-        elif k == Qt.Key_Return:
-            self.setText(self.text())
-            self.close_edit()
-        else:
-            super().keyPressEvent(event)
+    def sizeHint(self):
+        return QSize(*self._wsize)
 
 
 # ==================================================
@@ -359,7 +165,7 @@ class HBar(QFrame):
     # ==================================================
     def __init__(self, parent=None):
         """
-        Horizontal bar item.
+        Horizontal bar widget.
 
         Args:
             parent (QWidget, optional): parent.
@@ -368,14 +174,91 @@ class HBar(QFrame):
         self.setMinimumSize(0, 10)
         self.setFrameShape(QFrame.HLine)
         self.setFrameShadow(QFrame.Sunken)
-        self.setContentsMargins(0, 0, 0, 0)
-        self.setFocusPolicy(Qt.NoFocus)
+
+
+# ==================================================
+class VSpacer(QSpacerItem):
+    # ==================================================
+    def __init__(self):
+        """
+        Vertical spacer.
+        """
+        super().__init__(1, 1, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+
+# ==================================================
+class HSpacer(QSpacerItem):
+    # ==================================================
+    def __init__(self):
+        """
+        Horizontal spacer.
+        """
+        super().__init__(1, 1, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+
+# ==================================================
+class ColorSelector(QComboBox):
+    # ==================================================
+    def __init__(self, parent=None, current="", color_type="color", size=None, bold=False):
+        """
+        Color selector widget.
+
+        Args:
+            parent (QWidget, optional): parent.
+            current (str, optional): default color.
+            color_type (str, optional): color/colormap/color_both
+            size (int, optional): font size.
+            bold (bool, optional): bold face ?
+
+        Notes:
+            - connect currentTextChanged.
+        """
+        super().__init__(parent)
+        self.setSizePolicy(QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed))
+
+        font = QFont()
+        if size is not None:
+            font.setPointSize(size)
+        font.setBold(bold)
+        self.setFont(font)
+
+        color_pixmap, separator = color2pixmap(color_type, self.font().pointSize())
+        names = list(color_pixmap.keys())
+
+        if current == "":
+            current_index = 0
+        else:
+            try:
+                current_index = names.index(current)
+            except ValueError:
+                current_index = 0
+
+        self.blockSignals(True)
+        for color, pixmap in color_pixmap.items():
+            self.addItem(QIcon(pixmap), color)
+        self.blockSignals(False)
+
+        icon_size = next(iter(color_pixmap.values())).size()
+        self.setIconSize(icon_size)
+        self.setFixedHeight(int(icon_size.height() * 1.8))
+
+        for i in separator:
+            self.insertSeparator(i)
+
+        self.setCurrentIndex(current_index)
+        # self.setSizeAdjustPolicy(QComboBox.AdjustToContents)
+
+    # ==================================================
+    def sizeHint(self):
+        sz = super().sizeHint()
+        extra = 10
+        return QSize(sz.width() + extra, sz.height())
 
 
 # ==================================================
 class Button(QPushButton):
     # ==================================================
-    def __init__(self, parent=None, text="", toggle=False):
+    def __init__(self, parent=None, text="", toggle=False, size=None, bold=False):
         """
         Button widget.
 
@@ -383,17 +266,24 @@ class Button(QPushButton):
             parent (QWidget, optional): parent.
             text (str, optional): text.
             toggle (bool, optional): toggle button ?
+            size (int, optional): font size.
+            bold (bool, optional): bold face ?
         """
         super().__init__(text, parent)
         self.setCheckable(toggle)
-        self.setContentsMargins(0, 0, 0, 0)
-        self.setFocusPolicy(Qt.NoFocus)
+        self.setSizePolicy(QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed))
+
+        font = QFont()
+        if size is not None:
+            font.setPointSize(size)
+        font.setBold(bold)
+        self.setFont(font)
 
 
 # ==================================================
 class Combo(QComboBox):
     # ==================================================
-    def __init__(self, parent=None, item=[], init=None):
+    def __init__(self, parent=None, item=None, init=None, size=None, bold=False):
         """
         Combo widget.
 
@@ -401,16 +291,29 @@ class Combo(QComboBox):
             parent (QWidget, optional): parent.
             item (list, optional): list of items, [str].
             init (str, optional): initial value.
+            size (int, optional): font size.
+            bold (bool, optional): bold face ?
         """
         super().__init__(parent)
-        self.setContentsMargins(0, 0, 0, 0)
-        self.setFocusPolicy(Qt.NoFocus)
+        self.setSizePolicy(QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed))
+
+        font = QFont()
+        if size is not None:
+            font.setPointSize(size)
+        font.setBold(bold)
+        self.setFont(font)
+
+        if item is None:
+            item = []
+
         self.set_item(item)
+
         if init is not None:
             self.setCurrentText(init)
 
         total_height = self.font().pointSize() * 1.6
         self.setFixedHeight(total_height)
+        # self.setSizeAdjustPolicy(QComboBox.AdjustToContents)
 
     # ==================================================
     def get_item(self):
@@ -448,64 +351,91 @@ class Combo(QComboBox):
             - (int) -- index.
         """
         item = self.get_item()
-        index = [idx for idx, s in enumerate(item) if key in s]
+        index = [idx for idx, s in enumerate(item) if key == s]
         return index
+
+    # ==================================================
+    def sizeHint(self):
+        sz = super().sizeHint()
+        extra = 10
+        return QSize(sz.width() + extra, sz.height())
 
 
 # ==================================================
 class Spin(QSpinBox):
     # ==================================================
-    def __init__(self, parent=None, min=0, max=1):
+    def __init__(self, parent=None, minimum=0, maximum=1, size=None, bold=False):
         """
         Spin widget.
 
         Args:
             parent (QWidget, optional): parent.
-            min (int, optional): minimum value.
-            max (int, optional): maximum value.
+            minimum (int, optional): minimum value.
+            maximum (int, optional): maximum value.
+            size (int, optional): font size.
+            bold (bool, optional): bold face ?
         """
         super().__init__(parent)
-        self.setMinimum(min)
-        self.setMaximum(max)
-        self.setContentsMargins(0, 0, 0, 0)
-        self.setFocusPolicy(Qt.NoFocus)
+        self.setMinimum(minimum)
+        self.setMaximum(maximum)
+        self.setSizePolicy(QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed))
+
+        font = QFont()
+        if size is not None:
+            font.setPointSize(size)
+        font.setBold(bold)
+        self.setFont(font)
 
 
 # ==================================================
 class DSpin(QDoubleSpinBox):
     # ==================================================
-    def __init__(self, parent=None, min=0.0, max=1.0, step=0.1):
+    def __init__(self, parent=None, minimum=0.0, maximum=1.0, step=0.1, size=None, bold=False):
         """
         Spin widget.
 
         Args:
             parent (QWidget, optional): parent.
-            min (float, optional): minimum value.
-            max (float, optioanl): maximum value.
+            minimum (float, optional): minimum value.
+            maximum (float, optional): maximum value.
             step (float, optional): step value.
+            size (int, optional): font size.
+            bold (bool, optional): bold face ?
         """
         super().__init__(parent)
-        self.setMinimum(min)
-        self.setMaximum(max)
+        self.setMinimum(minimum)
+        self.setMaximum(maximum)
         self.setSingleStep(step)
-        self.setContentsMargins(0, 0, 0, 0)
-        self.setFocusPolicy(Qt.NoFocus)
+        self.setSizePolicy(QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed))
+
+        font = QFont()
+        if size is not None:
+            font.setPointSize(size)
+        font.setBold(bold)
+        self.setFont(font)
 
 
 # ==================================================
 class Check(QCheckBox):
     # ==================================================
-    def __init__(self, parent=None, text=""):
+    def __init__(self, parent=None, text="", size=None, bold=False):
         """
         Check widget.
 
         Args:
             parent (QWidget, optional): parent.
             text (str, optional): text.
+            size (int, optional): font size.
+            bold (bool, optional): bold face ?
         """
         super().__init__(text, parent)
-        self.setContentsMargins(0, 0, 0, 0)
-        self.setFocusPolicy(Qt.NoFocus)
+        self.setSizePolicy(QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed))
+
+        font = QFont()
+        if size is not None:
+            font.setPointSize(size)
+        font.setBold(bold)
+        self.setFont(font)
 
     # ==================================================
     def is_checked(self):
@@ -519,23 +449,135 @@ class Check(QCheckBox):
 
 
 # ==================================================
-class VSpacer(QSpacerItem):
-    # ==================================================
-    def __init__(self):
-        """
-        Vertical spacer.
-        """
-        super().__init__(1, 1, QSizePolicy.Minimum, QSizePolicy.Expanding)
+class LineEdit(QLineEdit):
+    focusOut = Signal()
 
+    def __init__(self, parent=None, text="", validator=None, size=None, bold=False):
+        super().__init__("", parent)
+        self.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
+        self.setContentsMargins(0, 0, 0, 0)
 
-# ==================================================
-class HSpacer(QSpacerItem):
+        font = QFont()
+        if size is not None:
+            font.setPointSize(size)
+        font.setBold(bold)
+        self.setFont(font)
+
+        self._validator_func = None
+        self._read_only = False
+        self._valid = True
+        self._raw = ""
+        self._validated = ""
+
+        if validator:
+            self.set_validator(validator)
+
+        self.setText(text)
+
     # ==================================================
-    def __init__(self):
+    def set_validator(self, validator):
+        vtype, option = validator
+        VALIDATORS = {
+            "int": validator_int,
+            "float": validator_float,
+            "list_float": validator_list_float,
+            "list_int": validator_list_int,
+            "math": validator_math,
+            "site": validator_site,
+            "bond": validator_bond,
+            "site_bond": validator_site_bond,
+            "vector_site_bond": validator_vector_site_bond,
+            "orbital_site_bond": validator_orbital_site_bond,
+        }
+        self._validator_func = lambda t: VALIDATORS[vtype](t, **option)
+
+    # ==================================================
+    def setText(self, text):
+        validated = self._validate(text)
+
+        if validated is None:
+            self._valid = False
+            super().setText(text)
+        else:
+            self._raw = text
+            self._valid = True
+            self._validated = validated
+            super().setText(validated)
+
+        self._update_style()
+
+    # ==================================================
+    def _validate(self, text):
+        return self._validator_func(text) if self._validator_func else text
+
+    # ==================================================
+    def _update_style(self):
+        base_style = """
+            QLineEdit {{
+                padding-left: 3px;
+                padding-right: 3px;
+                background: {bg_color};
+            }}
+            QLineEdit:focus {{
+                border: 2px solid "#90B8EF";
+            }}
         """
-        Horizontal spacer.
-        """
-        super().__init__(1, 1, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        if self._read_only:
+            bg_color = "lightgray"
+        elif self._valid:
+            bg_color = "white"
+        else:
+            bg_color = "pink"
+
+        self.setStyleSheet(base_style.format(bg_color=bg_color))
+
+    # ==================================================
+    def raw_text(self):
+        return self._raw
+
+    # ==================================================
+    def set_read_only(self, flag):
+        self._read_only = flag
+        self.setReadOnly(flag)
+
+        if flag:
+            self.setFocusPolicy(Qt.NoFocus)
+        else:
+            self.setFocusPolicy(Qt.StrongFocus)
+
+        self._update_style()
+
+    # ==================================================
+    def keyPressEvent(self, event):
+        k = event.key()
+        if k == Qt.Key_Escape:
+            super().setText(self._validated)
+            self._valid = True
+            self._update_style()
+            return
+
+        if k in (Qt.Key_Return, Qt.Key_Enter):
+            self.setText(self.text())
+            if self._valid:
+                self.returnPressed.emit()
+            return
+
+        super().keyPressEvent(event)
+
+    # ==================================================
+    def focusOutEvent(self, event):
+        super().setText(self._validated)
+        self._valid = True
+        self._update_style()
+
+        super().focusOutEvent(event)
+        self.focusOut.emit()
+
+    # ==================================================
+    def focusInEvent(self, event):
+        super().setText(self._raw)
+        self._update_style()
+        super().focusInEvent(event)
 
 
 # ==================================================
@@ -543,191 +585,128 @@ class Editor(Panel):
     returnPressed = Signal(str)
 
     # ==================================================
-    def __init__(self, parent=None, text="", validator=None, color="black", size=10, dpi=120):
+    def __init__(self, parent=None, text="", validator=None, color="black", size=None, bold=False):
         """
-        Math equation label widget.
+        Editor widget with math/text display.
 
         Args:
             parent (QWidget, optional): parent.
             text (str, optional): text.
             validator (tuple, optional): (validator_type, option).
-            color (str, optioanl): color name.
+            color (str, optional): color name.
             size (int, optional): font size.
-            dpi (int, optional): DPI.
-
-        Note:
-            - following validators can be used.
-                - int: (min, max).
-                - float: (min, max, digit).
-                - sympy_float: (digit).
-                - sympy: (variable list).
-                - ilist: (shape).
-                - list: (shape, variable list, digit).
-                - site: (use variable?).
-                - bond: (use variable?).
-                - site_bond: (use variable?).
-                - vector_site_bond: (use variable?).
-                - orbital_site_bond: (use variable?).
+            bold (bool, optional): bold face ?
         """
         super().__init__(parent)
+        self.setSizePolicy(QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed))
 
-        math = False
-        if validator is not None and validator[0] == "sympy":
-            math = True
+        self._math_mode = validator is not None and validator[0] == "math"
 
-        self._editor = LineEdit(None, text, validator)
-        self._display = Label(None, self._editor.text(), color=color, size=size, math=math, dpi=dpi)
+        self._editor = LineEdit(parent=parent, text=text, validator=validator, bold=bold, size=size)
+
+        validated = self._editor._validated or text
+
+        self._display = (
+            MathWidget(parent=parent, text=validated, color=color, size=size)
+            if self._math_mode
+            else Label(parent=parent, text=validated, color=color, bold=bold, size=size)
+        )
 
         self.layout.addWidget(self._display, 0, 0)
         self.layout.addWidget(self._editor, 0, 0)
-
         self._editor.hide()
+
         self._in_edit = False
 
-        self._editor.returnPressed.connect(self.close_editor)
-        self._editor.focusOut.connect(self.clearFocus)
+        # Signals
+        self._editor.returnPressed.connect(self._on_return)
+        self._editor.focusOut.connect(self._on_focus_out)
 
     # ==================================================
-    def close_editor(self):
+    def _on_return(self):
         """
-        Close editor.
+        Called when Enter is pressed in editor.
         """
         self.clearFocus()
         if self._editor._valid:
             self.returnPressed.emit(self._editor.raw_text())
 
     # ==================================================
-    def clearFocus(self):
+    def _on_focus_out(self):
         """
-        Clear focus.
+        Handle focus-out safely.
         """
-        if self._editor._valid:
-            self._display.setText(self._editor.text())
-        self._editor.clearFocus()
-        self._editor.hide()
-        self._display.show()
-        self._in_edit = False
+        if self._in_edit:
+            self.clearFocus()
 
     # ==================================================
-    def mouseDoubleClickEvent(self, event):
+    def clearFocus(self):
         """
-        Mouse double-click event.
+        Exit edit mode, safely restoring display.
         """
-        if not self._in_edit and not self._editor.read_only:
+        if not self._in_edit:
+            return
+
+        self._in_edit = False
+
+        if self._editor._valid:
+            self._display.setText(self._editor._validated)
+
+        self._editor.hide()
+        self._display.show()
+
+        # Avoid recursion
+        if self._editor.hasFocus():
+            self._editor.blockSignals(True)
+            self._editor.clearFocus()
+            self._editor.blockSignals(False)
+
+    # ==================================================
+    def mouseDoubleClickEvent(self, _):
+        """
+        Switch to edit mode on double click.
+        """
+        if not self._in_edit and not self._editor._read_only:
             self._in_edit = True
             self._display.hide()
             self._editor.show()
-            self._editor.setFocus()
+            self._editor.setFocus(Qt.TabFocusReason)
 
     # ==================================================
     def mousePressEvent(self, event):
         """
-        Mouse click event.
+        Handle focus changes safely.
         """
-        current = QApplication.focusWidget()
-        if current:
-            current.clearFocus()
+        focused = QApplication.focusWidget()
+        if focused and focused not in (self, self._editor):
+            focused.clearFocus()
         super().mousePressEvent(event)
 
     # ==================================================
     def text(self):
         """
-        Text.
+        Return current text.
 
-        Returns:
-            - (str) -- text.
+        - During editing: return raw_text() from LineEdit.
+        - Otherwise: return display text.
         """
-        if self._editor._validator_type == "sympy":
+        if self._in_edit:
             return self._editor.raw_text()
-        else:
-            return self._display.text()
+        return self._display.text()
 
     # ==================================================
     def setText(self, text):
         """
-        Set text.
-
-        Args:
-            text (str): text.
+        Set editor and display text.
         """
         self._editor.setText(text)
         if self._editor._valid:
             self._display.setText(self._editor.text())
-
-    # ==================================================
-    def raw_text(self):
-        """
-        Raw text.
-
-        Returns:
-            - (str) -- raw text.
-        """
-        return self._editor.raw_text()
 
     # ==================================================
     def setCurrentText(self, text):
-        """
-        Set current text.
-
-        Args:
-            text (str): text.
-        """
-        self._editor.setText(text)
-        if self._editor._valid:
-            self._display.setText(self._editor.text())
+        self.setText(text)
 
     # ==================================================
-    def currentText(self):
-        """
-        Get current text.
-
-        Returns:
-            - (str) -- current text.
-        """
-        return self._editor.raw_text()
-
-
-# ==================================================
-class ColorSelector(QComboBox):
-    # ==================================================
-    def __init__(self, parent=None, current="", color_type="color"):
-        """
-        Color selector widget.
-
-        Args:
-            parent (QWidget, optional): parent.
-            current (str, optional): default color.
-            color_type (str, optional): color/colormap/color_both
-
-        Notes:
-            - connect currentTextChanged.
-        """
-        super().__init__(parent=parent)
-        self.setFocusPolicy(Qt.NoFocus)
-        self.setContentsMargins(0, 0, 0, 0)
-
-        color_pixmap, separator = color2pixmap(color_type, self.font().pointSize())
-        names = list(color_pixmap.keys())
-
-        if current == "":
-            current_index = 0
-        else:
-            try:
-                current_index = names.index(current)
-            except ValueError:
-                current_index = 0
-
-        self.blockSignals(True)
-        for color, pixmap in color_pixmap.items():
-            self.addItem(QIcon(pixmap), color)
-        self.blockSignals(False)
-        self.setCurrentIndex(current_index)
-
-        icon_size = next(iter(color_pixmap.values())).size()
-        self.setIconSize(icon_size)
-
-        total_height = icon_size.height() * 1.8
-        self.setFixedHeight(total_height)
-
-        for i in separator:
-            self.insertSeparator(i)
+    def sizeHint(self):
+        return self._display.sizeHint()

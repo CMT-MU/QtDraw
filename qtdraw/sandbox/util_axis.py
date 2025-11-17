@@ -9,11 +9,12 @@ import pyvista as pv
 import numpy as np
 from math import floor, ceil
 
-from gcoreutils.convert_util import text_to_list
+from qtdraw.core.pyvista_widget_setting import widget_detail as detail
+from qtdraw.core.pyvista_widget_setting import CHOP, DIGIT
 
-from qtdraw.sandbox.pyvista_widget_setting import widget_detail as detail
-from qtdraw.sandbox.pyvista_widget_setting import CHOP, DIGIT
-from qtdraw.sandbox.color_palette import all_colors
+from qtdraw.widget.color_palette import all_colors
+
+from gcoreutils.convert_util import text_to_list
 
 
 # ==================================================

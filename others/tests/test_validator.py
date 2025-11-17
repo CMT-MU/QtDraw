@@ -4,7 +4,7 @@ Test for validators.
 This module provides a test for validators.
 """
 
-from qtdraw.util.qt_event_util import get_qt_application
+from qtdraw.widget.qt_event_util import get_qt_application
 from qtdraw.widget.custom_widget import Panel, Label, LineEdit, Button
 
 
@@ -12,26 +12,42 @@ from qtdraw.widget.custom_widget import Panel, Label, LineEdit, Button
 def test_validator():
     app = get_qt_application()
 
-    val_opt = [(-1, 4), (-0.5, 1.5, 3), 3, ["x", "y"], (2, 3), ((2, 3), None, 3)]
-    val = ["int", "float", "sympy_float", "sympy", "ilist", "list"]
-
     panel = Panel()
+    panel.resize(800, 100)
+    panel.layout.setContentsMargins(10, 10, 10, 10)
+    panel.layout.setHorizontalSpacing(10)
+    panel.layout.setVerticalSpacing(10)
+
+    val = [
+        "int (-1,4)",
+        "float (-0.5,1.5,3)",
+        "list_float (3,), 3",
+        "list_int ((3,), [x,y])",
+        "list_int (2,3)",
+        "list_float (2,3), 3",
+        "math ((3,), [x,y])",
+    ]
+    txt = ["0", "0", "[0,0,0]", "[0,0,0]", "[[1,2,3],[4,5,6]]", "[[1,2,3],[4,5,6]]", "[2/3,sin(x),cos(y)]"]
+
     lbl = []
     editor = []
-    push = Button(None, "show text")
-    for i in range(len(val_opt)):
-        lbl.append(Label(None, val[i]))
-    editor1 = LineEdit(None, "0", (val[0], val_opt[0]))
-    editor2 = LineEdit(None, "0", (val[1], val_opt[1]))
-    editor3 = LineEdit(None, "0", (val[2], val_opt[2]))
-    editor4 = LineEdit(None, "0", (val[3], val_opt[3]))
-    editor5 = LineEdit(None, "[[1,2,3],[4,5,6]]", (val[4], val_opt[4]))
-    editor6 = LineEdit(None, "[[1,2,3],[4,5,6]]", (val[5], val_opt[5]))
-    editor = [editor1, editor2, editor3, editor4, editor5, editor6]
+    push = Button(panel, text="show text")
+    for i in range(len(val)):
+        lbl.append(Label(text=val[i]))
+    editor1 = LineEdit(panel, text=txt[0], validator=("int", {"min": -1, "max": 4}))
+    editor2 = LineEdit(panel, text=txt[1], validator=("float", {"min": -0.5, "max": 1.5, "digit": 3}))
+    editor3 = LineEdit(panel, text=txt[2], validator=("list_float", {"shape": (3,), "digit": 3}))
+    editor4 = LineEdit(panel, text=txt[3], validator=("list_int", {"shape": (3,), "var": ["x", "y"]}))
+    editor5 = LineEdit(panel, text=txt[4], validator=("list_int", {"shape": (2, 3)}))
+    editor6 = LineEdit(panel, text=txt[5], validator=("list_float", {"shape": (2, 3), "digit": 3}))
+    editor7 = LineEdit(panel, text=txt[6], validator=("math", {"shape": (3,), "var": ["x", "y"]}))
+    editor = [editor1, editor2, editor3, editor4, editor5, editor6, editor7]
 
     for i, (l, e) in enumerate(zip(lbl, editor)):
+        v = Label(panel, text=txt[i])
         panel.layout.addWidget(l, i, 0)
-        panel.layout.addWidget(e, i, 1)
+        panel.layout.addWidget(v, i, 1)
+        panel.layout.addWidget(e, i, 2)
         panel.layout.addWidget(push, len(editor), 0, 1, 2)
 
     editor1.returnPressed.connect(lambda: print(editor1.text()))

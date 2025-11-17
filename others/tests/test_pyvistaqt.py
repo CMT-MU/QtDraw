@@ -1,16 +1,13 @@
 """
-Test for PyVistaQt.
+Test for PyVistaQt. (does not work)
 
 This module provides a test for PyVistaQt BackgroundPlotter.
 """
 
 import pyvista as pv
 from pyvistaqt import BackgroundPlotter
-from PySide6.QtWidgets import QApplication
 
-app = QApplication([])
-
-plotter = BackgroundPlotter(app=app)
+plotter = BackgroundPlotter(show=True)
 plotter.add_mesh(pv.Sphere())
 
-app.exec()
+plotter.app.exec()

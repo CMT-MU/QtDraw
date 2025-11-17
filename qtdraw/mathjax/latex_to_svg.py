@@ -13,8 +13,9 @@ import hashlib
 from pathlib import Path
 from playwright.sync_api import sync_playwright
 
+from qtdraw.widget.color_palette import all_colors
+
 from qtdraw import __top_dir__
-from qtdraw.sandbox.color_palette import all_colors
 
 
 # ==================================================

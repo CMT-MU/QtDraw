@@ -10,7 +10,7 @@ import logging
 from PySide6.QtWidgets import QWidget, QPlainTextEdit, QGridLayout, QFileDialog
 from PySide6.QtGui import QFont
 
-from qtdraw.sandbox.qt_event_util import ExceptionHook
+from qtdraw.widget.qt_event_util import ExceptionHook
 
 
 # ==================================================

@@ -1,7 +1,14 @@
-from qtdraw.sandbox.qt_event_util import get_qt_application
-from qtdraw.sandbox.group_view import GroupModel
-from qtdraw.sandbox.tab_group_view import TabGroupView
-from qtdraw.sandbox.pyvista_widget_setting import object_default
+"""
+Test for tab group view widget.
+
+This module provides a test for TabGroupView.
+"""
+
+from qtdraw.core.pyvista_widget_setting import object_default
+
+from qtdraw.widget.qt_event_util import get_qt_application
+from qtdraw.widget.group_view import GroupModel
+from qtdraw.widget.tab_group_view import TabGroupView
 
 # ================================================== main
 if __name__ == "__main__":

@@ -16,17 +16,7 @@ from PySide6.QtGui import QCursor, QMouseEvent
 from PySide6.QtCore import QEvent, Qt, QCoreApplication, Signal, QSize, QObject, QModelIndex
 import pyvista as pv
 from pyvistaqt import QtInteractor
-from gcoreutils.color_palette import all_colors, custom_colormap, check_color
-from gcoreutils.convert_util import text_to_list, apply
-from qtdraw.util.util_axis import (
-    create_axes_widget,
-    get_view_vector,
-    create_unit_cell,
-    create_grid,
-    get_lattice_vector,
-    get_repeat_range,
-    get_outside_box,
-)
+
 from qtdraw.core.pyvista_widget_setting import (
     default_status,
     default_preference,
@@ -42,9 +32,32 @@ from qtdraw.core.pyvista_widget_setting import (
 )
 from qtdraw.core.pyvista_widget_setting import widget_detail as detail
 from qtdraw.core.pyvista_widget_setting import DIGIT
+from qtdraw.__init__ import __version__, __date__, __author__
+
 from qtdraw.widget.group_model import GroupModel
 from qtdraw.widget.tab_group_view import TabGroupView
-from qtdraw.util.basic_object import (
+from qtdraw.widget.qt_event_util import get_qt_application
+from qtdraw.widget.logging_util import LogWidget
+from qtdraw.widget.color_palette import all_colors, custom_colormap, check_color
+
+from gcoreutils.convert_util import text_to_list, apply
+
+from qtdraw.util.util import convert_to_str, read_dict, convert_str_vector, split_filename, cat_filename, get_data_range
+
+from qtdraw.sandbox.read_material import read_draw
+from qtdraw.sandbox.xsf import extract_data_xsf
+from qtdraw.sandbox.converter import convert_version2
+
+from qtdraw.sandbox.util_axis import (
+    create_axes_widget,
+    get_view_vector,
+    create_unit_cell,
+    create_grid,
+    get_lattice_vector,
+    get_repeat_range,
+    get_outside_box,
+)
+from qtdraw.sandbox.basic_object import (
     create_sphere,
     create_bond,
     create_vector,
@@ -65,13 +78,6 @@ from qtdraw.util.basic_object import (
     create_orbital_data,
     create_stream_data,
 )
-from qtdraw.util.util import convert_to_str, read_dict, convert_str_vector, split_filename, cat_filename, get_data_range
-from qtdraw.parser.read_material import read_draw
-from qtdraw.parser.xsf import extract_data_xsf
-from qtdraw.parser.converter import convert_version2
-from qtdraw.util.logging_util import LogWidget
-from qtdraw.util.qt_event_util import get_qt_application
-from qtdraw.__init__ import __version__, __date__, __author__
 
 
 # ==================================================
@@ -204,7 +210,7 @@ class PyVistaWidget(QtInteractor):
             )
 
         # create data view group.
-        self._tab_group_view = TabGroupView(self._data, parent=self)
+        self._tab_group_view = TabGroupView(self, self._data)
         self._tab_group_view.resize(800, 600)
 
         # add "e" key to open data view group.
@@ -2252,7 +2258,7 @@ class PyVistaWidget(QtInteractor):
         self._actor_object_type = {}  # from actor_name to (object_type).
         self._data = {}
         for object_type, value in object_default.items():
-            self._data[object_type] = GroupModel(object_type, value, parent=self)
+            self._data[object_type] = GroupModel(self, object_type, value)
 
     # ==================================================
     def set_theme(self, theme=None):
@@ -2462,9 +2468,7 @@ class PyVistaWidget(QtInteractor):
             return
 
         for object_type, model in data.items():
-            self._data[object_type].block_update_widget(True)
             self._data[object_type].set_data(model)
-            self._data[object_type].block_update_widget(False)
 
     # ==================================================
     def repeat_data(self):
@@ -2582,7 +2586,6 @@ class PyVistaWidget(QtInteractor):
         :meta private:
         """
         self._tab_group_view.show()
-        self._tab_group_view.update_widget()
 
     # ==================================================
     def release_mouse(self):
@@ -2675,7 +2678,7 @@ class PyVistaWidget(QtInteractor):
         """
         self.select_actor(actor.name)
 
-        menu = QMenu(self)
+        menu = QMenu(self.window())
 
         # open menu.
         opn = menu.addAction("Open")

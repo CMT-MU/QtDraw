@@ -1,200 +1,232 @@
 """
 Validator type.
 
-- type: option ["*": no limit, digit only for no variable list=None(no check), [""](no variable)]
+- type: option.
     - int: (min, max)
     - float: (min, max, digit)
-    - sympy_float: (digit)
-    - sympy: (variable list)
-    - ilist: (shape)
-    - list: (shape, variable list, digit)
-    - site: (use variable?)
-    - bond: (use variable?)
-    - site_bond: (use variable?)
-    - vector_site_bond: (use variable?)
-    - orbital_site_bond: (use variable?)
+    - list_int: (shape, var)
+    - list_float: (shape, var ,digit)
+    - math: (shape, var)
+    - site: (use var?)
+    - bond: (use var?)
+    - site_bond: (use var?)
+    - vector_site_bond: (use var?)
+    - orbital_site_bond: (use var?)
 """
 
 import numpy as np
-import sympy as sp
-from qtdraw.util.util_str import str_to_numpy, apply_to_numpy
+
+from qtdraw.sandbox.util import str_to_sympy, to_latex
+
+DISPLAY_DIGIT = 5
 
 
 # ==================================================
-def validator_int(text, opt):
+def check_symbol(expr):
+    """
+    Check symbol.
+
+    Args:
+        expr (sympy or ndarray)
+
+    Returns:
+        - (bool) -- if expr contains symbol, return True otherwise False.
+    """
+    if isinstance(expr, np.ndarray):
+        return any(check_symbol(e) for e in expr.flat)
+
+    return bool(expr.free_symbols)
+
+
+# ==================================================
+def convert_to_bond(bond, use_var=False):
+    """
+    Convert to bond from str.
+
+    Args:
+        bond (str): bond.
+        use_var (bool, optional): use [x,y,z] for site/bond ?
+
+    Returns:
+        - (ndarray) -- bond vector.
+        - (ndarray) -- bond center.
+
+    Note:
+        - bond string is "[tail];[head]/[vector]@[center]/[start]:[vector]".
+    """
+    var = ["x", "y", "z"] if use_var else [""]
+    try:
+        if ";" in bond:
+            t, h = bond.split(";")
+            t = str_to_sympy(t, check_var=var, check_shape=(3,))
+            h = str_to_sympy(h, check_var=var, check_shape=(3,))
+            v = h - t
+            c = (t + h) / 2
+        elif "@" in bond:
+            v, c = bond.split("@")
+            v = str_to_sympy(v, check_var=var, check_shape=(3,))
+            c = str_to_sympy(c, check_var=var, check_shape=(3,))
+        elif ":" in bond:
+            s, v = bond.split(":")
+            s = str_to_sympy(s, check_var=var, check_shape=(3,))
+            v = str_to_sympy(v, check_var=var, check_shape=(3,))
+            c = s + v / 2
+        else:
+            raise Exception(f"invalid separator in {bond}.")
+        return v, c
+    except Exception:
+        return None, None
+
+
+# ==================================================
+def validator_int(text, **opt):
     """
     Validator for int.
 
     Args:
         text (str): int string.
-        opt (tuple, optional): option, (min, max).
+        opt (dict, optional): option, "min/max". (default: "*","*")
 
     Returns:
         - (str) -- formatted string if it is valid, otherwise None.
     """
-    r_min, r_max = opt
-
-    # type conversion.
     try:
         s = int(text)
-    except:
+    except ValueError:
         return None
 
-    # range check.
-    if r_min != "*" and s < int(r_min):
-        return None
-    if r_max != "*" and s > int(r_max):
+    r_min = opt.get("min", "*")
+    r_max = opt.get("max", "*")
+
+    if (r_min != "*" and s < int(r_min)) or (r_max != "*" and s > int(r_max)):
         return None
 
     return str(s)
 
 
 # ==================================================
-def validator_float(text, opt):
+def validator_float(text, **opt):
     """
     Validator for float.
 
     Args:
-        text (str): int string.
-        opt (tuple, optional): option, (min, max, digit).
+        text (str): float string.
+        opt (dict, optional): option, "min/max/digit". (default: "*","*",5)
 
     Returns:
         - (str) -- formatted string if it is valid, otherwise None.
     """
-    r_min, r_max, digit = opt
-
-    # type conversion.
     try:
         s = float(text)
-    except:
+    except ValueError:
         return None
 
-    # range check.
-    if r_min != "*" and s < float(r_min):
-        return None
-    if r_max != "*" and s > float(r_max):
-        return None
-    s = np.round(s, digit)
-    s = format(s, f".0{digit}f")
+    r_min = opt.get("min", "*")
+    r_max = opt.get("max", "*")
+    digit = opt.get("digit", DISPLAY_DIGIT)
 
-    return s
+    if (r_min != "*" and s < float(r_min)) or (r_max != "*" and s > float(r_max)):
+        return None
+
+    return f"{np.round(s, digit):.{digit}f}"
 
 
 # ==================================================
-def validator_sympy_float(text, opt):
+def validator_list_float(text, **opt):
     """
-    Validator for sympy.
+    Validator for list float.
 
     Args:
-        text (str): sympy string.
-        opt (int, optional): option, digit.
+        text (str): string with list.
+        opt (dict, optional): option, "digit/shape/var". (default: 5,None,[""])
+            e.g., 15, (), (n,), (n,m), ..., ["x", "y", ...].
 
     Returns:
         - (str) -- formatted string if it is valid, otherwise None.
     """
-    digit = opt
+    digit = opt.get("digit", DISPLAY_DIGIT)
+    shape = opt.get("shape", None)
+    var = opt.get("var", [""])
 
-    # convert to sympy, (1x1).
     try:
-        s = str_to_numpy(text, digit, None, ())
-    except:
+        s = str_to_sympy(text, check_var=var, check_shape=shape)
+    except Exception:
         return None
-    if s is None:
-        return None
-    s = s.tolist()
-    if digit is not None:
-        s = format(s, f".0{digit}f")
-    else:
-        s = str(s)
 
-    return s
+    if digit is not None and not check_symbol(s):
+        if isinstance(s, np.ndarray):
+            s = np.vectorize(lambda x: f"{float(x):.{digit}f}")(s)
+            return str(s.tolist()).replace("'", "").replace(" ", "")
+        else:
+            return f"{float(s):.{digit}f}"
+
+    if isinstance(s, np.ndarray):
+        return str(s.tolist()).replace(" ", "")
+    else:
+        return str(s)
 
 
 # ==================================================
-def validator_sympy(text, opt):
+def validator_list_int(text, **opt):
     """
-    Validator for sympy.
+    Validator for list int.
+
+    Args:
+        text (str): string with list.
+        opt (dict, optional): option, "shape/var". (default: None,[""])
+            e.g., (), (n,), (n,m), ..., ["x", "y", ...].
+
+    Returns:
+        - (str) -- formatted string if it is valid, otherwise None.
+    """
+    shape = opt.get("shape", None)
+    var = opt.get("var", [""])
+
+    try:
+        s = str_to_sympy(text, check_var=var, check_shape=shape)
+    except Exception:
+        return None
+
+    if not check_symbol(s):
+        try:
+            if isinstance(s, np.ndarray):
+                s = np.vectorize(lambda x: f"{int(x)}")(s)
+                return str(s.tolist()).replace("'", "").replace(" ", "")
+            else:
+                return f"{int(s)}"
+        except Exception:
+            return None
+
+    if isinstance(s, np.ndarray):
+        return str(s.tolist()).replace(" ", "")
+    else:
+        return str(s)
+
+
+# ==================================================
+def validator_math(text, **opt):
+    """
+    Validator for math to LaTeX.
 
     Args:
         text (str): sympy string.
-        opt (list, optional): option, var.
+        opt (dict, optional): option, "shape/var". (default: None,None)
 
     Returns:
         - (str) -- LaTeX string if it is valid, otherwise None.
     """
-    var = opt
+    shape = opt.get("shape", None)
+    var = opt.get("var", None)
 
-    # convert to sympy, (1x1).
     try:
-        s = str_to_numpy(text, None, var, ())
-    except:
-        return None
-    if s is None:
-        return None
-    s = s.tolist()
-    s = sp.latex(s)
-
-    return s
-
-
-# ==================================================
-def validator_ilist(s, opt):
-    """
-    Validator for int list.
-
-    Args:
-        s (str): int list string.
-        opt (tuple, optional): option, shape, (), (n,), (n,m), ...
-
-    Returns:
-        - (str) -- formatted string if it is valid, otherwise None.
-    """
-    shape = opt
-
-    # convert to sympy with shape and no varialbes.
-    try:
-        s = str_to_numpy(s, check_var=[""], check_shape=shape)
-    except:
-        return None
-    if s is None:
+        s = str_to_sympy(text, check_var=var, check_shape=shape)
+    except Exception:
         return None
 
-    # type conversion.
-    try:
-        s = s.astype(int)
-    except:
-        return None
-
-    s = str(s.tolist())
-
-    return s
-
-
-# ==================================================
-def validator_list(s, opt):
-    """
-    Validator for sympy list.
-
-    Args:
-        s (str): sympy list string.
-        opt (tuple, optional): option, (shape, var, digit).
-
-    Returns:
-        - (str) -- formatted string if it is valid, otherwise None.
-    """
-    shape, var, digit = opt
-
-    # convert to sympy with shape and no varialbes.
-    try:
-        s = str_to_numpy(s, digit, var, check_shape=shape)
-    except:
-        return None
-    if s is None:
-        return None
-    if digit is not None and var is not None and len("".join(var)) == 0:
-        s = apply_to_numpy(lambda x: format(x, f".0{digit}f"), s)
-
-    s = str(s.tolist()).replace("'", "")
+    if isinstance(s, np.ndarray):
+        s = str(to_latex(s).tolist()).replace("'", "").replace("\\\\", "\\")
+    else:
+        s = to_latex(s)
 
     return s
 
@@ -206,23 +238,13 @@ def validator_site(s, use_var=False):
 
     Args:
         s (str): site string, [x,y,z].
-        use_var (bool, optional): use [x,y,z] for site/bond ?
+        use_var (bool, optional): use [x,y,z] for site ?
 
     Returns:
         - (str) -- input s if it is valid, otherwise None.
     """
-    if use_var:
-        var = ["x", "y", "z"]
-    else:
-        var = [""]
-    try:
-        status = str_to_numpy(s, None, var, (3,))
-    except:
-        return None
-    if status is not None:
-        return s
-    else:
-        return None
+    var = ["x", "y", "z"] if use_var else [""]
+    return validator_list_float(s, shape=(3,), var=var)
 
 
 # ==================================================
@@ -232,7 +254,7 @@ def validator_bond(s, use_var=False):
 
     Args:
         s (str): bond string.
-        use_var (bool, optional): use [x,y,z] for site/bond ?
+        use_var (bool, optional): use [x,y,z] for bond ?
 
     Returns:
         - (str) -- input s if it is valid, otherwise None.
@@ -240,26 +262,12 @@ def validator_bond(s, use_var=False):
     Note:
         - bond sytles, start:vector, tail;head, vector@center, are accepted.
     """
-    if s.count(":"):
-        s2 = s.split(":")
-    elif s.count(";"):
-        s2 = s.split(";")
-    elif s.count("@"):
-        s2 = s.split("@")
-    else:
-        return None
 
-    if len(s2) != 2:
-        return None
-    sa, sb = s2
-    sa = validator_site(sa, use_var)
-    if sa is None:
-        return None
-    sb = validator_site(sb, use_var)
-    if sb is None:
-        return None
+    def fmt(a):
+        return str([f"{i:.{DISPLAY_DIGIT}f}" for i in a]).replace("'", "").replace(" ", "")
 
-    return s
+    v, c = convert_to_bond(s, use_var)
+    return None if v is None else f"{fmt(v)}@{fmt(c)}"
 
 
 # ==================================================
@@ -298,21 +306,14 @@ def validator_vector_site_bond(s, use_var=False):
     Note:
         - bond sytles, start:vector, tail;head, vector@center, are accepted.
     """
-    if s.count("#"):
-        s2 = s.split("#")
-        if len(s2) != 2:
-            return None
-        v, sb = s2
-        v = validator_site(v, use_var)
-        if v is None:
-            return None
-        sb = validator_site_bond(sb, use_var)
-        if sb is None:
-            return None
-    else:
+    if "#" not in s:
         return None
 
-    return s
+    v, sb = s.split("#", 1)
+    v = validator_site(v, use_var)
+    sb = validator_site_bond(sb, use_var)
+
+    return None if v is None or sb is None else v + "#" + sb
 
 
 # ==================================================
@@ -331,18 +332,11 @@ def validator_orbital_site_bond(s, use_var=False):
         - orbital can contain x, y, z, r.
         - bond sytles, start:vector, tail;head, vector@center, are accepted.
     """
-    if s.count("#"):
-        s2 = s.split("#")
-        if len(s2) != 2:
-            return None
-        o, sb = s2
-        o = str_to_numpy(o, None, ["x", "y", "z", "r"], ())
-        if o is None:
-            return None
-        sb = validator_site_bond(sb, use_var)
-        if sb is None:
-            return None
-    else:
+    if "#" not in s:
         return None
 
-    return s
+    v, sb = s.split("#", 1)
+    v = validator_list_float(v, var=["x", "y", "z", "r"], shape=())
+    sb = validator_site_bond(sb, use_var)
+
+    return None if v is None or sb is None else v + "#" + sb
