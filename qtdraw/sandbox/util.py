@@ -144,6 +144,8 @@ def to_latex(a, style="scalar"):
 
 
 # ==================================================
+# ==================================================
+# ==================================================
 def check_multipie():
     """
     Check if multipie is installed or not.
@@ -354,3 +356,106 @@ def affine_trans(v, s=None, A=None, digit=None, check_var=None):
                 v = v + np.tile(s, (v.shape[0], 1))
 
     return v
+
+
+# ==================================================
+# ==================================================
+# ==================================================
+# ==================================================
+def text_to_list(text):
+    """
+    convert single text to list.
+
+    Args:
+        text (str): text to convert.
+
+    Returns:
+        list or str: converted list.
+
+    Notes:
+        - if format error occurs, return None.
+    """
+    if not isinstance(text, str):
+        return None
+
+    lb = text.count("[")
+    rb = text.count("]")
+    if lb != rb:
+        return None
+    elif lb == 0 and rb == 0:
+        return text
+
+    text = re.sub(r"\s*\[\s*", "[", text)
+    text = re.sub(r"\s*\]\s*", "]", text)
+
+    text = text.replace("[", "['").replace("]", "']").replace(",", "','").replace("'[", "[").replace("]'", "]")
+    try:
+        lst = ast.literal_eval(text)
+    except (SyntaxError, ValueError):
+        return None
+
+    return lst
+
+
+# ==================================================
+def apply(f, lst):
+    """
+    apply function to (nested) list.
+
+    Args:
+        f (function): function to apply to each element of list.
+        lst (list or value): (nested) list to apply.
+
+    Returns:
+        list or value: applied list.
+    """
+    if isinstance(lst, list):
+        return [apply(f, x) for x in lst]
+    else:
+        return f(lst)
+
+
+# ==================================================
+def list_to_table(lst1d, col, p=None):
+    """
+    convert from list to table
+
+    Args:
+        lst1d (list): 1d list
+        col (int): number of columns
+        p (any, optional): padding value (no padding for None)
+
+    Returns:
+        list: 2d list
+    """
+    if type(lst1d) != list:
+        raise KeyError(f"non list type ({type(lst1d)}) is given.")
+
+    n = len(lst1d)
+    row = int(math.ceil(n / col))
+    tbl = []
+    for i in range(row):
+        tbl.append(lst1d[col * i : col * (i + 1)])
+    d = row * col - n
+    if p is not None and d != 0:
+        tbl[-1].extend([p] * d)
+
+    return tbl
+
+
+# ==================================================
+def remove_space(s):
+    """
+    remove space, tab, and newline.
+
+    Args:
+        s (str): string
+
+    Returns:
+        str: removed string
+    """
+    if type(s) != str:
+        raise KeyError(f"invalid type ({type(s)}) is given.")
+
+    s = s.replace(" ", "").replace("\t", "").replace("\n", "")
+    return s

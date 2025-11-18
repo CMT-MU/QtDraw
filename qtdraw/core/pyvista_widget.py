@@ -43,7 +43,7 @@ from qtdraw.parser.read_material import read_draw
 from qtdraw.parser.xsf import extract_data_xsf
 from qtdraw.parser.converter import convert_version2
 
-from gcoreutils.convert_util import text_to_list, apply
+from qtdraw.sandbox.util import text_to_list, apply
 
 
 from qtdraw.sandbox.util import read_dict, str_to_sympy

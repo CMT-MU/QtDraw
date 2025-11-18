@@ -7,16 +7,19 @@ This module provides MultiPie plugin.
 import logging
 import numpy as np
 import sympy as sp
-from gcoreutils.nsarray import NSArray
+
 from multipie import __version__, get_binary
 from multipie.const import __def_dict__
 from multipie.tag.tag_group import TagGroup
 from multipie.group.point_group import PointGroup
 from multipie.group.space_group import SpaceGroup
+
 from qtdraw.multipie.plugin_multipie_setting import plugin_detail as detail
 from qtdraw.multipie.plugin_multipie_setting import default_status
 from qtdraw.multipie.dialog_multipie import MultiPieDialog
 from qtdraw.multipie.util_multipie import check_get_site_bond, check_get_site, check_get_bond, combined_format, create_samb_object
+
+from gcoreutils.nsarray import NSArray
 
 
 # ==================================================

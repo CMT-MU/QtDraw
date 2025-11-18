@@ -15,7 +15,6 @@ dependencies = [
     "black",
     "ipython",
     "pymatgen",
-    "gcoreutils",
     "multipie",
 ]
 dynamic = ["version"]

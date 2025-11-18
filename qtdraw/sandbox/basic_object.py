@@ -33,9 +33,7 @@ from qtdraw.core.pyvista_widget_setting import widget_detail as detail
 from qtdraw.core.pyvista_widget_setting import CHOP
 
 from qtdraw.sandbox.util_axis import get_view_vector
-from qtdraw.sandbox.util import create_grid
-
-from gcoreutils.convert_util import text_to_sympy, text_to_list
+from qtdraw.sandbox.util import create_grid, str_to_sympy, text_to_list
 
 
 # ==================================================
@@ -62,7 +60,7 @@ def _str_poly_array(poly, xyz, var=["x", "y", "z"], size=1.0):
     poly = poly.replace("sqrt", "SQ")
     poly = poly.replace("r", "(sqrt(x**2+y**2+z**2))")
     poly = poly.replace("SQ", "sqrt")
-    ex = text_to_sympy(poly, local=v)
+    ex = str_to_sympy(poly, sub=v)
     x, y, z = xyz.T
 
     f = sp.lambdify(r, ex)
@@ -743,7 +741,7 @@ def create_spline_t(
     tp = np.arange(t_range[0], t_range[1], t_range[2])
 
     t = sp.symbols("t", real=True)
-    ex = [text_to_sympy(i, local={"t": t}) for i in point]
+    ex = [str_to_sympy(i, subs={"t": t}) for i in point]
 
     pts = np.asarray([np.full(tp.shape, i) if i.is_Number else sp.lambdify(t, i, modules="numpy")(tp) for i in ex])
     pointA = np.dot(A[0:3, 0:3], pts).T

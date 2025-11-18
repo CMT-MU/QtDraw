@@ -14,7 +14,7 @@ from qtdraw.core.pyvista_widget_setting import CHOP, DIGIT
 
 from qtdraw.widget.color_palette import all_colors
 
-from gcoreutils.convert_util import text_to_list
+from qtdraw.sandbox.util import text_to_list
 
 
 # ==================================================

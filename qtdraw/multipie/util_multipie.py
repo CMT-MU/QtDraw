@@ -5,8 +5,10 @@ This module contains utilities for multipie plugin.
 """
 
 import sympy as sp
-from gcoreutils.nsarray import NSArray
+
 from qtdraw.sandbox.util import str_to_list
+
+from gcoreutils.nsarray import NSArray
 
 
 # ==================================================

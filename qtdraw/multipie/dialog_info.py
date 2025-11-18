@@ -6,12 +6,15 @@ This module provides a dialog for group info. in MultiPie dialog.
 
 import sympy as sp
 from PySide6.QtWidgets import QDialog
-from gcoreutils.list_util import list_to_table
-from gcoreutils.nsarray import NSArray
+
 from multipie.tag.tag_multipole import TagMultipole
 from multipie.tag.tag_irrep import TagIrrep
+
 from qtdraw.widget.custom_widget import Layout
 from qtdraw.widget.table_view import TableView
+from qtdraw.sandbox.util import list_to_table
+
+from gcoreutils.nsarray import NSArray
 
 
 # ==================================================

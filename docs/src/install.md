@@ -1,6 +1,6 @@
 # Install QtDraw (and MultiPie)
 
-**QtDraw** can be installed from PyPI using pip on Python >= 3.9:
+**QtDraw** can be installed from PyPI using pip on Python >= 3.11:
 
 
 ## Requirements:
@@ -14,13 +14,13 @@
 - [MacOS or Linux] Add path for LaTeX and Python in .zshrc.
     ```bash
     export PATH=/Library/TeX/texbin:$PATH
-    export PATH=/opt/homebrew/opt/python@3.12/libexec/bin:$PATH
+    export PATH=/opt/homebrew/opt/python@3.13/libexec/bin:$PATH
     ```
 - If a virtual environment (e.g. `~/.venv`) is used, set PATH to `.venv/bin` prior to global one as well.
 - Restart shell
 - [MacOS] Install [Homebrew](https://brew.sh/index_ja)
     ```bash
-    $ brew install python@3.12
+    $ brew install python@3.13
     ```
 - [Windows] Install PowerShell & Python [https://www.python.jp/install/windows/install.html](https://www.python.jp/install/windows/install.html)
 
@@ -40,7 +40,6 @@
     $ pip install pyvistaqt
     $ pip install ipython
     $ pip install black # format python and .qtdw files
-    $ pip install gcoreutils
     $ pip install pandas # need for pymatgen
     $ pip install pymatgen # to read .cif, .vesta, and .xsf files
     $ pip install multipie # if use MultiPie extension
