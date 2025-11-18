@@ -11,7 +11,7 @@ from qtdraw.widget.custom_widget import Layout, Button
 from qtdraw.multipie.plugin_multipie_setting import modulation_panel
 from qtdraw.widget.group_model import GroupModel
 from qtdraw.widget.group_view import GroupView
-from qtdraw.multipie.util import parse_modulation_list
+from qtdraw.multipie.util_multipie import parse_modulation_list
 
 
 # ==================================================

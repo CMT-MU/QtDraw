@@ -7,7 +7,7 @@ This module provides a test for isosurface drawing.
 import numpy as np
 
 from qtdraw.parser.xsf import create_data
-from qtdraw.util.util import write_dict
+from qtdraw.sandbox.util import write_dict
 
 
 # ==================================================

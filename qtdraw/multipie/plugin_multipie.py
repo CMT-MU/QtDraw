@@ -16,7 +16,7 @@ from multipie.group.space_group import SpaceGroup
 from qtdraw.multipie.plugin_multipie_setting import plugin_detail as detail
 from qtdraw.multipie.plugin_multipie_setting import default_status
 from qtdraw.multipie.dialog_multipie import MultiPieDialog
-from qtdraw.multipie.util import check_get_site_bond, check_get_site, check_get_bond, combined_format, create_samb_object
+from qtdraw.multipie.util_multipie import check_get_site_bond, check_get_site, check_get_bond, combined_format, create_samb_object
 
 
 # ==================================================

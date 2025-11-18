@@ -3,6 +3,7 @@ For versatile utility.
 """
 
 import re
+import ast
 import numpy as np
 import sympy as sp
 import matplotlib.pyplot as plt
@@ -197,3 +198,159 @@ def create_grid(grid_n, grid_min, grid_max, A=None, endpoint=False):
     grid.transform(A, inplace=True)
 
     return grid
+
+
+# ==================================================
+def read_dict(filename):
+    """
+    Read dict text file.
+
+    Args:
+        filename (str): file name.
+
+    Returns:
+        - (dict) -- dictionary from dict text.
+    """
+    with open(filename, mode="r", encoding="utf-8") as f:
+        s = f.read()
+
+    if s[: s.find("{")].count("=") > 0:
+        s = s.split("=")[-1].strip(" ")
+
+    c = ast.get_docstring(ast.parse(s))
+    if c is not None:
+        s = s.replace(c, "").replace('"""', "")
+    d = ast.literal_eval(s)
+
+    return d
+
+
+# ==================================================
+def write_dict(filename, dic, header=None, var=None):
+    """
+    write dict text file.
+
+    Args:
+        filename (str): filename.
+        dic (dict): dictionary to write.
+        header (str, optional): header comment at the top of file.
+        var (str, optional): varialbe of dict.
+    """
+    with open(filename, mode="w", encoding="utf-8") as f:
+        if header is not None:
+            print('"""' + header + '"""', file=f)
+        if var is None:
+            print(dic, file=f)
+        else:
+            print(f"{var} =", dic, file=f)
+
+
+# ==================================================
+def str_to_list(s):
+    """
+    Convert a string to a list of strings.
+
+    Args:
+        s (str): a string with irregular-shaped list format.
+
+    Returns:
+        - (list) -- a list of strings.
+
+    Note:
+        - in case of no bracket, return as it is.
+        - raise ValueError for invalid brackets.
+    """
+    if s.count("[") != s.count("]"):
+        raise ValueError(f"invalid blackets in '{s}'.")
+
+    if s.count("[") == 0:
+        return s
+
+    nested_list = []
+    stack = []
+    current_word = ""
+
+    for char in s:
+        if char == "[":
+            if current_word.strip():  # remove space, and append it for non-null string.
+                stack[-1].append(current_word.strip())
+                current_word = ""
+            stack.append([])
+        elif char == "]":
+            if current_word.strip():  # remove space, and append it for non-null string.
+                stack[-1].append(current_word.strip())
+                current_word = ""
+            if stack:
+                popped = stack.pop()
+                if stack:
+                    stack[-1].append(popped)
+                else:
+                    nested_list.append(popped)
+        elif char == ",":
+            if current_word.strip():  # remove space, and append it for non-null string.
+                stack[-1].append(current_word.strip())
+                current_word = ""
+        else:
+            current_word += char
+
+    if current_word.strip():  # parse last word.
+        if stack:
+            stack[-1].append(current_word.strip())
+        else:
+            nested_list.append(current_word.strip())
+
+    return nested_list[0]
+
+
+# ==================================================
+def affine_trans(v, s=None, A=None, digit=None, check_var=None):
+    """
+    Affine transformation, A.v + s.
+
+    Args:
+        v (str): site/vector or a list of site/vector.
+        s (str, optional): shift vector or a list of shift vector.
+        A (str, optional): rotaional matrix (3x3), [a1, a2, a3].
+        digit (int, optional): accuracy digit (only for numerical vector).
+        check_var (list, optional): variables to accept.
+
+    Returns:
+        - (ndarray) -- transformed vector.
+    """
+    v = str_to_numpy(v, digit, check_var)
+    if v is None:
+        return None
+    if v.ndim != 1 and v.ndim != 2:
+        return None
+    if v.ndim == 1 and v.shape[0] != 3:
+        return None
+    if v.ndim == 2 and v.shape[1] != 3:
+        return None
+
+    if A is not None:
+        A = str_to_numpy(A, digit, check_var, (3, 3))
+        if A is None:
+            return None
+
+        v = v @ A.T
+
+    if s is not None:
+        s = str_to_numpy(s, digit, check_var)
+        if s is None:
+            return None
+        if s.ndim != 1 and s.ndim != 2:
+            return None
+        if s.ndim == 1 and s.shape[0] != 3:
+            return None
+        if s.ndim == 2 and s.shape[1] != 3:
+            return None
+
+        if v.ndim == s.ndim:
+            v += s
+        else:
+            if v.ndim == 1:
+                v = np.tile(v, (s.shape[0], 1)) + s
+            else:
+                v = v + np.tile(s, (v.shape[0], 1))
+
+    return v

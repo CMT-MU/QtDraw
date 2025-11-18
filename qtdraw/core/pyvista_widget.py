@@ -45,8 +45,8 @@ from qtdraw.parser.converter import convert_version2
 
 from gcoreutils.convert_util import text_to_list, apply
 
-from qtdraw.util.util import convert_to_str, read_dict, convert_str_vector, split_filename, cat_filename, get_data_range
 
+from qtdraw.sandbox.util import read_dict, str_to_sympy
 from qtdraw.sandbox.util_axis import (
     create_axes_widget,
     get_view_vector,
@@ -77,6 +77,103 @@ from qtdraw.sandbox.basic_object import (
     create_orbital_data,
     create_stream_data,
 )
+
+
+# ==================================================
+def convert_to_str(v):
+    """
+    Convert from object to str, and remove spaces.
+
+    Args:
+        v (Any): object.
+
+    Returns:
+        - (str) -- converted str.
+    """
+    return str(v).replace(" ", "").replace("\t", "").replace("\n", "")
+
+
+# ==================================================
+def get_data_range(data):
+    v1 = data.min()
+    v2 = data.max()
+    v = max(abs(v1), abs(v2))
+    if v1 * v2 < 0.0:
+        clim = [-v, v]
+    elif v1 < 0.0:
+        clim = [-v, 0.0]
+    else:
+        clim = [0.0, v]
+    return clim
+
+
+# ==================================================
+def convert_str_vector(vector, cell="[0,0,0]", transform=True, A=None):
+    """
+    Convert 3-component vector(s) to A.(position+cell).
+
+    Args:
+        vector (str): vector, str([float]) or str([[float]]).
+        cell (str, optional): cell, str([int]).
+        transform (bool, optional): transform by using A ?
+        A (numpy.ndarray, optional): A.
+
+    Returns:
+        - (numpy.ndarray) -- transformed position.
+    """
+    cell = str_to_sympy(cell).astype(int)
+    vector = str_to_sympy(vector, rational=False).astype(float)
+
+    vectorT = vector + cell
+    if transform:
+        A = A[0:3, 0:3].T
+        vectorT = vectorT @ A
+
+    return vectorT
+
+
+# ==================================================
+def split_filename(filename):
+    """
+    Split file name.
+
+    Args:
+        filename (str): filename.
+
+    Returns:
+        - (str) -- filename with absolute path.
+        - (str) -- filename with relative path.
+        - (str) -- base filename.
+        - (str) -- extension.
+        - (str) -- directory.
+    """
+    path = Path(filename)
+    path_abs = path if path.is_absolute() else (Path.cwd() / path).resolve()
+    path_rel = path_abs.relative_to(Path.cwd())
+    base = str(path_rel.stem)
+    ext = str(path_rel.suffix)
+    folder = str(path_abs.parent)
+
+    return str(path_abs), str(path_rel), base, ext, folder
+
+
+# ==================================================
+def cat_filename(base, ext=None):
+    """
+    Cat filename.
+
+    Args:
+        base (str): (base) filename.
+        ext (str, optional): extension.
+
+    Returns:
+        - (str) -- full file name.
+    """
+    if ext is not None:
+        base = base + ext
+    path = str(Path.cwd() / Path(base))
+
+    return path
 
 
 # ==================================================
