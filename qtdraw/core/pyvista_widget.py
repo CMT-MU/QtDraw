@@ -39,14 +39,13 @@ from qtdraw.widget.tab_group_view import TabGroupView
 from qtdraw.widget.qt_event_util import get_qt_application
 from qtdraw.widget.logging_util import LogWidget
 from qtdraw.widget.color_palette import all_colors, custom_colormap, check_color
+from qtdraw.parser.read_material import read_draw
+from qtdraw.parser.xsf import extract_data_xsf
+from qtdraw.parser.converter import convert_version2
 
 from gcoreutils.convert_util import text_to_list, apply
 
 from qtdraw.util.util import convert_to_str, read_dict, convert_str_vector, split_filename, cat_filename, get_data_range
-
-from qtdraw.sandbox.read_material import read_draw
-from qtdraw.sandbox.xsf import extract_data_xsf
-from qtdraw.sandbox.converter import convert_version2
 
 from qtdraw.sandbox.util_axis import (
     create_axes_widget,

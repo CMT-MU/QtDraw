@@ -90,11 +90,13 @@ class Label(QLabel):
         self.setSizePolicy(QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed))
         self.setContentsMargins(0, 0, 0, 0)
 
+        if size is None:
+            size = self.font().pointSize()
         font = QFont()
-        if size is not None:
-            font.setPointSize(size)
+        font.setPointSize(size)
         font.setBold(bold)
         self.setFont(font)
+
         self.setPalette(color_palette(color))
 
         self.setText(text)
@@ -216,9 +218,10 @@ class ColorSelector(QComboBox):
         super().__init__(parent)
         self.setSizePolicy(QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed))
 
+        if size is None:
+            size = self.font().pointSize()
         font = QFont()
-        if size is not None:
-            font.setPointSize(size)
+        font.setPointSize(size)
         font.setBold(bold)
         self.setFont(font)
 
@@ -273,9 +276,10 @@ class Button(QPushButton):
         self.setCheckable(toggle)
         self.setSizePolicy(QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed))
 
+        if size is None:
+            size = self.font().pointSize()
         font = QFont()
-        if size is not None:
-            font.setPointSize(size)
+        font.setPointSize(size)
         font.setBold(bold)
         self.setFont(font)
 
@@ -297,9 +301,10 @@ class Combo(QComboBox):
         super().__init__(parent)
         self.setSizePolicy(QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed))
 
+        if size is None:
+            size = self.font().pointSize()
         font = QFont()
-        if size is not None:
-            font.setPointSize(size)
+        font.setPointSize(size)
         font.setBold(bold)
         self.setFont(font)
 
@@ -431,9 +436,10 @@ class Check(QCheckBox):
         super().__init__(text, parent)
         self.setSizePolicy(QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed))
 
+        if size is None:
+            size = self.font().pointSize()
         font = QFont()
-        if size is not None:
-            font.setPointSize(size)
+        font.setPointSize(size)
         font.setBold(bold)
         self.setFont(font)
 
@@ -457,9 +463,10 @@ class LineEdit(QLineEdit):
         self.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
         self.setContentsMargins(0, 0, 0, 0)
 
+        if size is None:
+            size = self.font().pointSize()
         font = QFont()
-        if size is not None:
-            font.setPointSize(size)
+        font.setPointSize(size)
         font.setBold(bold)
         self.setFont(font)
 
@@ -599,6 +606,13 @@ class Editor(Panel):
         """
         super().__init__(parent)
         self.setSizePolicy(QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed))
+
+        if size is None:
+            size = self.font().pointSize()
+        font = QFont()
+        font.setPointSize(size)
+        font.setBold(bold)
+        self.setFont(font)
 
         self._math_mode = validator is not None and validator[0] == "math"
 

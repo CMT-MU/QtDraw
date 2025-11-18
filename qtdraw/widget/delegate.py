@@ -27,7 +27,7 @@ class Delegate(QStyledItemDelegate):
 
     # ==================================================
     def updateEditorGeometry(self, editor, option, index):
-        editor.setGeometry(option.rect.adjusted(5, 7, -5, 0))
+        editor.setGeometry(option.rect.adjusted(5, 8, -5, 0))
 
     # ==================================================
     def paint(self, painter, option, index):

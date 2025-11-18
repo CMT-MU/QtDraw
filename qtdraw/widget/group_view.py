@@ -7,6 +7,7 @@ By clicking right button of mouse, the context menu appears.
 
 from PySide6.QtWidgets import QMenu, QTreeView, QHeaderView, QSizePolicy
 from PySide6.QtCore import Qt, Signal, QPoint, QModelIndex, QItemSelection, QItemSelectionModel
+from PySide6.QtGui import QFont
 
 from qtdraw.core.pyvista_widget_setting import COLOR_WIDGET, COMBO_WIDGET, EDITOR_WIDGET, HIDE_TYPE
 
@@ -55,11 +56,8 @@ class GroupView(QTreeView):
                 elif t in EDITOR_WIDGET:
                     default = self.model().column_default[c]
                     option = self.model().column_option[c]
-                    if hasattr(model.parent(), "_preference"):
-                        color = model.parent()._preference["latex"]["color"]
-                        size = model.parent()._preference["latex"]["size"]
-                    else:
-                        color, size = "black", 11
+                    color = "black"
+                    size = self.font().pointSize()
                     self.setItemDelegateForColumn(c, EditorDelegate(self, default, option, t, color, size))
 
         # hide columns.
@@ -91,7 +89,7 @@ class GroupView(QTreeView):
         # connection to update widget.
         if self._debug["delegate"]:
             self.set_widget()
-            model.updateData.connect(self.on_insert_row)
+            model.updateWidget.connect(self.update_widget)
 
         # set properties.
         self.setAlternatingRowColors(True)
@@ -107,11 +105,10 @@ class GroupView(QTreeView):
         self.clear_selection()
 
     # ==================================================
-    def on_insert_row(self, n, d, r, i):
-        if r == GroupModel.AppendRow:
-            for column in self.model().column_widget:
-                index = i.siblingAtColumn(column)
-                self.openPersistentEditor(index)
+    def update_widget(self, index):
+        for column in self.model().column_widget:
+            index = index.siblingAtColumn(column)
+            self.openPersistentEditor(index)
 
     # ==================================================
     def clear_selection(self):

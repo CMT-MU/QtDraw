@@ -66,7 +66,7 @@ default_preference = {
         "italic": False,
         "label": "[a,b,c]",  # [x,y,z], [a,b,c], [a*,b*,c*]
     },
-    "latex": {"color": "black", "size": 10, "dpi": 120},
+    "latex": {"color": "black", "size": 12, "dpi": 120},
 }
 
 # ==================================================

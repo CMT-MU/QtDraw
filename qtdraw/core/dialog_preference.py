@@ -38,12 +38,12 @@ class PreferenceDialog(QDialog):
 
         # tab content.
         tab = QTabWidget(self)
+        tab.addTab(panel_general, "General")
         tab.addTab(panel_label, "Label")
         tab.addTab(panel_axis, "Axis")
         tab.addTab(panel_cell, "Cell")
         tab.addTab(panel_light, "Light")
         tab.addTab(panel_latex, "LaTeX")
-        tab.addTab(panel_general, "General")
 
         # button.
         button = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel | QDialogButtonBox.Apply)
@@ -355,7 +355,7 @@ class PreferenceDialog(QDialog):
         """
         font = self.preference["general"]["font"]
         size = self.preference["general"]["size"]
-        self.parent().app.app.setFont(QFont(font, size))
+        self.parent().app.setFont(QFont(font, size))
         self.widget.refresh()
         self.widget.redraw()
         self.parent()._update_panel()

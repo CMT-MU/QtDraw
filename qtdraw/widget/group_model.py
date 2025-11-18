@@ -23,6 +23,7 @@ from qtdraw.core.pyvista_widget_setting import CUSTOM_WIDGET, COLUMN_NAME_ACTOR,
 # ==================================================
 class GroupModel(QStandardItemModel):
     updateData = Signal(str, list, int, QModelIndex)  # name, row_data, role, index.
+    updateWidget = Signal(QModelIndex)  # index.
 
     # data/check state changed signal for user.
     dataRemoved = Signal(str, list, QModelIndex)  # object_type, row_data, index.
@@ -347,6 +348,7 @@ class GroupModel(QStandardItemModel):
             self.set_check_state(item, row_data)
             self.appendRow(item)
             self.updateData.emit(self.group_name, row_data, role, item[0].index())
+            self.updateWidget.emit(item[0].index())
         else:  # existing group.
             if not parent_item.hasChildren():  # no children.
                 row = parent_item.row()
@@ -354,10 +356,12 @@ class GroupModel(QStandardItemModel):
                 item = [QStandardItem(str(i)) for i in row_data0]
                 self.set_check_state(item, row_data0)
                 parent_item.appendRow(item)
+                self.updateWidget.emit(item[0].index())
             item = [QStandardItem(str(i)) for i in row_data]
             self.set_check_state(item, row_data)
             parent_item.appendRow(item)
             self.updateData.emit(self.group_name, row_data, role, item[0].index())
+            self.updateWidget.emit(item[0].index())
 
     # ==================================================
     def remove_row(self, index, role=None):
