@@ -1,7 +1,7 @@
 #
 # create isosurface for simple cubic tight-binding.
 #
-from qtdraw.core.qtdraw_app import QtDraw
+from qtdraw import QtDraw
 import numpy as np
 from qtdraw.parser.xsf import create_data
 

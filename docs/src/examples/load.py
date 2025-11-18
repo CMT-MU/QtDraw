@@ -2,7 +2,7 @@
 # load.py
 #
 import os
-from qtdraw.core.qtdraw_app import QtDraw
+from qtdraw import QtDraw
 
 files = ["sample.qtdw", "sample_ver1.qtdw", "icon.qtdw", "color_pattern.qtdw", "helimag.qtdw", "Si.cif", "Si.vesta", "Si.xsf"]
 
