@@ -21,7 +21,7 @@ from qtdraw.core.dialog_about import get_version_info
 from qtdraw.widget.custom_widget import Label, Layout, LineEdit, HBar, Button, Combo, VSpacer
 from qtdraw.widget.logging_util import LogWidget
 
-from qtdraw.util.util import check_multipie, create_style_sheet
+from qtdraw.sandbox.util import check_multipie
 
 
 # ==================================================
@@ -574,8 +574,7 @@ class QtDraw(Window):
         self.app.setStyle(self.pyvista_widget._preference["general"]["style"])
         font_type = self.pyvista_widget._preference["general"]["font"]
         size = self.pyvista_widget._preference["general"]["size"]
-        font = QFont(font_type, size)
-        self.app.setFont(font)
+        self.app.setStyleSheet("QWidget { font-family: " + f"{font_type}" + "; font-size: " + f"{size}" + "pt; }")
 
     # ==================================================
     def _update_title(self):
@@ -1028,15 +1027,17 @@ class QtDraw(Window):
         self.pref_dialog = PreferenceDialog(self.pyvista_widget, self)
         status = self.pref_dialog.exec()  # open as modal mode.
         self.sender().setDown(False)  # reset push button.
+
+        if status != QDialog.Accepted:
+            self.pyvista_widget.restore()
+
+        self._update_application()
+
         if status == QDialog.Accepted:
-            self.app.setStyleSheet(create_style_sheet(self.pyvista_widget._preference["general"]["size"]))
             self.pyvista_widget.refresh()
             self.pyvista_widget.redraw()
-            self._update_panel()
-        else:
-            self.pyvista_widget.restore()
-            self.app.setStyleSheet(create_style_sheet(self.pyvista_widget._preference["general"]["size"]))
-            self._update_panel()
+
+        self._update_panel()
 
     # ==================================================
     def _show_about(self):

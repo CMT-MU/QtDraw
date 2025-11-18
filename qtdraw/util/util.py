@@ -6,9 +6,7 @@ This module contains the versatile utilities.
 
 import ast
 from pathlib import Path
-import pyvista as pv
 import numpy as np
-import matplotlib.pyplot as plt
 from gcoreutils.convert_util import text_to_list, apply
 from qtdraw.util.util_str import str_to_sympy1
 
@@ -98,63 +96,6 @@ def convert_str_vector(vector, cell="[0,0,0]", transform=True, A=None):
 
 
 # ==================================================
-def check_multipie():
-    """
-    Check if multipie is installed or not.
-
-    Returns:
-        - (bool) -- installed ?
-    """
-    try:
-        import multipie
-
-        return True
-    except ImportError:
-        return False
-
-
-# ==================================================
-def set_latex_setting():
-    """
-    Set LaTeX setting.
-    """
-    package = ["amsmath", "amssymb", "physics"]
-    pre = "\n".join([r"\usepackage{" + i + "}" for i in package])
-    tex_setting = {"text.usetex": True, "text.latex.preamble": pre}
-    plt.rcParams.update(tex_setting)
-
-
-# ==================================================
-def create_grid(grid_n, grid_min, grid_max, A=None, endpoint=False):
-    """
-    Create grid.
-
-    Args:
-        grid_n (list): grid size.
-        grid_min (list): grid minimum.
-        grid_max (list): grid maximum.
-        A (list): [a1,a2,a3].
-        endpoint (bool, optional): include end points ?
-
-    Returns:
-        UniformGrid: uniform grid.
-
-    Note:
-        - grid in column-major order.
-    """
-    if A is None:
-        A = np.eye(4)
-    if endpoint:
-        s = [(ma - mi) / (n - 1) for mi, ma, n in zip(grid_min, grid_max, grid_n)]
-    else:
-        s = [(ma - mi) / n for mi, ma, n in zip(grid_min, grid_max, grid_n)]
-    grid = pv.ImageData(dimensions=grid_n, origin=grid_min, spacing=s).cast_to_unstructured_grid()
-    grid.transform(A, inplace=True)
-
-    return grid
-
-
-# ==================================================
 def split_filename(filename):
     """
     Split file name.
@@ -196,53 +137,6 @@ def cat_filename(base, ext=None):
     path = str(Path.cwd() / Path(base))
 
     return path
-
-
-# ==================================================
-def create_style_sheet(size):
-    """
-    Create style sheet.
-
-    Args:
-        size (int): font size (point).
-
-    Returns:
-        - (str) -- style sheet string.
-    """
-    return f"""
-    QTreeView::item {{
-        padding: 10px 15px 10px 15px;
-        border: none;
-        outline: none;
-        background: none;
-    }}
-
-    QTreeView::item:selected {{
-        border: none;
-        outline: none;
-        color: black;
-        background: lightyellow;
-    }}
-    QTreeView::item:focus {{
-        border: none;
-        outline: none;
-        color: black;
-        background: lightyellow;
-    }}
-
-    QComboBox {{
-        font-size: {size}pt;
-        min-width: 40px;
-    }}
-
-    QLabel {{
-        font-size: {size}pt;
-    }}
-
-    QPushButton {{
-        font-size: {size}pt;
-    }}
-    """
 
 
 # ==================================================

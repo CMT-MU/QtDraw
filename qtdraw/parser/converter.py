@@ -7,7 +7,7 @@ This module contains the converter for version 1 format.
 import copy
 
 from qtdraw.core.pyvista_widget_setting import default_status, default_preference
-from qtdraw import __version__
+from qtdraw.core.qtdraw_info import __version__
 
 from qtdraw.multipie.plugin_multipie_setting import space_group_list, point_group_list, crystal_list
 from qtdraw.multipie.plugin_multipie_setting import default_status as multipie_default

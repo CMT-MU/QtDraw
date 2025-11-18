@@ -1,10 +1,3 @@
-"""
-QtDraw
-"""
-
-from pathlib import Path
-
-__version__ = "2.4.2"
-__date__ = "2021 -"
-__author__ = "Hiroaki Kusunose"
-__top_dir__ = Path(__file__).parent / ".."
+from qtdraw.core.qtdraw_info import __version__
+from qtdraw.core.qtdraw_app import QtDraw
+from qtdraw.core.pyvista_widget import PyVistaWidget, create_qtdraw_file, convert_qtdraw_v2

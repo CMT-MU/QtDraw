@@ -355,7 +355,9 @@ class PreferenceDialog(QDialog):
         """
         font = self.preference["general"]["font"]
         size = self.preference["general"]["size"]
-        self.parent().app.setFont(QFont(font, size))
+        self.parent().app.setStyleSheet("QWidget { font-family: " + f"{font}" + "; font-size: " + f"{size}" + "pt; }")
+
         self.widget.refresh()
         self.widget.redraw()
+
         self.parent()._update_panel()

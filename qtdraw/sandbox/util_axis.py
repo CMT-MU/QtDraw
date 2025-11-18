@@ -314,7 +314,7 @@ def get_view_vector(n, A):
 
 
 # ==================================================
-def create_grid(ilower, dims):
+def create_cell_grid(ilower, dims):
     """
     Create grid point.
 

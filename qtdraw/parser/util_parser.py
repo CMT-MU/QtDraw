@@ -14,7 +14,7 @@ from pymatgen.io.cif import CifParser
 
 from qtdraw.core.pyvista_widget_setting import DIGIT, default_preference, default_status
 from qtdraw.core.pyvista_widget_setting import widget_detail as detail
-from qtdraw import __version__
+from qtdraw.core.qtdraw_info import __version__
 
 from qtdraw.parser.element import element_color
 from qtdraw.parser.data_group import _data_no_space_group

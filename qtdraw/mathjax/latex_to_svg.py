@@ -13,9 +13,8 @@ import hashlib
 from pathlib import Path
 from playwright.sync_api import sync_playwright
 
+from qtdraw.core.qtdraw_info import __top_dir__
 from qtdraw.widget.color_palette import all_colors
-
-from qtdraw import __top_dir__
 
 
 # ==================================================
@@ -45,7 +44,7 @@ body {{
 
 
 # ==================================================
-_mathjax_path = __top_dir__ / "qtdraw" / "mathjax" / "es5" / "tex-svg-full.js"
+_mathjax_path = Path(__top_dir__) / "qtdraw" / "mathjax" / "es5" / "tex-svg-full.js"
 
 _playwright = None
 _browser = None

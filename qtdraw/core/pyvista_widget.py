@@ -32,7 +32,7 @@ from qtdraw.core.pyvista_widget_setting import (
 )
 from qtdraw.core.pyvista_widget_setting import widget_detail as detail
 from qtdraw.core.pyvista_widget_setting import DIGIT
-from qtdraw.__init__ import __version__, __date__, __author__
+from qtdraw.core.qtdraw_info import __version__, __date__, __author__
 
 from qtdraw.widget.group_model import GroupModel
 from qtdraw.widget.tab_group_view import TabGroupView
@@ -51,7 +51,7 @@ from qtdraw.sandbox.util_axis import (
     create_axes_widget,
     get_view_vector,
     create_unit_cell,
-    create_grid,
+    create_cell_grid,
     get_lattice_vector,
     get_repeat_range,
     get_outside_box,
@@ -2478,7 +2478,7 @@ class PyVistaWidget(QtInteractor):
         """
         data = self.get_data_dict(home_cell=True)
         if self._status["repeat"]:
-            grid = create_grid(self._status["plus"]["ilower"], self._status["plus"]["dims"])
+            grid = create_cell_grid(self._status["plus"]["ilower"], self._status["plus"]["dims"])
             for object_type, model in data.items():
                 n = len(model)
                 if object_type != "text2d" and n > 0:
