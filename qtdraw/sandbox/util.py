@@ -432,7 +432,7 @@ def list_to_table(lst1d, col, p=None):
         raise KeyError(f"non list type ({type(lst1d)}) is given.")
 
     n = len(lst1d)
-    row = int(math.ceil(n / col))
+    row = (n + col - 1) // col
     tbl = []
     for i in range(row):
         tbl.append(lst1d[col * i : col * (i + 1)])
