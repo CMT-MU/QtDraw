@@ -32,3 +32,25 @@
 .. automodule:: qtdraw.widget.group_model
 .. automodule:: qtdraw.widget.delegate
 ```
+
+## Logging
+
+```{eval-rst}
+.. automodule:: qtdraw.widget.logging_util
+```
+
+## Event Loop
+
+```{eval-rst}
+.. automodule:: qtdraw.widget.qt_event_util
+```
+
+## PDF Viewer
+
+```{eval-rst}
+.. automodule:: qtdraw.widget.pdf_viewer
+```
+
+## Misc.
+
+.. automodule:: qtdraw.widget.color_selector_util

@@ -4,7 +4,7 @@ Test for utility.
 This module provides a test for utility.
 """
 
-from qtdraw.sandbox.util import str_to_list, affine_trans
+from qtdraw.util.util import str_to_list, affine_trans
 
 # ==================================================
 # test

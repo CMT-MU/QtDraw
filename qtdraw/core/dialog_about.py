@@ -19,7 +19,7 @@ from qtdraw.core.qtdraw_info import __version__, __date__, __author__
 
 from qtdraw.widget.custom_widget import Layout, Label, VSpacer
 
-from qtdraw.sandbox.util import check_multipie
+from qtdraw.util.util import check_multipie
 
 
 # ==================================================

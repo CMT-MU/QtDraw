@@ -18,7 +18,7 @@
     qtdraw.multipie.dialog_multipie
     qtdraw.multipie.dialog_info
     qtdraw.multipie.dialog_modulation
-    qtdraw.multipie.util
+    qtdraw.multipie.util_multipie
 ```
 
 ## Parser
@@ -30,7 +30,7 @@
     qtdraw.parser.xsf
     qtdraw.parser.element
     qtdraw.parser.data_group
-    qtdraw.parser.util
+    qtdraw.parser.util_parser
     qtdraw.parser.converter
 ```
 
@@ -47,27 +47,24 @@
 ```{eval-rst}
 .. autosummary::
     qtdraw.util.basic_object
-    qtdraw.util.logging_util
-    qtdraw.util.qt_event_util
-    qtdraw.util.pdf_viewer
-    qtdraw.util.latex_to_png
-    qtdraw.util.latex_to_svg
-    qtdraw.util.util
-    qtdraw.util.util_str
     qtdraw.util.util_axis
-    qtdraw.util.color_selector_util
+    qtdraw.util.util
 ```
 
 ## Widget
 
 ```{eval-rst}
 .. autosummary::
+    qtdraw.widget.color_selector_util
     qtdraw.widget.custom_widget
-    qtdraw.widget.validator
-    qtdraw.widget.message_box
-    qtdraw.widget.table_view
-    qtdraw.widget.tab_group_view
-    qtdraw.widget.group_view
-    qtdraw.widget.group_model
     qtdraw.widget.delegate
+    qtdraw.widget.group_model
+    qtdraw.widget.group_view
+    qtdraw.widget.logging_util
+    qtdraw.widget.message_box
+    qtdraw.widget.pdf_viewer
+    qtdraw.widget.qt_event_util
+    qtdraw.widget.tab_group_view
+    qtdraw.widget.table_view
+    qtdraw.widget.validator
 ```

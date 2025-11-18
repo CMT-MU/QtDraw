@@ -33,7 +33,7 @@
 ## Utility
 
 ```{eval-rst}
-.. automodule:: qtdraw.parser.util
+.. automodule:: qtdraw.parser.util_parser
 ```
 
 ## Converter

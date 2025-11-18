@@ -11,7 +11,7 @@ from PySide6.QtCore import Qt
 from multipie.multipole.util.atomic_orbital_util import parse_orb_list
 
 from qtdraw.widget.custom_widget import Label, Layout, Button, Combo, LineEdit, Check, VSpacer, HSpacer, HBar
-from qtdraw.sandbox.util import remove_space
+from qtdraw.util.util import remove_space
 from qtdraw.multipie.util_multipie import create_samb_object, check_linear_combination
 from qtdraw.multipie.plugin_multipie_setting import crystal_list, point_group_list, space_group_list, point_group_all_list
 from qtdraw.multipie.dialog_info import (

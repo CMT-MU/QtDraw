@@ -16,7 +16,7 @@ Validator type.
 
 import numpy as np
 
-from qtdraw.sandbox.util import str_to_sympy, to_latex
+from qtdraw.util.util import str_to_sympy, to_latex
 
 DISPLAY_DIGIT = 5
 

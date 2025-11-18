@@ -32,8 +32,8 @@ from pyvista.core.utilities import surface_from_para, geometric_sources
 from qtdraw.core.pyvista_widget_setting import widget_detail as detail
 from qtdraw.core.pyvista_widget_setting import CHOP
 
-from qtdraw.sandbox.util_axis import get_view_vector
-from qtdraw.sandbox.util import create_grid, str_to_sympy, text_to_list
+from qtdraw.util.util_axis import get_view_vector
+from qtdraw.util.util import create_grid, str_to_sympy, text_to_list
 
 
 # ==================================================

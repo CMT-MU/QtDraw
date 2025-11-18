@@ -43,11 +43,11 @@ from qtdraw.parser.read_material import read_draw
 from qtdraw.parser.xsf import extract_data_xsf
 from qtdraw.parser.converter import convert_version2
 
-from qtdraw.sandbox.util import text_to_list, apply
+from qtdraw.util.util import text_to_list, apply
 
 
-from qtdraw.sandbox.util import read_dict, str_to_sympy
-from qtdraw.sandbox.util_axis import (
+from qtdraw.util.util import read_dict, str_to_sympy
+from qtdraw.util.util_axis import (
     create_axes_widget,
     get_view_vector,
     create_unit_cell,
@@ -56,7 +56,7 @@ from qtdraw.sandbox.util_axis import (
     get_repeat_range,
     get_outside_box,
 )
-from qtdraw.sandbox.basic_object import (
+from qtdraw.util.basic_object import (
     create_sphere,
     create_bond,
     create_vector,

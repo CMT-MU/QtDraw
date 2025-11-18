@@ -142,6 +142,11 @@
 
 | Function | Summary |
 |--------|----------|
+| convert_to_str | Convert from object to str, and remove spaces. |
+| get_data_range |  |
+| convert_str_vector | Convert 3-component vector(s) to A.(position+cell). |
+| split_filename | Split file name. |
+| cat_filename | Cat filename. |
 | create_qtdraw_file | Create QtDraw file as background. |
 | convert_qtdraw_v2 | Convert qtdraw file to version 2. |
 | set_light_prop |  |
@@ -312,17 +317,19 @@
 
 | Function | Summary |
 |--------|----------|
+| check_symbol | Check symbol. |
+| convert_to_bond | Convert to bond from str. |
 | validator_int | Validator for int. |
 | validator_float | Validator for float. |
-| validator_sympy_float | Validator for sympy. |
-| validator_sympy | Validator for sympy. |
-| validator_ilist | Validator for int list. |
-| validator_list | Validator for sympy list. |
+| validator_list_float | Validator for list float. |
+| validator_list_int | Validator for list int. |
+| validator_math | Validator for math to LaTeX. |
 | validator_site | Validator for site. |
 | validator_bond | Validator for bond. |
 | validator_site_bond | Validator for site or bond. |
 | validator_vector_site_bond | Validator for vector on site or bond. |
 | validator_orbital_site_bond | Validator for orbital on site or bond. |
+| fmt |  |
 
 
 ## <div class='my-heading' style='color: darkgreen;'>group_model.py
@@ -334,7 +341,6 @@
 | GroupModel | Group data model (2 layer parent-child tree model). |
 | group_name | Group name. |
 | header | Header label. |
-| block_update_widget | Block update widget. |
 | is_parent | Is parent index ? |
 | update_check_state | Update check state data. |
 | set_data | Set data from list data. |
@@ -362,298 +368,17 @@
 | clear_data | Clear data with keeping header and column info. |
 
 
-## <div class='my-heading' style='color: darkgreen;'>delegate.py
-
-### <div class='my-heading' style='color: royalblue;'>Delegate
-
-| Function | Summary |
-|--------|----------|
-| Delegate | Base delegate. |
-| setEditorData | Set editor data. |
-| setModelData |  |
-| updateEditorGeometry | Update editor geometry. |
-| paint | Paint cell (need to highlight selection). |
-
-
-### <div class='my-heading' style='color: royalblue;'>ComboDelegate
-
-| Function | Summary |
-|--------|----------|
-| ComboDelegate | Create delegate for Combo. |
-| createEditor | Create combobox. |
-| updateEditorGeometry |  |
-
-
-### <div class='my-heading' style='color: royalblue;'>ColorDelegate
-
-| Function | Summary |
-|--------|----------|
-| ColorDelegate | Create delegate for ColorSelector. |
-| createEditor | Create color selector. |
-| updateEditorGeometry |  |
-
-
-### <div class='my-heading' style='color: royalblue;'>EditorDelegate
-
-| Function | Summary |
-|--------|----------|
-| EditorDelegate | Create delegate for Editor. |
-| createEditor | Create editor. |
-| updateEditorGeometry |  |
-
-
-## <div class='my-heading' style='color: darkgreen;'>message_box.py
-
-### <div class='my-heading' style='color: royalblue;'>MessageBox
-
-| Function | Summary |
-|--------|----------|
-| MessageBox | Message box. |
-
-
-## <div class='my-heading' style='color: darkgreen;'>group_view.py
-
-### <div class='my-heading' style='color: royalblue;'>GroupView
-
-| Function | Summary |
-|--------|----------|
-| GroupView | Group view. |
-| clear_selection | Clear selection. |
-| mousePressEvent | Mouse press event for focus or clear selection. |
-| keyPressEvent | Key press event for ESC and up and down keys. |
-| context_menu | Context menu. |
-| insert_row | Insert row. |
-| copy_row | Copy row. |
-| remove_row | Remove row. |
-| update_widget | Update widget. |
-| set_widget | Set widget. |
-| selection_changed | For Selection changed. |
-| select_row | Select row. |
-
-
-## <div class='my-heading' style='color: darkgreen;'>custom_widget.py
-
-### <div class='my-heading' style='color: royalblue;'>Layout
-
-| Function | Summary |
-|--------|----------|
-| Layout | Layout widget. |
-
-
-### <div class='my-heading' style='color: royalblue;'>Panel
-
-| Function | Summary |
-|--------|----------|
-| Panel | Panel widget. |
-
-
-### <div class='my-heading' style='color: royalblue;'>Color
-
-| Function | Summary |
-|--------|----------|
-| Color | Color |
-
-
-### <div class='my-heading' style='color: royalblue;'>Label
-
-| Function | Summary |
-|--------|----------|
-| Label | Label widget. |
-| setText | Set text. |
-
-
-### <div class='my-heading' style='color: royalblue;'>ColorLabel
-
-| Function | Summary |
-|--------|----------|
-| ColorLabel | Color label widget. |
-
-
-### <div class='my-heading' style='color: royalblue;'>LineEdit
-
-| Function | Summary |
-|--------|----------|
-| LineEdit | Line editor. |
-| validator | Validator type. |
-| read_only | Read only ? |
-| close_edit | Close editor. |
-| raw_text | Raw text. |
-| setText | Set text. |
-| set_validator | Set validator. |
-| set_read_only | Set read only. |
-| focusInEvent | Focus-out event. |
-| focusOutEvent | Focus-out event. |
-| clearFocus | Clear focus. |
-| keyPressEvent | Key event. |
-
-
-### <div class='my-heading' style='color: royalblue;'>HBar
-
-| Function | Summary |
-|--------|----------|
-| HBar | Horizontal bar item. |
-
-
-### <div class='my-heading' style='color: royalblue;'>Button
-
-| Function | Summary |
-|--------|----------|
-| Button | Button widget. |
-
-
-### <div class='my-heading' style='color: royalblue;'>Combo
-
-| Function | Summary |
-|--------|----------|
-| Combo | Combo widget. |
-| get_item | Get item. |
-| set_item | Set item. |
-| find_index | Find index. |
-
-
-### <div class='my-heading' style='color: royalblue;'>Spin
-
-| Function | Summary |
-|--------|----------|
-| Spin | Spin widget. |
-
-
-### <div class='my-heading' style='color: royalblue;'>DSpin
-
-| Function | Summary |
-|--------|----------|
-| DSpin | Spin widget. |
-
-
-### <div class='my-heading' style='color: royalblue;'>Check
-
-| Function | Summary |
-|--------|----------|
-| Check | Check widget. |
-| is_checked | Is checked ? |
-
-
-### <div class='my-heading' style='color: royalblue;'>VSpacer
-
-| Function | Summary |
-|--------|----------|
-| VSpacer | Vertical spacer. |
-
-
-### <div class='my-heading' style='color: royalblue;'>HSpacer
-
-| Function | Summary |
-|--------|----------|
-| HSpacer | Horizontal spacer. |
-
-
-### <div class='my-heading' style='color: royalblue;'>Editor
-
-| Function | Summary |
-|--------|----------|
-| Editor | Math equation label widget. |
-| close_editor | Close editor. |
-| clearFocus | Clear focus. |
-| mouseDoubleClickEvent | Mouse double-click event. |
-| mousePressEvent | Mouse click event. |
-| text | Text. |
-| setText | Set text. |
-| raw_text | Raw text. |
-| setCurrentText | Set current text. |
-| currentText | Get current text. |
-
-
-### <div class='my-heading' style='color: royalblue;'>ColorSelector
-
-| Function | Summary |
-|--------|----------|
-| ColorSelector | Color selector widget. |
-
-
-## <div class='my-heading' style='color: darkgreen;'>table_view.py
-
-### <div class='my-heading' style='color: royalblue;'>TableView
-
-| Function | Summary |
-|--------|----------|
-| TableView | Table view (math). |
-
-
-## <div class='my-heading' style='color: darkgreen;'>tab_group_view.py
-
-### <div class='my-heading' style='color: royalblue;'>TabGroupView
-
-| Function | Summary |
-|--------|----------|
-| TabGroupView | Data view group. |
-| select_tab | Select tab. |
-| closeEvent | Close event for deselect all. |
-| update_widget | Update widget. |
-
-
-## <div class='my-heading' style='color: darkgreen;'>latex_to_png.py
+## <div class='my-heading' style='color: darkgreen;'>color_palette.py
 
 ### <div class='my-heading' style='color: royalblue;'>Global function
 
 | Function | Summary |
 |--------|----------|
-| latex_to_png | Render a LaTeX string to png via matplotlib. |
-
-
-## <div class='my-heading' style='color: darkgreen;'>util_axis.py
-
-### <div class='my-heading' style='color: royalblue;'>Global function
-
-| Function | Summary |
-|--------|----------|
-| _create_label_axes_actor | Create label only orientation axes actor. |
-| _create_axes_actor | Create custom axes actor. |
-| create_axes_widget | Create axes widget. |
-| create_unit_cell | Create unit cell mesh. |
-| get_view_vector | Get view and viewup. |
-| create_grid | Create grid point. |
-| get_lattice_vector | Get lattice vector. |
-| get_repeat_range | Get repeart range. |
-| get_outside_box | Get indices outside range. |
-
-
-## <div class='my-heading' style='color: darkgreen;'>latex_to_svg.py
-
-### <div class='my-heading' style='color: royalblue;'>Global function
-
-| Function | Summary |
-|--------|----------|
-| latex_to_svg | Render a LaTeX string to svg via matplotlib. |
-| get_svg_size | Get SVG size. |
-
-
-### <div class='my-heading' style='color: royalblue;'>SVGWidget
-
-| Function | Summary |
-|--------|----------|
-| paintEvent |  |
-
-
-### <div class='my-heading' style='color: royalblue;'>MathText
-
-| Function | Summary |
-|--------|----------|
-| MathText | Math Text via SVG. |
-
-
-## <div class='my-heading' style='color: darkgreen;'>util.py
-
-### <div class='my-heading' style='color: royalblue;'>Global function
-
-| Function | Summary |
-|--------|----------|
-| check_get_site | Check and get site. |
-| check_get_bond | Check and get bond. |
-| check_get_site_bond | Check and get site (bond center) from site_bond. |
-| create_samb_object | Create SAMB object. |
-| check_linear_combination | Check form of linear combination. |
-| combined_format | Create formatted combined SAMB. |
-| parse_modulation_list | Parse modulation list. |
+| name_sep |  |
+| _rgb2html | convert RGB color to hex code (#??????). |
+| _hex2rgb | convert hex (#??????) code to RGB. |
+| custom_colormap | custom colormap. |
+| check_color | check if name is color or colormap. |
 
 
 ## <div class='my-heading' style='color: darkgreen;'>color_selector_util.py
@@ -665,24 +390,45 @@
 | _colormap2pixmap | Convert colormap to pixmap. |
 | _color2pixmap | Convert color/colormap to pixmap. |
 | color2pixmap | Convert color/colormap to QPixmap. |
+| color_palette | Color pallete. |
 
 
-## <div class='my-heading' style='color: darkgreen;'>util_str.py
+## <div class='my-heading' style='color: darkgreen;'>delegate.py
 
-### <div class='my-heading' style='color: royalblue;'>Global function
+### <div class='my-heading' style='color: royalblue;'>Delegate
 
 | Function | Summary |
 |--------|----------|
-| str_to_list | Convert a string to a list of strings. |
-| is_regular_list | Is regular-shaped list ? |
-| apply_to_list | Apply a function to each element of a list. |
-| apply_to_numpy | Apply a function to each element of ndarray. |
-| to_fraction | Convert a float number to a fractional one. |
-| get_variable | Get variables used in a sympy expression. |
-| str_to_sympy | Convert a string to a sympy. |
-| str_to_numpy | Convert a string (list) to a numpy array. |
-| affine_trans | Affine transformation, A.v + s. |
-| str_to_sympy1 | Convert a string to a sympy (new version). |
+| Delegate |  |
+| setEditorData |  |
+| setModelData |  |
+| updateEditorGeometry |  |
+| paint |  |
+
+
+### <div class='my-heading' style='color: royalblue;'>ComboDelegate
+
+| Function | Summary |
+|--------|----------|
+| ComboDelegate |  |
+| createEditor |  |
+
+
+### <div class='my-heading' style='color: royalblue;'>ColorDelegate
+
+| Function | Summary |
+|--------|----------|
+| ColorDelegate |  |
+| createEditor |  |
+
+
+### <div class='my-heading' style='color: royalblue;'>EditorDelegate
+
+| Function | Summary |
+|--------|----------|
+| EditorDelegate |  |
+| createEditor |  |
+| updateEditorGeometry |  |
 
 
 ## <div class='my-heading' style='color: darkgreen;'>logging_util.py
@@ -691,9 +437,7 @@
 
 | Function | Summary |
 |--------|----------|
-| timer | Timer decorater. |
 | start_logging | Start logging. |
-| wrapper |  |
 
 
 ### <div class='my-heading' style='color: royalblue;'>LogHandler
@@ -715,33 +459,33 @@
 | save | Save log message. |
 
 
-## <div class='my-heading' style='color: darkgreen;'>basic_object.py
+## <div class='my-heading' style='color: darkgreen;'>message_box.py
 
-### <div class='my-heading' style='color: royalblue;'>Global function
+### <div class='my-heading' style='color: royalblue;'>MessageBox
 
 | Function | Summary |
 |--------|----------|
-| _str_poly_array | Convert from polynomial string to scalar array. |
-| _str_vec_array | Convert from polynomial string (vector) to vector and scalar (abs.) arrays. |
-| create_sphere | Create sphere object. |
-| create_bond | Create bond object. |
-| create_vector | Create vector object. |
-| create_orbital | Create orbital object. |
-| create_stream | Create steam vector object. |
-| create_line | Create line object. |
-| create_plane | Create plane object. |
-| create_circle | Create circle object. |
-| create_torus | Create torus object. |
-| create_ellipsoid | Create ellipsoid object. |
-| create_toroid | Create ellipsoid object. |
-| create_box | Create box object. |
-| create_polygon | Create polygon object. |
-| create_text3d | Create text3d object. |
-| create_spline | Create spline object. |
-| create_spline_t | Create parametric spline object. |
-| create_isosurface | Create isosurface. |
-| create_orbital_data | Create orbital object from data. |
-| create_stream_data | Create steam vector object. |
+| MessageBox | Message box. |
+
+
+## <div class='my-heading' style='color: darkgreen;'>group_view.py
+
+### <div class='my-heading' style='color: royalblue;'>GroupView
+
+| Function | Summary |
+|--------|----------|
+| GroupView | Group view. |
+| update_widget |  |
+| clear_selection | Clear selection. |
+| mousePressEvent | Mouse press event for focus or clear selection. |
+| keyPressEvent | Key press event for ESC and up and down keys. |
+| context_menu | Context menu. |
+| insert_row | Insert row. |
+| copy_row | Copy row. |
+| remove_row | Remove row. |
+| set_widget | Set widget. |
+| selection_changed | For Selection changed. |
+| select_row | Select row. |
 
 
 ## <div class='my-heading' style='color: darkgreen;'>qt_event_util.py
@@ -775,6 +519,232 @@
 | set_title | Set window title. |
 
 
+## <div class='my-heading' style='color: darkgreen;'>custom_widget.py
+
+### <div class='my-heading' style='color: royalblue;'>Layout
+
+| Function | Summary |
+|--------|----------|
+| Layout | Layout widget. |
+
+
+### <div class='my-heading' style='color: royalblue;'>Panel
+
+| Function | Summary |
+|--------|----------|
+| Panel | Panel widget. |
+
+
+### <div class='my-heading' style='color: royalblue;'>Label
+
+| Function | Summary |
+|--------|----------|
+| Label | Label widget. |
+| sizeHint |  |
+
+
+### <div class='my-heading' style='color: royalblue;'>MathWidget
+
+| Function | Summary |
+|--------|----------|
+| MathWidget |  |
+| setText |  |
+| text |  |
+| paintEvent |  |
+| sizeHint |  |
+
+
+### <div class='my-heading' style='color: royalblue;'>HBar
+
+| Function | Summary |
+|--------|----------|
+| HBar | Horizontal bar widget. |
+
+
+### <div class='my-heading' style='color: royalblue;'>VSpacer
+
+| Function | Summary |
+|--------|----------|
+| VSpacer | Vertical spacer. |
+
+
+### <div class='my-heading' style='color: royalblue;'>HSpacer
+
+| Function | Summary |
+|--------|----------|
+| HSpacer | Horizontal spacer. |
+
+
+### <div class='my-heading' style='color: royalblue;'>ColorSelector
+
+| Function | Summary |
+|--------|----------|
+| ColorSelector | Color selector widget. |
+| sizeHint |  |
+
+
+### <div class='my-heading' style='color: royalblue;'>Button
+
+| Function | Summary |
+|--------|----------|
+| Button | Button widget. |
+
+
+### <div class='my-heading' style='color: royalblue;'>Combo
+
+| Function | Summary |
+|--------|----------|
+| Combo | Combo widget. |
+| get_item | Get item. |
+| set_item | Set item. |
+| find_index | Find index. |
+| sizeHint |  |
+
+
+### <div class='my-heading' style='color: royalblue;'>Spin
+
+| Function | Summary |
+|--------|----------|
+| Spin | Spin widget. |
+
+
+### <div class='my-heading' style='color: royalblue;'>DSpin
+
+| Function | Summary |
+|--------|----------|
+| DSpin | Spin widget. |
+
+
+### <div class='my-heading' style='color: royalblue;'>Check
+
+| Function | Summary |
+|--------|----------|
+| Check | Check widget. |
+| is_checked | Is checked ? |
+
+
+### <div class='my-heading' style='color: royalblue;'>LineEdit
+
+| Function | Summary |
+|--------|----------|
+| LineEdit |  |
+| set_validator |  |
+| setText |  |
+| _validate |  |
+| _update_style |  |
+| raw_text |  |
+| set_read_only |  |
+| keyPressEvent |  |
+| focusOutEvent |  |
+| focusInEvent |  |
+
+
+### <div class='my-heading' style='color: royalblue;'>Editor
+
+| Function | Summary |
+|--------|----------|
+| Editor | Editor widget with math/text display. |
+| _on_return | Called when Enter is pressed in editor. |
+| _on_focus_out | Handle focus-out safely. |
+| clearFocus | Exit edit mode, safely restoring display. |
+| mouseDoubleClickEvent | Switch to edit mode on double click. |
+| mousePressEvent | Handle focus changes safely. |
+| text | Return current text. |
+| setText | Set editor and display text. |
+| setCurrentText |  |
+| sizeHint |  |
+
+
+## <div class='my-heading' style='color: darkgreen;'>table_view.py
+
+### <div class='my-heading' style='color: royalblue;'>TableView
+
+| Function | Summary |
+|--------|----------|
+| TableView | Table view (math). |
+
+
+## <div class='my-heading' style='color: darkgreen;'>tab_group_view.py
+
+### <div class='my-heading' style='color: royalblue;'>TabGroupView
+
+| Function | Summary |
+|--------|----------|
+| TabGroupView | Data view group. |
+| select_tab | Select tab. |
+| closeEvent | Close event for deselect all. |
+
+
+## <div class='my-heading' style='color: darkgreen;'>util_axis.py
+
+### <div class='my-heading' style='color: royalblue;'>Global function
+
+| Function | Summary |
+|--------|----------|
+| _create_label_axes_actor | Create label only orientation axes actor. |
+| _create_axes_actor | Create custom axes actor. |
+| create_axes_widget | Create axes widget. |
+| create_unit_cell | Create unit cell mesh. |
+| get_view_vector | Get view and viewup. |
+| create_cell_grid | Create grid point. |
+| get_lattice_vector | Get lattice vector. |
+| get_repeat_range | Get repeart range. |
+| get_outside_box | Get indices outside range. |
+
+
+## <div class='my-heading' style='color: darkgreen;'>util.py
+
+### <div class='my-heading' style='color: royalblue;'>Global function
+
+| Function | Summary |
+|--------|----------|
+| _check_shape | Check array shape. |
+| str_to_sympy | Convert a string to a sympy. |
+| to_latex | convert list to latex list. |
+| check_multipie | Check if multipie is installed or not. |
+| set_latex_setting | Set LaTeX setting. |
+| create_grid | Create grid. |
+| read_dict | Read dict text file. |
+| write_dict | write dict text file. |
+| str_to_list | Convert a string to a list of strings. |
+| affine_trans | Affine transformation, A.v + s. |
+| text_to_list | convert single text to list. |
+| apply | apply function to (nested) list. |
+| list_to_table | convert from list to table |
+| remove_space | remove space, tab, and newline. |
+| vec_latex |  |
+| mat_latex |  |
+
+
+## <div class='my-heading' style='color: darkgreen;'>basic_object.py
+
+### <div class='my-heading' style='color: royalblue;'>Global function
+
+| Function | Summary |
+|--------|----------|
+| _str_poly_array | Convert from polynomial string to scalar array. |
+| _str_vec_array | Convert from polynomial string (vector) to vector and scalar (abs.) arrays. |
+| create_sphere | Create sphere object. |
+| create_bond | Create bond object. |
+| create_vector | Create vector object. |
+| create_orbital | Create orbital object. |
+| create_stream | Create steam vector object. |
+| create_line | Create line object. |
+| create_plane | Create plane object. |
+| create_circle | Create circle object. |
+| create_torus | Create torus object. |
+| create_ellipsoid | Create ellipsoid object. |
+| create_toroid | Create ellipsoid object. |
+| create_box | Create box object. |
+| create_polygon | Create polygon object. |
+| create_text3d | Create text3d object. |
+| create_spline | Create spline object. |
+| create_spline_t | Create parametric spline object. |
+| create_isosurface | Create isosurface. |
+| create_orbital_data | Create orbital object from data. |
+| create_stream_data | Create steam vector object. |
+
+
 ## <div class='my-heading' style='color: darkgreen;'>read_material.py
 
 ### <div class='my-heading' style='color: royalblue;'>Global function
@@ -782,6 +752,19 @@
 | Function | Summary |
 |--------|----------|
 | read_draw | Read and draw CIF, XSF, VESTA file. |
+
+
+## <div class='my-heading' style='color: darkgreen;'>util_parser.py
+
+### <div class='my-heading' style='color: royalblue;'>Global function
+
+| Function | Summary |
+|--------|----------|
+| get_model_cell | Get model and cell. |
+| get_site_info | Get site information. |
+| get_bond_info | Get bond information. |
+| draw_site_bond | Draw site and bond. |
+| parse_material | Parse material file. |
 
 
 ## <div class='my-heading' style='color: darkgreen;'>converter.py
@@ -817,6 +800,18 @@
 |--------|----------|
 | extract_data_xsf | Read xsf file (grid data part only). |
 | create_data |  |
+
+
+## <div class='my-heading' style='color: darkgreen;'>latex_to_svg.py
+
+### <div class='my-heading' style='color: royalblue;'>Global function
+
+| Function | Summary |
+|--------|----------|
+| _html_to_svg |  |
+| _get_browser |  |
+| _get_cache_path |  |
+| latex_to_svg_string |  |
 
 
 ## <div class='my-heading' style='color: darkgreen;'>qtdraw.py
@@ -886,6 +881,21 @@
 | add_virtual_cluster | Add virtual cluster. |
 | create_samb_modulation | Create SAMB modulation object. |
 | create_phase_factor | Create phase factor. |
+
+
+## <div class='my-heading' style='color: darkgreen;'>util_multipie.py
+
+### <div class='my-heading' style='color: royalblue;'>Global function
+
+| Function | Summary |
+|--------|----------|
+| check_get_site | Check and get site. |
+| check_get_bond | Check and get bond. |
+| check_get_site_bond | Check and get site (bond center) from site_bond. |
+| create_samb_object | Create SAMB object. |
+| check_linear_combination | Check form of linear combination. |
+| combined_format | Create formatted combined SAMB. |
+| parse_modulation_list | Parse modulation list. |
 
 
 ## <div class='my-heading' style='color: darkgreen;'>dialog_modulation.py

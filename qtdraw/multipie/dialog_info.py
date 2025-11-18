@@ -12,7 +12,7 @@ from multipie.tag.tag_irrep import TagIrrep
 
 from qtdraw.widget.custom_widget import Layout
 from qtdraw.widget.table_view import TableView
-from qtdraw.sandbox.util import list_to_table
+from qtdraw.util.util import list_to_table
 
 from gcoreutils.nsarray import NSArray
 

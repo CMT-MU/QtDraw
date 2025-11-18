@@ -21,7 +21,7 @@ from qtdraw.core.dialog_about import get_version_info
 from qtdraw.widget.custom_widget import Label, Layout, LineEdit, HBar, Button, Combo, VSpacer
 from qtdraw.widget.logging_util import LogWidget
 
-from qtdraw.sandbox.util import check_multipie
+from qtdraw.util.util import check_multipie
 
 
 # ==================================================
