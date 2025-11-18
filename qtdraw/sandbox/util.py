@@ -102,7 +102,7 @@ def to_latex(a, style="scalar"):
     Returns:
         - (ndarray or str) -- (list of) LaTeX string without "$".
     """
-    a = np.array(a)
+    a = np.array(a, dtype=object)
 
     if style == "scalar":
         if a.ndim == 0:
@@ -118,7 +118,9 @@ def to_latex(a, style="scalar"):
         if a.ndim == 1:
             return vec_latex(a)
         elif a.ndim > 1:
-            return np.apply_along_axis(lambda x: vec_latex(x), 1, a).astype(object)
+            s = a.shape
+            sz, v = s[:-1], s[-1]
+            return np.asarray([vec_latex(i) for i in a.reshape(-1, v)], dtype=object).reshape(sz)
         else:
             raise ValueError(f"invalid array shape, {a.shape}.")
 
@@ -131,7 +133,9 @@ def to_latex(a, style="scalar"):
         if a.ndim == 2:
             return mat_latex(a)
         elif a.ndim > 2:
-            return np.array([mat_latex(x) for x in a.reshape(-1, *a.shape[-2:])]).reshape(*a.shape[:-2]).astype(object)
+            s = a.shape
+            sz, v = s[:-2], s[-2:]
+            return np.asarray([mat_latex(i) for i in a.reshape(-1, *v)], dtype=object).reshape(sz)
         else:
             raise ValueError(f"invalid array shape, {a.shape}.")
 
