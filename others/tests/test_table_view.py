@@ -22,6 +22,7 @@ def test_math_table():
         [r"\frac{\sqrt{3}}{2}(x^2-y^2)", r"\begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix}"],
         [r"\left[\begin{array}{cc} 1 & 2 \\ 3 & 4 \end{array}\right]", r"f'(x) =\lim _{h\rightarrow 0}\dfrac{f(x+h) - f(x) }{h}"],
     ]
+
     table = TableView(widget, data=data, header=["eq1", "eq2"], size=16)
     widget.layout.addWidget(table)
 

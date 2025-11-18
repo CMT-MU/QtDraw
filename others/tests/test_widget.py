@@ -37,7 +37,6 @@ def test_widget():
     label3 = Label(widget, text="Red Label", color="red")
     label4 = Label(widget, text="Large Blue", color="blue", size=18)
     latex = r"\int_0^\infty e^{-x^2}\,dx = \frac{\sqrt{\pi}}{2}"
-    latex = "[\\frac{2}{3},\\sin{\\left(x\\right)},\\cos{\\left(y\\right)}]"
     label5 = MathWidget(widget, text=latex, color="green")
     label6 = MathWidget(widget, text="xyz", color="green")
     label9 = ColorSelector(widget, current="strawberry", color_type="color", bold=bold)

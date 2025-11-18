@@ -12,7 +12,7 @@ from multipie.tag.tag_irrep import TagIrrep
 
 from qtdraw.widget.custom_widget import Layout
 from qtdraw.widget.table_view import TableView
-from qtdraw.util.util import list_to_table
+from qtdraw.util.util import list_to_table, to_latex
 
 from gcoreutils.nsarray import NSArray
 
@@ -41,8 +41,7 @@ class InfoPanel(QDialog):
 
         color = latex["color"]
         size = latex["size"]
-        dpi = latex["dpi"]
-        table = TableView(self, data, header, vertical, color, size, dpi)
+        table = TableView(self, data, header, vertical, color, size)
         layout.addWidget(table)
 
         self.show()

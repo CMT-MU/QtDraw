@@ -12,6 +12,7 @@ import re
 import hashlib
 from pathlib import Path
 from playwright.sync_api import sync_playwright
+import xml.etree.ElementTree as ET
 
 from qtdraw.core.qtdraw_info import __top_dir__
 from qtdraw.widget.color_palette import all_colors
@@ -53,6 +54,97 @@ _svg_cache = {}
 # cache directory.
 _cache_dir = Path.home() / ".qtdraw" / "svg_cache"
 _cache_dir.mkdir(parents=True, exist_ok=True)
+
+# ==================================================
+SVG_NS = "http://www.w3.org/2000/svg"
+NS = {"svg": SVG_NS}
+ET.register_namespace("", SVG_NS)
+
+
+# ==================================================
+def flatten_svg_string(svg_text):
+    root = ET.fromstring(svg_text)
+
+    def find_nested_svgs(elem):
+        # get svg element other than root (recursive).
+        result = []
+        for child in elem:
+            # tag = "{namespace}tag".
+            if child.tag == f"{{{SVG_NS}}}svg":
+                result.append(child)
+            result.extend(find_nested_svgs(child))
+        return result
+
+    # get svg other than root.
+    nested_svgs = find_nested_svgs(root)
+
+    # reverse proc. for deep layer first.
+    for nested in reversed(nested_svgs):
+        parent = nested.getparent() if hasattr(nested, "getparent") else None
+
+        # find parent, as xml.etree has no getparent().
+        if parent is None:
+            # find parent manually.
+            parent = find_parent(root, nested)
+        if parent is None:
+            continue
+
+        # new <g>.
+        g = ET.Element(f"{{{SVG_NS}}}g")
+
+        # transform structure.
+        x = nested.get("x")
+        y = nested.get("y")
+        translate = None
+        if x is not None or y is not None:
+            tx = x if x else "0"
+            ty = y if y else "0"
+            translate = f"translate({tx},{ty})"
+
+        nested_transform = nested.get("transform")
+        if translate and nested_transform:
+            g.set("transform", translate + " " + nested_transform)
+        elif translate:
+            g.set("transform", translate)
+        elif nested_transform:
+            g.set("transform", nested_transform)
+
+        # leave info for viewBox, as Qt cannot handle it.
+        viewBox = nested.get("viewBox")
+        if viewBox:
+            g.set("data-viewBox", viewBox)
+
+        # copy other properties.
+        skip_attrs = {"x", "y", "width", "height", "viewBox", "transform", "xmlns"}
+        for k, v in nested.attrib.items():
+            if k not in skip_attrs:
+                g.set(k, v)
+
+        # move all children.
+        for child in list(nested):
+            g.append(child)
+
+        replace_child(parent, nested, g)
+
+    return ET.tostring(root, encoding="unicode")
+
+
+# ==================================================
+def find_parent(root, target):
+    for elem in root.iter():
+        for child in elem:
+            if child is target:
+                return elem
+    return None
+
+
+# ==================================================
+def replace_child(parent, old, new):
+    for i, child in enumerate(parent):
+        if child is old:
+            parent.remove(child)
+            parent.insert(i, new)
+            return
 
 
 # ==================================================
@@ -99,6 +191,7 @@ def latex_to_svg_string(latex, color="black"):
     page.close()
 
     svg_str = re.sub(r'fill="[^"]*"', f'fill="{all_colors[color][0]}"', svg_str)
+    svg_str = flatten_svg_string(svg_str)
 
     _svg_cache[key] = svg_str
     cache_path.write_text(svg_str, encoding="utf-8")

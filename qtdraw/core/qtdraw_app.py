@@ -468,9 +468,9 @@ class QtDraw(Window):
         panel1 = QWidget(parent)
         layout1 = Layout(panel1)
         layout1.addWidget(label_dataset, 0, 0, 1, 1)
-        layout1.addWidget(self.ds_button_screenshot, 0, 1, 1, 1)
+        layout1.addWidget(self.ds_button_clear, 0, 1, 1, 1)
         layout1.addWidget(self.ds_button_edit, 1, 0, 1, 1)
-        layout1.addWidget(self.ds_button_clear, 1, 1, 1, 1)
+        layout1.addWidget(self.ds_button_screenshot, 1, 1, 1, 1)
         layout1.addWidget(self.ds_button_load, 2, 0, 1, 1)
         layout1.addWidget(self.ds_button_save, 2, 1, 1, 1)
 
@@ -505,8 +505,8 @@ class QtDraw(Window):
         panel1 = QWidget(parent)
         layout1 = Layout(panel1)
         layout1.addWidget(label_misc, 0, 0, 1, 1)
-        layout1.addWidget(self.misc_button_info, 0, 1, 1, 1)
-        layout1.addWidget(self.misc_button_pref, 1, 0, 1, 1)
+        layout1.addWidget(self.misc_button_pref, 0, 1, 1, 1)
+        layout1.addWidget(self.misc_button_info, 1, 0, 1, 1)
         layout1.addWidget(self.misc_button_about, 1, 1, 1, 1)
         layout1.addWidget(self.misc_button_log, 2, 0, 1, 1)
         if check_multipie():
@@ -1419,7 +1419,7 @@ class QtDraw(Window):
 
         Args:
             shape (str, optional): orbital shape polynomial in terms of (x,y,z,r). (default: 3z**2-r**2)
-            surface (str, optional): orbital colormap polynomial in terms of (x,y,z,r). (default: "3z**2-r**2")
+            surface (str, optional): orbital colormap polynomial in terms of (x,y,z,r). (default: "")
             size (float, optional): orbital size. (default: 0.5)
             range (list, optional): plot range of [th,phi]. (default: [[0,180],[0,360]])
             color (str, optional): orbital color or colormap. (default: Wistia)

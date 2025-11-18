@@ -227,7 +227,7 @@ object_default = {
         "position": ("list_float", {"shape": (3,), "var": [""], "digit": 4}, "[0,0,0]"),
         "cell": ("list_int", {"shape": (3,)}, "[0,0,0]"),
         "shape": ("math", {"var": ["x", "y", "z", "r"]}, "3z**2-r**2"),
-        "surface": ("math", {"var": ["x", "y", "z", "r"]}, "3z**2-r**2"),
+        "surface": ("math", {"var": ["x", "y", "z", "r"]}, ""),
         "size": ("float", {"min": "*", "max": "*", "digit": 3}, "0.5"),
         "range": ("list_int", {"shape": (2, 2)}, "[[0,180],[0,360]]"),
         "color": ("color_both", {}, "Wistia"),

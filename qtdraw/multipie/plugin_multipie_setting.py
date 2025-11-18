@@ -141,9 +141,9 @@ plugin_detail = {
 
 # ==================================================
 modulation_panel = {
-    "id": ("hide", None, "0"),
+    "id": ("hide", {}, "0"),
     "basis": ("combo", ["Q01"], "Q01"),
-    "coeff": ("sympy", [""], "1"),
+    "coeff": ("math", {"var": [""]}, "1"),
     "k_vector": ("list", ((3,), [""], 3), "[1,0,0]"),
     "phase": ("combo", (["cos", "sin"]), "cos"),
 }

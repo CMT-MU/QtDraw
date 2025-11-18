@@ -539,7 +539,7 @@ class PyVistaWidget(QtInteractor):
 
         Args:
             shape (str, optional): orbital shape polynomial in terms of (x,y,z,r). (default: 3z**2-r**2)
-            surface (str, optional): orbital colormap polynomial in terms of (x,y,z,r). (default: "3z**2-r**2")
+            surface (str, optional): orbital colormap polynomial in terms of (x,y,z,r). (default: "")
             size (float, optional): orbital size. (default: 0.5)
             range (list, optional): plot range of [th,phi]. (default: [[0,180],[0,360]])
             color (str, optional): orbital color or colormap. (default: Wistia)
@@ -560,6 +560,8 @@ class PyVistaWidget(QtInteractor):
 
         if shape is not None:
             row_data["shape"] = shape
+        if surface is None:
+            surface = ""
         if surface is not None:
             if surface == "":
                 row_data["surface"] = shape
