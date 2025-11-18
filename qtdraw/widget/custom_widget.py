@@ -723,4 +723,7 @@ class Editor(Panel):
 
     # ==================================================
     def sizeHint(self):
-        return self._display.sizeHint()
+        if self._in_edit:
+            return self.editor.sizeHint()
+        else:
+            return self._display.sizeHint()
