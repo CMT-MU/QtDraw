@@ -89,7 +89,6 @@ class GroupView(QTreeView):
         if self._debug["delegate"]:
             self.set_widget()
             model.updateWidget.connect(self.update_widget)
-            model.dataModified.connect(lambda *args: self.refresh())
 
         # set properties.
         self.setAlternatingRowColors(True)
@@ -282,11 +281,3 @@ class GroupView(QTreeView):
         index1 = index.siblingAtColumn(self.model().columnCount() - 1)
         selection = QItemSelection(index, index1)  # all columns.
         self.selectionModel().select(selection, QItemSelectionModel.ClearAndSelect)
-
-    # ==================================================
-    def refresh(self):
-        """
-        Update view.
-        """
-        self.setVisible(False)
-        self.setVisible(True)
