@@ -2105,7 +2105,7 @@ class QtDraw(Window):
             caption (str, optional): caption list. (default: [A,B,C])
             size (int, optional): caption size. (default: 18)
             bold (bool, optional): bold ? (default: True)
-            color (str, optional): caption color. (default: licorice)
+            color (str, optional): caption color. (default: black)
             position (str, optional): position of each caption. (default: [[0,0,0],[1,0,0],[1,1,0]])
             cell (str, optional): cell. (default: [0,0,0])
             name (str, optional): name of group. (default: untitled)
@@ -2124,7 +2124,7 @@ class QtDraw(Window):
         Args:
             caption (str, optional): caption. (default: text)
             size (int, optional): caption size. (default: 8)
-            color (str, optional): caption color. (default: licorice)
+            color (str, optional): caption color. (default: black)
             font (str, optional): caption font. (default: arial)
             position (str, optional): position in cell, [x,y,z]. (default: [0,0,0])
             name (str, optional): name of group. (default: untitled)

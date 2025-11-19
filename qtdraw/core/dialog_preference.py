@@ -97,6 +97,7 @@ class PreferenceDialog(QDialog):
         spin_size.setProperty("value", preference["size"])
         check_bold.setChecked(preference["bold"])
         check_italic.setChecked(preference["italic"])
+        combo_color.setCurrentText(preference["color"])
         check_default.setChecked(preference["default_check"])
 
         # connections.
@@ -191,6 +192,7 @@ class PreferenceDialog(QDialog):
 
         # initial values.
         spin_width.setProperty("value", preference["line_width"])
+        combo_color.setCurrentText(preference["color"])
         spin_opacity.setProperty("value", preference["opacity"])
 
         # connections.
@@ -245,6 +247,7 @@ class PreferenceDialog(QDialog):
         spin_metallic.setProperty("value", preference["metallic"])
         spin_roughness.setProperty("value", preference["roughness"])
         combo_type.setCurrentText(preference["type"])
+        combo_color.setCurrentText(preference["color"])
 
         # connections.
         spin_intensity.valueChanged.connect(lambda v: preference.update({"intensity": round(v, 4)}))
@@ -288,6 +291,7 @@ class PreferenceDialog(QDialog):
         # initial values.
         spin_size.setProperty("value", preference["size"])
         combo_dpi.setCurrentText(str(preference["dpi"]))
+        combo_color.setCurrentText(preference["color"])
 
         # connections.
         combo_color.currentTextChanged.connect(lambda v: preference.update({"color": v}))

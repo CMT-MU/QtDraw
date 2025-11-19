@@ -52,7 +52,7 @@ default_preference = {
         "size": 18,
         "bold": False,
         "italic": False,
-        "color": "licorice",
+        "color": "black",
         "default_check": False,
     },
     "cell": {
@@ -99,7 +99,7 @@ widget_detail = {
     "pickable": True,
     "viewport": [0.0, 0.0, 0.12, 0.16],
     "shaft_color": ["crimson", "forestgreen", "royalblue"],
-    "sphere_color": "snow",
+    "sphere_color": "white",
     "shaft_radius": 0.05,
     "tip_radius": 0.1,
     "tip_length": 0.4,
@@ -543,7 +543,7 @@ object_default = {
         "size": ("int", {"min": 0, "max": "*"}, "18"),
         "bold": ("check", {}, ""),
         "bold_check": ("bool", {}, True),
-        "color": ("color", {}, "licorice"),
+        "color": ("color", {}, "black"),
     },
     "text2d": {
         "name": ("check", {}, "untitled"),
@@ -557,7 +557,7 @@ object_default = {
         "cell": ("hide", {}, "[0,0,0]"),  # dummy.
         "caption": ("str", {}, "text"),
         "size": ("int", {"min": 0, "max": "*"}, "8"),
-        "color": ("color", {}, "licorice"),
+        "color": ("color", {}, "black"),
         "font": ("combo", ["arial", "times", "courier"], "arial"),
     },
 }
