@@ -65,7 +65,7 @@ def _str_poly_array(poly, xyz, var=["x", "y", "z"], size=1.0):
 
     f = sp.lambdify(r, ex)
     fv = f(x, y, z)
-    if ex.is_Number:  # for const.
+    if ex.is_constant():  # for const.
         fv = np.full(np.size(x), fv, dtype=np.float64)
 
     max_f = np.abs(fv).max()
