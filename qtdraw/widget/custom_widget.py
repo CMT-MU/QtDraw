@@ -347,7 +347,7 @@ class Combo(QComboBox):
     # ==================================================
     def find_index(self, key):
         """
-        Find index.
+        Find index (including match).
 
         Args:
             key (str): item key.
@@ -356,7 +356,7 @@ class Combo(QComboBox):
             - (int) -- index.
         """
         item = self.get_item()
-        index = [idx for idx, s in enumerate(item) if key == s]
+        index = [idx for idx, s in enumerate(item) if key in s]
         return index
 
     # ==================================================

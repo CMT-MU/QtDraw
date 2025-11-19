@@ -131,8 +131,8 @@ class MultiPieDialog(QDialog):
         self.group_combo_crystal_type.setCurrentText(self.plus["crystal"])
         self.set_group_item()
 
-        ### no = self.group_combo_group.find_index(self.group["group"])[0]
-        ### self.group_combo_group.setCurrentIndex(no)
+        no = self.group_combo_group.find_index(self.group["group"])[0]
+        self.group_combo_group.setCurrentIndex(no)
         self.set_irrep_item()
         self.set_wyckoff_item()
 
@@ -143,8 +143,8 @@ class MultiPieDialog(QDialog):
 
         self.group_combo_harmonics_type.setCurrentText(self.group["harmonics_type"])
         self.group_combo_harmonics_rank.setCurrentText(str(self.group["harmonics_rank"]))
-        ### no = self.group_combo_harmonics_decomp.find_index(self.group["harmonics_decomp"])[0]
-        ### self.group_combo_harmonics_decomp.setCurrentIndex(no)
+        no = self.group_combo_harmonics_decomp.find_index(self.group["harmonics_decomp"])[0]
+        self.group_combo_harmonics_decomp.setCurrentIndex(no)
 
         self.group_combo_vc_wyckoff.setCurrentText(self.group["vc_wyckoff"])
         self.group_edit_vc_neighbor.setText(self.group["vc_neighbor"])
