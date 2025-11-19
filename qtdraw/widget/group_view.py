@@ -7,7 +7,6 @@ By clicking right button of mouse, the context menu appears.
 
 from PySide6.QtWidgets import QMenu, QTreeView, QHeaderView, QSizePolicy
 from PySide6.QtCore import Qt, Signal, QPoint, QModelIndex, QItemSelection, QItemSelectionModel
-from PySide6.QtGui import QFont
 
 from qtdraw.core.pyvista_widget_setting import COLOR_WIDGET, COMBO_WIDGET, EDITOR_WIDGET, HIDE_TYPE
 
@@ -90,6 +89,7 @@ class GroupView(QTreeView):
         if self._debug["delegate"]:
             self.set_widget()
             model.updateWidget.connect(self.update_widget)
+            model.dataModified.connect(lambda *args: self.refresh())
 
         # set properties.
         self.setAlternatingRowColors(True)
@@ -282,3 +282,11 @@ class GroupView(QTreeView):
         index1 = index.siblingAtColumn(self.model().columnCount() - 1)
         selection = QItemSelection(index, index1)  # all columns.
         self.selectionModel().select(selection, QItemSelectionModel.ClearAndSelect)
+
+    # ==================================================
+    def refresh(self):
+        """
+        Update view.
+        """
+        self.setVisible(False)
+        self.setVisible(True)

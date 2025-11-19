@@ -5,7 +5,7 @@ This module provides delegate for color selector, combo, and editor.
 """
 
 from PySide6.QtWidgets import QStyledItemDelegate, QStyle
-from PySide6.QtCore import Qt
+from PySide6.QtCore import Qt, QSize, QRect
 
 from qtdraw.widget.custom_widget import Combo, Editor, ColorSelector
 
@@ -15,6 +15,7 @@ class Delegate(QStyledItemDelegate):
     # ==================================================
     def __init__(self, parent):
         super().__init__(parent)
+        self.padding = 5
 
     # ==================================================
     def setEditorData(self, editor, index):
@@ -27,7 +28,21 @@ class Delegate(QStyledItemDelegate):
 
     # ==================================================
     def updateEditorGeometry(self, editor, option, index):
-        editor.setGeometry(option.rect.adjusted(5, 8, -5, 0))
+        rect = option.rect
+        size = editor.sizeHint()
+
+        width = size.width()
+        height = size.height()
+
+        max_width = rect.width() - 2 * self.padding
+        max_height = rect.height() - 2 * self.padding
+        width = min(width, max_width)
+        height = min(height, max_height)
+
+        x = rect.x() + (rect.width() - width) // 2
+        y = rect.y() + (rect.height() - height) // 2
+
+        editor.setGeometry(QRect(x, y, width, height))
 
     # ==================================================
     def paint(self, painter, option, index):
@@ -53,6 +68,12 @@ class ComboDelegate(Delegate):
         editor.currentTextChanged.connect(lambda data: model.setData(index, data))
         return editor
 
+    # ==================================================
+    def sizeHint(self, option, index):
+        sz = super().sizeHint(option, index)
+        w, h = 6 * self.padding, self.padding
+        return QSize(sz.width() + w, sz.height() + h)
+
 
 # ==================================================
 class ColorDelegate(Delegate):
@@ -68,6 +89,12 @@ class ColorDelegate(Delegate):
         editor = ColorSelector(parent, self.default, self.option)
         editor.currentTextChanged.connect(lambda data: model.setData(index, data))
         return editor
+
+    # ==================================================
+    def sizeHint(self, option, index):
+        sz = super().sizeHint(option, index)
+        w, h = 6 * self.padding, self.padding
+        return QSize(sz.width() + w, sz.height() + h)
 
 
 # ==================================================
@@ -89,5 +116,7 @@ class EditorDelegate(Delegate):
         return editor
 
     # ==================================================
-    def updateEditorGeometry(self, editor, option, index):
-        editor.setGeometry(option.rect.adjusted(5, 0, -5, 0))
+    def sizeHint(self, option, index):
+        sz = super().sizeHint(option, index)
+        w, h = 2 * self.padding, 4 * self.padding
+        return QSize(sz.width() + w, sz.height() + h)

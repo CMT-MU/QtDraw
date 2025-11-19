@@ -412,6 +412,7 @@
 |--------|----------|
 | ComboDelegate |  |
 | createEditor |  |
+| sizeHint |  |
 
 
 ### <div class='my-heading' style='color: royalblue;'>ColorDelegate
@@ -420,6 +421,7 @@
 |--------|----------|
 | ColorDelegate |  |
 | createEditor |  |
+| sizeHint |  |
 
 
 ### <div class='my-heading' style='color: royalblue;'>EditorDelegate
@@ -428,7 +430,7 @@
 |--------|----------|
 | EditorDelegate |  |
 | createEditor |  |
-| updateEditorGeometry |  |
+| sizeHint |  |
 
 
 ## <div class='my-heading' style='color: darkgreen;'>logging_util.py
@@ -486,6 +488,7 @@
 | set_widget | Set widget. |
 | selection_changed | For Selection changed. |
 | select_row | Select row. |
+| refresh | Update view. |
 
 
 ## <div class='my-heading' style='color: darkgreen;'>qt_event_util.py
@@ -580,7 +583,6 @@
 | Function | Summary |
 |--------|----------|
 | ColorSelector | Color selector widget. |
-| sizeHint |  |
 
 
 ### <div class='my-heading' style='color: royalblue;'>Button
@@ -597,8 +599,7 @@
 | Combo | Combo widget. |
 | get_item | Get item. |
 | set_item | Set item. |
-| find_index | Find index. |
-| sizeHint |  |
+| find_index | Find index (including match). |
 
 
 ### <div class='my-heading' style='color: royalblue;'>Spin
@@ -637,6 +638,7 @@
 | keyPressEvent |  |
 | focusOutEvent |  |
 | focusInEvent |  |
+| sizeHint |  |
 
 
 ### <div class='my-heading' style='color: royalblue;'>Editor
@@ -809,9 +811,13 @@
 | Function | Summary |
 |--------|----------|
 | _html_to_svg |  |
+| flatten_svg_string |  |
+| find_parent |  |
+| replace_child |  |
 | _get_browser |  |
 | _get_cache_path |  |
 | latex_to_svg_string |  |
+| find_nested_svgs |  |
 
 
 ## <div class='my-heading' style='color: darkgreen;'>qtdraw.py

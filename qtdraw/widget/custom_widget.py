@@ -87,9 +87,6 @@ class Label(QLabel):
         """
         super().__init__(parent)
 
-        self.setSizePolicy(QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed))
-        self.setContentsMargins(0, 0, 0, 0)
-
         if size is None:
             size = self.font().pointSize()
         font = QFont()
@@ -105,7 +102,7 @@ class Label(QLabel):
     # ==================================================
     def sizeHint(self):
         sz = super().sizeHint()
-        extra = 10
+        extra = 12
         return QSize(sz.width() + extra, sz.height())
 
 
@@ -117,9 +114,6 @@ class MathWidget(QWidget):
 
         if size is None:
             size = self.font().pointSize()
-
-        self.setSizePolicy(QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed))
-        self.setContentsMargins(0, 0, 0, 0)
 
         self._size = size + 5
         self._color = color
@@ -216,7 +210,6 @@ class ColorSelector(QComboBox):
             - connect currentTextChanged.
         """
         super().__init__(parent)
-        self.setSizePolicy(QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed))
 
         if size is None:
             size = self.font().pointSize()
@@ -249,13 +242,6 @@ class ColorSelector(QComboBox):
             self.insertSeparator(i)
 
         self.setCurrentIndex(current_index)
-        # self.setSizeAdjustPolicy(QComboBox.AdjustToContents)
-
-    # ==================================================
-    def sizeHint(self):
-        sz = super().sizeHint()
-        extra = 10
-        return QSize(sz.width() + extra, sz.height())
 
 
 # ==================================================
@@ -274,7 +260,6 @@ class Button(QPushButton):
         """
         super().__init__(text, parent)
         self.setCheckable(toggle)
-        self.setSizePolicy(QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed))
 
         if size is None:
             size = self.font().pointSize()
@@ -299,7 +284,6 @@ class Combo(QComboBox):
             bold (bool, optional): bold face ?
         """
         super().__init__(parent)
-        self.setSizePolicy(QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed))
 
         if size is None:
             size = self.font().pointSize()
@@ -318,7 +302,6 @@ class Combo(QComboBox):
 
         total_height = self.font().pointSize() * 1.6
         self.setFixedHeight(total_height)
-        # self.setSizeAdjustPolicy(QComboBox.AdjustToContents)
 
     # ==================================================
     def get_item(self):
@@ -359,12 +342,6 @@ class Combo(QComboBox):
         index = [idx for idx, s in enumerate(item) if key in s]
         return index
 
-    # ==================================================
-    def sizeHint(self):
-        sz = super().sizeHint()
-        extra = 10
-        return QSize(sz.width() + extra, sz.height())
-
 
 # ==================================================
 class Spin(QSpinBox):
@@ -383,7 +360,6 @@ class Spin(QSpinBox):
         super().__init__(parent)
         self.setMinimum(minimum)
         self.setMaximum(maximum)
-        self.setSizePolicy(QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed))
 
         font = QFont()
         if size is not None:
@@ -411,7 +387,6 @@ class DSpin(QDoubleSpinBox):
         self.setMinimum(minimum)
         self.setMaximum(maximum)
         self.setSingleStep(step)
-        self.setSizePolicy(QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed))
 
         font = QFont()
         if size is not None:
@@ -434,7 +409,6 @@ class Check(QCheckBox):
             bold (bool, optional): bold face ?
         """
         super().__init__(text, parent)
-        self.setSizePolicy(QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed))
 
         if size is None:
             size = self.font().pointSize()
@@ -460,8 +434,6 @@ class LineEdit(QLineEdit):
 
     def __init__(self, parent=None, text="", validator=None, size=None, bold=False):
         super().__init__("", parent)
-        self.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
-        self.setContentsMargins(0, 0, 0, 0)
 
         if size is None:
             size = self.font().pointSize()
@@ -586,6 +558,12 @@ class LineEdit(QLineEdit):
         self._update_style()
         super().focusInEvent(event)
 
+    # ==================================================
+    def sizeHint(self):
+        sz = super().sizeHint()
+        extra = 12
+        return QSize(sz.width() + extra, sz.height())
+
 
 # ==================================================
 class Editor(Panel):
@@ -605,7 +583,6 @@ class Editor(Panel):
             bold (bool, optional): bold face ?
         """
         super().__init__(parent)
-        self.setSizePolicy(QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed))
 
         if size is None:
             size = self.font().pointSize()
@@ -724,6 +701,11 @@ class Editor(Panel):
     # ==================================================
     def sizeHint(self):
         if self._in_edit:
-            return self.editor.sizeHint()
+            return self._editor.sizeHint()
         else:
-            return self._display.sizeHint()
+            if self._math_mode:
+                e_sz = self._editor.sizeHint()
+                d_sz = self._display.sizeHint()
+                return QSize(max(e_sz.width(), d_sz.width()), d_sz.height())
+            else:
+                return self._display.sizeHint()

@@ -8,8 +8,6 @@
 
 ## 改善
 
-- data panelの数式の高さ
-- 数式表現の係数の数値化
 - modulationの操作：
   - まず、unit cellのみを描く
   - modulationボタンで変調
