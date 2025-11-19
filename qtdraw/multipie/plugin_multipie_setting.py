@@ -144,8 +144,8 @@ modulation_panel = {
     "id": ("hide", {}, "0"),
     "basis": ("combo", ["Q01"], "Q01"),
     "coeff": ("math", {"var": [""]}, "1"),
-    "k_vector": ("list", ((3,), [""], 3), "[1,0,0]"),
-    "phase": ("combo", (["cos", "sin"]), "cos"),
+    "k_vector": ("list_float", {"shape": (3,), "var": [""], "digit": 3}, "[1,0,0]"),
+    "phase": ("combo", ["cos", "sin"], "cos"),
 }
 
 

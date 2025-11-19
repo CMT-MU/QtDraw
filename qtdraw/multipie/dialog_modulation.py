@@ -74,15 +74,14 @@ class ModulationDialog(QDialog):
         # modulation view.
         mod_panel = copy.deepcopy(modulation_panel)
         mod_panel["basis"] = ("combo", self.basis, self.basis[0])
-        model = GroupModel("modulation", mod_panel, self.widget)
+        model = GroupModel(self.widget, "modulation", mod_panel)
         model.set_data(data)
-        self.view = GroupView(model, parent)
+        self.view = GroupView(parent, model)
         self.view.customContextMenuRequested.disconnect()
-        self.view.update_widget(force=True)
 
         # buttons.
-        button_add = Button(parent, "add")
-        button_remove = Button(parent, "remove")
+        button_add = Button(parent, text="add")
+        button_remove = Button(parent, text="remove")
 
         # button.
         button = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel | QDialogButtonBox.Apply)
@@ -135,13 +134,9 @@ class ModulationDialog(QDialog):
         obj, igrid = self.parent().plugin.create_samb_modulation(samb_type, v, self.head, data, dims, ilower)
 
         if self.is_orbital:
-            self.parent().plugin._pvw._data["orbital"].block_update_widget(True)
             self.parent().plugin.add_orbital_modulation(obj, igrid, self.head)
-            self.parent().plugin._pvw._data["orbital"].block_update_widget(False)
         else:
-            self.parent().plugin._pvw._data["vector"].block_update_widget(True)
             self.parent().plugin.add_vector_modulation(obj, igrid, self.head, v)
-            self.parent().plugin._pvw._data["vector"].block_update_widget(False)
 
     # ==================================================
     def add_data(self):
