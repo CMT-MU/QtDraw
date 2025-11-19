@@ -488,7 +488,6 @@
 | set_widget | Set widget. |
 | selection_changed | For Selection changed. |
 | select_row | Select row. |
-| refresh | Update view. |
 
 
 ## <div class='my-heading' style='color: darkgreen;'>qt_event_util.py
