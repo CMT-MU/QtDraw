@@ -1476,6 +1476,7 @@ class MultiPieDialog(QDialog):
             return
 
         z_type = self.basis_combo_vector_samb_type.currentText()
+        v_type = self.basis_combo_vector_type.currentText()
         r_site_bond = self.basis_edit_vector.text()
         lc = self.basis_edit_vector_lc.text()
         cluster = self.plus["vector_cluster"]
@@ -1505,7 +1506,7 @@ class MultiPieDialog(QDialog):
 
         label = remove_space(lc) + " \u21d0 " + z_type + ", " + remove_space(r_site_bond)
 
-        self.plugin.add_vector_samb(cluster, cluster_obj, label, z_type, v, scale)
+        self.plugin.add_vector_samb(cluster, cluster_obj, label, v_type, v, scale)
 
     # ==================================================
     def basis_gen_vector_modulation(self):
@@ -1607,6 +1608,7 @@ class MultiPieDialog(QDialog):
             return
 
         z_type = self.basis_combo_orbital_samb_type.currentText()
+        o_type = self.basis_combo_orbital_type.currentText()
         rank = self.basis_combo_orbital_rank.currentText()
         lc = self.basis_edit_orbital_lc.text()
         r_site_bond = self.basis_edit_orbital.text()
@@ -1636,7 +1638,7 @@ class MultiPieDialog(QDialog):
         cluster_obj = NSArray(str(NSArray(form).subs(lc_basis).tolist().T.tolist()[0]))
 
         label = remove_space(lc) + " \u21d0 " + z_type + rank + ", " + remove_space(r_site_bond)
-        self.plugin.add_orbital_samb(cluster, cluster_obj, label, z_type, scale)
+        self.plugin.add_orbital_samb(cluster, cluster_obj, label, o_type, scale)
 
     # ==================================================
     def basis_gen_orbital_modulation(self):
