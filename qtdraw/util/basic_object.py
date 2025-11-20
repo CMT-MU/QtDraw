@@ -56,17 +56,17 @@ def _str_poly_array(poly, xyz, var=["x", "y", "z"], size=1.0):
     """
     xyz = np.array(xyz, dtype=np.float64)
     r = sp.symbols(" ".join(var), real=True)
-    v = {var[0]: r[0], var[1]: r[1], var[2]: r[2]}
     poly = poly.replace("sqrt", "SQ")
     poly = poly.replace("r", "(sqrt(x**2+y**2+z**2))")
     poly = poly.replace("SQ", "sqrt")
-    ex = str_to_sympy(poly, sub=v)
-    x, y, z = xyz.T
+    ex = str_to_sympy(poly)
 
-    f = sp.lambdify(r, ex)
-    fv = f(x, y, z)
     if ex.is_constant():  # for const.
-        fv = np.full(np.size(x), fv, dtype=np.float64)
+        fv = np.full(xyz.shape[0], float(ex))
+    else:
+        x, y, z = xyz.T
+        f = sp.lambdify(r, ex, modules=["numpy"])
+        fv = f(x, y, z)
 
     max_f = np.abs(fv).max()
     if size > CHOP:

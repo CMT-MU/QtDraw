@@ -2,7 +2,7 @@
 # background_s.py
 #
 import numpy as np
-from qtdraw import create_qtdraw_file
+from qtdraw.core.pyvista_widget import create_qtdraw_file
 
 
 # draw objects by using widget.
