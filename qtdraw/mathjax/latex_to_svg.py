@@ -1,8 +1,17 @@
+"""
+Render LaTeX to SVG.
+
+This module provides LaTeX converter to SVG string.
+
+To use this, install playwright.
+- pip install playwright
+- playwright install chromium
+"""
+
 import re
 import hashlib
 from pathlib import Path
-import asyncio
-from playwright.async_api import async_playwright
+from playwright.sync_api import sync_playwright
 import xml.etree.ElementTree as ET
 
 from qtdraw.core.qtdraw_info import __top_dir__
@@ -46,83 +55,45 @@ _svg_cache = {}
 _cache_dir = Path.home() / ".qtdraw" / "svg_cache"
 _cache_dir.mkdir(parents=True, exist_ok=True)
 
+# ==================================================
 SVG_NS = "http://www.w3.org/2000/svg"
-NS = {"svg": SVG_NS}
 ET.register_namespace("", SVG_NS)
 
 
 # ==================================================
-def flatten_svg_string(svg_text):
-    root = ET.fromstring(svg_text)
+def flatten_svg_string(svg):
+    if not svg:
+        return ""
 
-    def find_nested_svgs(elem):
-        result = []
-        for child in elem:
-            if child.tag == f"{{{SVG_NS}}}svg":
-                result.append(child)
-            result.extend(find_nested_svgs(child))
-        return result
+    # parse SVG
+    root = ET.fromstring(svg)
 
-    nested_svgs = find_nested_svgs(root)
+    def unwrap_inner_svg(elem):
+        for child in list(elem):
+            if child.tag.endswith("svg"):
+                # move inner children to parent
+                for grand in list(child):
+                    elem.append(grand)
+                elem.remove(child)
+            else:
+                unwrap_inner_svg(child)
 
-    for nested in reversed(nested_svgs):
-        parent = find_parent(root, nested)
-        if parent is None:
-            continue
+    unwrap_inner_svg(root)
 
-        g = ET.Element(f"{{{SVG_NS}}}g")
-
-        x = nested.get("x")
-        y = nested.get("y")
-        if x or y:
-            tx = x or "0"
-            ty = y or "0"
-            g.set("transform", f"translate({tx},{ty})")
-
-        nested_transform = nested.get("transform")
-        if nested_transform:
-            prev = g.get("transform")
-            g.set("transform", f"{prev} {nested_transform}" if prev else nested_transform)
-
-        viewBox = nested.get("viewBox")
-        if viewBox:
-            g.set("data-viewBox", viewBox)
-
-        skip_attrs = {"x", "y", "width", "height", "viewBox", "transform", "xmlns"}
-        for k, v in nested.attrib.items():
-            if k not in skip_attrs:
-                g.set(k, v)
-
-        for child in list(nested):
-            g.append(child)
-
-        replace_child(parent, nested, g)
+    # unify fill attributes
+    for elem in root.iter():
+        if "fill" in elem.attrib and elem.attrib["fill"] != "none":
+            elem.attrib["fill"] = "currentColor"
 
     return ET.tostring(root, encoding="unicode")
 
 
-def find_parent(root, target):
-    for elem in root.iter():
-        for child in elem:
-            if child is target:
-                return elem
-    return None
-
-
-def replace_child(parent, old, new):
-    for i, child in enumerate(parent):
-        if child is old:
-            parent.remove(child)
-            parent.insert(i, new)
-            return
-
-
 # ==================================================
-async def _get_browser():
+def _get_browser():
     global _playwright, _browser
     if _browser is None:
-        _playwright = await async_playwright().start()
-        _browser = await _playwright.chromium.launch(headless=True)
+        _playwright = sync_playwright().start()
+        _browser = _playwright.chromium.launch(headless=True)
     return _browser
 
 
@@ -133,7 +104,7 @@ def _get_cache_path(latex, color):
 
 
 # ==================================================
-async def _latex_to_svg_string(latex, color="black"):
+def latex_to_svg_string(latex, color="black"):
     key = (latex, color)
 
     if key in _svg_cache:
@@ -146,46 +117,24 @@ async def _latex_to_svg_string(latex, color="black"):
         return svg_str
 
     html = _html_to_svg(latex)
-    browser = await _get_browser()
-    page = await browser.new_page()
-    await page.set_content(html, wait_until="networkidle")
-    await page.add_script_tag(path=str(_mathjax_path))
-    await page.wait_for_timeout(50)
+    browser = _get_browser()
+    page = browser.new_page()
+    page.set_content(html, wait_until="networkidle")
+    page.add_script_tag(path=str(_mathjax_path))
+    page.wait_for_timeout(50)
 
-    svg_elem = await page.query_selector("mjx-container svg")
+    svg_elem = page.query_selector("mjx-container svg")
     if not svg_elem:
-        await page.close()
+        page.close()
         raise RuntimeError("fail to get SVG element.")
 
-    svg_str = await svg_elem.evaluate("el => el.outerHTML")
-    await page.close()
+    svg_str = svg_elem.evaluate("el => el.outerHTML")
+    page.close()
 
-    svg_str = re.sub(r"fill=\"[^\"]*\"", f'fill="{all_colors[color][0]}"', svg_str)
+    svg_str = re.sub(r'fill="[^"]*"', f'fill="{all_colors[color][0]}"', svg_str)
     svg_str = flatten_svg_string(svg_str)
 
     _svg_cache[key] = svg_str
     cache_path.write_text(svg_str, encoding="utf-8")
 
     return svg_str
-
-
-# ==================================================
-def latex_to_svg_string(latex, color="black"):
-    """
-    同期版ラッパー。
-    - 普通の Python 実行: asyncio.run() で実行
-    - VSCode ipynb: すでに走っているイベントループに参加
-    """
-    try:
-        # すでにイベントループが動いている（Jupyterなど）
-        loop = asyncio.get_running_loop()
-
-    except RuntimeError:
-        # 通常の Python 実行 → ループなし
-        return asyncio.run(_latex_to_svg_string(latex, color))
-    else:
-        # Jupyter(ipynb) → ループを再利用して実行
-        import nest_asyncio
-
-        nest_asyncio.apply()
-        return loop.run_until_complete(_latex_to_svg_string(latex, color))
