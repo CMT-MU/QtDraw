@@ -32,7 +32,6 @@ class PreferenceDialog(QDialog):
         panel_axis = self.create_axis_panel(self)
         panel_cell = self.create_cell_panel(self)
         panel_light = self.create_light_panel(self)
-        panel_latex = self.create_latex_panel(self)
         panel_general = self.create_general_panel(self)
 
         # tab content.
@@ -42,7 +41,6 @@ class PreferenceDialog(QDialog):
         tab.addTab(panel_axis, "Axis")
         tab.addTab(panel_cell, "Cell")
         tab.addTab(panel_light, "Light")
-        tab.addTab(panel_latex, "LaTeX")
 
         # button.
         button = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel | QDialogButtonBox.Apply)
@@ -255,47 +253,6 @@ class PreferenceDialog(QDialog):
         spin_roughness.valueChanged.connect(lambda v: preference.update({"roughness": round(v, 4)}))
         combo_color.currentTextChanged.connect(lambda v: preference.update({"color": v}))
         combo_type.currentTextChanged.connect(lambda v: preference.update({"type": v}))
-
-        return panel
-
-    # ==================================================
-    def create_latex_panel(self, parent):
-        """
-        Create LaTeX panel.
-        """
-        panel = QWidget(parent)
-        layout = Layout(panel)
-        layout.setContentsMargins(10, 5, 10, 5)
-
-        preference = self.preference["latex"]
-
-        # widgets.
-        label_color = Label(parent, text="color")
-        combo_color = ColorSelector(parent, preference["color"], color_type="color")
-        label_size = Label(parent, text="size")
-        spin_size = Spin(parent, 8, 24)
-        label_dpi = Label(parent, text="DPI")
-        combo_dpi = Combo(parent, ["120", "240", "300"])
-
-        # set layout.
-        layout.addWidget(label_color, 0, 0, 1, 1, Qt.AlignRight)
-        layout.addWidget(combo_color, 0, 1, 1, 2)
-        layout.addWidget(label_size, 1, 0, 1, 1, Qt.AlignRight)
-        layout.addWidget(spin_size, 1, 1, 1, 2)
-        layout.addWidget(label_dpi, 2, 0, 1, 1, Qt.AlignRight)
-        layout.addWidget(combo_dpi, 2, 1, 1, 2)
-        layout.addItem(HSpacer(), 0, 3, 1, 1)
-        layout.addItem(VSpacer(), 3, 0, 1, 1)
-
-        # initial values.
-        spin_size.setProperty("value", preference["size"])
-        combo_dpi.setCurrentText(str(preference["dpi"]))
-        combo_color.setCurrentText(preference["color"])
-
-        # connections.
-        combo_color.currentTextChanged.connect(lambda v: preference.update({"color": v}))
-        spin_size.valueChanged.connect(lambda v: preference.update({"size": v}))
-        combo_dpi.currentTextChanged.connect(lambda v: preference.update({"dpi": int(v)}))
 
         return panel
 

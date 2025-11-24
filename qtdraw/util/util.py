@@ -6,7 +6,6 @@ import re
 import ast
 import numpy as np
 import sympy as sp
-import matplotlib.pyplot as plt
 from sympy import SympifyError
 from sympy.parsing.sympy_parser import parse_expr, standard_transformations, implicit_multiplication, rationalize
 import pyvista as pv
@@ -144,8 +143,6 @@ def to_latex(a, style="scalar"):
 
 
 # ==================================================
-# ==================================================
-# ==================================================
 def check_multipie():
     """
     Check if multipie is installed or not.
@@ -159,17 +156,6 @@ def check_multipie():
         return True
     except ImportError:
         return False
-
-
-# ==================================================
-def set_latex_setting():
-    """
-    Set LaTeX setting.
-    """
-    package = ["amsmath", "amssymb", "physics"]
-    pre = "\n".join([r"\usepackage{" + i + "}" for i in package])
-    tex_setting = {"text.usetex": True, "text.latex.preamble": pre}
-    plt.rcParams.update(tex_setting)
 
 
 # ==================================================
@@ -302,60 +288,6 @@ def str_to_list(s):
             nested_list.append(current_word.strip())
 
     return nested_list[0]
-
-
-# ==================================================
-def affine_trans(v, s=None, A=None, digit=None, check_var=None):
-    """
-    Affine transformation, A.v + s.
-
-    Args:
-        v (str): site/vector or a list of site/vector.
-        s (str, optional): shift vector or a list of shift vector.
-        A (str, optional): rotaional matrix (3x3), [a1, a2, a3].
-        digit (int, optional): accuracy digit (only for numerical vector).
-        check_var (list, optional): variables to accept.
-
-    Returns:
-        - (ndarray) -- transformed vector.
-    """
-    v = str_to_numpy(v, digit, check_var)
-    if v is None:
-        return None
-    if v.ndim != 1 and v.ndim != 2:
-        return None
-    if v.ndim == 1 and v.shape[0] != 3:
-        return None
-    if v.ndim == 2 and v.shape[1] != 3:
-        return None
-
-    if A is not None:
-        A = str_to_numpy(A, digit, check_var, (3, 3))
-        if A is None:
-            return None
-
-        v = v @ A.T
-
-    if s is not None:
-        s = str_to_numpy(s, digit, check_var)
-        if s is None:
-            return None
-        if s.ndim != 1 and s.ndim != 2:
-            return None
-        if s.ndim == 1 and s.shape[0] != 3:
-            return None
-        if s.ndim == 2 and s.shape[1] != 3:
-            return None
-
-        if v.ndim == s.ndim:
-            v += s
-        else:
-            if v.ndim == 1:
-                v = np.tile(v, (s.shape[0], 1)) + s
-            else:
-                v = v + np.tile(s, (v.shape[0], 1))
-
-    return v
 
 
 # ==================================================

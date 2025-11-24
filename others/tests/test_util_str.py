@@ -4,7 +4,7 @@ Test for utility.
 This module provides a test for utility.
 """
 
-from qtdraw.util.util import str_to_list, affine_trans
+from qtdraw.util.util import str_to_list
 
 # ==================================================
 # test
@@ -35,39 +35,4 @@ def test_str_to_list():
 
 
 # ==================================================
-def test_affine_trans():
-    print("=== test_affine_trans ===")
-    test = [
-        "[1,2,3]",
-        "[1,a,b]",
-        "[x,y,1]",
-        "[1/2, sin(pi/3),0.3]",
-        "[1,2,3]@[1,2,3]",
-        "[x,y,1];[x,y,1]",
-        "[1/2, sin(pi/3),0.3]:[1/2, sin(pi/3),0.3]",
-        "[1,2]",
-        "[1,2,3]*[3,1,2]",
-        "[1,a,b]",
-    ]
-    A = "[[1,-1/2,0],[0,sqrt(3)/2,0],[0,0,1]]"
-    cell = "[1,1,1]"
-
-    for i in test:
-        s1 = affine_trans(i)
-        s2 = affine_trans(i, cell)
-        s3 = affine_trans(i, A=A)
-        s4 = affine_trans(i, cell, A)
-        print(f"{i} => {s1}, {s2}, {s3}, {s4}")
-
-    test1 = "[1,1,1]"
-    test2 = "[[1,1,1],[2,2,2]]"
-    cell1 = "[1/2,1/2,0]"
-    cell2 = "[[1/2,1/2,0],[0,1/2,1/2]]"
-    print(affine_trans(test1, cell2, A))
-    print(affine_trans(test2, cell1, A))
-    print(affine_trans(test2, cell2, A))
-
-
-# ==================================================
 test_str_to_list()
-test_affine_trans()
