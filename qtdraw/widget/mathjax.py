@@ -1,3 +1,9 @@
+"""
+MathJaxSVG converter.
+
+This module provides mathjax to SVG converter.
+"""
+
 import re
 import hashlib
 from pathlib import Path
@@ -44,7 +50,15 @@ _HTML_TEMPLATE = """
 class MathJaxSVG:
     _SVG_NS = "http://www.w3.org/2000/svg"
 
+    # ===============================
     def __init__(self, cache_dir=None, clear_cache=False):
+        """
+        MathJax converter.
+
+        Args:
+            cache_dir (str, optional): cache directory.
+            clear_cache (bool, optional): clear disk cache ?
+        """
         self._svg_cache = {}  # memory cache.
 
         # disk cache.

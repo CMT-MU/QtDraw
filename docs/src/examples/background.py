@@ -2,8 +2,7 @@
 # background.py
 #
 import numpy as np
-from qtdraw.widget.qt_event_util import get_qt_application
-from qtdraw.core.pyvista_widget import PyVistaWidget
+from qtdraw import get_qt_application, PyVistaWidget
 
 filename = "output.qtdw"  # output file name.
 

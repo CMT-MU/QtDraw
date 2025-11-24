@@ -28,8 +28,6 @@
     qtdraw.parser.read_material
     qtdraw.parser.vesta
     qtdraw.parser.xsf
-    qtdraw.parser.element
-    qtdraw.parser.data_group
     qtdraw.parser.util_parser
     qtdraw.parser.converter
 ```
@@ -61,6 +59,7 @@
     qtdraw.widget.group_model
     qtdraw.widget.group_view
     qtdraw.widget.logging_util
+    qtdraw.widget.mathjax
     qtdraw.widget.message_box
     qtdraw.widget.pdf_viewer
     qtdraw.widget.qt_event_util

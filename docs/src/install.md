@@ -49,6 +49,7 @@
 
     ```bash
     $ pip install qtdraw
+    $ playwright instll chromium
     ```
     [Linux: Ubuntu 22.04.4 LTS on WSL2]
     ```bash

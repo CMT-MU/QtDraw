@@ -10,9 +10,9 @@ Drawings are associated with crystallographic symmetry operations provided by [M
     > DOI: [https://doi.org/10.1103/PhysRevB.107.195118](https://doi.org/10.1103/PhysRevB.107.195118)
 
 - **Installation**: QtDraw can be installed from PyPI using pip on Python >= 3.11:
-    ```
-    pip install qtdraw
-    playwright instll chromium
+    ```bash
+    $ pip install qtdraw
+    $ playwright instll chromium
     ```
 
 - **Shell commands**:
