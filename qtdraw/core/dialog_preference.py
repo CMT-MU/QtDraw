@@ -6,7 +6,6 @@ This module provides preference dialog for PyVistaWidget.
 
 from PySide6.QtWidgets import QDialog, QTabWidget, QWidget, QDialogButtonBox
 from PySide6.QtCore import Qt
-from PySide6.QtGui import QFont
 
 from qtdraw.widget.custom_widget import Layout, Label, Combo, Spin, DSpin, Check, VSpacer, HSpacer, ColorSelector
 

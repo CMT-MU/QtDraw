@@ -8,12 +8,13 @@ from PySide6.QtWidgets import QTableWidget, QWidget, QSizePolicy, QHeaderView
 from PySide6.QtCore import Qt, QTimer
 
 from qtdraw.widget.custom_widget import MathWidget, Layout
+from qtdraw.widget.mathjax import MathJaxSVG
 
 
 # ==================================================
 class TableView(QTableWidget):
     # ==================================================
-    def __init__(self, parent=None, data=None, header=None, vertical=False, color="black", size=12):
+    def __init__(self, parent=None, data=None, header=None, vertical=False, color="black", size=12, mathjax=None):
         """
         Table view (math).
 
@@ -26,6 +27,11 @@ class TableView(QTableWidget):
             size (int, optional): font size.
         """
         super().__init__(parent)
+        if mathjax is None:
+            self._mathjax = MathJaxSVG()
+        else:
+            self._mathjax = mathjax
+
         if data is None:
             data = [[""]]
 
@@ -54,7 +60,7 @@ class TableView(QTableWidget):
             for j, item in enumerate(r):
                 item = str(item)
                 if item:
-                    math = MathWidget(self.viewport(), text=item, color=color, size=size)
+                    math = MathWidget(self.viewport(), text=item, color=color, size=size, mathjax=self._mathjax)
 
                     wrapper = QWidget(self)
                     layout = Layout(wrapper)

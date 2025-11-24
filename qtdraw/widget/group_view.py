@@ -12,6 +12,7 @@ from qtdraw.core.pyvista_widget_setting import COLOR_WIDGET, COMBO_WIDGET, EDITO
 
 from qtdraw.widget.delegate import ColorDelegate, ComboDelegate, EditorDelegate
 from qtdraw.widget.group_model import GroupModel
+from qtdraw.widget.mathjax import MathJaxSVG
 
 
 # ==================================================
@@ -19,7 +20,7 @@ class GroupView(QTreeView):
     selectionChanged = Signal(str, list, list)  # name, deselect, select.
 
     # ==================================================
-    def __init__(self, parent=None, model=None, use_delegate=True):
+    def __init__(self, parent=None, model=None, use_delegate=True, mathjax=None):
         """
         Group view.
 
@@ -29,6 +30,11 @@ class GroupView(QTreeView):
             use_delegate (bool, optional): use delegate or plain text ?
         """
         super().__init__(parent)
+
+        if mathjax is None:
+            self._mathjax = MathJaxSVG()
+        else:
+            self._mathjax = mathjax
 
         if model is None:
             model = GroupModel(parent)
@@ -57,7 +63,7 @@ class GroupView(QTreeView):
                     option = self.model().column_option[c]
                     color = "black"
                     size = self.font().pointSize()
-                    self.setItemDelegateForColumn(c, EditorDelegate(self, default, option, t, color, size))
+                    self.setItemDelegateForColumn(c, EditorDelegate(self, default, option, t, color, size, self._mathjax))
 
         # hide columns.
         if self._debug["hide"]:

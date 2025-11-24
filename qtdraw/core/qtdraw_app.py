@@ -10,7 +10,6 @@ from pathlib import Path
 import logging
 from PySide6.QtWidgets import QWidget, QMessageBox, QFileDialog, QDialog
 from PySide6.QtCore import Qt
-from PySide6.QtGui import QFont
 
 from qtdraw.core.pyvista_widget import PyVistaWidget, Window
 from qtdraw.core.pyvista_widget_setting import widget_detail as detail

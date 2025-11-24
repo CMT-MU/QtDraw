@@ -76,7 +76,7 @@ class ModulationDialog(QDialog):
         mod_panel["basis"] = ("combo", self.basis, self.basis[0])
         model = GroupModel(self.widget, "modulation", mod_panel)
         model.set_data(data)
-        self.view = GroupView(parent, model)
+        self.view = GroupView(parent, model, mathjax=self.parent().plugin._pvw._mathjax)
         self.view.customContextMenuRequested.disconnect()
 
         # buttons.

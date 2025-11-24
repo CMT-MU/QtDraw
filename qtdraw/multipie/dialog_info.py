@@ -32,6 +32,7 @@ class InfoPanel(QDialog):
         """
         super().__init__(parent)
         latex = parent.plugin._pvw._preference["latex"]
+        mathjax = parent.plugin._pvw._mathjax
 
         self.setWindowTitle(title)
         self.resize(800, 600)
@@ -41,7 +42,7 @@ class InfoPanel(QDialog):
 
         color = latex["color"]
         size = latex["size"]
-        table = TableView(self, data, header, vertical, color, size)
+        table = TableView(self, data, header, vertical, color, size, mathjax)
         layout.addWidget(table)
 
         self.show()

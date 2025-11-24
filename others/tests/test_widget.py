@@ -104,7 +104,6 @@ def test_widget():
         widget.layout.addWidget(o, i // 4, i % 4)
 
     widget.show()
-
     app.exec()
 
 

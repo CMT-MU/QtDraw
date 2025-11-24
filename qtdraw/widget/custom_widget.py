@@ -37,8 +37,7 @@ from qtdraw.widget.validator import (
     validator_vector_site_bond,
     validator_orbital_site_bond,
 )
-
-from qtdraw.mathjax.latex_to_svg import latex_to_svg_string
+from qtdraw.widget.mathjax import MathJaxSVG
 
 
 # ==================================================
@@ -109,7 +108,7 @@ class Label(QLabel):
 # ==================================================
 class MathWidget(QWidget):
     # ==================================================
-    def __init__(self, parent=None, text="", color="black", size=None):
+    def __init__(self, parent=None, text="", color="black", size=None, mathjax=None):
         super().__init__(parent)
 
         if size is None:
@@ -121,22 +120,24 @@ class MathWidget(QWidget):
         self._renderer = None
         self._wsize = (0, 0)
 
+        if mathjax is None:
+            self.mathjax = MathJaxSVG(clear_cache=False)
+        else:
+            self.mathjax = mathjax
+
         self.setText(text)
 
     # ==================================================
     def setText(self, text):
         self._text = text
         text = "$$" + text + "$$"
-        s = latex_to_svg_string(text, self._color)
 
-        root = ET.fromstring(s)
-        x, y, w, h = map(float, root.attrib["viewBox"].split())
-        scale = self._size / 1000.0
-        root.set("width", str(w * scale))
-        root.set("height", str(h * scale))
+        svg, wh = self.mathjax.convert(text, self._color, self._size)
+        self._wsize = wh
+
+        root = ET.fromstring(svg)
         svg_bytes = ET.tostring(root, encoding="utf-8")
         self._renderer = QSvgRenderer(svg_bytes)
-        self._wsize = (int(w * scale), int(h * scale))
         self.setFixedSize(*self._wsize)
         self.update()
 
@@ -146,10 +147,8 @@ class MathWidget(QWidget):
 
     # ==================================================
     def paintEvent(self, event):
-        if not self._renderer:
-            return
-        painter = QPainter(self)
-        self._renderer.render(painter)
+        if self._renderer:
+            self._renderer.render(QPainter(self))
 
     # ==================================================
     def sizeHint(self):
@@ -570,7 +569,7 @@ class Editor(Panel):
     returnPressed = Signal(str)
 
     # ==================================================
-    def __init__(self, parent=None, text="", validator=None, color="black", size=None, bold=False):
+    def __init__(self, parent=None, text="", validator=None, color="black", size=None, bold=False, mathjax=None):
         """
         Editor widget with math/text display.
 
@@ -581,6 +580,7 @@ class Editor(Panel):
             color (str, optional): color name.
             size (int, optional): font size.
             bold (bool, optional): bold face ?
+            mathjax (MathJaxSVG, optional): mathjax converter.
         """
         super().__init__(parent)
 
@@ -598,7 +598,7 @@ class Editor(Panel):
         validated = self._editor._validated or text
 
         self._display = (
-            MathWidget(parent=parent, text=validated, color=color, size=size)
+            MathWidget(parent=parent, text=validated, color=color, size=size, mathjax=mathjax)
             if self._math_mode
             else Label(parent=parent, text=validated, color=color, bold=bold, size=size)
         )

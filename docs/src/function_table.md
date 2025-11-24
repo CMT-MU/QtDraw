@@ -253,7 +253,6 @@
 | release_mouse | Release mouse button. |
 | keyPressEvent | In order to prevent default keys. |
 | closeEvent | In order to close QInteractor, and opened dialogs. |
-| close | In order to close QInteractor, and opened dialogs. |
 | remove_data | Remove data. |
 | show_context_menu | Show context menu. |
 | open_action | Action for open in context menum. |
@@ -366,6 +365,29 @@
 | get_role_str | Get role string. |
 | tolist_index | Row data for given index. |
 | clear_data | Clear data with keeping header and column info. |
+
+
+## <div class='my-heading' style='color: darkgreen;'>mathjax.py
+
+### <div class='my-heading' style='color: royalblue;'>MathJaxSVG
+
+| Function | Summary |
+|--------|----------|
+| MathJaxSVG |  |
+| _thread_main |  |
+| convert | Convert latex to SVG string. |
+| close |  |
+| _get_cache_path |  |
+| _get_attribute |  |
+| _replace_attribute |  |
+| _flatten_svg_string |  |
+
+
+### <div class='my-heading' style='color: royalblue;'>Global function
+
+| Function | Summary |
+|--------|----------|
+| unwrap_inner_svg |  |
 
 
 ## <div class='my-heading' style='color: darkgreen;'>color_palette.py
@@ -801,22 +823,6 @@
 |--------|----------|
 | extract_data_xsf | Read xsf file (grid data part only). |
 | create_data |  |
-
-
-## <div class='my-heading' style='color: darkgreen;'>latex_to_svg.py
-
-### <div class='my-heading' style='color: royalblue;'>Global function
-
-| Function | Summary |
-|--------|----------|
-| _html_to_svg |  |
-| flatten_svg_string |  |
-| find_parent |  |
-| replace_child |  |
-| _get_browser |  |
-| _get_cache_path |  |
-| latex_to_svg_string |  |
-| find_nested_svgs |  |
 
 
 ## <div class='my-heading' style='color: darkgreen;'>qtdraw.py

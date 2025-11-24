@@ -100,18 +100,19 @@ class ColorDelegate(Delegate):
 # ==================================================
 class EditorDelegate(Delegate):
     # ==================================================
-    def __init__(self, parent, default, option, t, color, size):
+    def __init__(self, parent, default, option, t, color, size, mathjax):
         super().__init__(parent)
         self.default = default
         self.option = option
         self.type = t
         self.color = color
         self.size = size
+        self.mathjax = mathjax
 
     # ==================================================
     def createEditor(self, parent, option, index):
         model = index.model()
-        editor = Editor(parent, self.default, (self.type, self.option), color=self.color, size=self.size)
+        editor = Editor(parent, self.default, (self.type, self.option), color=self.color, size=self.size, mathjax=self.mathjax)
         editor.returnPressed.connect(lambda data: model.setData(index, data))
         return editor
 

@@ -6,6 +6,7 @@ This module provides a class to draw various
 """
 
 import os
+import sys
 from pathlib import Path
 import ast
 import subprocess
@@ -33,7 +34,7 @@ from qtdraw.core.pyvista_widget_setting import (
 from qtdraw.core.pyvista_widget_setting import widget_detail as detail
 from qtdraw.core.pyvista_widget_setting import DIGIT
 from qtdraw.core.qtdraw_info import __version__, __date__, __author__
-
+from qtdraw.widget.mathjax import MathJaxSVG
 from qtdraw.widget.group_model import GroupModel
 from qtdraw.widget.tab_group_view import TabGroupView
 from qtdraw.widget.qt_event_util import get_qt_application
@@ -267,6 +268,14 @@ class PyVistaWidget(QtInteractor):
         # avoid recursion of the close() until the PyVistaWidget.__init__() is called, see pyvistaqt/plotting.py.
         self._closed = True
 
+        # suppress std err.
+        fd = sys.stderr.fileno()
+        se = os.dup(fd)
+        dev = os.open(os.devnull, os.O_WRONLY)
+        self._iosave = {"file_no": fd, "stderr": se, "dev_null": dev}
+        os.dup2(dev, fd)
+        os.close(dev)
+
         # set default.
         self._off_screen = off_screen
         self.clear_info()
@@ -282,6 +291,9 @@ class PyVistaWidget(QtInteractor):
             auto_update=detail["auto_update"],
         )
         assert not self._closed
+
+        # set mathjax converter.
+        self._mathjax = MathJaxSVG()
 
         # set data model.
         self.init_data_model()
@@ -306,7 +318,7 @@ class PyVistaWidget(QtInteractor):
             )
 
         # create data view group.
-        self._tab_group_view = TabGroupView(self, self._data)
+        self._tab_group_view = TabGroupView(self, self._data, mathjax=self._mathjax)
         self._tab_group_view.resize(800, 600)
 
         # add "e" key to open data view group.
@@ -560,11 +572,9 @@ class PyVistaWidget(QtInteractor):
 
         if shape is not None:
             row_data["shape"] = shape
-        if surface is None:
-            surface = ""
         if surface is not None:
             if surface == "":
-                row_data["surface"] = shape
+                row_data["surface"] = row_data["shape"]
             else:
                 row_data["surface"] = surface
         if size is not None:
@@ -2726,16 +2736,15 @@ class PyVistaWidget(QtInteractor):
 
         :meta private:
         """
-        self.close()
-
-    # ==================================================
-    def close(self):
-        """
-        In order to close QInteractor, and opened dialogs.
-
-        :meta private:
-        """
+        self._mathjax.close()
         self._tab_group_view.close()
+
+        # restore std err.
+        if self._iosave["stderr"] is not None:
+            os.dup2(self._iosave["stderr"], self._iosave["file_no"])
+            os.close(self._iosave["stderr"])
+            self._iosave["stderr"] = None
+
         super().close()
 
     # ==================================================

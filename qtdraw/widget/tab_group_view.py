@@ -9,12 +9,13 @@ from PySide6.QtGui import QFont
 
 from qtdraw.widget.group_view import GroupView
 from qtdraw.widget.custom_widget import Layout
+from qtdraw.widget.mathjax import MathJaxSVG
 
 
 # ==================================================
 class TabGroupView(QDialog):
     # ==================================================
-    def __init__(self, parent=None, models=None, title="Data"):
+    def __init__(self, parent=None, models=None, title="Data", mathjax=None):
         """
         Data view group.
 
@@ -24,6 +25,10 @@ class TabGroupView(QDialog):
             title (str, optional): window title.
         """
         super().__init__(parent)
+        if mathjax is None:
+            self._mathjax = MathJaxSVG()
+        else:
+            self._mathjax = mathjax
 
         if models is None:
             models = {}
@@ -38,7 +43,7 @@ class TabGroupView(QDialog):
 
         self.view = {}
         for object_type, model in models.items():
-            item = GroupView(parent=self, model=model)
+            item = GroupView(parent=self, model=model, mathjax=self._mathjax)
             self.tab.addTab(item, object_type)
             self.view[object_type] = item
 
