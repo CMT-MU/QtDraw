@@ -747,6 +747,8 @@
 |--------|----------|
 | _str_poly_array | Convert from polynomial string to scalar array. |
 | _str_vec_array | Convert from polynomial string (vector) to vector and scalar (abs.) arrays. |
+| _svg_to_qimage |  |
+| _create_image |  |
 | create_sphere | Create sphere object. |
 | create_bond | Create bond object. |
 | create_vector | Create vector object. |
@@ -761,6 +763,7 @@
 | create_box | Create box object. |
 | create_polygon | Create polygon object. |
 | create_text3d | Create text3d object. |
+| create_text2d | Create text 2d (math). |
 | create_spline | Create spline object. |
 | create_spline_t | Create parametric spline object. |
 | create_isosurface | Create isosurface. |

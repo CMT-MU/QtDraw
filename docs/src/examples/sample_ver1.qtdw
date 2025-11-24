@@ -1,6 +1,7 @@
 """
 QtDraw data file in Python dict format.
 """
+
 {
     "version": "1.1.0",
     "setting": {
@@ -247,5 +248,5 @@ QtDraw data file in Python dict format.
             "",
         ]
     ],
-    "text": [["txt0", [0.02, 0.95], True, "$\\int \\|\\psi(x)\\|^2 dx=1$", 8, "licorice", 0, True, ""]],
+    "text": [["txt0", [0.02, 0.95], True, "$\\int |\\psi(x)|^2 dx=1$", 8, "licorice", 0, True, ""]],
 }

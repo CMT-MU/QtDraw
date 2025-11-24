@@ -17,6 +17,7 @@ dependencies = [
     "pymatgen",
     "gcoreutils",
     "multipie",
+    "playwright",
 ]
 dynamic = ["version"]
 requires-python = ">=3.11"

@@ -72,6 +72,7 @@ from qtdraw.util.basic_object import (
     create_box,
     create_polygon,
     create_text3d,
+    create_text2d,
     create_spline,
     create_spline_t,
     create_isosurface,
@@ -3953,25 +3954,30 @@ class PyVistaWidget(QtInteractor):
         position = data["position"]
         caption = data["caption"]
         size = int(data["size"])
-        color = all_colors[data["color"]][0]  # hex
+        color = all_colors[data["color"]][0]
         font = data["font"]
 
         position = apply(float, text_to_list(position))[:2]
-
-        option = {
-            "position": position,
-            "text": caption,
-            "font_size": size,
-            "color": color,
-            "font": font,
-            "viewport": True,
-        }
 
         if actor == "":
             actor = f"Actor2D(Counter={self._label_counter})"
             self._label_counter += 1
 
-        self.add_text(name=actor, **option)
+        if "$" in caption:  # math.
+            x, y = position
+            ww, wh = self.window_size
+            act = create_text2d(caption, self._mathjax, x * ww, y * wh, 5 * size, data["color"])
+            self.add_actor(act, reset_camera=False, name=actor, pickable=False, render=True)
+        else:
+            option = {
+                "position": position,
+                "text": caption,
+                "font_size": size,
+                "color": color,
+                "font": font,
+                "viewport": True,
+            }
+            self.add_text(name=actor, **option)
         self.set_actor("text2d", index, actor)
 
     # ==================================================

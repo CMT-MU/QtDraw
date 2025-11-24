@@ -18,6 +18,7 @@ The following objects are available.
 - box
 - polygon
 - text3d
+- text2d (math)
 - spline
 - spline (parametric)
 - isosurface
@@ -25,9 +26,17 @@ The following objects are available.
 
 import numpy as np
 import sympy as sp
-from vtk import vtkParametricSpline
+import vtk
 import pyvista as pv
+from PIL import Image
+from vtk import vtkParametricSpline
+from vtkmodules.vtkCommonDataModel import vtkImageData
+from vtkmodules.vtkRenderingCore import vtkActor2D, vtkImageMapper
+from vtkmodules.util import numpy_support
 from pyvista.core.utilities import surface_from_para, geometric_sources
+from PySide6.QtSvg import QSvgRenderer
+from PySide6.QtGui import QImage, QPainter
+from PySide6.QtCore import QByteArray
 
 from qtdraw.core.pyvista_widget_setting import widget_detail as detail
 from qtdraw.core.pyvista_widget_setting import CHOP
@@ -109,6 +118,62 @@ def _str_vec_array(vec, xyz, normalize=True, var=["x", "y", "z"]):
     fs = np.linalg.norm(f, axis=1)
 
     return f, fs
+
+
+# ==================================================
+def _svg_to_qimage(latex, mathjax, size=1024, color="black"):
+    svg, wh = mathjax.convert(latex, size=size, color=color)
+    w, h = wh
+    svg_bytes = QByteArray(svg.encode("utf-8"))
+    renderer = QSvgRenderer(svg_bytes)
+
+    img = QImage(w, h, QImage.Format_ARGB32)
+    img.fill(0x00000000)
+
+    painter = QPainter(img)
+    renderer.render(painter)
+    painter.end()
+
+    channels = 4  # QImage.Format_ARGB32
+
+    buffer = img.bits().tobytes()
+
+    arr = np.frombuffer(buffer, dtype=np.uint8)
+    arr = arr.reshape((h, w, channels))
+
+    return arr
+
+
+# ==================================================
+def _create_image(np_img, x=0, y=0, size=None):
+    np_img = np_img.astype(np.uint8)
+
+    np_img = np_img[::-1, :, :]  # up-side down.
+    h, w, _ = np_img.shape
+    # resize.
+    if size is not None:
+        img = Image.fromarray(np_img)
+        img_resized = img.resize((int(w * size / h), size), Image.LANCZOS)
+        np_img = np.array(img_resized)
+        h, w = size, int(w * size / h)
+
+    vtk_img = vtkImageData()
+    vtk_img.SetDimensions(w, h, 1)
+    vtk_img.AllocateScalars(vtk.VTK_UNSIGNED_CHAR, 4)
+    vtk_arr = numpy_support.numpy_to_vtk(np_img.reshape(-1, 4), array_type=vtk.VTK_UNSIGNED_CHAR, deep=True)
+    vtk_img.GetPointData().SetScalars(vtk_arr)
+
+    mapper = vtkImageMapper()
+    mapper.SetInputData(vtk_img)
+    mapper.SetColorWindow(255)
+    mapper.SetColorLevel(127.5)
+    mapper.SetCustomDisplayExtents((0, w - 1, 0, h - 1, 0, 0))
+
+    actor = vtkActor2D()
+    actor.SetMapper(mapper)
+    actor.SetPosition(x, y)
+
+    return actor
 
 
 # ==================================================
@@ -624,6 +689,28 @@ def create_text3d(text, size=1.0, view=None, depth=1.0, offset=[0, 0, 0], A=None
     obj.transform(A, inplace=True)
 
     return obj
+
+
+# ==================================================
+def create_text2d(latex, mathjax, x, y, size, color):
+    """
+    Create text 2d (math).
+
+    Args:
+        latex (str): LaTeX with $.
+        mathjax (MathJaxSVG): mathjax converter.
+        x (int): x position from left.
+        y (int): y position from bottom.
+        size (int): size (height).
+        color (str): color.
+
+    Returns:
+        - (vtkActor2D) -- actor.
+    """
+    np_img = _svg_to_qimage(latex, mathjax, color=color)
+    actor = _create_image(np_img, x, y, size)
+
+    return actor
 
 
 # ==================================================
