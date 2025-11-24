@@ -7,13 +7,12 @@ This module provides a dialog for modulation dialog.
 import copy
 from PySide6.QtWidgets import QWidget, QDialog, QDialogButtonBox
 
+from qtdraw.util.util import vector3d
 from qtdraw.widget.custom_widget import Layout, Button
 from qtdraw.widget.group_model import GroupModel
 from qtdraw.widget.group_view import GroupView
 from qtdraw.multipie.util_multipie import parse_modulation_list
 from qtdraw.multipie.plugin_multipie_setting import modulation_panel
-
-from gcoreutils.nsarray import NSArray
 
 
 # ==================================================
@@ -129,7 +128,7 @@ class ModulationDialog(QDialog):
 
         self.widget.set_repeat(False)
 
-        v = NSArray.vector3d()
+        v = vector3d()
         samb_type = "orbital" if self.is_orbital else "vector"
         obj, igrid = self.parent().plugin.create_samb_modulation(samb_type, v, self.head, data, dims, ilower)
 

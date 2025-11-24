@@ -391,3 +391,27 @@ def remove_space(s):
 
     s = s.replace(" ", "").replace("\t", "").replace("\n", "")
     return s
+
+
+# ==================================================
+def vector3d(head="Q", pre=None):
+    """
+    3d vector.
+
+    Args:
+        head (str, optional): type of vector, Q/G/T/M.
+        pre (str, optional): head of symbol.
+
+    Returns:
+        NSArray: 3d vector.
+    """
+    d = {"Q": "[x,y,z]", "G": "[X,Y,Z]", "T": "[t_x,t_y,t_z]", "M": "[m_x,m_y,m_z]"}
+    if head not in d.keys():
+        raise KeyError("invalid head is given.")
+
+    if pre is None:
+        s = d[head]
+    else:
+        s = f"[{pre}_x,{pre}_y,{pre}_z]"
+    s = str_to_sympy(s, real=True)
+    return s

@@ -11,7 +11,7 @@ from PySide6.QtCore import Qt
 from multipie.multipole.util.atomic_orbital_util import parse_orb_list
 
 from qtdraw.widget.custom_widget import Label, Layout, Button, Combo, LineEdit, Check, VSpacer, HSpacer, HBar
-from qtdraw.util.util import remove_space
+from qtdraw.util.util import remove_space, vector3d
 from qtdraw.multipie.util_multipie import create_samb_object, check_linear_combination
 from qtdraw.multipie.plugin_multipie_setting import crystal_list, point_group_list, space_group_list, point_group_all_list
 from qtdraw.multipie.dialog_info import (
@@ -1319,7 +1319,7 @@ class MultiPieDialog(QDialog):
         cluster = self.plus["site_cluster"]
         r_site = self.basis_edit_site.text()
 
-        v = NSArray.vector3d()
+        v = vector3d()
         cluster_obj = create_samb_object(
             z_samb,
             cluster,
@@ -1385,7 +1385,7 @@ class MultiPieDialog(QDialog):
             samb -= len(z_samb["Q"])
         t_odd = z_type != "Q"
 
-        v = NSArray.vector3d()
+        v = vector3d()
         cluster_obj = create_samb_object(
             z_samb,
             cluster,
@@ -1448,7 +1448,7 @@ class MultiPieDialog(QDialog):
 
         t_odd = v_type.replace("M", "T").replace("G", "Q") != z_type.replace("M", "T").replace("G", "Q")
 
-        v = NSArray.vector3d()
+        v = vector3d()
         cluster_obj = create_samb_object(
             z_samb,
             cluster,
@@ -1486,7 +1486,7 @@ class MultiPieDialog(QDialog):
             return
         self.basis["vector_lc"] = lc
 
-        v = NSArray.vector3d()
+        v = vector3d()
         lc_basis = {
             i: sp.Matrix(
                 create_samb_object(
@@ -1580,7 +1580,7 @@ class MultiPieDialog(QDialog):
 
         t_odd = o_type.replace("M", "T").replace("G", "Q") != z_type.replace("M", "T").replace("G", "Q")
 
-        v = NSArray.vector3d()
+        v = vector3d()
         cluster_obj = create_samb_object(
             z_samb,
             cluster,
@@ -1619,7 +1619,7 @@ class MultiPieDialog(QDialog):
             return
         self.basis["orbital_lc"] = lc
 
-        v = NSArray.vector3d()
+        v = vector3d()
         lc_basis = {
             i: sp.Matrix(
                 create_samb_object(

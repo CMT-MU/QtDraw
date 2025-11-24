@@ -12,7 +12,7 @@ from multipie.tag.tag_irrep import TagIrrep
 
 from qtdraw.widget.custom_widget import Layout
 from qtdraw.widget.table_view import TableView
-from qtdraw.util.util import list_to_table, to_latex
+from qtdraw.util.util import list_to_table, vector3d, to_latex
 
 from gcoreutils.nsarray import NSArray
 
@@ -31,7 +31,6 @@ class InfoPanel(QDialog):
             vertical (bool): show vertical (sequential number) header ?
         """
         super().__init__(parent)
-        latex = parent.plugin._pvw._preference["latex"]
         mathjax = parent.plugin._pvw._mathjax
 
         self.setWindowTitle(title)
@@ -40,9 +39,8 @@ class InfoPanel(QDialog):
         layout = Layout(self)
         layout.setContentsMargins(10, 10, 10, 10)
 
-        color = latex["color"]
-        size = latex["size"]
-        table = TableView(self, data, header, vertical, color, size, mathjax)
+        size = parent.plugin._pvw._preference["general"]["size"]
+        table = TableView(self, data, header, vertical, "black", size, mathjax)
         layout.addWidget(table)
 
         self.show()
@@ -243,7 +241,7 @@ def show_harmonics(group, rank, head, parent):
                 irrep.latex(),
                 mul,
                 comp,
-                h.expression(v=NSArray.vector3d(head)).latex(),
+                h.expression(v=vector3d(head)).latex(),
                 h.definition().latex(),
             ]
         )

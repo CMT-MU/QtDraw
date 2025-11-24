@@ -1579,6 +1579,8 @@ class PyVistaWidget(QtInteractor):
         self.write_info(f"* read from {f}.")
 
         # set data.
+        if "latex" in all_data["preference"].keys():  # "latex" is deprecated for ver.2.5 or later.
+            del all_data["preference"]["latex"]
         self.set_property(all_data["status"], all_data["preference"])
         if file.suffix == detail["extension"]:
             self.set_camera_info(all_data["camera"])

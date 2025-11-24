@@ -1,0 +1,22 @@
+row = list_to_table(NSArray(v.tolist(), "scalar").latex(), n, "")
+cluster_obj = NSArray(str(NSArray(form).subs(lc_basis).tolist().T.tolist()[0]))
+
+s = NSArray(s)
+site = NSArray.from_str(site.keys())
+bond = NSArray(bond)
+bonds = NSArray.from_str(list(self._group.bond_mapping(bond)[0].keys()))
+pset = NSArray(self.plus["pset"])
+A = NSArray(self._pvw.A_matrix, "matrix")
+pos = NSArray(
+            [[np.cos(2 * np.pi * i / n), np.sin(2 * np.pi * i / n), 0.0] for i in range(n)],
+            "vector",
+            "value",
+        )
+d = NSArray.distance(site, site, G)
+obj = NSArray.zeros((len(igrid) * n_pset, len(cluster)), "vector")
+coeff = NSArray(coeff, fmt="value")
+igrid = NSArray.igrid(repeat, offset)
+site = NSArray(txt)
+bond = NSArray(txt)
+site_bond = NSArray(txt)
+form_variable = set(NSArray(form).variable())

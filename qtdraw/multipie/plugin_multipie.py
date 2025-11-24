@@ -14,6 +14,7 @@ from multipie.tag.tag_group import TagGroup
 from multipie.group.point_group import PointGroup
 from multipie.group.space_group import SpaceGroup
 
+from qtdraw.util.util import vector3d
 from qtdraw.multipie.plugin_multipie_setting import plugin_detail as detail
 from qtdraw.multipie.plugin_multipie_setting import default_status
 from qtdraw.multipie.dialog_multipie import MultiPieDialog
@@ -247,7 +248,7 @@ class MultiPiePlugin:
         h_type = h_type.replace("T", "Q").replace("M", "G")
         hs = self._point_group.harmonics.select(rank=rank, head=h_type)
         h = hs[irrep]
-        ex = h.expression(v=NSArray.vector3d("Q"))
+        ex = h.expression(v=vector3d())
         if self.obj["harmonics_latex"]:
             ex = ex.latex()
         else:
@@ -1042,7 +1043,7 @@ class MultiPiePlugin:
         for i in range(n):
             self._pvw.add_orbital(
                 position=pos[i].value(),
-                shape=str(hs[i].expression(v=NSArray.vector3d())),
+                shape=str(hs[i].expression(v=vector3d())),
                 size=size,
                 color=color,
                 name=pname,
