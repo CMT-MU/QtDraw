@@ -7,16 +7,21 @@ This module provides MultiPie plugin.
 import logging
 import numpy as np
 import sympy as sp
-from gcoreutils.nsarray import NSArray
+
 from multipie import __version__, get_binary
 from multipie.const import __def_dict__
 from multipie.tag.tag_group import TagGroup
 from multipie.group.point_group import PointGroup
 from multipie.group.space_group import SpaceGroup
+
+from qtdraw.util.util import vector3d, str_to_sympy, distance, igrid
+from qtdraw.widget.validator import convert_to_bond
 from qtdraw.multipie.plugin_multipie_setting import plugin_detail as detail
 from qtdraw.multipie.plugin_multipie_setting import default_status
 from qtdraw.multipie.dialog_multipie import MultiPieDialog
-from qtdraw.multipie.util import check_get_site_bond, check_get_site, check_get_bond, combined_format, create_samb_object
+from qtdraw.multipie.util_multipie import check_get_site_bond, check_get_site, check_get_bond, combined_format, create_samb_object
+
+from gcoreutils.nsarray import NSArray
 
 
 # ==================================================
@@ -139,12 +144,12 @@ class MultiPiePlugin:
             self._group = PointGroup(tag, self._core)
             self._point_group = self._group
             self.plus["n_pset"] = 1
-            self.plus["pset"] = "{[0,0,0]}"
+            self.plus["pset"] = "[[0,0,0]]"
         else:
             self._group = SpaceGroup(tag, self._core)
             self._point_group = self._group.pg
             self.plus["n_pset"] = len(self._group.symmetry_operation.plus_set)
-            self.plus["pset"] = str(self._group.symmetry_operation.plus_set)
+            self.plus["pset"] = str(self._group.symmetry_operation.plus_set.tolist())
 
         self.plus["crystal"] = self._group.tag.crystal
         self.plus["wyckoff"] = list(map(str, self._point_group.wyckoff.keys()))[::-1]
@@ -244,7 +249,7 @@ class MultiPiePlugin:
         h_type = h_type.replace("T", "Q").replace("M", "G")
         hs = self._point_group.harmonics.select(rank=rank, head=h_type)
         h = hs[irrep]
-        ex = h.expression(v=NSArray.vector3d("Q"))
+        ex = h.expression(v=vector3d())
         if self.obj["harmonics_latex"]:
             ex = ex.latex()
         else:
@@ -267,6 +272,7 @@ class MultiPiePlugin:
             logging.error(f"cannot find Wyckoff position, {wyckoff}")
             return None, None
 
+        r_site = NSArray(r_site, style="vector")  ### to be replaced.
         wp = self._group.find_wyckoff_position(r_site)
         sym = self._group.wyckoff.site_symmetry(wp)
         wp = str(wp)
@@ -292,6 +298,7 @@ class MultiPiePlugin:
             logging.error(f"format error, {site}")
             return None
 
+        r_site = NSArray(r_site, style="vector")  ### to be replaced.
         if self.plus["point_group"]:
             site = self._group.site_mapping(r_site)
         else:
@@ -305,7 +312,7 @@ class MultiPiePlugin:
         primitive_num = len(site) // n_pset
 
         for no, (s, mp) in enumerate(site.items()):
-            s = NSArray(s)
+            s = str_to_sympy(s).astype(float)
             mp = _mapping_str(mp)
             idx = no % primitive_num
             pset = no // primitive_num
@@ -313,7 +320,7 @@ class MultiPiePlugin:
             if n_pset > 1:
                 name += f"({pset+1})"
             label = f"s{idx+1:02}:{mp}"
-            self._pvw.add_site(position=s.value(), size=size * scale, color=color, name=name, label=label)
+            self._pvw.add_site(position=s, size=size * scale, color=color, name=name, label=label)
 
         return str(r_site)
 
@@ -337,6 +344,7 @@ class MultiPiePlugin:
             logging.error(f"format error, {bond}")
             return None
 
+        r_bond = NSArray(r_bond.reshape(2, 3), style="bond")  ### to be replaced.
         if self.plus["point_group"]:
             bond, nondirectional = self._group.bond_mapping(r_bond)
         else:
@@ -357,8 +365,8 @@ class MultiPiePlugin:
         width = detail["object"]["bond_width"]
 
         for no, (b, mp) in enumerate(bond.items()):
-            b = NSArray(b)
-            v, c = b.convert_bond("bond")
+            v, c = convert_to_bond(b)
+            v, c = v.astype(float), c.astype(float)
             mp = _mapping_str(mp)
             idx = no % primitive_num
             pset = no // primitive_num
@@ -366,9 +374,7 @@ class MultiPiePlugin:
             if n_pset > 1:
                 name += f"({pset+1})"
             label = f"b{idx+1:02}:{mp}"
-            self._pvw.add_bond(
-                position=c.value(), direction=v.value(), color=color1, color2=color2, width=width * scale, name=name, label=label
-            )
+            self._pvw.add_bond(position=c, direction=v, color=color1, color2=color2, width=width * scale, name=name, label=label)
 
         return str(r_bond)
 
@@ -401,11 +407,12 @@ class MultiPiePlugin:
             logging.error(f"format error, {pos}")
             return None
 
+        r_site = NSArray(r_site, style="vector")  ### to be replaced.
         if self.plus["point_group"]:
             site = self._group.site_mapping(r_site)
         else:
             site = self._group.site_mapping(r_site, plus_set=True)
-        site = NSArray.from_str(site.keys())
+        site = np.asarray([str_to_sympy(i) for i in site.keys()], dtype=float)
 
         count = self.counter("vector") + 1
         name0 = f"V{count:02}"
@@ -420,7 +427,7 @@ class MultiPiePlugin:
             if n_pset > 1:
                 name += f"({pset+1})"
             label = f"v{idx+1:02}"
-            self._pvw.add_vector(position=s.value(), direction=vector, length=length * scale, color=color, name=name, label=label)
+            self._pvw.add_vector(position=s, direction=vector, length=length * scale, color=color, name=name, label=label)
 
         return str(vector) + "#" + str(r_site)
 
@@ -449,11 +456,12 @@ class MultiPiePlugin:
             logging.error(f"format error, {pos}")
             return None
 
+        r_site = NSArray(r_site, style="vector")  ###  to be replaced.
         if self.plus["point_group"]:
             site = self._group.site_mapping(r_site)
         else:
             site = self._group.site_mapping(r_site, plus_set=True)
-        site = NSArray.from_str(site.keys())
+        site = np.asarray([str_to_sympy(i) for i in site.keys()], dtype=float)
 
         count = self.counter("orbital") + 1
         name0 = f"O{count:02}"
@@ -468,7 +476,7 @@ class MultiPiePlugin:
             if n_pset > 1:
                 name += f"({pset+1})"
             label = f"o{idx+1:02}"
-            self._pvw.add_orbital(position=s.value(), shape=orbital, size=size * scale, color=color, name=name, label=label)
+            self._pvw.add_orbital(position=s, shape=orbital, size=size * scale, color=color, name=name, label=label)
 
         return str(orbital) + "#" + str(r_site)
 
@@ -478,21 +486,23 @@ class MultiPiePlugin:
         Create combined SAMB.
 
         Args:
-            site_bond (str): site or bond.
+            site_bond (ndarray): site or bond.
             rank (str): harmonics rank.
             head (str): harmonics type.
             ret_bond (bool, optional): return bond ?
 
         Returns:
             - (dict) -- cluster SAMB.
-            - (NSArray) -- site or bond.
+            - (ndarray) -- site or bond ([v,c]).
             - (dict) -- combined SAMB.
         """
         t_rev = {"Q": "Q", "G": "G", "T": "Q", "M": "G"}
 
-        if site_bond.style == "vector":
+        if len(site_bond) == 3:
+            site_bond = NSArray(site_bond, style="vector")  ### to be replaced.
             c_samb, site = self._group.site_cluster_samb(site_bond)
         else:
+            site_bond = NSArray(site_bond.reshape(2, 3), style="bond")  ### to be replaced.
             c_samb, bond = self._group.bond_cluster_samb(site_bond)
             if ret_bond:
                 site = bond
@@ -636,7 +646,7 @@ class MultiPiePlugin:
         if pos is None:
             logging.error(f"format error, {pos}")
             return ""
-        return str(pos)
+        return pos
 
     # ==================================================
     def create_hopping_direction(self, bond):
@@ -644,31 +654,34 @@ class MultiPiePlugin:
         Create normal bond direction.
 
         Args:
-            bond (str): bond.
+            bond (ndarray): bond.
 
         Returns:
-            - (NSArray) -- a set of bonds (no plus_set).
+            - (ndarray) -- a set of bonds (no plus_set).
         """
         pg = self.plus["point_group"]
-        bond = NSArray(bond)
 
-        site = bond.convert_bond("bond_th")[0]
+        site = bond[3:]
+        site = NSArray(site, style="vector")  ### to be replaced.
         if pg:
             sites = list(self._group.site_mapping(site).keys())
         else:
             sites = list(self._group.site_mapping(site, plus_set=True).keys())
-        bonds = NSArray.from_str(list(self._group.bond_mapping(bond)[0].keys()))
+        bond = NSArray(bond.reshape(2, 3), style="bond")  ### to be replaced.
+        bonds = np.asarray([check_get_bond(i) for i in self._group.bond_mapping(bond)[0].keys()], dtype=object)
         new_bonds = []
-        for i in range(len(bonds)):
-            t = bonds[i].convert_bond("bond_th")[0]
+        for b in bonds:
+            v, c = b[0:3], b[3:6]
+            t = c - v / 2
             if not pg:
-                t = t.shift()
+                t = np.mod(t, 1)
+                pass
             if str(t) not in sites:
-                new_bonds.append(str(bonds[i].reverse_direction()))
+                new_bonds.append(np.concatenate([-v, c]))
             else:
-                new_bonds.append(str(bonds[i]))
+                new_bonds.append(b)
 
-        new_bonds = NSArray.from_str(new_bonds)
+        new_bonds = np.asarray(new_bonds)
 
         return new_bonds
 
@@ -678,12 +691,12 @@ class MultiPiePlugin:
         Add site cluster SAMB.
 
         Args:
-            site (NSArray): equivalent sites.
-            obj (NSArray): SAMB weight.
+            site (ndarray): equivalent sites.
+            obj (ndarray): SAMB weight.
             label (str): label.
             scale (float, optional): size scale.
         """
-        pset = NSArray(self.plus["pset"])
+        pset = str_to_sympy(self.plus["pset"])
         pg = self.plus["point_group"]
 
         color = []
@@ -721,15 +734,15 @@ class MultiPiePlugin:
         Add bond cluster SAMB.
 
         Args:
-            bond (NSArray): equivalent bonds.
-            obj (NSArray): SAMB weight.
+            bond (ndarray): equivalent bonds.
+            obj (ndarray): SAMB weight.
             label (str): label.
             z_type (str): SAMB type.
             scale (float, optional): width scale.
         """
-        pset = NSArray(self.plus["pset"])
+        pset = str_to_sympy(self.plus["pset"])
         pg = self.plus["point_group"]
-        A = NSArray(self._pvw.A_matrix, "matrix")
+        A = self._pvw.A_matrix
 
         color = []
         if z_type == "Q":
@@ -798,7 +811,7 @@ class MultiPiePlugin:
                             label=label,
                         )
                     else:
-                        v = v.transform(A, inplace=True)
+                        v = A[0:3, 0:3] @ v
                         if w < 0:
                             v = -v
                         norm = v.norm() * scale
@@ -819,14 +832,14 @@ class MultiPiePlugin:
         Add vector cluster SAMB.
 
         Args:
-            site (NSArray): equivalent sites.
-            obj (NSArray): SAMB weight.
+            site (ndarray): equivalent sites.
+            obj (ndarray): SAMB weight.
             label (str): label.
             z_type (str): SAMB type.
-            v (NSArray): vector variable.
+            v (ndarray): vector variable.
             scale (float, optional): length scale.
         """
-        pset = NSArray(self.plus["pset"])
+        pset = str_to_sympy(self.plus["pset"])
         pg = self.plus["point_group"]
 
         rep = {
@@ -848,14 +861,13 @@ class MultiPiePlugin:
                 if not pg:
                     s = (s + p).shift()
                 if c != 0:
-                    c = str(c.subs(rep).T[:])
-                    c = NSArray(c)
-                    d = c.norm()
+                    c = np.array(c.subs(rep)).reshape(-1).astype(float)
+                    d = np.linalg.norm(c)
                     self._pvw.add_vector(
                         position=s.value(),
-                        direction=c.value(),
+                        direction=c,
                         width=width,
-                        length=d.value() * scale,
+                        length=d * scale,
                         color=color,
                         name=name1,
                         label=label,
@@ -867,13 +879,13 @@ class MultiPiePlugin:
         Add orbital cluster SAMB.
 
         Args:
-            site (NSArray): equivalent sites.
-            obj (NSArray): SAMB weight.
+            site (ndarray): equivalent sites.
+            obj (ndarray): SAMB weight.
             label (str): label.
             z_type (str): SAMB type.
             scale (float, optional): size scale.
         """
-        pset = NSArray(self.plus["pset"])
+        pset = str_to_sympy(self.plus["pset"])
         pg = self.plus["point_group"]
 
         color = detail["general"]["orbital_color_" + z_type]
@@ -905,9 +917,9 @@ class MultiPiePlugin:
 
         Args:
             obj (list): SAMB weight at (cell,pset).
-            igrid (NSArray): cell grid.
+            igrid (ndarray): cell grid.
             head (str): multipole type.
-            v (NSArray): vector variable.
+            v (ndarray): vector variable.
         """
         rep = {
             v[0]: sp.Matrix([1, 0, 0]),
@@ -915,9 +927,9 @@ class MultiPiePlugin:
             v[2]: sp.Matrix([0, 0, 1]),
         }
         color = detail["general"]["vector_color_" + head]
-        pset = NSArray(self.plus["pset"])
+        pset = str_to_sympy(self.plus["pset"])
         n_pset = self.plus["n_pset"]
-        cluster = self.plus["vector_cluster"]
+        cluster = self.plus["vector_cluster"].astype(float)
 
         count = self.counter("vector") + 1
         name = f"mod{count:02}"
@@ -927,14 +939,13 @@ class MultiPiePlugin:
                 if n_pset != 1:
                     label = f"({p_no+1})"
                 for no, (s, c) in enumerate(zip(cluster, obj[i_no][p_no])):
-                    s = (s + p).shift()
+                    s = np.mod(s + p, 1)
                     label1 = f"s{no+1}" + label
                     if c != 0:
-                        c = str(c.subs(rep).T[:])
-                        c = NSArray(c)
-                        d = c.norm().value()
+                        c = np.array(c.subs(rep), dtype=float).reshape(-1)
+                        d = np.linalg.norm(c)
                         self._pvw.add_vector(
-                            position=s.value() + np.array(i), direction=c.value(), length=d, color=color, name=name, label=label1
+                            position=s + np.array(i), direction=c, length=d, color=color, name=name, label=label1
                         )
 
     # ==================================================
@@ -944,11 +955,11 @@ class MultiPiePlugin:
 
         Args:
             obj (list): SAMB weight at (cell,pset).
-            igrid (NSArray): cell grid.
+            igrid (ndarray): cell grid.
             head (str): multipole type.
         """
         color = detail["general"]["orbital_color_" + head]
-        pset = NSArray(self.plus["pset"])
+        pset = str_to_sympy(self.plus["pset"])
         n_pset = self.plus["n_pset"]
         cluster = self.plus["orbital_cluster"]
         size = detail["samb"]["orbital_mod"]
@@ -979,11 +990,11 @@ class MultiPiePlugin:
         Add normal hopping direction.
 
         Args:
-            bond (NSArray): equivalent bonds.
+            bond (ndarray): equivalent bonds.
             label (str): label.
             scale (float, optional): length scale.
         """
-        pset = NSArray(self.plus["pset"])
+        pset = str_to_sympy(self.plus["pset"])
         pg = self.plus["point_group"]
 
         color = "salmon"
@@ -991,20 +1002,21 @@ class MultiPiePlugin:
 
         count = self.counter("hopping") + 1
         name = f"Z_{count:02}"
-        A = NSArray(self._pvw.A_matrix, "matrix")
+        A = str_to_sympy(self._pvw.A_matrix)
         for no, p in enumerate(pset):
             name1 = name
             if n_pset != 1:
                 name1 += f"({no+1:02})"
             for s in bond:
-                v, c = s.convert_bond("bond")
+                v, c = s[0:3], s[3:6]
                 if not pg:
-                    c = (c + p).shift()
-                v = v.transform(A, inplace=True)
-                norm = v.norm() * scale
+                    c = np.mod(c + p, 1)
+                v, c = v.astype(float), c.astype(float)
+                v = A[0:3, 0:3] @ v
+                norm = np.linalg.norm(v) * scale
                 self._pvw.add_vector(
-                    position=c.value(),
-                    direction=v.value(),
+                    position=c,
+                    direction=v,
                     color=color,
                     length=norm * scale,
                     offset=-0.5,
@@ -1031,15 +1043,11 @@ class MultiPiePlugin:
         hs = pgh.select(rank=rank, head=head)
         n = len(hs)
 
-        pos = NSArray(
-            [[np.cos(2 * np.pi * i / n), np.sin(2 * np.pi * i / n), 0.0] for i in range(n)],
-            "vector",
-            "value",
-        )
+        pos = np.array([[np.cos(2 * np.pi * i / n), np.sin(2 * np.pi * i / n), 0.0] for i in range(n)], dtype=float)
         for i in range(n):
             self._pvw.add_orbital(
-                position=pos[i].value(),
-                shape=str(hs[i].expression(v=NSArray.vector3d())),
+                position=pos[i],
+                shape=str(hs[i].expression(v=vector3d())),
                 size=size,
                 color=color,
                 name=pname,
@@ -1056,12 +1064,13 @@ class MultiPiePlugin:
             bond (str): bond neighbor list.
         """
         _, site = self._group.virtual_cluster_basis(wyckoff=wp)
+        site = np.array(site, dtype=float)
 
         pname = wp
         color = detail["general"]["site_color"]
         for i in range(len(site)):
             self._pvw.add_site(
-                position=site[i].value(),
+                position=site[i],
                 color=color,
                 name=pname,
                 label=f"{i+1:02}",
@@ -1069,8 +1078,8 @@ class MultiPiePlugin:
 
         bond = bond.strip("[]")
         bond = list(map(int, bond.split(",")))
-        G = NSArray(self._pvw.G_matrix[0:3, 0:3], style="matrix")
-        d = NSArray.distance(site, site, G)
+        G = self._pvw.G_matrix[0:3, 0:3]
+        d = distance(site, site, G)
         dkey = list(d.keys())
         for i in bond:
             name = f"b{i:02}"
@@ -1079,7 +1088,7 @@ class MultiPiePlugin:
                     t, h = site[idxs[0]], site[idxs[1]]
                     c = (t + h) / 2
                     v = h - t
-                    self._pvw.add_bond(position=c.value(), direction=v.value(), name=name)
+                    self._pvw.add_bond(position=c, direction=v, name=name)
 
     # ==================================================
     def create_samb_modulation(self, samb_type, v, head, modulation, repeat, offset):
@@ -1087,7 +1096,7 @@ class MultiPiePlugin:
         Create SAMB modulation object.
 
         Args:
-            v (NSArray): vector variable.
+            v (ndarray): vector variable.
             head (str): _description_
             modulation (list): modulation info.
             repeat (list): repeat.
@@ -1104,14 +1113,14 @@ class MultiPiePlugin:
         z_samb = self.plus[samb_type + "_z_samb"]
         c_samb = self.plus[samb_type + "_c_samb"]
 
-        obj = NSArray.zeros((len(igrid) * n_pset, len(cluster)), "vector")
+        obj = np.full((len(igrid) * n_pset, len(cluster)), sp.S(0))
         for p_no in range(n_pset):
             for basis, coeff, k, n in modulation:
                 z_head = basis[0]
                 irrep = int(basis[1:]) - 1
                 t_odd = head.replace("M", "T").replace("G", "Q") != z_head.replace("M", "T").replace("G", "Q")
                 phase = phase_dict[(k, n, p_no)]
-                coeff = NSArray(coeff, fmt="value")
+                coeff = str_to_sympy(coeff)
                 cluster_obj = create_samb_object(
                     z_samb,
                     cluster,
@@ -1125,7 +1134,7 @@ class MultiPiePlugin:
                 for i_no in range(len(igrid)):
                     obj[i_no * n_pset + p_no] += coeff * phase[i_no] * cluster_obj
 
-        obj = obj.numpy().reshape((len(igrid), n_pset, len(cluster))).tolist()
+        obj = obj.reshape((len(igrid), n_pset, len(cluster))).tolist()
 
         return obj, igrid
 
@@ -1143,18 +1152,18 @@ class MultiPiePlugin:
             - (dict) -- {(k(str),n(int),plus_set no(int)): [phase at each grid(float)]}.
             - (list) -- cell grid.
         """
-        pset = NSArray(self.plus["pset"])
-        igrid = NSArray.igrid(repeat, offset)
+        pset = str_to_sympy(self.plus["pset"]).astype(float)
+        grid = igrid(repeat, offset)
 
         phase_dict = {}
         for _, _, k, n in modulation:
-            kvec = np.array(NSArray(k).tolist(), dtype=float)
+            kvec = str_to_sympy(k).astype(float)
             for p_no, p in enumerate(pset):
                 lst = []
-                for i in igrid:
-                    kr = 2.0 * np.pi * kvec @ (i.value() + p.value())
+                for i in grid:
+                    kr = 2.0 * np.pi * kvec @ (i + p)
                     phase = np.cos(kr) if n == "cos" else np.sin(kr)
                     lst.append(phase)
                 phase_dict[(k, n, p_no)] = lst
 
-        return phase_dict, igrid.numpy().astype(int).tolist()
+        return phase_dict, grid.astype(int).tolist()

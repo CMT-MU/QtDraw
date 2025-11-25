@@ -5,10 +5,14 @@ This module provides a view class to show object data.
 By clicking right button of mouse, the context menu appears.
 """
 
-from PySide6.QtWidgets import QMenu, QTreeView, QHeaderView
-from PySide6.QtCore import Qt, Signal, QPoint, QModelIndex, QItemSelection, QItemSelectionModel, QObject, QEvent
+from PySide6.QtWidgets import QMenu, QTreeView, QHeaderView, QSizePolicy
+from PySide6.QtCore import Qt, Signal, QPoint, QModelIndex, QItemSelection, QItemSelectionModel
+
 from qtdraw.core.pyvista_widget_setting import COLOR_WIDGET, COMBO_WIDGET, EDITOR_WIDGET, HIDE_TYPE
+
 from qtdraw.widget.delegate import ColorDelegate, ComboDelegate, EditorDelegate
+from qtdraw.widget.group_model import GroupModel
+from qtdraw.widget.mathjax import MathJaxSVG
 
 
 # ==================================================
@@ -16,15 +20,26 @@ class GroupView(QTreeView):
     selectionChanged = Signal(str, list, list)  # name, deselect, select.
 
     # ==================================================
-    def __init__(self, model, parent=None, use_delegate=True):
+    def __init__(self, parent=None, model=None, use_delegate=True, mathjax=None):
         """
         Group view.
 
         Args:
-            model (GroupModel): group model.
             parent (QWidget, optional): parent.
+            model (GroupModel, optional): group model.
+            use_delegate (bool, optional): use delegate or plain text ?
         """
         super().__init__(parent)
+
+        if mathjax is None:
+            self._mathjax = MathJaxSVG()
+        else:
+            self._mathjax = mathjax
+
+        if model is None:
+            model = GroupModel(parent)
+
+        self.setSizePolicy(QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding))
 
         # for debug.
         self._debug = {"delegate": use_delegate, "hide": True, "raw_data": False}
@@ -46,20 +61,9 @@ class GroupView(QTreeView):
                 elif t in EDITOR_WIDGET:
                     default = self.model().column_default[c]
                     option = self.model().column_option[c]
-                    if hasattr(model.parent(), "_preference"):
-                        color = model.parent()._preference["latex"]["color"]
-                        size = model.parent()._preference["latex"]["size"]
-                        dpi = model.parent()._preference["latex"]["dpi"]
-                    else:
-                        color, size, dpi = "black", 11, 120
-                    self.setItemDelegateForColumn(c, EditorDelegate(self, default, option, t, color, size, dpi))
-
-        # set properties.
-        self.setAlternatingRowColors(True)
-        self.header().setSectionsMovable(False)
-        for column in range(self.model().columnCount()):
-            self.header().setSectionResizeMode(column, QHeaderView.ResizeToContents)
-        self.header().setDefaultAlignment(Qt.AlignHCenter | Qt.AlignVCenter)
+                    color = "black"
+                    size = self.font().pointSize()
+                    self.setItemDelegateForColumn(c, EditorDelegate(self, default, option, t, color, size, self._mathjax))
 
         # hide columns.
         if self._debug["hide"]:
@@ -67,18 +71,49 @@ class GroupView(QTreeView):
                 if role in HIDE_TYPE:
                     self.header().setSectionHidden(column, True)
 
+        style = f"""
+        QTreeView::item {{
+            border: none;
+            outline: none;
+            padding: 10px 10px 10px 10px;
+            background: none;
+        }}
+        QTreeView::item:selected {{
+            border: none;
+            outline: none;
+            color: black;
+            background: LemonChiffon;
+        }}
+        """
+        self.setStyleSheet(style)
+
         # context menu.
         self.setContextMenuPolicy(Qt.CustomContextMenu)
         self.customContextMenuRequested.connect(self.context_menu)
 
         # connection to update widget.
         if self._debug["delegate"]:
-            self.model().updateWidget.connect(self.update_widget)
-            self.update_widget(force=True)
+            self.set_widget()
+            model.updateWidget.connect(self.update_widget)
+
+        # set properties.
+        self.setAlternatingRowColors(True)
+        self.header().setSectionsMovable(False)
+        self.setUniformRowHeights(False)
+
+        self.header().setDefaultAlignment(Qt.AlignHCenter | Qt.AlignVCenter)
+        for column in range(self.model().columnCount()):
+            self.header().setSectionResizeMode(column, QHeaderView.ResizeToContents)
 
         self.selectionModel().selectionChanged.connect(self.selection_changed)
 
         self.clear_selection()
+
+    # ==================================================
+    def update_widget(self, index):
+        for column in self.model().column_widget:
+            index = index.siblingAtColumn(column)
+            self.openPersistentEditor(index)
 
     # ==================================================
     def clear_selection(self):
@@ -144,14 +179,14 @@ class GroupView(QTreeView):
         """
         index = self.indexAt(position)
 
-        self.menu = QMenu(self)
-        self.menu.addAction("insert", self.insert_row)
+        menu = QMenu(self)
+        menu.addAction("insert", self.insert_row)
         if index.isValid():
-            self.menu.addAction("copy", self.copy_row)
-            self.menu.addAction("remove", self.remove_row)
+            menu.addAction("copy", self.copy_row)
+            menu.addAction("remove", self.remove_row)
         if self._debug["raw_data"]:
-            self.menu.addAction("raw_data", lambda: print(self.model().tolist()))
-        self.menu.exec(self.mapToGlobal(position))
+            menu.addAction("raw_data", lambda: print(self.model().tolist()))
+        menu.popup(self.mapToGlobal(position))
 
     # ==================================================
     def insert_row(self):
@@ -180,27 +215,16 @@ class GroupView(QTreeView):
         self.model().action_remove_row(indexes)
 
     # ==================================================
-    def update_widget(self, force=False):
-        """
-        Update widget.
-        """
-        if self.isVisible() or force:
-            self.blockSignals(True)
-            self.setUpdatesEnabled(False)
-            self.set_widget(self.model().invisibleRootItem())
-            self.setUpdatesEnabled(True)
-            self.blockSignals(False)
-            self.hide()  # in order to refresh widget.
-            self.show()
-
-    # ==================================================
-    def set_widget(self, item):
+    def set_widget(self, item=None):
         """
         Set widget.
 
         Args:
-            item (QStandardItem): item.
+            item (QStandardItem, optional): item.
         """
+        if item is None:
+            item = self.model().invisibleRootItem()
+
         for row in range(item.rowCount()):
             child = item.child(row)
             if child:
@@ -232,7 +256,7 @@ class GroupView(QTreeView):
                     cindex0 = model.index(row, 0, index0)
                     row_data0.append(model.get_row_data(cindex0))
         else:
-            row_data0 = None
+            row_data0 = []
 
         selected = [i for i in selected.indexes() if i.column() == 0]
         if selected:
@@ -245,7 +269,7 @@ class GroupView(QTreeView):
                     cindex1 = model.index(row, 0, index1)
                     row_data1.append(model.get_row_data(cindex1))
         else:
-            row_data1 = None
+            row_data1 = []
 
         self.selectionChanged.emit(model.group_name, row_data0, row_data1)
 

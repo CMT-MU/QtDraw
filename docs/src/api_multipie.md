@@ -27,5 +27,5 @@
 ## Utility
 
 ```{eval-rst}
-.. automodule:: qtdraw.multipie.util
+.. automodule:: qtdraw.multipie.util_multipie
 ```

@@ -5,7 +5,8 @@ This module provides a test for PDF viewer.
 """
 
 from PySide6.QtWidgets import QApplication
-from qtdraw.util.pdf_viewer import PDFViewer
+
+from qtdraw.widget.pdf_viewer import PDFViewer
 
 
 # ==================================================

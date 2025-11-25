@@ -5,13 +5,15 @@ This module provides a dialog for drawing objects with the help of MultiPie.
 """
 
 import sympy as sp
+import numpy as np
 from PySide6.QtWidgets import QDialog, QTabWidget, QWidget
 from PySide6.QtCore import Qt
-from gcoreutils.nsarray import NSArray
-from gcoreutils.string_util import remove_space
+
 from multipie.multipole.util.atomic_orbital_util import parse_orb_list
+
 from qtdraw.widget.custom_widget import Label, Layout, Button, Combo, LineEdit, Check, VSpacer, HSpacer, HBar
-from qtdraw.multipie.util import create_samb_object, check_linear_combination
+from qtdraw.util.util import remove_space, vector3d, str_to_sympy
+from qtdraw.multipie.util_multipie import create_samb_object, check_linear_combination
 from qtdraw.multipie.plugin_multipie_setting import crystal_list, point_group_list, space_group_list, point_group_all_list
 from qtdraw.multipie.dialog_info import (
     show_symmetry_operation,
@@ -234,20 +236,20 @@ class MultiPieDialog(QDialog):
         layout.setVerticalSpacing(10)
 
         # widget.
-        label_group = Label(parent, "Group", True)
+        label_group = Label(parent, text="Group", bold=True)
         self.group_combo_group_type = Combo(parent, ["space group", "point group"])
         self.group_combo_crystal_type = Combo(parent, crystal_list)
-        label_group_name = Label(parent, "group")
+        label_group_name = Label(parent, text="group")
         self.group_combo_group = Combo(parent, point_group_list["triclinic"])
 
-        label_info = Label(parent, "Info.", True)
-        self.group_button_symmetry_operation = Button(parent, "symmetry operation")
-        self.group_button_character_table = Button(parent, "character table")
-        self.group_button_wyckoff = Button(parent, "Wyckoff position")
-        self.group_button_product_table = Button(parent, "product table")
+        label_info = Label(parent, text="Info.", bold=True)
+        self.group_button_symmetry_operation = Button(parent, text="symmetry operation")
+        self.group_button_character_table = Button(parent, text="character table")
+        self.group_button_wyckoff = Button(parent, text="Wyckoff position")
+        self.group_button_product_table = Button(parent, text="product table")
 
         label_site_bond = Label(
-            parent, "SITE:\n   [x,y,z]\n\nBOND:\n   [tail] ; [head]\n   [vector] @ [center]\n   [start] : [vector]"
+            parent, text="SITE:\n   [x,y,z]\n\nBOND:\n   [tail] ; [head]\n   [vector] @ [center]\n   [start] : [vector]"
         )
 
         layout.addWidget(label_group, 0, 0, 1, 1)
@@ -285,12 +287,12 @@ class MultiPieDialog(QDialog):
         layout.setVerticalSpacing(10)
 
         # widget.
-        label_decomp = Label(parent, "Irrep. Decomposition", True)
-        label_symmetric = Label(parent, "symmetric")
-        label_antisymmetric = Label(parent, "anti-symmetric")
+        label_decomp = Label(parent, text="Irrep. Decomposition", bold=True)
+        label_symmetric = Label(parent, text="symmetric")
+        label_antisymmetric = Label(parent, text="anti-symmetric")
         self.group_combo_irrep1 = Combo(parent)
         self.group_combo_irrep2 = Combo(parent)
-        label_decomp_disp = Label(parent, "decomposition")
+        label_decomp_disp = Label(parent, text="decomposition")
         self.group_label_symmetric_decomp = Label(parent)
         self.group_combo_irrep = Combo(parent)
         self.group_label_antisymmetric_decomp = Label(parent)
@@ -310,16 +312,16 @@ class MultiPieDialog(QDialog):
         layout3.addWidget(self.group_combo_irrep, 1, 1, 1, 1)
         layout3.addWidget(self.group_label_antisymmetric_decomp, 1, 3, 1, 1)
 
-        label_harmonics = Label(parent, "Harmonics", True)
-        self.group_button_harmonics = Button(parent, "show")
-        label_harmonics_type = Label(parent, "type")
+        label_harmonics = Label(parent, text="Harmonics", bold=True)
+        self.group_button_harmonics = Button(parent, text="show")
+        label_harmonics_type = Label(parent, text="type")
         self.group_combo_harmonics_type = Combo(parent, ["Q", "G", "T", "M"])
-        label_harmonics_rank = Label(parent, "rank")
+        label_harmonics_rank = Label(parent, text="rank")
         self.group_combo_harmonics_rank = Combo(parent, map(str, range(12)))
 
-        label_harmonics_decomp = Label(parent, "target PG")
+        label_harmonics_decomp = Label(parent, text="target PG")
         self.group_combo_harmonics_decomp = Combo(parent, point_group_all_list)
-        self.group_button_harmonics_decomp = Button(parent, "decompose")
+        self.group_button_harmonics_decomp = Button(parent, text="decompose")
 
         panel5 = QWidget(parent)
         layout5 = Layout(panel5)
@@ -336,11 +338,11 @@ class MultiPieDialog(QDialog):
         layout4.addWidget(self.group_combo_harmonics_decomp, 1, 1, 1, 1)
         layout4.addWidget(self.group_button_harmonics_decomp, 1, 2, 1, 2)
 
-        label_response = Label(parent, "Response Tensor", True)
-        self.group_button_response = Button(parent, "show")
+        label_response = Label(parent, text="Response Tensor", bold=True)
+        self.group_button_response = Button(parent, text="show")
         self.group_combo_response_type = Combo(parent, ["Q", "G", "T", "M"])
-        label_response_type = Label(parent, "type")
-        label_response_rank = Label(parent, "rank")
+        label_response_type = Label(parent, text="type")
+        label_response_rank = Label(parent, text="rank")
         self.group_combo_response_rank = Combo(parent, map(str, range(1, 5)))
 
         panel11 = QWidget(parent)
@@ -355,12 +357,12 @@ class MultiPieDialog(QDialog):
         layout6.addWidget(label_response_rank, 1, 0, 1, 1, Qt.AlignRight)
         layout6.addWidget(self.group_combo_response_rank, 1, 1, 1, 1)
 
-        label_atomic = Label(parent, "Atomic Multipole", True)
-        self.group_button_atomic = Button(parent, "show")
-        label_atomic_type = Label(parent, "type")
+        label_atomic = Label(parent, text="Atomic Multipole", bold=True)
+        self.group_button_atomic = Button(parent, text="show")
+        label_atomic_type = Label(parent, text="type")
         self.group_combo_atomic_type = Combo(parent, ["", "Q", "G", "T", "M"])
         self.group_combo_atomic_basis_type = Combo(parent, ["lm", "jm"])
-        label_atomic_braket = Label(parent, "bra-ket")
+        label_atomic_braket = Label(parent, text="bra-ket")
         self.group_combo_atomic_bra_basis = Combo(parent, ["s", "p", "d", "f"])
         self.group_combo_atomic_ket_basis = Combo(parent, ["s", "p", "d", "f"])
 
@@ -378,12 +380,12 @@ class MultiPieDialog(QDialog):
         layout7.addWidget(self.group_combo_atomic_bra_basis, 1, 1, 1, 1)
         layout7.addWidget(self.group_combo_atomic_ket_basis, 1, 2, 1, 1)
 
-        label_virtual_cluster = Label(parent, "Virtual Cluster", True)
-        self.group_button_virtual_cluster = Button(parent, "show")
-        label_vc_neighbor = Label(parent, "neighbor")
-        label_wyckoff = Label(parent, "wyckoff")
+        label_virtual_cluster = Label(parent, text="Virtual Cluster", bold=True)
+        self.group_button_virtual_cluster = Button(parent, text="show")
+        label_vc_neighbor = Label(parent, text="neighbor")
+        label_wyckoff = Label(parent, text="wyckoff")
         self.group_combo_vc_wyckoff = Combo(parent)
-        self.group_edit_vc_neighbor = LineEdit(parent, "", ("ilist", (0,)))
+        self.group_edit_vc_neighbor = LineEdit(parent, text="", validator=("list_int", {"shape": (0,)}))
 
         panel9 = QWidget(parent)
         layout9 = Layout(panel9)
@@ -438,9 +440,9 @@ class MultiPieDialog(QDialog):
         # widget.
         label_site = Label(
             parent,
-            '<span style="font-weight:bold;">Site</span> : draw equivalent sites.<br>&nbsp;&nbsp;1. input representative SITE, + ENTER.',
+            text='<span style="font-weight:bold;">Site</span> : draw equivalent sites.<br>&nbsp;&nbsp;1. input representative SITE, + ENTER.',
         )
-        self.object_edit_site = LineEdit(parent, "", ("site", False))
+        self.object_edit_site = LineEdit(parent, text="", validator=("site", {"use_var": False}))
 
         panel1 = QWidget(parent)
         layout1 = Layout(panel1)
@@ -449,9 +451,9 @@ class MultiPieDialog(QDialog):
 
         label_bond = Label(
             parent,
-            '<span style="font-weight:bold;">Bond</span> : draw equivalent bonds.<br>&nbsp;&nbsp;1. input representative BOND, + ENTER.',
+            text='<span style="font-weight:bold;">Bond</span> : draw equivalent bonds.<br>&nbsp;&nbsp;1. input representative BOND, + ENTER.',
         )
-        self.object_edit_bond = LineEdit(parent, "", ("bond", False))
+        self.object_edit_bond = LineEdit(parent, text="", validator=("bond", {"use_var": False}))
 
         panel2 = QWidget(parent)
         layout2 = Layout(panel2)
@@ -460,10 +462,10 @@ class MultiPieDialog(QDialog):
 
         label_vector = Label(
             parent,
-            '<span style="font-weight:bold;">Vector</span> : draw vectors at equivalent sites or bonds.<br>&nbsp;&nbsp;1. choose type, 2. input vector [x,y,z] # representative SITE/BOND, + ENTER.',
+            text='<span style="font-weight:bold;">Vector</span> : draw vectors at equivalent sites or bonds.<br>&nbsp;&nbsp;1. choose type, 2. input vector [x,y,z] # representative SITE/BOND, + ENTER.',
         )
         self.object_combo_vector_type = Combo(parent, ["Q", "G", "T", "M"])
-        self.object_edit_vector = LineEdit(parent, "", ("vector_site_bond", False))
+        self.object_edit_vector = LineEdit(parent, text="", validator=("vector_site_bond", {"use_var": False}))
 
         panel3 = QWidget(parent)
         layout3 = Layout(panel3)
@@ -473,10 +475,10 @@ class MultiPieDialog(QDialog):
 
         label_orbital = Label(
             parent,
-            '<span style="font-weight:bold;">Orbital</span> : draw orbitals at equivalent sites or bonds.<br>&nbsp;&nbsp;1. choose type, 2. input orbital (xyz polynomial) # representative SITE/BOND, + ENTER.',
+            text='<span style="font-weight:bold;">Orbital</span> : draw orbitals at equivalent sites or bonds.<br>&nbsp;&nbsp;1. choose type, 2. input orbital (xyz polynomial) # representative SITE/BOND, + ENTER.',
         )
         self.object_combo_orbital_type = Combo(parent, ["Q", "G", "T", "M"])
-        self.object_edit_orbital = LineEdit(parent, "", ("orbital_site_bond", False))
+        self.object_edit_orbital = LineEdit(parent, text="", validator=("orbital_site_bond", {"use_var": False}))
 
         panel4 = QWidget(parent)
         layout4 = Layout(panel4)
@@ -486,15 +488,15 @@ class MultiPieDialog(QDialog):
 
         label_harmonics = Label(
             parent,
-            '<span style="font-weight:bold;">Harmonics</span> : draw point-group harmonics at equivalent sites or bonds.<br>&nbsp;&nbsp;1. choose (type,rank,irrep.), 2. input representative SITE/BOND, + ENTER.<br>&nbsp;&nbsp;\u21d2  expression of harmonics is also shown (in LaTeX form).',
+            text='<span style="font-weight:bold;">Harmonics</span> : draw point-group harmonics at equivalent sites or bonds.<br>&nbsp;&nbsp;1. choose (type,rank,irrep.), 2. input representative SITE/BOND, + ENTER.<br>&nbsp;&nbsp;\u21d2  expression of harmonics is also shown (in LaTeX form).',
         )
         self.object_combo_harmonics_type = Combo(parent, ["Q", "G", "T", "M"])
         self.object_combo_harmonics_rank = Combo(parent, map(str, range(12)))
         self.object_combo_harmonics_irrep = Combo(parent)
-        self.object_edit_harmonics = LineEdit(parent, "", ("site_bond", False))
-        label_harmonics_ex = Label(parent, "expression")
+        self.object_edit_harmonics = LineEdit(parent, text="", validator=("site_bond", {"use_var": False}))
+        label_harmonics_ex = Label(parent, text="expression")
         self.object_edit_harmonics_ex = LineEdit(parent)
-        self.object_check_harmonics_latex = Check(parent, "LaTeX")
+        self.object_check_harmonics_latex = Check(parent, text="LaTeX")
 
         panel5 = QWidget(parent)
         layout5 = Layout(panel5)
@@ -509,12 +511,12 @@ class MultiPieDialog(QDialog):
 
         label_wyckoff = Label(
             parent,
-            '<span style="font-weight:bold;">Wyckoff</span> : find wyckoff position (WP) and site symmetry (SS).<br>&nbsp;&nbsp;1. input representative SITE/BOND, + ENTER. \u21d2 WP and SS are shown.',
+            text='<span style="font-weight:bold;">Wyckoff</span> : find wyckoff position (WP) and site symmetry (SS).<br>&nbsp;&nbsp;1. input representative SITE/BOND, + ENTER. \u21d2 WP and SS are shown.',
         )
-        self.object_edit_wyckoff = LineEdit(parent, "", ("site_bond", False))
-        label_wyckoff_position = Label(parent, "\u21d2 WP")
+        self.object_edit_wyckoff = LineEdit(parent, text="", validator=("site_bond", {"use_var": False}))
+        label_wyckoff_position = Label(parent, text="\u21d2 WP")
         self.object_edit_wyckoff_position = LineEdit(parent)
-        label_symmetry = Label(parent, "sym.")
+        label_symmetry = Label(parent, text="sym.")
         self.object_edit_wyckoff_symmetry = LineEdit(parent)
 
         panel6 = QWidget(parent)
@@ -563,13 +565,13 @@ class MultiPieDialog(QDialog):
         # widget.
         label_site = Label(
             parent,
-            '<span style="font-weight:bold;">Site</span> : draw site-cluster basis.<br>&nbsp;&nbsp;1. input representative SITE, + ENTER, \u21d2 2. choose basis, 3. push "draw".',
+            text='<span style="font-weight:bold;">Site</span> : draw site-cluster basis.<br>&nbsp;&nbsp;1. input representative SITE, + ENTER, \u21d2 2. choose basis, 3. push "draw".',
         )
-        self.basis_edit_site = LineEdit(parent, "", ("site", False))
+        self.basis_edit_site = LineEdit(parent, text="", validator=("site", {"use_var": False}))
 
-        label_site_to = Label(parent, "\u21d2 basis")
+        label_site_to = Label(parent, text="\u21d2 basis")
         self.basis_combo_site_samb = Combo(parent)
-        self.basis_button_site_draw = Button(parent, "draw")
+        self.basis_button_site_draw = Button(parent, text="draw")
 
         panel1 = QWidget(parent)
         layout1 = Layout(panel1)
@@ -581,12 +583,12 @@ class MultiPieDialog(QDialog):
 
         label_bond = Label(
             parent,
-            '<span style="font-weight:bold;">Bond</span> : draw bond-cluster basis.<br>&nbsp;&nbsp;1. input representative BOND, + ENTER, \u21d2 2. choose basis, 3. push "draw".',
+            text='<span style="font-weight:bold;">Bond</span> : draw bond-cluster basis.<br>&nbsp;&nbsp;1. input representative BOND, + ENTER, \u21d2 2. choose basis, 3. push "draw".',
         )
-        self.basis_edit_bond = LineEdit(parent, "", ("bond", False))
-        label_bond_to = Label(parent, "\u21d2 basis")
+        self.basis_edit_bond = LineEdit(parent, text="", validator=("bond", {"use_var": False}))
+        label_bond_to = Label(parent, text="\u21d2 basis")
         self.basis_combo_bond_samb = Combo(parent)
-        self.basis_button_bond_draw = Button(parent, "draw")
+        self.basis_button_bond_draw = Button(parent, text="draw")
 
         panel2 = QWidget(parent)
         layout2 = Layout(panel2)
@@ -598,18 +600,18 @@ class MultiPieDialog(QDialog):
 
         label_vector = Label(
             parent,
-            '<span style="font-weight:bold;">Vector</span> : draw symmetry-adapted vector.<br>&nbsp;&nbsp;1. choose type, 2. input representative SITE/BOND, + ENTER,<br>&nbsp;&nbsp;\u21d2  3. choose (type,basis), 4. push "draw" or 3. input linear combination, + ENTER or 3. push "modulation".',
+            text='<span style="font-weight:bold;">Vector</span> : draw symmetry-adapted vector.<br>&nbsp;&nbsp;1. choose type, 2. input representative SITE/BOND, + ENTER,<br>&nbsp;&nbsp;\u21d2  3. choose (type,basis), 4. push "draw" or 3. input linear combination, + ENTER or 3. push "modulation".',
         )
         self.basis_combo_vector_type = Combo(parent, ["Q", "G", "T", "M"])
-        self.basis_edit_vector = LineEdit(parent, "", ("site_bond", False))
-        label_vector_to = Label(parent, "\u21d2 basis")
+        self.basis_edit_vector = LineEdit(parent, text="", validator=("site_bond", {"use_var": False}))
+        label_vector_to = Label(parent, text="\u21d2 basis")
         self.basis_combo_vector_samb_type = Combo(parent, ["Q", "G", "T", "M"])
         self.basis_combo_vector_samb = Combo(parent)
-        self.basis_button_vector_draw = Button(parent, "draw")
+        self.basis_button_vector_draw = Button(parent, text="draw")
 
-        label_vector_lc = Label(parent, "linear combination")
+        label_vector_lc = Label(parent, text="linear combination")
         self.basis_edit_vector_lc = LineEdit(parent)
-        self.basis_button_vector_modulation = Button(parent, "modulation")
+        self.basis_button_vector_modulation = Button(parent, text="modulation")
         self.basis_combo_vector_modulation_type = Combo(parent, ["Q,G", "T,M"])
         self.basis_edit_vector_modulation = LineEdit(parent)
 
@@ -630,19 +632,19 @@ class MultiPieDialog(QDialog):
 
         label_orbital = Label(
             parent,
-            '<span style="font-weight:bold;">Orbital</span> : draw symmetry-adapted orbital.<br>&nbsp;&nbsp;1. choose (type,rank), 2. input representative SITE/BOND, + ENTER,<br>&nbsp;&nbsp;\u21d2  3. choose (type,basis), 4. push "draw" or 3. input linear combination, + ENTER or 3. push "modulation".',
+            text='<span style="font-weight:bold;">Orbital</span> : draw symmetry-adapted orbital.<br>&nbsp;&nbsp;1. choose (type,rank), 2. input representative SITE/BOND, + ENTER,<br>&nbsp;&nbsp;\u21d2  3. choose (type,basis), 4. push "draw" or 3. input linear combination, + ENTER or 3. push "modulation".',
         )
         self.basis_combo_orbital_type = Combo(parent, ["Q", "G", "T", "M"])
         self.basis_combo_orbital_rank = Combo(parent, map(str, range(12)))
-        self.basis_edit_orbital = LineEdit(parent, "", ("site_bond", False))
-        label_orbital_to = Label(parent, "\u21d2 basis")
+        self.basis_edit_orbital = LineEdit(parent, text="", validator=("site_bond", {"use_var": False}))
+        label_orbital_to = Label(parent, text="\u21d2 basis")
         self.basis_combo_orbital_samb_type = Combo(parent, ["Q", "G", "T", "M"])
         self.basis_combo_orbital_samb = Combo(parent)
-        self.basis_button_orbital_draw = Button(parent, "draw")
+        self.basis_button_orbital_draw = Button(parent, text="draw")
 
-        label_orbital_lc = Label(parent, "linear combination")
+        label_orbital_lc = Label(parent, text="linear combination")
         self.basis_edit_orbital_lc = LineEdit(parent)
-        self.basis_button_orbital_modulation = Button(parent, "modulation")
+        self.basis_button_orbital_modulation = Button(parent, text="modulation")
         self.basis_combo_orbital_modulation_type = Combo(parent, ["Q,G", "T,M"])
         self.basis_edit_orbital_modulation = LineEdit(parent)
 
@@ -664,9 +666,9 @@ class MultiPieDialog(QDialog):
 
         label_hopping = Label(
             parent,
-            '<span style="font-weight:bold;">Hopping</span> : draw hopping direction.<br>&nbsp;&nbsp;1. input representative BOND, + ENTER.',
+            text='<span style="font-weight:bold;">Hopping</span> : draw hopping direction.<br>&nbsp;&nbsp;1. input representative BOND, + ENTER.',
         )
-        self.basis_edit_hopping = LineEdit(parent, "", ("bond", False))
+        self.basis_edit_hopping = LineEdit(parent, text="", validator=("bond", {"use_var": False}))
 
         panel5 = QWidget(parent)
         layout5 = Layout(panel5)
@@ -1316,7 +1318,7 @@ class MultiPieDialog(QDialog):
         cluster = self.plus["site_cluster"]
         r_site = self.basis_edit_site.text()
 
-        v = NSArray.vector3d()
+        v = vector3d()
         cluster_obj = create_samb_object(
             z_samb,
             cluster,
@@ -1382,7 +1384,7 @@ class MultiPieDialog(QDialog):
             samb -= len(z_samb["Q"])
         t_odd = z_type != "Q"
 
-        v = NSArray.vector3d()
+        v = vector3d()
         cluster_obj = create_samb_object(
             z_samb,
             cluster,
@@ -1445,7 +1447,7 @@ class MultiPieDialog(QDialog):
 
         t_odd = v_type.replace("M", "T").replace("G", "Q") != z_type.replace("M", "T").replace("G", "Q")
 
-        v = NSArray.vector3d()
+        v = vector3d()
         cluster_obj = create_samb_object(
             z_samb,
             cluster,
@@ -1473,6 +1475,7 @@ class MultiPieDialog(QDialog):
             return
 
         z_type = self.basis_combo_vector_samb_type.currentText()
+        v_type = self.basis_combo_vector_type.currentText()
         r_site_bond = self.basis_edit_vector.text()
         lc = self.basis_edit_vector_lc.text()
         cluster = self.plus["vector_cluster"]
@@ -1482,7 +1485,7 @@ class MultiPieDialog(QDialog):
             return
         self.basis["vector_lc"] = lc
 
-        v = NSArray.vector3d()
+        v = vector3d()
         lc_basis = {
             i: sp.Matrix(
                 create_samb_object(
@@ -1498,11 +1501,11 @@ class MultiPieDialog(QDialog):
             )
             for i in ex_var
         }
-        cluster_obj = NSArray(str(NSArray(form).subs(lc_basis).tolist().T.tolist()[0]))
+        cluster_obj = str_to_sympy(form, subs=lc_basis).reshape(-1)
 
         label = remove_space(lc) + " \u21d0 " + z_type + ", " + remove_space(r_site_bond)
 
-        self.plugin.add_vector_samb(cluster, cluster_obj, label, z_type, v, scale)
+        self.plugin.add_vector_samb(cluster, cluster_obj, label, v_type, v, scale)
 
     # ==================================================
     def basis_gen_vector_modulation(self):
@@ -1576,7 +1579,7 @@ class MultiPieDialog(QDialog):
 
         t_odd = o_type.replace("M", "T").replace("G", "Q") != z_type.replace("M", "T").replace("G", "Q")
 
-        v = NSArray.vector3d()
+        v = vector3d()
         cluster_obj = create_samb_object(
             z_samb,
             cluster,
@@ -1604,6 +1607,7 @@ class MultiPieDialog(QDialog):
             return
 
         z_type = self.basis_combo_orbital_samb_type.currentText()
+        o_type = self.basis_combo_orbital_type.currentText()
         rank = self.basis_combo_orbital_rank.currentText()
         lc = self.basis_edit_orbital_lc.text()
         r_site_bond = self.basis_edit_orbital.text()
@@ -1614,7 +1618,7 @@ class MultiPieDialog(QDialog):
             return
         self.basis["orbital_lc"] = lc
 
-        v = NSArray.vector3d()
+        v = vector3d()
         lc_basis = {
             i: sp.Matrix(
                 create_samb_object(
@@ -1630,10 +1634,10 @@ class MultiPieDialog(QDialog):
             )
             for i in ex_var
         }
-        cluster_obj = NSArray(str(NSArray(form).subs(lc_basis).tolist().T.tolist()[0]))
+        cluster_obj = str_to_sympy(form, subs=lc_basis).reshape(-1)
 
         label = remove_space(lc) + " \u21d0 " + z_type + rank + ", " + remove_space(r_site_bond)
-        self.plugin.add_orbital_samb(cluster, cluster_obj, label, z_type, scale)
+        self.plugin.add_orbital_samb(cluster, cluster_obj, label, o_type, scale)
 
     # ==================================================
     def basis_gen_orbital_modulation(self):
@@ -1666,9 +1670,9 @@ class MultiPieDialog(QDialog):
         """
         pos = self.basis_edit_hopping.text()
         pos = self.plugin.gen_hopping_samb(pos)
-        self.basis["hopping"] = pos
+        self.basis["hopping"] = str(pos.tolist())
 
-        if pos != "":
+        if str(pos) != "":
             bond = self.plugin.create_hopping_direction(pos)
             label = "T \u21d0 " + remove_space(str(pos))
 

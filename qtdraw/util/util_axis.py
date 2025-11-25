@@ -8,10 +8,13 @@ import vtk
 import pyvista as pv
 import numpy as np
 from math import floor, ceil
-from gcoreutils.color_palette import all_colors
-from gcoreutils.convert_util import text_to_list
+
 from qtdraw.core.pyvista_widget_setting import widget_detail as detail
 from qtdraw.core.pyvista_widget_setting import CHOP, DIGIT
+
+from qtdraw.widget.color_palette import all_colors
+
+from qtdraw.util.util import text_to_list
 
 
 # ==================================================
@@ -311,7 +314,7 @@ def get_view_vector(n, A):
 
 
 # ==================================================
-def create_grid(ilower, dims):
+def create_cell_grid(ilower, dims):
     """
     Create grid point.
 

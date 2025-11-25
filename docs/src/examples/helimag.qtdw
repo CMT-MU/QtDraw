@@ -1445,7 +1445,6 @@ QtDraw data file in Python dict format.
         "label": {"font": "arial", "size": 18, "bold": False, "italic": False, "color": "licorice", "default_check": False},
         "cell": {"line_width": 1.0, "color": "black", "opacity": 1.0},
         "axis": {"size": 18, "bold": True, "italic": False, "label": "[a,b,c]"},
-        "latex": {"color": "black", "size": 10, "dpi": 120},
     },
     "camera": {
         "position": [4.35, 16.294151, 6.51766],
