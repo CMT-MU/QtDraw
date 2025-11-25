@@ -6,12 +6,11 @@ This module provides utilities for logging.
 
 import sys
 import os
-import time
 import logging
-from functools import wraps
 from PySide6.QtWidgets import QWidget, QPlainTextEdit, QGridLayout, QFileDialog
 from PySide6.QtGui import QFont
-from qtdraw.util.qt_event_util import ExceptionHook
+
+from qtdraw.widget.qt_event_util import ExceptionHook
 
 
 # ==================================================
@@ -69,27 +68,6 @@ class LogHandler(logging.Handler):
 
 
 # ==================================================
-def timer(func):
-    """
-    Timer decorater.
-
-    Args:
-        func (Function): function to decorate.
-    """
-
-    @wraps(func)
-    def wrapper(*args, **kwargs):
-        start = time.time()
-        logging.info(f"=== ({func.__name__}) begin === ")
-        result = func(*args, **kwargs)
-        end = time.time()
-        logging.info(f"=== ({func.__name__}) end ({end - start:.7f} [s] elapsed) ===")
-        return result
-
-    return wrapper
-
-
-# ==================================================
 def start_logging(level=logging.DEBUG, stream=None, text_widget=None, hook=True):
     """
     Start logging.
@@ -114,16 +92,16 @@ def start_logging(level=logging.DEBUG, stream=None, text_widget=None, hook=True)
 # ==================================================
 class LogWidget(QWidget):
     # ==================================================
-    def __init__(self, title="log message", level=logging.DEBUG, stream=None, hook=True, parent=None):
+    def __init__(self, parent=None, title="log message", level=logging.DEBUG, stream=None, hook=True):
         """
         Log widget.
 
         Args:
+            parent (QObject, optional): parent.
             title (str, optional): window title.
             level (Level, optional): log level.
             stream (TextIO, optional): stream for logging.
             hook (bool, optional): exception hook ?
-            parent (QObject, optional): parent.
 
         Note:
             - if stream is True, sys.stderr is used.

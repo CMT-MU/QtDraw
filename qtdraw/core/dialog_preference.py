@@ -6,8 +6,8 @@ This module provides preference dialog for PyVistaWidget.
 
 from PySide6.QtWidgets import QDialog, QTabWidget, QWidget, QDialogButtonBox
 from PySide6.QtCore import Qt
+
 from qtdraw.widget.custom_widget import Layout, Label, Combo, Spin, DSpin, Check, VSpacer, HSpacer, ColorSelector
-from qtdraw.util.util import create_style_sheet
 
 
 # ==================================================
@@ -32,17 +32,15 @@ class PreferenceDialog(QDialog):
         panel_axis = self.create_axis_panel(self)
         panel_cell = self.create_cell_panel(self)
         panel_light = self.create_light_panel(self)
-        panel_latex = self.create_latex_panel(self)
         panel_general = self.create_general_panel(self)
 
         # tab content.
         tab = QTabWidget(self)
+        tab.addTab(panel_general, "General")
         tab.addTab(panel_label, "Label")
         tab.addTab(panel_axis, "Axis")
         tab.addTab(panel_cell, "Cell")
         tab.addTab(panel_light, "Light")
-        tab.addTab(panel_latex, "LaTeX")
-        tab.addTab(panel_general, "General")
 
         # button.
         button = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel | QDialogButtonBox.Apply)
@@ -68,15 +66,15 @@ class PreferenceDialog(QDialog):
         preference = self.preference["label"]
 
         # widgets.
-        label_font = Label(parent, "font")
+        label_font = Label(parent, text="font")
         combo_font = Combo(parent, ["arial", "courier", "times"])
-        label_size = Label(parent, "size")
+        label_size = Label(parent, text="size")
         spin_size = Spin(parent, 4, 48)
-        label_color = Label(parent, "color")
+        label_color = Label(parent, text="color")
         combo_color = ColorSelector(parent, preference["color"], color_type="color")
-        check_bold = Check(parent, "bold")
-        check_italic = Check(parent, "italic")
-        check_default = Check(parent, "default check")
+        check_bold = Check(parent, text="bold")
+        check_italic = Check(parent, text="italic")
+        check_default = Check(parent, text="default check")
 
         # set layout.
         layout.addWidget(label_font, 0, 0, 1, 1, Qt.AlignRight)
@@ -96,6 +94,7 @@ class PreferenceDialog(QDialog):
         spin_size.setProperty("value", preference["size"])
         check_bold.setChecked(preference["bold"])
         check_italic.setChecked(preference["italic"])
+        combo_color.setCurrentText(preference["color"])
         check_default.setChecked(preference["default_check"])
 
         # connections.
@@ -128,12 +127,12 @@ class PreferenceDialog(QDialog):
         }
 
         # widgets.
-        label_type = Label(parent, "type")
+        label_type = Label(parent, text="type")
         combo_type = Combo(parent, ["xyz", "abc", "abc*"])
-        label_size = Label(parent, "size")
+        label_size = Label(parent, text="size")
         spin_size = Spin(parent, 12, 36)
-        check_bold = Check(parent, "bold")
-        check_italic = Check(parent, "italic")
+        check_bold = Check(parent, text="bold")
+        check_italic = Check(parent, text="italic")
 
         # set layout.
         layout.addWidget(label_type, 0, 0, 1, 1, Qt.AlignRight)
@@ -171,11 +170,11 @@ class PreferenceDialog(QDialog):
         preference = self.preference["cell"]
 
         # widgets.
-        label_width = Label(parent, "width")
+        label_width = Label(parent, text="width")
         spin_width = DSpin(parent, 0.0, 5.0, 0.1)
-        label_color = Label(parent, "color")
+        label_color = Label(parent, text="color")
         combo_color = ColorSelector(parent, preference["color"], color_type="color")
-        label_opacity = Label(parent, "opacity")
+        label_opacity = Label(parent, text="opacity")
         spin_opacity = DSpin(parent, 0.0, 1.0, 0.1)
 
         # set layout.
@@ -190,6 +189,7 @@ class PreferenceDialog(QDialog):
 
         # initial values.
         spin_width.setProperty("value", preference["line_width"])
+        combo_color.setCurrentText(preference["color"])
         spin_opacity.setProperty("value", preference["opacity"])
 
         # connections.
@@ -211,16 +211,16 @@ class PreferenceDialog(QDialog):
         preference = self.preference["light"]
 
         # widgets.
-        label_intensity = Label(parent, "intensity")
+        label_intensity = Label(parent, text="intensity")
         spin_intensity = DSpin(parent, 0.0, 1.0, 0.05)
-        check_pbr = Check(parent, "physics based rendering")
-        label_metallic = Label(parent, "metallic")
+        check_pbr = Check(parent, text="physics based rendering")
+        label_metallic = Label(parent, text="metallic")
         spin_metallic = DSpin(parent, 0.0, 1.0, 0.1)
-        label_roughness = Label(parent, "roughness")
+        label_roughness = Label(parent, text="roughness")
         spin_roughness = DSpin(parent, 0.0, 1.0, 0.1)
-        label_color = Label(parent, "color")
+        label_color = Label(parent, text="color")
         combo_color = ColorSelector(parent, preference["color"], color_type="color")
-        label_type = Label(parent, "type")
+        label_type = Label(parent, text="type")
         combo_type = Combo(parent, ["lightkit", "3 lights", "ver1"])
 
         # set layout.
@@ -244,6 +244,7 @@ class PreferenceDialog(QDialog):
         spin_metallic.setProperty("value", preference["metallic"])
         spin_roughness.setProperty("value", preference["roughness"])
         combo_type.setCurrentText(preference["type"])
+        combo_color.setCurrentText(preference["color"])
 
         # connections.
         spin_intensity.valueChanged.connect(lambda v: preference.update({"intensity": round(v, 4)}))
@@ -252,46 +253,6 @@ class PreferenceDialog(QDialog):
         spin_roughness.valueChanged.connect(lambda v: preference.update({"roughness": round(v, 4)}))
         combo_color.currentTextChanged.connect(lambda v: preference.update({"color": v}))
         combo_type.currentTextChanged.connect(lambda v: preference.update({"type": v}))
-
-        return panel
-
-    # ==================================================
-    def create_latex_panel(self, parent):
-        """
-        Create LaTeX panel.
-        """
-        panel = QWidget(parent)
-        layout = Layout(panel)
-        layout.setContentsMargins(10, 5, 10, 5)
-
-        preference = self.preference["latex"]
-
-        # widgets.
-        label_color = Label(parent, "color")
-        combo_color = ColorSelector(parent, preference["color"], color_type="color")
-        label_size = Label(parent, "size")
-        spin_size = Spin(parent, 8, 24)
-        label_dpi = Label(parent, "DPI")
-        combo_dpi = Combo(parent, ["120", "240", "300"])
-
-        # set layout.
-        layout.addWidget(label_color, 0, 0, 1, 1, Qt.AlignRight)
-        layout.addWidget(combo_color, 0, 1, 1, 2)
-        layout.addWidget(label_size, 1, 0, 1, 1, Qt.AlignRight)
-        layout.addWidget(spin_size, 1, 1, 1, 2)
-        layout.addWidget(label_dpi, 2, 0, 1, 1, Qt.AlignRight)
-        layout.addWidget(combo_dpi, 2, 1, 1, 2)
-        layout.addItem(HSpacer(), 0, 3, 1, 1)
-        layout.addItem(VSpacer(), 3, 0, 1, 1)
-
-        # initial values.
-        spin_size.setProperty("value", preference["size"])
-        combo_dpi.setCurrentText(str(preference["dpi"]))
-
-        # connections.
-        combo_color.currentTextChanged.connect(lambda v: preference.update({"color": v}))
-        spin_size.valueChanged.connect(lambda v: preference.update({"size": v}))
-        combo_dpi.currentTextChanged.connect(lambda v: preference.update({"dpi": int(v)}))
 
         return panel
 
@@ -307,13 +268,13 @@ class PreferenceDialog(QDialog):
         preference = self.preference["general"]
 
         # widgets.
-        label_style = Label(parent, "style")
+        label_style = Label(parent, text="style")
         combo_style = Combo(parent, ["fusion", "macos", "windows"])
-        label_font = Label(parent, "font")
+        label_font = Label(parent, text="font")
         combo_font = Combo(parent, ["Osaka", "Monaco", "Arial", "Times New Roman", "Helvetica Neue"])
-        label_color = Label(parent, "scheme")
+        label_color = Label(parent, text="scheme")
         combo_color = Combo(parent, ["Jmol", "VESTA"])
-        label_size = Label(parent, "size")
+        label_size = Label(parent, text="size")
         spin_size = Spin(parent, 9, 14)
 
         # set layout.
@@ -352,7 +313,11 @@ class PreferenceDialog(QDialog):
 
         :meta private:
         """
-        self.parent().app.setStyleSheet(create_style_sheet(self.preference["general"]["size"]))
+        font = self.preference["general"]["font"]
+        size = self.preference["general"]["size"]
+        self.parent().app.setStyleSheet("QWidget { font-family: " + f"{font}" + "; font-size: " + f"{size}" + "pt; }")
+
         self.widget.refresh()
         self.widget.redraw()
+
         self.parent()._update_panel()

@@ -4,8 +4,9 @@ Delegate for GroupModel and GroupView.
 This module provides delegate for color selector, combo, and editor.
 """
 
-from PySide6.QtWidgets import QStyle, QStyledItemDelegate
-from PySide6.QtCore import Qt
+from PySide6.QtWidgets import QStyledItemDelegate, QStyle
+from PySide6.QtCore import Qt, QSize, QRect
+
 from qtdraw.widget.custom_widget import Combo, Editor, ColorSelector
 
 
@@ -13,52 +14,38 @@ from qtdraw.widget.custom_widget import Combo, Editor, ColorSelector
 class Delegate(QStyledItemDelegate):
     # ==================================================
     def __init__(self, parent):
-        """
-        Base delegate.
-
-        Args:
-            parent (QWidget): parent.
-        """
         super().__init__(parent)
+        self.padding = 5
 
     # ==================================================
     def setEditorData(self, editor, index):
-        """
-        Set editor data.
-
-        Args:
-            editor (QWidget): editor.
-            index (QModelIndex): index.
-        """
-        value = index.model().data(index, Qt.EditRole)
+        value = index.data(Qt.EditRole)
         editor.setCurrentText(value)
 
     # ==================================================
     def setModelData(self, editor, model, index):
-        return  # set model data by using signal.
+        return
 
     # ==================================================
     def updateEditorGeometry(self, editor, option, index):
-        """
-        Update editor geometry.
+        rect = option.rect
+        size = editor.sizeHint()
 
-        Args:
-            editor (QWidget): editor.
-            option (QStyleOptionViewItem) option.
-            index (QModelIndex): index.
-        """
-        editor.setGeometry(option.rect.adjusted(5, 7, -5, 0))
+        width = size.width()
+        height = size.height()
+
+        max_width = rect.width() - 2 * self.padding
+        max_height = rect.height() - 2 * self.padding
+        width = min(width, max_width)
+        height = min(height, max_height)
+
+        x = rect.x() + (rect.width() - width) // 2
+        y = rect.y() + (rect.height() - height) // 2
+
+        editor.setGeometry(QRect(x, y, width, height))
 
     # ==================================================
     def paint(self, painter, option, index):
-        """
-        Paint cell (need to highlight selection).
-
-        Args:
-            painter (QPainter): painter.
-            option (QStyleOptionViewItem) option.
-            index (QModelIndex): index.
-        """
         if index.isValid():
             value = index.model().data(index, Qt.DisplayRole)
             if value:
@@ -70,113 +57,67 @@ class Delegate(QStyledItemDelegate):
 class ComboDelegate(Delegate):
     # ==================================================
     def __init__(self, parent, default, option):
-        """
-        Create delegate for Combo.
-
-        Args:
-            parent (QWidget): parent.
-            default (str): Combo default.
-            option (tuple): Cobo option.
-        """
         super().__init__(parent)
         self.default = default
         self.option = option
 
     # ==================================================
     def createEditor(self, parent, option, index):
-        """
-        Create combobox.
+        model = index.model()
+        editor = Combo(parent, self.option, self.default)
+        editor.currentTextChanged.connect(lambda data: model.setData(index, data))
+        return editor
 
-        Args:
-            parent (QWidget): parent.
-            option (QStyleOptionViewItem): option.
-            index (QModelIndex): index.
-
-        Returns:
-            - (Combo) -- combo widget.
-        """
-        combo = Combo(parent, self.option, self.default)
-        combo.currentTextChanged.connect(lambda data: index.model().setData(index, data))
-        return combo
+    # ==================================================
+    def sizeHint(self, option, index):
+        sz = super().sizeHint(option, index)
+        w, h = 6 * self.padding, self.padding
+        return QSize(sz.width() + w, sz.height() + h)
 
 
 # ==================================================
 class ColorDelegate(Delegate):
     # ==================================================
     def __init__(self, parent, default, option):
-        """
-        Create delegate for ColorSelector.
-
-        Args:
-            parent (QWidget): parent.
-            default (str): ColorSelector default.
-            option (tuple): ColorSelector option.
-        """
         super().__init__(parent)
         self.default = default
         self.option = option
 
     # ==================================================
     def createEditor(self, parent, option, index):
-        """
-        Create color selector.
+        model = index.model()
+        editor = ColorSelector(parent, self.default, self.option)
+        editor.currentTextChanged.connect(lambda data: model.setData(index, data))
+        return editor
 
-        Args:
-            parent (QWidget): parent.
-            option (QStyleOptionViewItem): option.
-            index (QModelIndex): index.
-
-        Returns:
-            - (ColorSelector) -- color selector widget.
-        """
-        color_selector = ColorSelector(parent, self.default, self.option)
-        color_selector.currentTextChanged.connect(lambda data: index.model().setData(index, data))
-
-        return color_selector
+    # ==================================================
+    def sizeHint(self, option, index):
+        sz = super().sizeHint(option, index)
+        w, h = 6 * self.padding, self.padding
+        return QSize(sz.width() + w, sz.height() + h)
 
 
 # ==================================================
 class EditorDelegate(Delegate):
     # ==================================================
-    def __init__(self, parent, default, option, t, color, size, dpi):
-        """
-        Create delegate for Editor.
-
-        Args:
-            parent (QWidget): parent.
-            default (str): Editor default.
-            option (tuple): Editor option.
-            t (str): Editor type.
-            color (str): Editor color.
-            size (int): Editor size.
-            dpi (int): Editor dpi.
-        """
+    def __init__(self, parent, default, option, t, color, size, mathjax):
         super().__init__(parent)
         self.default = default
         self.option = option
         self.type = t
         self.color = color
         self.size = size
-        self.dpi = dpi
+        self.mathjax = mathjax
 
     # ==================================================
     def createEditor(self, parent, option, index):
-        """
-        Create editor.
-
-        Args:
-            parent (QWidget): parent.
-            option (QStyleOptionViewItem): option.
-            index (QModelIndex): index.
-
-        Returns:
-            - (Editor) -- editor widget.
-        """
-        editor = Editor(parent, self.default, (self.type, self.option), self.color, self.size, self.dpi)
-
-        editor.returnPressed.connect(lambda data: index.model().setData(index, data))
+        model = index.model()
+        editor = Editor(parent, self.default, (self.type, self.option), color=self.color, size=self.size, mathjax=self.mathjax)
+        editor.returnPressed.connect(lambda data: model.setData(index, data))
         return editor
 
     # ==================================================
-    def updateEditorGeometry(self, editor, option, index):
-        editor.setGeometry(option.rect.adjusted(5, 0, -5, 0))
+    def sizeHint(self, option, index):
+        sz = super().sizeHint(option, index)
+        w, h = 2 * self.padding, 4 * self.padding
+        return QSize(sz.width() + w, sz.height() + h)

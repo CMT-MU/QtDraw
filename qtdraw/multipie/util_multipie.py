@@ -5,8 +5,10 @@ This module contains utilities for multipie plugin.
 """
 
 import sympy as sp
-from gcoreutils.nsarray import NSArray
-from qtdraw.util.util_str import str_to_list
+import numpy as np
+
+from qtdraw.util.util import str_to_list, str_to_sympy
+from qtdraw.widget.validator import convert_to_bond
 
 
 # ==================================================
@@ -18,16 +20,12 @@ def check_get_site(txt):
         txt (str): site.
 
     Returns:
-        - (NSArray) -- site or None if invalid.
+        - (ndarray) -- site or None if invalid.
     """
     try:
-        site = NSArray(txt)
-        if site.style != "vector":
-            return None
-    except Exception:
+        return str_to_sympy(txt, check_shape=(3,))
+    except ValueError:
         return None
-
-    return site
 
 
 # ==================================================
@@ -39,16 +37,13 @@ def check_get_bond(txt):
         txt (str): bond.
 
     Returns:
-        - (NSArray) -- bond or None if invalid.
+        - (ndarray) -- bond ([v,c]) or None if invalid.
     """
-    try:
-        bond = NSArray(txt)
-        if bond.style not in ["bond", "bond_th", "bond_sv"]:
-            return None
-    except Exception:
+    v, c = convert_to_bond(txt)
+    if v is None:
         return None
-
-    return bond
+    else:
+        return np.concatenate([v, c])
 
 
 # ==================================================
@@ -61,19 +56,18 @@ def check_get_site_bond(txt, ret_site=False):
         ret_site (bool, optional): return site ?
 
     Returns:
-        - (NSArray) -- site, bond or bond center, or None if invalid.
+        - (ndarray) -- site, bond ([v,c]) or bond center, or None if invalid.
     """
-    try:
-        site_bond = NSArray(txt)
-        if site_bond.style not in ["vector", "bond", "bond_th", "bond_sv"]:
+    if "@" in txt or ";" in txt or ":" in txt:  # bond.
+        b = check_get_bond(txt)
+        if b is None:
             return None
-    except Exception:
-        return None
-
-    if ret_site and site_bond.style != "vector":
-        return site_bond.convert_bond("bond")[1]
+        if ret_site:
+            return b[3:]
+        else:
+            return b
     else:
-        return site_bond
+        return check_get_site(txt)
 
 
 # ==================================================
@@ -83,18 +77,18 @@ def create_samb_object(z_samb, site, c_samb, z_head, irrep, pg, v, t_odd):
 
     Args:
         z_samb (dict): combined SAMB.
-        site (NSArray): site.
+        site (ndarray): site.
         c_samb (dict): cluster SAMB.
         z_head (str): multipole type.
         irrep (int): irrep. index.
         pg (PointGroup): point group.
-        v (NSArray): vector variable.
+        v (ndarray): vector variable.
         t_odd (bool): magnetic bond ?
 
     Returns:
-        - (NSArray) -- (xyz)-polynomial at each cluster site.
+        - (ndarray) -- (xyz)-polynomial at each cluster site.
     """
-    obj = NSArray.zeros(len(site), "vector")
+    obj = np.full(len(site), sp.S(0))
     for i in z_samb[z_head][irrep][1]:
         coeff, tag_h, tag_c = i
         harm = pg.harmonics[tag_h].expression(v=v)
@@ -127,7 +121,7 @@ def check_linear_combination(z_samb, form, head):
     var_m = set([f"t{i+1:02d}" for i in range(irrep_num["T"])] + [f"m{i+1:02d}" for i in range(irrep_num["M"])])
 
     form = form.lower()
-    form_variable = set(NSArray(form).variable())
+    form_variable = str_to_sympy(form).free_symbols
 
     t_odd = "Q"
     if form_variable.issubset(var_m):

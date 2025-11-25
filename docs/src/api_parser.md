@@ -18,22 +18,10 @@
 .. automodule:: qtdraw.parser.xsf
 ```
 
-## Element
-
-```{eval-rst}
-.. automodule:: qtdraw.parser.element
-```
-
-## Data Group
-
-```{eval-rst}
-.. automodule:: qtdraw.parser.data_group
-```
-
 ## Utility
 
 ```{eval-rst}
-.. automodule:: qtdraw.parser.util
+.. automodule:: qtdraw.parser.util_parser
 ```
 
 ## Converter

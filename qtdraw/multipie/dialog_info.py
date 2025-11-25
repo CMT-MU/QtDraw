@@ -6,12 +6,13 @@ This module provides a dialog for group info. in MultiPie dialog.
 
 import sympy as sp
 from PySide6.QtWidgets import QDialog
-from gcoreutils.list_util import list_to_table
-from gcoreutils.nsarray import NSArray
+
 from multipie.tag.tag_multipole import TagMultipole
 from multipie.tag.tag_irrep import TagIrrep
+
 from qtdraw.widget.custom_widget import Layout
 from qtdraw.widget.table_view import TableView
+from qtdraw.util.util import list_to_table, vector3d, to_latex
 
 
 # ==================================================
@@ -28,7 +29,7 @@ class InfoPanel(QDialog):
             vertical (bool): show vertical (sequential number) header ?
         """
         super().__init__(parent)
-        latex = parent.plugin._pvw._preference["latex"]
+        mathjax = parent.plugin._pvw._mathjax
 
         self.setWindowTitle(title)
         self.resize(800, 600)
@@ -36,10 +37,8 @@ class InfoPanel(QDialog):
         layout = Layout(self)
         layout.setContentsMargins(10, 10, 10, 10)
 
-        color = latex["color"]
-        size = latex["size"]
-        dpi = latex["dpi"]
-        table = TableView(self, data, header, vertical, color, size, dpi)
+        size = parent.plugin._pvw._preference["general"]["size"]
+        table = TableView(self, data, header, vertical, "black", size, mathjax)
         layout.addWidget(table)
 
         self.show()
@@ -240,7 +239,7 @@ def show_harmonics(group, rank, head, parent):
                 irrep.latex(),
                 mul,
                 comp,
-                h.expression(v=NSArray.vector3d(head)).latex(),
+                h.expression(v=vector3d(head)).latex(),
                 h.definition().latex(),
             ]
         )
@@ -313,7 +312,7 @@ def show_virtual_cluster(group, wp, parent):
         else:
             data.append([""] + r)
     for tag, v in basis.items():
-        row = list_to_table(NSArray(v.tolist(), "scalar").latex(), n, "")
+        row = list_to_table(to_latex(v, "scalar").tolist(), n, "")
         for i, r in enumerate(row):
             if i == 0:
                 t = tag.latex()

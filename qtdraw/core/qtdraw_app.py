@@ -10,15 +10,17 @@ from pathlib import Path
 import logging
 from PySide6.QtWidgets import QWidget, QMessageBox, QFileDialog, QDialog
 from PySide6.QtCore import Qt
-from PySide6.QtGui import QFont
-from qtdraw.widget.custom_widget import Label, Layout, LineEdit, HBar, Button, Combo, VSpacer
+
 from qtdraw.core.pyvista_widget import PyVistaWidget, Window
-from qtdraw.util.logging_util import LogWidget
 from qtdraw.core.pyvista_widget_setting import widget_detail as detail
 from qtdraw.core.dialog_preference import PreferenceDialog
 from qtdraw.core.dialog_about import AboutDialog
-from qtdraw.util.util import check_multipie, create_style_sheet
 from qtdraw.core.dialog_about import get_version_info
+
+from qtdraw.widget.custom_widget import Label, Layout, LineEdit, HBar, Button, Combo, VSpacer
+from qtdraw.widget.logging_util import LogWidget
+
+from qtdraw.util.util import check_multipie
 
 
 # ==================================================
@@ -84,7 +86,7 @@ class QtDraw(Window):
         layout.setVerticalSpacing(5)
 
         # PyVista widget.
-        self.info_dialog = LogWidget("Information", None)
+        self.info_dialog = LogWidget(title="Information")
         txt = get_version_info()
         self.write_info(txt)
         self.pyvista_widget = PyVistaWidget(self)
@@ -270,35 +272,35 @@ class QtDraw(Window):
         panel = QWidget(parent)
         layout = Layout(panel)
 
-        label_uc = Label(parent, "UnitCell", True)
+        label_uc = Label(parent, text="UnitCell", bold=True)
 
-        label_crystal = Label(parent, "Crystal")
+        label_crystal = Label(parent, text="Crystal")
         self.uc_combo_crystal = Combo(
             parent, ["", "triclinic", "monoclinic", "orthorhombic", "tetragonal", "trigonal", "hexagonal", "cubic"]
         )
 
-        label_origin = Label(parent, "Origin")
-        self.uc_edit_origin = LineEdit(parent, "", ("list", ((3,), [""], 2)))
+        label_origin = Label(parent, text="Origin")
+        self.uc_edit_origin = LineEdit(parent, "", validator=("list_float", {"shape": (3,), "var": [""], "digit": 2}))
 
         self.uc_label_volume = Label(parent)
 
-        label_a = Label(parent, "a")
-        self.uc_edit_a = LineEdit(parent, "", ("sympy_float", 4))
+        label_a = Label(parent, text="a")
+        self.uc_edit_a = LineEdit(parent, "", validator=("float", {"digit": 4}))
 
-        label_b = Label(parent, "b")
-        self.uc_edit_b = LineEdit(parent, "", ("sympy_float", 4))
+        label_b = Label(parent, text="b")
+        self.uc_edit_b = LineEdit(parent, "", validator=("float", {"digit": 4}))
 
-        label_c = Label(parent, "c")
-        self.uc_edit_c = LineEdit(parent, "", ("sympy_float", 4))
+        label_c = Label(parent, text="c")
+        self.uc_edit_c = LineEdit(parent, "", validator=("float", {"digit": 4}))
 
-        label_alpha = Label(parent, "\u03b1")
-        self.uc_edit_alpha = LineEdit(parent, "", ("sympy_float", 2))
+        label_alpha = Label(parent, text="\u03b1")
+        self.uc_edit_alpha = LineEdit(parent, "", validator=("float", {"digit": 2}))
 
-        label_beta = Label(parent, "\u03b2")
-        self.uc_edit_beta = LineEdit(parent, "", ("sympy_float", 2))
+        label_beta = Label(parent, text="\u03b2")
+        self.uc_edit_beta = LineEdit(parent, "", validator=("float", {"digit": 2}))
 
-        label_gamma = Label(parent, "\u03b3")
-        self.uc_edit_gamma = LineEdit(parent, "", ("sympy_float", 2))
+        label_gamma = Label(parent, text="\u03b3")
+        self.uc_edit_gamma = LineEdit(parent, "", validator=("float", {"digit": 2}))
 
         panel1 = QWidget(parent)
         layout1 = Layout(panel1)
@@ -351,37 +353,37 @@ class QtDraw(Window):
         panel = QWidget(parent)
         layout = Layout(panel)
 
-        label_view = Label(parent, "View", True)
-        self.view_button_clip = Button(parent, "clip", True)
-        self.view_button_repeat = Button(parent, "repeat", True)
-        self.view_button_nonrepeat = Button(parent, "non-repeat")
+        label_view = Label(parent, text="View", bold=True)
+        self.view_button_clip = Button(parent, text="clip", toggle=True)
+        self.view_button_repeat = Button(parent, text="repeat", toggle=True)
+        self.view_button_nonrepeat = Button(parent, text="non-repeat")
 
-        label_lower = Label(parent, "lower")
-        self.view_edit_lower = LineEdit(parent, "", ("list", ((3,), [""], 2)))
-        label_upper = Label(parent, "upper")
-        self.view_edit_upper = LineEdit(parent, "", ("list", ((3,), [""], 2)))
+        label_lower = Label(parent, text="lower")
+        self.view_edit_lower = LineEdit(parent, "", validator=("list_float", {"shape": (3,), "var": [""], "digit": 2}))
+        label_upper = Label(parent, text="upper")
+        self.view_edit_upper = LineEdit(parent, "", validator=("list_float", {"shape": (3,), "var": [""], "digit": 2}))
 
-        self.view_button_x = Button(parent, "+x")
-        self.view_button_y = Button(parent, "+y")
-        self.view_button_z = Button(parent, "+z")
-        self.view_button_xm = Button(parent, "-x")
-        self.view_button_ym = Button(parent, "-y")
-        self.view_button_zm = Button(parent, "-z")
-        label_a = Label(parent, "a")
-        label_b = Label(parent, "b")
-        label_c = Label(parent, "c")
+        self.view_button_x = Button(parent, text="+x")
+        self.view_button_y = Button(parent, text="+y")
+        self.view_button_z = Button(parent, text="+z")
+        self.view_button_xm = Button(parent, text="-x")
+        self.view_button_ym = Button(parent, text="-y")
+        self.view_button_zm = Button(parent, text="-z")
+        label_a = Label(parent, text="a")
+        label_b = Label(parent, text="b")
+        label_c = Label(parent, text="c")
         self.view_combo_a = Combo(parent, [str(i) for i in range(-9, 10)])
         self.view_combo_b = Combo(parent, [str(i) for i in range(-9, 10)])
         self.view_combo_c = Combo(parent, [str(i) for i in range(-9, 10)])
 
-        self.view_button_default = Button(parent, "default")
-        self.view_button_bar = Button(parent, "bar", True)
-        self.view_button_parallel = Button(parent, "parallel", True)
-        self.view_button_grid = Button(parent, "grid", True)
+        self.view_button_default = Button(parent, text="default")
+        self.view_button_bar = Button(parent, text="bar", toggle=True)
+        self.view_button_parallel = Button(parent, text="parallel", toggle=True)
+        self.view_button_grid = Button(parent, text="grid", toggle=True)
 
-        label_axis = Label(parent, "axis")
+        label_axis = Label(parent, text="axis")
         self.view_combo_axis = Combo(parent, ["on", "axis", "full", "off"])
-        label_cell = Label(parent, "cell")
+        label_cell = Label(parent, text="cell")
         self.view_combo_cell = Combo(parent, ["single", "all", "off"])
 
         panel1 = QWidget(parent)
@@ -455,19 +457,19 @@ class QtDraw(Window):
         panel = QWidget(parent)
         layout = Layout(panel)
 
-        label_dataset = Label(parent, "DataSet", True)
-        self.ds_button_edit = Button(parent, "edit")
-        self.ds_button_clear = Button(parent, "clear")
-        self.ds_button_load = Button(parent, "load")
-        self.ds_button_save = Button(parent, "save")
-        self.ds_button_screenshot = Button(parent, "screenshot")
+        label_dataset = Label(parent, text="DataSet", bold=True)
+        self.ds_button_edit = Button(parent, text="edit")
+        self.ds_button_clear = Button(parent, text="clear")
+        self.ds_button_load = Button(parent, text="load")
+        self.ds_button_save = Button(parent, text="save")
+        self.ds_button_screenshot = Button(parent, text="screenshot")
 
         panel1 = QWidget(parent)
         layout1 = Layout(panel1)
         layout1.addWidget(label_dataset, 0, 0, 1, 1)
-        layout1.addWidget(self.ds_button_screenshot, 0, 1, 1, 1)
+        layout1.addWidget(self.ds_button_clear, 0, 1, 1, 1)
         layout1.addWidget(self.ds_button_edit, 1, 0, 1, 1)
-        layout1.addWidget(self.ds_button_clear, 1, 1, 1, 1)
+        layout1.addWidget(self.ds_button_screenshot, 1, 1, 1, 1)
         layout1.addWidget(self.ds_button_load, 2, 0, 1, 1)
         layout1.addWidget(self.ds_button_save, 2, 1, 1, 1)
 
@@ -491,19 +493,19 @@ class QtDraw(Window):
         panel = QWidget(parent)
         layout = Layout(panel)
 
-        label_misc = Label(parent, "Misc", True)
-        self.misc_button_info = Button(parent, "info")
-        self.misc_button_pref = Button(parent, "preference")
-        self.misc_button_about = Button(parent, "about")
-        self.misc_button_log = Button(parent, "log")
+        label_misc = Label(parent, text="Misc", bold=True)
+        self.misc_button_info = Button(parent, text="info")
+        self.misc_button_pref = Button(parent, text="preference")
+        self.misc_button_about = Button(parent, text="about")
+        self.misc_button_log = Button(parent, text="log")
         if check_multipie():
-            self.misc_button_multipie = Button(parent, "MultiPie")
+            self.misc_button_multipie = Button(parent, text="MultiPie")
 
         panel1 = QWidget(parent)
         layout1 = Layout(panel1)
         layout1.addWidget(label_misc, 0, 0, 1, 1)
-        layout1.addWidget(self.misc_button_info, 0, 1, 1, 1)
-        layout1.addWidget(self.misc_button_pref, 1, 0, 1, 1)
+        layout1.addWidget(self.misc_button_pref, 0, 1, 1, 1)
+        layout1.addWidget(self.misc_button_info, 1, 0, 1, 1)
         layout1.addWidget(self.misc_button_about, 1, 1, 1, 1)
         layout1.addWidget(self.misc_button_log, 2, 0, 1, 1)
         if check_multipie():
@@ -529,12 +531,12 @@ class QtDraw(Window):
         panel = QWidget(parent)
         layout = Layout(panel)
 
-        label_debug = Label(parent, "Debug", True)
-        self.debug_button_camera = Button(parent, "camera")
-        self.debug_button_actor = Button(parent, "actor")
-        self.debug_button_data = Button(parent, "data")
-        self.debug_button_status = Button(parent, "status")
-        self.debug_button_preference = Button(parent, "pref")
+        label_debug = Label(parent, text="Debug", bold=True)
+        self.debug_button_camera = Button(parent, text="camera")
+        self.debug_button_actor = Button(parent, text="actor")
+        self.debug_button_data = Button(parent, text="data")
+        self.debug_button_status = Button(parent, text="status")
+        self.debug_button_preference = Button(parent, text="pref")
 
         panel1 = QWidget(parent)
         layout1 = Layout(panel1)
@@ -571,8 +573,7 @@ class QtDraw(Window):
         self.app.setStyle(self.pyvista_widget._preference["general"]["style"])
         font_type = self.pyvista_widget._preference["general"]["font"]
         size = self.pyvista_widget._preference["general"]["size"]
-        font = QFont(font_type, size)
-        self.app.setFont(font)
+        self.app.setStyleSheet("QWidget { font-family: " + f"{font_type}" + "; font-size: " + f"{size}" + "pt; }")
 
     # ==================================================
     def _update_title(self):
@@ -1025,15 +1026,17 @@ class QtDraw(Window):
         self.pref_dialog = PreferenceDialog(self.pyvista_widget, self)
         status = self.pref_dialog.exec()  # open as modal mode.
         self.sender().setDown(False)  # reset push button.
+
+        if status != QDialog.Accepted:
+            self.pyvista_widget.restore()
+
+        self._update_application()
+
         if status == QDialog.Accepted:
-            self.app.setStyleSheet(create_style_sheet(self.pyvista_widget._preference["general"]["size"]))
             self.pyvista_widget.refresh()
             self.pyvista_widget.redraw()
-            self._update_panel()
-        else:
-            self.pyvista_widget.restore()
-            self.app.setStyleSheet(create_style_sheet(self.pyvista_widget._preference["general"]["size"]))
-            self._update_panel()
+
+        self._update_panel()
 
     # ==================================================
     def _show_about(self):
@@ -2101,7 +2104,7 @@ class QtDraw(Window):
             caption (str, optional): caption list. (default: [A,B,C])
             size (int, optional): caption size. (default: 18)
             bold (bool, optional): bold ? (default: True)
-            color (str, optional): caption color. (default: licorice)
+            color (str, optional): caption color. (default: black)
             position (str, optional): position of each caption. (default: [[0,0,0],[1,0,0],[1,1,0]])
             cell (str, optional): cell. (default: [0,0,0])
             name (str, optional): name of group. (default: untitled)
@@ -2120,7 +2123,7 @@ class QtDraw(Window):
         Args:
             caption (str, optional): caption. (default: text)
             size (int, optional): caption size. (default: 8)
-            color (str, optional): caption color. (default: licorice)
+            color (str, optional): caption color. (default: black)
             font (str, optional): caption font. (default: arial)
             position (str, optional): position in cell, [x,y,z]. (default: [0,0,0])
             name (str, optional): name of group. (default: untitled)

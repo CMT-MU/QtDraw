@@ -3,7 +3,7 @@ QtDraw data file in Python dict format.
 """
 
 {
-    "version": "2.3.0",
+    "version": "2.4.2",
     "data": {
         "site": [["untitled", True, "", "site", True, "", "3", "[0,0,0]", "[0,0,0]", "0.1", "darkseagreen", "1.0"]],
         "bond": [
@@ -62,7 +62,7 @@ QtDraw data file in Python dict format.
                 "[0,3,0]",
                 "[0,0,0]",
                 "3z**2-r**2",
-                "",
+                "3z**2-r**2",
                 "0.7",
                 "[[0,180],[0,360]]",
                 "Wistia",
@@ -440,14 +440,13 @@ QtDraw data file in Python dict format.
         "label": {"font": "arial", "size": 18, "bold": False, "italic": False, "color": "licorice", "default_check": True},
         "cell": {"line_width": 1.0, "color": "black", "opacity": 1.0},
         "axis": {"size": 20, "bold": True, "italic": False, "label": "[a,b,c]"},
-        "latex": {"color": "black", "size": 10, "dpi": 120},
     },
     "camera": {
-        "position": [26.196065, 22.330054, 10.858019],
-        "viewup": [-0.190572, -0.15881, 0.968742],
+        "position": [26.646087, 21.922535, 10.494363],
+        "viewup": [-0.1991, -0.129456, 0.971391],
         "focal_point": [3.0, 3.0, 3.125997],
         "angle": 30.0,
-        "clipping_range": [15.364613, 51.138142],
+        "clipping_range": [15.4412, 51.041735],
         "distance": 31.168776,
         "scale": 8.067073,
     },

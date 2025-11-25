@@ -6,6 +6,7 @@ This module provides a class to draw various
 """
 
 import os
+import sys
 from pathlib import Path
 import ast
 import subprocess
@@ -16,17 +17,7 @@ from PySide6.QtGui import QCursor, QMouseEvent
 from PySide6.QtCore import QEvent, Qt, QCoreApplication, Signal, QSize, QObject, QModelIndex
 import pyvista as pv
 from pyvistaqt import QtInteractor
-from gcoreutils.color_palette import all_colors, custom_colormap, check_color
-from gcoreutils.convert_util import text_to_list, apply
-from qtdraw.util.util_axis import (
-    create_axes_widget,
-    get_view_vector,
-    create_unit_cell,
-    create_grid,
-    get_lattice_vector,
-    get_repeat_range,
-    get_outside_box,
-)
+
 from qtdraw.core.pyvista_widget_setting import (
     default_status,
     default_preference,
@@ -42,8 +33,30 @@ from qtdraw.core.pyvista_widget_setting import (
 )
 from qtdraw.core.pyvista_widget_setting import widget_detail as detail
 from qtdraw.core.pyvista_widget_setting import DIGIT
+from qtdraw.core.qtdraw_info import __version__, __date__, __author__
+from qtdraw.widget.mathjax import MathJaxSVG
 from qtdraw.widget.group_model import GroupModel
 from qtdraw.widget.tab_group_view import TabGroupView
+from qtdraw.widget.qt_event_util import get_qt_application
+from qtdraw.widget.logging_util import LogWidget
+from qtdraw.widget.color_palette import all_colors, custom_colormap, check_color
+from qtdraw.parser.read_material import read_draw
+from qtdraw.parser.xsf import extract_data_xsf
+from qtdraw.parser.converter import convert_version2
+
+from qtdraw.util.util import text_to_list, apply
+
+
+from qtdraw.util.util import read_dict, str_to_sympy
+from qtdraw.util.util_axis import (
+    create_axes_widget,
+    get_view_vector,
+    create_unit_cell,
+    create_cell_grid,
+    get_lattice_vector,
+    get_repeat_range,
+    get_outside_box,
+)
 from qtdraw.util.basic_object import (
     create_sphere,
     create_bond,
@@ -59,19 +72,110 @@ from qtdraw.util.basic_object import (
     create_box,
     create_polygon,
     create_text3d,
+    create_text2d,
     create_spline,
     create_spline_t,
     create_isosurface,
     create_orbital_data,
     create_stream_data,
 )
-from qtdraw.util.util import convert_to_str, read_dict, convert_str_vector, split_filename, cat_filename, get_data_range
-from qtdraw.parser.read_material import read_draw
-from qtdraw.parser.xsf import extract_data_xsf
-from qtdraw.parser.converter import convert_version2
-from qtdraw.util.logging_util import LogWidget
-from qtdraw.util.qt_event_util import get_qt_application
-from qtdraw.__init__ import __version__, __date__, __author__
+
+
+# ==================================================
+def convert_to_str(v):
+    """
+    Convert from object to str, and remove spaces.
+
+    Args:
+        v (Any): object.
+
+    Returns:
+        - (str) -- converted str.
+    """
+    return str(v).replace(" ", "").replace("\t", "").replace("\n", "")
+
+
+# ==================================================
+def get_data_range(data):
+    v1 = data.min()
+    v2 = data.max()
+    v = max(abs(v1), abs(v2))
+    if v1 * v2 < 0.0:
+        clim = [-v, v]
+    elif v1 < 0.0:
+        clim = [-v, 0.0]
+    else:
+        clim = [0.0, v]
+    return clim
+
+
+# ==================================================
+def convert_str_vector(vector, cell="[0,0,0]", transform=True, A=None):
+    """
+    Convert 3-component vector(s) to A.(position+cell).
+
+    Args:
+        vector (str): vector, str([float]) or str([[float]]).
+        cell (str, optional): cell, str([int]).
+        transform (bool, optional): transform by using A ?
+        A (numpy.ndarray, optional): A.
+
+    Returns:
+        - (numpy.ndarray) -- transformed position.
+    """
+    cell = str_to_sympy(cell).astype(int)
+    vector = str_to_sympy(vector, rational=False).astype(float)
+
+    vectorT = vector + cell
+    if transform:
+        A = A[0:3, 0:3].T
+        vectorT = vectorT @ A
+
+    return vectorT
+
+
+# ==================================================
+def split_filename(filename):
+    """
+    Split file name.
+
+    Args:
+        filename (str): filename.
+
+    Returns:
+        - (str) -- filename with absolute path.
+        - (str) -- filename with relative path.
+        - (str) -- base filename.
+        - (str) -- extension.
+        - (str) -- directory.
+    """
+    path = Path(filename)
+    path_abs = path if path.is_absolute() else (Path.cwd() / path).resolve()
+    path_rel = path_abs.relative_to(Path.cwd())
+    base = str(path_rel.stem)
+    ext = str(path_rel.suffix)
+    folder = str(path_abs.parent)
+
+    return str(path_abs), str(path_rel), base, ext, folder
+
+
+# ==================================================
+def cat_filename(base, ext=None):
+    """
+    Cat filename.
+
+    Args:
+        base (str): (base) filename.
+        ext (str, optional): extension.
+
+    Returns:
+        - (str) -- full file name.
+    """
+    if ext is not None:
+        base = base + ext
+    path = str(Path.cwd() / Path(base))
+
+    return path
 
 
 # ==================================================
@@ -165,6 +269,14 @@ class PyVistaWidget(QtInteractor):
         # avoid recursion of the close() until the PyVistaWidget.__init__() is called, see pyvistaqt/plotting.py.
         self._closed = True
 
+        # suppress std err.
+        fd = sys.stderr.fileno()
+        se = os.dup(fd)
+        dev = os.open(os.devnull, os.O_WRONLY)
+        self._iosave = {"file_no": fd, "stderr": se, "dev_null": dev}
+        os.dup2(dev, fd)
+        os.close(dev)
+
         # set default.
         self._off_screen = off_screen
         self.clear_info()
@@ -180,6 +292,9 @@ class PyVistaWidget(QtInteractor):
             auto_update=detail["auto_update"],
         )
         assert not self._closed
+
+        # set mathjax converter.
+        self._mathjax = MathJaxSVG()
 
         # set data model.
         self.init_data_model()
@@ -204,7 +319,7 @@ class PyVistaWidget(QtInteractor):
             )
 
         # create data view group.
-        self._tab_group_view = TabGroupView(self._data, parent=self)
+        self._tab_group_view = TabGroupView(self, self._data, mathjax=self._mathjax)
         self._tab_group_view.resize(800, 600)
 
         # add "e" key to open data view group.
@@ -459,7 +574,10 @@ class PyVistaWidget(QtInteractor):
         if shape is not None:
             row_data["shape"] = shape
         if surface is not None:
-            row_data["surface"] = surface
+            if surface == "":
+                row_data["surface"] = row_data["shape"]
+            else:
+                row_data["surface"] = surface
         if size is not None:
             row_data["size"] = convert_to_str(size)
         if range is not None:
@@ -1363,7 +1481,7 @@ class PyVistaWidget(QtInteractor):
             caption (str, optional): caption list. (default: [A,B,C])
             size (int, optional): caption size. (default: 18)
             bold (bool, optional): bold ? (default: True)
-            color (str, optional): caption color. (default: licorice)
+            color (str, optional): caption color. (default: black)
             position (str, optional): position of each caption. (default: [[0,0,0],[1,0,0],[1,1,0]])
             cell (str, optional): cell. (default: [0,0,0])
             name (str, optional): name of group. (default: untitled)
@@ -1402,7 +1520,7 @@ class PyVistaWidget(QtInteractor):
         Args:
             caption (str, optional): caption. (default: text)
             size (int, optional): caption size. (default: 8)
-            color (str, optional): caption color. (default: licorice)
+            color (str, optional): caption color. (default: black)
             font (str, optional): caption font. (default: arial)
             position (str, optional): position in cell, [x,y,z]. (default: [0,0,0])
             name (str, optional): name of group. (default: untitled)
@@ -1461,6 +1579,8 @@ class PyVistaWidget(QtInteractor):
         self.write_info(f"* read from {f}.")
 
         # set data.
+        if "latex" in all_data["preference"].keys():  # "latex" is deprecated for ver.2.5 or later.
+            del all_data["preference"]["latex"]
         self.set_property(all_data["status"], all_data["preference"])
         if file.suffix == detail["extension"]:
             self.set_camera_info(all_data["camera"])
@@ -2252,7 +2372,7 @@ class PyVistaWidget(QtInteractor):
         self._actor_object_type = {}  # from actor_name to (object_type).
         self._data = {}
         for object_type, value in object_default.items():
-            self._data[object_type] = GroupModel(object_type, value, parent=self)
+            self._data[object_type] = GroupModel(self, object_type, value)
 
     # ==================================================
     def set_theme(self, theme=None):
@@ -2462,9 +2582,7 @@ class PyVistaWidget(QtInteractor):
             return
 
         for object_type, model in data.items():
-            self._data[object_type].block_update_widget(True)
             self._data[object_type].set_data(model)
-            self._data[object_type].block_update_widget(False)
 
     # ==================================================
     def repeat_data(self):
@@ -2475,7 +2593,7 @@ class PyVistaWidget(QtInteractor):
         """
         data = self.get_data_dict(home_cell=True)
         if self._status["repeat"]:
-            grid = create_grid(self._status["plus"]["ilower"], self._status["plus"]["dims"])
+            grid = create_cell_grid(self._status["plus"]["ilower"], self._status["plus"]["dims"])
             for object_type, model in data.items():
                 n = len(model)
                 if object_type != "text2d" and n > 0:
@@ -2582,7 +2700,6 @@ class PyVistaWidget(QtInteractor):
         :meta private:
         """
         self._tab_group_view.show()
-        self._tab_group_view.update_widget()
 
     # ==================================================
     def release_mouse(self):
@@ -2622,16 +2739,15 @@ class PyVistaWidget(QtInteractor):
 
         :meta private:
         """
-        self.close()
-
-    # ==================================================
-    def close(self):
-        """
-        In order to close QInteractor, and opened dialogs.
-
-        :meta private:
-        """
+        self._mathjax.close()
         self._tab_group_view.close()
+
+        # restore std err.
+        if self._iosave["stderr"] is not None:
+            os.dup2(self._iosave["stderr"], self._iosave["file_no"])
+            os.close(self._iosave["stderr"])
+            self._iosave["stderr"] = None
+
         super().close()
 
     # ==================================================
@@ -2675,7 +2791,7 @@ class PyVistaWidget(QtInteractor):
         """
         self.select_actor(actor.name)
 
-        menu = QMenu(self)
+        menu = QMenu(self.window())
 
         # open menu.
         opn = menu.addAction("Open")
@@ -2812,13 +2928,13 @@ class PyVistaWidget(QtInteractor):
             return
 
         # deselected.
-        if deselect is not None:
+        if deselect:
             for row in deselect:
                 actor_name = row[COLUMN_NAME_ACTOR]
                 self.deselect_actor(actor_name)
 
         # selected.
-        if select is not None:
+        if select:
             for row in select:
                 actor_name = row[COLUMN_NAME_ACTOR]
                 if actor_name != "":
@@ -3840,25 +3956,30 @@ class PyVistaWidget(QtInteractor):
         position = data["position"]
         caption = data["caption"]
         size = int(data["size"])
-        color = all_colors[data["color"]][0]  # hex
+        color = all_colors[data["color"]][0]
         font = data["font"]
 
         position = apply(float, text_to_list(position))[:2]
-
-        option = {
-            "position": position,
-            "text": caption,
-            "font_size": size,
-            "color": color,
-            "font": font,
-            "viewport": True,
-        }
 
         if actor == "":
             actor = f"Actor2D(Counter={self._label_counter})"
             self._label_counter += 1
 
-        self.add_text(name=actor, **option)
+        if "$" in caption:  # math.
+            x, y = position
+            ww, wh = self.window_size
+            act = create_text2d(caption, self._mathjax, x * ww, y * wh, 5 * size, data["color"])
+            self.add_actor(act, reset_camera=False, name=actor, pickable=False, render=True)
+        else:
+            option = {
+                "position": position,
+                "text": caption,
+                "font_size": size,
+                "color": color,
+                "font": font,
+                "viewport": True,
+            }
+            self.add_text(name=actor, **option)
         self.set_actor("text2d", index, actor)
 
     # ==================================================

@@ -5,7 +5,8 @@ This module contains the parser.
 """
 
 import numpy as np
-from qtdraw.parser.util import parse_material, draw_site_bond
+
+from qtdraw.parser.util_parser import parse_material, draw_site_bond
 from qtdraw.parser.xsf import extract_data_xsf
 
 
