@@ -15,17 +15,19 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="../../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-
-  
-  <link href="../../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+  <link href="../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
@@ -36,13 +38,14 @@
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=5f1b4820" />
   
+  <!-- So that users can add custom icons -->
+  <script src="../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
-<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
-  <script src="../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
     <script src="../../../_static/documentation_options.js?v=8cf54648"></script>
-    <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../../../_static/copybutton.js?v=f281be69"></script>
@@ -55,13 +58,12 @@
     <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script async="async" src="../../../_static/sphinx-thebe.js?v=c100c467"></script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>DOCUMENTATION_OPTIONS.pagename = '_modules/qtdraw/core/qtdraw_app';</script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="jp"/>
+  <meta name="docsearch:version" content="" />
   </head>
   
   
@@ -77,19 +79,8 @@
     <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
   
-  <input type="checkbox"
-          class="sidebar-toggle"
-          id="pst-primary-sidebar-checkbox"/>
-  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
-  
-  <input type="checkbox"
-          class="sidebar-toggle"
-          id="pst-secondary-sidebar-checkbox"/>
-  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
-  
-  <div class="search-button__wrapper">
-    <div class="search-button__overlay"></div>
-    <div class="search-button__search-container">
+  <dialog id="pst-search-dialog">
+    
 <form class="bd-search d-flex align-items-center"
       action="../../../search.html"
       method="get">
@@ -97,7 +88,6 @@
   <input type="search"
          class="form-control"
          name="q"
-         id="search-input"
          placeholder="Search this book..."
          aria-label="Search this book..."
          autocomplete="off"
@@ -105,8 +95,8 @@
          autocapitalize="off"
          spellcheck="false"/>
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form></div>
-  </div>
+</form>
+  </dialog>
 
   <div class="pst-async-banner-revealer d-none">
   <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
@@ -124,7 +114,8 @@
       
         
       
-      <div class="bd-sidebar-primary bd-sidebar">
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
         
 
   
@@ -154,21 +145,17 @@
     
     
     <img src="../../../_static/qtdraw_logo.png" class="logo__image only-light" alt="QtDraw - Home"/>
-    <script>document.write(`<img src="../../../_static/qtdraw_logo.png" class="logo__image only-dark" alt="QtDraw - Home"/>`);</script>
+    <img src="../../../_static/qtdraw_logo.png" class="logo__image only-dark pst-js-only" alt="QtDraw - Home"/>
   
   
 </a></div>
         <div class="sidebar-primary-item">
 
- <script>
- document.write(`
-   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
-    <span class="search-button__default-text">Search</span>
-    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-   </button>
- `);
- </script></div>
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
@@ -200,9 +187,14 @@
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
   </div>
-  
-  <div id="rtd-footer-container"></div>
 
 
       </div>
@@ -298,24 +290,16 @@
 
 
 
-<script>
-document.write(`
-  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
-    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
-    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
-  </button>
-`);
-</script>
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
 
 
-<script>
-document.write(`
-  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
-  </button>
-`);
-</script>
+</button>
 
 </div></div>
       
@@ -354,15 +338,17 @@ document.write(`
 <span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">PySide6.QtWidgets</span><span class="w"> </span><span class="kn">import</span> <span class="n">QWidget</span><span class="p">,</span> <span class="n">QMessageBox</span><span class="p">,</span> <span class="n">QFileDialog</span><span class="p">,</span> <span class="n">QDialog</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">PySide6.QtCore</span><span class="w"> </span><span class="kn">import</span> <span class="n">Qt</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">PySide6.QtGui</span><span class="w"> </span><span class="kn">import</span> <span class="n">QFont</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw.widget.custom_widget</span><span class="w"> </span><span class="kn">import</span> <span class="n">Label</span><span class="p">,</span> <span class="n">Layout</span><span class="p">,</span> <span class="n">LineEdit</span><span class="p">,</span> <span class="n">HBar</span><span class="p">,</span> <span class="n">Button</span><span class="p">,</span> <span class="n">Combo</span><span class="p">,</span> <span class="n">VSpacer</span>
+
 <span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw.core.pyvista_widget</span><span class="w"> </span><span class="kn">import</span> <span class="n">PyVistaWidget</span><span class="p">,</span> <span class="n">Window</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw.util.logging_util</span><span class="w"> </span><span class="kn">import</span> <span class="n">LogWidget</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw.core.pyvista_widget_setting</span><span class="w"> </span><span class="kn">import</span> <span class="n">widget_detail</span> <span class="k">as</span> <span class="n">detail</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw.core.dialog_preference</span><span class="w"> </span><span class="kn">import</span> <span class="n">PreferenceDialog</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw.core.dialog_about</span><span class="w"> </span><span class="kn">import</span> <span class="n">AboutDialog</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw.util.util</span><span class="w"> </span><span class="kn">import</span> <span class="n">check_multipie</span><span class="p">,</span> <span class="n">create_style_sheet</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw.core.dialog_about</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_version_info</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw.widget.custom_widget</span><span class="w"> </span><span class="kn">import</span> <span class="n">Label</span><span class="p">,</span> <span class="n">Layout</span><span class="p">,</span> <span class="n">LineEdit</span><span class="p">,</span> <span class="n">HBar</span><span class="p">,</span> <span class="n">Button</span><span class="p">,</span> <span class="n">Combo</span><span class="p">,</span> <span class="n">VSpacer</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw.widget.logging_util</span><span class="w"> </span><span class="kn">import</span> <span class="n">LogWidget</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw.util.util</span><span class="w"> </span><span class="kn">import</span> <span class="n">check_multipie</span>
 
 
 <span class="c1"># ==================================================</span>
@@ -430,7 +416,7 @@ document.write(`
         <span class="n">layout</span><span class="o">.</span><span class="n">setVerticalSpacing</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 
         <span class="c1"># PyVista widget.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">info_dialog</span> <span class="o">=</span> <span class="n">LogWidget</span><span class="p">(</span><span class="s2">&quot;Information&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">info_dialog</span> <span class="o">=</span> <span class="n">LogWidget</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Information&quot;</span><span class="p">)</span>
         <span class="n">txt</span> <span class="o">=</span> <span class="n">get_version_info</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">write_info</span><span class="p">(</span><span class="n">txt</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pyvista_widget</span> <span class="o">=</span> <span class="n">PyVistaWidget</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
@@ -616,35 +602,35 @@ document.write(`
         <span class="n">panel</span> <span class="o">=</span> <span class="n">QWidget</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
         <span class="n">layout</span> <span class="o">=</span> <span class="n">Layout</span><span class="p">(</span><span class="n">panel</span><span class="p">)</span>
 
-        <span class="n">label_uc</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;UnitCell&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="n">label_uc</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;UnitCell&quot;</span><span class="p">,</span> <span class="n">bold</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-        <span class="n">label_crystal</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;Crystal&quot;</span><span class="p">)</span>
+        <span class="n">label_crystal</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Crystal&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">uc_combo_crystal</span> <span class="o">=</span> <span class="n">Combo</span><span class="p">(</span>
             <span class="n">parent</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;triclinic&quot;</span><span class="p">,</span> <span class="s2">&quot;monoclinic&quot;</span><span class="p">,</span> <span class="s2">&quot;orthorhombic&quot;</span><span class="p">,</span> <span class="s2">&quot;tetragonal&quot;</span><span class="p">,</span> <span class="s2">&quot;trigonal&quot;</span><span class="p">,</span> <span class="s2">&quot;hexagonal&quot;</span><span class="p">,</span> <span class="s2">&quot;cubic&quot;</span><span class="p">]</span>
         <span class="p">)</span>
 
-        <span class="n">label_origin</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;Origin&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">uc_edit_origin</span> <span class="o">=</span> <span class="n">LineEdit</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="p">(</span><span class="s2">&quot;list&quot;</span><span class="p">,</span> <span class="p">((</span><span class="mi">3</span><span class="p">,),</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">],</span> <span class="mi">2</span><span class="p">)))</span>
+        <span class="n">label_origin</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Origin&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">uc_edit_origin</span> <span class="o">=</span> <span class="n">LineEdit</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">validator</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;list_float&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;shape&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">3</span><span class="p">,),</span> <span class="s2">&quot;var&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">],</span> <span class="s2">&quot;digit&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}))</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">uc_label_volume</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
 
-        <span class="n">label_a</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">uc_edit_a</span> <span class="o">=</span> <span class="n">LineEdit</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="p">(</span><span class="s2">&quot;sympy_float&quot;</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+        <span class="n">label_a</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;a&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">uc_edit_a</span> <span class="o">=</span> <span class="n">LineEdit</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">validator</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;digit&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">}))</span>
 
-        <span class="n">label_b</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">uc_edit_b</span> <span class="o">=</span> <span class="n">LineEdit</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="p">(</span><span class="s2">&quot;sympy_float&quot;</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+        <span class="n">label_b</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;b&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">uc_edit_b</span> <span class="o">=</span> <span class="n">LineEdit</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">validator</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;digit&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">}))</span>
 
-        <span class="n">label_c</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;c&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">uc_edit_c</span> <span class="o">=</span> <span class="n">LineEdit</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="p">(</span><span class="s2">&quot;sympy_float&quot;</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+        <span class="n">label_c</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;c&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">uc_edit_c</span> <span class="o">=</span> <span class="n">LineEdit</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">validator</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;digit&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">}))</span>
 
-        <span class="n">label_alpha</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\u03b1</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">uc_edit_alpha</span> <span class="o">=</span> <span class="n">LineEdit</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="p">(</span><span class="s2">&quot;sympy_float&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+        <span class="n">label_alpha</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\u03b1</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">uc_edit_alpha</span> <span class="o">=</span> <span class="n">LineEdit</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">validator</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;digit&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}))</span>
 
-        <span class="n">label_beta</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\u03b2</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">uc_edit_beta</span> <span class="o">=</span> <span class="n">LineEdit</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="p">(</span><span class="s2">&quot;sympy_float&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+        <span class="n">label_beta</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\u03b2</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">uc_edit_beta</span> <span class="o">=</span> <span class="n">LineEdit</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">validator</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;digit&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}))</span>
 
-        <span class="n">label_gamma</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\u03b3</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">uc_edit_gamma</span> <span class="o">=</span> <span class="n">LineEdit</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="p">(</span><span class="s2">&quot;sympy_float&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+        <span class="n">label_gamma</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\u03b3</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">uc_edit_gamma</span> <span class="o">=</span> <span class="n">LineEdit</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">validator</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;digit&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}))</span>
 
         <span class="n">panel1</span> <span class="o">=</span> <span class="n">QWidget</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
         <span class="n">layout1</span> <span class="o">=</span> <span class="n">Layout</span><span class="p">(</span><span class="n">panel1</span><span class="p">)</span>
@@ -697,37 +683,37 @@ document.write(`
         <span class="n">panel</span> <span class="o">=</span> <span class="n">QWidget</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
         <span class="n">layout</span> <span class="o">=</span> <span class="n">Layout</span><span class="p">(</span><span class="n">panel</span><span class="p">)</span>
 
-        <span class="n">label_view</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;View&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">view_button_clip</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;clip&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">view_button_repeat</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;repeat&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">view_button_nonrepeat</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;non-repeat&quot;</span><span class="p">)</span>
+        <span class="n">label_view</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;View&quot;</span><span class="p">,</span> <span class="n">bold</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">view_button_clip</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;clip&quot;</span><span class="p">,</span> <span class="n">toggle</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">view_button_repeat</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;repeat&quot;</span><span class="p">,</span> <span class="n">toggle</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">view_button_nonrepeat</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;non-repeat&quot;</span><span class="p">)</span>
 
-        <span class="n">label_lower</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;lower&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">view_edit_lower</span> <span class="o">=</span> <span class="n">LineEdit</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="p">(</span><span class="s2">&quot;list&quot;</span><span class="p">,</span> <span class="p">((</span><span class="mi">3</span><span class="p">,),</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">],</span> <span class="mi">2</span><span class="p">)))</span>
-        <span class="n">label_upper</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;upper&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">view_edit_upper</span> <span class="o">=</span> <span class="n">LineEdit</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="p">(</span><span class="s2">&quot;list&quot;</span><span class="p">,</span> <span class="p">((</span><span class="mi">3</span><span class="p">,),</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">],</span> <span class="mi">2</span><span class="p">)))</span>
+        <span class="n">label_lower</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;lower&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">view_edit_lower</span> <span class="o">=</span> <span class="n">LineEdit</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">validator</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;list_float&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;shape&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">3</span><span class="p">,),</span> <span class="s2">&quot;var&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">],</span> <span class="s2">&quot;digit&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}))</span>
+        <span class="n">label_upper</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;upper&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">view_edit_upper</span> <span class="o">=</span> <span class="n">LineEdit</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">validator</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;list_float&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;shape&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">3</span><span class="p">,),</span> <span class="s2">&quot;var&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">],</span> <span class="s2">&quot;digit&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}))</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">view_button_x</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;+x&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">view_button_y</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;+y&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">view_button_z</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;+z&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">view_button_xm</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;-x&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">view_button_ym</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;-y&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">view_button_zm</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;-z&quot;</span><span class="p">)</span>
-        <span class="n">label_a</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">)</span>
-        <span class="n">label_b</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">)</span>
-        <span class="n">label_c</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;c&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">view_button_x</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;+x&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">view_button_y</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;+y&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">view_button_z</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;+z&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">view_button_xm</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;-x&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">view_button_ym</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;-y&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">view_button_zm</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;-z&quot;</span><span class="p">)</span>
+        <span class="n">label_a</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;a&quot;</span><span class="p">)</span>
+        <span class="n">label_b</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;b&quot;</span><span class="p">)</span>
+        <span class="n">label_c</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;c&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">view_combo_a</span> <span class="o">=</span> <span class="n">Combo</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="o">-</span><span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">)])</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">view_combo_b</span> <span class="o">=</span> <span class="n">Combo</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="o">-</span><span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">)])</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">view_combo_c</span> <span class="o">=</span> <span class="n">Combo</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="o">-</span><span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">)])</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">view_button_default</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;default&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">view_button_bar</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;bar&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">view_button_parallel</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;parallel&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">view_button_grid</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;grid&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">view_button_default</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">view_button_bar</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;bar&quot;</span><span class="p">,</span> <span class="n">toggle</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">view_button_parallel</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;parallel&quot;</span><span class="p">,</span> <span class="n">toggle</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">view_button_grid</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;grid&quot;</span><span class="p">,</span> <span class="n">toggle</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-        <span class="n">label_axis</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;axis&quot;</span><span class="p">)</span>
+        <span class="n">label_axis</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;axis&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">view_combo_axis</span> <span class="o">=</span> <span class="n">Combo</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;on&quot;</span><span class="p">,</span> <span class="s2">&quot;axis&quot;</span><span class="p">,</span> <span class="s2">&quot;full&quot;</span><span class="p">,</span> <span class="s2">&quot;off&quot;</span><span class="p">])</span>
-        <span class="n">label_cell</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;cell&quot;</span><span class="p">)</span>
+        <span class="n">label_cell</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;cell&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">view_combo_cell</span> <span class="o">=</span> <span class="n">Combo</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;single&quot;</span><span class="p">,</span> <span class="s2">&quot;all&quot;</span><span class="p">,</span> <span class="s2">&quot;off&quot;</span><span class="p">])</span>
 
         <span class="n">panel1</span> <span class="o">=</span> <span class="n">QWidget</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
@@ -801,19 +787,19 @@ document.write(`
         <span class="n">panel</span> <span class="o">=</span> <span class="n">QWidget</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
         <span class="n">layout</span> <span class="o">=</span> <span class="n">Layout</span><span class="p">(</span><span class="n">panel</span><span class="p">)</span>
 
-        <span class="n">label_dataset</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;DataSet&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ds_button_edit</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;edit&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ds_button_clear</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;clear&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ds_button_load</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;load&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ds_button_save</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;save&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ds_button_screenshot</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;screenshot&quot;</span><span class="p">)</span>
+        <span class="n">label_dataset</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;DataSet&quot;</span><span class="p">,</span> <span class="n">bold</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ds_button_edit</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;edit&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ds_button_clear</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;clear&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ds_button_load</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;load&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ds_button_save</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;save&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ds_button_screenshot</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;screenshot&quot;</span><span class="p">)</span>
 
         <span class="n">panel1</span> <span class="o">=</span> <span class="n">QWidget</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
         <span class="n">layout1</span> <span class="o">=</span> <span class="n">Layout</span><span class="p">(</span><span class="n">panel1</span><span class="p">)</span>
         <span class="n">layout1</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">label_dataset</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-        <span class="n">layout1</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ds_button_screenshot</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">layout1</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ds_button_clear</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
         <span class="n">layout1</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ds_button_edit</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-        <span class="n">layout1</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ds_button_clear</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">layout1</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ds_button_screenshot</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
         <span class="n">layout1</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ds_button_load</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
         <span class="n">layout1</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ds_button_save</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 
@@ -837,19 +823,19 @@ document.write(`
         <span class="n">panel</span> <span class="o">=</span> <span class="n">QWidget</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
         <span class="n">layout</span> <span class="o">=</span> <span class="n">Layout</span><span class="p">(</span><span class="n">panel</span><span class="p">)</span>
 
-        <span class="n">label_misc</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;Misc&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">misc_button_info</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;info&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">misc_button_pref</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;preference&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">misc_button_about</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;about&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">misc_button_log</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;log&quot;</span><span class="p">)</span>
+        <span class="n">label_misc</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Misc&quot;</span><span class="p">,</span> <span class="n">bold</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">misc_button_info</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;info&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">misc_button_pref</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;preference&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">misc_button_about</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;about&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">misc_button_log</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">check_multipie</span><span class="p">():</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">misc_button_multipie</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;MultiPie&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">misc_button_multipie</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;MultiPie&quot;</span><span class="p">)</span>
 
         <span class="n">panel1</span> <span class="o">=</span> <span class="n">QWidget</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
         <span class="n">layout1</span> <span class="o">=</span> <span class="n">Layout</span><span class="p">(</span><span class="n">panel1</span><span class="p">)</span>
         <span class="n">layout1</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">label_misc</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-        <span class="n">layout1</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">misc_button_info</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-        <span class="n">layout1</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">misc_button_pref</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">layout1</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">misc_button_pref</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">layout1</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">misc_button_info</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
         <span class="n">layout1</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">misc_button_about</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
         <span class="n">layout1</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">misc_button_log</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">check_multipie</span><span class="p">():</span>
@@ -875,12 +861,12 @@ document.write(`
         <span class="n">panel</span> <span class="o">=</span> <span class="n">QWidget</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
         <span class="n">layout</span> <span class="o">=</span> <span class="n">Layout</span><span class="p">(</span><span class="n">panel</span><span class="p">)</span>
 
-        <span class="n">label_debug</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;Debug&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">debug_button_camera</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;camera&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">debug_button_actor</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;actor&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">debug_button_data</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">debug_button_status</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;status&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">debug_button_preference</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;pref&quot;</span><span class="p">)</span>
+        <span class="n">label_debug</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Debug&quot;</span><span class="p">,</span> <span class="n">bold</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">debug_button_camera</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;camera&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">debug_button_actor</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;actor&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">debug_button_data</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;data&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">debug_button_status</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;status&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">debug_button_preference</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;pref&quot;</span><span class="p">)</span>
 
         <span class="n">panel1</span> <span class="o">=</span> <span class="n">QWidget</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
         <span class="n">layout1</span> <span class="o">=</span> <span class="n">Layout</span><span class="p">(</span><span class="n">panel1</span><span class="p">)</span>
@@ -917,8 +903,7 @@ document.write(`
         <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">setStyle</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pyvista_widget</span><span class="o">.</span><span class="n">_preference</span><span class="p">[</span><span class="s2">&quot;general&quot;</span><span class="p">][</span><span class="s2">&quot;style&quot;</span><span class="p">])</span>
         <span class="n">font_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pyvista_widget</span><span class="o">.</span><span class="n">_preference</span><span class="p">[</span><span class="s2">&quot;general&quot;</span><span class="p">][</span><span class="s2">&quot;font&quot;</span><span class="p">]</span>
         <span class="n">size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pyvista_widget</span><span class="o">.</span><span class="n">_preference</span><span class="p">[</span><span class="s2">&quot;general&quot;</span><span class="p">][</span><span class="s2">&quot;size&quot;</span><span class="p">]</span>
-        <span class="n">font</span> <span class="o">=</span> <span class="n">QFont</span><span class="p">(</span><span class="n">font_type</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">setFont</span><span class="p">(</span><span class="n">font</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QWidget { font-family: &quot;</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">font_type</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;; font-size: &quot;</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">size</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;pt; }&quot;</span><span class="p">)</span>
 
     <span class="c1"># ==================================================</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">_update_title</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -1371,15 +1356,17 @@ document.write(`
         <span class="bp">self</span><span class="o">.</span><span class="n">pref_dialog</span> <span class="o">=</span> <span class="n">PreferenceDialog</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pyvista_widget</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
         <span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pref_dialog</span><span class="o">.</span><span class="n">exec</span><span class="p">()</span>  <span class="c1"># open as modal mode.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sender</span><span class="p">()</span><span class="o">.</span><span class="n">setDown</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>  <span class="c1"># reset push button.</span>
+
+        <span class="k">if</span> <span class="n">status</span> <span class="o">!=</span> <span class="n">QDialog</span><span class="o">.</span><span class="n">Accepted</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pyvista_widget</span><span class="o">.</span><span class="n">restore</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_application</span><span class="p">()</span>
+
         <span class="k">if</span> <span class="n">status</span> <span class="o">==</span> <span class="n">QDialog</span><span class="o">.</span><span class="n">Accepted</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="n">create_style_sheet</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pyvista_widget</span><span class="o">.</span><span class="n">_preference</span><span class="p">[</span><span class="s2">&quot;general&quot;</span><span class="p">][</span><span class="s2">&quot;size&quot;</span><span class="p">]))</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">pyvista_widget</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">pyvista_widget</span><span class="o">.</span><span class="n">redraw</span><span class="p">()</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_update_panel</span><span class="p">()</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">pyvista_widget</span><span class="o">.</span><span class="n">restore</span><span class="p">()</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="n">create_style_sheet</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pyvista_widget</span><span class="o">.</span><span class="n">_preference</span><span class="p">[</span><span class="s2">&quot;general&quot;</span><span class="p">][</span><span class="s2">&quot;size&quot;</span><span class="p">]))</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_update_panel</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_panel</span><span class="p">()</span>
 
     <span class="c1"># ==================================================</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">_show_about</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -2503,7 +2490,7 @@ document.write(`
 <span class="sd">            caption (str, optional): caption list. (default: [A,B,C])</span>
 <span class="sd">            size (int, optional): caption size. (default: 18)</span>
 <span class="sd">            bold (bool, optional): bold ? (default: True)</span>
-<span class="sd">            color (str, optional): caption color. (default: licorice)</span>
+<span class="sd">            color (str, optional): caption color. (default: black)</span>
 <span class="sd">            position (str, optional): position of each caption. (default: [[0,0,0],[1,0,0],[1,1,0]])</span>
 <span class="sd">            cell (str, optional): cell. (default: [0,0,0])</span>
 <span class="sd">            name (str, optional): name of group. (default: untitled)</span>
@@ -2525,7 +2512,7 @@ document.write(`
 <span class="sd">        Args:</span>
 <span class="sd">            caption (str, optional): caption. (default: text)</span>
 <span class="sd">            size (int, optional): caption size. (default: 8)</span>
-<span class="sd">            color (str, optional): caption color. (default: licorice)</span>
+<span class="sd">            color (str, optional): caption color. (default: black)</span>
 <span class="sd">            font (str, optional): caption font. (default: arial)</span>
 <span class="sd">            position (str, optional): position in cell, [x,y,z]. (default: [0,0,0])</span>
 <span class="sd">            name (str, optional): name of group. (default: untitled)</span>
@@ -3496,8 +3483,8 @@ By Hiroaki Kusunose
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
-<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
 
   <footer class="bd-footer">
   </footer>

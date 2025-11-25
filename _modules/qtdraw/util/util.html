@@ -15,17 +15,19 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="../../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-
-  
-  <link href="../../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+  <link href="../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
@@ -36,13 +38,14 @@
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=5f1b4820" />
   
+  <!-- So that users can add custom icons -->
+  <script src="../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
-<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
-  <script src="../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
     <script src="../../../_static/documentation_options.js?v=8cf54648"></script>
-    <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../../../_static/copybutton.js?v=f281be69"></script>
@@ -55,13 +58,12 @@
     <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script async="async" src="../../../_static/sphinx-thebe.js?v=c100c467"></script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>DOCUMENTATION_OPTIONS.pagename = '_modules/qtdraw/util/util';</script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="jp"/>
+  <meta name="docsearch:version" content="" />
   </head>
   
   
@@ -77,19 +79,8 @@
     <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
   
-  <input type="checkbox"
-          class="sidebar-toggle"
-          id="pst-primary-sidebar-checkbox"/>
-  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
-  
-  <input type="checkbox"
-          class="sidebar-toggle"
-          id="pst-secondary-sidebar-checkbox"/>
-  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
-  
-  <div class="search-button__wrapper">
-    <div class="search-button__overlay"></div>
-    <div class="search-button__search-container">
+  <dialog id="pst-search-dialog">
+    
 <form class="bd-search d-flex align-items-center"
       action="../../../search.html"
       method="get">
@@ -97,7 +88,6 @@
   <input type="search"
          class="form-control"
          name="q"
-         id="search-input"
          placeholder="Search this book..."
          aria-label="Search this book..."
          autocomplete="off"
@@ -105,8 +95,8 @@
          autocapitalize="off"
          spellcheck="false"/>
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form></div>
-  </div>
+</form>
+  </dialog>
 
   <div class="pst-async-banner-revealer d-none">
   <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
@@ -124,7 +114,8 @@
       
         
       
-      <div class="bd-sidebar-primary bd-sidebar">
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
         
 
   
@@ -154,21 +145,17 @@
     
     
     <img src="../../../_static/qtdraw_logo.png" class="logo__image only-light" alt="QtDraw - Home"/>
-    <script>document.write(`<img src="../../../_static/qtdraw_logo.png" class="logo__image only-dark" alt="QtDraw - Home"/>`);</script>
+    <img src="../../../_static/qtdraw_logo.png" class="logo__image only-dark pst-js-only" alt="QtDraw - Home"/>
   
   
 </a></div>
         <div class="sidebar-primary-item">
 
- <script>
- document.write(`
-   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
-    <span class="search-button__default-text">Search</span>
-    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-   </button>
- `);
- </script></div>
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
@@ -200,9 +187,14 @@
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
   </div>
-  
-  <div id="rtd-footer-container"></div>
 
 
       </div>
@@ -298,24 +290,16 @@
 
 
 
-<script>
-document.write(`
-  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
-    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
-    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
-  </button>
-`);
-</script>
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
 
 
-<script>
-document.write(`
-  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
-  </button>
-`);
-</script>
+</button>
 
 </div></div>
       
@@ -343,34 +327,204 @@ document.write(`
                   
   <h1>Source code for qtdraw.util.util</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Utility.</span>
-
-<span class="sd">This module contains the versatile utilities.</span>
+<span class="sd">For versatile utility.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">ast</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">pyvista</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pv</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">gcoreutils.convert_util</span><span class="w"> </span><span class="kn">import</span> <span class="n">text_to_list</span><span class="p">,</span> <span class="n">apply</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw.util.util_str</span><span class="w"> </span><span class="kn">import</span> <span class="n">str_to_sympy1</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sympy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sp</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sympy</span><span class="w"> </span><span class="kn">import</span> <span class="n">SympifyError</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sympy.parsing.sympy_parser</span><span class="w"> </span><span class="kn">import</span> <span class="n">parse_expr</span><span class="p">,</span> <span class="n">standard_transformations</span><span class="p">,</span> <span class="n">implicit_multiplication</span><span class="p">,</span> <span class="n">rationalize</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pyvista</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pv</span>
 
 
 <span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="convert_to_str">
-<a class="viewcode-back" href="../../../src/api_util.html#qtdraw.util.util.convert_to_str">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">convert_to_str</span><span class="p">(</span><span class="n">v</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_check_shape</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">shape</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Convert from object to str, and remove spaces.</span>
+<span class="sd">    Check array shape.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        v (Any): object.</span>
+<span class="sd">        a (ndarray): array.</span>
+<span class="sd">        shape (tuple): shape, (), (n,), (n,m), ...</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        - (str) -- converted str.</span>
+<span class="sd">        - (bool) -- if a is given shape, return True otherwise False.</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        - &quot;0&quot; in shape means any size.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">v</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span></div>
+    <span class="k">if</span> <span class="n">shape</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">return</span> <span class="n">a</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">all</span><span class="p">(</span><span class="n">s</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">x</span> <span class="o">==</span> <span class="n">s</span> <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">shape</span><span class="p">))</span>
+
+
+<span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="str_to_sympy">
+<a class="viewcode-back" href="../../../src/api_util.html#qtdraw.util.util.str_to_sympy">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">str_to_sympy</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">check_var</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">check_shape</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">rational</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">subs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">assumptions</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert a string to a sympy.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        s (str): a string.</span>
+<span class="sd">        check_var (list, optional): variables to accept, None (all).</span>
+<span class="sd">        check_shape (tuple, optional): shape, (), (n,), (n,m), ...</span>
+<span class="sd">        rational (bool, optional): use rational number ?</span>
+<span class="sd">        subs (dict, optional): replace dict for local variables.</span>
+<span class="sd">        **assumptions (dict, optional): common assumptions for all variables.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        - (ndarray) -- (list of) sympy.</span>
+
+<span class="sd">    Notes:</span>
+<span class="sd">        - if format error occurs, raise ValueError.</span>
+<span class="sd">        - if s cannot be converted to a sympy, raise ValueError.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># reserved words in sympy (functions, constants, etc.).</span>
+    <span class="n">reserved</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">sp</span><span class="o">.</span><span class="n">__all__</span><span class="p">)</span> <span class="o">|</span> <span class="p">{</span><span class="s2">&quot;pi&quot;</span><span class="p">,</span> <span class="s2">&quot;E&quot;</span><span class="p">,</span> <span class="s2">&quot;I&quot;</span><span class="p">,</span> <span class="s2">&quot;oo&quot;</span><span class="p">,</span> <span class="s2">&quot;zoo&quot;</span><span class="p">}</span>
+
+    <span class="c1"># extract candidate variable names.</span>
+    <span class="n">var</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;[A-Za-z_]\w*&quot;</span><span class="p">,</span> <span class="n">s</span><span class="p">)))</span>
+    <span class="c1"># remove reserved ones.</span>
+    <span class="n">var</span> <span class="o">=</span> <span class="p">[</span><span class="n">v</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">var</span> <span class="k">if</span> <span class="n">v</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">reserved</span><span class="p">]</span>
+
+    <span class="c1"># check var validation.</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">check_var</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">var</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="nb">set</span><span class="p">(</span><span class="n">check_var</span><span class="p">)):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;not found variable &#39;</span><span class="si">{</span><span class="n">var</span><span class="si">}</span><span class="s2">&#39; in &#39;</span><span class="si">{</span><span class="n">check_var</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span>
+
+    <span class="c1"># set up local symbol environment.</span>
+    <span class="n">local_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">v</span><span class="p">:</span> <span class="n">sp</span><span class="o">.</span><span class="n">Symbol</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="o">**</span><span class="n">assumptions</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">var</span><span class="p">}</span>
+    <span class="k">if</span> <span class="n">subs</span><span class="p">:</span>
+        <span class="n">local_dict</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">subs</span><span class="p">)</span>
+
+    <span class="c1"># setup parser transformations.</span>
+    <span class="n">transformations</span> <span class="o">=</span> <span class="n">standard_transformations</span> <span class="o">+</span> <span class="p">(</span><span class="n">implicit_multiplication</span><span class="p">,)</span>
+    <span class="k">if</span> <span class="n">rational</span><span class="p">:</span>
+        <span class="n">transformations</span> <span class="o">+=</span> <span class="p">(</span><span class="n">rationalize</span><span class="p">,)</span>
+
+    <span class="c1"># parse string.</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;,\s*]&quot;</span><span class="p">,</span> <span class="s2">&quot;]&quot;</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
+        <span class="n">expression</span> <span class="o">=</span> <span class="n">parse_expr</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">transformations</span><span class="o">=</span><span class="n">transformations</span><span class="p">,</span> <span class="n">local_dict</span><span class="o">=</span><span class="n">local_dict</span><span class="p">)</span>
+    <span class="k">except</span> <span class="p">(</span><span class="n">SympifyError</span><span class="p">,</span> <span class="ne">SyntaxError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;invalid string &#39;</span><span class="si">{</span><span class="n">s</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span>
+
+    <span class="n">expression</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">expression</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">object</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">_check_shape</span><span class="p">(</span><span class="n">expression</span><span class="p">,</span> <span class="n">check_shape</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;invalid shape, </span><span class="si">{</span><span class="n">expression</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">!=</span><span class="si">{</span><span class="n">check_shape</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">expression</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">expression</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">expression</span></div>
+
+
+
+<span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="to_latex">
+<a class="viewcode-back" href="../../../src/api_util.html#qtdraw.util.util.to_latex">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">to_latex</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s2">&quot;scalar&quot;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    convert list to latex list.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        a (array-like): list of sympy.</span>
+<span class="sd">        style (str, optional): style, &quot;scalar/vector/matrix&quot;.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        - (ndarray or str) -- (list of) LaTeX string without &quot;$&quot;.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">object</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">style</span> <span class="o">==</span> <span class="s2">&quot;scalar&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">a</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">sp</span><span class="o">.</span><span class="n">latex</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">item</span><span class="p">())</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">vectorize</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">sp</span><span class="o">.</span><span class="n">latex</span><span class="p">(</span><span class="n">x</span><span class="p">))(</span><span class="n">a</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">object</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">style</span> <span class="o">==</span> <span class="s2">&quot;vector&quot;</span><span class="p">:</span>
+
+        <span class="k">def</span><span class="w"> </span><span class="nf">vec_latex</span><span class="p">(</span><span class="n">v</span><span class="p">):</span>
+            <span class="k">return</span> <span class="sa">r</span><span class="s2">&quot;\left[ &quot;</span> <span class="o">+</span> <span class="sa">r</span><span class="s2">&quot;,\, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">sp</span><span class="o">.</span><span class="n">latex</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">v</span><span class="p">)</span> <span class="o">+</span> <span class="sa">r</span><span class="s2">&quot; \right]&quot;</span>
+
+        <span class="k">if</span> <span class="n">a</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">vec_latex</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">a</span><span class="o">.</span><span class="n">ndim</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">shape</span>
+            <span class="n">sz</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="n">s</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">s</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">([</span><span class="n">vec_latex</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">a</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">v</span><span class="p">)],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">object</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">sz</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;invalid array shape, </span><span class="si">{</span><span class="n">a</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">style</span> <span class="o">==</span> <span class="s2">&quot;matrix&quot;</span><span class="p">:</span>
+
+        <span class="k">def</span><span class="w"> </span><span class="nf">mat_latex</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+            <span class="n">rows</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot; &amp; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">sp</span><span class="o">.</span><span class="n">latex</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">row</span><span class="p">)</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">m</span><span class="p">]</span>
+            <span class="k">return</span> <span class="sa">r</span><span class="s2">&quot;\begin</span><span class="si">{bmatrix}</span><span class="s2"> &quot;</span> <span class="o">+</span> <span class="sa">r</span><span class="s2">&quot; </span><span class="se">\\</span><span class="s2"> &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span> <span class="o">+</span> <span class="sa">r</span><span class="s2">&quot; \end</span><span class="si">{bmatrix}</span><span class="s2">&quot;</span>
+
+        <span class="k">if</span> <span class="n">a</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">mat_latex</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">a</span><span class="o">.</span><span class="n">ndim</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">shape</span>
+            <span class="n">sz</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="n">s</span><span class="p">[:</span><span class="o">-</span><span class="mi">2</span><span class="p">],</span> <span class="n">s</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">:]</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">([</span><span class="n">mat_latex</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">a</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">*</span><span class="n">v</span><span class="p">)],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">object</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">sz</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;invalid array shape, </span><span class="si">{</span><span class="n">a</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;unknown style, </span><span class="si">{</span><span class="n">style</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span></div>
+
+
+
+<span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="check_multipie">
+<a class="viewcode-back" href="../../../src/api_util.html#qtdraw.util.util.check_multipie">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">check_multipie</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check if multipie is installed or not.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        - (bool) -- installed ?</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">multipie</span>
+
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+
+
+<span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="create_grid">
+<a class="viewcode-back" href="../../../src/api_util.html#qtdraw.util.util.create_grid">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">create_grid</span><span class="p">(</span><span class="n">grid_n</span><span class="p">,</span> <span class="n">grid_min</span><span class="p">,</span> <span class="n">grid_max</span><span class="p">,</span> <span class="n">A</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">endpoint</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Create grid.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        grid_n (list): grid size.</span>
+<span class="sd">        grid_min (list): grid minimum.</span>
+<span class="sd">        grid_max (list): grid maximum.</span>
+<span class="sd">        A (list): [a1,a2,a3].</span>
+<span class="sd">        endpoint (bool, optional): include end points ?</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        UniformGrid: uniform grid.</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        - grid in column-major order.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">A</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">endpoint</span><span class="p">:</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="p">[(</span><span class="n">ma</span> <span class="o">-</span> <span class="n">mi</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">mi</span><span class="p">,</span> <span class="n">ma</span><span class="p">,</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">grid_min</span><span class="p">,</span> <span class="n">grid_max</span><span class="p">,</span> <span class="n">grid_n</span><span class="p">)]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="p">[(</span><span class="n">ma</span> <span class="o">-</span> <span class="n">mi</span><span class="p">)</span> <span class="o">/</span> <span class="n">n</span> <span class="k">for</span> <span class="n">mi</span><span class="p">,</span> <span class="n">ma</span><span class="p">,</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">grid_min</span><span class="p">,</span> <span class="n">grid_max</span><span class="p">,</span> <span class="n">grid_n</span><span class="p">)]</span>
+    <span class="n">grid</span> <span class="o">=</span> <span class="n">pv</span><span class="o">.</span><span class="n">ImageData</span><span class="p">(</span><span class="n">dimensions</span><span class="o">=</span><span class="n">grid_n</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="n">grid_min</span><span class="p">,</span> <span class="n">spacing</span><span class="o">=</span><span class="n">s</span><span class="p">)</span><span class="o">.</span><span class="n">cast_to_unstructured_grid</span><span class="p">()</span>
+    <span class="n">grid</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">grid</span></div>
 
 
 
@@ -426,211 +580,269 @@ document.write(`
 
 
 <span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="convert_str_vector">
-<a class="viewcode-back" href="../../../src/api_util.html#qtdraw.util.util.convert_str_vector">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">convert_str_vector</span><span class="p">(</span><span class="n">vector</span><span class="p">,</span> <span class="n">cell</span><span class="o">=</span><span class="s2">&quot;[0,0,0]&quot;</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">A</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="str_to_list">
+<a class="viewcode-back" href="../../../src/api_util.html#qtdraw.util.util.str_to_list">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">str_to_list</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Convert 3-component vector(s) to A.(position+cell).</span>
+<span class="sd">    Convert a string to a list of strings.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        vector (str): vector, str([float]) or str([[float]]).</span>
-<span class="sd">        cell (str, optional): cell, str([int]).</span>
-<span class="sd">        transform (bool, optional): transform by using A ?</span>
-<span class="sd">        A (numpy.ndarray, optional): A.</span>
+<span class="sd">        s (str): a string with irregular-shaped list format.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        - (numpy.ndarray) -- transformed position.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">cell</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">apply</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">text_to_list</span><span class="p">(</span><span class="n">cell</span><span class="p">)))</span>
-    <span class="n">vector</span> <span class="o">=</span> <span class="n">str_to_sympy1</span><span class="p">(</span><span class="n">vector</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
-
-    <span class="n">vectorT</span> <span class="o">=</span> <span class="n">vector</span> <span class="o">+</span> <span class="n">cell</span>
-    <span class="k">if</span> <span class="n">transform</span><span class="p">:</span>
-        <span class="n">A</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">T</span>
-        <span class="n">vectorT</span> <span class="o">=</span> <span class="n">vectorT</span> <span class="o">@</span> <span class="n">A</span>
-
-    <span class="k">return</span> <span class="n">vectorT</span></div>
-
-
-
-<span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="check_multipie">
-<a class="viewcode-back" href="../../../src/api_util.html#qtdraw.util.util.check_multipie">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">check_multipie</span><span class="p">():</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Check if multipie is installed or not.</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        - (bool) -- installed ?</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="kn">import</span><span class="w"> </span><span class="nn">multipie</span>
-
-        <span class="k">return</span> <span class="kc">True</span>
-    <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
-        <span class="k">return</span> <span class="kc">False</span></div>
-
-
-
-<span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="set_latex_setting">
-<a class="viewcode-back" href="../../../src/api_util.html#qtdraw.util.util.set_latex_setting">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">set_latex_setting</span><span class="p">():</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Set LaTeX setting.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">package</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;amsmath&quot;</span><span class="p">,</span> <span class="s2">&quot;amssymb&quot;</span><span class="p">,</span> <span class="s2">&quot;physics&quot;</span><span class="p">]</span>
-    <span class="n">pre</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="sa">r</span><span class="s2">&quot;\usepackage{&quot;</span> <span class="o">+</span> <span class="n">i</span> <span class="o">+</span> <span class="s2">&quot;}&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">package</span><span class="p">])</span>
-    <span class="n">tex_setting</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;text.usetex&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s2">&quot;text.latex.preamble&quot;</span><span class="p">:</span> <span class="n">pre</span><span class="p">}</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">tex_setting</span><span class="p">)</span></div>
-
-
-
-<span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="create_grid">
-<a class="viewcode-back" href="../../../src/api_util.html#qtdraw.util.util.create_grid">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">create_grid</span><span class="p">(</span><span class="n">grid_n</span><span class="p">,</span> <span class="n">grid_min</span><span class="p">,</span> <span class="n">grid_max</span><span class="p">,</span> <span class="n">A</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">endpoint</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Create grid.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        grid_n (list): grid size.</span>
-<span class="sd">        grid_min (list): grid minimum.</span>
-<span class="sd">        grid_max (list): grid maximum.</span>
-<span class="sd">        A (list): [a1,a2,a3].</span>
-<span class="sd">        endpoint (bool, optional): include end points ?</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        UniformGrid: uniform grid.</span>
+<span class="sd">        - (list) -- a list of strings.</span>
 
 <span class="sd">    Note:</span>
-<span class="sd">        - grid in column-major order.</span>
+<span class="sd">        - in case of no bracket, return as it is.</span>
+<span class="sd">        - raise ValueError for invalid brackets.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">A</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">endpoint</span><span class="p">:</span>
-        <span class="n">s</span> <span class="o">=</span> <span class="p">[(</span><span class="n">ma</span> <span class="o">-</span> <span class="n">mi</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">mi</span><span class="p">,</span> <span class="n">ma</span><span class="p">,</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">grid_min</span><span class="p">,</span> <span class="n">grid_max</span><span class="p">,</span> <span class="n">grid_n</span><span class="p">)]</span>
+    <span class="k">if</span> <span class="n">s</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s2">&quot;[&quot;</span><span class="p">)</span> <span class="o">!=</span> <span class="n">s</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s2">&quot;]&quot;</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;invalid blackets in &#39;</span><span class="si">{</span><span class="n">s</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">s</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s2">&quot;[&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">s</span>
+
+    <span class="n">nested_list</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">stack</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">current_word</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+    <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">s</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">char</span> <span class="o">==</span> <span class="s2">&quot;[&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">current_word</span><span class="o">.</span><span class="n">strip</span><span class="p">():</span>  <span class="c1"># remove space, and append it for non-null string.</span>
+                <span class="n">stack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">current_word</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+                <span class="n">current_word</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+            <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">([])</span>
+        <span class="k">elif</span> <span class="n">char</span> <span class="o">==</span> <span class="s2">&quot;]&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">current_word</span><span class="o">.</span><span class="n">strip</span><span class="p">():</span>  <span class="c1"># remove space, and append it for non-null string.</span>
+                <span class="n">stack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">current_word</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+                <span class="n">current_word</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+            <span class="k">if</span> <span class="n">stack</span><span class="p">:</span>
+                <span class="n">popped</span> <span class="o">=</span> <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">stack</span><span class="p">:</span>
+                    <span class="n">stack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">popped</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">nested_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">popped</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">char</span> <span class="o">==</span> <span class="s2">&quot;,&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">current_word</span><span class="o">.</span><span class="n">strip</span><span class="p">():</span>  <span class="c1"># remove space, and append it for non-null string.</span>
+                <span class="n">stack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">current_word</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+                <span class="n">current_word</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">current_word</span> <span class="o">+=</span> <span class="n">char</span>
+
+    <span class="k">if</span> <span class="n">current_word</span><span class="o">.</span><span class="n">strip</span><span class="p">():</span>  <span class="c1"># parse last word.</span>
+        <span class="k">if</span> <span class="n">stack</span><span class="p">:</span>
+            <span class="n">stack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">current_word</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">nested_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">current_word</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+
+    <span class="k">return</span> <span class="n">nested_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></div>
+
+
+
+<span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="text_to_list">
+<a class="viewcode-back" href="../../../src/api_util.html#qtdraw.util.util.text_to_list">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">text_to_list</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert single text to list.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        text (str): text to convert.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        - (list or str) -- converted list.</span>
+
+<span class="sd">    Notes:</span>
+<span class="sd">        - if format error occurs, return None.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="n">lb</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s2">&quot;[&quot;</span><span class="p">)</span>
+    <span class="n">rb</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s2">&quot;]&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">lb</span> <span class="o">!=</span> <span class="n">rb</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="k">elif</span> <span class="n">lb</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">rb</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">text</span>
+
+    <span class="n">text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\s*\[\s*&quot;</span><span class="p">,</span> <span class="s2">&quot;[&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\s*\]\s*&quot;</span><span class="p">,</span> <span class="s2">&quot;]&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+
+    <span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;[&quot;</span><span class="p">,</span> <span class="s2">&quot;[&#39;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;]&quot;</span><span class="p">,</span> <span class="s2">&quot;&#39;]&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">,</span> <span class="s2">&quot;&#39;,&#39;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;&#39;[&quot;</span><span class="p">,</span> <span class="s2">&quot;[&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;]&#39;&quot;</span><span class="p">,</span> <span class="s2">&quot;]&quot;</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">lst</span> <span class="o">=</span> <span class="n">ast</span><span class="o">.</span><span class="n">literal_eval</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+    <span class="k">except</span> <span class="p">(</span><span class="ne">SyntaxError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">return</span> <span class="n">lst</span></div>
+
+
+
+<span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="apply">
+<a class="viewcode-back" href="../../../src/api_util.html#qtdraw.util.util.apply">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">apply</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">lst</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Apply function to (nested) list.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        f (function): function to apply to each element of list.</span>
+<span class="sd">        lst (list or value): (nested) list to apply.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        - (list or value) -- applied list.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">lst</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">apply</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">lst</span><span class="p">]</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">s</span> <span class="o">=</span> <span class="p">[(</span><span class="n">ma</span> <span class="o">-</span> <span class="n">mi</span><span class="p">)</span> <span class="o">/</span> <span class="n">n</span> <span class="k">for</span> <span class="n">mi</span><span class="p">,</span> <span class="n">ma</span><span class="p">,</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">grid_min</span><span class="p">,</span> <span class="n">grid_max</span><span class="p">,</span> <span class="n">grid_n</span><span class="p">)]</span>
-    <span class="n">grid</span> <span class="o">=</span> <span class="n">pv</span><span class="o">.</span><span class="n">ImageData</span><span class="p">(</span><span class="n">dimensions</span><span class="o">=</span><span class="n">grid_n</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="n">grid_min</span><span class="p">,</span> <span class="n">spacing</span><span class="o">=</span><span class="n">s</span><span class="p">)</span><span class="o">.</span><span class="n">cast_to_unstructured_grid</span><span class="p">()</span>
-    <span class="n">grid</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">f</span><span class="p">(</span><span class="n">lst</span><span class="p">)</span></div>
+
+
+
+<span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="list_to_table">
+<a class="viewcode-back" href="../../../src/api_util.html#qtdraw.util.util.list_to_table">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">list_to_table</span><span class="p">(</span><span class="n">lst1d</span><span class="p">,</span> <span class="n">col</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert from list to table</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        lst1d (list): 1d list</span>
+<span class="sd">        col (int): number of columns</span>
+<span class="sd">        p (any, optional): padding value (no padding for None)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        - (list) -- 2d list.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">lst1d</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">list</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;non list type (</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">lst1d</span><span class="p">)</span><span class="si">}</span><span class="s2">) is given.&quot;</span><span class="p">)</span>
+
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">lst1d</span><span class="p">)</span>
+    <span class="n">row</span> <span class="o">=</span> <span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="n">col</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="n">col</span>
+    <span class="n">tbl</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">row</span><span class="p">):</span>
+        <span class="n">tbl</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">lst1d</span><span class="p">[</span><span class="n">col</span> <span class="o">*</span> <span class="n">i</span> <span class="p">:</span> <span class="n">col</span> <span class="o">*</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)])</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">row</span> <span class="o">*</span> <span class="n">col</span> <span class="o">-</span> <span class="n">n</span>
+    <span class="k">if</span> <span class="n">p</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">d</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">tbl</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="n">p</span><span class="p">]</span> <span class="o">*</span> <span class="n">d</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">tbl</span></div>
+
+
+
+<span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="remove_space">
+<a class="viewcode-back" href="../../../src/api_util.html#qtdraw.util.util.remove_space">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">remove_space</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Remove space, tab, and newline.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        s (str): string</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        - (str) -- removed string.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;invalid type (</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="si">}</span><span class="s2">) is given.&quot;</span><span class="p">)</span>
+
+    <span class="n">s</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">s</span></div>
+
+
+
+<span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="vector3d">
+<a class="viewcode-back" href="../../../src/api_util.html#qtdraw.util.util.vector3d">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">vector3d</span><span class="p">(</span><span class="n">head</span><span class="o">=</span><span class="s2">&quot;Q&quot;</span><span class="p">,</span> <span class="n">pre</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    3d vector.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        head (str, optional): type of vector, Q/G/T/M.</span>
+<span class="sd">        pre (str, optional): head of symbol.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        - (ndarray) -- 3d vector.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Q&quot;</span><span class="p">:</span> <span class="s2">&quot;[x,y,z]&quot;</span><span class="p">,</span> <span class="s2">&quot;G&quot;</span><span class="p">:</span> <span class="s2">&quot;[X,Y,Z]&quot;</span><span class="p">,</span> <span class="s2">&quot;T&quot;</span><span class="p">:</span> <span class="s2">&quot;[t_x,t_y,t_z]&quot;</span><span class="p">,</span> <span class="s2">&quot;M&quot;</span><span class="p">:</span> <span class="s2">&quot;[m_x,m_y,m_z]&quot;</span><span class="p">}</span>
+    <span class="k">if</span> <span class="n">head</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">d</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="s2">&quot;invalid head is given.&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">pre</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="n">head</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;[</span><span class="si">{</span><span class="n">pre</span><span class="si">}</span><span class="s2">_x,</span><span class="si">{</span><span class="n">pre</span><span class="si">}</span><span class="s2">_y,</span><span class="si">{</span><span class="n">pre</span><span class="si">}</span><span class="s2">_z]&quot;</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">str_to_sympy</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">real</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">s</span></div>
+
+
+
+<span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="distance">
+<a class="viewcode-back" href="../../../src/api_util.html#qtdraw.util.util.distance">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">distance</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">,</span> <span class="n">G</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">accuracy</span><span class="o">=</span><span class="mi">4</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    group of sites with the same distance (in increasing order).</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        s1 (ndarray): vector array.</span>
+<span class="sd">        s2 (ndarray): vector array.</span>
+<span class="sd">        G (ndarray, optional): metric matrix (None = unit matrix).</span>
+<span class="sd">        accuracy (int, optional): accuracy of digit.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        dict : i, j are indices of positions (i&lt;=j only for s1=s2), { distance(float): [(i(int),j(int))] }.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">G</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">G</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">s1</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">diff</span> <span class="o">=</span> <span class="nb">id</span><span class="p">(</span><span class="n">s1</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">id</span><span class="p">(</span><span class="n">s2</span><span class="p">)</span>
+    <span class="n">s1</span> <span class="o">=</span> <span class="n">s1</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">diff</span><span class="p">:</span>
+        <span class="n">s2</span> <span class="o">=</span> <span class="n">s2</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">s2</span> <span class="o">=</span> <span class="n">s1</span>
+
+    <span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="p">[]}</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">v1</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">s1</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">v2</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">s2</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">diff</span> <span class="ow">or</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">j</span><span class="p">:</span>
+                <span class="n">r</span> <span class="o">=</span> <span class="n">v1</span> <span class="o">-</span> <span class="n">v2</span>
+                <span class="n">dist</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">r</span> <span class="o">@</span> <span class="n">G</span> <span class="o">@</span> <span class="n">r</span><span class="p">)),</span> <span class="n">accuracy</span><span class="p">)</span>
+                <span class="n">d</span><span class="p">[</span><span class="n">dist</span><span class="p">]</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">dist</span><span class="p">,</span> <span class="p">[])</span> <span class="o">+</span> <span class="p">[(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)]</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="n">i</span><span class="p">:</span> <span class="n">j</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">items</span><span class="p">())}</span>
+
+    <span class="k">return</span> <span class="n">d</span></div>
+
+
+
+<span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="igrid">
+<a class="viewcode-back" href="../../../src/api_util.html#qtdraw.util.util.igrid">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">igrid</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    create integer grid points.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        N (list): number of points in each direction.</span>
+<span class="sd">        offset (tuple, optional): offset in each direction. 0 is used for None.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        ndarray: grid points.</span>
+
+<span class="sd">    Notes:</span>
+<span class="sd">        - grid point: increase of indices from left to right.</span>
+<span class="sd">        - x[i] = offset + i.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">offset</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">offset</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">d</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">offset</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">offset</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">N</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">d</span><span class="p">)]</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="o">*</span><span class="n">g</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">indexing</span><span class="o">=</span><span class="s2">&quot;ij&quot;</span><span class="p">)</span>
+    <span class="n">grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">i</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">g</span><span class="p">][::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">grid</span></div>
 
-
-
-<span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="split_filename">
-<a class="viewcode-back" href="../../../src/api_util.html#qtdraw.util.util.split_filename">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">split_filename</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Split file name.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        filename (str): filename.</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        - (str) -- filename with absolute path.</span>
-<span class="sd">        - (str) -- filename with relative path.</span>
-<span class="sd">        - (str) -- base filename.</span>
-<span class="sd">        - (str) -- extension.</span>
-<span class="sd">        - (str) -- directory.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
-    <span class="n">path_abs</span> <span class="o">=</span> <span class="n">path</span> <span class="k">if</span> <span class="n">path</span><span class="o">.</span><span class="n">is_absolute</span><span class="p">()</span> <span class="k">else</span> <span class="p">(</span><span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span> <span class="o">/</span> <span class="n">path</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
-    <span class="n">path_rel</span> <span class="o">=</span> <span class="n">path_abs</span><span class="o">.</span><span class="n">relative_to</span><span class="p">(</span><span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">())</span>
-    <span class="n">base</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">path_rel</span><span class="o">.</span><span class="n">stem</span><span class="p">)</span>
-    <span class="n">ext</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">path_rel</span><span class="o">.</span><span class="n">suffix</span><span class="p">)</span>
-    <span class="n">folder</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">path_abs</span><span class="o">.</span><span class="n">parent</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">path_abs</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">path_rel</span><span class="p">),</span> <span class="n">base</span><span class="p">,</span> <span class="n">ext</span><span class="p">,</span> <span class="n">folder</span></div>
-
-
-
-<span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="cat_filename">
-<a class="viewcode-back" href="../../../src/api_util.html#qtdraw.util.util.cat_filename">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">cat_filename</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">ext</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Cat filename.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        base (str): (base) filename.</span>
-<span class="sd">        ext (str, optional): extension.</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        - (str) -- full file name.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">ext</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">base</span> <span class="o">=</span> <span class="n">base</span> <span class="o">+</span> <span class="n">ext</span>
-    <span class="n">path</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span> <span class="o">/</span> <span class="n">Path</span><span class="p">(</span><span class="n">base</span><span class="p">))</span>
-
-    <span class="k">return</span> <span class="n">path</span></div>
-
-
-
-<span class="c1"># ==================================================</span>
-<div class="viewcode-block" id="create_style_sheet">
-<a class="viewcode-back" href="../../../src/api_util.html#qtdraw.util.util.create_style_sheet">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">create_style_sheet</span><span class="p">(</span><span class="n">size</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Create style sheet.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        size (int): font size (point).</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        - (str) -- style sheet string.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">    QTreeView::item </span><span class="se">{{</span>
-<span class="s2">        padding: 10px 15px 10px 15px;</span>
-<span class="s2">        border: none;</span>
-<span class="s2">        outline: none;</span>
-<span class="s2">        background: none;</span>
-<span class="s2">    </span><span class="se">}}</span>
-
-<span class="s2">    QTreeView::item:selected </span><span class="se">{{</span>
-<span class="s2">        border: none;</span>
-<span class="s2">        outline: none;</span>
-<span class="s2">        color: black;</span>
-<span class="s2">        background: lightyellow;</span>
-<span class="s2">    </span><span class="se">}}</span>
-<span class="s2">    QTreeView::item:focus </span><span class="se">{{</span>
-<span class="s2">        border: none;</span>
-<span class="s2">        outline: none;</span>
-<span class="s2">        color: black;</span>
-<span class="s2">        background: lightyellow;</span>
-<span class="s2">    </span><span class="se">}}</span>
-
-<span class="s2">    QComboBox </span><span class="se">{{</span>
-<span class="s2">        font-size: </span><span class="si">{</span><span class="n">size</span><span class="si">}</span><span class="s2">pt;</span>
-<span class="s2">        min-width: 40px;</span>
-<span class="s2">    </span><span class="se">}}</span>
-
-<span class="s2">    QLabel </span><span class="se">{{</span>
-<span class="s2">        font-size: </span><span class="si">{</span><span class="n">size</span><span class="si">}</span><span class="s2">pt;</span>
-<span class="s2">    </span><span class="se">}}</span>
-
-<span class="s2">    QPushButton </span><span class="se">{{</span>
-<span class="s2">        font-size: </span><span class="si">{</span><span class="n">size</span><span class="si">}</span><span class="s2">pt;</span>
-<span class="s2">    </span><span class="se">}}</span>
-<span class="s2">    &quot;&quot;&quot;</span></div>
-
-
-
-<span class="c1"># ==================================================</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">get_data_range</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
-    <span class="n">v1</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
-    <span class="n">v2</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
-    <span class="n">v</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">v1</span><span class="p">),</span> <span class="nb">abs</span><span class="p">(</span><span class="n">v2</span><span class="p">))</span>
-    <span class="k">if</span> <span class="n">v1</span> <span class="o">*</span> <span class="n">v2</span> <span class="o">&lt;</span> <span class="mf">0.0</span><span class="p">:</span>
-        <span class="n">clim</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="n">v</span><span class="p">,</span> <span class="n">v</span><span class="p">]</span>
-    <span class="k">elif</span> <span class="n">v1</span> <span class="o">&lt;</span> <span class="mf">0.0</span><span class="p">:</span>
-        <span class="n">clim</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="n">v</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">clim</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">v</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">clim</span>
 </pre></div>
 
                 </article>
@@ -687,8 +899,8 @@ By Hiroaki Kusunose
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
-<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
 
   <footer class="bd-footer">
   </footer>

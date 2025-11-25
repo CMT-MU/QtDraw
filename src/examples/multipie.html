@@ -16,17 +16,19 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-
-  
-  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
@@ -37,13 +39,14 @@
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=5f1b4820" />
   
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
-<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
-  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
     <script src="../../_static/documentation_options.js?v=8cf54648"></script>
-    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../../_static/copybutton.js?v=f281be69"></script>
@@ -56,13 +59,12 @@
     <script src="../../_static/design-tabs.js?v=f930bc37"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'src/examples/multipie';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="jp"/>
+  <meta name="docsearch:version" content="" />
   </head>
   
   
@@ -78,19 +80,8 @@
     <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
   
-  <input type="checkbox"
-          class="sidebar-toggle"
-          id="pst-primary-sidebar-checkbox"/>
-  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
-  
-  <input type="checkbox"
-          class="sidebar-toggle"
-          id="pst-secondary-sidebar-checkbox"/>
-  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
-  
-  <div class="search-button__wrapper">
-    <div class="search-button__overlay"></div>
-    <div class="search-button__search-container">
+  <dialog id="pst-search-dialog">
+    
 <form class="bd-search d-flex align-items-center"
       action="../../search.html"
       method="get">
@@ -98,7 +89,6 @@
   <input type="search"
          class="form-control"
          name="q"
-         id="search-input"
          placeholder="Search this book..."
          aria-label="Search this book..."
          autocomplete="off"
@@ -106,8 +96,8 @@
          autocapitalize="off"
          spellcheck="false"/>
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form></div>
-  </div>
+</form>
+  </dialog>
 
   <div class="pst-async-banner-revealer d-none">
   <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
@@ -125,7 +115,8 @@
       
         
       
-      <div class="bd-sidebar-primary bd-sidebar">
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
         
 
   
@@ -155,21 +146,17 @@
     
     
     <img src="../../_static/qtdraw_logo.png" class="logo__image only-light" alt="QtDraw - Home"/>
-    <script>document.write(`<img src="../../_static/qtdraw_logo.png" class="logo__image only-dark" alt="QtDraw - Home"/>`);</script>
+    <img src="../../_static/qtdraw_logo.png" class="logo__image only-dark pst-js-only" alt="QtDraw - Home"/>
   
   
 </a></div>
         <div class="sidebar-primary-item">
 
- <script>
- document.write(`
-   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
-    <span class="search-button__default-text">Search</span>
-    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-   </button>
- `);
- </script></div>
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
@@ -201,9 +188,14 @@
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
   </div>
-  
-  <div id="rtd-footer-container"></div>
 
 
       </div>
@@ -364,24 +356,16 @@
 
 
 
-<script>
-document.write(`
-  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
-    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
-    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
-  </button>
-`);
-</script>
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
 
 
-<script>
-document.write(`
-  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
-  </button>
-`);
-</script>
+</button>
 <button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
 </button>
@@ -422,7 +406,7 @@ document.write(`
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#</span>
 <span class="c1"># multipie.ipynb</span>
 <span class="c1">#</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw.core.qtdraw_app</span><span class="w"> </span><span class="kn">import</span> <span class="n">QtDraw</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw</span><span class="w"> </span><span class="kn">import</span> <span class="n">QtDraw</span>
 
 <span class="c1"># show tag list.</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">show_list</span><span class="p">(</span><span class="n">header</span><span class="p">,</span> <span class="n">lst</span><span class="p">):</span>
@@ -517,10 +501,15 @@ document.write(`
   Q(3,E,1,1)
   Q(3,E,2,0)
   Q(3,E,2,1)
-site SAMB:
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>site SAMB:
   Q01: Q(0,A1,,) = Qa(0,A1,) x Qs(0,A1,)
-  Q02: Q(1,E,,0) = Qa(0,A1,) x Qs(1,E,)
-  Q03: Q(1,E,,1) = Qa(0,A1,) x Qs(1,E,)
+  Q02: Q(1,A2,,) = Qa(0,A1,) x Qs(1,A2,)
+  Q03: Q(1,E,,0) = Qa(0,A1,) x Qs(1,E,)
+  Q04: Q(1,E,,1) = Qa(0,A1,) x Qs(1,E,)
+  Q05: Q(2,E,1,0) = Qa(0,A1,) x Qs(2,E,1)
+  Q06: Q(2,E,1,1) = Qa(0,A1,) x Qs(2,E,1)
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>bond SAMB:
@@ -532,50 +521,87 @@ site SAMB:
   T03: T(2,E,1,1) = Qa(0,A1,) x Tb(2,E,1)
 </pre></div>
 </div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>vector SAMB:
+  Q01: Q(1,A2,,) = Qa(1,A2,) x Qs(0,A1,)
+  Q02: Q(1,A2,,) = Qa(1,E,) x Qs(2,E,1)
+  Q03: Q(1,E,,0) = Qa(1,A2,) x Qs(2,E,1)
+  Q04: Q(1,E,,0) = Qa(1,E,) x Qs(0,A1,)
+  Q05: Q(1,E,,1) = Qa(1,A2,) x Qs(2,E,1)
+  Q06: Q(1,E,,1) = Qa(1,E,) x Qs(0,A1,)
+  G01: G(2,A1,,) = Qa(1,E,) x Qs(2,E,1)
+  G02: G(2,E,2,0) = Qa(1,E,) x Qs(2,E,1)
+  G03: G(2,E,2,1) = Qa(1,E,) x Qs(2,E,1)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>orital SAMB:
+  Q01: Q(1,A2,,) = Qa(1,A2,) x Qb(0,A1,)
+  Q02: Q(1,A2,,) = Qa(1,E,) x Qb(2,E,1)
+  Q03: Q(1,E,,0) = Qa(1,A2,) x Qb(2,E,1)
+  Q04: Q(1,E,,0) = Qa(1,E,) x Qb(0,A1,)
+  Q05: Q(1,E,,1) = Qa(1,A2,) x Qb(2,E,1)
+  Q06: Q(1,E,,1) = Qa(1,E,) x Qb(0,A1,)
+  G01: G(2,A1,,) = Qa(1,E,) x Qb(2,E,1)
+  G02: G(2,E,2,0) = Qa(1,E,) x Qb(2,E,1)
+  G03: G(2,E,2,1) = Qa(1,E,) x Qb(2,E,1)
+  T01: T(1,A2,,) = Qa(1,A2,) x Tb(0,A1,)
+  T02: T(1,A2,,) = Qa(1,E,) x Tb(2,E,1)
+  T03: T(1,E,,0) = Qa(1,A2,) x Tb(2,E,1)
+  T04: T(1,E,,0) = Qa(1,E,) x Tb(0,A1,)
+  T05: T(1,E,,1) = Qa(1,A2,) x Tb(2,E,1)
+  T06: T(1,E,,1) = Qa(1,E,) x Tb(0,A1,)
+  M01: M(2,A1,,) = Qa(1,E,) x Tb(2,E,1)
+  M02: M(2,E,2,0) = Qa(1,E,) x Tb(2,E,1)
+  M03: M(2,E,2,1) = Qa(1,E,) x Tb(2,E,1)
+</pre></div>
+</div>
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">TypeError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">line</span> <span class="mi">6</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="n">draw_harmonics</span><span class="p">(</span><span class="n">win</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">draw_site</span><span class="p">(</span><span class="n">win</span><span class="p">)</span>
-<span class="ne">----&gt; </span><span class="mi">6</span> <span class="n">draw_bond</span><span class="p">(</span><span class="n">win</span><span class="p">)</span>
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">line</span> <span class="mi">9</span>
 <span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="n">draw_vector</span><span class="p">(</span><span class="n">win</span><span class="p">)</span>
 <span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="n">draw_orbital</span><span class="p">(</span><span class="n">win</span><span class="p">)</span>
+<span class="ne">----&gt; </span><span class="mi">9</span> <span class="n">draw_hopping</span><span class="p">(</span><span class="n">win</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">10</span> <span class="n">draw_vector_modulation</span><span class="p">(</span><span class="n">win</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">11</span> <span class="n">draw_orbital_modulation</span><span class="p">(</span><span class="n">win</span><span class="p">)</span>
 
-<span class="nn">Cell In[1], line 36,</span> in <span class="ni">draw_bond</span><span class="nt">(win)</span>
-<span class="g g-Whitespace">     </span><span class="mi">34</span> <span class="n">lst</span> <span class="o">=</span> <span class="n">win</span><span class="o">.</span><span class="n">mp_create_bond_samb</span><span class="p">(</span><span class="s2">&quot;[1/2,1/2,0]@[1/4,1/4,0]&quot;</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">35</span> <span class="n">show_list</span><span class="p">(</span><span class="s2">&quot;bond SAMB:&quot;</span><span class="p">,</span> <span class="n">lst</span><span class="p">)</span>
-<span class="ne">---&gt; </span><span class="mi">36</span> <span class="n">win</span><span class="o">.</span><span class="n">mp_add_bond_samb</span><span class="p">(</span><span class="n">lst</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+<span class="nn">Cell In[1], line 64,</span> in <span class="ni">draw_hopping</span><span class="nt">(win)</span>
+<span class="g g-Whitespace">     </span><span class="mi">62</span> <span class="k">def</span><span class="w"> </span><span class="nf">draw_hopping</span><span class="p">(</span><span class="n">win</span><span class="p">):</span>
+<span class="g g-Whitespace">     </span><span class="mi">63</span>     <span class="c1"># draw hopping direction.</span>
+<span class="ne">---&gt; </span><span class="mi">64</span>     <span class="n">win</span><span class="o">.</span><span class="n">mp_add_hopping</span><span class="p">(</span><span class="s2">&quot;[0,0,0];[1/2,1/2,0]&quot;</span><span class="p">)</span>
 
-<span class="nn">File ~/.venv/lib/python3.13/site-packages/qtdraw/core/qtdraw_app.py:2792,</span> in <span class="ni">QtDraw.mp_add_bond_samb</span><span class="nt">(self, tag, scale)</span>
-<span class="g g-Whitespace">   </span><span class="mi">2784</span><span class="w"> </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="g g-Whitespace">   </span><span class="mi">2785</span><span class="sd"> MultiPie: Add bond SAMB.</span>
-<span class="g g-Whitespace">   </span><span class="mi">2786</span><span class="sd"> </span>
-<span class="sd">   (...)   2789     scale (float, optional): width scale.</span>
-<span class="g g-Whitespace">   </span><span class="mi">2790</span><span class="sd"> &quot;&quot;&quot;</span>
-<span class="g g-Whitespace">   </span><span class="mi">2791</span> <span class="bp">self</span><span class="o">.</span><span class="n">multipie_dialog</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">basis_combo_bond_samb</span><span class="o">.</span><span class="n">setCurrentText</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span>
-<span class="ne">-&gt; </span><span class="mi">2792</span> <span class="bp">self</span><span class="o">.</span><span class="n">multipie_dialog</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">basis_add_bond</span><span class="p">(</span><span class="n">scale</span><span class="p">)</span>
+<span class="nn">File ~/Library/CloudStorage/Dropbox/working/GitHub/QtDraw/qtdraw/core/qtdraw_app.py:2924,</span> in <span class="ni">QtDraw.mp_add_hopping</span><span class="nt">(self, bond, scale)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2921</span>     <span class="bp">self</span><span class="o">.</span><span class="n">mp_set_group</span><span class="p">()</span>
+<span class="g g-Whitespace">   </span><span class="mi">2923</span> <span class="bp">self</span><span class="o">.</span><span class="n">multipie_dialog</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">basis_edit_hopping</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">bond</span><span class="p">)</span>
+<span class="ne">-&gt; </span><span class="mi">2924</span> <span class="bp">self</span><span class="o">.</span><span class="n">multipie_dialog</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">basis_add_hopping</span><span class="p">(</span><span class="n">scale</span><span class="p">)</span>
 
-<span class="nn">File ~/.venv/lib/python3.13/site-packages/qtdraw/multipie/dialog_multipie.py:1397,</span> in <span class="ni">MultiPieDialog.basis_add_bond</span><span class="nt">(self, scale)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1386</span> <span class="n">cluster_obj</span> <span class="o">=</span> <span class="n">create_samb_object</span><span class="p">(</span>
-<span class="g g-Whitespace">   </span><span class="mi">1387</span>     <span class="n">z_samb</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1388</span>     <span class="n">cluster</span><span class="p">,</span>
-   <span class="p">(</span><span class="o">...</span><span class="p">)</span>   <span class="mi">1394</span>     <span class="n">t_odd</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1395</span> <span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1396</span> <span class="n">label</span> <span class="o">=</span> <span class="n">samb_str</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot; </span><span class="se">\u21d0</span><span class="s2"> &quot;</span> <span class="o">+</span> <span class="n">remove_space</span><span class="p">(</span><span class="n">r_bond</span><span class="p">)</span>
-<span class="ne">-&gt; </span><span class="mi">1397</span> <span class="bp">self</span><span class="o">.</span><span class="n">plugin</span><span class="o">.</span><span class="n">add_bond_samb</span><span class="p">(</span><span class="n">cluster</span><span class="p">,</span> <span class="n">cluster_obj</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">z_type</span><span class="p">,</span> <span class="n">scale</span><span class="p">)</span>
+<span class="nn">File ~/Library/CloudStorage/Dropbox/working/GitHub/QtDraw/qtdraw/multipie/dialog_multipie.py:1679,</span> in <span class="ni">MultiPieDialog.basis_add_hopping</span><span class="nt">(self, scale)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1676</span> <span class="n">bond</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">plugin</span><span class="o">.</span><span class="n">create_hopping_direction</span><span class="p">(</span><span class="n">pos</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1677</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;T </span><span class="se">\u21d0</span><span class="s2"> &quot;</span> <span class="o">+</span> <span class="n">remove_space</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">pos</span><span class="p">))</span>
+<span class="ne">-&gt; </span><span class="mi">1679</span> <span class="bp">self</span><span class="o">.</span><span class="n">plugin</span><span class="o">.</span><span class="n">add_hopping_samb</span><span class="p">(</span><span class="n">bond</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">scale</span><span class="p">)</span>
 
-<span class="nn">File ~/.venv/lib/python3.13/site-packages/qtdraw/multipie/plugin_multipie.py:801,</span> in <span class="ni">MultiPiePlugin.add_bond_samb</span><span class="nt">(self, bond, obj, label, z_type, scale)</span>
-<span class="g g-Whitespace">    </span><span class="mi">791</span>     <span class="bp">self</span><span class="o">.</span><span class="n">_pvw</span><span class="o">.</span><span class="n">add_bond</span><span class="p">(</span>
-<span class="g g-Whitespace">    </span><span class="mi">792</span>         <span class="n">position</span><span class="o">=</span><span class="n">c</span><span class="o">.</span><span class="n">value</span><span class="p">(),</span>
-<span class="g g-Whitespace">    </span><span class="mi">793</span>         <span class="n">direction</span><span class="o">=</span><span class="n">v</span><span class="o">.</span><span class="n">value</span><span class="p">(),</span>
-   <span class="p">(</span><span class="o">...</span><span class="p">)</span>    <span class="mi">798</span>         <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">799</span>     <span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">800</span> <span class="k">else</span><span class="p">:</span>
-<span class="ne">--&gt; </span><span class="mi">801</span>     <span class="n">v</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">802</span>     <span class="k">if</span> <span class="n">w</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">803</span>         <span class="n">v</span> <span class="o">=</span> <span class="o">-</span><span class="n">v</span>
+<span class="nn">File ~/Library/CloudStorage/Dropbox/working/GitHub/QtDraw/qtdraw/multipie/plugin_multipie.py:1005,</span> in <span class="ni">MultiPiePlugin.add_hopping_samb</span><span class="nt">(self, bond, label, scale)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1003</span> <span class="n">count</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">counter</span><span class="p">(</span><span class="s2">&quot;hopping&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="g g-Whitespace">   </span><span class="mi">1004</span> <span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Z_</span><span class="si">{</span><span class="n">count</span><span class="si">:</span><span class="s2">02</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="ne">-&gt; </span><span class="mi">1005</span> <span class="n">A</span> <span class="o">=</span> <span class="n">str_to_sympy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_pvw</span><span class="o">.</span><span class="n">A_matrix</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1006</span> <span class="k">for</span> <span class="n">no</span><span class="p">,</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">pset</span><span class="p">):</span>
+<span class="g g-Whitespace">   </span><span class="mi">1007</span>     <span class="n">name1</span> <span class="o">=</span> <span class="n">name</span>
 
-<span class="ne">TypeError</span>: NSArray.transform() got an unexpected keyword argument &#39;inplace&#39;
+<span class="nn">File ~/Library/CloudStorage/Dropbox/working/GitHub/QtDraw/qtdraw/util/util.py:58,</span> in <span class="ni">str_to_sympy</span><span class="nt">(s, check_var, check_shape, rational, subs, **assumptions)</span>
+<span class="g g-Whitespace">     </span><span class="mi">55</span> <span class="n">reserved</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">sp</span><span class="o">.</span><span class="n">__all__</span><span class="p">)</span> <span class="o">|</span> <span class="p">{</span><span class="s2">&quot;pi&quot;</span><span class="p">,</span> <span class="s2">&quot;E&quot;</span><span class="p">,</span> <span class="s2">&quot;I&quot;</span><span class="p">,</span> <span class="s2">&quot;oo&quot;</span><span class="p">,</span> <span class="s2">&quot;zoo&quot;</span><span class="p">}</span>
+<span class="g g-Whitespace">     </span><span class="mi">57</span> <span class="c1"># extract candidate variable names.</span>
+<span class="ne">---&gt; </span><span class="mi">58</span> <span class="n">var</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;[A-Za-z_]\w*&quot;</span><span class="p">,</span> <span class="n">s</span><span class="p">)))</span>
+<span class="g g-Whitespace">     </span><span class="mi">59</span> <span class="c1"># remove reserved ones.</span>
+<span class="g g-Whitespace">     </span><span class="mi">60</span> <span class="n">var</span> <span class="o">=</span> <span class="p">[</span><span class="n">v</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">var</span> <span class="k">if</span> <span class="n">v</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">reserved</span><span class="p">]</span>
+
+<span class="nn">File /opt/homebrew/Cellar/python@3.13/3.13.9_1/Frameworks/Python.framework/Versions/3.13/lib/python3.13/re/__init__.py:278,</span> in <span class="ni">findall</span><span class="nt">(pattern, string, flags)</span>
+<span class="g g-Whitespace">    </span><span class="mi">270</span> <span class="k">def</span><span class="w"> </span><span class="nf">findall</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">string</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">271</span><span class="w">     </span><span class="sd">&quot;&quot;&quot;Return a list of all non-overlapping matches in the string.</span>
+<span class="g g-Whitespace">    </span><span class="mi">272</span><span class="sd"> </span>
+<span class="g g-Whitespace">    </span><span class="mi">273</span><span class="sd">     If one or more capturing groups are present in the pattern, return</span>
+<span class="sd">   (...)    276 </span>
+<span class="g g-Whitespace">    </span><span class="mi">277</span><span class="sd">     Empty matches are included in the result.&quot;&quot;&quot;</span>
+<span class="ne">--&gt; </span><span class="mi">278</span>     <span class="k">return</span> <span class="n">_compile</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">flags</span><span class="p">)</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+
+<span class="ne">TypeError</span>: cannot use a string pattern on a bytes-like object
 </pre></div>
 </div>
 </div>
@@ -612,7 +638,8 @@ site SAMB:
             
             
               
-                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
 
   <div class="sidebar-secondary-item">
@@ -670,8 +697,8 @@ By Hiroaki Kusunose
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
-<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
 
   <footer class="bd-footer">
   </footer>

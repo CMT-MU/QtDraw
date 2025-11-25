@@ -16,17 +16,19 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-
-  
-  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
@@ -37,13 +39,14 @@
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=5f1b4820" />
   
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
-  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
     <script src="../_static/documentation_options.js?v=8cf54648"></script>
-    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=f281be69"></script>
@@ -56,14 +59,13 @@
     <script src="../_static/design-tabs.js?v=f930bc37"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'src/function_table';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="prev" title="Widget" href="api_widget.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="jp"/>
+  <meta name="docsearch:version" content="" />
   </head>
   
   
@@ -79,19 +81,8 @@
     <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
   
-  <input type="checkbox"
-          class="sidebar-toggle"
-          id="pst-primary-sidebar-checkbox"/>
-  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
-  
-  <input type="checkbox"
-          class="sidebar-toggle"
-          id="pst-secondary-sidebar-checkbox"/>
-  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
-  
-  <div class="search-button__wrapper">
-    <div class="search-button__overlay"></div>
-    <div class="search-button__search-container">
+  <dialog id="pst-search-dialog">
+    
 <form class="bd-search d-flex align-items-center"
       action="../search.html"
       method="get">
@@ -99,7 +90,6 @@
   <input type="search"
          class="form-control"
          name="q"
-         id="search-input"
          placeholder="Search this book..."
          aria-label="Search this book..."
          autocomplete="off"
@@ -107,8 +97,8 @@
          autocapitalize="off"
          spellcheck="false"/>
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form></div>
-  </div>
+</form>
+  </dialog>
 
   <div class="pst-async-banner-revealer d-none">
   <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
@@ -124,7 +114,8 @@
       
       
       
-      <div class="bd-sidebar-primary bd-sidebar">
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
         
 
   
@@ -154,21 +145,17 @@
     
     
     <img src="../_static/qtdraw_logo.png" class="logo__image only-light" alt="QtDraw - Home"/>
-    <script>document.write(`<img src="../_static/qtdraw_logo.png" class="logo__image only-dark" alt="QtDraw - Home"/>`);</script>
+    <img src="../_static/qtdraw_logo.png" class="logo__image only-dark pst-js-only" alt="QtDraw - Home"/>
   
   
 </a></div>
         <div class="sidebar-primary-item">
 
- <script>
- document.write(`
-   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
-    <span class="search-button__default-text">Search</span>
-    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-   </button>
- `);
- </script></div>
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
@@ -200,9 +187,14 @@
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
   </div>
-  
-  <div id="rtd-footer-container"></div>
 
 
       </div>
@@ -363,24 +355,16 @@
 
 
 
-<script>
-document.write(`
-  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
-    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
-    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
-  </button>
-`);
-</script>
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
 
 
-<script>
-document.write(`
-  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
-  </button>
-`);
-</script>
+</button>
 <button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
 </button>
@@ -432,11 +416,30 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#groupmodel"><div class="my-heading" style="color: royalblue;">GroupModel</div></a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mathjax-py"><div class="my-heading" style="color: darkgreen;">mathjax.py</div></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mathjaxsvg"><div class="my-heading" style="color: royalblue;">MathJaxSVG</div></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3"><div class="my-heading" style="color: royalblue;">Global function</div></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#color-palette-py"><div class="my-heading" style="color: darkgreen;">color_palette.py</div></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4"><div class="my-heading" style="color: royalblue;">Global function</div></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#color-selector-util-py"><div class="my-heading" style="color: darkgreen;">color_selector_util.py</div></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5"><div class="my-heading" style="color: royalblue;">Global function</div></a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#delegate-py"><div class="my-heading" style="color: darkgreen;">delegate.py</div></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#delegate"><div class="my-heading" style="color: royalblue;">Delegate</div></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#combodelegate"><div class="my-heading" style="color: royalblue;">ComboDelegate</div></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#colordelegate"><div class="my-heading" style="color: royalblue;">ColorDelegate</div></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#editordelegate"><div class="my-heading" style="color: royalblue;">EditorDelegate</div></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#logging-util-py"><div class="my-heading" style="color: darkgreen;">logging_util.py</div></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6"><div class="my-heading" style="color: royalblue;">Global function</div></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#loghandler"><div class="my-heading" style="color: royalblue;">LogHandler</div></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#logwidget"><div class="my-heading" style="color: royalblue;">LogWidget</div></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#message-box-py"><div class="my-heading" style="color: darkgreen;">message_box.py</div></a><ul class="nav section-nav flex-column">
@@ -447,23 +450,31 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#groupview"><div class="my-heading" style="color: royalblue;">GroupView</div></a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qt-event-util-py"><div class="my-heading" style="color: darkgreen;">qt_event_util.py</div></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7"><div class="my-heading" style="color: royalblue;">Global function</div></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exceptionhook"><div class="my-heading" style="color: royalblue;">ExceptionHook</div></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pdf-viewer-py"><div class="my-heading" style="color: darkgreen;">pdf_viewer.py</div></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pdfviewer"><div class="my-heading" style="color: royalblue;">PDFViewer</div></a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#custom-widget-py"><div class="my-heading" style="color: darkgreen;">custom_widget.py</div></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#layout"><div class="my-heading" style="color: royalblue;">Layout</div></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#panel"><div class="my-heading" style="color: royalblue;">Panel</div></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#color"><div class="my-heading" style="color: royalblue;">Color</div></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#label"><div class="my-heading" style="color: royalblue;">Label</div></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#colorlabel"><div class="my-heading" style="color: royalblue;">ColorLabel</div></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lineedit"><div class="my-heading" style="color: royalblue;">LineEdit</div></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mathwidget"><div class="my-heading" style="color: royalblue;">MathWidget</div></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hbar"><div class="my-heading" style="color: royalblue;">HBar</div></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#vspacer"><div class="my-heading" style="color: royalblue;">VSpacer</div></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hspacer"><div class="my-heading" style="color: royalblue;">HSpacer</div></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#colorselector"><div class="my-heading" style="color: royalblue;">ColorSelector</div></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#button"><div class="my-heading" style="color: royalblue;">Button</div></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#combo"><div class="my-heading" style="color: royalblue;">Combo</div></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spin"><div class="my-heading" style="color: royalblue;">Spin</div></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dspin"><div class="my-heading" style="color: royalblue;">DSpin</div></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#check"><div class="my-heading" style="color: royalblue;">Check</div></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#vspacer"><div class="my-heading" style="color: royalblue;">VSpacer</div></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hspacer"><div class="my-heading" style="color: royalblue;">HSpacer</div></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lineedit"><div class="my-heading" style="color: royalblue;">LineEdit</div></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#editor"><div class="my-heading" style="color: royalblue;">Editor</div></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#colorselector"><div class="my-heading" style="color: royalblue;">ColorSelector</div></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#table-view-py"><div class="my-heading" style="color: darkgreen;">table_view.py</div></a><ul class="nav section-nav flex-column">
@@ -474,52 +485,23 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tabgroupview"><div class="my-heading" style="color: royalblue;">TabGroupView</div></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#latex-to-png-py"><div class="my-heading" style="color: darkgreen;">latex_to_png.py</div></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3"><div class="my-heading" style="color: royalblue;">Global function</div></a></li>
-</ul>
-</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#util-axis-py"><div class="my-heading" style="color: darkgreen;">util_axis.py</div></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4"><div class="my-heading" style="color: royalblue;">Global function</div></a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#latex-to-svg-py"><div class="my-heading" style="color: darkgreen;">latex_to_svg.py</div></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5"><div class="my-heading" style="color: royalblue;">Global function</div></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svgwidget"><div class="my-heading" style="color: royalblue;">SVGWidget</div></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mathtext"><div class="my-heading" style="color: royalblue;">MathText</div></a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#util-py"><div class="my-heading" style="color: darkgreen;">util.py</div></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6"><div class="my-heading" style="color: royalblue;">Global function</div></a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#color-selector-util-py"><div class="my-heading" style="color: darkgreen;">color_selector_util.py</div></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7"><div class="my-heading" style="color: royalblue;">Global function</div></a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#util-str-py"><div class="my-heading" style="color: darkgreen;">util_str.py</div></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8"><div class="my-heading" style="color: royalblue;">Global function</div></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#logging-util-py"><div class="my-heading" style="color: darkgreen;">logging_util.py</div></a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#util-py"><div class="my-heading" style="color: darkgreen;">util.py</div></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9"><div class="my-heading" style="color: royalblue;">Global function</div></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#loghandler"><div class="my-heading" style="color: royalblue;">LogHandler</div></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#logwidget"><div class="my-heading" style="color: royalblue;">LogWidget</div></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-object-py"><div class="my-heading" style="color: darkgreen;">basic_object.py</div></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10"><div class="my-heading" style="color: royalblue;">Global function</div></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qt-event-util-py"><div class="my-heading" style="color: darkgreen;">qt_event_util.py</div></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11"><div class="my-heading" style="color: royalblue;">Global function</div></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exceptionhook"><div class="my-heading" style="color: royalblue;">ExceptionHook</div></a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pdf-viewer-py"><div class="my-heading" style="color: darkgreen;">pdf_viewer.py</div></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pdfviewer"><div class="my-heading" style="color: royalblue;">PDFViewer</div></a></li>
-</ul>
-</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#read-material-py"><div class="my-heading" style="color: darkgreen;">read_material.py</div></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11"><div class="my-heading" style="color: royalblue;">Global function</div></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#util-parser-py"><div class="my-heading" style="color: darkgreen;">util_parser.py</div></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id12"><div class="my-heading" style="color: royalblue;">Global function</div></a></li>
 </ul>
 </li>
@@ -548,12 +530,16 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multipieplugin"><div class="my-heading" style="color: royalblue;">MultiPiePlugin</div></a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#util-multipie-py"><div class="my-heading" style="color: darkgreen;">util_multipie.py</div></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id19"><div class="my-heading" style="color: royalblue;">Global function</div></a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dialog-modulation-py"><div class="my-heading" style="color: darkgreen;">dialog_modulation.py</div></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#modulationdialog"><div class="my-heading" style="color: royalblue;">ModulationDialog</div></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dialog-info-py"><div class="my-heading" style="color: darkgreen;">dialog_info.py</div></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id19"><div class="my-heading" style="color: royalblue;">Global function</div></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id20"><div class="my-heading" style="color: royalblue;">Global function</div></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#infopanel"><div class="my-heading" style="color: royalblue;">InfoPanel</div></a></li>
 </ul>
 </li>
@@ -972,13 +958,28 @@ document.write(`
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>create_qtdraw_file</p></td>
+<tr class="row-even"><td><p>convert_to_str</p></td>
+<td><p>Convert from object to str, and remove spaces.</p></td>
+</tr>
+<tr class="row-odd"><td><p>get_data_range</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p>convert_str_vector</p></td>
+<td><p>Convert 3-component vector(s) to A.(position+cell).</p></td>
+</tr>
+<tr class="row-odd"><td><p>split_filename</p></td>
+<td><p>Split file name.</p></td>
+</tr>
+<tr class="row-even"><td><p>cat_filename</p></td>
+<td><p>Cat filename.</p></td>
+</tr>
+<tr class="row-odd"><td><p>create_qtdraw_file</p></td>
 <td><p>Create QtDraw file as background.</p></td>
 </tr>
-<tr class="row-odd"><td><p>convert_qtdraw_v2</p></td>
+<tr class="row-even"><td><p>convert_qtdraw_v2</p></td>
 <td><p>Convert qtdraw file to version 2.</p></td>
 </tr>
-<tr class="row-even"><td><p>set_light_prop</p></td>
+<tr class="row-odd"><td><p>set_light_prop</p></td>
 <td><p></p></td>
 </tr>
 </tbody>
@@ -1275,124 +1276,121 @@ document.write(`
 <tr class="row-even"><td><p>closeEvent</p></td>
 <td><p>In order to close QInteractor, and opened dialogs.</p></td>
 </tr>
-<tr class="row-odd"><td><p>close</p></td>
-<td><p>In order to close QInteractor, and opened dialogs.</p></td>
-</tr>
-<tr class="row-even"><td><p>remove_data</p></td>
+<tr class="row-odd"><td><p>remove_data</p></td>
 <td><p>Remove data.</p></td>
 </tr>
-<tr class="row-odd"><td><p>show_context_menu</p></td>
+<tr class="row-even"><td><p>show_context_menu</p></td>
 <td><p>Show context menu.</p></td>
 </tr>
-<tr class="row-even"><td><p>open_action</p></td>
+<tr class="row-odd"><td><p>open_action</p></td>
 <td><p>Action for open in context menum.</p></td>
 </tr>
-<tr class="row-odd"><td><p>hide_action</p></td>
+<tr class="row-even"><td><p>hide_action</p></td>
 <td><p>Action for hide in context menu.</p></td>
 </tr>
-<tr class="row-even"><td><p>remove_action</p></td>
+<tr class="row-odd"><td><p>remove_action</p></td>
 <td><p>Action for remove in context menu.</p></td>
 </tr>
-<tr class="row-odd"><td><p>select_actor</p></td>
+<tr class="row-even"><td><p>select_actor</p></td>
 <td><p>Select actor with spotlight.</p></td>
 </tr>
-<tr class="row-even"><td><p>deselect_actor</p></td>
+<tr class="row-odd"><td><p>deselect_actor</p></td>
 <td><p>Deselect actor with reset of spotlight.</p></td>
 </tr>
-<tr class="row-odd"><td><p>deselect_actor_all</p></td>
+<tr class="row-even"><td><p>deselect_actor_all</p></td>
 <td><p>Deselect all selected actors.</p></td>
 </tr>
-<tr class="row-even"><td><p>change_selection</p></td>
+<tr class="row-odd"><td><p>change_selection</p></td>
 <td><p>Change selection for spotlight.</p></td>
 </tr>
-<tr class="row-odd"><td><p>find_index</p></td>
+<tr class="row-even"><td><p>find_index</p></td>
 <td><p>Find index from actor.</p></td>
 </tr>
-<tr class="row-even"><td><p>set_common_row_data</p></td>
+<tr class="row-odd"><td><p>set_common_row_data</p></td>
 <td><p>Set common row data.</p></td>
 </tr>
-<tr class="row-odd"><td><p>plot_data</p></td>
+<tr class="row-even"><td><p>plot_data</p></td>
 <td><p>Plot mesh from data.</p></td>
 </tr>
-<tr class="row-even"><td><p>redraw</p></td>
+<tr class="row-odd"><td><p>redraw</p></td>
 <td><p>Redraw all object.</p></td>
 </tr>
-<tr class="row-odd"><td><p>common_option</p></td>
+<tr class="row-even"><td><p>common_option</p></td>
 <td><p>Create common option to plot.</p></td>
 </tr>
-<tr class="row-even"><td><p>label_option</p></td>
+<tr class="row-odd"><td><p>label_option</p></td>
 <td><p>Create common option to plot.</p></td>
 </tr>
-<tr class="row-odd"><td><p>check_hide</p></td>
+<tr class="row-even"><td><p>check_hide</p></td>
 <td><p>Check hide state.</p></td>
 </tr>
-<tr class="row-even"><td><p>plot_data_site</p></td>
+<tr class="row-odd"><td><p>plot_data_site</p></td>
 <td><p>Plot site.</p></td>
 </tr>
-<tr class="row-odd"><td><p>plot_data_bond</p></td>
+<tr class="row-even"><td><p>plot_data_bond</p></td>
 <td><p>Plot bond.</p></td>
 </tr>
-<tr class="row-even"><td><p>plot_data_vector</p></td>
+<tr class="row-odd"><td><p>plot_data_vector</p></td>
 <td><p>Plot vector.</p></td>
 </tr>
-<tr class="row-odd"><td><p>plot_data_orbital</p></td>
+<tr class="row-even"><td><p>plot_data_orbital</p></td>
 <td><p>Plot orbital.</p></td>
 </tr>
-<tr class="row-even"><td><p>plot_data_stream</p></td>
+<tr class="row-odd"><td><p>plot_data_stream</p></td>
 <td><p>Plot stream (vectors in cartesian coordinate).</p></td>
 </tr>
-<tr class="row-odd"><td><p>plot_data_line</p></td>
+<tr class="row-even"><td><p>plot_data_line</p></td>
 <td><p>Plot line.</p></td>
 </tr>
-<tr class="row-even"><td><p>plot_data_plane</p></td>
+<tr class="row-odd"><td><p>plot_data_plane</p></td>
 <td><p>Plot plane.</p></td>
 </tr>
-<tr class="row-odd"><td><p>plot_data_circle</p></td>
+<tr class="row-even"><td><p>plot_data_circle</p></td>
 <td><p>Plot circle.</p></td>
 </tr>
-<tr class="row-even"><td><p>plot_data_torus</p></td>
+<tr class="row-odd"><td><p>plot_data_torus</p></td>
 <td><p>Plot torus.</p></td>
 </tr>
-<tr class="row-odd"><td><p>plot_data_ellipsoid</p></td>
+<tr class="row-even"><td><p>plot_data_ellipsoid</p></td>
 <td><p>Plot ellipsoid.</p></td>
 </tr>
-<tr class="row-even"><td><p>plot_data_toroid</p></td>
+<tr class="row-odd"><td><p>plot_data_toroid</p></td>
 <td><p>Plot toroid.</p></td>
 </tr>
-<tr class="row-odd"><td><p>plot_data_box</p></td>
+<tr class="row-even"><td><p>plot_data_box</p></td>
 <td><p>Plot box.</p></td>
 </tr>
-<tr class="row-even"><td><p>plot_data_polygon</p></td>
+<tr class="row-odd"><td><p>plot_data_polygon</p></td>
 <td><p>Plot polygon.</p></td>
 </tr>
-<tr class="row-odd"><td><p>plot_data_text3d</p></td>
+<tr class="row-even"><td><p>plot_data_text3d</p></td>
 <td><p>Plot text3d (view and offset in reduced coordinate).</p></td>
 </tr>
-<tr class="row-even"><td><p>plot_data_isosurface</p></td>
+<tr class="row-odd"><td><p>plot_data_isosurface</p></td>
 <td><p>Plot isosurface.</p></td>
 </tr>
-<tr class="row-odd"><td><p>plot_data_spline</p></td>
+<tr class="row-even"><td><p>plot_data_spline</p></td>
 <td><p>Plot spline.</p></td>
 </tr>
-<tr class="row-even"><td><p>plot_data_spline_t</p></td>
+<tr class="row-odd"><td><p>plot_data_spline_t</p></td>
 <td><p>Plot spline (parametric).</p></td>
 </tr>
-<tr class="row-odd"><td><p>plot_data_caption</p></td>
+<tr class="row-even"><td><p>plot_data_caption</p></td>
 <td><p>Plot caption.</p></td>
 </tr>
-<tr class="row-even"><td><p>plot_data_text2d</p></td>
+<tr class="row-odd"><td><p>plot_data_text2d</p></td>
 <td><p>Plot text 2d.</p></td>
 </tr>
-<tr class="row-odd"><td><p>plot_label</p></td>
+<tr class="row-even"><td><p>plot_label</p></td>
 <td><p>Plot label.</p></td>
 </tr>
-<tr class="row-even"><td><p>set_isosurface_data</p></td>
+<tr class="row-odd"><td><p>set_isosurface_data</p></td>
 <td><p>Set isosurface data.</p></td>
 </tr>
-<tr class="row-odd"><td><p>plot_orbital_from_data</p></td>
+<tr class="row-even"><td><p>plot_orbital_from_data</p></td>
 <td><p>Plot orbital from data.</p></td>
 </tr>
-<tr class="row-even"><td><p>plot_stream_from_data</p></td>
+<tr class="row-odd"><td><p>plot_stream_from_data</p></td>
 <td><p>Plot stream from data (vectors in cartesian coordinate).</p></td>
 </tr>
 </tbody>
@@ -1451,38 +1449,44 @@ document.write(`
 </tr>
 </thead>
 <tbody>
+<tr class="row-even"><td><p>check_symbol</p></td>
+<td><p>Check symbol.</p></td>
+</tr>
+<tr class="row-odd"><td><p>convert_to_bond</p></td>
+<td><p>Convert to bond from str.</p></td>
+</tr>
 <tr class="row-even"><td><p>validator_int</p></td>
 <td><p>Validator for int.</p></td>
 </tr>
 <tr class="row-odd"><td><p>validator_float</p></td>
 <td><p>Validator for float.</p></td>
 </tr>
-<tr class="row-even"><td><p>validator_sympy_float</p></td>
-<td><p>Validator for sympy.</p></td>
+<tr class="row-even"><td><p>validator_list_float</p></td>
+<td><p>Validator for list float.</p></td>
 </tr>
-<tr class="row-odd"><td><p>validator_sympy</p></td>
-<td><p>Validator for sympy.</p></td>
+<tr class="row-odd"><td><p>validator_list_int</p></td>
+<td><p>Validator for list int.</p></td>
 </tr>
-<tr class="row-even"><td><p>validator_ilist</p></td>
-<td><p>Validator for int list.</p></td>
+<tr class="row-even"><td><p>validator_math</p></td>
+<td><p>Validator for math to LaTeX.</p></td>
 </tr>
-<tr class="row-odd"><td><p>validator_list</p></td>
-<td><p>Validator for sympy list.</p></td>
-</tr>
-<tr class="row-even"><td><p>validator_site</p></td>
+<tr class="row-odd"><td><p>validator_site</p></td>
 <td><p>Validator for site.</p></td>
 </tr>
-<tr class="row-odd"><td><p>validator_bond</p></td>
+<tr class="row-even"><td><p>validator_bond</p></td>
 <td><p>Validator for bond.</p></td>
 </tr>
-<tr class="row-even"><td><p>validator_site_bond</p></td>
+<tr class="row-odd"><td><p>validator_site_bond</p></td>
 <td><p>Validator for site or bond.</p></td>
 </tr>
-<tr class="row-odd"><td><p>validator_vector_site_bond</p></td>
+<tr class="row-even"><td><p>validator_vector_site_bond</p></td>
 <td><p>Validator for vector on site or bond.</p></td>
 </tr>
-<tr class="row-even"><td><p>validator_orbital_site_bond</p></td>
+<tr class="row-odd"><td><p>validator_orbital_site_bond</p></td>
 <td><p>Validator for orbital on site or bond.</p></td>
+</tr>
+<tr class="row-even"><td><p>fmt</p></td>
+<td><p></p></td>
 </tr>
 </tbody>
 </table>
@@ -1509,83 +1513,195 @@ document.write(`
 <tr class="row-even"><td><p>header</p></td>
 <td><p>Header label.</p></td>
 </tr>
-<tr class="row-odd"><td><p>block_update_widget</p></td>
-<td><p>Block update widget.</p></td>
-</tr>
-<tr class="row-even"><td><p>is_parent</p></td>
+<tr class="row-odd"><td><p>is_parent</p></td>
 <td><p>Is parent index ?</p></td>
 </tr>
-<tr class="row-odd"><td><p>update_check_state</p></td>
+<tr class="row-even"><td><p>update_check_state</p></td>
 <td><p>Update check state data.</p></td>
 </tr>
-<tr class="row-even"><td><p>set_data</p></td>
+<tr class="row-odd"><td><p>set_data</p></td>
 <td><p>Set data from list data.</p></td>
 </tr>
-<tr class="row-odd"><td><p>set_row_data</p></td>
+<tr class="row-even"><td><p>set_row_data</p></td>
 <td><p>Set row data.</p></td>
 </tr>
-<tr class="row-even"><td><p>set_check</p></td>
+<tr class="row-odd"><td><p>set_check</p></td>
 <td><p>Set check state.</p></td>
 </tr>
-<tr class="row-odd"><td><p>tolist</p></td>
+<tr class="row-even"><td><p>tolist</p></td>
 <td><p>Convert to list.</p></td>
 </tr>
-<tr class="row-even"><td><p>emit_update_all</p></td>
+<tr class="row-odd"><td><p>emit_update_all</p></td>
 <td><p>Emit update for all data.</p></td>
 </tr>
-<tr class="row-odd"><td><p>find_item</p></td>
+<tr class="row-even"><td><p>find_item</p></td>
 <td><p>Find item.</p></td>
 </tr>
-<tr class="row-even"><td><p>set_check_state</p></td>
+<tr class="row-odd"><td><p>set_check_state</p></td>
 <td><p>Set check state of row.</p></td>
 </tr>
-<tr class="row-odd"><td><p>get_row_data</p></td>
+<tr class="row-even"><td><p>get_row_data</p></td>
 <td><p>Get row data.</p></td>
 </tr>
-<tr class="row-even"><td><p>emit_update_data</p></td>
+<tr class="row-odd"><td><p>emit_update_data</p></td>
 <td><p>Emit update data.</p></td>
 </tr>
-<tr class="row-odd"><td><p>append_row</p></td>
+<tr class="row-even"><td><p>append_row</p></td>
 <td><p>Append row.</p></td>
 </tr>
-<tr class="row-even"><td><p>remove_row</p></td>
+<tr class="row-odd"><td><p>remove_row</p></td>
 <td><p>Remove row.</p></td>
 </tr>
-<tr class="row-odd"><td><p>move_row</p></td>
+<tr class="row-even"><td><p>move_row</p></td>
 <td><p>Move row.</p></td>
 </tr>
-<tr class="row-even"><td><p>action_copy_row</p></td>
+<tr class="row-odd"><td><p>action_copy_row</p></td>
 <td><p>Slot for copy row action.</p></td>
 </tr>
-<tr class="row-odd"><td><p>action_insert_row</p></td>
+<tr class="row-even"><td><p>action_insert_row</p></td>
 <td><p>Slot for insert row action.</p></td>
 </tr>
-<tr class="row-even"><td><p>action_remove_row</p></td>
+<tr class="row-odd"><td><p>action_remove_row</p></td>
 <td><p>Slot for remove row action.</p></td>
 </tr>
-<tr class="row-odd"><td><p>setData</p></td>
+<tr class="row-even"><td><p>setData</p></td>
 <td><p>Set data (override).</p></td>
 </tr>
-<tr class="row-even"><td><p>debug_data_changed</p></td>
+<tr class="row-odd"><td><p>debug_data_changed</p></td>
 <td><p>Debug for dataChanged signal.</p></td>
 </tr>
-<tr class="row-odd"><td><p>debug_updata_data</p></td>
+<tr class="row-even"><td><p>debug_updata_data</p></td>
 <td><p>Debug for updateData signal.</p></td>
 </tr>
-<tr class="row-even"><td><p>debug_item_tree</p></td>
+<tr class="row-odd"><td><p>debug_item_tree</p></td>
 <td><p>Debug for showing item tree.</p></td>
 </tr>
-<tr class="row-odd"><td><p>show_index</p></td>
+<tr class="row-even"><td><p>show_index</p></td>
 <td><p>Get raw index.</p></td>
 </tr>
-<tr class="row-even"><td><p>get_role_str</p></td>
+<tr class="row-odd"><td><p>get_role_str</p></td>
 <td><p>Get role string.</p></td>
 </tr>
-<tr class="row-odd"><td><p>tolist_index</p></td>
+<tr class="row-even"><td><p>tolist_index</p></td>
 <td><p>Row data for given index.</p></td>
 </tr>
-<tr class="row-even"><td><p>clear_data</p></td>
+<tr class="row-odd"><td><p>clear_data</p></td>
 <td><p>Clear data with keeping header and column info.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</section>
+<section id="mathjax-py">
+<h2><div class='my-heading' style='color: darkgreen;'><a class="reference external" href="http://mathjax.py">mathjax.py</a><a class="headerlink" href="#mathjax-py" title="Link to this heading">#</a></h2>
+<section id="mathjaxsvg">
+<h3><div class='my-heading' style='color: royalblue;'>MathJaxSVG<a class="headerlink" href="#mathjaxsvg" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Function</p></th>
+<th class="head"><p>Summary</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>MathJaxSVG</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>_thread_main</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p>convert</p></td>
+<td><p>Convert latex to SVG string.</p></td>
+</tr>
+<tr class="row-odd"><td><p>close</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p>_get_cache_path</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>_get_attribute</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p>_replace_attribute</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>_flatten_svg_string</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="id3">
+<h3><div class='my-heading' style='color: royalblue;'>Global function<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Function</p></th>
+<th class="head"><p>Summary</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>unwrap_inner_svg</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</section>
+<section id="color-palette-py">
+<h2><div class='my-heading' style='color: darkgreen;'>color_palette.py<a class="headerlink" href="#color-palette-py" title="Link to this heading">#</a></h2>
+<section id="id4">
+<h3><div class='my-heading' style='color: royalblue;'>Global function<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Function</p></th>
+<th class="head"><p>Summary</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>name_sep</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>_rgb2html</p></td>
+<td><p>convert RGB color to hex code (#???).</p></td>
+</tr>
+<tr class="row-even"><td><p>_hex2rgb</p></td>
+<td><p>convert hex (#???) code to RGB.</p></td>
+</tr>
+<tr class="row-odd"><td><p>custom_colormap</p></td>
+<td><p>custom colormap.</p></td>
+</tr>
+<tr class="row-even"><td><p>check_color</p></td>
+<td><p>check if name is color or colormap.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</section>
+<section id="color-selector-util-py">
+<h2><div class='my-heading' style='color: darkgreen;'>color_selector_util.py<a class="headerlink" href="#color-selector-util-py" title="Link to this heading">#</a></h2>
+<section id="id5">
+<h3><div class='my-heading' style='color: royalblue;'>Global function<a class="headerlink" href="#id5" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Function</p></th>
+<th class="head"><p>Summary</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>_colormap2pixmap</p></td>
+<td><p>Convert colormap to pixmap.</p></td>
+</tr>
+<tr class="row-odd"><td><p>_color2pixmap</p></td>
+<td><p>Convert color/colormap to pixmap.</p></td>
+</tr>
+<tr class="row-even"><td><p>color2pixmap</p></td>
+<td><p>Convert color/colormap to QPixmap.</p></td>
+</tr>
+<tr class="row-odd"><td><p>color_palette</p></td>
+<td><p>Color pallete.</p></td>
 </tr>
 </tbody>
 </table>
@@ -1604,19 +1720,19 @@ document.write(`
 </thead>
 <tbody>
 <tr class="row-even"><td><p>Delegate</p></td>
-<td><p>Base delegate.</p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p>setEditorData</p></td>
-<td><p>Set editor data.</p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p>setModelData</p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p>updateEditorGeometry</p></td>
-<td><p>Update editor geometry.</p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p>paint</p></td>
-<td><p>Paint cell (need to highlight selection).</p></td>
+<td><p></p></td>
 </tr>
 </tbody>
 </table>
@@ -1632,12 +1748,12 @@ document.write(`
 </thead>
 <tbody>
 <tr class="row-even"><td><p>ComboDelegate</p></td>
-<td><p>Create delegate for Combo.</p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p>createEditor</p></td>
-<td><p>Create combobox.</p></td>
+<td><p></p></td>
 </tr>
-<tr class="row-even"><td><p>updateEditorGeometry</p></td>
+<tr class="row-even"><td><p>sizeHint</p></td>
 <td><p></p></td>
 </tr>
 </tbody>
@@ -1654,12 +1770,12 @@ document.write(`
 </thead>
 <tbody>
 <tr class="row-even"><td><p>ColorDelegate</p></td>
-<td><p>Create delegate for ColorSelector.</p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p>createEditor</p></td>
-<td><p>Create color selector.</p></td>
+<td><p></p></td>
 </tr>
-<tr class="row-even"><td><p>updateEditorGeometry</p></td>
+<tr class="row-even"><td><p>sizeHint</p></td>
 <td><p></p></td>
 </tr>
 </tbody>
@@ -1676,12 +1792,12 @@ document.write(`
 </thead>
 <tbody>
 <tr class="row-even"><td><p>EditorDelegate</p></td>
-<td><p>Create delegate for Editor.</p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p>createEditor</p></td>
-<td><p>Create editor.</p></td>
+<td><p></p></td>
 </tr>
-<tr class="row-even"><td><p>updateEditorGeometry</p></td>
+<tr class="row-even"><td><p>sizeHint</p></td>
 <td><p></p></td>
 </tr>
 </tbody>
@@ -1689,576 +1805,8 @@ document.write(`
 </div>
 </section>
 </section>
-<section id="message-box-py">
-<h2><div class='my-heading' style='color: darkgreen;'>message_box.py<a class="headerlink" href="#message-box-py" title="Link to this heading">#</a></h2>
-<section id="messagebox">
-<h3><div class='my-heading' style='color: royalblue;'>MessageBox<a class="headerlink" href="#messagebox" title="Link to this heading">#</a></h3>
-<div class="pst-scrollable-table-container"><table class="table">
-<thead>
-<tr class="row-odd"><th class="head"><p>Function</p></th>
-<th class="head"><p>Summary</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>MessageBox</p></td>
-<td><p>Message box.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</section>
-</section>
-<section id="group-view-py">
-<h2><div class='my-heading' style='color: darkgreen;'>group_view.py<a class="headerlink" href="#group-view-py" title="Link to this heading">#</a></h2>
-<section id="groupview">
-<h3><div class='my-heading' style='color: royalblue;'>GroupView<a class="headerlink" href="#groupview" title="Link to this heading">#</a></h3>
-<div class="pst-scrollable-table-container"><table class="table">
-<thead>
-<tr class="row-odd"><th class="head"><p>Function</p></th>
-<th class="head"><p>Summary</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>GroupView</p></td>
-<td><p>Group view.</p></td>
-</tr>
-<tr class="row-odd"><td><p>clear_selection</p></td>
-<td><p>Clear selection.</p></td>
-</tr>
-<tr class="row-even"><td><p>mousePressEvent</p></td>
-<td><p>Mouse press event for focus or clear selection.</p></td>
-</tr>
-<tr class="row-odd"><td><p>keyPressEvent</p></td>
-<td><p>Key press event for ESC and up and down keys.</p></td>
-</tr>
-<tr class="row-even"><td><p>context_menu</p></td>
-<td><p>Context menu.</p></td>
-</tr>
-<tr class="row-odd"><td><p>insert_row</p></td>
-<td><p>Insert row.</p></td>
-</tr>
-<tr class="row-even"><td><p>copy_row</p></td>
-<td><p>Copy row.</p></td>
-</tr>
-<tr class="row-odd"><td><p>remove_row</p></td>
-<td><p>Remove row.</p></td>
-</tr>
-<tr class="row-even"><td><p>update_widget</p></td>
-<td><p>Update widget.</p></td>
-</tr>
-<tr class="row-odd"><td><p>set_widget</p></td>
-<td><p>Set widget.</p></td>
-</tr>
-<tr class="row-even"><td><p>selection_changed</p></td>
-<td><p>For Selection changed.</p></td>
-</tr>
-<tr class="row-odd"><td><p>select_row</p></td>
-<td><p>Select row.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</section>
-</section>
-<section id="custom-widget-py">
-<h2><div class='my-heading' style='color: darkgreen;'>custom_widget.py<a class="headerlink" href="#custom-widget-py" title="Link to this heading">#</a></h2>
-<section id="layout">
-<h3><div class='my-heading' style='color: royalblue;'>Layout<a class="headerlink" href="#layout" title="Link to this heading">#</a></h3>
-<div class="pst-scrollable-table-container"><table class="table">
-<thead>
-<tr class="row-odd"><th class="head"><p>Function</p></th>
-<th class="head"><p>Summary</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>Layout</p></td>
-<td><p>Layout widget.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</section>
-<section id="panel">
-<h3><div class='my-heading' style='color: royalblue;'>Panel<a class="headerlink" href="#panel" title="Link to this heading">#</a></h3>
-<div class="pst-scrollable-table-container"><table class="table">
-<thead>
-<tr class="row-odd"><th class="head"><p>Function</p></th>
-<th class="head"><p>Summary</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>Panel</p></td>
-<td><p>Panel widget.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</section>
-<section id="color">
-<h3><div class='my-heading' style='color: royalblue;'>Color<a class="headerlink" href="#color" title="Link to this heading">#</a></h3>
-<div class="pst-scrollable-table-container"><table class="table">
-<thead>
-<tr class="row-odd"><th class="head"><p>Function</p></th>
-<th class="head"><p>Summary</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>Color</p></td>
-<td><p>Color</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</section>
-<section id="label">
-<h3><div class='my-heading' style='color: royalblue;'>Label<a class="headerlink" href="#label" title="Link to this heading">#</a></h3>
-<div class="pst-scrollable-table-container"><table class="table">
-<thead>
-<tr class="row-odd"><th class="head"><p>Function</p></th>
-<th class="head"><p>Summary</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>Label</p></td>
-<td><p>Label widget.</p></td>
-</tr>
-<tr class="row-odd"><td><p>setText</p></td>
-<td><p>Set text.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</section>
-<section id="colorlabel">
-<h3><div class='my-heading' style='color: royalblue;'>ColorLabel<a class="headerlink" href="#colorlabel" title="Link to this heading">#</a></h3>
-<div class="pst-scrollable-table-container"><table class="table">
-<thead>
-<tr class="row-odd"><th class="head"><p>Function</p></th>
-<th class="head"><p>Summary</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>ColorLabel</p></td>
-<td><p>Color label widget.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</section>
-<section id="lineedit">
-<h3><div class='my-heading' style='color: royalblue;'>LineEdit<a class="headerlink" href="#lineedit" title="Link to this heading">#</a></h3>
-<div class="pst-scrollable-table-container"><table class="table">
-<thead>
-<tr class="row-odd"><th class="head"><p>Function</p></th>
-<th class="head"><p>Summary</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>LineEdit</p></td>
-<td><p>Line editor.</p></td>
-</tr>
-<tr class="row-odd"><td><p>validator</p></td>
-<td><p>Validator type.</p></td>
-</tr>
-<tr class="row-even"><td><p>read_only</p></td>
-<td><p>Read only ?</p></td>
-</tr>
-<tr class="row-odd"><td><p>close_edit</p></td>
-<td><p>Close editor.</p></td>
-</tr>
-<tr class="row-even"><td><p>raw_text</p></td>
-<td><p>Raw text.</p></td>
-</tr>
-<tr class="row-odd"><td><p>setText</p></td>
-<td><p>Set text.</p></td>
-</tr>
-<tr class="row-even"><td><p>set_validator</p></td>
-<td><p>Set validator.</p></td>
-</tr>
-<tr class="row-odd"><td><p>set_read_only</p></td>
-<td><p>Set read only.</p></td>
-</tr>
-<tr class="row-even"><td><p>focusInEvent</p></td>
-<td><p>Focus-out event.</p></td>
-</tr>
-<tr class="row-odd"><td><p>focusOutEvent</p></td>
-<td><p>Focus-out event.</p></td>
-</tr>
-<tr class="row-even"><td><p>clearFocus</p></td>
-<td><p>Clear focus.</p></td>
-</tr>
-<tr class="row-odd"><td><p>keyPressEvent</p></td>
-<td><p>Key event.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</section>
-<section id="hbar">
-<h3><div class='my-heading' style='color: royalblue;'>HBar<a class="headerlink" href="#hbar" title="Link to this heading">#</a></h3>
-<div class="pst-scrollable-table-container"><table class="table">
-<thead>
-<tr class="row-odd"><th class="head"><p>Function</p></th>
-<th class="head"><p>Summary</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>HBar</p></td>
-<td><p>Horizontal bar item.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</section>
-<section id="button">
-<h3><div class='my-heading' style='color: royalblue;'>Button<a class="headerlink" href="#button" title="Link to this heading">#</a></h3>
-<div class="pst-scrollable-table-container"><table class="table">
-<thead>
-<tr class="row-odd"><th class="head"><p>Function</p></th>
-<th class="head"><p>Summary</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>Button</p></td>
-<td><p>Button widget.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</section>
-<section id="combo">
-<h3><div class='my-heading' style='color: royalblue;'>Combo<a class="headerlink" href="#combo" title="Link to this heading">#</a></h3>
-<div class="pst-scrollable-table-container"><table class="table">
-<thead>
-<tr class="row-odd"><th class="head"><p>Function</p></th>
-<th class="head"><p>Summary</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>Combo</p></td>
-<td><p>Combo widget.</p></td>
-</tr>
-<tr class="row-odd"><td><p>get_item</p></td>
-<td><p>Get item.</p></td>
-</tr>
-<tr class="row-even"><td><p>set_item</p></td>
-<td><p>Set item.</p></td>
-</tr>
-<tr class="row-odd"><td><p>find_index</p></td>
-<td><p>Find index.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</section>
-<section id="spin">
-<h3><div class='my-heading' style='color: royalblue;'>Spin<a class="headerlink" href="#spin" title="Link to this heading">#</a></h3>
-<div class="pst-scrollable-table-container"><table class="table">
-<thead>
-<tr class="row-odd"><th class="head"><p>Function</p></th>
-<th class="head"><p>Summary</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>Spin</p></td>
-<td><p>Spin widget.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</section>
-<section id="dspin">
-<h3><div class='my-heading' style='color: royalblue;'>DSpin<a class="headerlink" href="#dspin" title="Link to this heading">#</a></h3>
-<div class="pst-scrollable-table-container"><table class="table">
-<thead>
-<tr class="row-odd"><th class="head"><p>Function</p></th>
-<th class="head"><p>Summary</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>DSpin</p></td>
-<td><p>Spin widget.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</section>
-<section id="check">
-<h3><div class='my-heading' style='color: royalblue;'>Check<a class="headerlink" href="#check" title="Link to this heading">#</a></h3>
-<div class="pst-scrollable-table-container"><table class="table">
-<thead>
-<tr class="row-odd"><th class="head"><p>Function</p></th>
-<th class="head"><p>Summary</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>Check</p></td>
-<td><p>Check widget.</p></td>
-</tr>
-<tr class="row-odd"><td><p>is_checked</p></td>
-<td><p>Is checked ?</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</section>
-<section id="vspacer">
-<h3><div class='my-heading' style='color: royalblue;'>VSpacer<a class="headerlink" href="#vspacer" title="Link to this heading">#</a></h3>
-<div class="pst-scrollable-table-container"><table class="table">
-<thead>
-<tr class="row-odd"><th class="head"><p>Function</p></th>
-<th class="head"><p>Summary</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>VSpacer</p></td>
-<td><p>Vertical spacer.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</section>
-<section id="hspacer">
-<h3><div class='my-heading' style='color: royalblue;'>HSpacer<a class="headerlink" href="#hspacer" title="Link to this heading">#</a></h3>
-<div class="pst-scrollable-table-container"><table class="table">
-<thead>
-<tr class="row-odd"><th class="head"><p>Function</p></th>
-<th class="head"><p>Summary</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>HSpacer</p></td>
-<td><p>Horizontal spacer.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</section>
-<section id="editor">
-<h3><div class='my-heading' style='color: royalblue;'>Editor<a class="headerlink" href="#editor" title="Link to this heading">#</a></h3>
-<div class="pst-scrollable-table-container"><table class="table">
-<thead>
-<tr class="row-odd"><th class="head"><p>Function</p></th>
-<th class="head"><p>Summary</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>Editor</p></td>
-<td><p>Math equation label widget.</p></td>
-</tr>
-<tr class="row-odd"><td><p>close_editor</p></td>
-<td><p>Close editor.</p></td>
-</tr>
-<tr class="row-even"><td><p>clearFocus</p></td>
-<td><p>Clear focus.</p></td>
-</tr>
-<tr class="row-odd"><td><p>mouseDoubleClickEvent</p></td>
-<td><p>Mouse double-click event.</p></td>
-</tr>
-<tr class="row-even"><td><p>mousePressEvent</p></td>
-<td><p>Mouse click event.</p></td>
-</tr>
-<tr class="row-odd"><td><p>text</p></td>
-<td><p>Text.</p></td>
-</tr>
-<tr class="row-even"><td><p>setText</p></td>
-<td><p>Set text.</p></td>
-</tr>
-<tr class="row-odd"><td><p>raw_text</p></td>
-<td><p>Raw text.</p></td>
-</tr>
-<tr class="row-even"><td><p>setCurrentText</p></td>
-<td><p>Set current text.</p></td>
-</tr>
-<tr class="row-odd"><td><p>currentText</p></td>
-<td><p>Get current text.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</section>
-<section id="colorselector">
-<h3><div class='my-heading' style='color: royalblue;'>ColorSelector<a class="headerlink" href="#colorselector" title="Link to this heading">#</a></h3>
-<div class="pst-scrollable-table-container"><table class="table">
-<thead>
-<tr class="row-odd"><th class="head"><p>Function</p></th>
-<th class="head"><p>Summary</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>ColorSelector</p></td>
-<td><p>Color selector widget.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</section>
-</section>
-<section id="table-view-py">
-<h2><div class='my-heading' style='color: darkgreen;'>table_view.py<a class="headerlink" href="#table-view-py" title="Link to this heading">#</a></h2>
-<section id="tableview">
-<h3><div class='my-heading' style='color: royalblue;'>TableView<a class="headerlink" href="#tableview" title="Link to this heading">#</a></h3>
-<div class="pst-scrollable-table-container"><table class="table">
-<thead>
-<tr class="row-odd"><th class="head"><p>Function</p></th>
-<th class="head"><p>Summary</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>TableView</p></td>
-<td><p>Table view (math).</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</section>
-</section>
-<section id="tab-group-view-py">
-<h2><div class='my-heading' style='color: darkgreen;'>tab_group_view.py<a class="headerlink" href="#tab-group-view-py" title="Link to this heading">#</a></h2>
-<section id="tabgroupview">
-<h3><div class='my-heading' style='color: royalblue;'>TabGroupView<a class="headerlink" href="#tabgroupview" title="Link to this heading">#</a></h3>
-<div class="pst-scrollable-table-container"><table class="table">
-<thead>
-<tr class="row-odd"><th class="head"><p>Function</p></th>
-<th class="head"><p>Summary</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>TabGroupView</p></td>
-<td><p>Data view group.</p></td>
-</tr>
-<tr class="row-odd"><td><p>select_tab</p></td>
-<td><p>Select tab.</p></td>
-</tr>
-<tr class="row-even"><td><p>closeEvent</p></td>
-<td><p>Close event for deselect all.</p></td>
-</tr>
-<tr class="row-odd"><td><p>update_widget</p></td>
-<td><p>Update widget.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</section>
-</section>
-<section id="latex-to-png-py">
-<h2><div class='my-heading' style='color: darkgreen;'>latex_to_png.py<a class="headerlink" href="#latex-to-png-py" title="Link to this heading">#</a></h2>
-<section id="id3">
-<h3><div class='my-heading' style='color: royalblue;'>Global function<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
-<div class="pst-scrollable-table-container"><table class="table">
-<thead>
-<tr class="row-odd"><th class="head"><p>Function</p></th>
-<th class="head"><p>Summary</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>latex_to_png</p></td>
-<td><p>Render a LaTeX string to png via matplotlib.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</section>
-</section>
-<section id="util-axis-py">
-<h2><div class='my-heading' style='color: darkgreen;'>util_axis.py<a class="headerlink" href="#util-axis-py" title="Link to this heading">#</a></h2>
-<section id="id4">
-<h3><div class='my-heading' style='color: royalblue;'>Global function<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
-<div class="pst-scrollable-table-container"><table class="table">
-<thead>
-<tr class="row-odd"><th class="head"><p>Function</p></th>
-<th class="head"><p>Summary</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>_create_label_axes_actor</p></td>
-<td><p>Create label only orientation axes actor.</p></td>
-</tr>
-<tr class="row-odd"><td><p>_create_axes_actor</p></td>
-<td><p>Create custom axes actor.</p></td>
-</tr>
-<tr class="row-even"><td><p>create_axes_widget</p></td>
-<td><p>Create axes widget.</p></td>
-</tr>
-<tr class="row-odd"><td><p>create_unit_cell</p></td>
-<td><p>Create unit cell mesh.</p></td>
-</tr>
-<tr class="row-even"><td><p>get_view_vector</p></td>
-<td><p>Get view and viewup.</p></td>
-</tr>
-<tr class="row-odd"><td><p>create_grid</p></td>
-<td><p>Create grid point.</p></td>
-</tr>
-<tr class="row-even"><td><p>get_lattice_vector</p></td>
-<td><p>Get lattice vector.</p></td>
-</tr>
-<tr class="row-odd"><td><p>get_repeat_range</p></td>
-<td><p>Get repeart range.</p></td>
-</tr>
-<tr class="row-even"><td><p>get_outside_box</p></td>
-<td><p>Get indices outside range.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</section>
-</section>
-<section id="latex-to-svg-py">
-<h2><div class='my-heading' style='color: darkgreen;'>latex_to_svg.py<a class="headerlink" href="#latex-to-svg-py" title="Link to this heading">#</a></h2>
-<section id="id5">
-<h3><div class='my-heading' style='color: royalblue;'>Global function<a class="headerlink" href="#id5" title="Link to this heading">#</a></h3>
-<div class="pst-scrollable-table-container"><table class="table">
-<thead>
-<tr class="row-odd"><th class="head"><p>Function</p></th>
-<th class="head"><p>Summary</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>latex_to_svg</p></td>
-<td><p>Render a LaTeX string to svg via matplotlib.</p></td>
-</tr>
-<tr class="row-odd"><td><p>get_svg_size</p></td>
-<td><p>Get SVG size.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</section>
-<section id="svgwidget">
-<h3><div class='my-heading' style='color: royalblue;'>SVGWidget<a class="headerlink" href="#svgwidget" title="Link to this heading">#</a></h3>
-<div class="pst-scrollable-table-container"><table class="table">
-<thead>
-<tr class="row-odd"><th class="head"><p>Function</p></th>
-<th class="head"><p>Summary</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>paintEvent</p></td>
-<td><p></p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</section>
-<section id="mathtext">
-<h3><div class='my-heading' style='color: royalblue;'>MathText<a class="headerlink" href="#mathtext" title="Link to this heading">#</a></h3>
-<div class="pst-scrollable-table-container"><table class="table">
-<thead>
-<tr class="row-odd"><th class="head"><p>Function</p></th>
-<th class="head"><p>Summary</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>MathText</p></td>
-<td><p>Math Text via SVG.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</section>
-</section>
-<section id="util-py">
-<h2><div class='my-heading' style='color: darkgreen;'><a class="reference external" href="http://util.py">util.py</a><a class="headerlink" href="#util-py" title="Link to this heading">#</a></h2>
+<section id="logging-util-py">
+<h2><div class='my-heading' style='color: darkgreen;'>logging_util.py<a class="headerlink" href="#logging-util-py" title="Link to this heading">#</a></h2>
 <section id="id6">
 <h3><div class='my-heading' style='color: royalblue;'>Global function<a class="headerlink" href="#id6" title="Link to this heading">#</a></h3>
 <div class="pst-scrollable-table-container"><table class="table">
@@ -2268,122 +1816,8 @@ document.write(`
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>check_get_site</p></td>
-<td><p>Check and get site.</p></td>
-</tr>
-<tr class="row-odd"><td><p>check_get_bond</p></td>
-<td><p>Check and get bond.</p></td>
-</tr>
-<tr class="row-even"><td><p>check_get_site_bond</p></td>
-<td><p>Check and get site (bond center) from site_bond.</p></td>
-</tr>
-<tr class="row-odd"><td><p>create_samb_object</p></td>
-<td><p>Create SAMB object.</p></td>
-</tr>
-<tr class="row-even"><td><p>check_linear_combination</p></td>
-<td><p>Check form of linear combination.</p></td>
-</tr>
-<tr class="row-odd"><td><p>combined_format</p></td>
-<td><p>Create formatted combined SAMB.</p></td>
-</tr>
-<tr class="row-even"><td><p>parse_modulation_list</p></td>
-<td><p>Parse modulation list.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</section>
-</section>
-<section id="color-selector-util-py">
-<h2><div class='my-heading' style='color: darkgreen;'>color_selector_util.py<a class="headerlink" href="#color-selector-util-py" title="Link to this heading">#</a></h2>
-<section id="id7">
-<h3><div class='my-heading' style='color: royalblue;'>Global function<a class="headerlink" href="#id7" title="Link to this heading">#</a></h3>
-<div class="pst-scrollable-table-container"><table class="table">
-<thead>
-<tr class="row-odd"><th class="head"><p>Function</p></th>
-<th class="head"><p>Summary</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>_colormap2pixmap</p></td>
-<td><p>Convert colormap to pixmap.</p></td>
-</tr>
-<tr class="row-odd"><td><p>_color2pixmap</p></td>
-<td><p>Convert color/colormap to pixmap.</p></td>
-</tr>
-<tr class="row-even"><td><p>color2pixmap</p></td>
-<td><p>Convert color/colormap to QPixmap.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</section>
-</section>
-<section id="util-str-py">
-<h2><div class='my-heading' style='color: darkgreen;'>util_str.py<a class="headerlink" href="#util-str-py" title="Link to this heading">#</a></h2>
-<section id="id8">
-<h3><div class='my-heading' style='color: royalblue;'>Global function<a class="headerlink" href="#id8" title="Link to this heading">#</a></h3>
-<div class="pst-scrollable-table-container"><table class="table">
-<thead>
-<tr class="row-odd"><th class="head"><p>Function</p></th>
-<th class="head"><p>Summary</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>str_to_list</p></td>
-<td><p>Convert a string to a list of strings.</p></td>
-</tr>
-<tr class="row-odd"><td><p>is_regular_list</p></td>
-<td><p>Is regular-shaped list ?</p></td>
-</tr>
-<tr class="row-even"><td><p>apply_to_list</p></td>
-<td><p>Apply a function to each element of a list.</p></td>
-</tr>
-<tr class="row-odd"><td><p>apply_to_numpy</p></td>
-<td><p>Apply a function to each element of ndarray.</p></td>
-</tr>
-<tr class="row-even"><td><p>to_fraction</p></td>
-<td><p>Convert a float number to a fractional one.</p></td>
-</tr>
-<tr class="row-odd"><td><p>get_variable</p></td>
-<td><p>Get variables used in a sympy expression.</p></td>
-</tr>
-<tr class="row-even"><td><p>str_to_sympy</p></td>
-<td><p>Convert a string to a sympy.</p></td>
-</tr>
-<tr class="row-odd"><td><p>str_to_numpy</p></td>
-<td><p>Convert a string (list) to a numpy array.</p></td>
-</tr>
-<tr class="row-even"><td><p>affine_trans</p></td>
-<td><p>Affine transformation, A.v + s.</p></td>
-</tr>
-<tr class="row-odd"><td><p>str_to_sympy1</p></td>
-<td><p>Convert a string to a sympy (new version).</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</section>
-</section>
-<section id="logging-util-py">
-<h2><div class='my-heading' style='color: darkgreen;'>logging_util.py<a class="headerlink" href="#logging-util-py" title="Link to this heading">#</a></h2>
-<section id="id9">
-<h3><div class='my-heading' style='color: royalblue;'>Global function<a class="headerlink" href="#id9" title="Link to this heading">#</a></h3>
-<div class="pst-scrollable-table-container"><table class="table">
-<thead>
-<tr class="row-odd"><th class="head"><p>Function</p></th>
-<th class="head"><p>Summary</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>timer</p></td>
-<td><p>Timer decorater.</p></td>
-</tr>
-<tr class="row-odd"><td><p>start_logging</p></td>
+<tr class="row-even"><td><p>start_logging</p></td>
 <td><p>Start logging.</p></td>
-</tr>
-<tr class="row-even"><td><p>wrapper</p></td>
-<td><p></p></td>
 </tr>
 </tbody>
 </table>
@@ -2437,10 +1871,10 @@ document.write(`
 </div>
 </section>
 </section>
-<section id="basic-object-py">
-<h2><div class='my-heading' style='color: darkgreen;'>basic_object.py<a class="headerlink" href="#basic-object-py" title="Link to this heading">#</a></h2>
-<section id="id10">
-<h3><div class='my-heading' style='color: royalblue;'>Global function<a class="headerlink" href="#id10" title="Link to this heading">#</a></h3>
+<section id="message-box-py">
+<h2><div class='my-heading' style='color: darkgreen;'>message_box.py<a class="headerlink" href="#message-box-py" title="Link to this heading">#</a></h2>
+<section id="messagebox">
+<h3><div class='my-heading' style='color: royalblue;'>MessageBox<a class="headerlink" href="#messagebox" title="Link to this heading">#</a></h3>
 <div class="pst-scrollable-table-container"><table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>Function</p></th>
@@ -2448,68 +1882,60 @@ document.write(`
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>_str_poly_array</p></td>
-<td><p>Convert from polynomial string to scalar array.</p></td>
+<tr class="row-even"><td><p>MessageBox</p></td>
+<td><p>Message box.</p></td>
 </tr>
-<tr class="row-odd"><td><p>_str_vec_array</p></td>
-<td><p>Convert from polynomial string (vector) to vector and scalar (abs.) arrays.</p></td>
+</tbody>
+</table>
+</div>
+</section>
+</section>
+<section id="group-view-py">
+<h2><div class='my-heading' style='color: darkgreen;'>group_view.py<a class="headerlink" href="#group-view-py" title="Link to this heading">#</a></h2>
+<section id="groupview">
+<h3><div class='my-heading' style='color: royalblue;'>GroupView<a class="headerlink" href="#groupview" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Function</p></th>
+<th class="head"><p>Summary</p></th>
 </tr>
-<tr class="row-even"><td><p>create_sphere</p></td>
-<td><p>Create sphere object.</p></td>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>GroupView</p></td>
+<td><p>Group view.</p></td>
 </tr>
-<tr class="row-odd"><td><p>create_bond</p></td>
-<td><p>Create bond object.</p></td>
+<tr class="row-odd"><td><p>update_widget</p></td>
+<td><p></p></td>
 </tr>
-<tr class="row-even"><td><p>create_vector</p></td>
-<td><p>Create vector object.</p></td>
+<tr class="row-even"><td><p>clear_selection</p></td>
+<td><p>Clear selection.</p></td>
 </tr>
-<tr class="row-odd"><td><p>create_orbital</p></td>
-<td><p>Create orbital object.</p></td>
+<tr class="row-odd"><td><p>mousePressEvent</p></td>
+<td><p>Mouse press event for focus or clear selection.</p></td>
 </tr>
-<tr class="row-even"><td><p>create_stream</p></td>
-<td><p>Create steam vector object.</p></td>
+<tr class="row-even"><td><p>keyPressEvent</p></td>
+<td><p>Key press event for ESC and up and down keys.</p></td>
 </tr>
-<tr class="row-odd"><td><p>create_line</p></td>
-<td><p>Create line object.</p></td>
+<tr class="row-odd"><td><p>context_menu</p></td>
+<td><p>Context menu.</p></td>
 </tr>
-<tr class="row-even"><td><p>create_plane</p></td>
-<td><p>Create plane object.</p></td>
+<tr class="row-even"><td><p>insert_row</p></td>
+<td><p>Insert row.</p></td>
 </tr>
-<tr class="row-odd"><td><p>create_circle</p></td>
-<td><p>Create circle object.</p></td>
+<tr class="row-odd"><td><p>copy_row</p></td>
+<td><p>Copy row.</p></td>
 </tr>
-<tr class="row-even"><td><p>create_torus</p></td>
-<td><p>Create torus object.</p></td>
+<tr class="row-even"><td><p>remove_row</p></td>
+<td><p>Remove row.</p></td>
 </tr>
-<tr class="row-odd"><td><p>create_ellipsoid</p></td>
-<td><p>Create ellipsoid object.</p></td>
+<tr class="row-odd"><td><p>set_widget</p></td>
+<td><p>Set widget.</p></td>
 </tr>
-<tr class="row-even"><td><p>create_toroid</p></td>
-<td><p>Create ellipsoid object.</p></td>
+<tr class="row-even"><td><p>selection_changed</p></td>
+<td><p>For Selection changed.</p></td>
 </tr>
-<tr class="row-odd"><td><p>create_box</p></td>
-<td><p>Create box object.</p></td>
-</tr>
-<tr class="row-even"><td><p>create_polygon</p></td>
-<td><p>Create polygon object.</p></td>
-</tr>
-<tr class="row-odd"><td><p>create_text3d</p></td>
-<td><p>Create text3d object.</p></td>
-</tr>
-<tr class="row-even"><td><p>create_spline</p></td>
-<td><p>Create spline object.</p></td>
-</tr>
-<tr class="row-odd"><td><p>create_spline_t</p></td>
-<td><p>Create parametric spline object.</p></td>
-</tr>
-<tr class="row-even"><td><p>create_isosurface</p></td>
-<td><p>Create isosurface.</p></td>
-</tr>
-<tr class="row-odd"><td><p>create_orbital_data</p></td>
-<td><p>Create orbital object from data.</p></td>
-</tr>
-<tr class="row-even"><td><p>create_stream_data</p></td>
-<td><p>Create steam vector object.</p></td>
+<tr class="row-odd"><td><p>select_row</p></td>
+<td><p>Select row.</p></td>
 </tr>
 </tbody>
 </table>
@@ -2518,8 +1944,8 @@ document.write(`
 </section>
 <section id="qt-event-util-py">
 <h2><div class='my-heading' style='color: darkgreen;'>qt_event_util.py<a class="headerlink" href="#qt-event-util-py" title="Link to this heading">#</a></h2>
-<section id="id11">
-<h3><div class='my-heading' style='color: royalblue;'>Global function<a class="headerlink" href="#id11" title="Link to this heading">#</a></h3>
+<section id="id7">
+<h3><div class='my-heading' style='color: royalblue;'>Global function<a class="headerlink" href="#id7" title="Link to this heading">#</a></h3>
 <div class="pst-scrollable-table-container"><table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>Function</p></th>
@@ -2588,10 +2014,576 @@ document.write(`
 </div>
 </section>
 </section>
+<section id="custom-widget-py">
+<h2><div class='my-heading' style='color: darkgreen;'>custom_widget.py<a class="headerlink" href="#custom-widget-py" title="Link to this heading">#</a></h2>
+<section id="layout">
+<h3><div class='my-heading' style='color: royalblue;'>Layout<a class="headerlink" href="#layout" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Function</p></th>
+<th class="head"><p>Summary</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Layout</p></td>
+<td><p>Layout widget.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="panel">
+<h3><div class='my-heading' style='color: royalblue;'>Panel<a class="headerlink" href="#panel" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Function</p></th>
+<th class="head"><p>Summary</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Panel</p></td>
+<td><p>Panel widget.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="label">
+<h3><div class='my-heading' style='color: royalblue;'>Label<a class="headerlink" href="#label" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Function</p></th>
+<th class="head"><p>Summary</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Label</p></td>
+<td><p>Label widget.</p></td>
+</tr>
+<tr class="row-odd"><td><p>sizeHint</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="mathwidget">
+<h3><div class='my-heading' style='color: royalblue;'>MathWidget<a class="headerlink" href="#mathwidget" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Function</p></th>
+<th class="head"><p>Summary</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>MathWidget</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>setText</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p>text</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>paintEvent</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p>sizeHint</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="hbar">
+<h3><div class='my-heading' style='color: royalblue;'>HBar<a class="headerlink" href="#hbar" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Function</p></th>
+<th class="head"><p>Summary</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>HBar</p></td>
+<td><p>Horizontal bar widget.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="vspacer">
+<h3><div class='my-heading' style='color: royalblue;'>VSpacer<a class="headerlink" href="#vspacer" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Function</p></th>
+<th class="head"><p>Summary</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>VSpacer</p></td>
+<td><p>Vertical spacer.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="hspacer">
+<h3><div class='my-heading' style='color: royalblue;'>HSpacer<a class="headerlink" href="#hspacer" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Function</p></th>
+<th class="head"><p>Summary</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>HSpacer</p></td>
+<td><p>Horizontal spacer.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="colorselector">
+<h3><div class='my-heading' style='color: royalblue;'>ColorSelector<a class="headerlink" href="#colorselector" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Function</p></th>
+<th class="head"><p>Summary</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>ColorSelector</p></td>
+<td><p>Color selector widget.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="button">
+<h3><div class='my-heading' style='color: royalblue;'>Button<a class="headerlink" href="#button" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Function</p></th>
+<th class="head"><p>Summary</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Button</p></td>
+<td><p>Button widget.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="combo">
+<h3><div class='my-heading' style='color: royalblue;'>Combo<a class="headerlink" href="#combo" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Function</p></th>
+<th class="head"><p>Summary</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Combo</p></td>
+<td><p>Combo widget.</p></td>
+</tr>
+<tr class="row-odd"><td><p>get_item</p></td>
+<td><p>Get item.</p></td>
+</tr>
+<tr class="row-even"><td><p>set_item</p></td>
+<td><p>Set item.</p></td>
+</tr>
+<tr class="row-odd"><td><p>find_index</p></td>
+<td><p>Find index (including match).</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="spin">
+<h3><div class='my-heading' style='color: royalblue;'>Spin<a class="headerlink" href="#spin" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Function</p></th>
+<th class="head"><p>Summary</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Spin</p></td>
+<td><p>Spin widget.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="dspin">
+<h3><div class='my-heading' style='color: royalblue;'>DSpin<a class="headerlink" href="#dspin" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Function</p></th>
+<th class="head"><p>Summary</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>DSpin</p></td>
+<td><p>Spin widget.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="check">
+<h3><div class='my-heading' style='color: royalblue;'>Check<a class="headerlink" href="#check" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Function</p></th>
+<th class="head"><p>Summary</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Check</p></td>
+<td><p>Check widget.</p></td>
+</tr>
+<tr class="row-odd"><td><p>is_checked</p></td>
+<td><p>Is checked ?</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="lineedit">
+<h3><div class='my-heading' style='color: royalblue;'>LineEdit<a class="headerlink" href="#lineedit" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Function</p></th>
+<th class="head"><p>Summary</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>LineEdit</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>set_validator</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p>setText</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>_validate</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p>_update_style</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>raw_text</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p>set_read_only</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>keyPressEvent</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p>focusOutEvent</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>focusInEvent</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p>sizeHint</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="editor">
+<h3><div class='my-heading' style='color: royalblue;'>Editor<a class="headerlink" href="#editor" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Function</p></th>
+<th class="head"><p>Summary</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Editor</p></td>
+<td><p>Editor widget with math/text display.</p></td>
+</tr>
+<tr class="row-odd"><td><p>_on_return</p></td>
+<td><p>Called when Enter is pressed in editor.</p></td>
+</tr>
+<tr class="row-even"><td><p>_on_focus_out</p></td>
+<td><p>Handle focus-out safely.</p></td>
+</tr>
+<tr class="row-odd"><td><p>clearFocus</p></td>
+<td><p>Exit edit mode, safely restoring display.</p></td>
+</tr>
+<tr class="row-even"><td><p>mouseDoubleClickEvent</p></td>
+<td><p>Switch to edit mode on double click.</p></td>
+</tr>
+<tr class="row-odd"><td><p>mousePressEvent</p></td>
+<td><p>Handle focus changes safely.</p></td>
+</tr>
+<tr class="row-even"><td><p>text</p></td>
+<td><p>Return current text.</p></td>
+</tr>
+<tr class="row-odd"><td><p>setText</p></td>
+<td><p>Set editor and display text.</p></td>
+</tr>
+<tr class="row-even"><td><p>setCurrentText</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>sizeHint</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</section>
+<section id="table-view-py">
+<h2><div class='my-heading' style='color: darkgreen;'>table_view.py<a class="headerlink" href="#table-view-py" title="Link to this heading">#</a></h2>
+<section id="tableview">
+<h3><div class='my-heading' style='color: royalblue;'>TableView<a class="headerlink" href="#tableview" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Function</p></th>
+<th class="head"><p>Summary</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>TableView</p></td>
+<td><p>Table view (math).</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</section>
+<section id="tab-group-view-py">
+<h2><div class='my-heading' style='color: darkgreen;'>tab_group_view.py<a class="headerlink" href="#tab-group-view-py" title="Link to this heading">#</a></h2>
+<section id="tabgroupview">
+<h3><div class='my-heading' style='color: royalblue;'>TabGroupView<a class="headerlink" href="#tabgroupview" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Function</p></th>
+<th class="head"><p>Summary</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>TabGroupView</p></td>
+<td><p>Data view group.</p></td>
+</tr>
+<tr class="row-odd"><td><p>select_tab</p></td>
+<td><p>Select tab.</p></td>
+</tr>
+<tr class="row-even"><td><p>closeEvent</p></td>
+<td><p>Close event for deselect all.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</section>
+<section id="util-axis-py">
+<h2><div class='my-heading' style='color: darkgreen;'>util_axis.py<a class="headerlink" href="#util-axis-py" title="Link to this heading">#</a></h2>
+<section id="id8">
+<h3><div class='my-heading' style='color: royalblue;'>Global function<a class="headerlink" href="#id8" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Function</p></th>
+<th class="head"><p>Summary</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>_create_label_axes_actor</p></td>
+<td><p>Create label only orientation axes actor.</p></td>
+</tr>
+<tr class="row-odd"><td><p>_create_axes_actor</p></td>
+<td><p>Create custom axes actor.</p></td>
+</tr>
+<tr class="row-even"><td><p>create_axes_widget</p></td>
+<td><p>Create axes widget.</p></td>
+</tr>
+<tr class="row-odd"><td><p>create_unit_cell</p></td>
+<td><p>Create unit cell mesh.</p></td>
+</tr>
+<tr class="row-even"><td><p>get_view_vector</p></td>
+<td><p>Get view and viewup.</p></td>
+</tr>
+<tr class="row-odd"><td><p>create_cell_grid</p></td>
+<td><p>Create grid point.</p></td>
+</tr>
+<tr class="row-even"><td><p>get_lattice_vector</p></td>
+<td><p>Get lattice vector.</p></td>
+</tr>
+<tr class="row-odd"><td><p>get_repeat_range</p></td>
+<td><p>Get repeart range.</p></td>
+</tr>
+<tr class="row-even"><td><p>get_outside_box</p></td>
+<td><p>Get indices outside range.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</section>
+<section id="util-py">
+<h2><div class='my-heading' style='color: darkgreen;'><a class="reference external" href="http://util.py">util.py</a><a class="headerlink" href="#util-py" title="Link to this heading">#</a></h2>
+<section id="id9">
+<h3><div class='my-heading' style='color: royalblue;'>Global function<a class="headerlink" href="#id9" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Function</p></th>
+<th class="head"><p>Summary</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>_check_shape</p></td>
+<td><p>Check array shape.</p></td>
+</tr>
+<tr class="row-odd"><td><p>str_to_sympy</p></td>
+<td><p>Convert a string to a sympy.</p></td>
+</tr>
+<tr class="row-even"><td><p>to_latex</p></td>
+<td><p>convert list to latex list.</p></td>
+</tr>
+<tr class="row-odd"><td><p>check_multipie</p></td>
+<td><p>Check if multipie is installed or not.</p></td>
+</tr>
+<tr class="row-even"><td><p>set_latex_setting</p></td>
+<td><p>Set LaTeX setting.</p></td>
+</tr>
+<tr class="row-odd"><td><p>create_grid</p></td>
+<td><p>Create grid.</p></td>
+</tr>
+<tr class="row-even"><td><p>read_dict</p></td>
+<td><p>Read dict text file.</p></td>
+</tr>
+<tr class="row-odd"><td><p>write_dict</p></td>
+<td><p>write dict text file.</p></td>
+</tr>
+<tr class="row-even"><td><p>str_to_list</p></td>
+<td><p>Convert a string to a list of strings.</p></td>
+</tr>
+<tr class="row-odd"><td><p>affine_trans</p></td>
+<td><p>Affine transformation, A.v + s.</p></td>
+</tr>
+<tr class="row-even"><td><p>text_to_list</p></td>
+<td><p>convert single text to list.</p></td>
+</tr>
+<tr class="row-odd"><td><p>apply</p></td>
+<td><p>apply function to (nested) list.</p></td>
+</tr>
+<tr class="row-even"><td><p>list_to_table</p></td>
+<td><p>convert from list to table</p></td>
+</tr>
+<tr class="row-odd"><td><p>remove_space</p></td>
+<td><p>remove space, tab, and newline.</p></td>
+</tr>
+<tr class="row-even"><td><p>vec_latex</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>mat_latex</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</section>
+<section id="basic-object-py">
+<h2><div class='my-heading' style='color: darkgreen;'>basic_object.py<a class="headerlink" href="#basic-object-py" title="Link to this heading">#</a></h2>
+<section id="id10">
+<h3><div class='my-heading' style='color: royalblue;'>Global function<a class="headerlink" href="#id10" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Function</p></th>
+<th class="head"><p>Summary</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>_str_poly_array</p></td>
+<td><p>Convert from polynomial string to scalar array.</p></td>
+</tr>
+<tr class="row-odd"><td><p>_str_vec_array</p></td>
+<td><p>Convert from polynomial string (vector) to vector and scalar (abs.) arrays.</p></td>
+</tr>
+<tr class="row-even"><td><p>_svg_to_qimage</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>_create_image</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p>create_sphere</p></td>
+<td><p>Create sphere object.</p></td>
+</tr>
+<tr class="row-odd"><td><p>create_bond</p></td>
+<td><p>Create bond object.</p></td>
+</tr>
+<tr class="row-even"><td><p>create_vector</p></td>
+<td><p>Create vector object.</p></td>
+</tr>
+<tr class="row-odd"><td><p>create_orbital</p></td>
+<td><p>Create orbital object.</p></td>
+</tr>
+<tr class="row-even"><td><p>create_stream</p></td>
+<td><p>Create steam vector object.</p></td>
+</tr>
+<tr class="row-odd"><td><p>create_line</p></td>
+<td><p>Create line object.</p></td>
+</tr>
+<tr class="row-even"><td><p>create_plane</p></td>
+<td><p>Create plane object.</p></td>
+</tr>
+<tr class="row-odd"><td><p>create_circle</p></td>
+<td><p>Create circle object.</p></td>
+</tr>
+<tr class="row-even"><td><p>create_torus</p></td>
+<td><p>Create torus object.</p></td>
+</tr>
+<tr class="row-odd"><td><p>create_ellipsoid</p></td>
+<td><p>Create ellipsoid object.</p></td>
+</tr>
+<tr class="row-even"><td><p>create_toroid</p></td>
+<td><p>Create ellipsoid object.</p></td>
+</tr>
+<tr class="row-odd"><td><p>create_box</p></td>
+<td><p>Create box object.</p></td>
+</tr>
+<tr class="row-even"><td><p>create_polygon</p></td>
+<td><p>Create polygon object.</p></td>
+</tr>
+<tr class="row-odd"><td><p>create_text3d</p></td>
+<td><p>Create text3d object.</p></td>
+</tr>
+<tr class="row-even"><td><p>create_text2d</p></td>
+<td><p>Create text 2d (math).</p></td>
+</tr>
+<tr class="row-odd"><td><p>create_spline</p></td>
+<td><p>Create spline object.</p></td>
+</tr>
+<tr class="row-even"><td><p>create_spline_t</p></td>
+<td><p>Create parametric spline object.</p></td>
+</tr>
+<tr class="row-odd"><td><p>create_isosurface</p></td>
+<td><p>Create isosurface.</p></td>
+</tr>
+<tr class="row-even"><td><p>create_orbital_data</p></td>
+<td><p>Create orbital object from data.</p></td>
+</tr>
+<tr class="row-odd"><td><p>create_stream_data</p></td>
+<td><p>Create steam vector object.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</section>
 <section id="read-material-py">
 <h2><div class='my-heading' style='color: darkgreen;'>read_material.py<a class="headerlink" href="#read-material-py" title="Link to this heading">#</a></h2>
-<section id="id12">
-<h3><div class='my-heading' style='color: royalblue;'>Global function<a class="headerlink" href="#id12" title="Link to this heading">#</a></h3>
+<section id="id11">
+<h3><div class='my-heading' style='color: royalblue;'>Global function<a class="headerlink" href="#id11" title="Link to this heading">#</a></h3>
 <div class="pst-scrollable-table-container"><table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>Function</p></th>
@@ -2601,6 +2593,37 @@ document.write(`
 <tbody>
 <tr class="row-even"><td><p>read_draw</p></td>
 <td><p>Read and draw CIF, XSF, VESTA file.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</section>
+<section id="util-parser-py">
+<h2><div class='my-heading' style='color: darkgreen;'>util_parser.py<a class="headerlink" href="#util-parser-py" title="Link to this heading">#</a></h2>
+<section id="id12">
+<h3><div class='my-heading' style='color: royalblue;'>Global function<a class="headerlink" href="#id12" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Function</p></th>
+<th class="head"><p>Summary</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>get_model_cell</p></td>
+<td><p>Get model and cell.</p></td>
+</tr>
+<tr class="row-odd"><td><p>get_site_info</p></td>
+<td><p>Get site information.</p></td>
+</tr>
+<tr class="row-even"><td><p>get_bond_info</p></td>
+<td><p>Get bond information.</p></td>
+</tr>
+<tr class="row-odd"><td><p>draw_site_bond</p></td>
+<td><p>Draw site and bond.</p></td>
+</tr>
+<tr class="row-even"><td><p>parse_material</p></td>
+<td><p>Parse material file.</p></td>
 </tr>
 </tbody>
 </table>
@@ -2866,6 +2889,43 @@ document.write(`
 </div>
 </section>
 </section>
+<section id="util-multipie-py">
+<h2><div class='my-heading' style='color: darkgreen;'>util_multipie.py<a class="headerlink" href="#util-multipie-py" title="Link to this heading">#</a></h2>
+<section id="id19">
+<h3><div class='my-heading' style='color: royalblue;'>Global function<a class="headerlink" href="#id19" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Function</p></th>
+<th class="head"><p>Summary</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>check_get_site</p></td>
+<td><p>Check and get site.</p></td>
+</tr>
+<tr class="row-odd"><td><p>check_get_bond</p></td>
+<td><p>Check and get bond.</p></td>
+</tr>
+<tr class="row-even"><td><p>check_get_site_bond</p></td>
+<td><p>Check and get site (bond center) from site_bond.</p></td>
+</tr>
+<tr class="row-odd"><td><p>create_samb_object</p></td>
+<td><p>Create SAMB object.</p></td>
+</tr>
+<tr class="row-even"><td><p>check_linear_combination</p></td>
+<td><p>Check form of linear combination.</p></td>
+</tr>
+<tr class="row-odd"><td><p>combined_format</p></td>
+<td><p>Create formatted combined SAMB.</p></td>
+</tr>
+<tr class="row-even"><td><p>parse_modulation_list</p></td>
+<td><p>Parse modulation list.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</section>
 <section id="dialog-modulation-py">
 <h2><div class='my-heading' style='color: darkgreen;'>dialog_modulation.py<a class="headerlink" href="#dialog-modulation-py" title="Link to this heading">#</a></h2>
 <section id="modulationdialog">
@@ -2914,8 +2974,8 @@ document.write(`
 </section>
 <section id="dialog-info-py">
 <h2><div class='my-heading' style='color: darkgreen;'>dialog_info.py<a class="headerlink" href="#dialog-info-py" title="Link to this heading">#</a></h2>
-<section id="id19">
-<h3><div class='my-heading' style='color: royalblue;'>Global function<a class="headerlink" href="#id19" title="Link to this heading">#</a></h3>
+<section id="id20">
+<h3><div class='my-heading' style='color: royalblue;'>Global function<a class="headerlink" href="#id20" title="Link to this heading">#</a></h3>
 <div class="pst-scrollable-table-container"><table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>Function</p></th>
@@ -3239,7 +3299,8 @@ document.write(`
             
             
               
-                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
 
   <div class="sidebar-secondary-item">
@@ -3276,11 +3337,30 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#groupmodel"><div class="my-heading" style="color: royalblue;">GroupModel</div></a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mathjax-py"><div class="my-heading" style="color: darkgreen;">mathjax.py</div></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mathjaxsvg"><div class="my-heading" style="color: royalblue;">MathJaxSVG</div></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3"><div class="my-heading" style="color: royalblue;">Global function</div></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#color-palette-py"><div class="my-heading" style="color: darkgreen;">color_palette.py</div></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4"><div class="my-heading" style="color: royalblue;">Global function</div></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#color-selector-util-py"><div class="my-heading" style="color: darkgreen;">color_selector_util.py</div></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5"><div class="my-heading" style="color: royalblue;">Global function</div></a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#delegate-py"><div class="my-heading" style="color: darkgreen;">delegate.py</div></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#delegate"><div class="my-heading" style="color: royalblue;">Delegate</div></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#combodelegate"><div class="my-heading" style="color: royalblue;">ComboDelegate</div></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#colordelegate"><div class="my-heading" style="color: royalblue;">ColorDelegate</div></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#editordelegate"><div class="my-heading" style="color: royalblue;">EditorDelegate</div></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#logging-util-py"><div class="my-heading" style="color: darkgreen;">logging_util.py</div></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6"><div class="my-heading" style="color: royalblue;">Global function</div></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#loghandler"><div class="my-heading" style="color: royalblue;">LogHandler</div></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#logwidget"><div class="my-heading" style="color: royalblue;">LogWidget</div></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#message-box-py"><div class="my-heading" style="color: darkgreen;">message_box.py</div></a><ul class="nav section-nav flex-column">
@@ -3291,23 +3371,31 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#groupview"><div class="my-heading" style="color: royalblue;">GroupView</div></a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qt-event-util-py"><div class="my-heading" style="color: darkgreen;">qt_event_util.py</div></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7"><div class="my-heading" style="color: royalblue;">Global function</div></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exceptionhook"><div class="my-heading" style="color: royalblue;">ExceptionHook</div></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pdf-viewer-py"><div class="my-heading" style="color: darkgreen;">pdf_viewer.py</div></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pdfviewer"><div class="my-heading" style="color: royalblue;">PDFViewer</div></a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#custom-widget-py"><div class="my-heading" style="color: darkgreen;">custom_widget.py</div></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#layout"><div class="my-heading" style="color: royalblue;">Layout</div></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#panel"><div class="my-heading" style="color: royalblue;">Panel</div></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#color"><div class="my-heading" style="color: royalblue;">Color</div></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#label"><div class="my-heading" style="color: royalblue;">Label</div></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#colorlabel"><div class="my-heading" style="color: royalblue;">ColorLabel</div></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lineedit"><div class="my-heading" style="color: royalblue;">LineEdit</div></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mathwidget"><div class="my-heading" style="color: royalblue;">MathWidget</div></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hbar"><div class="my-heading" style="color: royalblue;">HBar</div></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#vspacer"><div class="my-heading" style="color: royalblue;">VSpacer</div></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hspacer"><div class="my-heading" style="color: royalblue;">HSpacer</div></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#colorselector"><div class="my-heading" style="color: royalblue;">ColorSelector</div></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#button"><div class="my-heading" style="color: royalblue;">Button</div></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#combo"><div class="my-heading" style="color: royalblue;">Combo</div></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spin"><div class="my-heading" style="color: royalblue;">Spin</div></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dspin"><div class="my-heading" style="color: royalblue;">DSpin</div></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#check"><div class="my-heading" style="color: royalblue;">Check</div></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#vspacer"><div class="my-heading" style="color: royalblue;">VSpacer</div></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hspacer"><div class="my-heading" style="color: royalblue;">HSpacer</div></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lineedit"><div class="my-heading" style="color: royalblue;">LineEdit</div></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#editor"><div class="my-heading" style="color: royalblue;">Editor</div></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#colorselector"><div class="my-heading" style="color: royalblue;">ColorSelector</div></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#table-view-py"><div class="my-heading" style="color: darkgreen;">table_view.py</div></a><ul class="nav section-nav flex-column">
@@ -3318,52 +3406,23 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tabgroupview"><div class="my-heading" style="color: royalblue;">TabGroupView</div></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#latex-to-png-py"><div class="my-heading" style="color: darkgreen;">latex_to_png.py</div></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3"><div class="my-heading" style="color: royalblue;">Global function</div></a></li>
-</ul>
-</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#util-axis-py"><div class="my-heading" style="color: darkgreen;">util_axis.py</div></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4"><div class="my-heading" style="color: royalblue;">Global function</div></a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#latex-to-svg-py"><div class="my-heading" style="color: darkgreen;">latex_to_svg.py</div></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5"><div class="my-heading" style="color: royalblue;">Global function</div></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svgwidget"><div class="my-heading" style="color: royalblue;">SVGWidget</div></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mathtext"><div class="my-heading" style="color: royalblue;">MathText</div></a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#util-py"><div class="my-heading" style="color: darkgreen;">util.py</div></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6"><div class="my-heading" style="color: royalblue;">Global function</div></a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#color-selector-util-py"><div class="my-heading" style="color: darkgreen;">color_selector_util.py</div></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7"><div class="my-heading" style="color: royalblue;">Global function</div></a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#util-str-py"><div class="my-heading" style="color: darkgreen;">util_str.py</div></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8"><div class="my-heading" style="color: royalblue;">Global function</div></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#logging-util-py"><div class="my-heading" style="color: darkgreen;">logging_util.py</div></a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#util-py"><div class="my-heading" style="color: darkgreen;">util.py</div></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9"><div class="my-heading" style="color: royalblue;">Global function</div></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#loghandler"><div class="my-heading" style="color: royalblue;">LogHandler</div></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#logwidget"><div class="my-heading" style="color: royalblue;">LogWidget</div></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-object-py"><div class="my-heading" style="color: darkgreen;">basic_object.py</div></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10"><div class="my-heading" style="color: royalblue;">Global function</div></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qt-event-util-py"><div class="my-heading" style="color: darkgreen;">qt_event_util.py</div></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11"><div class="my-heading" style="color: royalblue;">Global function</div></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exceptionhook"><div class="my-heading" style="color: royalblue;">ExceptionHook</div></a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pdf-viewer-py"><div class="my-heading" style="color: darkgreen;">pdf_viewer.py</div></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pdfviewer"><div class="my-heading" style="color: royalblue;">PDFViewer</div></a></li>
-</ul>
-</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#read-material-py"><div class="my-heading" style="color: darkgreen;">read_material.py</div></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11"><div class="my-heading" style="color: royalblue;">Global function</div></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#util-parser-py"><div class="my-heading" style="color: darkgreen;">util_parser.py</div></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id12"><div class="my-heading" style="color: royalblue;">Global function</div></a></li>
 </ul>
 </li>
@@ -3392,12 +3451,16 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multipieplugin"><div class="my-heading" style="color: royalblue;">MultiPiePlugin</div></a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#util-multipie-py"><div class="my-heading" style="color: darkgreen;">util_multipie.py</div></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id19"><div class="my-heading" style="color: royalblue;">Global function</div></a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dialog-modulation-py"><div class="my-heading" style="color: darkgreen;">dialog_modulation.py</div></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#modulationdialog"><div class="my-heading" style="color: royalblue;">ModulationDialog</div></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dialog-info-py"><div class="my-heading" style="color: darkgreen;">dialog_info.py</div></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id19"><div class="my-heading" style="color: royalblue;">Global function</div></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id20"><div class="my-heading" style="color: royalblue;">Global function</div></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#infopanel"><div class="my-heading" style="color: royalblue;">InfoPanel</div></a></li>
 </ul>
 </li>
@@ -3453,8 +3516,8 @@ By Hiroaki Kusunose
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
 
   <footer class="bd-footer">
   </footer>

@@ -15,17 +15,19 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-
-  
-  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
@@ -36,13 +38,14 @@
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="_static/custom.css?v=5f1b4820" />
   
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
-  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
     <script src="_static/documentation_options.js?v=8cf54648"></script>
-    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="_static/copybutton.js?v=f281be69"></script>
@@ -55,13 +58,12 @@
     <script src="_static/design-tabs.js?v=f930bc37"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'genindex';</script>
     <link rel="index" title="Index" href="#" />
     <link rel="search" title="Search" href="search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="jp"/>
+  <meta name="docsearch:version" content="" />
   </head>
   
   
@@ -77,19 +79,8 @@
     <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
   
-  <input type="checkbox"
-          class="sidebar-toggle"
-          id="pst-primary-sidebar-checkbox"/>
-  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
-  
-  <input type="checkbox"
-          class="sidebar-toggle"
-          id="pst-secondary-sidebar-checkbox"/>
-  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
-  
-  <div class="search-button__wrapper">
-    <div class="search-button__overlay"></div>
-    <div class="search-button__search-container">
+  <dialog id="pst-search-dialog">
+    
 <form class="bd-search d-flex align-items-center"
       action="search.html"
       method="get">
@@ -97,7 +88,6 @@
   <input type="search"
          class="form-control"
          name="q"
-         id="search-input"
          placeholder="Search this book..."
          aria-label="Search this book..."
          autocomplete="off"
@@ -105,8 +95,8 @@
          autocapitalize="off"
          spellcheck="false"/>
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form></div>
-  </div>
+</form>
+  </dialog>
 
   <div class="pst-async-banner-revealer d-none">
   <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
@@ -124,7 +114,8 @@
       
         
       
-      <div class="bd-sidebar-primary bd-sidebar">
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
         
 
   
@@ -154,21 +145,17 @@
     
     
     <img src="_static/qtdraw_logo.png" class="logo__image only-light" alt="QtDraw - Home"/>
-    <script>document.write(`<img src="_static/qtdraw_logo.png" class="logo__image only-dark" alt="QtDraw - Home"/>`);</script>
+    <img src="_static/qtdraw_logo.png" class="logo__image only-dark pst-js-only" alt="QtDraw - Home"/>
   
   
 </a></div>
         <div class="sidebar-primary-item">
 
- <script>
- document.write(`
-   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
-    <span class="search-button__default-text">Search</span>
-    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-   </button>
- `);
- </script></div>
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
@@ -200,9 +187,14 @@
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
   </div>
-  
-  <div id="rtd-footer-container"></div>
 
 
       </div>
@@ -298,24 +290,16 @@
 
 
 
-<script>
-document.write(`
-  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
-    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
-    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
-  </button>
-`);
-</script>
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
 
 
-<script>
-document.write(`
-  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
-  </button>
-`);
-</script>
+</button>
 
 </div></div>
       
@@ -441,14 +425,14 @@ document.write(`
 </li>
       <li><a href="src/api_multipie.html#qtdraw.multipie.dialog_modulation.ModulationDialog.add_modulation">add_modulation() (ModulationDialog method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.add_orbital">add_orbital() (PyVistaWidget method)</a>
 
       <ul>
         <li><a href="src/api_core.html#qtdraw.core.qtdraw_app.QtDraw.add_orbital">(QtDraw method)</a>, <a href="src/from_python.html#qtdraw.core.qtdraw_app.QtDraw.add_orbital">[1]</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.add_plane">add_plane() (PyVistaWidget method)</a>
 
       <ul>
@@ -515,18 +499,16 @@ document.write(`
         <li><a href="src/api_core.html#qtdraw.core.qtdraw_app.QtDraw.add_vector">(QtDraw method)</a>, <a href="src/from_python.html#qtdraw.core.qtdraw_app.QtDraw.add_vector">[1]</a>
 </li>
       </ul></li>
-      <li><a href="src/api_util.html#qtdraw.util.util_str.affine_trans">affine_trans() (in module qtdraw.util.util_str)</a>
-</li>
       <li><a href="src/api_widget.html#qtdraw.widget.group_model.GroupModel.append_row">append_row() (GroupModel method)</a>
 </li>
-      <li><a href="src/api_util.html#qtdraw.util.logging_util.LogWidget.append_text">append_text() (LogWidget method)</a>
+      <li><a href="src/api_widget.html#qtdraw.widget.logging_util.LogWidget.append_text">append_text() (LogWidget method)</a>
 </li>
-      <li><a href="src/api_multipie.html#qtdraw.multipie.dialog_modulation.ModulationDialog.apply">apply() (ModulationDialog method)</a>
+      <li><a href="src/api_util.html#qtdraw.util.util.apply">apply() (in module qtdraw.util.util)</a>
+
+      <ul>
+        <li><a href="src/api_multipie.html#qtdraw.multipie.dialog_modulation.ModulationDialog.apply">(ModulationDialog method)</a>
 </li>
-      <li><a href="src/api_util.html#qtdraw.util.util_str.apply_to_list">apply_to_list() (in module qtdraw.util.util_str)</a>
-</li>
-      <li><a href="src/api_util.html#qtdraw.util.util_str.apply_to_numpy">apply_to_numpy() (in module qtdraw.util.util_str)</a>
-</li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
@@ -551,10 +533,10 @@ document.write(`
 </li>
       <li><a href="src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_gen_bond">basis_gen_bond() (MultiPieDialog method)</a>
 </li>
-      <li><a href="src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_gen_orbital">basis_gen_orbital() (MultiPieDialog method)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_gen_orbital">basis_gen_orbital() (MultiPieDialog method)</a>
+</li>
       <li><a href="src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_gen_orbital_modulation">basis_gen_orbital_modulation() (MultiPieDialog method)</a>
 </li>
       <li><a href="src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_gen_site">basis_gen_site() (MultiPieDialog method)</a>
@@ -571,8 +553,6 @@ document.write(`
 </li>
       <li><a href="src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.basis_set_vector_select">basis_set_vector_select() (MultiPieDialog method)</a>
 </li>
-      <li><a href="src/api_widget.html#qtdraw.widget.group_model.GroupModel.block_update_widget">block_update_widget() (GroupModel method)</a>
-</li>
       <li><a href="src/api_widget.html#qtdraw.widget.custom_widget.Button">Button (class in qtdraw.widget.custom_widget)</a>
 </li>
   </ul></td>
@@ -581,23 +561,25 @@ document.write(`
 <h2 id="C">C</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="src/api_util.html#qtdraw.util.util.cat_filename">cat_filename() (in module qtdraw.util.util)</a>
+      <li><a href="src/api_core.html#qtdraw.core.pyvista_widget.cat_filename">cat_filename() (in module qtdraw.core.pyvista_widget)</a>
 </li>
       <li><a href="src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.cell_volume">cell_volume (PyVistaWidget property)</a>
 </li>
       <li><a href="src/api_widget.html#qtdraw.widget.custom_widget.Check">Check (class in qtdraw.widget.custom_widget)</a>
 </li>
-      <li><a href="src/api_multipie.html#qtdraw.multipie.util.check_get_bond">check_get_bond() (in module qtdraw.multipie.util)</a>
+      <li><a href="src/api_multipie.html#qtdraw.multipie.util_multipie.check_get_bond">check_get_bond() (in module qtdraw.multipie.util_multipie)</a>
 </li>
-      <li><a href="src/api_multipie.html#qtdraw.multipie.util.check_get_site">check_get_site() (in module qtdraw.multipie.util)</a>
+      <li><a href="src/api_multipie.html#qtdraw.multipie.util_multipie.check_get_site">check_get_site() (in module qtdraw.multipie.util_multipie)</a>
 </li>
-      <li><a href="src/api_multipie.html#qtdraw.multipie.util.check_get_site_bond">check_get_site_bond() (in module qtdraw.multipie.util)</a>
+      <li><a href="src/api_multipie.html#qtdraw.multipie.util_multipie.check_get_site_bond">check_get_site_bond() (in module qtdraw.multipie.util_multipie)</a>
 </li>
-      <li><a href="src/api_multipie.html#qtdraw.multipie.util.check_linear_combination">check_linear_combination() (in module qtdraw.multipie.util)</a>
+      <li><a href="src/api_multipie.html#qtdraw.multipie.util_multipie.check_linear_combination">check_linear_combination() (in module qtdraw.multipie.util_multipie)</a>
 </li>
       <li><a href="src/api_util.html#qtdraw.util.util.check_multipie">check_multipie() (in module qtdraw.util.util)</a>
 </li>
-      <li><a href="src/api_util.html#qtdraw.util.logging_util.LogWidget.clear">clear() (LogWidget method)</a>
+      <li><a href="src/api_widget.html#qtdraw.widget.validator.check_symbol">check_symbol() (in module qtdraw.widget.validator)</a>
+</li>
+      <li><a href="src/api_widget.html#qtdraw.widget.logging_util.LogWidget.clear">clear() (LogWidget method)</a>
 </li>
       <li><a href="src/api_widget.html#qtdraw.widget.group_model.GroupModel.clear_data">clear_data() (GroupModel method)</a>
 
@@ -610,32 +592,22 @@ document.write(`
       <li><a href="src/api_widget.html#qtdraw.widget.group_view.GroupView.clear_selection">clear_selection() (GroupView method)</a>
 </li>
       <li><a href="src/api_widget.html#qtdraw.widget.custom_widget.Editor.clearFocus">clearFocus() (Editor method)</a>
-
-      <ul>
-        <li><a href="src/api_widget.html#qtdraw.widget.custom_widget.LineEdit.clearFocus">(LineEdit method)</a>
 </li>
-      </ul></li>
       <li><a href="src/api_multipie.html#qtdraw.multipie.dialog_modulation.ModulationDialog.close">close() (ModulationDialog method)</a>
 
       <ul>
         <li><a href="src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.close">(MultiPieDialog method)</a>
 </li>
       </ul></li>
-      <li><a href="src/api_widget.html#qtdraw.widget.custom_widget.LineEdit.close_edit">close_edit() (LineEdit method)</a>
+      <li><a href="src/api_widget.html#qtdraw.widget.color_selector_util.color2pixmap">color2pixmap() (in module qtdraw.widget.color_selector_util)</a>
 </li>
-      <li><a href="src/api_widget.html#qtdraw.widget.custom_widget.Editor.close_editor">close_editor() (Editor method)</a>
-</li>
-      <li><a href="src/api_widget.html#qtdraw.widget.custom_widget.Color">Color (class in qtdraw.widget.custom_widget)</a>
-</li>
-      <li><a href="src/api_util.html#qtdraw.util.color_selector_util.color2pixmap">color2pixmap() (in module qtdraw.util.color_selector_util)</a>
+      <li><a href="src/api_widget.html#qtdraw.widget.color_selector_util.color_palette">color_palette() (in module qtdraw.widget.color_selector_util)</a>
 </li>
       <li><a href="src/api_widget.html#qtdraw.widget.delegate.ColorDelegate">ColorDelegate (class in qtdraw.widget.delegate)</a>
 </li>
-      <li><a href="src/api_widget.html#qtdraw.widget.custom_widget.ColorLabel">ColorLabel (class in qtdraw.widget.custom_widget)</a>
-</li>
       <li><a href="src/api_widget.html#qtdraw.widget.custom_widget.ColorSelector">ColorSelector (class in qtdraw.widget.custom_widget)</a>
 </li>
-      <li><a href="src/api_multipie.html#qtdraw.multipie.util.combined_format">combined_format() (in module qtdraw.multipie.util)</a>
+      <li><a href="src/api_multipie.html#qtdraw.multipie.util_multipie.combined_format">combined_format() (in module qtdraw.multipie.util_multipie)</a>
 </li>
       <li><a href="src/api_widget.html#qtdraw.widget.custom_widget.Combo">Combo (class in qtdraw.widget.custom_widget)</a>
 </li>
@@ -645,9 +617,11 @@ document.write(`
 </li>
       <li><a href="src/api_core.html#qtdraw.core.pyvista_widget.convert_qtdraw_v2">convert_qtdraw_v2() (in module qtdraw.core.pyvista_widget)</a>
 </li>
-      <li><a href="src/api_util.html#qtdraw.util.util.convert_str_vector">convert_str_vector() (in module qtdraw.util.util)</a>
+      <li><a href="src/api_core.html#qtdraw.core.pyvista_widget.convert_str_vector">convert_str_vector() (in module qtdraw.core.pyvista_widget)</a>
 </li>
-      <li><a href="src/api_util.html#qtdraw.util.util.convert_to_str">convert_to_str() (in module qtdraw.util.util)</a>
+      <li><a href="src/api_widget.html#qtdraw.widget.validator.convert_to_bond">convert_to_bond() (in module qtdraw.widget.validator)</a>
+</li>
+      <li><a href="src/api_core.html#qtdraw.core.pyvista_widget.convert_to_str">convert_to_str() (in module qtdraw.core.pyvista_widget)</a>
 </li>
       <li><a href="src/api_parser.html#qtdraw.parser.converter.convert_version2">convert_version2() (in module qtdraw.parser.converter)</a>
 </li>
@@ -661,13 +635,15 @@ document.write(`
 </li>
       <li><a href="src/api_core.html#qtdraw.core.dialog_preference.PreferenceDialog.create_axis_panel">create_axis_panel() (PreferenceDialog method)</a>
 </li>
-      <li><a href="src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.create_basis_panel">create_basis_panel() (MultiPieDialog method)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.create_basis_panel">create_basis_panel() (MultiPieDialog method)</a>
+</li>
       <li><a href="src/api_util.html#qtdraw.util.basic_object.create_bond">create_bond() (in module qtdraw.util.basic_object)</a>
 </li>
       <li><a href="src/api_util.html#qtdraw.util.basic_object.create_box">create_box() (in module qtdraw.util.basic_object)</a>
+</li>
+      <li><a href="src/api_util.html#qtdraw.util.util_axis.create_cell_grid">create_cell_grid() (in module qtdraw.util.util_axis)</a>
 </li>
       <li><a href="src/api_core.html#qtdraw.core.dialog_preference.PreferenceDialog.create_cell_panel">create_cell_panel() (PreferenceDialog method)</a>
 </li>
@@ -678,18 +654,12 @@ document.write(`
       <li><a href="src/api_core.html#qtdraw.core.dialog_preference.PreferenceDialog.create_general_panel">create_general_panel() (PreferenceDialog method)</a>
 </li>
       <li><a href="src/api_util.html#qtdraw.util.util.create_grid">create_grid() (in module qtdraw.util.util)</a>
-
-      <ul>
-        <li><a href="src/api_util.html#qtdraw.util.util_axis.create_grid">(in module qtdraw.util.util_axis)</a>
 </li>
-      </ul></li>
       <li><a href="src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.create_group_panel">create_group_panel() (MultiPieDialog method)</a>
 </li>
       <li><a href="src/api_util.html#qtdraw.util.basic_object.create_isosurface">create_isosurface() (in module qtdraw.util.basic_object)</a>
 </li>
       <li><a href="src/api_core.html#qtdraw.core.dialog_preference.PreferenceDialog.create_label_panel">create_label_panel() (PreferenceDialog method)</a>
-</li>
-      <li><a href="src/api_core.html#qtdraw.core.dialog_preference.PreferenceDialog.create_latex_panel">create_latex_panel() (PreferenceDialog method)</a>
 </li>
       <li><a href="src/api_core.html#qtdraw.core.dialog_preference.PreferenceDialog.create_light_panel">create_light_panel() (PreferenceDialog method)</a>
 </li>
@@ -709,7 +679,7 @@ document.write(`
 </li>
       <li><a href="src/api_core.html#qtdraw.core.pyvista_widget.create_qtdraw_file">create_qtdraw_file() (in module qtdraw.core.pyvista_widget)</a>
 </li>
-      <li><a href="src/api_multipie.html#qtdraw.multipie.util.create_samb_object">create_samb_object() (in module qtdraw.multipie.util)</a>
+      <li><a href="src/api_multipie.html#qtdraw.multipie.util_multipie.create_samb_object">create_samb_object() (in module qtdraw.multipie.util_multipie)</a>
 </li>
       <li><a href="src/api_util.html#qtdraw.util.basic_object.create_sphere">create_sphere() (in module qtdraw.util.basic_object)</a>
 </li>
@@ -723,9 +693,9 @@ document.write(`
 </li>
       <li><a href="src/api_parser.html#qtdraw.parser.vesta.create_structure_vesta">create_structure_vesta() (in module qtdraw.parser.vesta)</a>
 </li>
-      <li><a href="src/api_util.html#qtdraw.util.util.create_style_sheet">create_style_sheet() (in module qtdraw.util.util)</a>
-</li>
       <li><a href="src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.create_sub_group_panel">create_sub_group_panel() (MultiPieDialog method)</a>
+</li>
+      <li><a href="src/api_util.html#qtdraw.util.basic_object.create_text2d">create_text2d() (in module qtdraw.util.basic_object)</a>
 </li>
       <li><a href="src/api_util.html#qtdraw.util.basic_object.create_text3d">create_text3d() (in module qtdraw.util.basic_object)</a>
 </li>
@@ -736,16 +706,6 @@ document.write(`
       <li><a href="src/api_util.html#qtdraw.util.util_axis.create_unit_cell">create_unit_cell() (in module qtdraw.util.util_axis)</a>
 </li>
       <li><a href="src/api_util.html#qtdraw.util.basic_object.create_vector">create_vector() (in module qtdraw.util.basic_object)</a>
-</li>
-      <li><a href="src/api_widget.html#qtdraw.widget.delegate.ColorDelegate.createEditor">createEditor() (ColorDelegate method)</a>
-
-      <ul>
-        <li><a href="src/api_widget.html#qtdraw.widget.delegate.ComboDelegate.createEditor">(ComboDelegate method)</a>
-</li>
-        <li><a href="src/api_widget.html#qtdraw.widget.delegate.EditorDelegate.createEditor">(EditorDelegate method)</a>
-</li>
-      </ul></li>
-      <li><a href="src/api_widget.html#qtdraw.widget.custom_widget.Editor.currentText">currentText() (Editor method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -763,7 +723,9 @@ document.write(`
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="src/api_widget.html#qtdraw.widget.delegate.Delegate">Delegate (class in qtdraw.widget.delegate)</a>
 </li>
-      <li><a href="src/api_parser.html#qtdraw.parser.util.draw_site_bond">draw_site_bond() (in module qtdraw.parser.util)</a>
+      <li><a href="src/api_util.html#qtdraw.util.util.distance">distance() (in module qtdraw.util.util)</a>
+</li>
+      <li><a href="src/api_parser.html#qtdraw.parser.util_parser.draw_site_bond">draw_site_bond() (in module qtdraw.parser.util_parser)</a>
 </li>
       <li><a href="src/api_widget.html#qtdraw.widget.custom_widget.DSpin">DSpin (class in qtdraw.widget.custom_widget)</a>
 </li>
@@ -777,7 +739,7 @@ document.write(`
 </li>
       <li><a href="src/api_widget.html#qtdraw.widget.delegate.EditorDelegate">EditorDelegate (class in qtdraw.widget.delegate)</a>
 </li>
-      <li><a href="src/api_util.html#qtdraw.util.logging_util.LogHandler.emit">emit() (LogHandler method)</a>
+      <li><a href="src/api_widget.html#qtdraw.widget.logging_util.LogHandler.emit">emit() (LogHandler method)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
@@ -785,7 +747,7 @@ document.write(`
 </li>
       <li><a href="src/api_widget.html#qtdraw.widget.group_model.GroupModel.emit_update_data">emit_update_data() (GroupModel method)</a>
 </li>
-      <li><a href="src/api_util.html#qtdraw.util.qt_event_util.ExceptionHook">ExceptionHook (class in qtdraw.util.qt_event_util)</a>
+      <li><a href="src/api_widget.html#qtdraw.widget.qt_event_util.ExceptionHook">ExceptionHook (class in qtdraw.widget.qt_event_util)</a>
 </li>
       <li><a href="src/api_parser.html#qtdraw.parser.xsf.extract_data_xsf">extract_data_xsf() (in module qtdraw.parser.xsf)</a>
 </li>
@@ -797,13 +759,9 @@ document.write(`
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="src/api_widget.html#qtdraw.widget.custom_widget.Combo.find_index">find_index() (Combo method)</a>
 </li>
-      <li><a href="src/api_widget.html#qtdraw.widget.group_model.GroupModel.find_item">find_item() (GroupModel method)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="src/api_widget.html#qtdraw.widget.custom_widget.LineEdit.focusInEvent">focusInEvent() (LineEdit method)</a>
-</li>
-      <li><a href="src/api_widget.html#qtdraw.widget.custom_widget.LineEdit.focusOutEvent">focusOutEvent() (LineEdit method)</a>
+      <li><a href="src/api_widget.html#qtdraw.widget.group_model.GroupModel.find_item">find_item() (GroupModel method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -813,7 +771,7 @@ document.write(`
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.G_matrix">G_matrix (PyVistaWidget property)</a>
 </li>
-      <li><a href="src/api_parser.html#qtdraw.parser.util.get_bond_info">get_bond_info() (in module qtdraw.parser.util)</a>
+      <li><a href="src/api_parser.html#qtdraw.parser.util_parser.get_bond_info">get_bond_info() (in module qtdraw.parser.util_parser)</a>
 </li>
       <li><a href="src/api_parser.html#qtdraw.parser.converter.get_camera">get_camera() (in module qtdraw.parser.converter)</a>
 </li>
@@ -823,7 +781,7 @@ document.write(`
 </li>
       <li><a href="src/api_util.html#qtdraw.util.util_axis.get_lattice_vector">get_lattice_vector() (in module qtdraw.util.util_axis)</a>
 </li>
-      <li><a href="src/api_parser.html#qtdraw.parser.util.get_model_cell">get_model_cell() (in module qtdraw.parser.util)</a>
+      <li><a href="src/api_parser.html#qtdraw.parser.util_parser.get_model_cell">get_model_cell() (in module qtdraw.parser.util_parser)</a>
 </li>
       <li><a href="src/api_parser.html#qtdraw.parser.converter.get_multipie">get_multipie() (in module qtdraw.parser.converter)</a>
 </li>
@@ -831,25 +789,21 @@ document.write(`
 </li>
       <li><a href="src/api_parser.html#qtdraw.parser.converter.get_preference">get_preference() (in module qtdraw.parser.converter)</a>
 </li>
-      <li><a href="src/api_util.html#qtdraw.util.qt_event_util.get_qt_application">get_qt_application() (in module qtdraw.util.qt_event_util)</a>
+      <li><a href="src/api_widget.html#qtdraw.widget.qt_event_util.get_qt_application">get_qt_application() (in module qtdraw.widget.qt_event_util)</a>
 </li>
       <li><a href="src/api_multipie.html#qtdraw.multipie.dialog_modulation.ModulationDialog.get_raw_data">get_raw_data() (ModulationDialog method)</a>
 </li>
-      <li><a href="src/api_util.html#qtdraw.util.util_axis.get_repeat_range">get_repeat_range() (in module qtdraw.util.util_axis)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="src/api_util.html#qtdraw.util.util_axis.get_repeat_range">get_repeat_range() (in module qtdraw.util.util_axis)</a>
+</li>
       <li><a href="src/api_widget.html#qtdraw.widget.group_model.GroupModel.get_role_str">get_role_str() (GroupModel method)</a>
 </li>
       <li><a href="src/api_widget.html#qtdraw.widget.group_model.GroupModel.get_row_data">get_row_data() (GroupModel method)</a>
 </li>
-      <li><a href="src/api_parser.html#qtdraw.parser.util.get_site_info">get_site_info() (in module qtdraw.parser.util)</a>
+      <li><a href="src/api_parser.html#qtdraw.parser.util_parser.get_site_info">get_site_info() (in module qtdraw.parser.util_parser)</a>
 </li>
       <li><a href="src/api_parser.html#qtdraw.parser.converter.get_status">get_status() (in module qtdraw.parser.converter)</a>
-</li>
-      <li><a href="src/api_util.html#qtdraw.util.latex_to_svg.get_svg_size">get_svg_size() (in module qtdraw.util.latex_to_svg)</a>
-</li>
-      <li><a href="src/api_util.html#qtdraw.util.util_str.get_variable">get_variable() (in module qtdraw.util.util_str)</a>
 </li>
       <li><a href="src/api_core.html#qtdraw.core.dialog_about.get_version_info">get_version_info() (in module qtdraw.core.dialog_about)</a>
 </li>
@@ -863,7 +817,7 @@ document.write(`
 </li>
       <li><a href="src/api_widget.html#qtdraw.widget.group_view.GroupView">GroupView (class in qtdraw.widget.group_view)</a>
 </li>
-      <li><a href="src/api_util.html#qtdraw.util.qt_event_util.gui_qt">gui_qt() (in module qtdraw.util.qt_event_util)</a>
+      <li><a href="src/api_widget.html#qtdraw.widget.qt_event_util.gui_qt">gui_qt() (in module qtdraw.widget.qt_event_util)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -877,7 +831,7 @@ document.write(`
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="src/api_util.html#qtdraw.util.qt_event_util.ExceptionHook.hook">hook() (ExceptionHook method)</a>
+      <li><a href="src/api_widget.html#qtdraw.widget.qt_event_util.ExceptionHook.hook">hook() (ExceptionHook method)</a>
 </li>
       <li><a href="src/api_widget.html#qtdraw.widget.custom_widget.HSpacer">HSpacer (class in qtdraw.widget.custom_widget)</a>
 </li>
@@ -887,17 +841,17 @@ document.write(`
 <h2 id="I">I</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="src/api_multipie.html#qtdraw.multipie.dialog_info.InfoPanel">InfoPanel (class in qtdraw.multipie.dialog_info)</a>
+      <li><a href="src/api_util.html#qtdraw.util.util.igrid">igrid() (in module qtdraw.util.util)</a>
 </li>
-      <li><a href="src/api_widget.html#qtdraw.widget.group_view.GroupView.insert_row">insert_row() (GroupView method)</a>
+      <li><a href="src/api_multipie.html#qtdraw.multipie.dialog_info.InfoPanel">InfoPanel (class in qtdraw.multipie.dialog_info)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="src/api_widget.html#qtdraw.widget.group_view.GroupView.insert_row">insert_row() (GroupView method)</a>
+</li>
       <li><a href="src/api_widget.html#qtdraw.widget.custom_widget.Check.is_checked">is_checked() (Check method)</a>
 </li>
       <li><a href="src/api_widget.html#qtdraw.widget.group_model.GroupModel.is_parent">is_parent() (GroupModel method)</a>
-</li>
-      <li><a href="src/api_util.html#qtdraw.util.util_str.is_regular_list">is_regular_list() (in module qtdraw.util.util_str)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -906,11 +860,7 @@ document.write(`
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="src/api_widget.html#qtdraw.widget.group_view.GroupView.keyPressEvent">keyPressEvent() (GroupView method)</a>
-
-      <ul>
-        <li><a href="src/api_widget.html#qtdraw.widget.custom_widget.LineEdit.keyPressEvent">(LineEdit method)</a>
 </li>
-      </ul></li>
   </ul></td>
 </tr></table>
 
@@ -919,17 +869,15 @@ document.write(`
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="src/api_widget.html#qtdraw.widget.custom_widget.Label">Label (class in qtdraw.widget.custom_widget)</a>
 </li>
-      <li><a href="src/api_util.html#qtdraw.util.latex_to_png.latex_to_png">latex_to_png() (in module qtdraw.util.latex_to_png)</a>
-</li>
-      <li><a href="src/api_util.html#qtdraw.util.latex_to_svg.latex_to_svg">latex_to_svg() (in module qtdraw.util.latex_to_svg)</a>
-</li>
       <li><a href="src/api_widget.html#qtdraw.widget.custom_widget.Layout">Layout (class in qtdraw.widget.custom_widget)</a>
 </li>
       <li><a href="src/api_widget.html#qtdraw.widget.custom_widget.LineEdit">LineEdit (class in qtdraw.widget.custom_widget)</a>
 </li>
+      <li><a href="src/api_util.html#qtdraw.util.util.list_to_table">list_to_table() (in module qtdraw.util.util)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="src/api_util.html#qtdraw.util.pdf_viewer.PDFViewer.load">load() (PDFViewer method)</a>
+      <li><a href="src/api_widget.html#qtdraw.widget.pdf_viewer.PDFViewer.load">load() (PDFViewer method)</a>
 
       <ul>
         <li><a href="src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.load">(PyVistaWidget method)</a>
@@ -937,9 +885,9 @@ document.write(`
         <li><a href="src/api_core.html#qtdraw.core.qtdraw_app.QtDraw.load">(QtDraw method)</a>, <a href="src/from_python.html#qtdraw.core.qtdraw_app.QtDraw.load">[1]</a>
 </li>
       </ul></li>
-      <li><a href="src/api_util.html#qtdraw.util.logging_util.LogHandler">LogHandler (class in qtdraw.util.logging_util)</a>
+      <li><a href="src/api_widget.html#qtdraw.widget.logging_util.LogHandler">LogHandler (class in qtdraw.widget.logging_util)</a>
 </li>
-      <li><a href="src/api_util.html#qtdraw.util.logging_util.LogWidget">LogWidget (class in qtdraw.util.logging_util)</a>
+      <li><a href="src/api_widget.html#qtdraw.widget.logging_util.LogWidget">LogWidget (class in qtdraw.widget.logging_util)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -947,7 +895,7 @@ document.write(`
 <h2 id="M">M</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="src/api_util.html#qtdraw.util.latex_to_svg.MathText">MathText (class in qtdraw.util.latex_to_svg)</a>
+      <li><a href="src/api_widget.html#qtdraw.widget.custom_widget.MathWidget">MathWidget (class in qtdraw.widget.custom_widget)</a>
 </li>
       <li><a href="src/api_widget.html#qtdraw.widget.message_box.MessageBox">MessageBox (class in qtdraw.widget.message_box)</a>
 </li>
@@ -973,17 +921,13 @@ document.write(`
 </li>
         <li><a href="src/api_multipie.html#module-qtdraw.multipie.plugin_multipie">qtdraw.multipie.plugin_multipie</a>
 </li>
-        <li><a href="src/api_multipie.html#module-qtdraw.multipie.util">qtdraw.multipie.util</a>
+        <li><a href="src/api_multipie.html#module-qtdraw.multipie.util_multipie">qtdraw.multipie.util_multipie</a>
 </li>
         <li><a href="src/api_parser.html#module-qtdraw.parser.converter">qtdraw.parser.converter</a>
 </li>
-        <li><a href="src/api_parser.html#module-qtdraw.parser.data_group">qtdraw.parser.data_group</a>
-</li>
-        <li><a href="src/api_parser.html#module-qtdraw.parser.element">qtdraw.parser.element</a>
-</li>
         <li><a href="src/api_parser.html#module-qtdraw.parser.read_material">qtdraw.parser.read_material</a>
 </li>
-        <li><a href="src/api_parser.html#module-qtdraw.parser.util">qtdraw.parser.util</a>
+        <li><a href="src/api_parser.html#module-qtdraw.parser.util_parser">qtdraw.parser.util_parser</a>
 </li>
         <li><a href="src/api_parser.html#module-qtdraw.parser.vesta">qtdraw.parser.vesta</a>
 </li>
@@ -995,23 +939,11 @@ document.write(`
 </li>
         <li><a href="src/api_util.html#module-qtdraw.util.basic_object">qtdraw.util.basic_object</a>
 </li>
-        <li><a href="src/api_util.html#module-qtdraw.util.color_selector_util">qtdraw.util.color_selector_util</a>
-</li>
-        <li><a href="src/api_util.html#module-qtdraw.util.latex_to_png">qtdraw.util.latex_to_png</a>
-</li>
-        <li><a href="src/api_util.html#module-qtdraw.util.latex_to_svg">qtdraw.util.latex_to_svg</a>
-</li>
-        <li><a href="src/api_util.html#module-qtdraw.util.logging_util">qtdraw.util.logging_util</a>
-</li>
-        <li><a href="src/api_util.html#module-qtdraw.util.pdf_viewer">qtdraw.util.pdf_viewer</a>
-</li>
-        <li><a href="src/api_util.html#module-qtdraw.util.qt_event_util">qtdraw.util.qt_event_util</a>
-</li>
         <li><a href="src/api_util.html#module-qtdraw.util.util">qtdraw.util.util</a>
 </li>
         <li><a href="src/api_util.html#module-qtdraw.util.util_axis">qtdraw.util.util_axis</a>
 </li>
-        <li><a href="src/api_util.html#module-qtdraw.util.util_str">qtdraw.util.util_str</a>
+        <li><a href="src/api_widget.html#module-qtdraw.widget.color_selector_util">qtdraw.widget.color_selector_util</a>
 </li>
         <li><a href="src/api_widget.html#module-qtdraw.widget.custom_widget">qtdraw.widget.custom_widget</a>
 </li>
@@ -1021,7 +953,15 @@ document.write(`
 </li>
         <li><a href="src/api_widget.html#module-qtdraw.widget.group_view">qtdraw.widget.group_view</a>
 </li>
+        <li><a href="src/api_widget.html#module-qtdraw.widget.logging_util">qtdraw.widget.logging_util</a>
+</li>
+        <li><a href="src/api_widget.html#module-qtdraw.widget.mathjax">qtdraw.widget.mathjax</a>
+</li>
         <li><a href="src/api_widget.html#module-qtdraw.widget.message_box">qtdraw.widget.message_box</a>
+</li>
+        <li><a href="src/api_widget.html#module-qtdraw.widget.pdf_viewer">qtdraw.widget.pdf_viewer</a>
+</li>
+        <li><a href="src/api_widget.html#module-qtdraw.widget.qt_event_util">qtdraw.widget.qt_event_util</a>
 </li>
         <li><a href="src/api_widget.html#module-qtdraw.widget.tab_group_view">qtdraw.widget.tab_group_view</a>
 </li>
@@ -1108,26 +1048,24 @@ document.write(`
 <h2 id="P">P</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="src/api_widget.html#qtdraw.widget.delegate.Delegate.paint">paint() (Delegate method)</a>
-</li>
       <li><a href="src/api_widget.html#qtdraw.widget.custom_widget.Panel">Panel (class in qtdraw.widget.custom_widget)</a>
 </li>
-      <li><a href="src/api_parser.html#qtdraw.parser.util.parse_material">parse_material() (in module qtdraw.parser.util)</a>
+      <li><a href="src/api_parser.html#qtdraw.parser.util_parser.parse_material">parse_material() (in module qtdraw.parser.util_parser)</a>
 </li>
-      <li><a href="src/api_multipie.html#qtdraw.multipie.util.parse_modulation_list">parse_modulation_list() (in module qtdraw.multipie.util)</a>
+      <li><a href="src/api_multipie.html#qtdraw.multipie.util_multipie.parse_modulation_list">parse_modulation_list() (in module qtdraw.multipie.util_multipie)</a>
 </li>
       <li><a href="src/api_parser.html#qtdraw.parser.vesta.parse_vesta">parse_vesta() (in module qtdraw.parser.vesta)</a>
 </li>
-      <li><a href="src/api_util.html#qtdraw.util.pdf_viewer.PDFViewer">PDFViewer (class in qtdraw.util.pdf_viewer)</a>
+      <li><a href="src/api_widget.html#qtdraw.widget.pdf_viewer.PDFViewer">PDFViewer (class in qtdraw.widget.pdf_viewer)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.plot_orbital_from_data">plot_orbital_from_data() (PyVistaWidget method)</a>
 
       <ul>
         <li><a href="src/api_core.html#qtdraw.core.qtdraw_app.QtDraw.plot_orbital_from_data">(QtDraw method)</a>, <a href="src/from_python.html#qtdraw.core.qtdraw_app.QtDraw.plot_orbital_from_data">[1]</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.plot_stream_from_data">plot_stream_from_data() (PyVistaWidget method)</a>
 
       <ul>
@@ -1205,10 +1143,10 @@ document.write(`
 </li>
       </ul></li>
       <li>
-    qtdraw.multipie.util
+    qtdraw.multipie.util_multipie
 
       <ul>
-        <li><a href="src/api_multipie.html#module-qtdraw.multipie.util">module</a>
+        <li><a href="src/api_multipie.html#module-qtdraw.multipie.util_multipie">module</a>
 </li>
       </ul></li>
       <li>
@@ -1219,20 +1157,6 @@ document.write(`
 </li>
       </ul></li>
       <li>
-    qtdraw.parser.data_group
-
-      <ul>
-        <li><a href="src/api_parser.html#module-qtdraw.parser.data_group">module</a>
-</li>
-      </ul></li>
-      <li>
-    qtdraw.parser.element
-
-      <ul>
-        <li><a href="src/api_parser.html#module-qtdraw.parser.element">module</a>
-</li>
-      </ul></li>
-      <li>
     qtdraw.parser.read_material
 
       <ul>
@@ -1240,10 +1164,10 @@ document.write(`
 </li>
       </ul></li>
       <li>
-    qtdraw.parser.util
+    qtdraw.parser.util_parser
 
       <ul>
-        <li><a href="src/api_parser.html#module-qtdraw.parser.util">module</a>
+        <li><a href="src/api_parser.html#module-qtdraw.parser.util_parser">module</a>
 </li>
       </ul></li>
       <li>
@@ -1284,48 +1208,6 @@ document.write(`
 </li>
       </ul></li>
       <li>
-    qtdraw.util.color_selector_util
-
-      <ul>
-        <li><a href="src/api_util.html#module-qtdraw.util.color_selector_util">module</a>
-</li>
-      </ul></li>
-      <li>
-    qtdraw.util.latex_to_png
-
-      <ul>
-        <li><a href="src/api_util.html#module-qtdraw.util.latex_to_png">module</a>
-</li>
-      </ul></li>
-      <li>
-    qtdraw.util.latex_to_svg
-
-      <ul>
-        <li><a href="src/api_util.html#module-qtdraw.util.latex_to_svg">module</a>
-</li>
-      </ul></li>
-      <li>
-    qtdraw.util.logging_util
-
-      <ul>
-        <li><a href="src/api_util.html#module-qtdraw.util.logging_util">module</a>
-</li>
-      </ul></li>
-      <li>
-    qtdraw.util.pdf_viewer
-
-      <ul>
-        <li><a href="src/api_util.html#module-qtdraw.util.pdf_viewer">module</a>
-</li>
-      </ul></li>
-      <li>
-    qtdraw.util.qt_event_util
-
-      <ul>
-        <li><a href="src/api_util.html#module-qtdraw.util.qt_event_util">module</a>
-</li>
-      </ul></li>
-      <li>
     qtdraw.util.util
 
       <ul>
@@ -1340,10 +1222,10 @@ document.write(`
 </li>
       </ul></li>
       <li>
-    qtdraw.util.util_str
+    qtdraw.widget.color_selector_util
 
       <ul>
-        <li><a href="src/api_util.html#module-qtdraw.util.util_str">module</a>
+        <li><a href="src/api_widget.html#module-qtdraw.widget.color_selector_util">module</a>
 </li>
       </ul></li>
       <li>
@@ -1375,10 +1257,38 @@ document.write(`
 </li>
       </ul></li>
       <li>
+    qtdraw.widget.logging_util
+
+      <ul>
+        <li><a href="src/api_widget.html#module-qtdraw.widget.logging_util">module</a>
+</li>
+      </ul></li>
+      <li>
+    qtdraw.widget.mathjax
+
+      <ul>
+        <li><a href="src/api_widget.html#module-qtdraw.widget.mathjax">module</a>
+</li>
+      </ul></li>
+      <li>
     qtdraw.widget.message_box
 
       <ul>
         <li><a href="src/api_widget.html#module-qtdraw.widget.message_box">module</a>
+</li>
+      </ul></li>
+      <li>
+    qtdraw.widget.pdf_viewer
+
+      <ul>
+        <li><a href="src/api_widget.html#module-qtdraw.widget.pdf_viewer">module</a>
+</li>
+      </ul></li>
+      <li>
+    qtdraw.widget.qt_event_util
+
+      <ul>
+        <li><a href="src/api_widget.html#module-qtdraw.widget.qt_event_util">module</a>
 </li>
       </ul></li>
       <li>
@@ -1408,24 +1318,16 @@ document.write(`
 <h2 id="R">R</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="src/api_widget.html#qtdraw.widget.custom_widget.Editor.raw_text">raw_text() (Editor method)</a>
-
-      <ul>
-        <li><a href="src/api_widget.html#qtdraw.widget.custom_widget.LineEdit.raw_text">(LineEdit method)</a>
-</li>
-      </ul></li>
       <li><a href="src/api_util.html#qtdraw.util.util.read_dict">read_dict() (in module qtdraw.util.util)</a>
 </li>
       <li><a href="src/api_parser.html#qtdraw.parser.read_material.read_draw">read_draw() (in module qtdraw.parser.read_material)</a>
 </li>
-      <li><a href="src/api_widget.html#qtdraw.widget.custom_widget.LineEdit.read_only">read_only (LineEdit property)</a>
-</li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="src/api_multipie.html#qtdraw.multipie.dialog_modulation.ModulationDialog.reject">reject() (ModulationDialog method)</a>
 </li>
       <li><a href="src/api_core.html#qtdraw.core.qtdraw_app.QtDraw.remove_actor">remove_actor() (QtDraw method)</a>, <a href="src/from_python.html#qtdraw.core.qtdraw_app.QtDraw.remove_actor">[1]</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="src/api_multipie.html#qtdraw.multipie.dialog_modulation.ModulationDialog.remove_data">remove_data() (ModulationDialog method)</a>
 </li>
       <li><a href="src/api_widget.html#qtdraw.widget.group_model.GroupModel.remove_row">remove_row() (GroupModel method)</a>
@@ -1434,7 +1336,9 @@ document.write(`
         <li><a href="src/api_widget.html#qtdraw.widget.group_view.GroupView.remove_row">(GroupView method)</a>
 </li>
       </ul></li>
-      <li><a href="src/api_util.html#qtdraw.util.qt_event_util.ExceptionHook.reset">reset() (ExceptionHook method)</a>
+      <li><a href="src/api_util.html#qtdraw.util.util.remove_space">remove_space() (in module qtdraw.util.util)</a>
+</li>
+      <li><a href="src/api_widget.html#qtdraw.widget.qt_event_util.ExceptionHook.reset">reset() (ExceptionHook method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -1442,10 +1346,10 @@ document.write(`
 <h2 id="S">S</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="src/api_util.html#qtdraw.util.logging_util.LogWidget.save">save() (LogWidget method)</a>
+      <li><a href="src/api_widget.html#qtdraw.widget.logging_util.LogWidget.save">save() (LogWidget method)</a>
 
       <ul>
-        <li><a href="src/api_util.html#qtdraw.util.pdf_viewer.PDFViewer.save">(PDFViewer method)</a>
+        <li><a href="src/api_widget.html#qtdraw.widget.pdf_viewer.PDFViewer.save">(PDFViewer method)</a>
 </li>
         <li><a href="src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.save">(PyVistaWidget method)</a>
 </li>
@@ -1544,8 +1448,6 @@ document.write(`
 </li>
       <li><a href="src/api_widget.html#qtdraw.widget.custom_widget.Combo.set_item">set_item() (Combo method)</a>
 </li>
-      <li><a href="src/api_util.html#qtdraw.util.util.set_latex_setting">set_latex_setting() (in module qtdraw.util.util)</a>
-</li>
       <li><a href="src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.set_model">set_model() (PyVistaWidget method)</a>
 
       <ul>
@@ -1566,6 +1468,8 @@ document.write(`
 </li>
       <li><a href="src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_obj_orbital_type">set_obj_orbital_type() (MultiPieDialog method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_obj_vector_type">set_obj_vector_type() (MultiPieDialog method)</a>
 </li>
       <li><a href="src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_obj_wyckoff">set_obj_wyckoff() (MultiPieDialog method)</a>
@@ -1574,8 +1478,6 @@ document.write(`
 </li>
       <li><a href="src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_object_panel_value">set_object_panel_value() (MultiPieDialog method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.set_origin">set_origin() (PyVistaWidget method)</a>
 
       <ul>
@@ -1594,8 +1496,6 @@ document.write(`
         <li><a href="src/api_core.html#qtdraw.core.qtdraw_app.QtDraw.set_range">(QtDraw method)</a>, <a href="src/from_python.html#qtdraw.core.qtdraw_app.QtDraw.set_range">[1]</a>
 </li>
       </ul></li>
-      <li><a href="src/api_widget.html#qtdraw.widget.custom_widget.LineEdit.set_read_only">set_read_only() (LineEdit method)</a>
-</li>
       <li><a href="src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.set_repeat">set_repeat() (PyVistaWidget method)</a>
 
       <ul>
@@ -1608,9 +1508,9 @@ document.write(`
 </li>
       <li><a href="src/api_widget.html#qtdraw.widget.group_model.GroupModel.set_row_data">set_row_data() (GroupModel method)</a>
 </li>
-      <li><a href="src/api_util.html#qtdraw.util.logging_util.LogWidget.set_text">set_text() (LogWidget method)</a>
+      <li><a href="src/api_widget.html#qtdraw.widget.logging_util.LogWidget.set_text">set_text() (LogWidget method)</a>
 </li>
-      <li><a href="src/api_util.html#qtdraw.util.pdf_viewer.PDFViewer.set_title">set_title() (PDFViewer method)</a>
+      <li><a href="src/api_widget.html#qtdraw.widget.pdf_viewer.PDFViewer.set_title">set_title() (PDFViewer method)</a>
 </li>
       <li><a href="src/api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget.set_unit_cell">set_unit_cell() (PyVistaWidget method)</a>
 
@@ -1618,8 +1518,6 @@ document.write(`
         <li><a href="src/api_core.html#qtdraw.core.qtdraw_app.QtDraw.set_unit_cell">(QtDraw method)</a>, <a href="src/from_python.html#qtdraw.core.qtdraw_app.QtDraw.set_unit_cell">[1]</a>
 </li>
       </ul></li>
-      <li><a href="src/api_widget.html#qtdraw.widget.custom_widget.LineEdit.set_validator">set_validator() (LineEdit method)</a>
-</li>
       <li><a href="src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_vc_neighbor">set_vc_neighbor() (MultiPieDialog method)</a>
 </li>
       <li><a href="src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_vc_wyckoff">set_vc_wyckoff() (MultiPieDialog method)</a>
@@ -1634,20 +1532,10 @@ document.write(`
 </li>
       <li><a href="src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.set_wyckoff_item">set_wyckoff_item() (MultiPieDialog method)</a>
 </li>
-      <li><a href="src/api_widget.html#qtdraw.widget.custom_widget.Editor.setCurrentText">setCurrentText() (Editor method)</a>
-</li>
       <li><a href="src/api_widget.html#qtdraw.widget.group_model.GroupModel.setData">setData() (GroupModel method)</a>
 </li>
-      <li><a href="src/api_widget.html#qtdraw.widget.delegate.Delegate.setEditorData">setEditorData() (Delegate method)</a>
-</li>
       <li><a href="src/api_widget.html#qtdraw.widget.custom_widget.Editor.setText">setText() (Editor method)</a>
-
-      <ul>
-        <li><a href="src/api_widget.html#qtdraw.widget.custom_widget.Label.setText">(Label method)</a>
 </li>
-        <li><a href="src/api_widget.html#qtdraw.widget.custom_widget.LineEdit.setText">(LineEdit method)</a>
-</li>
-      </ul></li>
       <li><a href="src/api_multipie.html#qtdraw.multipie.dialog_multipie.MultiPieDialog.show_atomic">show_atomic() (MultiPieDialog method)</a>
 </li>
       <li><a href="src/api_multipie.html#qtdraw.multipie.dialog_info.show_atomic_multipole">show_atomic_multipole() (in module qtdraw.multipie.dialog_info)</a>
@@ -1706,19 +1594,13 @@ document.write(`
       </ul></li>
       <li><a href="src/api_widget.html#qtdraw.widget.custom_widget.Spin">Spin (class in qtdraw.widget.custom_widget)</a>
 </li>
-      <li><a href="src/api_util.html#qtdraw.util.util.split_filename">split_filename() (in module qtdraw.util.util)</a>
+      <li><a href="src/api_core.html#qtdraw.core.pyvista_widget.split_filename">split_filename() (in module qtdraw.core.pyvista_widget)</a>
 </li>
-      <li><a href="src/api_util.html#qtdraw.util.logging_util.start_logging">start_logging() (in module qtdraw.util.logging_util)</a>
+      <li><a href="src/api_widget.html#qtdraw.widget.logging_util.start_logging">start_logging() (in module qtdraw.widget.logging_util)</a>
 </li>
-      <li><a href="src/api_util.html#qtdraw.util.util_str.str_to_list">str_to_list() (in module qtdraw.util.util_str)</a>
+      <li><a href="src/api_util.html#qtdraw.util.util.str_to_list">str_to_list() (in module qtdraw.util.util)</a>
 </li>
-      <li><a href="src/api_util.html#qtdraw.util.util_str.str_to_numpy">str_to_numpy() (in module qtdraw.util.util_str)</a>
-</li>
-      <li><a href="src/api_util.html#qtdraw.util.util_str.str_to_sympy">str_to_sympy() (in module qtdraw.util.util_str)</a>
-</li>
-      <li><a href="src/api_util.html#qtdraw.util.util_str.str_to_sympy1">str_to_sympy1() (in module qtdraw.util.util_str)</a>
-</li>
-      <li><a href="src/api_util.html#qtdraw.util.latex_to_svg.SVGWidget">SVGWidget (class in qtdraw.util.latex_to_svg)</a>
+      <li><a href="src/api_util.html#qtdraw.util.util.str_to_sympy">str_to_sympy() (in module qtdraw.util.util)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -1732,13 +1614,13 @@ document.write(`
 </li>
       <li><a href="src/api_widget.html#qtdraw.widget.custom_widget.Editor.text">text() (Editor method)</a>
 </li>
-      <li><a href="src/api_util.html#qtdraw.util.logging_util.timer">timer() (in module qtdraw.util.logging_util)</a>
+      <li><a href="src/api_util.html#qtdraw.util.util.text_to_list">text_to_list() (in module qtdraw.util.util)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="src/api_parser.html#qtdraw.parser.converter.to_bool">to_bool() (in module qtdraw.parser.converter)</a>
 </li>
-      <li><a href="src/api_util.html#qtdraw.util.util_str.to_fraction">to_fraction() (in module qtdraw.util.util_str)</a>
+      <li><a href="src/api_util.html#qtdraw.util.util.to_latex">to_latex() (in module qtdraw.util.util)</a>
 </li>
       <li><a href="src/api_widget.html#qtdraw.widget.group_model.GroupModel.tolist">tolist() (GroupModel method)</a>
 </li>
@@ -1752,33 +1634,23 @@ document.write(`
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="src/api_widget.html#qtdraw.widget.group_model.GroupModel.update_check_state">update_check_state() (GroupModel method)</a>
 </li>
-      <li><a href="src/api_widget.html#qtdraw.widget.group_view.GroupView.update_widget">update_widget() (GroupView method)</a>
-</li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="src/api_widget.html#qtdraw.widget.delegate.Delegate.updateEditorGeometry">updateEditorGeometry() (Delegate method)</a>
-
-      <ul>
-        <li><a href="src/api_widget.html#qtdraw.widget.delegate.EditorDelegate.updateEditorGeometry">(EditorDelegate method)</a>
-</li>
-      </ul></li>
   </ul></td>
 </tr></table>
 
 <h2 id="V">V</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="src/api_widget.html#qtdraw.widget.custom_widget.LineEdit.validator">validator (LineEdit property)</a>
-</li>
       <li><a href="src/api_widget.html#qtdraw.widget.validator.validator_bond">validator_bond() (in module qtdraw.widget.validator)</a>
 </li>
       <li><a href="src/api_widget.html#qtdraw.widget.validator.validator_float">validator_float() (in module qtdraw.widget.validator)</a>
 </li>
-      <li><a href="src/api_widget.html#qtdraw.widget.validator.validator_ilist">validator_ilist() (in module qtdraw.widget.validator)</a>
-</li>
       <li><a href="src/api_widget.html#qtdraw.widget.validator.validator_int">validator_int() (in module qtdraw.widget.validator)</a>
 </li>
-      <li><a href="src/api_widget.html#qtdraw.widget.validator.validator_list">validator_list() (in module qtdraw.widget.validator)</a>
+      <li><a href="src/api_widget.html#qtdraw.widget.validator.validator_list_float">validator_list_float() (in module qtdraw.widget.validator)</a>
+</li>
+      <li><a href="src/api_widget.html#qtdraw.widget.validator.validator_list_int">validator_list_int() (in module qtdraw.widget.validator)</a>
+</li>
+      <li><a href="src/api_widget.html#qtdraw.widget.validator.validator_math">validator_math() (in module qtdraw.widget.validator)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
@@ -1788,11 +1660,9 @@ document.write(`
 </li>
       <li><a href="src/api_widget.html#qtdraw.widget.validator.validator_site_bond">validator_site_bond() (in module qtdraw.widget.validator)</a>
 </li>
-      <li><a href="src/api_widget.html#qtdraw.widget.validator.validator_sympy">validator_sympy() (in module qtdraw.widget.validator)</a>
-</li>
-      <li><a href="src/api_widget.html#qtdraw.widget.validator.validator_sympy_float">validator_sympy_float() (in module qtdraw.widget.validator)</a>
-</li>
       <li><a href="src/api_widget.html#qtdraw.widget.validator.validator_vector_site_bond">validator_vector_site_bond() (in module qtdraw.widget.validator)</a>
+</li>
+      <li><a href="src/api_util.html#qtdraw.util.util.vector3d">vector3d() (in module qtdraw.util.util)</a>
 </li>
       <li><a href="src/api_widget.html#qtdraw.widget.custom_widget.VSpacer">VSpacer (class in qtdraw.widget.custom_widget)</a>
 </li>
@@ -1869,8 +1739,8 @@ By Hiroaki Kusunose
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
-<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
 
   <footer class="bd-footer">
   </footer>

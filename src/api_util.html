@@ -16,17 +16,19 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-
-  
-  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
@@ -37,13 +39,14 @@
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=5f1b4820" />
   
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
-  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
     <script src="../_static/documentation_options.js?v=8cf54648"></script>
-    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=f281be69"></script>
@@ -56,8 +59,6 @@
     <script src="../_static/design-tabs.js?v=f930bc37"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'src/api_util';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -65,6 +66,7 @@
     <link rel="prev" title="Script" href="api_script.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="jp"/>
+  <meta name="docsearch:version" content="" />
   </head>
   
   
@@ -80,19 +82,8 @@
     <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
   
-  <input type="checkbox"
-          class="sidebar-toggle"
-          id="pst-primary-sidebar-checkbox"/>
-  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
-  
-  <input type="checkbox"
-          class="sidebar-toggle"
-          id="pst-secondary-sidebar-checkbox"/>
-  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
-  
-  <div class="search-button__wrapper">
-    <div class="search-button__overlay"></div>
-    <div class="search-button__search-container">
+  <dialog id="pst-search-dialog">
+    
 <form class="bd-search d-flex align-items-center"
       action="../search.html"
       method="get">
@@ -100,7 +91,6 @@
   <input type="search"
          class="form-control"
          name="q"
-         id="search-input"
          placeholder="Search this book..."
          aria-label="Search this book..."
          autocomplete="off"
@@ -108,8 +98,8 @@
          autocapitalize="off"
          spellcheck="false"/>
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form></div>
-  </div>
+</form>
+  </dialog>
 
   <div class="pst-async-banner-revealer d-none">
   <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
@@ -125,7 +115,8 @@
       
       
       
-      <div class="bd-sidebar-primary bd-sidebar">
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
         
 
   
@@ -155,21 +146,17 @@
     
     
     <img src="../_static/qtdraw_logo.png" class="logo__image only-light" alt="QtDraw - Home"/>
-    <script>document.write(`<img src="../_static/qtdraw_logo.png" class="logo__image only-dark" alt="QtDraw - Home"/>`);</script>
+    <img src="../_static/qtdraw_logo.png" class="logo__image only-dark pst-js-only" alt="QtDraw - Home"/>
   
   
 </a></div>
         <div class="sidebar-primary-item">
 
- <script>
- document.write(`
-   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
-    <span class="search-button__default-text">Search</span>
-    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-   </button>
- `);
- </script></div>
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
@@ -201,9 +188,14 @@
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
   </div>
-  
-  <div id="rtd-footer-container"></div>
 
 
       </div>
@@ -364,24 +356,16 @@
 
 
 
-<script>
-document.write(`
-  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
-    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
-    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
-  </button>
-`);
-</script>
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
 
 
-<script>
-document.write(`
-  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
-  </button>
-`);
-</script>
+</button>
 <button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
 </button>
@@ -405,7 +389,7 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-qtdraw.util.basic_object">Basic Object</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-qtdraw.util.basic_object">Utility</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_bond"><code class="docutils literal notranslate"><span class="pre">create_bond()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_box"><code class="docutils literal notranslate"><span class="pre">create_box()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_circle"><code class="docutils literal notranslate"><span class="pre">create_circle()</span></code></a></li>
@@ -421,84 +405,32 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_spline_t"><code class="docutils literal notranslate"><span class="pre">create_spline_t()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_stream"><code class="docutils literal notranslate"><span class="pre">create_stream()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_stream_data"><code class="docutils literal notranslate"><span class="pre">create_stream_data()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_text2d"><code class="docutils literal notranslate"><span class="pre">create_text2d()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_text3d"><code class="docutils literal notranslate"><span class="pre">create_text3d()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_toroid"><code class="docutils literal notranslate"><span class="pre">create_toroid()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_torus"><code class="docutils literal notranslate"><span class="pre">create_torus()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_vector"><code class="docutils literal notranslate"><span class="pre">create_vector()</span></code></a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-qtdraw.util.logging_util">Logging</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.logging_util.LogHandler"><code class="docutils literal notranslate"><span class="pre">LogHandler</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.logging_util.LogHandler.emit"><code class="docutils literal notranslate"><span class="pre">LogHandler.emit()</span></code></a></li>
-</ul>
-</li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.logging_util.LogWidget"><code class="docutils literal notranslate"><span class="pre">LogWidget</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.logging_util.LogWidget.append_text"><code class="docutils literal notranslate"><span class="pre">LogWidget.append_text()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.logging_util.LogWidget.clear"><code class="docutils literal notranslate"><span class="pre">LogWidget.clear()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.logging_util.LogWidget.save"><code class="docutils literal notranslate"><span class="pre">LogWidget.save()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.logging_util.LogWidget.set_text"><code class="docutils literal notranslate"><span class="pre">LogWidget.set_text()</span></code></a></li>
-</ul>
-</li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.logging_util.start_logging"><code class="docutils literal notranslate"><span class="pre">start_logging()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.logging_util.timer"><code class="docutils literal notranslate"><span class="pre">timer()</span></code></a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-qtdraw.util.qt_event_util">Event Loop</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.qt_event_util.ExceptionHook"><code class="docutils literal notranslate"><span class="pre">ExceptionHook</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.qt_event_util.ExceptionHook.hook"><code class="docutils literal notranslate"><span class="pre">ExceptionHook.hook()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.qt_event_util.ExceptionHook.reset"><code class="docutils literal notranslate"><span class="pre">ExceptionHook.reset()</span></code></a></li>
-</ul>
-</li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.qt_event_util.get_qt_application"><code class="docutils literal notranslate"><span class="pre">get_qt_application()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.qt_event_util.gui_qt"><code class="docutils literal notranslate"><span class="pre">gui_qt()</span></code></a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-qtdraw.util.pdf_viewer">PDF Viewer</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.pdf_viewer.PDFViewer"><code class="docutils literal notranslate"><span class="pre">PDFViewer</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.pdf_viewer.PDFViewer.load"><code class="docutils literal notranslate"><span class="pre">PDFViewer.load()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.pdf_viewer.PDFViewer.save"><code class="docutils literal notranslate"><span class="pre">PDFViewer.save()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.pdf_viewer.PDFViewer.set_title"><code class="docutils literal notranslate"><span class="pre">PDFViewer.set_title()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-qtdraw.util.latex_to_png">LaTeX</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.latex_to_png.latex_to_png"><code class="docutils literal notranslate"><span class="pre">latex_to_png()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.latex_to_svg.MathText"><code class="docutils literal notranslate"><span class="pre">MathText</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.latex_to_svg.SVGWidget"><code class="docutils literal notranslate"><span class="pre">SVGWidget</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.latex_to_svg.get_svg_size"><code class="docutils literal notranslate"><span class="pre">get_svg_size()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.latex_to_svg.latex_to_svg"><code class="docutils literal notranslate"><span class="pre">latex_to_svg()</span></code></a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-qtdraw.util.util">Utility</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.cat_filename"><code class="docutils literal notranslate"><span class="pre">cat_filename()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.apply"><code class="docutils literal notranslate"><span class="pre">apply()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.check_multipie"><code class="docutils literal notranslate"><span class="pre">check_multipie()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.convert_str_vector"><code class="docutils literal notranslate"><span class="pre">convert_str_vector()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.convert_to_str"><code class="docutils literal notranslate"><span class="pre">convert_to_str()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.create_grid"><code class="docutils literal notranslate"><span class="pre">create_grid()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.create_style_sheet"><code class="docutils literal notranslate"><span class="pre">create_style_sheet()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.distance"><code class="docutils literal notranslate"><span class="pre">distance()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.igrid"><code class="docutils literal notranslate"><span class="pre">igrid()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.list_to_table"><code class="docutils literal notranslate"><span class="pre">list_to_table()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.read_dict"><code class="docutils literal notranslate"><span class="pre">read_dict()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.set_latex_setting"><code class="docutils literal notranslate"><span class="pre">set_latex_setting()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.split_filename"><code class="docutils literal notranslate"><span class="pre">split_filename()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.remove_space"><code class="docutils literal notranslate"><span class="pre">remove_space()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.str_to_list"><code class="docutils literal notranslate"><span class="pre">str_to_list()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.str_to_sympy"><code class="docutils literal notranslate"><span class="pre">str_to_sympy()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.text_to_list"><code class="docutils literal notranslate"><span class="pre">text_to_list()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.to_latex"><code class="docutils literal notranslate"><span class="pre">to_latex()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.vector3d"><code class="docutils literal notranslate"><span class="pre">vector3d()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.write_dict"><code class="docutils literal notranslate"><span class="pre">write_dict()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util_str.affine_trans"><code class="docutils literal notranslate"><span class="pre">affine_trans()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util_str.apply_to_list"><code class="docutils literal notranslate"><span class="pre">apply_to_list()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util_str.apply_to_numpy"><code class="docutils literal notranslate"><span class="pre">apply_to_numpy()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util_str.get_variable"><code class="docutils literal notranslate"><span class="pre">get_variable()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util_str.is_regular_list"><code class="docutils literal notranslate"><span class="pre">is_regular_list()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util_str.str_to_list"><code class="docutils literal notranslate"><span class="pre">str_to_list()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util_str.str_to_numpy"><code class="docutils literal notranslate"><span class="pre">str_to_numpy()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util_str.str_to_sympy"><code class="docutils literal notranslate"><span class="pre">str_to_sympy()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util_str.str_to_sympy1"><code class="docutils literal notranslate"><span class="pre">str_to_sympy1()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util_str.to_fraction"><code class="docutils literal notranslate"><span class="pre">to_fraction()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util_axis.create_axes_widget"><code class="docutils literal notranslate"><span class="pre">create_axes_widget()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util_axis.create_grid"><code class="docutils literal notranslate"><span class="pre">create_grid()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util_axis.create_cell_grid"><code class="docutils literal notranslate"><span class="pre">create_cell_grid()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util_axis.create_unit_cell"><code class="docutils literal notranslate"><span class="pre">create_unit_cell()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util_axis.get_lattice_vector"><code class="docutils literal notranslate"><span class="pre">get_lattice_vector()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util_axis.get_outside_box"><code class="docutils literal notranslate"><span class="pre">get_outside_box()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util_axis.get_repeat_range"><code class="docutils literal notranslate"><span class="pre">get_repeat_range()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util_axis.get_view_vector"><code class="docutils literal notranslate"><span class="pre">get_view_vector()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.color_selector_util.color2pixmap"><code class="docutils literal notranslate"><span class="pre">color2pixmap()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -515,7 +447,7 @@ document.write(`
   <section class="tex2jax_ignore mathjax_ignore" id="utilities">
 <h1>Utilities<a class="headerlink" href="#utilities" title="Link to this heading">#</a></h1>
 <section id="module-qtdraw.util.basic_object">
-<span id="basic-object"></span><h2>Basic Object<a class="headerlink" href="#module-qtdraw.util.basic_object" title="Link to this heading">#</a></h2>
+<span id="utility"></span><h2>Utility<a class="headerlink" href="#module-qtdraw.util.basic_object" title="Link to this heading">#</a></h2>
 <p>Basic PolyData objects.</p>
 <p>This module provides PolyData objects as fundamental elements to draw.
 The following objects are available.</p>
@@ -534,6 +466,7 @@ The following objects are available.</p>
 <li><p>box</p></li>
 <li><p>polygon</p></li>
 <li><p>text3d</p></li>
+<li><p>text2d (math)</p></li>
 <li><p>spline</p></li>
 <li><p>spline (parametric)</p></li>
 <li><p>isosurface</p></li>
@@ -961,6 +894,30 @@ The following objects are available.</p>
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="qtdraw.util.basic_object.create_text2d">
+<span class="sig-name descname"><span class="pre">create_text2d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">latex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mathjax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/basic_object.html#create_text2d"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.basic_object.create_text2d" title="Link to this definition">#</a></dt>
+<dd><p>Create text 2d (math).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>latex</strong> (<em>str</em>) -- LaTeX with $.</p></li>
+<li><p><strong>mathjax</strong> (<em>MathJaxSVG</em>) -- mathjax converter.</p></li>
+<li><p><strong>x</strong> (<em>int</em>) -- x position from left.</p></li>
+<li><p><strong>y</strong> (<em>int</em>) -- y position from bottom.</p></li>
+<li><p><strong>size</strong> (<em>int</em>) -- size (height).</p></li>
+<li><p><strong>color</strong> (<em>str</em>) -- color.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>(vtkActor2D) -- actor.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="qtdraw.util.basic_object.create_text3d">
 <span class="sig-name descname"><span class="pre">create_text3d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">view</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">depth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[0,</span> <span class="pre">0,</span> <span class="pre">0]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">A</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/basic_object.html#create_text3d"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.basic_object.create_text3d" title="Link to this definition">#</a></dt>
 <dd><p>Create text3d object.</p>
@@ -1069,399 +1026,21 @@ The following objects are available.</p>
 </div>
 </dd></dl>
 
-</section>
-<section id="module-qtdraw.util.logging_util">
-<span id="logging"></span><h2>Logging<a class="headerlink" href="#module-qtdraw.util.logging_util" title="Link to this heading">#</a></h2>
-<p>Logging utility.</p>
-<p>This module provides utilities for logging.</p>
-<dl class="py class">
-<dt class="sig sig-object py" id="qtdraw.util.logging_util.LogHandler">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">LogHandler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text_widget</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/logging_util.html#LogHandler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.logging_util.LogHandler" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Handler</span></code></p>
-<p>Log handler.</p>
+<p id="module-qtdraw.util.util">For versatile utility.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="qtdraw.util.util.apply">
+<span class="sig-name descname"><span class="pre">apply</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">f</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lst</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/util.html#apply"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.util.apply" title="Link to this definition">#</a></dt>
+<dd><p>Apply function to (nested) list.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>level</strong> (<em>Level</em><em>, </em><em>optional</em>) -- log level.</p></li>
-<li><p><strong>stream</strong> (<em>TextIO</em><em>, </em><em>optional</em>) -- stream.</p></li>
-<li><p><strong>text_widget</strong> (<a class="reference internal" href="#qtdraw.util.logging_util.LogWidget" title="qtdraw.util.logging_util.LogWidget"><em>LogWidget</em></a><em>, </em><em>optional</em>) -- text widget.</p></li>
-</ul>
-</dd>
-</dl>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<ul class="simple">
-<li><p>if stream/text_widget is None, it is not used.</p></li>
-</ul>
-</div>
-<dl class="py method">
-<dt class="sig sig-object py" id="qtdraw.util.logging_util.LogHandler.emit">
-<span class="sig-name descname"><span class="pre">emit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">record</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/logging_util.html#LogHandler.emit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.logging_util.LogHandler.emit" title="Link to this definition">#</a></dt>
-<dd><p>Emit message.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>record</strong> (<em>LogRecord</em>) -- log record.</p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="qtdraw.util.logging_util.LogWidget">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">LogWidget</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'log</span> <span class="pre">message'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hook</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/logging_util.html#LogWidget"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.logging_util.LogWidget" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">QWidget</span></code></p>
-<p>Log widget.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>title</strong> (<em>str</em><em>, </em><em>optional</em>) -- window title.</p></li>
-<li><p><strong>level</strong> (<em>Level</em><em>, </em><em>optional</em>) -- log level.</p></li>
-<li><p><strong>stream</strong> (<em>TextIO</em><em>, </em><em>optional</em>) -- stream for logging.</p></li>
-<li><p><strong>hook</strong> (<em>bool</em><em>, </em><em>optional</em>) -- exception hook ?</p></li>
-<li><p><strong>parent</strong> (<em>QObject</em><em>, </em><em>optional</em>) -- parent.</p></li>
-</ul>
-</dd>
-</dl>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<ul class="simple">
-<li><p>if stream is True, sys.stderr is used.</p></li>
-<li><p>if level is None, no logging.</p></li>
-</ul>
-</div>
-<dl class="py method">
-<dt class="sig sig-object py" id="qtdraw.util.logging_util.LogWidget.append_text">
-<span class="sig-name descname"><span class="pre">append_text</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/logging_util.html#LogWidget.append_text"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.logging_util.LogWidget.append_text" title="Link to this definition">#</a></dt>
-<dd><p>Append text.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>text</strong> (<em>str</em>) -- text.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="qtdraw.util.logging_util.LogWidget.clear">
-<span class="sig-name descname"><span class="pre">clear</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/logging_util.html#LogWidget.clear"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.logging_util.LogWidget.clear" title="Link to this definition">#</a></dt>
-<dd><p>Clear log message.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="qtdraw.util.logging_util.LogWidget.save">
-<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/logging_util.html#LogWidget.save"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.logging_util.LogWidget.save" title="Link to this definition">#</a></dt>
-<dd><p>Save log message.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="qtdraw.util.logging_util.LogWidget.set_text">
-<span class="sig-name descname"><span class="pre">set_text</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/logging_util.html#LogWidget.set_text"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.logging_util.LogWidget.set_text" title="Link to this definition">#</a></dt>
-<dd><p>Set text.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>text</strong> (<em>str</em>) -- text.</p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="qtdraw.util.logging_util.start_logging">
-<span class="sig-name descname"><span class="pre">start_logging</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text_widget</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hook</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/logging_util.html#start_logging"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.logging_util.start_logging" title="Link to this definition">#</a></dt>
-<dd><p>Start logging.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>level</strong> (<em>Level</em><em>, </em><em>optional</em>) -- logging level.</p></li>
-<li><p><strong>stream</strong> (<em>TextIO</em><em>, </em><em>optional</em>) -- stream for logging.</p></li>
-<li><p><strong>text_widget</strong> (<a class="reference internal" href="#qtdraw.util.logging_util.LogWidget" title="qtdraw.util.logging_util.LogWidget"><em>LogWidget</em></a><em>, </em><em>optional</em>) -- text widget.</p></li>
-<li><p><strong>hook</strong> (<em>bool</em><em>, </em><em>optional</em>) -- exception hook ?</p></li>
-</ul>
-</dd>
-</dl>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<ul class="simple">
-<li><p>stream is True, sys.stderr is used.</p></li>
-</ul>
-</div>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="qtdraw.util.logging_util.timer">
-<span class="sig-name descname"><span class="pre">timer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/logging_util.html#timer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.logging_util.timer" title="Link to this definition">#</a></dt>
-<dd><p>Timer decorater.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>func</strong> (<em>Function</em>) -- function to decorate.</p>
-</dd>
-</dl>
-</dd></dl>
-
-</section>
-<section id="module-qtdraw.util.qt_event_util">
-<span id="event-loop"></span><h2>Event Loop<a class="headerlink" href="#module-qtdraw.util.qt_event_util" title="Link to this heading">#</a></h2>
-<p>Control Qt event loop.</p>
-<p>This module provides functions to control Qt event loop.</p>
-<p>See also,</p>
-<ul class="simple">
-<li><p>[use Qt from Jupyter NB](<a class="reference external" href="https://qiita.com/Hanjin_Liu/items/9df684920727f8a784c4">https://qiita.com/Hanjin_Liu/items/9df684920727f8a784c4</a>)</p></li>
-<li><p>[exception hook](<a class="reference external" href="https://timlehr.com/python-exception-hooks-with-qt-message-box/">https://timlehr.com/python-exception-hooks-with-qt-message-box/</a>)</p></li>
-</ul>
-<dl class="py class">
-<dt class="sig sig-object py" id="qtdraw.util.qt_event_util.ExceptionHook">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ExceptionHook</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/qt_event_util.html#ExceptionHook"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.qt_event_util.ExceptionHook" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">QObject</span></code></p>
-<p>Exception hook.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>parent</strong> (<em>QObject</em><em>, </em><em>optional</em>) -- parent.</p>
-</dd>
-</dl>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<ul class="simple">
-<li><dl class="simple">
-<dt>call this before super().__init__() in __init__() of QMainWindow class as follows.</dt><dd><ul>
-<li><p>self.app = get_qt_application()</p></li>
-<li><p>ExceptionHook()</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-</ul>
-</div>
-<dl class="py method">
-<dt class="sig sig-object py" id="qtdraw.util.qt_event_util.ExceptionHook.hook">
-<span class="sig-name descname"><span class="pre">hook</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">traceback</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/qt_event_util.html#ExceptionHook.hook"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.qt_event_util.ExceptionHook.hook" title="Link to this definition">#</a></dt>
-<dd><p>Callback for uncaught exceptions.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>type</strong> (<em>Any</em>) -- type of exception.</p></li>
-<li><p><strong>value</strong> (<em>Any</em>) -- arguments.</p></li>
-<li><p><strong>traceback</strong> (<em>TraceBack</em>) -- traceback.</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="qtdraw.util.qt_event_util.ExceptionHook.reset">
-<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/qt_event_util.html#ExceptionHook.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.qt_event_util.ExceptionHook.reset" title="Link to this definition">#</a></dt>
-<dd><p>Reset exception hook.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="qtdraw.util.qt_event_util.get_qt_application">
-<span class="sig-name descname"><span class="pre">get_qt_application</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">latex</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/qt_event_util.html#get_qt_application"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.qt_event_util.get_qt_application" title="Link to this definition">#</a></dt>
-<dd><p>Get Qt application.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>latex</strong> (<em>bool</em><em>, </em><em>optional</em>) -- use latex setting ?</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><ul class="simple">
-<li><p>(QApplication) -- Qt application.</p></li>
-</ul>
-</p>
-</dd>
-</dl>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<ul class="simple">
-<li><dl class="simple">
-<dt>call this before super().__init__() in __init__() of QMainWindow class as follows.</dt><dd><ul>
-<li><p>self.app = get_qt_application()</p></li>
-<li><p>ExceptionHook()</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-</ul>
-</div>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="qtdraw.util.qt_event_util.gui_qt">
-<span class="sig-name descname"><span class="pre">gui_qt</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/qt_event_util.html#gui_qt"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.qt_event_util.gui_qt" title="Link to this definition">#</a></dt>
-<dd><p>Execute Qt GUI mode in IPython (if available).</p>
-</dd></dl>
-
-</section>
-<section id="module-qtdraw.util.pdf_viewer">
-<span id="pdf-viewer"></span><h2>PDF Viewer<a class="headerlink" href="#module-qtdraw.util.pdf_viewer" title="Link to this heading">#</a></h2>
-<p>Simple PDF viewer.</p>
-<p>This module contains a class for simple PDF viewer.
-It can load PDF file, and save the same file to
-different directory (just by copying it).</p>
-<dl class="py class">
-<dt class="sig sig-object py" id="qtdraw.util.pdf_viewer.PDFViewer">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PDFViewer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/pdf_viewer.html#PDFViewer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.pdf_viewer.PDFViewer" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">QWidget</span></code></p>
-<p>Simple PDF viewer.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>filename</strong> (<em>str</em><em>, </em><em>optional</em>) -- file name to load.</p>
-</dd>
-</dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="qtdraw.util.pdf_viewer.PDFViewer.load">
-<span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/pdf_viewer.html#PDFViewer.load"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.pdf_viewer.PDFViewer.load" title="Link to this definition">#</a></dt>
-<dd><p>Load PDF file.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="qtdraw.util.pdf_viewer.PDFViewer.save">
-<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/pdf_viewer.html#PDFViewer.save"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.pdf_viewer.PDFViewer.save" title="Link to this definition">#</a></dt>
-<dd><p>Save PDF file (default = current directory).</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="qtdraw.util.pdf_viewer.PDFViewer.set_title">
-<span class="sig-name descname"><span class="pre">set_title</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/pdf_viewer.html#PDFViewer.set_title"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.pdf_viewer.PDFViewer.set_title" title="Link to this definition">#</a></dt>
-<dd><p>Set window title.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>filename</strong> (<em>str</em><em>, </em><em>optional</em>) -- file name.</p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
-</section>
-<section id="module-qtdraw.util.latex_to_png">
-<span id="latex"></span><h2>LaTeX<a class="headerlink" href="#module-qtdraw.util.latex_to_png" title="Link to this heading">#</a></h2>
-<p>Render LaTeX to backend.</p>
-<p>This module provides LaTeX converter to backend.</p>
-<p>See for example, <a class="github reference external" href="https://github.com/ipython/IPython/lib/latextools.py">ipython/IPython</a>.</p>
-<dl class="py function">
-<dt class="sig sig-object py" id="qtdraw.util.latex_to_png.latex_to_png">
-<span class="sig-name descname"><span class="pre">latex_to_png</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wrap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'black'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">12</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dpi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">120</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/latex_to_png.html#latex_to_png"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.latex_to_png.latex_to_png" title="Link to this definition">#</a></dt>
-<dd><p>Render a LaTeX string to png via matplotlib.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>text</strong> (<em>str</em>) -- raw string containing valid inline LaTeX.</p></li>
-<li><p><strong>backend</strong> (<em>str</em><em>, </em><em>optional</em>) -- backend for producing png or svg.</p></li>
-<li><p><strong>wrap</strong> (<em>bool</em><em>, </em><em>optional</em>) -- if true, automatically wrap <cite>s</cite> as a LaTeX equation.</p></li>
-<li><p><strong>color</strong> (<em>str</em><em>, </em><em>optional</em>) -- color name.</p></li>
-<li><p><strong>size</strong> (<em>int</em><em>, </em><em>optional</em>) -- fontsize.</p></li>
-<li><p><strong>dpi</strong> (<em>int</em><em>, </em><em>optional</em>) -- DPI.</p></li>
+<li><p><strong>f</strong> (<em>function</em>) -- function to apply to each element of list.</p></li>
+<li><p><strong>lst</strong> (<em>list</em><em> or </em><em>value</em>) -- (nested) list to apply.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><ul class="simple">
-<li><p>(pixmap) -- pixmap image.</p></li>
-</ul>
-</p>
-</dd>
-</dl>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<ul class="simple">
-<li><p>None is returned when the backend cannot be used.</p></li>
-</ul>
-</div>
-</dd></dl>
-
-<p id="module-qtdraw.util.latex_to_svg">Render LaTeX to SVG.</p>
-<p>This module provides LaTeX converter to SVG.</p>
-<p>See for example, <a class="github reference external" href="https://github.com/ipython/IPython/lib/latextools.py">ipython/IPython</a>.</p>
-<dl class="py class">
-<dt class="sig sig-object py" id="qtdraw.util.latex_to_svg.MathText">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MathText</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/latex_to_svg.html#MathText"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.latex_to_svg.MathText" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">QWidget</span></code></p>
-<p>Math Text via SVG.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>parent</strong> (<em>QWidget</em>) -- parent.</p></li>
-<li><p><strong>text</strong> (<em>str</em>) -- LaTeX stirng without &quot;$&quot;.</p></li>
-<li><p><strong>size</strong> (<em>int</em>) -- font size.</p></li>
-<li><p><strong>color</strong> (<em>str</em>) -- color.</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="qtdraw.util.latex_to_svg.SVGWidget">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SVGWidget</span></span><a class="reference internal" href="../_modules/qtdraw/util/latex_to_svg.html#SVGWidget"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.latex_to_svg.SVGWidget" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">QSvgWidget</span></code></p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="qtdraw.util.latex_to_svg.get_svg_size">
-<span class="sig-name descname"><span class="pre">get_svg_size</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">svg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/latex_to_svg.html#get_svg_size"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.latex_to_svg.get_svg_size" title="Link to this definition">#</a></dt>
-<dd><p>Get SVG size.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>svg</strong> (<em>str</em>) -- bin code of svg.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><ul class="simple">
-<li><p>(int) -- width.</p></li>
-<li><p>(int) -- hight.</p></li>
-</ul>
-</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="qtdraw.util.latex_to_svg.latex_to_svg">
-<span class="sig-name descname"><span class="pre">latex_to_svg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wrap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'black'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">12</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/latex_to_svg.html#latex_to_svg"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.latex_to_svg.latex_to_svg" title="Link to this definition">#</a></dt>
-<dd><p>Render a LaTeX string to svg via matplotlib.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>text</strong> (<em>str</em>) -- raw string containing valid inline LaTeX.</p></li>
-<li><p><strong>wrap</strong> (<em>bool</em><em>, </em><em>optional</em>) -- if true, automatically wrap <cite>s</cite> as a LaTeX equation.</p></li>
-<li><p><strong>color</strong> (<em>str</em><em>, </em><em>optional</em>) -- color name.</p></li>
-<li><p><strong>size</strong> (<em>int</em><em>, </em><em>optional</em>) -- fontsize.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><ul class="simple">
-<li><p>(str) -- SVG code (byte string).</p></li>
-<li><p>(int) -- width.</p></li>
-<li><p>(int) -- height.</p></li>
-</ul>
-</p>
-</dd>
-</dl>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<ul class="simple">
-<li><p>None is returned when the backend cannot be used.</p></li>
-</ul>
-</div>
-</dd></dl>
-
-</section>
-<section id="module-qtdraw.util.util">
-<span id="utility"></span><h2>Utility<a class="headerlink" href="#module-qtdraw.util.util" title="Link to this heading">#</a></h2>
-<p>Utility.</p>
-<p>This module contains the versatile utilities.</p>
-<dl class="py function">
-<dt class="sig sig-object py" id="qtdraw.util.util.cat_filename">
-<span class="sig-name descname"><span class="pre">cat_filename</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ext</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/util.html#cat_filename"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.util.cat_filename" title="Link to this definition">#</a></dt>
-<dd><p>Cat filename.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>base</strong> (<em>str</em>) -- (base) filename.</p></li>
-<li><p><strong>ext</strong> (<em>str</em><em>, </em><em>optional</em>) -- extension.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><ul class="simple">
-<li><p>(str) -- full file name.</p></li>
+<li><p>(list or value) -- applied list.</p></li>
 </ul>
 </p>
 </dd>
@@ -1476,45 +1055,6 @@ different directory (just by copying it).</p>
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p><ul class="simple">
 <li><p>(bool) -- installed ?</p></li>
-</ul>
-</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="qtdraw.util.util.convert_str_vector">
-<span class="sig-name descname"><span class="pre">convert_str_vector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vector</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cell</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'[0,0,0]'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">A</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/util.html#convert_str_vector"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.util.convert_str_vector" title="Link to this definition">#</a></dt>
-<dd><p>Convert 3-component vector(s) to A.(position+cell).</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>vector</strong> (<em>str</em>) -- vector, str([float]) or str([[float]]).</p></li>
-<li><p><strong>cell</strong> (<em>str</em><em>, </em><em>optional</em>) -- cell, str([int]).</p></li>
-<li><p><strong>transform</strong> (<em>bool</em><em>, </em><em>optional</em>) -- transform by using A ?</p></li>
-<li><p><strong>A</strong> (<em>numpy.ndarray</em><em>, </em><em>optional</em>)</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><ul class="simple">
-<li><p>(numpy.ndarray) -- transformed position.</p></li>
-</ul>
-</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="qtdraw.util.util.convert_to_str">
-<span class="sig-name descname"><span class="pre">convert_to_str</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/util.html#convert_to_str"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.util.convert_to_str" title="Link to this definition">#</a></dt>
-<dd><p>Convert from object to str, and remove spaces.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>v</strong> (<em>Any</em>) -- object.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><ul class="simple">
-<li><p>(str) -- converted str.</p></li>
 </ul>
 </p>
 </dd>
@@ -1551,16 +1091,67 @@ different directory (just by copying it).</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="qtdraw.util.util.create_style_sheet">
-<span class="sig-name descname"><span class="pre">create_style_sheet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/util.html#create_style_sheet"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.util.create_style_sheet" title="Link to this definition">#</a></dt>
-<dd><p>Create style sheet.</p>
+<dt class="sig sig-object py" id="qtdraw.util.util.distance">
+<span class="sig-name descname"><span class="pre">distance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">G</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">accuracy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/util.html#distance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.util.distance" title="Link to this definition">#</a></dt>
+<dd><p>group of sites with the same distance (in increasing order).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>size</strong> (<em>int</em>) -- font size (point).</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>s1</strong> (<em>ndarray</em>) -- vector array.</p></li>
+<li><p><strong>s2</strong> (<em>ndarray</em>) -- vector array.</p></li>
+<li><p><strong>G</strong> (<em>ndarray</em><em>, </em><em>optional</em>) -- metric matrix (None = unit matrix).</p></li>
+<li><p><strong>accuracy</strong> (<em>int</em><em>, </em><em>optional</em>) -- accuracy of digit.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>i, j are indices of positions (i&lt;=j only for s1=s2), { distance(float): [(i(int),j(int))] }.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qtdraw.util.util.igrid">
+<span class="sig-name descname"><span class="pre">igrid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">N</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/util.html#igrid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.util.igrid" title="Link to this definition">#</a></dt>
+<dd><p>create integer grid points.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>N</strong> (<em>list</em>) -- number of points in each direction.</p></li>
+<li><p><strong>offset</strong> (<em>tuple</em><em>, </em><em>optional</em>) -- offset in each direction. 0 is used for None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>grid points.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ndarray</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>grid point: increase of indices from left to right.</p></li>
+<li><p>x[i] = offset + i.</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qtdraw.util.util.list_to_table">
+<span class="sig-name descname"><span class="pre">list_to_table</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lst1d</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">col</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/util.html#list_to_table"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.util.list_to_table" title="Link to this definition">#</a></dt>
+<dd><p>Convert from list to table</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>lst1d</strong> (<em>list</em>) -- 1d list</p></li>
+<li><p><strong>col</strong> (<em>int</em>) -- number of columns</p></li>
+<li><p><strong>p</strong> (<em>any</em><em>, </em><em>optional</em>) -- padding value (no padding for None)</p></li>
+</ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><ul class="simple">
-<li><p>(str) -- style sheet string.</p></li>
+<li><p>(list) -- 2d list.</p></li>
 </ul>
 </p>
 </dd>
@@ -1585,26 +1176,16 @@ different directory (just by copying it).</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="qtdraw.util.util.set_latex_setting">
-<span class="sig-name descname"><span class="pre">set_latex_setting</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/util.html#set_latex_setting"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.util.set_latex_setting" title="Link to this definition">#</a></dt>
-<dd><p>Set LaTeX setting.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="qtdraw.util.util.split_filename">
-<span class="sig-name descname"><span class="pre">split_filename</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/util.html#split_filename"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.util.split_filename" title="Link to this definition">#</a></dt>
-<dd><p>Split file name.</p>
+<dt class="sig sig-object py" id="qtdraw.util.util.remove_space">
+<span class="sig-name descname"><span class="pre">remove_space</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/util.html#remove_space"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.util.remove_space" title="Link to this definition">#</a></dt>
+<dd><p>Remove space, tab, and newline.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>filename</strong> (<em>str</em>) -- filename.</p>
+<dd class="field-odd"><p><strong>s</strong> (<em>str</em>) -- string</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><ul class="simple">
-<li><p>(str) -- filename with absolute path.</p></li>
-<li><p>(str) -- filename with relative path.</p></li>
-<li><p>(str) -- base filename.</p></li>
-<li><p>(str) -- extension.</p></li>
-<li><p>(str) -- directory.</p></li>
+<li><p>(str) -- removed string.</p></li>
 </ul>
 </p>
 </dd>
@@ -1612,135 +1193,8 @@ different directory (just by copying it).</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="qtdraw.util.util.write_dict">
-<span class="sig-name descname"><span class="pre">write_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dic</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">header</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">var</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/util.html#write_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.util.write_dict" title="Link to this definition">#</a></dt>
-<dd><p>write dict text file.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>filename</strong> (<em>str</em>) -- filename.</p></li>
-<li><p><strong>dic</strong> (<em>dict</em>) -- dictionary to write.</p></li>
-<li><p><strong>header</strong> (<em>str</em><em>, </em><em>optional</em>) -- header comment at the top of file.</p></li>
-<li><p><strong>var</strong> (<em>str</em><em>, </em><em>optional</em>) -- varialbe of dict.</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<p id="module-qtdraw.util.util_str">Versatile utility.</p>
-<p>This module contains the utilities mainly for string and list.</p>
-<dl class="py function">
-<dt class="sig sig-object py" id="qtdraw.util.util_str.affine_trans">
-<span class="sig-name descname"><span class="pre">affine_trans</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">A</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">digit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check_var</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/util_str.html#affine_trans"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.util_str.affine_trans" title="Link to this definition">#</a></dt>
-<dd><p>Affine transformation, A.v + s.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>v</strong> (<em>str</em>) -- site/vector or a list of site/vector.</p></li>
-<li><p><strong>s</strong> (<em>str</em><em>, </em><em>optional</em>) -- shift vector or a list of shift vector.</p></li>
-<li><p><strong>A</strong> (<em>str</em><em>, </em><em>optional</em>) -- rotaional matrix (3x3), [a1, a2, a3].</p></li>
-<li><p><strong>digit</strong> (<em>int</em><em>, </em><em>optional</em>) -- accuracy digit (only for numerical vector).</p></li>
-<li><p><strong>check_var</strong> (<em>list</em><em>, </em><em>optional</em>) -- variables to accept.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><ul class="simple">
-<li><p>(ndarray) -- transformed vector.</p></li>
-</ul>
-</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="qtdraw.util.util_str.apply_to_list">
-<span class="sig-name descname"><span class="pre">apply_to_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lst</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/util_str.html#apply_to_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.util_str.apply_to_list" title="Link to this definition">#</a></dt>
-<dd><p>Apply a function to each element of a list.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>func</strong> (<em>function</em>) -- a function.</p></li>
-<li><p><strong>lst</strong> (<em>list</em>) -- a list.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><ul class="simple">
-<li><p>(list) -- an applied list.</p></li>
-</ul>
-</p>
-</dd>
-</dl>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<ul class="simple">
-<li><p>applicable to an irregular-shaped list.</p></li>
-</ul>
-</div>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="qtdraw.util.util_str.apply_to_numpy">
-<span class="sig-name descname"><span class="pre">apply_to_numpy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lst</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/util_str.html#apply_to_numpy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.util_str.apply_to_numpy" title="Link to this definition">#</a></dt>
-<dd><p>Apply a function to each element of ndarray.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>func</strong> (<em>function</em>) -- a function.</p></li>
-<li><p><strong>lst</strong> (<em>ndarray</em>) -- a numpy array.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><ul class="simple">
-<li><p>(ndarray) -- an applied array.</p></li>
-</ul>
-</p>
-</dd>
-</dl>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<ul class="simple">
-<li><p>applicable only to a regular-shaped ndarray.</p></li>
-</ul>
-</div>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="qtdraw.util.util_str.get_variable">
-<span class="sig-name descname"><span class="pre">get_variable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sp_ex</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/util_str.html#get_variable"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.util_str.get_variable" title="Link to this definition">#</a></dt>
-<dd><p>Get variables used in a sympy expression.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>sp_ex</strong> (<em>sympy</em>) -- a sympy expression (except for Matrix).</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><ul class="simple">
-<li><p>(list) -- variable strings (sorted).</p></li>
-</ul>
-</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="qtdraw.util.util_str.is_regular_list">
-<span class="sig-name descname"><span class="pre">is_regular_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lst</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/util_str.html#is_regular_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.util_str.is_regular_list" title="Link to this definition">#</a></dt>
-<dd><p>Is regular-shaped list ?</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>lst</strong> (<em>list</em>) -- a list.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><ul class="simple">
-<li><p>(bool) -- is regular-shaped list ?</p></li>
-</ul>
-</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="qtdraw.util.util_str.str_to_list">
-<span class="sig-name descname"><span class="pre">str_to_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/util_str.html#str_to_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.util_str.str_to_list" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="qtdraw.util.util.str_to_list">
+<span class="sig-name descname"><span class="pre">str_to_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/util.html#str_to_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.util.str_to_list" title="Link to this definition">#</a></dt>
 <dd><p>Convert a string to a list of strings.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -1763,76 +1217,18 @@ different directory (just by copying it).</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="qtdraw.util.util_str.str_to_numpy">
-<span class="sig-name descname"><span class="pre">str_to_numpy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">digit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check_var</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check_shape</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/util_str.html#str_to_numpy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.util_str.str_to_numpy" title="Link to this definition">#</a></dt>
-<dd><p>Convert a string (list) to a numpy array.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>s</strong> (<em>str</em>) -- a string (list).</p></li>
-<li><p><strong>digit</strong> (<em>int</em><em>, </em><em>optional</em>) -- accuracy digit (only for numerical vector).</p></li>
-<li><p><strong>check_var</strong> (<em>list</em><em>, </em><em>optional</em>) -- variables to accept.</p></li>
-<li><p><strong>check_shape</strong> (<em>tuple</em><em>, </em><em>optional</em>) -- shape to check.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>a numpy array.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><ul class="simple">
-<li><p>(ndarray)</p></li>
-</ul>
-</p>
-</dd>
-</dl>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<ul class="simple">
-<li><p>when parse error occurrs, return None.</p></li>
-<li><p>in check_shape, '0' means no check.</p></li>
-</ul>
-</div>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="qtdraw.util.util_str.str_to_sympy">
-<span class="sig-name descname"><span class="pre">str_to_sympy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check_var</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rational</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/util_str.html#str_to_sympy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.util_str.str_to_sympy" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="qtdraw.util.util.str_to_sympy">
+<span class="sig-name descname"><span class="pre">str_to_sympy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check_var</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check_shape</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rational</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">assumptions</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/util.html#str_to_sympy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.util.str_to_sympy" title="Link to this definition">#</a></dt>
 <dd><p>Convert a string to a sympy.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>s</strong> (<em>str</em>) -- a string.</p></li>
-<li><p><strong>local</strong> (<em>dict</em><em>, </em><em>optional</em>) -- variables to replace.</p></li>
-<li><p><strong>check_var</strong> (<em>list</em><em>, </em><em>optional</em>) -- variables to accept.</p></li>
+<li><p><strong>check_var</strong> (<em>list</em><em>, </em><em>optional</em>) -- variables to accept, None (all).</p></li>
+<li><p><strong>check_shape</strong> (<em>tuple</em><em>, </em><em>optional</em>) -- shape, (), (n,), (n,m), ...</p></li>
 <li><p><strong>rational</strong> (<em>bool</em><em>, </em><em>optional</em>) -- use rational number ?</p></li>
 <li><p><strong>subs</strong> (<em>dict</em><em>, </em><em>optional</em>) -- replace dict for local variables.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><ul class="simple">
-<li><p>(sympy) -- a sympy.</p></li>
-</ul>
-</p>
-</dd>
-</dl>
-<p class="rubric">Notes</p>
-<ul class="simple">
-<li><p>if format error occurs, return None.</p></li>
-<li><p>if s cannot be converted to a sympy, return None.</p></li>
-</ul>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="qtdraw.util.util_str.str_to_sympy1">
-<span class="sig-name descname"><span class="pre">str_to_sympy1</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check_var</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rational</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/util_str.html#str_to_sympy1"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.util_str.str_to_sympy1" title="Link to this definition">#</a></dt>
-<dd><p>Convert a string to a sympy (new version).</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>s</strong> (<em>str</em>) -- a string.</p></li>
-<li><p><strong>check_var</strong> (<em>list</em><em>, </em><em>optional</em>) -- variables to accept.</p></li>
-<li><p><strong>rational</strong> (<em>bool</em><em>, </em><em>optional</em>) -- use rational number ?</p></li>
-<li><p><strong>subs</strong> (<em>dict</em><em>, </em><em>optional</em>) -- replace dict for local variables.</p></li>
+<li><p><strong>**assumptions</strong> (<em>dict</em><em>, </em><em>optional</em>) -- common assumptions for all variables.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -1850,21 +1246,78 @@ different directory (just by copying it).</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="qtdraw.util.util_str.to_fraction">
-<span class="sig-name descname"><span class="pre">to_fraction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_denominator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000000</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/util_str.html#to_fraction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.util_str.to_fraction" title="Link to this definition">#</a></dt>
-<dd><p>Convert a float number to a fractional one.</p>
+<dt class="sig sig-object py" id="qtdraw.util.util.text_to_list">
+<span class="sig-name descname"><span class="pre">text_to_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/util.html#text_to_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.util.text_to_list" title="Link to this definition">#</a></dt>
+<dd><p>Convert single text to list.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>text</strong> (<em>str</em>) -- text to convert.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>(list or str) -- converted list.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>if format error occurs, return None.</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qtdraw.util.util.to_latex">
+<span class="sig-name descname"><span class="pre">to_latex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">style</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'scalar'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/util.html#to_latex"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.util.to_latex" title="Link to this definition">#</a></dt>
+<dd><p>convert list to latex list.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>x</strong> (<em>float</em>) -- a float number.</p></li>
-<li><p><strong>max_denominator</strong> (<em>int</em><em>, </em><em>optional</em>) -- max. of denominator.</p></li>
+<li><p><strong>a</strong> (<em>array-like</em>) -- list of sympy.</p></li>
+<li><p><strong>style</strong> (<em>str</em><em>, </em><em>optional</em>) -- style, &quot;scalar/vector/matrix&quot;.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><ul class="simple">
-<li><p>(str) -- a fractional string.</p></li>
+<li><p>(ndarray or str) -- (list of) LaTeX string without &quot;$&quot;.</p></li>
 </ul>
 </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qtdraw.util.util.vector3d">
+<span class="sig-name descname"><span class="pre">vector3d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">head</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Q'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pre</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/util.html#vector3d"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.util.vector3d" title="Link to this definition">#</a></dt>
+<dd><p>3d vector.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>head</strong> (<em>str</em><em>, </em><em>optional</em>) -- type of vector, Q/G/T/M.</p></li>
+<li><p><strong>pre</strong> (<em>str</em><em>, </em><em>optional</em>) -- head of symbol.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>(ndarray) -- 3d vector.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qtdraw.util.util.write_dict">
+<span class="sig-name descname"><span class="pre">write_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dic</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">header</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">var</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/util.html#write_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.util.write_dict" title="Link to this definition">#</a></dt>
+<dd><p>write dict text file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filename</strong> (<em>str</em>) -- filename.</p></li>
+<li><p><strong>dic</strong> (<em>dict</em>) -- dictionary to write.</p></li>
+<li><p><strong>header</strong> (<em>str</em><em>, </em><em>optional</em>) -- header comment at the top of file.</p></li>
+<li><p><strong>var</strong> (<em>str</em><em>, </em><em>optional</em>) -- varialbe of dict.</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
@@ -1898,8 +1351,8 @@ different directory (just by copying it).</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="qtdraw.util.util_axis.create_grid">
-<span class="sig-name descname"><span class="pre">create_grid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ilower</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dims</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/util_axis.html#create_grid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.util_axis.create_grid" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="qtdraw.util.util_axis.create_cell_grid">
+<span class="sig-name descname"><span class="pre">create_cell_grid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ilower</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dims</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/util_axis.html#create_cell_grid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.util_axis.create_cell_grid" title="Link to this definition">#</a></dt>
 <dd><p>Create grid point.</p>
 <p>Parameters:
 :param ilower: start cell.
@@ -2028,31 +1481,6 @@ different directory (just by copying it).</p>
 </dl>
 </dd></dl>
 
-<p id="module-qtdraw.util.color_selector_util">Color selector widget.</p>
-<p>This module provides color selector widget.</p>
-<dl class="py function">
-<dt class="sig sig-object py" id="qtdraw.util.color_selector_util.color2pixmap">
-<span class="sig-name descname"><span class="pre">color2pixmap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">color_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aspect_ratio</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/color_selector_util.html#color2pixmap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.color_selector_util.color2pixmap" title="Link to this definition">#</a></dt>
-<dd><p>Convert color/colormap to QPixmap.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>color_type</strong> (<em>str</em>) -- color type, &quot;color/colormap/color_both&quot;.</p></li>
-<li><p><strong>size</strong> (<em>int</em>) -- size of pixmap.</p></li>
-<li><p><strong>aspect_ratio</strong> (<em>int</em><em>, </em><em>optional</em>) -- aspect ratio of pximap (width/height).</p></li>
-<li><p><strong>steps</strong> (<em>int</em><em>, </em><em>optional</em>) -- division of colorbar gradation.</p></li>
-</ul>
-</dd>
-</dl>
-<dl class="simple">
-<dt>Retruns:</dt><dd><ul class="simple">
-<li><p>(dict) -- pixmap dict {name: pixmap}.</p></li>
-<li><p>(list) -- separator position.</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
 </section>
 </section>
 
@@ -2087,7 +1515,8 @@ different directory (just by copying it).</p>
             
             
               
-                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
 
   <div class="sidebar-secondary-item">
@@ -2096,7 +1525,7 @@ different directory (just by copying it).</p>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-qtdraw.util.basic_object">Basic Object</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-qtdraw.util.basic_object">Utility</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_bond"><code class="docutils literal notranslate"><span class="pre">create_bond()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_box"><code class="docutils literal notranslate"><span class="pre">create_box()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_circle"><code class="docutils literal notranslate"><span class="pre">create_circle()</span></code></a></li>
@@ -2112,84 +1541,32 @@ different directory (just by copying it).</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_spline_t"><code class="docutils literal notranslate"><span class="pre">create_spline_t()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_stream"><code class="docutils literal notranslate"><span class="pre">create_stream()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_stream_data"><code class="docutils literal notranslate"><span class="pre">create_stream_data()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_text2d"><code class="docutils literal notranslate"><span class="pre">create_text2d()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_text3d"><code class="docutils literal notranslate"><span class="pre">create_text3d()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_toroid"><code class="docutils literal notranslate"><span class="pre">create_toroid()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_torus"><code class="docutils literal notranslate"><span class="pre">create_torus()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_vector"><code class="docutils literal notranslate"><span class="pre">create_vector()</span></code></a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-qtdraw.util.logging_util">Logging</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.logging_util.LogHandler"><code class="docutils literal notranslate"><span class="pre">LogHandler</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.logging_util.LogHandler.emit"><code class="docutils literal notranslate"><span class="pre">LogHandler.emit()</span></code></a></li>
-</ul>
-</li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.logging_util.LogWidget"><code class="docutils literal notranslate"><span class="pre">LogWidget</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.logging_util.LogWidget.append_text"><code class="docutils literal notranslate"><span class="pre">LogWidget.append_text()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.logging_util.LogWidget.clear"><code class="docutils literal notranslate"><span class="pre">LogWidget.clear()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.logging_util.LogWidget.save"><code class="docutils literal notranslate"><span class="pre">LogWidget.save()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.logging_util.LogWidget.set_text"><code class="docutils literal notranslate"><span class="pre">LogWidget.set_text()</span></code></a></li>
-</ul>
-</li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.logging_util.start_logging"><code class="docutils literal notranslate"><span class="pre">start_logging()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.logging_util.timer"><code class="docutils literal notranslate"><span class="pre">timer()</span></code></a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-qtdraw.util.qt_event_util">Event Loop</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.qt_event_util.ExceptionHook"><code class="docutils literal notranslate"><span class="pre">ExceptionHook</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.qt_event_util.ExceptionHook.hook"><code class="docutils literal notranslate"><span class="pre">ExceptionHook.hook()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.qt_event_util.ExceptionHook.reset"><code class="docutils literal notranslate"><span class="pre">ExceptionHook.reset()</span></code></a></li>
-</ul>
-</li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.qt_event_util.get_qt_application"><code class="docutils literal notranslate"><span class="pre">get_qt_application()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.qt_event_util.gui_qt"><code class="docutils literal notranslate"><span class="pre">gui_qt()</span></code></a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-qtdraw.util.pdf_viewer">PDF Viewer</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.pdf_viewer.PDFViewer"><code class="docutils literal notranslate"><span class="pre">PDFViewer</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.pdf_viewer.PDFViewer.load"><code class="docutils literal notranslate"><span class="pre">PDFViewer.load()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.pdf_viewer.PDFViewer.save"><code class="docutils literal notranslate"><span class="pre">PDFViewer.save()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.pdf_viewer.PDFViewer.set_title"><code class="docutils literal notranslate"><span class="pre">PDFViewer.set_title()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-qtdraw.util.latex_to_png">LaTeX</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.latex_to_png.latex_to_png"><code class="docutils literal notranslate"><span class="pre">latex_to_png()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.latex_to_svg.MathText"><code class="docutils literal notranslate"><span class="pre">MathText</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.latex_to_svg.SVGWidget"><code class="docutils literal notranslate"><span class="pre">SVGWidget</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.latex_to_svg.get_svg_size"><code class="docutils literal notranslate"><span class="pre">get_svg_size()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.latex_to_svg.latex_to_svg"><code class="docutils literal notranslate"><span class="pre">latex_to_svg()</span></code></a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-qtdraw.util.util">Utility</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.cat_filename"><code class="docutils literal notranslate"><span class="pre">cat_filename()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.apply"><code class="docutils literal notranslate"><span class="pre">apply()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.check_multipie"><code class="docutils literal notranslate"><span class="pre">check_multipie()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.convert_str_vector"><code class="docutils literal notranslate"><span class="pre">convert_str_vector()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.convert_to_str"><code class="docutils literal notranslate"><span class="pre">convert_to_str()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.create_grid"><code class="docutils literal notranslate"><span class="pre">create_grid()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.create_style_sheet"><code class="docutils literal notranslate"><span class="pre">create_style_sheet()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.distance"><code class="docutils literal notranslate"><span class="pre">distance()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.igrid"><code class="docutils literal notranslate"><span class="pre">igrid()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.list_to_table"><code class="docutils literal notranslate"><span class="pre">list_to_table()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.read_dict"><code class="docutils literal notranslate"><span class="pre">read_dict()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.set_latex_setting"><code class="docutils literal notranslate"><span class="pre">set_latex_setting()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.split_filename"><code class="docutils literal notranslate"><span class="pre">split_filename()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.remove_space"><code class="docutils literal notranslate"><span class="pre">remove_space()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.str_to_list"><code class="docutils literal notranslate"><span class="pre">str_to_list()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.str_to_sympy"><code class="docutils literal notranslate"><span class="pre">str_to_sympy()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.text_to_list"><code class="docutils literal notranslate"><span class="pre">text_to_list()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.to_latex"><code class="docutils literal notranslate"><span class="pre">to_latex()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.vector3d"><code class="docutils literal notranslate"><span class="pre">vector3d()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.write_dict"><code class="docutils literal notranslate"><span class="pre">write_dict()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util_str.affine_trans"><code class="docutils literal notranslate"><span class="pre">affine_trans()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util_str.apply_to_list"><code class="docutils literal notranslate"><span class="pre">apply_to_list()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util_str.apply_to_numpy"><code class="docutils literal notranslate"><span class="pre">apply_to_numpy()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util_str.get_variable"><code class="docutils literal notranslate"><span class="pre">get_variable()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util_str.is_regular_list"><code class="docutils literal notranslate"><span class="pre">is_regular_list()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util_str.str_to_list"><code class="docutils literal notranslate"><span class="pre">str_to_list()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util_str.str_to_numpy"><code class="docutils literal notranslate"><span class="pre">str_to_numpy()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util_str.str_to_sympy"><code class="docutils literal notranslate"><span class="pre">str_to_sympy()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util_str.str_to_sympy1"><code class="docutils literal notranslate"><span class="pre">str_to_sympy1()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util_str.to_fraction"><code class="docutils literal notranslate"><span class="pre">to_fraction()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util_axis.create_axes_widget"><code class="docutils literal notranslate"><span class="pre">create_axes_widget()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util_axis.create_grid"><code class="docutils literal notranslate"><span class="pre">create_grid()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util_axis.create_cell_grid"><code class="docutils literal notranslate"><span class="pre">create_cell_grid()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util_axis.create_unit_cell"><code class="docutils literal notranslate"><span class="pre">create_unit_cell()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util_axis.get_lattice_vector"><code class="docutils literal notranslate"><span class="pre">get_lattice_vector()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util_axis.get_outside_box"><code class="docutils literal notranslate"><span class="pre">get_outside_box()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util_axis.get_repeat_range"><code class="docutils literal notranslate"><span class="pre">get_repeat_range()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util_axis.get_view_vector"><code class="docutils literal notranslate"><span class="pre">get_view_vector()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.color_selector_util.color2pixmap"><code class="docutils literal notranslate"><span class="pre">color2pixmap()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -2240,8 +1617,8 @@ By Hiroaki Kusunose
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
 
   <footer class="bd-footer">
   </footer>

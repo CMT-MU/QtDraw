@@ -15,17 +15,19 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="../../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-
-  
-  <link href="../../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+  <link href="../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
@@ -36,13 +38,14 @@
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=5f1b4820" />
   
+  <!-- So that users can add custom icons -->
+  <script src="../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
-<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
-  <script src="../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
     <script src="../../../_static/documentation_options.js?v=8cf54648"></script>
-    <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../../../_static/copybutton.js?v=f281be69"></script>
@@ -55,13 +58,12 @@
     <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script async="async" src="../../../_static/sphinx-thebe.js?v=c100c467"></script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>DOCUMENTATION_OPTIONS.pagename = '_modules/qtdraw/multipie/dialog_multipie';</script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="jp"/>
+  <meta name="docsearch:version" content="" />
   </head>
   
   
@@ -77,19 +79,8 @@
     <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
   
-  <input type="checkbox"
-          class="sidebar-toggle"
-          id="pst-primary-sidebar-checkbox"/>
-  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
-  
-  <input type="checkbox"
-          class="sidebar-toggle"
-          id="pst-secondary-sidebar-checkbox"/>
-  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
-  
-  <div class="search-button__wrapper">
-    <div class="search-button__overlay"></div>
-    <div class="search-button__search-container">
+  <dialog id="pst-search-dialog">
+    
 <form class="bd-search d-flex align-items-center"
       action="../../../search.html"
       method="get">
@@ -97,7 +88,6 @@
   <input type="search"
          class="form-control"
          name="q"
-         id="search-input"
          placeholder="Search this book..."
          aria-label="Search this book..."
          autocomplete="off"
@@ -105,8 +95,8 @@
          autocapitalize="off"
          spellcheck="false"/>
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form></div>
-  </div>
+</form>
+  </dialog>
 
   <div class="pst-async-banner-revealer d-none">
   <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
@@ -124,7 +114,8 @@
       
         
       
-      <div class="bd-sidebar-primary bd-sidebar">
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
         
 
   
@@ -154,21 +145,17 @@
     
     
     <img src="../../../_static/qtdraw_logo.png" class="logo__image only-light" alt="QtDraw - Home"/>
-    <script>document.write(`<img src="../../../_static/qtdraw_logo.png" class="logo__image only-dark" alt="QtDraw - Home"/>`);</script>
+    <img src="../../../_static/qtdraw_logo.png" class="logo__image only-dark pst-js-only" alt="QtDraw - Home"/>
   
   
 </a></div>
         <div class="sidebar-primary-item">
 
- <script>
- document.write(`
-   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
-    <span class="search-button__default-text">Search</span>
-    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-   </button>
- `);
- </script></div>
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
@@ -200,9 +187,14 @@
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
   </div>
-  
-  <div id="rtd-footer-container"></div>
 
 
       </div>
@@ -298,24 +290,16 @@
 
 
 
-<script>
-document.write(`
-  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
-    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
-    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
-  </button>
-`);
-</script>
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
 
 
-<script>
-document.write(`
-  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
-  </button>
-`);
-</script>
+</button>
 
 </div></div>
       
@@ -349,13 +333,15 @@ document.write(`
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">sympy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sp</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">PySide6.QtWidgets</span><span class="w"> </span><span class="kn">import</span> <span class="n">QDialog</span><span class="p">,</span> <span class="n">QTabWidget</span><span class="p">,</span> <span class="n">QWidget</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">PySide6.QtCore</span><span class="w"> </span><span class="kn">import</span> <span class="n">Qt</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">gcoreutils.nsarray</span><span class="w"> </span><span class="kn">import</span> <span class="n">NSArray</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">gcoreutils.string_util</span><span class="w"> </span><span class="kn">import</span> <span class="n">remove_space</span>
+
 <span class="kn">from</span><span class="w"> </span><span class="nn">multipie.multipole.util.atomic_orbital_util</span><span class="w"> </span><span class="kn">import</span> <span class="n">parse_orb_list</span>
+
 <span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw.widget.custom_widget</span><span class="w"> </span><span class="kn">import</span> <span class="n">Label</span><span class="p">,</span> <span class="n">Layout</span><span class="p">,</span> <span class="n">Button</span><span class="p">,</span> <span class="n">Combo</span><span class="p">,</span> <span class="n">LineEdit</span><span class="p">,</span> <span class="n">Check</span><span class="p">,</span> <span class="n">VSpacer</span><span class="p">,</span> <span class="n">HSpacer</span><span class="p">,</span> <span class="n">HBar</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw.multipie.util</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_samb_object</span><span class="p">,</span> <span class="n">check_linear_combination</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw.util.util</span><span class="w"> </span><span class="kn">import</span> <span class="n">remove_space</span><span class="p">,</span> <span class="n">vector3d</span><span class="p">,</span> <span class="n">str_to_sympy</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw.multipie.util_multipie</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_samb_object</span><span class="p">,</span> <span class="n">check_linear_combination</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw.multipie.plugin_multipie_setting</span><span class="w"> </span><span class="kn">import</span> <span class="n">crystal_list</span><span class="p">,</span> <span class="n">point_group_list</span><span class="p">,</span> <span class="n">space_group_list</span><span class="p">,</span> <span class="n">point_group_all_list</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw.multipie.dialog_info</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">show_symmetry_operation</span><span class="p">,</span>
@@ -591,20 +577,20 @@ document.write(`
         <span class="n">layout</span><span class="o">.</span><span class="n">setVerticalSpacing</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 
         <span class="c1"># widget.</span>
-        <span class="n">label_group</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;Group&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="n">label_group</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Group&quot;</span><span class="p">,</span> <span class="n">bold</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">group_combo_group_type</span> <span class="o">=</span> <span class="n">Combo</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;space group&quot;</span><span class="p">,</span> <span class="s2">&quot;point group&quot;</span><span class="p">])</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">group_combo_crystal_type</span> <span class="o">=</span> <span class="n">Combo</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">crystal_list</span><span class="p">)</span>
-        <span class="n">label_group_name</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;group&quot;</span><span class="p">)</span>
+        <span class="n">label_group_name</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;group&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">group_combo_group</span> <span class="o">=</span> <span class="n">Combo</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">point_group_list</span><span class="p">[</span><span class="s2">&quot;triclinic&quot;</span><span class="p">])</span>
 
-        <span class="n">label_info</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;Info.&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">group_button_symmetry_operation</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;symmetry operation&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">group_button_character_table</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;character table&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">group_button_wyckoff</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;Wyckoff position&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">group_button_product_table</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;product table&quot;</span><span class="p">)</span>
+        <span class="n">label_info</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Info.&quot;</span><span class="p">,</span> <span class="n">bold</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">group_button_symmetry_operation</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;symmetry operation&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">group_button_character_table</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;character table&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">group_button_wyckoff</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Wyckoff position&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">group_button_product_table</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;product table&quot;</span><span class="p">)</span>
 
         <span class="n">label_site_bond</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span>
-            <span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;SITE:</span><span class="se">\n</span><span class="s2">   [x,y,z]</span><span class="se">\n\n</span><span class="s2">BOND:</span><span class="se">\n</span><span class="s2">   [tail] ; [head]</span><span class="se">\n</span><span class="s2">   [vector] @ [center]</span><span class="se">\n</span><span class="s2">   [start] : [vector]&quot;</span>
+            <span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;SITE:</span><span class="se">\n</span><span class="s2">   [x,y,z]</span><span class="se">\n\n</span><span class="s2">BOND:</span><span class="se">\n</span><span class="s2">   [tail] ; [head]</span><span class="se">\n</span><span class="s2">   [vector] @ [center]</span><span class="se">\n</span><span class="s2">   [start] : [vector]&quot;</span>
         <span class="p">)</span>
 
         <span class="n">layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">label_group</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
@@ -645,12 +631,12 @@ document.write(`
         <span class="n">layout</span><span class="o">.</span><span class="n">setVerticalSpacing</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 
         <span class="c1"># widget.</span>
-        <span class="n">label_decomp</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;Irrep. Decomposition&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
-        <span class="n">label_symmetric</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;symmetric&quot;</span><span class="p">)</span>
-        <span class="n">label_antisymmetric</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;anti-symmetric&quot;</span><span class="p">)</span>
+        <span class="n">label_decomp</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Irrep. Decomposition&quot;</span><span class="p">,</span> <span class="n">bold</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">label_symmetric</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;symmetric&quot;</span><span class="p">)</span>
+        <span class="n">label_antisymmetric</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;anti-symmetric&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">group_combo_irrep1</span> <span class="o">=</span> <span class="n">Combo</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">group_combo_irrep2</span> <span class="o">=</span> <span class="n">Combo</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
-        <span class="n">label_decomp_disp</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;decomposition&quot;</span><span class="p">)</span>
+        <span class="n">label_decomp_disp</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;decomposition&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">group_label_symmetric_decomp</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">group_combo_irrep</span> <span class="o">=</span> <span class="n">Combo</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">group_label_antisymmetric_decomp</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
@@ -670,16 +656,16 @@ document.write(`
         <span class="n">layout3</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">group_combo_irrep</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
         <span class="n">layout3</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">group_label_antisymmetric_decomp</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 
-        <span class="n">label_harmonics</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;Harmonics&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">group_button_harmonics</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;show&quot;</span><span class="p">)</span>
-        <span class="n">label_harmonics_type</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;type&quot;</span><span class="p">)</span>
+        <span class="n">label_harmonics</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Harmonics&quot;</span><span class="p">,</span> <span class="n">bold</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">group_button_harmonics</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;show&quot;</span><span class="p">)</span>
+        <span class="n">label_harmonics_type</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;type&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">group_combo_harmonics_type</span> <span class="o">=</span> <span class="n">Combo</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;Q&quot;</span><span class="p">,</span> <span class="s2">&quot;G&quot;</span><span class="p">,</span> <span class="s2">&quot;T&quot;</span><span class="p">,</span> <span class="s2">&quot;M&quot;</span><span class="p">])</span>
-        <span class="n">label_harmonics_rank</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;rank&quot;</span><span class="p">)</span>
+        <span class="n">label_harmonics_rank</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;rank&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">group_combo_harmonics_rank</span> <span class="o">=</span> <span class="n">Combo</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">12</span><span class="p">)))</span>
 
-        <span class="n">label_harmonics_decomp</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;target PG&quot;</span><span class="p">)</span>
+        <span class="n">label_harmonics_decomp</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;target PG&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">group_combo_harmonics_decomp</span> <span class="o">=</span> <span class="n">Combo</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">point_group_all_list</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">group_button_harmonics_decomp</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;decompose&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">group_button_harmonics_decomp</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;decompose&quot;</span><span class="p">)</span>
 
         <span class="n">panel5</span> <span class="o">=</span> <span class="n">QWidget</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
         <span class="n">layout5</span> <span class="o">=</span> <span class="n">Layout</span><span class="p">(</span><span class="n">panel5</span><span class="p">)</span>
@@ -696,11 +682,11 @@ document.write(`
         <span class="n">layout4</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">group_combo_harmonics_decomp</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
         <span class="n">layout4</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">group_button_harmonics_decomp</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
 
-        <span class="n">label_response</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;Response Tensor&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">group_button_response</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;show&quot;</span><span class="p">)</span>
+        <span class="n">label_response</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Response Tensor&quot;</span><span class="p">,</span> <span class="n">bold</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">group_button_response</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;show&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">group_combo_response_type</span> <span class="o">=</span> <span class="n">Combo</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;Q&quot;</span><span class="p">,</span> <span class="s2">&quot;G&quot;</span><span class="p">,</span> <span class="s2">&quot;T&quot;</span><span class="p">,</span> <span class="s2">&quot;M&quot;</span><span class="p">])</span>
-        <span class="n">label_response_type</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;type&quot;</span><span class="p">)</span>
-        <span class="n">label_response_rank</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;rank&quot;</span><span class="p">)</span>
+        <span class="n">label_response_type</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;type&quot;</span><span class="p">)</span>
+        <span class="n">label_response_rank</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;rank&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">group_combo_response_rank</span> <span class="o">=</span> <span class="n">Combo</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">)))</span>
 
         <span class="n">panel11</span> <span class="o">=</span> <span class="n">QWidget</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
@@ -715,12 +701,12 @@ document.write(`
         <span class="n">layout6</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">label_response_rank</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">AlignRight</span><span class="p">)</span>
         <span class="n">layout6</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">group_combo_response_rank</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 
-        <span class="n">label_atomic</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;Atomic Multipole&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">group_button_atomic</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;show&quot;</span><span class="p">)</span>
-        <span class="n">label_atomic_type</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;type&quot;</span><span class="p">)</span>
+        <span class="n">label_atomic</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Atomic Multipole&quot;</span><span class="p">,</span> <span class="n">bold</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">group_button_atomic</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;show&quot;</span><span class="p">)</span>
+        <span class="n">label_atomic_type</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;type&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">group_combo_atomic_type</span> <span class="o">=</span> <span class="n">Combo</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;Q&quot;</span><span class="p">,</span> <span class="s2">&quot;G&quot;</span><span class="p">,</span> <span class="s2">&quot;T&quot;</span><span class="p">,</span> <span class="s2">&quot;M&quot;</span><span class="p">])</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">group_combo_atomic_basis_type</span> <span class="o">=</span> <span class="n">Combo</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;lm&quot;</span><span class="p">,</span> <span class="s2">&quot;jm&quot;</span><span class="p">])</span>
-        <span class="n">label_atomic_braket</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;bra-ket&quot;</span><span class="p">)</span>
+        <span class="n">label_atomic_braket</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;bra-ket&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">group_combo_atomic_bra_basis</span> <span class="o">=</span> <span class="n">Combo</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;s&quot;</span><span class="p">,</span> <span class="s2">&quot;p&quot;</span><span class="p">,</span> <span class="s2">&quot;d&quot;</span><span class="p">,</span> <span class="s2">&quot;f&quot;</span><span class="p">])</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">group_combo_atomic_ket_basis</span> <span class="o">=</span> <span class="n">Combo</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;s&quot;</span><span class="p">,</span> <span class="s2">&quot;p&quot;</span><span class="p">,</span> <span class="s2">&quot;d&quot;</span><span class="p">,</span> <span class="s2">&quot;f&quot;</span><span class="p">])</span>
 
@@ -738,12 +724,12 @@ document.write(`
         <span class="n">layout7</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">group_combo_atomic_bra_basis</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
         <span class="n">layout7</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">group_combo_atomic_ket_basis</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 
-        <span class="n">label_virtual_cluster</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;Virtual Cluster&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">group_button_virtual_cluster</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;show&quot;</span><span class="p">)</span>
-        <span class="n">label_vc_neighbor</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;neighbor&quot;</span><span class="p">)</span>
-        <span class="n">label_wyckoff</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;wyckoff&quot;</span><span class="p">)</span>
+        <span class="n">label_virtual_cluster</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Virtual Cluster&quot;</span><span class="p">,</span> <span class="n">bold</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">group_button_virtual_cluster</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;show&quot;</span><span class="p">)</span>
+        <span class="n">label_vc_neighbor</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;neighbor&quot;</span><span class="p">)</span>
+        <span class="n">label_wyckoff</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;wyckoff&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">group_combo_vc_wyckoff</span> <span class="o">=</span> <span class="n">Combo</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">group_edit_vc_neighbor</span> <span class="o">=</span> <span class="n">LineEdit</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="p">(</span><span class="s2">&quot;ilist&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,)))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">group_edit_vc_neighbor</span> <span class="o">=</span> <span class="n">LineEdit</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">validator</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;list_int&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;shape&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,)}))</span>
 
         <span class="n">panel9</span> <span class="o">=</span> <span class="n">QWidget</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
         <span class="n">layout9</span> <span class="o">=</span> <span class="n">Layout</span><span class="p">(</span><span class="n">panel9</span><span class="p">)</span>
@@ -801,9 +787,9 @@ document.write(`
         <span class="c1"># widget.</span>
         <span class="n">label_site</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span>
             <span class="n">parent</span><span class="p">,</span>
-            <span class="s1">&#39;&lt;span style=&quot;font-weight:bold;&quot;&gt;Site&lt;/span&gt; : draw equivalent sites.&lt;br&gt;&amp;nbsp;&amp;nbsp;1. input representative SITE, + ENTER.&#39;</span><span class="p">,</span>
+            <span class="n">text</span><span class="o">=</span><span class="s1">&#39;&lt;span style=&quot;font-weight:bold;&quot;&gt;Site&lt;/span&gt; : draw equivalent sites.&lt;br&gt;&amp;nbsp;&amp;nbsp;1. input representative SITE, + ENTER.&#39;</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">object_edit_site</span> <span class="o">=</span> <span class="n">LineEdit</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="p">(</span><span class="s2">&quot;site&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">object_edit_site</span> <span class="o">=</span> <span class="n">LineEdit</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">validator</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;site&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;use_var&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">}))</span>
 
         <span class="n">panel1</span> <span class="o">=</span> <span class="n">QWidget</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
         <span class="n">layout1</span> <span class="o">=</span> <span class="n">Layout</span><span class="p">(</span><span class="n">panel1</span><span class="p">)</span>
@@ -812,9 +798,9 @@ document.write(`
 
         <span class="n">label_bond</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span>
             <span class="n">parent</span><span class="p">,</span>
-            <span class="s1">&#39;&lt;span style=&quot;font-weight:bold;&quot;&gt;Bond&lt;/span&gt; : draw equivalent bonds.&lt;br&gt;&amp;nbsp;&amp;nbsp;1. input representative BOND, + ENTER.&#39;</span><span class="p">,</span>
+            <span class="n">text</span><span class="o">=</span><span class="s1">&#39;&lt;span style=&quot;font-weight:bold;&quot;&gt;Bond&lt;/span&gt; : draw equivalent bonds.&lt;br&gt;&amp;nbsp;&amp;nbsp;1. input representative BOND, + ENTER.&#39;</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">object_edit_bond</span> <span class="o">=</span> <span class="n">LineEdit</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="p">(</span><span class="s2">&quot;bond&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">object_edit_bond</span> <span class="o">=</span> <span class="n">LineEdit</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">validator</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;bond&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;use_var&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">}))</span>
 
         <span class="n">panel2</span> <span class="o">=</span> <span class="n">QWidget</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
         <span class="n">layout2</span> <span class="o">=</span> <span class="n">Layout</span><span class="p">(</span><span class="n">panel2</span><span class="p">)</span>
@@ -823,10 +809,10 @@ document.write(`
 
         <span class="n">label_vector</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span>
             <span class="n">parent</span><span class="p">,</span>
-            <span class="s1">&#39;&lt;span style=&quot;font-weight:bold;&quot;&gt;Vector&lt;/span&gt; : draw vectors at equivalent sites or bonds.&lt;br&gt;&amp;nbsp;&amp;nbsp;1. choose type, 2. input vector [x,y,z] # representative SITE/BOND, + ENTER.&#39;</span><span class="p">,</span>
+            <span class="n">text</span><span class="o">=</span><span class="s1">&#39;&lt;span style=&quot;font-weight:bold;&quot;&gt;Vector&lt;/span&gt; : draw vectors at equivalent sites or bonds.&lt;br&gt;&amp;nbsp;&amp;nbsp;1. choose type, 2. input vector [x,y,z] # representative SITE/BOND, + ENTER.&#39;</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">object_combo_vector_type</span> <span class="o">=</span> <span class="n">Combo</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;Q&quot;</span><span class="p">,</span> <span class="s2">&quot;G&quot;</span><span class="p">,</span> <span class="s2">&quot;T&quot;</span><span class="p">,</span> <span class="s2">&quot;M&quot;</span><span class="p">])</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">object_edit_vector</span> <span class="o">=</span> <span class="n">LineEdit</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="p">(</span><span class="s2">&quot;vector_site_bond&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">object_edit_vector</span> <span class="o">=</span> <span class="n">LineEdit</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">validator</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;vector_site_bond&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;use_var&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">}))</span>
 
         <span class="n">panel3</span> <span class="o">=</span> <span class="n">QWidget</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
         <span class="n">layout3</span> <span class="o">=</span> <span class="n">Layout</span><span class="p">(</span><span class="n">panel3</span><span class="p">)</span>
@@ -836,10 +822,10 @@ document.write(`
 
         <span class="n">label_orbital</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span>
             <span class="n">parent</span><span class="p">,</span>
-            <span class="s1">&#39;&lt;span style=&quot;font-weight:bold;&quot;&gt;Orbital&lt;/span&gt; : draw orbitals at equivalent sites or bonds.&lt;br&gt;&amp;nbsp;&amp;nbsp;1. choose type, 2. input orbital (xyz polynomial) # representative SITE/BOND, + ENTER.&#39;</span><span class="p">,</span>
+            <span class="n">text</span><span class="o">=</span><span class="s1">&#39;&lt;span style=&quot;font-weight:bold;&quot;&gt;Orbital&lt;/span&gt; : draw orbitals at equivalent sites or bonds.&lt;br&gt;&amp;nbsp;&amp;nbsp;1. choose type, 2. input orbital (xyz polynomial) # representative SITE/BOND, + ENTER.&#39;</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">object_combo_orbital_type</span> <span class="o">=</span> <span class="n">Combo</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;Q&quot;</span><span class="p">,</span> <span class="s2">&quot;G&quot;</span><span class="p">,</span> <span class="s2">&quot;T&quot;</span><span class="p">,</span> <span class="s2">&quot;M&quot;</span><span class="p">])</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">object_edit_orbital</span> <span class="o">=</span> <span class="n">LineEdit</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="p">(</span><span class="s2">&quot;orbital_site_bond&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">object_edit_orbital</span> <span class="o">=</span> <span class="n">LineEdit</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">validator</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;orbital_site_bond&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;use_var&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">}))</span>
 
         <span class="n">panel4</span> <span class="o">=</span> <span class="n">QWidget</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
         <span class="n">layout4</span> <span class="o">=</span> <span class="n">Layout</span><span class="p">(</span><span class="n">panel4</span><span class="p">)</span>
@@ -849,15 +835,15 @@ document.write(`
 
         <span class="n">label_harmonics</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span>
             <span class="n">parent</span><span class="p">,</span>
-            <span class="s1">&#39;&lt;span style=&quot;font-weight:bold;&quot;&gt;Harmonics&lt;/span&gt; : draw point-group harmonics at equivalent sites or bonds.&lt;br&gt;&amp;nbsp;&amp;nbsp;1. choose (type,rank,irrep.), 2. input representative SITE/BOND, + ENTER.&lt;br&gt;&amp;nbsp;&amp;nbsp;</span><span class="se">\u21d2</span><span class="s1">  expression of harmonics is also shown (in LaTeX form).&#39;</span><span class="p">,</span>
+            <span class="n">text</span><span class="o">=</span><span class="s1">&#39;&lt;span style=&quot;font-weight:bold;&quot;&gt;Harmonics&lt;/span&gt; : draw point-group harmonics at equivalent sites or bonds.&lt;br&gt;&amp;nbsp;&amp;nbsp;1. choose (type,rank,irrep.), 2. input representative SITE/BOND, + ENTER.&lt;br&gt;&amp;nbsp;&amp;nbsp;</span><span class="se">\u21d2</span><span class="s1">  expression of harmonics is also shown (in LaTeX form).&#39;</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">object_combo_harmonics_type</span> <span class="o">=</span> <span class="n">Combo</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;Q&quot;</span><span class="p">,</span> <span class="s2">&quot;G&quot;</span><span class="p">,</span> <span class="s2">&quot;T&quot;</span><span class="p">,</span> <span class="s2">&quot;M&quot;</span><span class="p">])</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">object_combo_harmonics_rank</span> <span class="o">=</span> <span class="n">Combo</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">12</span><span class="p">)))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">object_combo_harmonics_irrep</span> <span class="o">=</span> <span class="n">Combo</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">object_edit_harmonics</span> <span class="o">=</span> <span class="n">LineEdit</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="p">(</span><span class="s2">&quot;site_bond&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">))</span>
-        <span class="n">label_harmonics_ex</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;expression&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">object_edit_harmonics</span> <span class="o">=</span> <span class="n">LineEdit</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">validator</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;site_bond&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;use_var&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">}))</span>
+        <span class="n">label_harmonics_ex</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;expression&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">object_edit_harmonics_ex</span> <span class="o">=</span> <span class="n">LineEdit</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">object_check_harmonics_latex</span> <span class="o">=</span> <span class="n">Check</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;LaTeX&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">object_check_harmonics_latex</span> <span class="o">=</span> <span class="n">Check</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;LaTeX&quot;</span><span class="p">)</span>
 
         <span class="n">panel5</span> <span class="o">=</span> <span class="n">QWidget</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
         <span class="n">layout5</span> <span class="o">=</span> <span class="n">Layout</span><span class="p">(</span><span class="n">panel5</span><span class="p">)</span>
@@ -872,12 +858,12 @@ document.write(`
 
         <span class="n">label_wyckoff</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span>
             <span class="n">parent</span><span class="p">,</span>
-            <span class="s1">&#39;&lt;span style=&quot;font-weight:bold;&quot;&gt;Wyckoff&lt;/span&gt; : find wyckoff position (WP) and site symmetry (SS).&lt;br&gt;&amp;nbsp;&amp;nbsp;1. input representative SITE/BOND, + ENTER. </span><span class="se">\u21d2</span><span class="s1"> WP and SS are shown.&#39;</span><span class="p">,</span>
+            <span class="n">text</span><span class="o">=</span><span class="s1">&#39;&lt;span style=&quot;font-weight:bold;&quot;&gt;Wyckoff&lt;/span&gt; : find wyckoff position (WP) and site symmetry (SS).&lt;br&gt;&amp;nbsp;&amp;nbsp;1. input representative SITE/BOND, + ENTER. </span><span class="se">\u21d2</span><span class="s1"> WP and SS are shown.&#39;</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">object_edit_wyckoff</span> <span class="o">=</span> <span class="n">LineEdit</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="p">(</span><span class="s2">&quot;site_bond&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">))</span>
-        <span class="n">label_wyckoff_position</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\u21d2</span><span class="s2"> WP&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">object_edit_wyckoff</span> <span class="o">=</span> <span class="n">LineEdit</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">validator</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;site_bond&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;use_var&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">}))</span>
+        <span class="n">label_wyckoff_position</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\u21d2</span><span class="s2"> WP&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">object_edit_wyckoff_position</span> <span class="o">=</span> <span class="n">LineEdit</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
-        <span class="n">label_symmetry</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;sym.&quot;</span><span class="p">)</span>
+        <span class="n">label_symmetry</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;sym.&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">object_edit_wyckoff_symmetry</span> <span class="o">=</span> <span class="n">LineEdit</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
 
         <span class="n">panel6</span> <span class="o">=</span> <span class="n">QWidget</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
@@ -929,13 +915,13 @@ document.write(`
         <span class="c1"># widget.</span>
         <span class="n">label_site</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span>
             <span class="n">parent</span><span class="p">,</span>
-            <span class="s1">&#39;&lt;span style=&quot;font-weight:bold;&quot;&gt;Site&lt;/span&gt; : draw site-cluster basis.&lt;br&gt;&amp;nbsp;&amp;nbsp;1. input representative SITE, + ENTER, </span><span class="se">\u21d2</span><span class="s1"> 2. choose basis, 3. push &quot;draw&quot;.&#39;</span><span class="p">,</span>
+            <span class="n">text</span><span class="o">=</span><span class="s1">&#39;&lt;span style=&quot;font-weight:bold;&quot;&gt;Site&lt;/span&gt; : draw site-cluster basis.&lt;br&gt;&amp;nbsp;&amp;nbsp;1. input representative SITE, + ENTER, </span><span class="se">\u21d2</span><span class="s1"> 2. choose basis, 3. push &quot;draw&quot;.&#39;</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">basis_edit_site</span> <span class="o">=</span> <span class="n">LineEdit</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="p">(</span><span class="s2">&quot;site&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">basis_edit_site</span> <span class="o">=</span> <span class="n">LineEdit</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">validator</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;site&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;use_var&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">}))</span>
 
-        <span class="n">label_site_to</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\u21d2</span><span class="s2"> basis&quot;</span><span class="p">)</span>
+        <span class="n">label_site_to</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\u21d2</span><span class="s2"> basis&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">basis_combo_site_samb</span> <span class="o">=</span> <span class="n">Combo</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">basis_button_site_draw</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;draw&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">basis_button_site_draw</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;draw&quot;</span><span class="p">)</span>
 
         <span class="n">panel1</span> <span class="o">=</span> <span class="n">QWidget</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
         <span class="n">layout1</span> <span class="o">=</span> <span class="n">Layout</span><span class="p">(</span><span class="n">panel1</span><span class="p">)</span>
@@ -947,12 +933,12 @@ document.write(`
 
         <span class="n">label_bond</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span>
             <span class="n">parent</span><span class="p">,</span>
-            <span class="s1">&#39;&lt;span style=&quot;font-weight:bold;&quot;&gt;Bond&lt;/span&gt; : draw bond-cluster basis.&lt;br&gt;&amp;nbsp;&amp;nbsp;1. input representative BOND, + ENTER, </span><span class="se">\u21d2</span><span class="s1"> 2. choose basis, 3. push &quot;draw&quot;.&#39;</span><span class="p">,</span>
+            <span class="n">text</span><span class="o">=</span><span class="s1">&#39;&lt;span style=&quot;font-weight:bold;&quot;&gt;Bond&lt;/span&gt; : draw bond-cluster basis.&lt;br&gt;&amp;nbsp;&amp;nbsp;1. input representative BOND, + ENTER, </span><span class="se">\u21d2</span><span class="s1"> 2. choose basis, 3. push &quot;draw&quot;.&#39;</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">basis_edit_bond</span> <span class="o">=</span> <span class="n">LineEdit</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="p">(</span><span class="s2">&quot;bond&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">))</span>
-        <span class="n">label_bond_to</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\u21d2</span><span class="s2"> basis&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">basis_edit_bond</span> <span class="o">=</span> <span class="n">LineEdit</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">validator</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;bond&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;use_var&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">}))</span>
+        <span class="n">label_bond_to</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\u21d2</span><span class="s2"> basis&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">basis_combo_bond_samb</span> <span class="o">=</span> <span class="n">Combo</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">basis_button_bond_draw</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;draw&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">basis_button_bond_draw</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;draw&quot;</span><span class="p">)</span>
 
         <span class="n">panel2</span> <span class="o">=</span> <span class="n">QWidget</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
         <span class="n">layout2</span> <span class="o">=</span> <span class="n">Layout</span><span class="p">(</span><span class="n">panel2</span><span class="p">)</span>
@@ -964,18 +950,18 @@ document.write(`
 
         <span class="n">label_vector</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span>
             <span class="n">parent</span><span class="p">,</span>
-            <span class="s1">&#39;&lt;span style=&quot;font-weight:bold;&quot;&gt;Vector&lt;/span&gt; : draw symmetry-adapted vector.&lt;br&gt;&amp;nbsp;&amp;nbsp;1. choose type, 2. input representative SITE/BOND, + ENTER,&lt;br&gt;&amp;nbsp;&amp;nbsp;</span><span class="se">\u21d2</span><span class="s1">  3. choose (type,basis), 4. push &quot;draw&quot; or 3. input linear combination, + ENTER or 3. push &quot;modulation&quot;.&#39;</span><span class="p">,</span>
+            <span class="n">text</span><span class="o">=</span><span class="s1">&#39;&lt;span style=&quot;font-weight:bold;&quot;&gt;Vector&lt;/span&gt; : draw symmetry-adapted vector.&lt;br&gt;&amp;nbsp;&amp;nbsp;1. choose type, 2. input representative SITE/BOND, + ENTER,&lt;br&gt;&amp;nbsp;&amp;nbsp;</span><span class="se">\u21d2</span><span class="s1">  3. choose (type,basis), 4. push &quot;draw&quot; or 3. input linear combination, + ENTER or 3. push &quot;modulation&quot;.&#39;</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">basis_combo_vector_type</span> <span class="o">=</span> <span class="n">Combo</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;Q&quot;</span><span class="p">,</span> <span class="s2">&quot;G&quot;</span><span class="p">,</span> <span class="s2">&quot;T&quot;</span><span class="p">,</span> <span class="s2">&quot;M&quot;</span><span class="p">])</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">basis_edit_vector</span> <span class="o">=</span> <span class="n">LineEdit</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="p">(</span><span class="s2">&quot;site_bond&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">))</span>
-        <span class="n">label_vector_to</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\u21d2</span><span class="s2"> basis&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">basis_edit_vector</span> <span class="o">=</span> <span class="n">LineEdit</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">validator</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;site_bond&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;use_var&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">}))</span>
+        <span class="n">label_vector_to</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\u21d2</span><span class="s2"> basis&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">basis_combo_vector_samb_type</span> <span class="o">=</span> <span class="n">Combo</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;Q&quot;</span><span class="p">,</span> <span class="s2">&quot;G&quot;</span><span class="p">,</span> <span class="s2">&quot;T&quot;</span><span class="p">,</span> <span class="s2">&quot;M&quot;</span><span class="p">])</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">basis_combo_vector_samb</span> <span class="o">=</span> <span class="n">Combo</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">basis_button_vector_draw</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;draw&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">basis_button_vector_draw</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;draw&quot;</span><span class="p">)</span>
 
-        <span class="n">label_vector_lc</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;linear combination&quot;</span><span class="p">)</span>
+        <span class="n">label_vector_lc</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;linear combination&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">basis_edit_vector_lc</span> <span class="o">=</span> <span class="n">LineEdit</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">basis_button_vector_modulation</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;modulation&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">basis_button_vector_modulation</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;modulation&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">basis_combo_vector_modulation_type</span> <span class="o">=</span> <span class="n">Combo</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;Q,G&quot;</span><span class="p">,</span> <span class="s2">&quot;T,M&quot;</span><span class="p">])</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">basis_edit_vector_modulation</span> <span class="o">=</span> <span class="n">LineEdit</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
 
@@ -996,19 +982,19 @@ document.write(`
 
         <span class="n">label_orbital</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span>
             <span class="n">parent</span><span class="p">,</span>
-            <span class="s1">&#39;&lt;span style=&quot;font-weight:bold;&quot;&gt;Orbital&lt;/span&gt; : draw symmetry-adapted orbital.&lt;br&gt;&amp;nbsp;&amp;nbsp;1. choose (type,rank), 2. input representative SITE/BOND, + ENTER,&lt;br&gt;&amp;nbsp;&amp;nbsp;</span><span class="se">\u21d2</span><span class="s1">  3. choose (type,basis), 4. push &quot;draw&quot; or 3. input linear combination, + ENTER or 3. push &quot;modulation&quot;.&#39;</span><span class="p">,</span>
+            <span class="n">text</span><span class="o">=</span><span class="s1">&#39;&lt;span style=&quot;font-weight:bold;&quot;&gt;Orbital&lt;/span&gt; : draw symmetry-adapted orbital.&lt;br&gt;&amp;nbsp;&amp;nbsp;1. choose (type,rank), 2. input representative SITE/BOND, + ENTER,&lt;br&gt;&amp;nbsp;&amp;nbsp;</span><span class="se">\u21d2</span><span class="s1">  3. choose (type,basis), 4. push &quot;draw&quot; or 3. input linear combination, + ENTER or 3. push &quot;modulation&quot;.&#39;</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">basis_combo_orbital_type</span> <span class="o">=</span> <span class="n">Combo</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;Q&quot;</span><span class="p">,</span> <span class="s2">&quot;G&quot;</span><span class="p">,</span> <span class="s2">&quot;T&quot;</span><span class="p">,</span> <span class="s2">&quot;M&quot;</span><span class="p">])</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">basis_combo_orbital_rank</span> <span class="o">=</span> <span class="n">Combo</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">12</span><span class="p">)))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">basis_edit_orbital</span> <span class="o">=</span> <span class="n">LineEdit</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="p">(</span><span class="s2">&quot;site_bond&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">))</span>
-        <span class="n">label_orbital_to</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\u21d2</span><span class="s2"> basis&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">basis_edit_orbital</span> <span class="o">=</span> <span class="n">LineEdit</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">validator</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;site_bond&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;use_var&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">}))</span>
+        <span class="n">label_orbital_to</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\u21d2</span><span class="s2"> basis&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">basis_combo_orbital_samb_type</span> <span class="o">=</span> <span class="n">Combo</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;Q&quot;</span><span class="p">,</span> <span class="s2">&quot;G&quot;</span><span class="p">,</span> <span class="s2">&quot;T&quot;</span><span class="p">,</span> <span class="s2">&quot;M&quot;</span><span class="p">])</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">basis_combo_orbital_samb</span> <span class="o">=</span> <span class="n">Combo</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">basis_button_orbital_draw</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;draw&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">basis_button_orbital_draw</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;draw&quot;</span><span class="p">)</span>
 
-        <span class="n">label_orbital_lc</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;linear combination&quot;</span><span class="p">)</span>
+        <span class="n">label_orbital_lc</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;linear combination&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">basis_edit_orbital_lc</span> <span class="o">=</span> <span class="n">LineEdit</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">basis_button_orbital_modulation</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;modulation&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">basis_button_orbital_modulation</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;modulation&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">basis_combo_orbital_modulation_type</span> <span class="o">=</span> <span class="n">Combo</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;Q,G&quot;</span><span class="p">,</span> <span class="s2">&quot;T,M&quot;</span><span class="p">])</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">basis_edit_orbital_modulation</span> <span class="o">=</span> <span class="n">LineEdit</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
 
@@ -1030,9 +1016,9 @@ document.write(`
 
         <span class="n">label_hopping</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span>
             <span class="n">parent</span><span class="p">,</span>
-            <span class="s1">&#39;&lt;span style=&quot;font-weight:bold;&quot;&gt;Hopping&lt;/span&gt; : draw hopping direction.&lt;br&gt;&amp;nbsp;&amp;nbsp;1. input representative BOND, + ENTER.&#39;</span><span class="p">,</span>
+            <span class="n">text</span><span class="o">=</span><span class="s1">&#39;&lt;span style=&quot;font-weight:bold;&quot;&gt;Hopping&lt;/span&gt; : draw hopping direction.&lt;br&gt;&amp;nbsp;&amp;nbsp;1. input representative BOND, + ENTER.&#39;</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">basis_edit_hopping</span> <span class="o">=</span> <span class="n">LineEdit</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="p">(</span><span class="s2">&quot;bond&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">basis_edit_hopping</span> <span class="o">=</span> <span class="n">LineEdit</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">validator</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;bond&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;use_var&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">}))</span>
 
         <span class="n">panel5</span> <span class="o">=</span> <span class="n">QWidget</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
         <span class="n">layout5</span> <span class="o">=</span> <span class="n">Layout</span><span class="p">(</span><span class="n">panel5</span><span class="p">)</span>
@@ -1817,7 +1803,7 @@ document.write(`
         <span class="n">cluster</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">plus</span><span class="p">[</span><span class="s2">&quot;site_cluster&quot;</span><span class="p">]</span>
         <span class="n">r_site</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">basis_edit_site</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
 
-        <span class="n">v</span> <span class="o">=</span> <span class="n">NSArray</span><span class="o">.</span><span class="n">vector3d</span><span class="p">()</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="n">vector3d</span><span class="p">()</span>
         <span class="n">cluster_obj</span> <span class="o">=</span> <span class="n">create_samb_object</span><span class="p">(</span>
             <span class="n">z_samb</span><span class="p">,</span>
             <span class="n">cluster</span><span class="p">,</span>
@@ -1892,7 +1878,7 @@ document.write(`
             <span class="n">samb</span> <span class="o">-=</span> <span class="nb">len</span><span class="p">(</span><span class="n">z_samb</span><span class="p">[</span><span class="s2">&quot;Q&quot;</span><span class="p">])</span>
         <span class="n">t_odd</span> <span class="o">=</span> <span class="n">z_type</span> <span class="o">!=</span> <span class="s2">&quot;Q&quot;</span>
 
-        <span class="n">v</span> <span class="o">=</span> <span class="n">NSArray</span><span class="o">.</span><span class="n">vector3d</span><span class="p">()</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="n">vector3d</span><span class="p">()</span>
         <span class="n">cluster_obj</span> <span class="o">=</span> <span class="n">create_samb_object</span><span class="p">(</span>
             <span class="n">z_samb</span><span class="p">,</span>
             <span class="n">cluster</span><span class="p">,</span>
@@ -1964,7 +1950,7 @@ document.write(`
 
         <span class="n">t_odd</span> <span class="o">=</span> <span class="n">v_type</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;M&quot;</span><span class="p">,</span> <span class="s2">&quot;T&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;G&quot;</span><span class="p">,</span> <span class="s2">&quot;Q&quot;</span><span class="p">)</span> <span class="o">!=</span> <span class="n">z_type</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;M&quot;</span><span class="p">,</span> <span class="s2">&quot;T&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;G&quot;</span><span class="p">,</span> <span class="s2">&quot;Q&quot;</span><span class="p">)</span>
 
-        <span class="n">v</span> <span class="o">=</span> <span class="n">NSArray</span><span class="o">.</span><span class="n">vector3d</span><span class="p">()</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="n">vector3d</span><span class="p">()</span>
         <span class="n">cluster_obj</span> <span class="o">=</span> <span class="n">create_samb_object</span><span class="p">(</span>
             <span class="n">z_samb</span><span class="p">,</span>
             <span class="n">cluster</span><span class="p">,</span>
@@ -1995,6 +1981,7 @@ document.write(`
             <span class="k">return</span>
 
         <span class="n">z_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">basis_combo_vector_samb_type</span><span class="o">.</span><span class="n">currentText</span><span class="p">()</span>
+        <span class="n">v_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">basis_combo_vector_type</span><span class="o">.</span><span class="n">currentText</span><span class="p">()</span>
         <span class="n">r_site_bond</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">basis_edit_vector</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
         <span class="n">lc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">basis_edit_vector_lc</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
         <span class="n">cluster</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">plus</span><span class="p">[</span><span class="s2">&quot;vector_cluster&quot;</span><span class="p">]</span>
@@ -2004,7 +1991,7 @@ document.write(`
             <span class="k">return</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">basis</span><span class="p">[</span><span class="s2">&quot;vector_lc&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">lc</span>
 
-        <span class="n">v</span> <span class="o">=</span> <span class="n">NSArray</span><span class="o">.</span><span class="n">vector3d</span><span class="p">()</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="n">vector3d</span><span class="p">()</span>
         <span class="n">lc_basis</span> <span class="o">=</span> <span class="p">{</span>
             <span class="n">i</span><span class="p">:</span> <span class="n">sp</span><span class="o">.</span><span class="n">Matrix</span><span class="p">(</span>
                 <span class="n">create_samb_object</span><span class="p">(</span>
@@ -2020,11 +2007,11 @@ document.write(`
             <span class="p">)</span>
             <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">ex_var</span>
         <span class="p">}</span>
-        <span class="n">cluster_obj</span> <span class="o">=</span> <span class="n">NSArray</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">NSArray</span><span class="p">(</span><span class="n">form</span><span class="p">)</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">lc_basis</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">tolist</span><span class="p">()[</span><span class="mi">0</span><span class="p">]))</span>
+        <span class="n">cluster_obj</span> <span class="o">=</span> <span class="n">str_to_sympy</span><span class="p">(</span><span class="n">form</span><span class="p">,</span> <span class="n">subs</span><span class="o">=</span><span class="n">lc_basis</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
 
         <span class="n">label</span> <span class="o">=</span> <span class="n">remove_space</span><span class="p">(</span><span class="n">lc</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; </span><span class="se">\u21d0</span><span class="s2"> &quot;</span> <span class="o">+</span> <span class="n">z_type</span> <span class="o">+</span> <span class="s2">&quot;, &quot;</span> <span class="o">+</span> <span class="n">remove_space</span><span class="p">(</span><span class="n">r_site_bond</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">plugin</span><span class="o">.</span><span class="n">add_vector_samb</span><span class="p">(</span><span class="n">cluster</span><span class="p">,</span> <span class="n">cluster_obj</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">z_type</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">scale</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plugin</span><span class="o">.</span><span class="n">add_vector_samb</span><span class="p">(</span><span class="n">cluster</span><span class="p">,</span> <span class="n">cluster_obj</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">v_type</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">scale</span><span class="p">)</span></div>
 
 
     <span class="c1"># ==================================================</span>
@@ -2110,7 +2097,7 @@ document.write(`
 
         <span class="n">t_odd</span> <span class="o">=</span> <span class="n">o_type</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;M&quot;</span><span class="p">,</span> <span class="s2">&quot;T&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;G&quot;</span><span class="p">,</span> <span class="s2">&quot;Q&quot;</span><span class="p">)</span> <span class="o">!=</span> <span class="n">z_type</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;M&quot;</span><span class="p">,</span> <span class="s2">&quot;T&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;G&quot;</span><span class="p">,</span> <span class="s2">&quot;Q&quot;</span><span class="p">)</span>
 
-        <span class="n">v</span> <span class="o">=</span> <span class="n">NSArray</span><span class="o">.</span><span class="n">vector3d</span><span class="p">()</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="n">vector3d</span><span class="p">()</span>
         <span class="n">cluster_obj</span> <span class="o">=</span> <span class="n">create_samb_object</span><span class="p">(</span>
             <span class="n">z_samb</span><span class="p">,</span>
             <span class="n">cluster</span><span class="p">,</span>
@@ -2141,6 +2128,7 @@ document.write(`
             <span class="k">return</span>
 
         <span class="n">z_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">basis_combo_orbital_samb_type</span><span class="o">.</span><span class="n">currentText</span><span class="p">()</span>
+        <span class="n">o_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">basis_combo_orbital_type</span><span class="o">.</span><span class="n">currentText</span><span class="p">()</span>
         <span class="n">rank</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">basis_combo_orbital_rank</span><span class="o">.</span><span class="n">currentText</span><span class="p">()</span>
         <span class="n">lc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">basis_edit_orbital_lc</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
         <span class="n">r_site_bond</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">basis_edit_orbital</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
@@ -2151,7 +2139,7 @@ document.write(`
             <span class="k">return</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">basis</span><span class="p">[</span><span class="s2">&quot;orbital_lc&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">lc</span>
 
-        <span class="n">v</span> <span class="o">=</span> <span class="n">NSArray</span><span class="o">.</span><span class="n">vector3d</span><span class="p">()</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="n">vector3d</span><span class="p">()</span>
         <span class="n">lc_basis</span> <span class="o">=</span> <span class="p">{</span>
             <span class="n">i</span><span class="p">:</span> <span class="n">sp</span><span class="o">.</span><span class="n">Matrix</span><span class="p">(</span>
                 <span class="n">create_samb_object</span><span class="p">(</span>
@@ -2167,10 +2155,10 @@ document.write(`
             <span class="p">)</span>
             <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">ex_var</span>
         <span class="p">}</span>
-        <span class="n">cluster_obj</span> <span class="o">=</span> <span class="n">NSArray</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">NSArray</span><span class="p">(</span><span class="n">form</span><span class="p">)</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">lc_basis</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">tolist</span><span class="p">()[</span><span class="mi">0</span><span class="p">]))</span>
+        <span class="n">cluster_obj</span> <span class="o">=</span> <span class="n">str_to_sympy</span><span class="p">(</span><span class="n">form</span><span class="p">,</span> <span class="n">subs</span><span class="o">=</span><span class="n">lc_basis</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
 
         <span class="n">label</span> <span class="o">=</span> <span class="n">remove_space</span><span class="p">(</span><span class="n">lc</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; </span><span class="se">\u21d0</span><span class="s2"> &quot;</span> <span class="o">+</span> <span class="n">z_type</span> <span class="o">+</span> <span class="n">rank</span> <span class="o">+</span> <span class="s2">&quot;, &quot;</span> <span class="o">+</span> <span class="n">remove_space</span><span class="p">(</span><span class="n">r_site_bond</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">plugin</span><span class="o">.</span><span class="n">add_orbital_samb</span><span class="p">(</span><span class="n">cluster</span><span class="p">,</span> <span class="n">cluster_obj</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">z_type</span><span class="p">,</span> <span class="n">scale</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plugin</span><span class="o">.</span><span class="n">add_orbital_samb</span><span class="p">(</span><span class="n">cluster</span><span class="p">,</span> <span class="n">cluster_obj</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">o_type</span><span class="p">,</span> <span class="n">scale</span><span class="p">)</span></div>
 
 
     <span class="c1"># ==================================================</span>
@@ -2209,9 +2197,9 @@ document.write(`
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">basis_edit_hopping</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
         <span class="n">pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">plugin</span><span class="o">.</span><span class="n">gen_hopping_samb</span><span class="p">(</span><span class="n">pos</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">basis</span><span class="p">[</span><span class="s2">&quot;hopping&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pos</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">basis</span><span class="p">[</span><span class="s2">&quot;hopping&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">pos</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
 
-        <span class="k">if</span> <span class="n">pos</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">pos</span><span class="p">)</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
             <span class="n">bond</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">plugin</span><span class="o">.</span><span class="n">create_hopping_direction</span><span class="p">(</span><span class="n">pos</span><span class="p">)</span>
             <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;T </span><span class="se">\u21d0</span><span class="s2"> &quot;</span> <span class="o">+</span> <span class="n">remove_space</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">pos</span><span class="p">))</span>
 
@@ -2306,8 +2294,8 @@ By Hiroaki Kusunose
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
-<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
 
   <footer class="bd-footer">
   </footer>
