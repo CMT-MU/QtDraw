@@ -2,3 +2,4 @@
 include LICENSE
 recursive-include qtdraw *.png
 recursive-include qtdraw *.py
+recursive-include qtdraw/mathjax *

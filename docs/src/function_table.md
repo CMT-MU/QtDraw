@@ -305,7 +305,6 @@
 | create_axis_panel | Create axis panel. |
 | create_cell_panel | Create cell panel. |
 | create_light_panel | Create light panel. |
-| create_latex_panel | Create LaTeX panel. |
 | create_general_panel | Create general panel. |
 | apply | Apply change. |
 
@@ -373,7 +372,7 @@
 
 | Function | Summary |
 |--------|----------|
-| MathJaxSVG |  |
+| MathJaxSVG | MathJax converter. |
 | _thread_main |  |
 | convert | Convert latex to SVG string. |
 | close |  |
@@ -725,16 +724,17 @@
 | str_to_sympy | Convert a string to a sympy. |
 | to_latex | convert list to latex list. |
 | check_multipie | Check if multipie is installed or not. |
-| set_latex_setting | Set LaTeX setting. |
 | create_grid | Create grid. |
 | read_dict | Read dict text file. |
 | write_dict | write dict text file. |
 | str_to_list | Convert a string to a list of strings. |
-| affine_trans | Affine transformation, A.v + s. |
-| text_to_list | convert single text to list. |
-| apply | apply function to (nested) list. |
-| list_to_table | convert from list to table |
-| remove_space | remove space, tab, and newline. |
+| text_to_list | Convert single text to list. |
+| apply | Apply function to (nested) list. |
+| list_to_table | Convert from list to table |
+| remove_space | Remove space, tab, and newline. |
+| vector3d | 3d vector. |
+| distance | group of sites with the same distance (in increasing order). |
+| igrid | create integer grid points. |
 | vec_latex |  |
 | mat_latex |  |
 
