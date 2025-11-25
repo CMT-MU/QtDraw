@@ -5,13 +5,14 @@ This module provides a dialog for drawing objects with the help of MultiPie.
 """
 
 import sympy as sp
+import numpy as np
 from PySide6.QtWidgets import QDialog, QTabWidget, QWidget
 from PySide6.QtCore import Qt
 
 from multipie.multipole.util.atomic_orbital_util import parse_orb_list
 
 from qtdraw.widget.custom_widget import Label, Layout, Button, Combo, LineEdit, Check, VSpacer, HSpacer, HBar
-from qtdraw.util.util import remove_space, vector3d
+from qtdraw.util.util import remove_space, vector3d, str_to_sympy
 from qtdraw.multipie.util_multipie import create_samb_object, check_linear_combination
 from qtdraw.multipie.plugin_multipie_setting import crystal_list, point_group_list, space_group_list, point_group_all_list
 from qtdraw.multipie.dialog_info import (
@@ -26,8 +27,6 @@ from qtdraw.multipie.dialog_info import (
     show_response,
 )
 from qtdraw.multipie.dialog_modulation import ModulationDialog
-
-from gcoreutils.nsarray import NSArray
 
 
 # ==================================================
@@ -1502,7 +1501,7 @@ class MultiPieDialog(QDialog):
             )
             for i in ex_var
         }
-        cluster_obj = NSArray(str(NSArray(form).subs(lc_basis).tolist().T.tolist()[0]))
+        cluster_obj = str_to_sympy(form, subs=lc_basis).reshape(-1)
 
         label = remove_space(lc) + " \u21d0 " + z_type + ", " + remove_space(r_site_bond)
 
@@ -1635,7 +1634,7 @@ class MultiPieDialog(QDialog):
             )
             for i in ex_var
         }
-        cluster_obj = NSArray(str(NSArray(form).subs(lc_basis).tolist().T.tolist()[0]))
+        cluster_obj = str_to_sympy(form, subs=lc_basis).reshape(-1)
 
         label = remove_space(lc) + " \u21d0 " + z_type + rank + ", " + remove_space(r_site_bond)
         self.plugin.add_orbital_samb(cluster, cluster_obj, label, o_type, scale)
@@ -1671,9 +1670,9 @@ class MultiPieDialog(QDialog):
         """
         pos = self.basis_edit_hopping.text()
         pos = self.plugin.gen_hopping_samb(pos)
-        self.basis["hopping"] = pos
+        self.basis["hopping"] = str(pos.tolist())
 
-        if pos != "":
+        if str(pos) != "":
             bond = self.plugin.create_hopping_direction(pos)
             label = "T \u21d0 " + remove_space(str(pos))
 

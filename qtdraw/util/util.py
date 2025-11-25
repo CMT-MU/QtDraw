@@ -291,18 +291,15 @@ def str_to_list(s):
 
 
 # ==================================================
-# ==================================================
-# ==================================================
-# ==================================================
 def text_to_list(text):
     """
-    convert single text to list.
+    Convert single text to list.
 
     Args:
         text (str): text to convert.
 
     Returns:
-        list or str: converted list.
+        - (list or str) -- converted list.
 
     Notes:
         - if format error occurs, return None.
@@ -332,14 +329,14 @@ def text_to_list(text):
 # ==================================================
 def apply(f, lst):
     """
-    apply function to (nested) list.
+    Apply function to (nested) list.
 
     Args:
         f (function): function to apply to each element of list.
         lst (list or value): (nested) list to apply.
 
     Returns:
-        list or value: applied list.
+        - (list or value) -- applied list.
     """
     if isinstance(lst, list):
         return [apply(f, x) for x in lst]
@@ -350,7 +347,7 @@ def apply(f, lst):
 # ==================================================
 def list_to_table(lst1d, col, p=None):
     """
-    convert from list to table
+    Convert from list to table
 
     Args:
         lst1d (list): 1d list
@@ -358,7 +355,7 @@ def list_to_table(lst1d, col, p=None):
         p (any, optional): padding value (no padding for None)
 
     Returns:
-        list: 2d list
+        - (list) -- 2d list.
     """
     if type(lst1d) != list:
         raise KeyError(f"non list type ({type(lst1d)}) is given.")
@@ -378,13 +375,13 @@ def list_to_table(lst1d, col, p=None):
 # ==================================================
 def remove_space(s):
     """
-    remove space, tab, and newline.
+    Remove space, tab, and newline.
 
     Args:
         s (str): string
 
     Returns:
-        str: removed string
+        - (str) -- removed string.
     """
     if type(s) != str:
         raise KeyError(f"invalid type ({type(s)}) is given.")
@@ -403,7 +400,7 @@ def vector3d(head="Q", pre=None):
         pre (str, optional): head of symbol.
 
     Returns:
-        NSArray: 3d vector.
+        - (ndarray) -- 3d vector.
     """
     d = {"Q": "[x,y,z]", "G": "[X,Y,Z]", "T": "[t_x,t_y,t_z]", "M": "[m_x,m_y,m_z]"}
     if head not in d.keys():
@@ -415,3 +412,64 @@ def vector3d(head="Q", pre=None):
         s = f"[{pre}_x,{pre}_y,{pre}_z]"
     s = str_to_sympy(s, real=True)
     return s
+
+
+# ==================================================
+def distance(s1, s2, G=None, accuracy=4):
+    """
+    group of sites with the same distance (in increasing order).
+
+    Args:
+        s1 (ndarray): vector array.
+        s2 (ndarray): vector array.
+        G (ndarray, optional): metric matrix (None = unit matrix).
+        accuracy (int, optional): accuracy of digit.
+
+    Returns:
+        dict : i, j are indices of positions (i<=j only for s1=s2), { distance(float): [(i(int),j(int))] }.
+    """
+    if G is None:
+        G = np.eye(s1.shape[0])
+    diff = id(s1) != id(s2)
+    s1 = s1.astype(float)
+    if diff:
+        s2 = s2.astype(float)
+    else:
+        s2 = s1
+
+    d = {0: []}
+    for i, v1 in enumerate(s1):
+        for j, v2 in enumerate(s2):
+            if diff or i <= j:
+                r = v1 - v2
+                dist = round(float(np.sqrt(r @ G @ r)), accuracy)
+                d[dist] = d.get(dist, []) + [(i, j)]
+    d = {i: j for i, j in sorted(d.items())}
+
+    return d
+
+
+# ==================================================
+def igrid(N, offset=None):
+    """
+    create integer grid points.
+
+    Args:
+        N (list): number of points in each direction.
+        offset (tuple, optional): offset in each direction. 0 is used for None.
+
+    Returns:
+        ndarray: grid points.
+
+    Notes:
+        - grid point: increase of indices from left to right.
+        - x[i] = offset + i.
+    """
+    d = len(N)
+    if offset is None:
+        offset = [0] * d
+    g = [np.arange(offset[i], offset[i] + N[i]) for i in range(d)]
+    g = np.meshgrid(*g[::-1], indexing="ij")
+    grid = np.stack([i.ravel() for i in g][::-1], axis=1)
+
+    return grid

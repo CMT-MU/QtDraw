@@ -14,8 +14,6 @@ from qtdraw.widget.custom_widget import Layout
 from qtdraw.widget.table_view import TableView
 from qtdraw.util.util import list_to_table, vector3d, to_latex
 
-from gcoreutils.nsarray import NSArray
-
 
 # ==================================================
 class InfoPanel(QDialog):
@@ -314,7 +312,7 @@ def show_virtual_cluster(group, wp, parent):
         else:
             data.append([""] + r)
     for tag, v in basis.items():
-        row = list_to_table(NSArray(v.tolist(), "scalar").latex(), n, "")
+        row = list_to_table(to_latex(v, "scalar").tolist(), n, "")
         for i, r in enumerate(row):
             if i == 0:
                 t = tag.latex()
