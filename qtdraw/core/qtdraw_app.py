@@ -587,8 +587,7 @@ class QtDraw(Window):
         self.setWindowTitle(title)
         self.pyvista_widget._tab_group_view.setWindowTitle(data_title)
         if self.multipie_dialog is not None:
-            multipie_title = title.replace("QtDraw", "MultiPie Plugin")
-            self.multipie_dialog.dialog.setWindowTitle(multipie_title)
+            self.multipie_dialog.set_title()
 
     # ==================================================
     def _update_unit_cell(self):
@@ -1057,10 +1056,10 @@ class QtDraw(Window):
         :meta private:
         """
         if check_multipie():
-            from qtdraw.multipie.plugin_multipie import MultiPiePlugin
+            from qtdraw.multipie.multipie_dialog import MultiPieDialog
 
             if self.multipie_dialog is None:
-                self.multipie_dialog = MultiPiePlugin(self)
+                self.multipie_dialog = MultiPieDialog(self)
             else:
                 self.multipie_dialog.dialog.show()
             self.sender().setDown(False)  # reset push button.
@@ -1187,7 +1186,7 @@ class QtDraw(Window):
         self.pyvista_widget.reload()
         self._update_panel()
         if self.multipie_dialog is not None:
-            self.multipie_dialog.clear_counter()
+            self.multipie_dialog.clear_data()
 
     # ==================================================
     def exec(self):
@@ -1233,7 +1232,7 @@ class QtDraw(Window):
             if self.camera_dialog is not None:
                 self.camera_dialog.close()
         if self.multipie_dialog is not None:
-            self.multipie_dialog.dialog.close()
+            self.multipie_dialog.close()
         self.logger.close()
         self.info_dialog.close()
         self.pyvista_widget.close()
