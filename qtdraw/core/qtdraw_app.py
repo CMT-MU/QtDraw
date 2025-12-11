@@ -1061,7 +1061,7 @@ class QtDraw(Window):
             if self.multipie_dialog is None:
                 self.multipie_dialog = MultiPieDialog(self)
             else:
-                self.multipie_dialog.dialog.show()
+                self.multipie_dialog.show()
             self.sender().setDown(False)  # reset push button.
 
     # ==================================================
@@ -2614,7 +2614,7 @@ class QtDraw(Window):
             raise Exception("MultiPie is not installed.")
 
         if self.multipie_dialog is not None:
-            self.multipie_dialog.dialog.close()
+            self.multipie_dialog.close()
             del self.multipie_dialog
             self.multipie_dialog = None
 

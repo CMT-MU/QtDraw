@@ -9,7 +9,10 @@ import numpy as np
 from PySide6.QtWidgets import QDialog, QTabWidget, QWidget
 from PySide6.QtCore import Qt
 
-
+from qtdraw.multipie.sub_group import SubGroup
+from qtdraw.multipie.tab_group import TabGroup
+from qtdraw.multipie.tab_object import TabObject
+from qtdraw.multipie.tab_basis import TabBasis
 from qtdraw.widget.custom_widget import Label, Layout, Button, Combo, LineEdit, Check, VSpacer, HSpacer, HBar
 from qtdraw.util.util import remove_space, vector3d, str_to_sympy
 from qtdraw.multipie.util_multipie import create_samb_object, check_linear_combination
@@ -28,7 +31,7 @@ from qtdraw.multipie.util_multipie import create_samb_object, check_linear_combi
 # )
 from qtdraw.multipie.plugin_multipie_setting import plugin_detail as detail
 
-from multipie import __version__
+from multipie import __version__, Group
 
 
 # ==================================================
@@ -44,17 +47,28 @@ class MultiPieDialog(QDialog):
         super().__init__()
         self._qtdraw = parent  # QtDraw.
         self._pvw = parent.pyvista_widget  # PyVistaWidget.
-        self._status = {"version": __version__}
+
+        mapping = Group.global_info()["mapping"]
+        self._crystal_list = {crystal: {tp: list(i.keys()) for tp, i in enumerate(v.values())} for crystal, v in mapping.items()}
+        self._mapping = {}
+        for v in mapping.values():
+            for i in v.values():
+                for k, x in i.items():
+                    self._mapping[k] = x
+
+        self._type = 0  # PG.
+        self._tag = self._mapping["1: C1 (1)"]
+        self._group = [None, None, None, None]
 
         self.set_title()
         self.resize(600, 500)
 
         self._pvw.update_preference("label", "default_check", detail["general"]["label"])
 
-        # sub_panel = self.create_sub_group_panel(self)
-        # group_panel = self.create_group_panel(self)
-        # object_panel = self.create_object_panel(self)
-        # basis_panel = self.create_basis_panel(self)
+        sub_panel = SubGroup(self)
+        group_panel = TabGroup(self)
+        object_panel = TabObject(self)
+        basis_panel = TabBasis(self)
 
         # self.set_group_panel_value()
         # self.set_object_panel_value()
@@ -66,15 +80,15 @@ class MultiPieDialog(QDialog):
 
         # tab content.
         tab = QTabWidget(self)
-        # tab.addTab(group_panel, "Group Info.")
-        # tab.addTab(object_panel, "Object Drawing")
-        # tab.addTab(basis_panel, "Basis Drawing")
+        tab.addTab(group_panel, "Group Info.")
+        tab.addTab(object_panel, "Object Drawing")
+        tab.addTab(basis_panel, "Basis Drawing")
 
         # main layout.
         layout = Layout(self)
         layout.setContentsMargins(10, 5, 10, 5)
-        # layout.addWidget(sub_panel, 0, 0, 1, 1)
-        # layout.addWidget(tab, 0, 1, 1, 1)
+        layout.addWidget(sub_panel, 0, 0, 1, 1)
+        layout.addWidget(tab, 0, 1, 1, 1)
 
         # self._symmetry_operation_dialog = None
         # self._character_table_dialog = None
@@ -92,6 +106,15 @@ class MultiPieDialog(QDialog):
         self.show()
 
     # ==================================================
+    def group(self, tp=None):
+        if tp is None:
+            tp = self._type
+        if self._group[tp] is None:
+            self._group[tp] = Group(self._tag[tp])
+
+        return self._group[tp]
+
+    # ==================================================
     def set_title(self):
         title = self._pvw.window_title.replace("QtDraw", "MultiPie Plugin")
         self.setWindowTitle(title)
@@ -105,3 +128,8 @@ class MultiPieDialog(QDialog):
     def close(self):
         # close all panels.
         super().close()
+
+    # ==================================================
+    def get_status(self):
+        status = {"version": __version__}
+        return status
