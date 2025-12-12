@@ -99,6 +99,22 @@ class Label(QLabel):
         self.setIndent(6)
 
     # ==================================================
+    def set_background(self, flag):
+        if flag:
+            base_style = """
+                padding-left: 3px;
+                padding-right: 3px;
+                background: white;
+                border: 1px solid grey;
+            """
+            self.setStyleSheet(base_style)
+        else:
+            self.setStyleSheet("")
+            self.style().unpolish(self)
+            self.style().polish(self)
+            self.update()
+
+    # ==================================================
     def sizeHint(self):
         sz = super().sizeHint()
         extra = 12

@@ -86,38 +86,17 @@ class TabObject(QWidget):
         layout5.addWidget(self.object_edit_harmonics_ex, 2, 1, 1, 8)
         layout5.addWidget(self.object_check_harmonics_latex, 2, 9, 1, 1, Qt.AlignRight)
 
-        label_wyckoff = Label(
-            parent,
-            text='<span style="font-weight:bold;">Wyckoff</span> : find wyckoff position (WP) and site symmetry (SS).<br>&nbsp;&nbsp;1. input representative SITE/BOND, + ENTER. \u21d2 WP and SS are shown.',
-        )
-        self.object_edit_wyckoff = LineEdit(parent, text="", validator=("site_bond", {"use_var": False}))
-        label_wyckoff_position = Label(parent, text="\u21d2 WP")
-        self.object_edit_wyckoff_position = LineEdit(parent)
-        label_symmetry = Label(parent, text="sym.")
-        self.object_edit_wyckoff_symmetry = LineEdit(parent)
-
-        panel6 = QWidget(parent)
-        layout6 = Layout(panel6)
-        layout6.addWidget(label_wyckoff, 0, 0, 1, 10, Qt.AlignLeft)
-        layout6.addWidget(self.object_edit_wyckoff, 1, 0, 1, 6)
-        layout6.addWidget(label_wyckoff_position, 1, 6, 1, 1, Qt.AlignRight)
-        layout6.addWidget(self.object_edit_wyckoff_position, 1, 7, 1, 1)
-        layout6.addWidget(label_symmetry, 1, 8, 1, 1, Qt.AlignRight)
-        layout6.addWidget(self.object_edit_wyckoff_symmetry, 1, 9, 1, 1)
-
         # layout.
-        layout.addWidget(panel1, 0, 0, 1, 1)
-        layout.addWidget(HBar(), 1, 0, 1, 1)
-        layout.addWidget(panel2, 2, 0, 1, 1)
-        layout.addWidget(HBar(), 3, 0, 1, 1)
-        layout.addWidget(panel3, 4, 0, 1, 1)
-        layout.addWidget(HBar(), 5, 0, 1, 1)
-        layout.addWidget(panel4, 6, 0, 1, 1)
-        layout.addWidget(HBar(), 7, 0, 1, 1)
-        layout.addWidget(panel5, 8, 0, 1, 1)
-        layout.addWidget(HBar(), 9, 0, 1, 1)
-        layout.addWidget(panel6, 10, 0, 1, 1)
+        layout.addWidget(panel1)
+        layout.addWidget(HBar())
+        layout.addWidget(panel2)
+        layout.addWidget(HBar())
+        layout.addWidget(panel3)
+        layout.addWidget(HBar())
+        layout.addWidget(panel4)
+        layout.addWidget(HBar())
+        layout.addWidget(panel5)
         layout.addItem(HSpacer(), 0, 1, 1, 1)
-        layout.addItem(VSpacer(), 11, 0, 1, 1)
+        layout.addItem(VSpacer())
 
     # ==================================================

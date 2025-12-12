@@ -1211,32 +1211,23 @@ class QtDraw(Window):
         if ret != QMessageBox.Ok:
             event.ignore()
         else:
-            self.close()
-
-    # ==================================================
-    def close(self):
-        """
-        Close dialogs.
-
-        :meta private:
-        """
-        if self.debug:
-            if self.actor_dialog is not None:
-                self.actor_dialog.close()
-            if self.data_dialog is not None:
-                self.data_dialog.close()
-            if self.status_dialog is not None:
-                self.status_dialog.close()
-            if self.pref_data_dialog is not None:
-                self.pref_data_dialog.close()
-            if self.camera_dialog is not None:
-                self.camera_dialog.close()
-        if self.multipie_dialog is not None:
-            self.multipie_dialog.close()
-        self.logger.close()
-        self.info_dialog.close()
-        self.pyvista_widget.close()
-        super().close()
+            if self.debug:
+                if self.actor_dialog is not None:
+                    self.actor_dialog.close()
+                if self.data_dialog is not None:
+                    self.data_dialog.close()
+                if self.status_dialog is not None:
+                    self.status_dialog.close()
+                if self.pref_data_dialog is not None:
+                    self.pref_data_dialog.close()
+                if self.camera_dialog is not None:
+                    self.camera_dialog.close()
+            if self.multipie_dialog is not None:
+                self.multipie_dialog.close()
+            self.logger.close()
+            self.info_dialog.close()
+            self.pyvista_widget.close()
+            super().close()
 
     # ==================================================
     def update_status(self, key, value):

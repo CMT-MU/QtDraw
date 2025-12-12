@@ -4,9 +4,11 @@ Info. dialog.
 This module provides a dialog for group info. in MultiPie dialog.
 """
 
+import numpy as np
 import sympy as sp
 from PySide6.QtWidgets import QDialog
 
+from multipie.util.util_harmonics import harmonics_decomposition
 from qtdraw.widget.custom_widget import Layout
 from qtdraw.widget.table_view import TableView
 from qtdraw.util.util import to_latex
@@ -27,7 +29,7 @@ class InfoPanel(QDialog):
             vertical (bool): show vertical (sequential number) header ?
         """
         super().__init__(parent)
-        self._pvw = parent.parent()._pvw
+        self._pvw = parent.parent._pvw
         mathjax = self._pvw._mathjax
 
         self.setWindowTitle(title)
@@ -146,6 +148,7 @@ def show_wyckoff_site(group, parent):
     g_type = group.group_type
     SO = group["symmetry_operation"]
     wp = group["wyckoff"]["site"]
+    nop = len(SO["tag"])
 
     data = []
     if g_type in ["SG"]:
@@ -157,9 +160,12 @@ def show_wyckoff_site(group, parent):
         sym = val["symmetry"]
         pos = val["expression"]
         mp = val["mapping"]
-        data.append([r"{\rm " + w + "}", "", r"{\rm " + sym + "}", "", ""])
+        data.append([r"{\rm " + w + "}", r"{\rm " + sym + "}", "", "", ""])
         for no, (i, m) in enumerate(zip(pos, mp)):
-            ms = str(m)
+            if nop > 24 and len(m) == nop:
+                ms = f"[1, ..., {nop}]"
+            else:
+                ms = str(m)
             data.append([f"{no+1}", to_latex(i, "vector"), ms, "", ""])
         data.append(["", "", ""])
 
@@ -184,6 +190,7 @@ def show_wyckoff_bond(group, parent):
     g_type = group.group_type
     SO = group["symmetry_operation"]
     wp = group["wyckoff"]["bond"]
+    nop = len(SO["tag"])
 
     data = []
     if g_type in ["SG"]:
@@ -198,7 +205,10 @@ def show_wyckoff_bond(group, parent):
         vector, center = bond[:, 0:3], bond[:, 3:6]
         data.append([r"{\rm " + b_wp + "}", "", "", "", ""])
         for no, (v, c, m) in enumerate(zip(vector, center, mp)):
-            ms = str(m)
+            if nop > 24 and len(m) == nop:
+                ms = f"[1, ..., {nop}]"
+            else:
+                ms = str(m)
             data.append([f"{no+1}", to_latex(v, "vector"), to_latex(c, "vector"), ms, ""])
 
     name = "Wyckoff Bond"
@@ -234,5 +244,137 @@ def show_product_table(group, parent):
     data.append([""] + ops)
     for r, t in zip(ops, tbl):
         data.append([r] + t)
+
+    return show_group_info(group, name, None, data, False, parent)
+
+
+# ==================================================
+def show_harmonics_decomp(group, basis, rank, head, parent):
+    """
+    Show harmonics decomposition panel.
+
+    Args:
+        group (Group): PG expressed by basis PG.
+        basis (str): basis PG.
+        rank (int): rank.
+        head (str): type, Q/G.
+        parent (QWidget): parent.
+
+    Returns:
+        - (InfoPanel) -- harmonics decomposition panel.
+    """
+    pg = str(group)
+    decomp = harmonics_decomposition(basis, pg, rank, head)
+
+    name = head + "_harmonics decomposition to " + basis
+    header = [pg, " \u21d2 " + basis]
+
+    data = []
+    for h, d in decomp:
+        ex = sp.S(0)
+        for c, b in d:
+            ex += c * sp.Symbol(b)
+        data.append([h, to_latex(ex)])
+
+    return show_group_info(group, name, header, data, True, parent)
+
+
+# ==================================================
+def show_atomic_multipole(group, bra, ket, head, basis_type, parent):
+    """
+    Show atomic multipole panel.
+
+    Args:
+        group (Group): PG.
+        bra (str): bra basis list.
+        ket (str): ket basis list.
+        head (str): head.
+        basis_type (str): basis type.
+        parent (QWidget): parent.
+
+    Returns:
+        - (InfoPanel) -- symmetry operation panel.
+    """
+    rank_dict = {"s": 0, "p": 1, "d": 2, "f": 3}
+    bra = rank_dict[bra]
+    ket = rank_dict[ket]
+
+    name = "Atomic Multipole"
+    header = ["No", "multipole", "matrix"]
+
+    if bra > ket:
+        samb = group["atomic_samb"][basis_type][(ket, bra)]
+    else:
+        samb = group["atomic_samb"][basis_type][(bra, ket)]
+    if head != "":
+        samb = samb.select(X=head)
+    basis = group.atomic_basis(basis_type)
+
+    bras = ", ".join([group.tag_atomic_basis(i, bra, latex=True, ket=False) for i in basis[bra]])
+    kets = ", ".join([group.tag_atomic_basis(i, ket, latex=True, ket=True) for i in basis[ket]])
+
+    data = [["", r"{\rm bra}", bras], ["", r"{\rm ket}", kets], ["", "", ""]]
+    no = 1
+    for idx, (mat, ex) in samb.items():
+        for comp, m in enumerate(mat):
+            if bra > ket:
+                m = m.conjugate().T
+            data.append([str(no), group.tag_multipole(idx, comp, True, "a"), to_latex(m, "matrix")])
+            no += 1
+
+    return show_group_info(group, name, header, data, False, parent)
+
+
+# ==================================================
+def show_response(group, rank, r_type, parent):
+    """
+    Show response tensor panel.
+
+    Args:
+        group (Group): MPG.
+        rank (int): response tensor rank.
+        r_type (str): response tensor type.
+        parent (QWidget): parent.
+
+    Returns:
+        - (InfoPanel) -- response tensor panel.
+    """
+    rank_dict = {0: "s", 1: "p", 2: "d", 3: "f"}
+    d = group.response_tensor_all(r_type)
+    lst0 = group["active_multipole"]
+    lst = {}
+    for i in lst0:
+        for r in range(rank + 1):
+            if rank_dict[r] in i:
+                lst[i[0]] = lst.get(i[0], []) + [i[1:]]
+
+    data = []
+    data.append([r"\text{active multipole}"])
+    if lst.get("Q"):
+        data.append([r"\text{Q: " + ", ".join(lst["Q"]) + "}"])
+    if lst.get("G"):
+        data.append([r"\text{G: " + ", ".join(lst["G"]) + "}"])
+    if lst.get("T"):
+        data.append([r"\text{T: " + ", ".join(lst["T"]) + "}"])
+    if lst.get("M"):
+        data.append([r"\text{M: " + ", ".join(lst["M"]) + "}"])
+    data.append([""])
+
+    for t, (m, ex) in d.items():
+        X, rank1, opt = t
+        if rank1 != rank:
+            continue
+        if opt == "":
+            data.append([r"\text{" + f"rank {rank} tensor" + "}"])
+        else:
+            data.append([r"\text{" + f"rank {rank} tensor ({opt})" + "}"])
+        if not np.all(m == sp.S(0)):
+            ml = to_latex(m, "matrix")
+            data.append([ml])
+            for i, j in ex.items():
+                data.append([sp.latex(sp.Eq(i, j))])
+        data.append([""])
+
+    name = r_type + " Response Tensor"
 
     return show_group_info(group, name, None, data, False, parent)
