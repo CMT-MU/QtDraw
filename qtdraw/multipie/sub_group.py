@@ -39,9 +39,9 @@ class SubGroup(QWidget):
         # widget.
         label_group = Label(parent, text="Group", bold=True)
         self._type_list = {"Point Group": 0, "Space Group": 1, "Magnetic Point Group": 2, "Magnetic Space Group": 3}
-        self.group_combo_group_type = Combo(parent, self._type_list.keys())
-        self.group_combo_crystal_type = Combo(parent, parent._crystal_list.keys())
-        self.group_combo_group = Combo(parent, [])
+        self.combo_group_type = Combo(parent, self._type_list.keys())
+        self.combo_crystal_type = Combo(parent, parent._crystal_list.keys())
+        self.combo_group = Combo(parent, [])
         label_assoc_group = Label(parent, text="Associated Group (PG/SG/MPG/MSG)", bold=True)
         self.label_pg_name = Label(parent, text="")
         self.label_sg_name = Label(parent, text="")
@@ -49,11 +49,11 @@ class SubGroup(QWidget):
         self.label_msg_name = Label(parent, text="")
 
         label_info = Label(parent, text="Info.", bold=True)
-        self.group_button_symmetry_operation = Button(parent, text="Symmetry Operation")
-        self.group_button_character_table = Button(parent, text="Character Table (PG)")
-        self.group_button_wyckoff_site = Button(parent, text="Wyckoff Site (PG/SG)")
-        self.group_button_wyckoff_bond = Button(parent, text="Wyckoff Bond (PG/SG)")
-        self.group_button_product_table = Button(parent, text="Product Table (PG)")
+        self.button_symmetry_operation = Button(parent, text="Symmetry Operation")
+        self.button_character_table = Button(parent, text="Character Table (PG)")
+        self.button_wyckoff_site = Button(parent, text="Wyckoff Site (PG/SG)")
+        self.button_wyckoff_bond = Button(parent, text="Wyckoff Bond (PG/SG)")
+        self.button_product_table = Button(parent, text="Product Table (PG)")
 
         label_site_bond = Label(
             parent,
@@ -62,9 +62,9 @@ class SubGroup(QWidget):
 
         # layout.
         layout.addWidget(label_group)
-        layout.addWidget(self.group_combo_crystal_type)
-        layout.addWidget(self.group_combo_group_type)
-        layout.addWidget(self.group_combo_group)
+        layout.addWidget(self.combo_crystal_type)
+        layout.addWidget(self.combo_group_type)
+        layout.addWidget(self.combo_group)
         layout.addWidget(label_assoc_group)
         layout.addWidget(self.label_pg_name)
         layout.addWidget(self.label_sg_name)
@@ -72,29 +72,29 @@ class SubGroup(QWidget):
         layout.addWidget(self.label_msg_name)
         layout.addWidget(HBar())
         layout.addWidget(label_info)
-        layout.addWidget(self.group_button_symmetry_operation)
-        layout.addWidget(self.group_button_character_table)
-        layout.addWidget(self.group_button_wyckoff_site)
-        layout.addWidget(self.group_button_wyckoff_bond)
-        layout.addWidget(self.group_button_product_table)
+        layout.addWidget(self.button_symmetry_operation)
+        layout.addWidget(self.button_character_table)
+        layout.addWidget(self.button_wyckoff_site)
+        layout.addWidget(self.button_wyckoff_bond)
+        layout.addWidget(self.button_product_table)
         layout.addWidget(HBar())
         layout.addWidget(label_site_bond)
         layout.addItem(VSpacer())
 
         # connections.
-        self.group_combo_group_type.currentTextChanged.connect(self.set_group_type)
-        self.group_combo_crystal_type.currentTextChanged.connect(self.set_crystal_type)
-        self.group_combo_group.currentTextChanged.connect(self.set_group)
-        self.group_button_symmetry_operation.clicked.connect(self.show_symmetry_operation)
-        self.group_button_character_table.clicked.connect(self.show_character_table)
-        self.group_button_wyckoff_site.clicked.connect(self.show_wyckoff_site)
-        self.group_button_wyckoff_bond.clicked.connect(self.show_wyckoff_bond)
-        self.group_button_product_table.clicked.connect(self.show_product_table)
+        self.combo_group_type.currentTextChanged.connect(self.set_group_type)
+        self.combo_crystal_type.currentTextChanged.connect(self.set_crystal_type)
+        self.combo_group.currentTextChanged.connect(self.set_group)
+        self.button_symmetry_operation.clicked.connect(self.show_symmetry_operation)
+        self.button_character_table.clicked.connect(self.show_character_table)
+        self.button_wyckoff_site.clicked.connect(self.show_wyckoff_site)
+        self.button_wyckoff_bond.clicked.connect(self.show_wyckoff_bond)
+        self.button_product_table.clicked.connect(self.show_product_table)
 
         # set initial values.
-        self.group_combo_crystal_type.setCurrentText(self.parent._crystal)
-        self.group_combo_group_type.setCurrentIndex(self.parent._type)
-        self.group_combo_group.set_item(self.parent._get_group_list())
+        self.combo_crystal_type.setCurrentText(self.parent._crystal)
+        self.combo_group_type.setCurrentIndex(self.parent._type)
+        self.combo_group.set_item(self.parent._get_group_list())
         if self.parent._type in [0, 2]:
             self.parent._qtdraw.set_cell("off")
         else:
@@ -106,7 +106,7 @@ class SubGroup(QWidget):
         group = group_list[0]  # top.
 
         self.set_group(group, crystal=crystal)
-        self.group_combo_group.set_item(group_list)
+        self.combo_group.set_item(group_list)
         self.parent._qtdraw._set_crystal(crystal)
 
     # ==================================================
@@ -114,7 +114,7 @@ class SubGroup(QWidget):
         tp = self._type_list[group_type]
         group = self.parent._get_group_name()[tp]
         group_list = self.parent._get_group_list(tp=tp)
-        self.group_combo_group.set_item(group_list)
+        self.combo_group.set_item(group_list)
         self.set_group(group, tp=tp)
 
         if tp in [0, 2]:
@@ -125,11 +125,11 @@ class SubGroup(QWidget):
     # ==================================================
     def set_group(self, group, crystal=None, tp=None):
         if crystal is None:
-            crystal = self.group_combo_crystal_type.currentText()
+            crystal = self.combo_crystal_type.currentText()
         if tp is None:
-            tp = self._type_list[self.group_combo_group_type.currentText()]
+            tp = self._type_list[self.combo_group_type.currentText()]
         self.parent._set_group_data(group, crystal=crystal, tp=tp)
-        self.group_combo_group.setCurrentText(group)
+        self.combo_group.setCurrentText(group)
         self.set_group_name()
 
     # ==================================================
