@@ -77,6 +77,7 @@ class MultiPieDialog(QDialog):
 
         self.group_changed.connect(group_panel.set_irrep_list)
         self.group_changed.connect(group_panel.set_wyckoff_list)
+        self.group_changed.connect(group_panel.set_harm_list)
 
         self.group_changed.emit()
         sub_panel.set_group_name()

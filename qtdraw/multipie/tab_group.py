@@ -2,8 +2,8 @@ import sympy as sp
 from PySide6.QtWidgets import QWidget
 from PySide6.QtCore import Qt
 
-from qtdraw.util.util import distance
-from qtdraw.widget.custom_widget import Label, Layout, Button, Combo, VSpacer, HSpacer, HBar, LineEdit
+from qtdraw.util.util import distance, to_latex
+from qtdraw.widget.custom_widget import Label, Layout, Button, Combo, VSpacer, HSpacer, HBar, LineEdit, Check
 from qtdraw.multipie.info_dialog import show_harmonics_decomp, show_atomic_multipole, show_response
 from qtdraw.multipie.multipie_setting import setting_detail as detail
 
@@ -39,10 +39,10 @@ class TabGroup(QWidget):
         layout2.addWidget(label_symmetric, 0, 0, 1, 1, Qt.AlignRight)
         layout2.addWidget(self.group_combo_irrep1, 0, 1, 1, 1)
         layout2.addWidget(self.group_combo_irrep2, 0, 2, 1, 1)
-        layout2.addWidget(self.group_label_symmetric_decomp, 0, 3, 1, 2)
+        layout2.addWidget(self.group_label_symmetric_decomp, 0, 3, 1, 3)
         layout2.addWidget(label_antisymmetric, 1, 0, 1, 1, Qt.AlignRight)
         layout2.addWidget(self.group_combo_irrep, 1, 1, 1, 1)
-        layout2.addWidget(self.group_label_antisymmetric_decomp, 1, 3, 1, 2)
+        layout2.addWidget(self.group_label_antisymmetric_decomp, 1, 3, 1, 3)
 
         # harmonics decomposition.
         label_harmonics = Label(parent, text="Harmonics Decomposition (PG)", bold=True)
@@ -68,6 +68,27 @@ class TabGroup(QWidget):
         layout4.addWidget(self.group_combo_harmonics_rank, 0, 3, 1, 1)
         layout4.addWidget(label_harmonics_decomp, 0, 4, 1, 1, Qt.AlignRight)
         layout4.addWidget(self.group_combo_harmonics_decomp, 0, 5, 1, 2)
+
+        # harmonics.
+        label_harmonics1 = Label(parent, text="Harmonics (PG)", bold=True)
+        self.object_combo_harmonics_type = Combo(parent, ["Q", "G"])
+        self.object_combo_harmonics_rank = Combo(parent, map(str, range(12)))
+        self.object_combo_harmonics = Combo(parent)
+        label_harmonics_ex = Label(parent, text="expression")
+        self.object_edit_harmonics_ex = LineEdit(parent)
+        self.object_check_harmonics_latex = Check(parent, text="LaTeX")
+
+        panel15 = QWidget(parent)
+        layout15 = Layout(panel15)
+        layout15.addWidget(label_harmonics1, 0, 0, 1, 1)
+        panel16 = QWidget(parent)
+        layout16 = Layout(panel16)
+        layout16.addWidget(self.object_combo_harmonics_type, 0, 0, 1, 1)
+        layout16.addWidget(self.object_combo_harmonics_rank, 0, 1, 1, 1)
+        layout16.addWidget(self.object_combo_harmonics, 0, 2, 1, 1)
+        layout16.addWidget(self.object_check_harmonics_latex, 0, 3, 1, 1, Qt.AlignRight)
+        layout16.addWidget(label_harmonics_ex, 1, 0, 1, 1)
+        layout16.addWidget(self.object_edit_harmonics_ex, 1, 1, 1, 3)
 
         # response tensor.
         label_response = Label(parent, text="Response Tensor (PG/MPG)", bold=True)
@@ -116,7 +137,6 @@ class TabGroup(QWidget):
 
         # Wyckoff site/bond.
         label_wyckoff_site = Label(parent, text="Wyckoff Site/Bond (representative) (PG/SG)", bold=True)
-        self.group_button_wyckoff_site = Button(parent, text="show")
         label_ws_neighbor = Label(parent, text="neighbor")
         label_wyckoff_site_str = Label(parent, text="site")
         self.group_combo_wyckoff_site = Combo(parent)
@@ -134,20 +154,17 @@ class TabGroup(QWidget):
         layout10.addWidget(label_wyckoff_site_str, 0, 0, 1, 1, Qt.AlignRight)
         layout10.addWidget(self.group_combo_wyckoff_site, 0, 1, 1, 1)
         layout10.addWidget(label_ws_neighbor, 0, 2, 1, 1, Qt.AlignRight)
-        layout10.addWidget(self.group_edit_ws_neighbor, 0, 3, 1, 1)
-        layout10.addWidget(self.group_button_wyckoff_site, 0, 4, 1, 1, Qt.AlignRight)
+        layout10.addWidget(self.group_edit_ws_neighbor, 0, 3, 1, 2)
         layout10.addWidget(label_wyckoff_bond_str, 1, 0, 1, 1, Qt.AlignRight)
         layout10.addWidget(self.group_combo_wyckoff_bond, 1, 1, 1, 1)
         layout10.addWidget(self.group_button_wyckoff_bond, 1, 4, 1, 1, Qt.AlignRight)
-        layout10.addItem(HSpacer(), 0, 5, 1, 1)
+        # layout10.addItem(HSpacer(), 0, 5, 1, 1)
 
         # find Wyckoff.
-        label_fwyckoff = Label(
-            parent,
-            text='<span style="font-weight:bold;">Find Wyckoff (PG/SG)</span> : find Wyckoff and local symmetry (LS).<br>&nbsp;&nbsp;1. input SITE/BOND, + ENTER. \u21d2 Wyckoff and LS are shown.',
-        )
+        label_fwyckoff = Label(parent, text="Find Wyckoff Site/Bond (PG/SG)", bold=True)
+        label_fwyckoff_sb = Label(parent, text="Site/Bond")
         self.group_edit_fwyckoff = LineEdit(parent, text="[0,0,0]", validator=("site_bond", {"use_var": False}))
-        label_wyckoff = Label(parent, text="\u21d2 Wyckoff")
+        label_wyckoff = Label(parent, text="Wyckoff")
         self.group_edit_fwyckoff_position = Label(parent, text="")
         self.group_edit_fwyckoff_position.set_background(True)
         label_symmetry = Label(parent, text="LS")
@@ -157,11 +174,14 @@ class TabGroup(QWidget):
         panel13 = QWidget(parent)
         layout13 = Layout(panel13)
         layout13.addWidget(label_fwyckoff, 0, 0, 1, 5, Qt.AlignLeft)
-        layout13.addWidget(self.group_edit_fwyckoff, 1, 0, 1, 4)
-        layout13.addWidget(label_wyckoff, 2, 0, 1, 1, Qt.AlignRight)
-        layout13.addWidget(self.group_edit_fwyckoff_position, 2, 1, 1, 1)
-        layout13.addWidget(label_symmetry, 2, 2, 1, 1, Qt.AlignRight)
-        layout13.addWidget(self.group_edit_fwyckoff_symmetry, 2, 3, 1, 1)
+        panel14 = QWidget(parent)
+        layout14 = Layout(panel14)
+        layout14.addWidget(label_fwyckoff_sb, 0, 0, 1, 1)
+        layout14.addWidget(self.group_edit_fwyckoff, 0, 1, 1, 4)
+        layout14.addWidget(label_wyckoff, 1, 1, 1, 1, Qt.AlignRight)
+        layout14.addWidget(self.group_edit_fwyckoff_position, 1, 2, 1, 1)
+        layout14.addWidget(label_symmetry, 1, 3, 1, 1, Qt.AlignRight)
+        layout14.addWidget(self.group_edit_fwyckoff_symmetry, 1, 4, 1, 1)
 
         # layout.
         layout.addWidget(panel1)
@@ -172,7 +192,12 @@ class TabGroup(QWidget):
         layout.addWidget(panel4)
         layout.addWidget(HBar())
 
+        layout.addWidget(panel15)
+        layout.addWidget(panel16)
+        layout.addWidget(HBar())
+
         layout.addWidget(panel13)
+        layout.addWidget(panel14)
         layout.addWidget(HBar())
 
         layout.addWidget(panel9)
@@ -196,9 +221,14 @@ class TabGroup(QWidget):
 
         self.group_button_harmonics_decomp.clicked.connect(self.show_harmonics_decomp)
 
+        self.object_combo_harmonics_type.currentTextChanged.connect(self.set_harm_list)
+        self.object_combo_harmonics_rank.currentTextChanged.connect(self.set_harm_list)
+        self.object_combo_harmonics.currentTextChanged.connect(self.show_harmonics)
+        self.object_check_harmonics_latex.checkStateChanged.connect(self.show_harmonics)
+
         self.group_edit_fwyckoff.returnPressed.connect(self.find_wyckoff_set)
 
-        self.group_button_wyckoff_site.clicked.connect(self.show_wyckoff_site)
+        self.group_edit_ws_neighbor.returnPressed.connect(self.show_wyckoff_site)
         self.group_button_wyckoff_bond.clicked.connect(self.show_wyckoff_bond)
 
         self.group_button_atomic.clicked.connect(self.show_atomic)
@@ -217,6 +247,26 @@ class TabGroup(QWidget):
         self.group_combo_irrep2.set_item(lst)
         self.group_combo_irrep.set_item(lst)
         self.set_irrep_decomp()
+
+    # ==================================================
+    def set_harm_list(self):
+        group = self.parent.group(0)  # PG.
+        rank = int(self.object_combo_harmonics_rank.currentText())
+        head = self.object_combo_harmonics_type.currentText()
+        lst0 = [f"{i[2]}({i[3]})" if i[3] != -1 else f"{i[2]}" for i in group["harmonics"].select(l=rank, X=head).keys()]
+        lst = []
+        for i in lst0:
+            if i[0] == "E":
+                lst.append(i + ",1")
+                lst.append(i + ",2")
+            elif i[0] == "T":
+                lst.append(i + ",1")
+                lst.append(i + ",2")
+                lst.append(i + ",3")
+            else:
+                lst.append(i)
+        self.object_combo_harmonics.set_item(lst)
+        self.object_combo_harmonics.currentTextChanged.emit(lst[0])
 
     # ==================================================
     def set_wyckoff_list(self):
@@ -264,6 +314,30 @@ class TabGroup(QWidget):
         basis = self.group_combo_harmonics_decomp.currentText()
         basis = basis.split(" ")[1]
         self._harmonics_decomp_dialog = show_harmonics_decomp(group, basis, rank, head, self)
+
+    # ==================================================
+    def show_harmonics(self):
+        group = self.parent.group(0)  # PG.
+        rank = int(self.object_combo_harmonics_rank.currentText())
+        head = self.object_combo_harmonics_type.currentText()
+        harm = self.object_combo_harmonics.currentText()
+        check = self.object_check_harmonics_latex.is_checked()
+
+        harm = harm.replace("(", " ").replace(")", "")
+        comp = int(harm.split(",")[1]) - 1 if harm.count(",") > 0 else 0
+        harm = harm.split(",")[0] if harm.count(",") > 0 else harm
+        harm = harm.split(" ")
+        irrep = harm[0]
+        n = -1 if len(harm) == 1 else int(harm[1])
+
+        harm = group["harmonics"].select(X=head, l=rank, Gamma=irrep, n=n)
+        harm = harm[next(iter(harm))][0][comp]
+        if check:
+            harm = to_latex(harm)
+        else:
+            harm = str(harm)
+
+        self.object_edit_harmonics_ex.setText(harm)
 
     # ==================================================
     def show_wyckoff_site(self):

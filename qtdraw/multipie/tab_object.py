@@ -63,29 +63,6 @@ class TabObject(QWidget):
         layout4.addWidget(self.object_combo_orbital_type, 1, 0, 1, 1)
         layout4.addWidget(self.object_edit_orbital, 1, 1, 1, 9)
 
-        label_harmonics = Label(
-            parent,
-            text='<span style="font-weight:bold;">Harmonics</span> : draw point-group harmonics at equivalent sites or bonds.<br>&nbsp;&nbsp;1. choose (type,rank,irrep.), 2. input representative SITE/BOND, + ENTER.<br>&nbsp;&nbsp;\u21d2  expression of harmonics is also shown (in LaTeX form).',
-        )
-        self.object_combo_harmonics_type = Combo(parent, ["Q", "G", "T", "M"])
-        self.object_combo_harmonics_rank = Combo(parent, map(str, range(12)))
-        self.object_combo_harmonics_irrep = Combo(parent)
-        self.object_edit_harmonics = LineEdit(parent, text="", validator=("site_bond", {"use_var": False}))
-        label_harmonics_ex = Label(parent, text="expression")
-        self.object_edit_harmonics_ex = LineEdit(parent)
-        self.object_check_harmonics_latex = Check(parent, text="LaTeX")
-
-        panel5 = QWidget(parent)
-        layout5 = Layout(panel5)
-        layout5.addWidget(label_harmonics, 0, 0, 1, 10, Qt.AlignLeft)
-        layout5.addWidget(self.object_combo_harmonics_type, 1, 0, 1, 1)
-        layout5.addWidget(self.object_combo_harmonics_rank, 1, 1, 1, 1)
-        layout5.addWidget(self.object_combo_harmonics_irrep, 1, 2, 1, 3)
-        layout5.addWidget(self.object_edit_harmonics, 1, 5, 1, 5)
-        layout5.addWidget(label_harmonics_ex, 2, 0, 1, 1)
-        layout5.addWidget(self.object_edit_harmonics_ex, 2, 1, 1, 8)
-        layout5.addWidget(self.object_check_harmonics_latex, 2, 9, 1, 1, Qt.AlignRight)
-
         # layout.
         layout.addWidget(panel1)
         layout.addWidget(HBar())
@@ -94,8 +71,6 @@ class TabObject(QWidget):
         layout.addWidget(panel3)
         layout.addWidget(HBar())
         layout.addWidget(panel4)
-        layout.addWidget(HBar())
-        layout.addWidget(panel5)
         layout.addItem(HSpacer(), 0, 1, 1, 1)
         layout.addItem(VSpacer())
 
