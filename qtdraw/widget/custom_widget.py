@@ -299,6 +299,7 @@ class Combo(QComboBox):
             bold (bool, optional): bold face ?
         """
         super().__init__(parent)
+        self.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
 
         if size is None:
             size = self.font().pointSize()

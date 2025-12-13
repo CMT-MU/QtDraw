@@ -128,7 +128,6 @@ class MultiPieDialog(QDialog):
     # ==================================================
     def clear_data(self):
         self._counter = {}
-        # find tags and remove pvw object.
 
     # ==================================================
     def closeEvent(self, event):
@@ -136,7 +135,7 @@ class MultiPieDialog(QDialog):
 
     # ==================================================
     def _set_counter(self, name):
-        cnt = self._counter.get(name, -1) + 1
+        cnt = self._counter.get(name, 0) + 1
         self._counter[name] = cnt
         return cnt
 
@@ -144,3 +143,30 @@ class MultiPieDialog(QDialog):
     def get_status(self):
         status = {"version": __version__}
         return status
+
+    # ==================================================
+    def _get_index_list(self, lst):
+        def remove_latex(s):
+            s = (
+                s.replace("_{", "")
+                .replace("}", "")
+                .replace("^{", "")
+                .replace(r"\prime", "'")
+                .replace("(", "")
+                .replace(")", "")
+                .replace("0", "-")
+            )
+            return s
+
+        idx = [(Group.tag_multipole(i, latex=True), i) for i in lst]
+        tag_lst = []
+        idx_comp = []
+        for v, i in idx:
+            for no, n in enumerate(v):
+                t1, t2 = n.split("(")
+                t2 = remove_latex(t2)
+                n = t1 + "(" + t2 + ")"
+                tag_lst.append(n.replace(r"\mathbb{", "").replace("}_", "_").replace(",)", ")"))
+                idx_comp.append((i, no))
+
+        return tag_lst, idx_comp

@@ -1,3 +1,9 @@
+"""
+Multipie group tab.
+
+This module provides group tab in MultiPie dialog.
+"""
+
 import sympy as sp
 from PySide6.QtWidgets import QWidget
 from PySide6.QtCore import Qt
@@ -74,6 +80,7 @@ class TabGroup(QWidget):
         self.combo_harmonics1_type = Combo(parent, ["Q", "G"])
         self.combo_harmonics1_rank = Combo(parent, map(str, range(12)))
         self.combo_harmonics1 = Combo(parent)
+        self.combo_harmonics1.setMinimumWidth(150)
         label_harmonics_ex = Label(parent, text="expression")
         self.edit_harmonics1_ex = LineEdit(parent)
         self.check_harmonics1_latex = Check(parent, text="LaTeX")
@@ -219,7 +226,7 @@ class TabGroup(QWidget):
 
         self.combo_harmonics1_type.currentTextChanged.connect(self.set_harm_list)
         self.combo_harmonics1_rank.currentTextChanged.connect(self.set_harm_list)
-        self.combo_harmonics1.currentTextChanged.connect(self.show_harmonics)
+        self.combo_harmonics1.currentIndexChanged.connect(self.show_harmonics)
         self.check_harmonics1_latex.checkStateChanged.connect(self.show_harmonics)
 
         self.edit_find_wyckoff.returnPressed.connect(self.find_wyckoff_set)
@@ -249,20 +256,9 @@ class TabGroup(QWidget):
         group = self.parent.group(0)  # PG.
         rank = int(self.combo_harmonics1_rank.currentText())
         head = self.combo_harmonics1_type.currentText()
-        lst0 = [f"{i[2]}({i[3]})" if i[3] != -1 else f"{i[2]}" for i in group["harmonics"].select(l=rank, X=head).keys()]
-        lst = []
-        for i in lst0:
-            if i[0] == "E":
-                lst.append(i + ",1")
-                lst.append(i + ",2")
-            elif i[0] == "T":
-                lst.append(i + ",1")
-                lst.append(i + ",2")
-                lst.append(i + ",3")
-            else:
-                lst.append(i)
+        lst, self._harm_list = self.parent._get_index_list(group["harmonics"].select(l=rank, X=head).keys())
         self.combo_harmonics1.set_item(lst)
-        self.combo_harmonics1.currentTextChanged.emit(lst[0])
+        self.combo_harmonics1.currentIndexChanged.emit(0)
 
     # ==================================================
     def set_wyckoff_list(self):
@@ -314,20 +310,10 @@ class TabGroup(QWidget):
     # ==================================================
     def show_harmonics(self):
         group = self.parent.group(0)  # PG.
-        rank = int(self.combo_harmonics1_rank.currentText())
-        head = self.combo_harmonics1_type.currentText()
-        harm = self.combo_harmonics1.currentText()
+        harm, comp = self._harm_list[self.combo_harmonics1.currentIndex()]
         check = self.check_harmonics1_latex.is_checked()
 
-        harm = harm.replace("(", " ").replace(")", "")
-        comp = int(harm.split(",")[1]) - 1 if harm.count(",") > 0 else 0
-        harm = harm.split(",")[0] if harm.count(",") > 0 else harm
-        harm = harm.split(" ")
-        irrep = harm[0]
-        n = -1 if len(harm) == 1 else int(harm[1])
-
-        harm = group["harmonics"].select(X=head, l=rank, Gamma=irrep, n=n)
-        harm = harm[next(iter(harm))][0][comp]
+        harm = group["harmonics"][harm][0][comp]
         if check:
             harm = to_latex(harm)
         else:

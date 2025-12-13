@@ -1,3 +1,9 @@
+"""
+Multipie object tab.
+
+This module provides object tab in MultiPie dialog.
+"""
+
 from PySide6.QtWidgets import QWidget
 from PySide6.QtCore import Qt
 

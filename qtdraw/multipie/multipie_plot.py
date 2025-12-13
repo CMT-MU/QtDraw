@@ -204,3 +204,161 @@ def plot_cell_multipole(dialog, multipole, X="Q", size=None, color=None, opacity
                     continue
                 label = f"O{no+1}: " + f"[{m}]".replace(" ", "")
                 pvw.add_orbital(shape=v, surface=v, size=size, color=color, opacity=opacity, position=s, name=name, label=label)
+
+
+# ==================================================
+def plot_bond_definition(
+    dialog, bond, rep=True, name=None, length=None, width=None, opacity=None, color=None, arrow_color=None, arrow_color_rep=None
+):
+    if dialog._type in [0, 2]:
+        group = dialog.group(0)
+    else:
+        group = dialog.group(1)
+    pvw = dialog._pvw
+
+    default = detail["bond_samb"]
+
+    if length is None:
+        length = default["length"]
+    if width is None:
+        width = default["width"]
+    if opacity is None:
+        opacity = default["opacity"]
+    if color is None:
+        color = default["color"]
+    if arrow_color is None:
+        arrow_color = default["arrow_color"]
+    if arrow_color_rep is None:
+        arrow_color_rep = default["arrow_color_rep"]
+
+    wp, bonds = group.find_wyckoff_bond(bond)
+
+    if name is None:
+        cnt = dialog._set_counter(wp)
+        name = f"{wp}({cnt})"
+
+    opt = opacity
+    for no, b in enumerate(bonds):
+        v, c = b[0:3], b[3:6]
+        pvw.add_bond(
+            position=c,
+            direction=v,
+            color=color,
+            color2=color,
+            width=width,
+            cartesian=False,
+            opacity=opt,
+            label=f"b{no+1}",
+            name=name,
+        )
+        acolor = arrow_color_rep if rep and no == 0 else arrow_color
+        pvw.add_vector(
+            position=c, direction=v, length=-length, color=acolor, width=0.01, cartesian=False, label=f"b{no+1}", name=name
+        )
+
+
+# ==================================================
+def plot_site_cluster(
+    dialog, site, samb, wp, label=None, color=None, color_neg=None, color_pos=None, zero_size=None, size_ratio=None
+):
+    pvw = dialog._pvw
+
+    if isinstance(samb, np.ndarray):
+        samb = samb.astype(float)
+
+    default = detail["site_samb"]
+    if color is None:
+        color = default["color"]
+    if color_neg is None:
+        color_neg = default["color_neg"]
+    if color_pos is None:
+        color_pos = default["color_pos"]
+    if zero_size is None:
+        zero_size = default["zero_size"]
+    if size_ratio is None:
+        size_ratio = default["size_ratio"]
+
+    cnt = dialog._set_counter(wp)
+    name = f"{wp}({cnt})"
+
+    for s, v in zip(site, samb):
+        if v > 0:
+            c = color_pos
+        elif v < 0:
+            c = color_neg
+        else:
+            c = color
+            v = zero_size
+        pvw.add_site(position=s, size=size_ratio * abs(v), color=c, name=name, label=label)
+
+
+# ==================================================
+def plot_bond_cluster(
+    dialog,
+    bond,
+    samb,
+    wp,
+    sym=True,
+    label=None,
+    color=None,
+    color_neg=None,
+    color_pos=None,
+    width=None,
+    arrow_ratio=None,
+    width_ratio=None,
+):
+    pvw = dialog._pvw
+
+    if isinstance(samb, np.ndarray):
+        samb = samb.astype(float)
+
+    default = detail["bond_samb"]
+    if color is None:
+        color = default["color"]
+    if color_neg is None:
+        color_neg = default["color_neg"]
+    if color_pos is None:
+        color_pos = default["color_pos"]
+    if width is None:
+        width = default["width"]
+    if arrow_ratio is None:
+        arrow_ratio = default["arrow_ratio"]
+    if width_ratio is None:
+        width_ratio = default["width_ratio"]
+
+    cnt = dialog._set_counter(wp)
+    name = f"{wp}({cnt})"
+
+    if sym:
+        for b, h in zip(bond, samb):
+            v, c = b[0:3], b[3:6]
+            if abs(h) < CHOP:
+                pvw.add_bond(
+                    position=c, direction=v, color=color, color2=color, width=width, cartesian=False, name=name, label=label
+                )
+            else:
+                cl = color_neg if h < 0 else color_pos
+                width = width_ratio * abs(h)
+                pvw.add_bond(position=c, direction=v, color=cl, color2=cl, width=width, cartesian=False, name=name, label=label)
+    else:
+        for b, h in zip(bond, samb):
+            v, c = b[0:3], b[3:6]
+            if abs(h) < CHOP:
+                pvw.add_bond(
+                    position=c,
+                    direction=arrow_ratio * v,
+                    color=color,
+                    color2=color,
+                    width=width,
+                    cartesian=False,
+                    name=name,
+                    label=label,
+                )
+            else:
+                if h < 0:
+                    v = -v
+                cl = color_pos
+                width = width_ratio * abs(h)
+                pvw.add_vector(
+                    position=c, direction=v, length=-arrow_ratio, color=cl, width=width, cartesian=False, name=name, label=label
+                )

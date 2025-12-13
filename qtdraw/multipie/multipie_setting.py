@@ -92,6 +92,22 @@ setting_detail = {
         "opacity": 1.0,
     },
     "multipole": {"size": 0.2, "color": {"Q": "Wistia", "M": "GnBu", "T": "coolwarm", "G": "PiYG"}, "opacity": 1.0},
+    #
+    #
+    #
+    "site_samb": {"color": "silver", "color_neg": "aqua", "color_pos": "salmon", "zero_size": 0.5, "size_ratio": 0.2},
+    "bond_samb": {
+        "length": 0.2,
+        "width": 0.03,
+        "width_ratio": 0.07,
+        "opacity": 0.7,
+        "color": "white",
+        "color_neg": "aqua",
+        "color_pos": "salmon",
+        "arrow_color": "black",
+        "arrow_color_rep": "red",
+        "arrow_ratio": 0.7,
+    },
     "general": {
         "label": False,  # show label ?
         "site_color": "darkseagreen",
