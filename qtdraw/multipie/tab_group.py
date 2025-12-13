@@ -92,7 +92,7 @@ class TabGroup(QWidget):
 
         # find Wyckoff.
         label_fwyckoff = Label(parent, text="Find Wyckoff Site/Bond (PG/SG)", bold=True)
-        label_fwyckoff_sb = Label(parent, text="Site/Bond")
+        label_fwyckoff_sb = Label(parent, text="site/bond")
         self.edit_find_wyckoff = LineEdit(parent, text="[0,0,0]", validator=("site_bond", {"use_var": False}))
         label_wyckoff = Label(parent, text="Wyckoff")
         self.edit_find_wyckoff_position = Label(parent, text="")
@@ -407,7 +407,7 @@ class TabGroup(QWidget):
             group = self.parent.group(0)  # PG.
         else:
             group = self.parent.group(1)  # SG.
-        text = self.edit_find_wyckoff.text()
+        text = self.edit_find_wyckoff.raw_text()
 
         if "@" in text:
             wp, r = group.find_wyckoff_bond(text)

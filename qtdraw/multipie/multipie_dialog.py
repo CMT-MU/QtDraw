@@ -31,6 +31,7 @@ class MultiPieDialog(QDialog):
         super().__init__()
         self._qtdraw = parent  # QtDraw.
         self._pvw = parent.pyvista_widget  # PyVistaWidget.
+        self._counter = {}
 
         mapping = Group.global_info()["mapping"]
         self._crystal_list = {crystal: {tp: list(i.keys()) for tp, i in enumerate(v.values())} for crystal, v in mapping.items()}
@@ -78,6 +79,7 @@ class MultiPieDialog(QDialog):
         self.group_changed.connect(group_panel.set_irrep_list)
         self.group_changed.connect(group_panel.set_wyckoff_list)
         self.group_changed.connect(group_panel.set_harm_list)
+        self._pvw.data_removed.connect(self.clear_data)
 
         self.group_changed.emit()
         sub_panel.set_group_name()
@@ -125,12 +127,18 @@ class MultiPieDialog(QDialog):
 
     # ==================================================
     def clear_data(self):
-        # set counter zero.
-        pass
+        self._counter = {}
+        # find tags and remove pvw object.
 
     # ==================================================
     def closeEvent(self, event):
         super().closeEvent(event)
+
+    # ==================================================
+    def _set_counter(self, name):
+        cnt = self._counter.get(name, -1) + 1
+        self._counter[name] = cnt
+        return cnt
 
     # ==================================================
     def get_status(self):

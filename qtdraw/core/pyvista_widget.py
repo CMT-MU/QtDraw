@@ -255,6 +255,7 @@ class PlotSignal(QObject):
 class PyVistaWidget(QtInteractor):
     # signal for write info.
     message = Signal(str)  # messsage.
+    data_removed = Signal()
 
     # ==================================================
     def __init__(self, parent=None, off_screen=False):
@@ -2515,6 +2516,7 @@ class PyVistaWidget(QtInteractor):
         Clear Data.
         """
         self.reload()
+        self.data_removed.emit()
 
     # ==================================================
     def get_camera_info(self):

@@ -8,6 +8,7 @@ class TabBasis(QWidget):
     # ==================================================
     def __init__(self, parent):
         super().__init__(parent)
+        self.parent = parent
 
         layout = Layout(self)
         layout.setContentsMargins(10, 10, 10, 10)

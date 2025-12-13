@@ -57,7 +57,7 @@ class SubGroup(QWidget):
 
         label_site_bond = Label(
             parent,
-            text="SITE:\n   [x,y,z]\n\nBOND:\n   [x0,y0,z0] ; [x1,y1,z1] (tail-head)\n   [X,Y,Z] @ [x,y,z] (vector-center)\n   [x0,y0,z0] : [X,Y,Z] (start-vector)\n\nVECTOR:\n   [X,Y,Z] # SITE/BOND\n\nORBITAL:\n   (xyz[r]-polynomial) # SITE/BOND",
+            text="Site:\n   [x,y,z]\n\nBond:\n   [x0,y0,z0] ; [x1,y1,z1]     (tail-head)\n   [X,Y,Z] @ [x,y,z]     (vector-center)\n   [x0,y0,z0] : [X,Y,Z]     (start-vector)\n\nVector:\n   [X,Y,Z] # site/bond\n\nOrbital:\n   (xyz[r]-polynomial) # site/bond",
         )
 
         # layout.

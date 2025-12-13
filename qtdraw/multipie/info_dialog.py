@@ -39,7 +39,7 @@ class InfoPanel(QDialog):
         layout.setContentsMargins(10, 10, 10, 10)
 
         size = self._pvw._preference["general"]["size"]
-        table = TableView(self, data, header, vertical, "black", size, mathjax)
+        table = TableView(self, data, header, vertical, "black", size - 2, mathjax)
         layout.addWidget(table)
 
         self.show()
