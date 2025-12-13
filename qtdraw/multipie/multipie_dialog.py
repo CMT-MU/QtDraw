@@ -10,7 +10,7 @@ from PySide6.QtCore import Signal
 from multipie import __version__, Group
 from qtdraw.widget.custom_widget import Layout
 from qtdraw.multipie.sub_group import SubGroup
-from qtdraw.multipie.tab_group import TabGroup
+from qtdraw.multipie.tab_group import TabGroup, _remove_latex
 from qtdraw.multipie.tab_object import TabObject
 from qtdraw.multipie.tab_basis import TabBasis
 from qtdraw.multipie.multipie_setting import setting_detail as detail
@@ -146,17 +146,6 @@ class MultiPieDialog(QDialog):
 
     # ==================================================
     def _get_index_list(self, lst):
-        def remove_latex(s):
-            s = (
-                s.replace("_{", "")
-                .replace("}", "")
-                .replace("^{", "")
-                .replace(r"\prime", "'")
-                .replace("(", "")
-                .replace(")", "")
-                .replace("0", "-")
-            )
-            return s
 
         idx = [(Group.tag_multipole(i, latex=True), i) for i in lst]
         tag_lst = []
@@ -164,7 +153,7 @@ class MultiPieDialog(QDialog):
         for v, i in idx:
             for no, n in enumerate(v):
                 t1, t2 = n.split("(")
-                t2 = remove_latex(t2)
+                t2 = _remove_latex(t2)
                 n = t1 + "(" + t2 + ")"
                 tag_lst.append(n.replace(r"\mathbb{", "").replace("}_", "_").replace(",)", ")"))
                 idx_comp.append((i, no))

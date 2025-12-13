@@ -15,6 +15,20 @@ from qtdraw.multipie.multipie_setting import setting_detail as detail
 
 
 # ==================================================
+def _remove_latex(s):
+    s = (
+        s.replace("_{", "")
+        .replace("}", "")
+        .replace("^{", "")
+        .replace(r"\prime", "'")
+        .replace("(", "")
+        .replace(")", "")
+        .replace("0", "-")
+    )
+    return s
+
+
+# ==================================================
 class TabGroup(QWidget):
     # ==================================================
     def __init__(self, parent):
@@ -272,18 +286,6 @@ class TabGroup(QWidget):
 
     # ==================================================
     def set_irrep_decomp(self, value=None):
-        def remove_latex(s):
-            s = (
-                s.replace("_{", "")
-                .replace("}", "")
-                .replace("^{", "")
-                .replace(r"\prime", "'")
-                .replace("(", "")
-                .replace(")", "")
-                .replace("0", "-")
-            )
-            return s
-
         pg = self.parent.group(0)  # PG.
 
         irrep1 = self.combo_irrep1.currentText()
@@ -292,8 +294,8 @@ class TabGroup(QWidget):
 
         s = pg["character"]["symmetric_product"][(irrep1, irrep2)]
         a = pg["character"]["anti_symmetric_product"][irrep]
-        s = remove_latex(str(sum([n * sp.Symbol(v) for n, v in s])))
-        a = remove_latex(str(sum([n * sp.Symbol(v) for n, v in a])))
+        s = _remove_latex(str(sum([n * sp.Symbol(v) for n, v in s])))
+        a = _remove_latex(str(sum([n * sp.Symbol(v) for n, v in a])))
 
         self.label_symmetric_decomp.setText("   =   " + s)
         self.label_antisymmetric_decomp.setText("   =   " + a)
@@ -395,7 +397,7 @@ class TabGroup(QWidget):
             group = self.parent.group(1)  # SG.
         text = self.edit_find_wyckoff.raw_text()
 
-        if "@" in text:
+        if text.count("[") == 2:
             wp, r = group.find_wyckoff_bond(text)
             # sym = group["wyckoff"]["bond"][wp]["symmetry"]
             sym = ""
