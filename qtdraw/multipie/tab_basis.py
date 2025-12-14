@@ -187,7 +187,7 @@ class TabBasis(QWidget):
         site = self.edit_site.raw_text()
 
         self._site_wp, self._sites = group.find_wyckoff_site(site)
-        self._site_samb = group["cluster_samb"]["site"][self._site_wp]
+        self._site_samb = group.cluster_samb(self._site_wp)
 
         lst, self._site_samb_list = self.parent._get_index_list(self._site_samb.keys())
         self.combo_site_samb.set_item(lst)
@@ -202,10 +202,7 @@ class TabBasis(QWidget):
         bond = self.edit_bond.raw_text()
 
         self._bond_wp, self._bonds = group.find_wyckoff_bond(bond)
-        s = group["cluster_samb"]["bond_s"][self._bond_wp]
-        a = group["cluster_samb"]["bond_a"][self._bond_wp]
-        a = Dict(PGMultipoleType, {("T" if idx[0] == "Q" else "M", *idx[1:]): (v, ex) for idx, (v, ex) in a.items()})
-        self._bond_samb = Dict(s.key_type, dict(s) | dict(a))
+        self._bond_samb = group.cluster_samb(self._bond_wp, "bond")
 
         lst, self._bond_samb_list = self.parent._get_index_list(self._bond_samb.keys())
         self.combo_bond_samb.set_item(lst)

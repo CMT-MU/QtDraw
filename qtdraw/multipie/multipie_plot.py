@@ -310,7 +310,10 @@ def plot_bond_cluster(
     pvw = dialog._pvw
 
     if isinstance(samb, np.ndarray):
-        samb = samb.astype(float)
+        if sym:
+            samb = samb.astype(float)
+        else:
+            samb = samb.astype(complex).imag
 
     default = detail["bond_samb"]
     if color is None:
