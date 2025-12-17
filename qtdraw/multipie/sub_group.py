@@ -38,7 +38,7 @@ class SubGroup(QWidget):
 
         # widget.
         label_group = Label(parent, text="Group", bold=True)
-        self._type_list = {"Point Group": 0, "Space Group": 1, "Magnetic Point Group": 2, "Magnetic Space Group": 3}
+        self._type_list = {"Point Group": "PG", "Space Group": "SG", "Magnetic Point Group": "MPG", "Magnetic Space Group": "MSG"}
         self.combo_group_type = Combo(parent, self._type_list.keys())
         self.combo_crystal_type = Combo(parent, parent._crystal_list.keys())
         self.combo_group = Combo(parent, [])
@@ -93,9 +93,9 @@ class SubGroup(QWidget):
 
         # set initial values.
         self.combo_crystal_type.setCurrentText(self.parent._crystal)
-        self.combo_group_type.setCurrentIndex(self.parent._type)
+        self.combo_group_type.setCurrentText(self.parent._type)
         self.combo_group.set_item(self.parent._get_group_list())
-        if self.parent._type in [0, 2]:
+        if self.parent._type in ["PG", "MPG"]:
             self.parent._qtdraw.set_cell("off")
         else:
             self.parent._qtdraw.set_cell("single")
@@ -117,7 +117,7 @@ class SubGroup(QWidget):
         self.combo_group.set_item(group_list)
         self.set_group(group, tp=tp)
 
-        if tp in [0, 2]:
+        if tp in ["PG", "MPG"]:
             self.parent._qtdraw.set_cell("off")
         else:
             self.parent._qtdraw.set_cell("single")
@@ -135,40 +135,34 @@ class SubGroup(QWidget):
     # ==================================================
     def set_group_name(self):
         name = self.parent._get_group_name()
-        self.label_pg_name.setText("  " + name[0])
-        self.label_sg_name.setText("  " + name[1])
-        self.label_mpg_name.setText("  " + name[2])
-        self.label_msg_name.setText("  " + name[3])
+        self.label_pg_name.setText("  " + name["PG"])
+        self.label_sg_name.setText("  " + name["SG"])
+        self.label_mpg_name.setText("  " + name["MPG"])
+        self.label_msg_name.setText("  " + name["MSG"])
 
     # ==================================================
     def show_symmetry_operation(self):
-        group = self.parent.group()
+        group = self.parent.group
         self._symmetry_operation_dialog = show_symmetry_operation(group, self)
 
     # ==================================================
     def show_character_table(self):
-        group = self.parent.group(0)  # PG.
+        group = self.parent.p_group
         self._character_table_dialog = show_character_table(group, self)
 
     # ==================================================
     def show_wyckoff_site(self):
-        if self.parent._type in [0, 2]:
-            group = self.parent.group(0)  # PG.
-        else:
-            group = self.parent.group(1)  # SG.
+        group = self.parent.ps_group
         self._wyckoff_site_dialog = show_wyckoff_site(group, self)
 
     # ==================================================
     def show_wyckoff_bond(self):
-        if self.parent._type in [0, 2]:
-            group = self.parent.group(0)  # PG.
-        else:
-            group = self.parent.group(1)  # SG.
+        group = self.parent.ps_group
         self._wyckoff_bond_dialog = show_wyckoff_bond(group, self)
 
     # ==================================================
     def show_product_table(self):
-        group = self.parent.group(0)  # PG.
+        group = self.parent.p_group
         self._product_table_dialog = show_product_table(group, self)
 
     # ==================================================

@@ -553,6 +553,7 @@ class LineEdit(QLineEdit):
 
         if k in (Qt.Key_Return, Qt.Key_Enter):
             self.setText(self.text())
+            self.clearFocus()
             if self._valid:
                 self.returnPressed.emit()
             return

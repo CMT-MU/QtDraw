@@ -78,27 +78,27 @@ def show_symmetry_operation(group, parent):
         - (InfoPanel) -- symmetry operation panel.
     """
     g_type = group.group_type
-    SO = group["symmetry_operation"]
+    SO = group.symmetry_operation
 
     name = "Symmetry Operation"
     header = ["No", "tag", "matrix (polar)", "det", "TR"]
 
     ops = [group.tag_symmetry_operation(i, True) for i in SO["tag"]]
-    if g_type in ["PG", "MPG"]:
+    if group.is_point_group:
         mat = [sp.latex(sp.Matrix(i)) for i in SO["fractional"]]
     else:
         mat = [sp.latex(sp.Matrix(i)[0:3, :]) for i in SO["fractional"]]
     det = [str(i) for i in SO["det"]]
-    if g_type in ["MPG", "MSG"]:
+    if group.is_magnetic_group:
         tr = [str(i) for i in SO["tr_sign"]]
 
     data = []
-    if g_type in ["SG"]:
+    if g_type == "SG":
         ps = ["+" + to_latex(i, "vector") for i in SO["plus_set"]]
         data.append([r"{\rm PS}"] + ps + [""] * (4 - len(ps)))
         data.append(["", "", "", "", ""])
 
-    if g_type in ["PG", "SG"]:
+    if not group.is_magnetic_group:
         for no, i in enumerate(zip(ops, mat, det)):
             data.append([str(no + 1)] + list(i) + [""])
     else:
@@ -120,7 +120,7 @@ def show_character_table(group, parent):
     Returns:
         - (InfoPanel) -- character table panel.
     """
-    character = group["character"]
+    character = group.character
 
     name = "Character Table"
     first = [r"{\rm irrep.}"] + [group.tag_symmetry_operation(i[0], True) + f"({len(i)})" for i in character["conjugacy"]]
@@ -146,8 +146,8 @@ def show_wyckoff_site(group, parent):
         - (InfoPanel) -- Wyckoff site panel.
     """
     g_type = group.group_type
-    SO = group["symmetry_operation"]
-    wp = group["wyckoff"]["site"]
+    SO = group.symmetry_operation
+    wp = group.wyckoff["site"]
     nop = len(SO["tag"])
 
     data = []
@@ -188,8 +188,8 @@ def show_wyckoff_bond(group, parent):
         - (InfoPanel) -- Wyckoff bond panel.
     """
     g_type = group.group_type
-    SO = group["symmetry_operation"]
-    wp = group["wyckoff"]["bond"]
+    SO = group.symmetry_operation
+    wp = group.wyckoff["bond"]
     nop = len(SO["tag"])
 
     data = []
@@ -229,7 +229,7 @@ def show_product_table(group, parent):
     Returns:
         - (InfoPanel) -- product table panel.
     """
-    SO = group["symmetry_operation"]
+    SO = group.symmetry_operation
 
     name = "Product Table"
     ops = [group.tag_symmetry_operation(i, True) for i in SO["tag"]]
@@ -303,9 +303,9 @@ def show_atomic_multipole(group, bra, ket, head, basis_type, parent):
     header = ["No", "multipole", "matrix"]
 
     if bra > ket:
-        samb = group["atomic_samb"][basis_type][(ket, bra)]
+        samb = group.atomic_samb(basis_type, (ket, bra))
     else:
-        samb = group["atomic_samb"][basis_type][(bra, ket)]
+        samb = group.atomic_samb(basis_type, (bra, ket))
     if head != "":
         samb = samb.select(X=head)
     basis = group.atomic_basis(basis_type)
@@ -341,7 +341,7 @@ def show_response(group, rank, r_type, parent):
     """
     rank_dict = {0: "s", 1: "p", 2: "d", 3: "f"}
     d = group.response_tensor_all(r_type)
-    lst0 = group["active_multipole"]
+    lst0 = group.active_multipole
     lst = {}
     for i in lst0:
         for r in range(rank + 1):

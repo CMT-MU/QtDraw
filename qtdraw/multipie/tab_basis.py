@@ -4,14 +4,20 @@ Multipie basis tab.
 This module provides basis tab in MultiPie dialog.
 """
 
-import sympy as sp
+import numpy as np
+
 from PySide6.QtWidgets import QWidget
 from PySide6.QtCore import Qt
 
-from multipie import PGMultipoleType
-from multipie.util.util_dict import Dict
 from qtdraw.widget.custom_widget import Label, Layout, Button, Combo, VSpacer, HBar, LineEdit
-from qtdraw.multipie.multipie_plot import plot_bond_definition, plot_site_cluster, plot_bond_cluster
+from qtdraw.multipie.multipie_plot import (
+    plot_bond_definition,
+    plot_site_cluster,
+    plot_bond_cluster,
+    plot_vector_cluster,
+    plot_orbital_cluster,
+)
+from qtdraw.multipie.multipie_util import create_samb_object
 
 
 # ==================================================
@@ -159,10 +165,13 @@ class TabBasis(QWidget):
         layout.addWidget(panel5, 8, 0, 1, 1)
         layout.addItem(VSpacer(), 9, 0, 1, 1)
 
-        self._site_samb = None
-        self._bond_samb = None
-        self._vector_samb = None
-        self._orbital_samb = None
+        self._site_samb = {}
+        self._bond_samb = {}
+        self._vector_samb = {}
+        self._orbital_samb = {}
+
+        self._vector_list = {"Q": [], "G": [], "T": [], "M": []}
+        self._orbital_list = {"Q": [], "G": [], "T": [], "M": []}
 
         # connections.
         self.edit_def_bond.returnPressed.connect(self.show_bond_definition)
@@ -172,18 +181,14 @@ class TabBasis(QWidget):
         self.edit_orbital.returnPressed.connect(self.set_orbital)
         self.button_site_draw.clicked.connect(self.show_site)
         self.button_bond_draw.clicked.connect(self.show_bond)
-
-    # ==================================================
-    def show_bond_definition(self):
-        bond = self.edit_def_bond.raw_text()
-        plot_bond_definition(self.parent, bond)
+        self.combo_vector_samb_type.currentTextChanged.connect(self.set_vector_list)
+        self.combo_orbital_samb_type.currentTextChanged.connect(self.set_orbital_list)
+        self.button_vector_draw.clicked.connect(self.show_vector)
+        self.button_orbital_draw.clicked.connect(self.show_orbital)
 
     # ==================================================
     def set_site(self):
-        if self.parent._type in [0, 2]:
-            group = self.parent.group(0)  # PG.
-        else:
-            group = self.parent.group(1)  # SG.
+        group = self.parent.ps_group
         site = self.edit_site.raw_text()
 
         self._site_wp, self._sites = group.find_wyckoff_site(site)
@@ -195,10 +200,7 @@ class TabBasis(QWidget):
 
     # ==================================================
     def set_bond(self):
-        if self.parent._type in [0, 2]:
-            group = self.parent.group(0)  # PG.
-        else:
-            group = self.parent.group(1)  # SG.
+        group = self.parent.ps_group
         bond = self.edit_bond.raw_text()
 
         self._bond_wp, self._bonds = group.find_wyckoff_bond(bond)
@@ -210,18 +212,54 @@ class TabBasis(QWidget):
 
     # ==================================================
     def set_vector(self):
+        group = self.parent.ps_group
         site_bond = self.edit_vector.raw_text()
         vector_type = self.combo_vector_type.currentText()
-        print(vector_type, site_bond)
-        # set samb
+        samb, self._vector_wp, self._vector_samb_site = group.multipole_cluster_samb(vector_type, 1, site_bond)
+
+        self._vector_samb = {}
+        self._vector_samb_list = {}
+        for tp in ["Q", "G", "T", "M"]:
+            self._vector_samb[tp] = samb.select(X=tp)
+            self._vector_list[tp], self._vector_samb_list[tp] = self.parent._get_index_list(self._vector_samb[tp].keys())
+        self.set_vector_list()
+
+    # ==================================================
+    def set_vector_list(self):
+        tp = self.combo_vector_samb_type.currentText()
+        lst = self._vector_list[tp]
+        self.combo_vector_samb.set_item(lst)
+        self.combo_vector_samb.setCurrentIndex(0)
 
     # ==================================================
     def set_orbital(self):
+        group = self.parent.ps_group
         site_bond = self.edit_orbital.raw_text()
         orbital_type = self.combo_orbital_type.currentText()
         orbital_rank = int(self.combo_orbital_rank.currentText())
-        print(orbital_type, orbital_rank, site_bond)
-        # set samb
+        samb, self._orbital_wp, self._orbital_samb_site = group.multipole_cluster_samb(orbital_type, orbital_rank, site_bond)
+
+        self._orbital_samb = {}
+        self._orbital_samb_list = {}
+        for tp in ["Q", "G", "T", "M"]:
+            self._orbital_samb[tp] = samb.select(X=tp)
+            self._orbital_list[tp], self._orbital_samb_list[tp] = self.parent._get_index_list(self._orbital_samb[tp].keys())
+        self.set_orbital_list()
+
+    # ==================================================
+    def set_orbital_list(self):
+        tp = self.combo_orbital_samb_type.currentText()
+        lst = self._orbital_list[tp]
+        self.combo_orbital_samb.set_item(lst)
+        self.combo_orbital_samb.setCurrentIndex(0)
+
+    # ==================================================
+    def show_bond_definition(self):
+        group = self.parent.ps_group
+        bond = self.edit_def_bond.raw_text()
+        wp, bonds = group.find_wyckoff_bond(bond)
+
+        plot_bond_definition(self.parent, bonds, wp)
 
     # ==================================================
     def show_site(self):
@@ -237,3 +275,29 @@ class TabBasis(QWidget):
 
         samb = self._bond_samb[samb][0][comp]
         plot_bond_cluster(self.parent, self._bonds, samb, self._bond_wp, sym)
+
+    # ==================================================
+    def show_vector(self):
+        X = self.combo_vector_type.currentText()
+        tp = self.combo_vector_samb_type.currentText()
+        samb, comp = self._vector_samb_list[tp][self.combo_vector_samb.currentIndex()]
+
+        samb = self._vector_samb[tp][samb][0][comp]
+        wp = self._vector_wp
+        site = self._vector_samb_site
+
+        obj = create_samb_object(self.parent.ps_group, tp, samb, wp, site, vec=True)
+        plot_vector_cluster(self.parent, site, obj, X)
+
+    # ==================================================
+    def show_orbital(self):
+        X = self.combo_orbital_type.currentText()
+        tp = self.combo_orbital_samb_type.currentText()
+        samb, comp = self._orbital_samb_list[tp][self.combo_orbital_samb.currentIndex()]
+
+        samb = self._orbital_samb[tp][samb][0][comp]
+        wp = self._orbital_wp
+        site = self._orbital_samb_site
+
+        obj = create_samb_object(self.parent.ps_group, tp, samb, wp, site)
+        plot_orbital_cluster(self.parent, site, obj, X)

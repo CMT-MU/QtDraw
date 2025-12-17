@@ -55,6 +55,8 @@ class TabObject(QWidget):
         self.combo_vector_type = Combo(parent, ["Q", "G", "T", "M"])
         self.edit_vector = LineEdit(parent, text="[0,0,1] # [0,0,1]@[0,0,0]", validator=("vector_site_bond", {"use_var": False}))
         self.check_vector_av = Check(parent, text="av.")
+        self.check_vector_cart = Check(parent, text="cartesian")
+        self.check_vector_cart.setChecked(True)
 
         panel3 = QWidget(parent)
         layout3 = Layout(panel3)
@@ -62,6 +64,7 @@ class TabObject(QWidget):
         layout3.addWidget(self.combo_vector_type, 1, 0, 1, 1)
         layout3.addWidget(self.check_vector_av, 1, 1, 1, 1, Qt.AlignRight)
         layout3.addWidget(self.edit_vector, 1, 2, 1, 1)
+        layout3.addWidget(self.check_vector_cart, 2, 0, 1, 2)
 
         # orbital.
         label_orbital = Label(
@@ -109,8 +112,9 @@ class TabObject(QWidget):
     def show_vector(self):
         vector = self.edit_vector.raw_text()
         vector_type = self.combo_vector_type.currentText()
+        cartesian = self.check_vector_cart.is_checked()
         av = self.check_vector_av.is_checked()
-        plot_cell_vector(self.parent, vector, vector_type, average=av, cartesian=True)
+        plot_cell_vector(self.parent, vector, vector_type, average=av, cartesian=cartesian)
 
     # ==================================================
     def show_orbital(self):

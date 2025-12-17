@@ -15,20 +15,6 @@ from qtdraw.multipie.multipie_setting import setting_detail as detail
 
 
 # ==================================================
-def _remove_latex(s):
-    s = (
-        s.replace("_{", "")
-        .replace("}", "")
-        .replace("^{", "")
-        .replace(r"\prime", "'")
-        .replace("(", "")
-        .replace(")", "")
-        .replace("0", "-")
-    )
-    return s
-
-
-# ==================================================
 class TabGroup(QWidget):
     # ==================================================
     def __init__(self, parent):
@@ -71,7 +57,7 @@ class TabGroup(QWidget):
         label_harmonics_rank = Label(parent, text="rank")
         self.combo_harmonics_rank = Combo(parent, map(str, range(12)))
         label_harmonics_decomp = Label(parent, text="target PG")
-        point_group_all_list = sum([i[0] for i in self.parent._crystal_list.values()], [])
+        point_group_all_list = sum([i["PG"] for i in self.parent._crystal_list.values()], [])
         self.combo_harmonics_decomp = Combo(parent, point_group_all_list)
         self.button_harmonics_decomp = Button(parent, text="decompose")
 
@@ -181,7 +167,7 @@ class TabGroup(QWidget):
         layout12.addWidget(self.combo_atomic_ket_basis, 1, 2, 1, 1)
 
         # response tensor.
-        label_response = Label(parent, text="Response Tensor (PG/MPG)", bold=True)
+        label_response = Label(parent, text="Response Tensor (MPG)", bold=True)
         self.button_response = Button(parent, text="show")
         self.combo_response_type = Combo(parent, ["Q", "G", "T", "M"])
         label_response_type = Label(parent, text="type")
@@ -258,8 +244,8 @@ class TabGroup(QWidget):
 
     # ==================================================
     def set_irrep_list(self):
-        group = self.parent.group(0)  # PG.
-        lst = list(group["character"]["table"].keys())
+        group = self.parent.p_group
+        lst = list(group.character["table"].keys())
         self.combo_irrep1.set_item(lst)
         self.combo_irrep2.set_item(lst)
         self.combo_irrep.set_item(lst)
@@ -267,33 +253,42 @@ class TabGroup(QWidget):
 
     # ==================================================
     def set_harm_list(self):
-        group = self.parent.group(0)  # PG.
+        group = self.parent.p_group
         rank = int(self.combo_harmonics1_rank.currentText())
         head = self.combo_harmonics1_type.currentText()
-        lst, self._harm_list = self.parent._get_index_list(group["harmonics"].select(l=rank, X=head).keys())
+        lst, self._harm_list = self.parent._get_index_list(group.harmonics.select(l=rank, X=head).keys())
         self.combo_harmonics1.set_item(lst)
         self.combo_harmonics1.currentIndexChanged.emit(0)
 
     # ==================================================
     def set_wyckoff_list(self):
-        if self.parent._type in [0, 2]:
-            group = self.parent.group(0)  # PG.
-        else:
-            group = self.parent.group(1)  # SG.
+        group = self.parent.ps_group
 
-        self.combo_wyckoff_site.set_item(group["wyckoff"]["site"].keys())
-        self.combo_wyckoff_bond.set_item(group["wyckoff"]["bond"].keys())
+        self.combo_wyckoff_site.set_item(group.wyckoff["site"].keys())
+        self.combo_wyckoff_bond.set_item(group.wyckoff["bond"].keys())
 
     # ==================================================
     def set_irrep_decomp(self, value=None):
-        pg = self.parent.group(0)  # PG.
+        def _remove_latex(s):
+            s = (
+                s.replace("_{", "")
+                .replace("}", "")
+                .replace("^{", "")
+                .replace(r"\prime", "'")
+                .replace("(", "")
+                .replace(")", "")
+                .replace("0", "-")
+            )
+            return s
+
+        pg = self.parent.p_group
 
         irrep1 = self.combo_irrep1.currentText()
         irrep2 = self.combo_irrep2.currentText()
         irrep = self.combo_irrep.currentText()
 
-        s = pg["character"]["symmetric_product"][(irrep1, irrep2)]
-        a = pg["character"]["anti_symmetric_product"][irrep]
+        s = pg.character["symmetric_product"][(irrep1, irrep2)]
+        a = pg.character["anti_symmetric_product"][irrep]
         s = _remove_latex(str(sum([n * sp.Symbol(v) for n, v in s])))
         a = _remove_latex(str(sum([n * sp.Symbol(v) for n, v in a])))
 
@@ -302,7 +297,7 @@ class TabGroup(QWidget):
 
     # ==================================================
     def show_harmonics_decomp(self):
-        group = self.parent.group(0)  # PG.
+        group = self.parent.p_group
         head = self.combo_harmonics_type.currentText()
         rank = int(self.combo_harmonics_rank.currentText())
         basis = self.combo_harmonics_decomp.currentText()
@@ -311,11 +306,11 @@ class TabGroup(QWidget):
 
     # ==================================================
     def show_harmonics(self):
-        group = self.parent.group(0)  # PG.
+        group = self.parent.p_group
         harm, comp = self._harm_list[self.combo_harmonics1.currentIndex()]
         check = self.check_harmonics1_latex.is_checked()
 
-        harm = group["harmonics"][harm][0][comp]
+        harm = group.harmonics[harm][0][comp]
         if check:
             harm = to_latex(harm)
         else:
@@ -325,15 +320,12 @@ class TabGroup(QWidget):
 
     # ==================================================
     def show_wyckoff_site(self):
-        if self.parent._type in [0, 2]:
-            group = self.parent.group(0)  # PG.
-        else:
-            group = self.parent.group(1)  # SG.
+        group = self.parent.ps_group
         wp = self.combo_wyckoff_site.currentText()
 
         # plot sites.
-        sites = group["wyckoff"]["site"][wp]["fractional"].astype(float)
-        mp = group["wyckoff"]["site"][wp]["mapping"]
+        sites = group.wyckoff["site"][wp]["fractional"].astype(float)
+        mp = group.wyckoff["site"][wp]["mapping"]
 
         default = detail["site"]
         size = default["size"]
@@ -363,15 +355,12 @@ class TabGroup(QWidget):
 
     # ==================================================
     def show_wyckoff_bond(self):
-        if self.parent._type in [0, 2]:
-            group = self.parent.group(0)  # PG.
-        else:
-            group = self.parent.group(1)  # SG.
+        group = self.parent.ps_group
         wp = self.combo_wyckoff_bond.currentText()
 
         # plot bonds.
-        bonds = group["wyckoff"]["bond"][wp]["fractional"].astype(float)
-        mp = group["wyckoff"]["bond"][wp]["mapping"]
+        bonds = group.wyckoff["bond"][wp]["fractional"].astype(float)
+        mp = group.wyckoff["bond"][wp]["mapping"]
 
         default = detail["bond"]
         width = default["width"]
@@ -391,19 +380,16 @@ class TabGroup(QWidget):
 
     # ==================================================
     def find_wyckoff_set(self):
-        if self.parent._type in [0, 2]:
-            group = self.parent.group(0)  # PG.
-        else:
-            group = self.parent.group(1)  # SG.
+        group = self.parent.ps_group
         text = self.edit_find_wyckoff.raw_text()
 
         if text.count("[") == 2:
             wp, r = group.find_wyckoff_bond(text)
-            # sym = group["wyckoff"]["bond"][wp]["symmetry"]
+            # sym = group.wyckoff["bond"][wp]["symmetry"]
             sym = ""
         else:
             wp, r = group.find_wyckoff_site(text)
-            sym = group["wyckoff"]["site"][wp]["symmetry"]
+            sym = group.wyckoff["site"][wp]["symmetry"]
 
         self.edit_find_wyckoff_position.setText(wp)
         self.edit_find_wyckoff_symmetry.setText(sym)
@@ -414,13 +400,13 @@ class TabGroup(QWidget):
         basis_type = self.combo_atomic_basis_type.currentText()
         bra = self.combo_atomic_bra_basis.currentText()
         ket = self.combo_atomic_ket_basis.currentText()
-        group = self.parent.group(0)
+        group = self.parent.p_group
 
         self._atomic_dialog = show_atomic_multipole(group, bra, ket, head, basis_type, self)
 
     # ==================================================
     def show_response(self):
-        group = self.parent.group(2)  # MPG.
+        group = self.parent.mp_group
         rank = int(self.combo_response_rank.currentText())
         r_type = self.combo_response_type.currentText()
 

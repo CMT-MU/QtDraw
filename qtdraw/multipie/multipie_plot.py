@@ -18,7 +18,7 @@ def plot_cell_site(dialog, site, size=None, color=None, opacity=None, name=None)
             opacity (float, optional): opacity [default: 1.0].
             name (str, optional): plot name.
     """
-    group = dialog.group()
+    group = dialog.group
     pvw = dialog._pvw
 
     if name is None:
@@ -54,7 +54,7 @@ def plot_cell_bond(dialog, bond, width=None, color=None, color2=None, opacity=No
             opacity (float, optional): opacity [default: 1.0].
             name (str, optional): plot name.
     """
-    group = dialog.group()
+    group = dialog.group
     pvw = dialog._pvw
 
     if name is None:
@@ -100,7 +100,7 @@ def plot_cell_vector(
             cartesian (bool, optional): vector in cartesian coordinate ?
             name (str, optional): plot name.
     """
-    group = dialog.group()
+    group = dialog.group
     pvw = dialog._pvw
 
     if name is None:
@@ -172,7 +172,7 @@ def plot_cell_multipole(dialog, multipole, X="Q", size=None, color=None, opacity
             average (bool, optional): average at each site ?
             name (str, optional): plot name.
     """
-    group = dialog.group()
+    group = dialog.group
     pvw = dialog._pvw
 
     if name is None:
@@ -208,12 +208,18 @@ def plot_cell_multipole(dialog, multipole, X="Q", size=None, color=None, opacity
 
 # ==================================================
 def plot_bond_definition(
-    dialog, bond, rep=True, name=None, length=None, width=None, opacity=None, color=None, arrow_color=None, arrow_color_rep=None
+    dialog,
+    bonds,
+    wp,
+    rep=True,
+    name=None,
+    length=None,
+    width=None,
+    opacity=None,
+    color=None,
+    arrow_color=None,
+    arrow_color_rep=None,
 ):
-    if dialog._type in [0, 2]:
-        group = dialog.group(0)
-    else:
-        group = dialog.group(1)
     pvw = dialog._pvw
 
     default = detail["bond_samb"]
@@ -230,8 +236,6 @@ def plot_bond_definition(
         arrow_color = default["arrow_color"]
     if arrow_color_rep is None:
         arrow_color_rep = default["arrow_color_rep"]
-
-    wp, bonds = group.find_wyckoff_bond(bond)
 
     if name is None:
         cnt = dialog._set_counter(wp)
@@ -365,3 +369,64 @@ def plot_bond_cluster(
                 pvw.add_vector(
                     position=c, direction=v, length=-arrow_ratio, color=cl, width=width, cartesian=False, name=name, label=label
                 )
+
+
+# ==================================================
+def plot_vector_cluster(dialog, site, samb, X="Q", length=None, width=None, color=None, opacity=None, name=None):
+    pvw = dialog._pvw
+
+    if name is None:
+        cnt = dialog._set_counter("vector")
+        name = f"vector{cnt}"
+
+    default = detail["vector"]
+    if length is None:
+        length = default["length"]
+    if width is None:
+        width = default["width"]
+    if color is None:
+        color = default["color"][X]
+    if opacity is None:
+        opacity = default["opacity"]
+
+    if isinstance(samb, np.ndarray):
+        samb = samb.astype(float)
+
+    for no, (v, s) in enumerate(zip(samb, site)):
+        if np.linalg.norm(v) < CHOP:
+            continue
+        label = f"V{no+1}:"
+        pvw.add_vector(
+            direction=v,
+            length=length,
+            width=width,
+            color=color,
+            opacity=opacity,
+            cartesian=True,
+            position=s,
+            name=name,
+            label=label,
+        )
+
+
+# ==================================================
+def plot_orbital_cluster(dialog, site, samb, X="Q", size=None, color=None, opacity=None, name=None):
+    pvw = dialog._pvw
+
+    if name is None:
+        cnt = dialog._set_counter("orbital")
+        name = f"orbital{cnt}"
+
+    default = detail["multipole"]
+    if size is None:
+        size = default["size"]
+    if color is None:
+        color = default["color"][X]
+    if opacity is None:
+        opacity = default["opacity"]
+
+    for no, (v, s) in enumerate(zip(samb, site)):
+        if v == 0:
+            continue
+        label = f"O{no+1}:"
+        pvw.add_orbital(shape=v, surface=v, size=size, color=color, opacity=opacity, position=s, name=name, label=label)

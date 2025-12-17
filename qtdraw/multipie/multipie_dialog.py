@@ -10,10 +10,11 @@ from PySide6.QtCore import Signal
 from multipie import __version__, Group
 from qtdraw.widget.custom_widget import Layout
 from qtdraw.multipie.sub_group import SubGroup
-from qtdraw.multipie.tab_group import TabGroup, _remove_latex
+from qtdraw.multipie.tab_group import TabGroup
 from qtdraw.multipie.tab_object import TabObject
 from qtdraw.multipie.tab_basis import TabBasis
 from qtdraw.multipie.multipie_setting import setting_detail as detail
+from qtdraw.multipie.multipie_setting import group_list
 
 
 # ==================================================
@@ -33,29 +34,21 @@ class MultiPieDialog(QDialog):
         self._pvw = parent.pyvista_widget  # PyVistaWidget.
         self._counter = {}
 
-        mapping = Group.global_info()["mapping"]
-        self._crystal_list = {crystal: {tp: list(i.keys()) for tp, i in enumerate(v.values())} for crystal, v in mapping.items()}
-        self._mapping = {}
-        for v in mapping.values():
+        self._crystal_list = {crystal: {tp: i[1] for tp, i in v.items()} for crystal, v in group_list.items()}
+        self._to_tag = {}
+        self._to_name = {}
+        for v in group_list.values():
             for i in v.values():
-                for k, x in i.items():
-                    self._mapping[k] = x
-        self._tag_name = {}
-        for v in mapping.values():
-            for k, x in v["PG"].items():
-                self._tag_name[x[0]] = k
-            for k, x in v["SG"].items():
-                self._tag_name[x[1]] = k
-            for k, x in v["MPG"].items():
-                self._tag_name[x[2]] = k
-            for k, x in v["MSG"].items():
-                self._tag_name[x[3]] = k
+                for a, b in zip(i[0], i[1]):
+                    self._to_tag[b] = a
+                    self._to_name[a] = b
 
         self.set_title()
         self.resize(600, 500)
 
         # initial value.
-        self._set_group_data("#1: C1 (1)", "triclinic", 0)  # PG#1.
+        crystal, tp, idx = "triclinic", "PG", 0  # PG#1.
+        self._set_group_data(self._crystal_list[crystal][tp][idx], crystal, tp)
 
         self._pvw.update_preference("label", "default_check", detail["general"]["label"])
 
@@ -87,13 +80,43 @@ class MultiPieDialog(QDialog):
         self.show()
 
     # ==================================================
-    def group(self, tp=None):
-        if tp is None:
-            tp = self._type
-        if self._group[tp] is None:
-            self._group[tp] = Group(self._tag[tp], with_pg=False)
+    @property
+    def group(self):
+        if self._group is None:
+            self._group = Group(self._tag)
 
-        return self._group[tp]
+        return self._group
+
+    # ==================================================
+    @property
+    def ps_group(self):
+        if self.group.group_type in ["PG", "SG"]:
+            return self.group
+        if self._ps_group is None:
+            ps = self.group.info.PG if self.group.group_type in ["MPG"] else self.group.info.SG
+            self._ps_group = Group(ps)
+
+        return self._ps_group
+
+    # ==================================================
+    @property
+    def p_group(self):
+        if self.group.group_type in ["PG"]:
+            return self.group
+        if self._p_group is None:
+            self._p_group = Group(self.group.info.PG)
+
+        return self._p_group
+
+    # ==================================================
+    @property
+    def mp_group(self):
+        if self.group.group_type in ["MPG"]:
+            return self.group
+        if self._mp_group is None:
+            self._mp_group = Group(self.group.info.MPG)
+
+        return self._mp_group
 
     # ==================================================
     def set_title(self):
@@ -101,14 +124,17 @@ class MultiPieDialog(QDialog):
         self.setWindowTitle(title)
 
     # ==================================================
-    def _set_group_data(self, tag, crystal=None, tp=None):
+    def _set_group_data(self, name, crystal=None, tp=None):
         if crystal is not None:
             self._crystal = crystal
         if tp is not None:
             self._type = tp
 
-        self._tag = self._mapping[tag]
-        self._group = [None, None, None, None]
+        self._tag = self._to_tag[name]
+        self._group = None
+        self._p_group = None
+        self._ps_group = None
+        self._mp_group = None
 
         self.group_changed.emit()
 
@@ -122,7 +148,13 @@ class MultiPieDialog(QDialog):
 
     # ==================================================
     def _get_group_name(self):
-        name = [self._tag_name[i] for i in self._tag]
+        info = self.group.info
+        name = {
+            "PG": self._to_name[info.PG],
+            "SG": self._to_name[info.SG],
+            "MPG": self._to_name[info.MPG],
+            "MSG": self._to_name[info.MSG],
+        }
         return name
 
     # ==================================================
@@ -146,16 +178,8 @@ class MultiPieDialog(QDialog):
 
     # ==================================================
     def _get_index_list(self, lst):
-
-        idx = [(Group.tag_multipole(i, latex=True), i) for i in lst]
-        tag_lst = []
-        idx_comp = []
-        for v, i in idx:
-            for no, n in enumerate(v):
-                t1, t2 = n.split("(")
-                t2 = _remove_latex(t2)
-                n = t1 + "(" + t2 + ")"
-                tag_lst.append(n.replace(r"\mathbb{", "").replace("}_", "_").replace(",)", ")"))
-                idx_comp.append((i, no))
+        idx = [(Group.tag_multipole(i), i) for i in lst]
+        tag_lst = [n for v, _ in idx for n in v]
+        idx_comp = [(i, no) for v, i in idx for no, _ in enumerate(v)]
 
         return tag_lst, idx_comp
