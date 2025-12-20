@@ -1,6 +1,8 @@
 import numpy as np
 import sympy as sp
 
+from qtdraw.util.util import str_to_sympy
+
 
 # ==================================================
 def create_samb_object(group, samb_tp, samb, wp, site, vec=False):
@@ -23,6 +25,20 @@ def create_samb_object(group, samb_tp, samb, wp, site, vec=False):
         ).reshape(-1, 3)
 
     return obj
+
+
+# ==================================================
+def check_linear_combination(ex, basis_num):
+    var_e = set([f"Q{i+1:02d}" for i in range(basis_num["Q"])] + [f"G{i+1:02d}" for i in range(basis_num["G"])])
+    var_m = set([f"T{i+1:02d}" for i in range(basis_num["T"])] + [f"M{i+1:02d}" for i in range(basis_num["M"])])
+
+    ex = str_to_sympy(ex.upper())
+    ex_var = set(map(str, ex.free_symbols))
+
+    if ex_var.issubset(var_e) or ex_var.issubset(var_m):
+        return ex, ex_var
+    else:
+        return None, None
 
 
 # ==================================================

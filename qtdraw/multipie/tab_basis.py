@@ -5,6 +5,7 @@ This module provides basis tab in MultiPie dialog.
 """
 
 import numpy as np
+import sympy as sp
 
 from PySide6.QtWidgets import QWidget
 from PySide6.QtCore import Qt
@@ -17,7 +18,7 @@ from qtdraw.multipie.multipie_plot import (
     plot_vector_cluster,
     plot_orbital_cluster,
 )
-from qtdraw.multipie.multipie_util import create_samb_object
+from qtdraw.multipie.multipie_util import create_samb_object, check_linear_combination
 
 
 # ==================================================
@@ -185,6 +186,8 @@ class TabBasis(QWidget):
         self.combo_orbital_samb_type.currentTextChanged.connect(self.set_orbital_list)
         self.button_vector_draw.clicked.connect(self.show_vector)
         self.button_orbital_draw.clicked.connect(self.show_orbital)
+        self.edit_vector_lc.returnPressed.connect(self.show_vector_lc)
+        self.edit_orbital_lc.returnPressed.connect(self.show_orbital_lc)
 
     # ==================================================
     def set_site(self):
@@ -219,9 +222,12 @@ class TabBasis(QWidget):
 
         self._vector_samb = {}
         self._vector_samb_list = {}
+        self._vector_samb_num = {}
         for tp in ["Q", "G", "T", "M"]:
             self._vector_samb[tp] = samb.select(X=tp)
             self._vector_list[tp], self._vector_samb_list[tp] = self.parent._get_index_list(self._vector_samb[tp].keys())
+            self._vector_list[tp] = [f"{tp}{no+1:02d}: {i}" for no, i in enumerate(self._vector_list[tp])]
+            self._vector_samb_num[tp] = len(self._vector_list[tp])
         self.set_vector_list()
 
     # ==================================================
@@ -241,9 +247,12 @@ class TabBasis(QWidget):
 
         self._orbital_samb = {}
         self._orbital_samb_list = {}
+        self._orbital_samb_num = {}
         for tp in ["Q", "G", "T", "M"]:
             self._orbital_samb[tp] = samb.select(X=tp)
             self._orbital_list[tp], self._orbital_samb_list[tp] = self.parent._get_index_list(self._orbital_samb[tp].keys())
+            self._orbital_list[tp] = [f"{tp}{no+1:02d}: {i}" for no, i in enumerate(self._orbital_list[tp])]
+            self._orbital_samb_num[tp] = len(self._orbital_list[tp])
         self.set_orbital_list()
 
     # ==================================================
@@ -290,6 +299,28 @@ class TabBasis(QWidget):
         plot_vector_cluster(self.parent, site, obj, X)
 
     # ==================================================
+    def show_vector_lc(self):
+        ex = self.edit_vector_lc.raw_text()
+        ex, var = check_linear_combination(ex, self._vector_samb_num)
+        if ex is None:
+            return
+
+        X = self.combo_vector_type.currentText()
+        wp = self._vector_wp
+        site = self._vector_samb_site
+
+        lc_obj = {}
+        for i in var:
+            tp = i[0]
+            idx = int(i[1:]) - 1
+            samb, comp = self._vector_samb_list[tp][idx]
+            samb = self._vector_samb[tp][samb][0][comp]
+            lc_obj[i] = sp.Matrix(create_samb_object(self.parent.ps_group, tp, samb, wp, site, vec=True))
+
+        obj = np.array(ex.subs(lc_obj))
+        plot_vector_cluster(self.parent, site, obj, X)
+
+    # ==================================================
     def show_orbital(self):
         X = self.combo_orbital_type.currentText()
         tp = self.combo_orbital_samb_type.currentText()
@@ -300,4 +331,26 @@ class TabBasis(QWidget):
         site = self._orbital_samb_site
 
         obj = create_samb_object(self.parent.ps_group, tp, samb, wp, site)
+        plot_orbital_cluster(self.parent, site, obj, X)
+
+    # ==================================================
+    def show_orbital_lc(self):
+        ex = self.edit_orbital_lc.raw_text()
+        ex, var = check_linear_combination(ex, self._orbital_samb_num)
+        if ex is None:
+            return
+
+        X = self.combo_orbital_type.currentText()
+        wp = self._orbital_wp
+        site = self._orbital_samb_site
+
+        lc_obj = {}
+        for i in var:
+            tp = i[0]
+            idx = int(i[1:]) - 1
+            samb, comp = self._orbital_samb_list[tp][idx]
+            samb = self._orbital_samb[tp][samb][0][comp]
+            lc_obj[i] = sp.Matrix(create_samb_object(self.parent.ps_group, tp, samb, wp, site))
+
+        obj = np.array(ex.subs(lc_obj)).reshape(-1)
         plot_orbital_cluster(self.parent, site, obj, X)
