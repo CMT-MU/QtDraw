@@ -146,12 +146,12 @@ setting_detail = {
 modulation_panel = {
     "id": ("hide", {}, "0"),
     "basis": ("combo", ["Q01"], "Q01"),
-    "coeff": ("math", {"var": [""]}, "1"),
-    "k_vector": ("list_float", {"shape": (3,), "var": [""], "digit": 3}, "[1,0,0]"),
+    "coeff": ("list_float", {"digit": 4}, "1"),
+    "k_vector": ("list_float", {"shape": (3,), "var": [""], "digit": 4}, "[1,0,0]"),
     "phase": ("combo", ["cos", "sin"], "cos"),
 }
 
-
+# ==================================================
 group_list = {  # crystal: "PG/SG/MPG/MSG": [tag_list, name_list].
     "triclinic": {
         "PG": [["PG:1", "PG:2"], ["#1: C1 (1)", "#2: Ci (-1)"]],

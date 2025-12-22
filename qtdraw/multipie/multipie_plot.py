@@ -127,7 +127,7 @@ def plot_cell_vector(
             label = f"V{no+1}: " + f"{m}".replace(" ", "")
             pvw.add_vector(
                 direction=v,
-                length=length,
+                length=-length,
                 width=width,
                 color=color,
                 opacity=opacity,
@@ -146,7 +146,7 @@ def plot_cell_vector(
                 label = f"V{no+1}: " + f"[{m}]".replace(" ", "")
                 pvw.add_vector(
                     direction=v,
-                    length=length,
+                    length=-length,
                     width=width,
                     color=color,
                     opacity=opacity,
@@ -194,7 +194,7 @@ def plot_cell_multipole(dialog, multipole, X="Q", size=None, color=None, opacity
             if v == 0:
                 continue
             label = f"O{no+1}: " + f"{m}".replace(" ", "")
-            pvw.add_orbital(shape=v, surface=v, size=size, color=color, opacity=opacity, position=s, name=name, label=label)
+            pvw.add_orbital(shape=v, surface=v, size=-size, color=color, opacity=opacity, position=s, name=name, label=label)
     else:
         no = -1
         for vl, s, ml in zip(multipoles, sites, mp):
@@ -203,7 +203,7 @@ def plot_cell_multipole(dialog, multipole, X="Q", size=None, color=None, opacity
                 if v == 0:
                     continue
                 label = f"O{no+1}: " + f"[{m}]".replace(" ", "")
-                pvw.add_orbital(shape=v, surface=v, size=size, color=color, opacity=opacity, position=s, name=name, label=label)
+                pvw.add_orbital(shape=v, surface=v, size=-size, color=color, opacity=opacity, position=s, name=name, label=label)
 
 
 # ==================================================
@@ -398,7 +398,7 @@ def plot_vector_cluster(dialog, site, samb, X="Q", length=None, width=None, colo
         label = f"V{no+1}:"
         pvw.add_vector(
             direction=v,
-            length=length,
+            length=-length,
             width=width,
             color=color,
             opacity=opacity,
@@ -429,4 +429,4 @@ def plot_orbital_cluster(dialog, site, samb, X="Q", size=None, color=None, opaci
         if v == 0:
             continue
         label = f"O{no+1}:"
-        pvw.add_orbital(shape=v, surface=v, size=size, color=color, opacity=opacity, position=s, name=name, label=label)
+        pvw.add_orbital(shape=v, surface=v, size=-size, color=color, opacity=opacity, position=s, name=name, label=label)

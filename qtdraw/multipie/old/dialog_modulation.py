@@ -95,8 +95,8 @@ class ModulationDialog(QDialog):
         layout.addWidget(button, 2, 0, 1, 4)
 
         # connections.
-        button_add.clicked.connect(self.add_data)
-        button_remove.clicked.connect(self.remove_data)
+        # button_add.clicked.connect(self.add_data)
+        # button_remove.clicked.connect(self.remove_data)
 
         return panel
 

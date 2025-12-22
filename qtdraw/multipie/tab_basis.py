@@ -18,7 +18,13 @@ from qtdraw.multipie.multipie_plot import (
     plot_vector_cluster,
     plot_orbital_cluster,
 )
-from qtdraw.multipie.multipie_util import create_samb_object, check_linear_combination
+from qtdraw.multipie.multipie_util import (
+    create_samb_object,
+    check_linear_combination,
+    convert_vector_object,
+    create_samb_modulation,
+)
+from qtdraw.multipie.multipie_modulation_dialog import ModulationDialog
 
 
 # ==================================================
@@ -100,7 +106,7 @@ class TabBasis(QWidget):
 
         label_vector_lc = Label(parent, text="linear combination")
         self.edit_vector_lc = LineEdit(parent)
-        self.button_vector_modulation = Button(parent, text="modulation")
+        self.button_vector_modulation = Button(parent, text="modulation (SG)")
         self.combo_vector_modulation_type = Combo(parent, ["Q,G", "T,M"])
         self.edit_vector_modulation = LineEdit(parent)
 
@@ -134,7 +140,7 @@ class TabBasis(QWidget):
 
         label_orbital_lc = Label(parent, text="linear combination")
         self.edit_orbital_lc = LineEdit(parent)
-        self.button_orbital_modulation = Button(parent, text="modulation")
+        self.button_orbital_modulation = Button(parent, text="modulation (SG)")
         self.combo_orbital_modulation_type = Combo(parent, ["Q,G", "T,M"])
         self.edit_orbital_modulation = LineEdit(parent)
 
@@ -174,6 +180,9 @@ class TabBasis(QWidget):
         self._vector_list = {"Q": [], "G": [], "T": [], "M": []}
         self._orbital_list = {"Q": [], "G": [], "T": [], "M": []}
 
+        self._vector_modulation_dialog = None
+        self._orbital_modulation_dialog = None
+
         # connections.
         self.edit_def_bond.returnPressed.connect(self.show_bond_definition)
         self.edit_site.returnPressed.connect(self.set_site)
@@ -188,6 +197,8 @@ class TabBasis(QWidget):
         self.button_orbital_draw.clicked.connect(self.show_orbital)
         self.edit_vector_lc.returnPressed.connect(self.show_vector_lc)
         self.edit_orbital_lc.returnPressed.connect(self.show_orbital_lc)
+        self.button_vector_modulation.clicked.connect(self.create_vector_modulation)
+        self.button_orbital_modulation.clicked.connect(self.create_orbital_modulation)
 
     # ==================================================
     def set_site(self):
@@ -222,12 +233,12 @@ class TabBasis(QWidget):
 
         self._vector_samb = {}
         self._vector_samb_list = {}
-        self._vector_samb_num = {}
+        self._vector_samb_var = {}
         for tp in ["Q", "G", "T", "M"]:
             self._vector_samb[tp] = samb.select(X=tp)
             self._vector_list[tp], self._vector_samb_list[tp] = self.parent._get_index_list(self._vector_samb[tp].keys())
             self._vector_list[tp] = [f"{tp}{no+1:02d}: {i}" for no, i in enumerate(self._vector_list[tp])]
-            self._vector_samb_num[tp] = len(self._vector_list[tp])
+            self._vector_samb_var[tp] = [f"{tp}{i+1:02d}" for i in range(len(self._vector_list[tp]))]
         self.set_vector_list()
 
     # ==================================================
@@ -247,12 +258,12 @@ class TabBasis(QWidget):
 
         self._orbital_samb = {}
         self._orbital_samb_list = {}
-        self._orbital_samb_num = {}
+        self._orbital_samb_var = {}
         for tp in ["Q", "G", "T", "M"]:
             self._orbital_samb[tp] = samb.select(X=tp)
             self._orbital_list[tp], self._orbital_samb_list[tp] = self.parent._get_index_list(self._orbital_samb[tp].keys())
             self._orbital_list[tp] = [f"{tp}{no+1:02d}: {i}" for no, i in enumerate(self._orbital_list[tp])]
-            self._orbital_samb_num[tp] = len(self._orbital_list[tp])
+            self._orbital_samb_var[tp] = [f"{tp}{i+1:02d}" for i in range(len(self._orbital_list[tp]))]
         self.set_orbital_list()
 
     # ==================================================
@@ -295,13 +306,14 @@ class TabBasis(QWidget):
         wp = self._vector_wp
         site = self._vector_samb_site
 
-        obj = create_samb_object(self.parent.ps_group, tp, samb, wp, site, vec=True)
+        obj = create_samb_object(self.parent.ps_group, tp, samb, wp, site)
+        obj = convert_vector_object(obj)
         plot_vector_cluster(self.parent, site, obj, X)
 
     # ==================================================
     def show_vector_lc(self):
         ex = self.edit_vector_lc.raw_text()
-        ex, var = check_linear_combination(ex, self._vector_samb_num)
+        ex, var = check_linear_combination(ex, self._vector_samb_var)
         if ex is None:
             return
 
@@ -315,7 +327,8 @@ class TabBasis(QWidget):
             idx = int(i[1:]) - 1
             samb, comp = self._vector_samb_list[tp][idx]
             samb = self._vector_samb[tp][samb][0][comp]
-            lc_obj[i] = sp.Matrix(create_samb_object(self.parent.ps_group, tp, samb, wp, site, vec=True))
+            lc_obj[i] = create_samb_object(self.parent.ps_group, tp, samb, wp, site)
+            lc_obj[i] = sp.Matrix(convert_vector_object(lc_obj[i]))
 
         obj = np.array(ex.subs(lc_obj))
         plot_vector_cluster(self.parent, site, obj, X)
@@ -336,7 +349,7 @@ class TabBasis(QWidget):
     # ==================================================
     def show_orbital_lc(self):
         ex = self.edit_orbital_lc.raw_text()
-        ex, var = check_linear_combination(ex, self._orbital_samb_num)
+        ex, var = check_linear_combination(ex, self._orbital_samb_var)
         if ex is None:
             return
 
@@ -354,3 +367,60 @@ class TabBasis(QWidget):
 
         obj = np.array(ex.subs(lc_obj)).reshape(-1)
         plot_orbital_cluster(self.parent, site, obj, X)
+
+    # ==================================================
+    def create_vector_modulation(self):
+        modulation = self.edit_vector_modulation.text()
+        if self.combo_vector_modulation_type.currentText() == "Q,G":
+            var = self._vector_samb_var["Q"] + self._vector_samb_var["G"]
+        else:
+            var = self._vector_samb_var["T"] + self._vector_samb_var["M"]
+        if len(var) == 0:
+            return
+        if not self.parent.ps_group.is_point_group:
+            self._vector_modulation_dialog = ModulationDialog(self, modulation, var, vec=True)
+
+    # ==================================================
+    def create_orbital_modulation(self):
+        modulation = self.edit_orbital_modulation.text()
+        if self.combo_orbital_modulation_type.currentText() == "Q,G":
+            var = self._orbital_samb_var["Q"] + self._orbital_samb_var["G"]
+        else:
+            var = self._orbital_samb_var["T"] + self._orbital_samb_var["M"]
+        if len(var) == 0:
+            return
+        if not self.parent.ps_group.is_point_group:
+            self._orbital_modulation_dialog = ModulationDialog(self, modulation, var, vec=False)
+
+    # ==================================================
+    def create_vector_samb_modulation(self, modulation, phase_dict, igrid, pset):
+        wp = self._vector_wp
+        site = self._vector_samb_site
+        X = self.combo_vector_type.currentText()
+
+        obj, site_idx, full_site = create_samb_modulation(
+            self.parent.ps_group, modulation, phase_dict, igrid, pset, self._vector_samb, self._vector_samb_list, wp, site
+        )
+        obj = convert_vector_object(obj)
+
+        plot_vector_cluster(self.parent, full_site, obj, X)
+
+    # ==================================================
+    def create_orbital_samb_modulation(self, modulation, phase_dict, igrid, pset):
+        wp = self._orbital_wp
+        site = self._orbital_samb_site
+        X = self.combo_orbital_type.currentText()
+
+        obj, site_idx, full_site = create_samb_modulation(
+            self.parent.ps_group, modulation, phase_dict, igrid, pset, self._orbital_samb, self._orbital_samb_list, wp, site
+        )
+
+        plot_orbital_cluster(self.parent, full_site, obj, X)
+
+    # ==================================================
+    def closeEvent(self, event):
+        if self._vector_modulation_dialog is not None:
+            self._vector_modulation_dialog.close()
+        if self._orbital_modulation_dialog is not None:
+            self._orbital_modulation_dialog.close()
+        super().closeEvent(event)
