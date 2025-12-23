@@ -372,12 +372,18 @@ def plot_bond_cluster(
 
 
 # ==================================================
-def plot_vector_cluster(dialog, site, samb, X="Q", length=None, width=None, color=None, opacity=None, name=None):
+def plot_vector_cluster(
+    dialog, site, samb, X="Q", wp=None, label=None, length=None, width=None, color=None, opacity=None, name=None
+):
     pvw = dialog._pvw
 
     if name is None:
-        cnt = dialog._set_counter("vector")
-        name = f"vector{cnt}"
+        if wp is None:
+            cnt = dialog._set_counter("vector")
+            name = f"vector{cnt}"
+        else:
+            cnt = dialog._set_counter(wp)
+            name = f"{wp}({cnt})"
 
     default = detail["vector"]
     if length is None:
@@ -392,10 +398,12 @@ def plot_vector_cluster(dialog, site, samb, X="Q", length=None, width=None, colo
     if isinstance(samb, np.ndarray):
         samb = samb.astype(float)
 
-    for no, (v, s) in enumerate(zip(samb, site)):
+    if label is None:
+        label = list(range(len(site)))
+
+    for no, v, s in zip(label, samb, site):
         if np.linalg.norm(v) < CHOP:
             continue
-        label = f"V{no+1}:"
         pvw.add_vector(
             direction=v,
             length=-length,
@@ -405,17 +413,21 @@ def plot_vector_cluster(dialog, site, samb, X="Q", length=None, width=None, colo
             cartesian=True,
             position=s,
             name=name,
-            label=label,
+            label=f"v{no}".replace(" ", ""),
         )
 
 
 # ==================================================
-def plot_orbital_cluster(dialog, site, samb, X="Q", size=None, color=None, opacity=None, name=None):
+def plot_orbital_cluster(dialog, site, samb, X="Q", wp=None, label=None, size=None, color=None, opacity=None, name=None):
     pvw = dialog._pvw
 
     if name is None:
-        cnt = dialog._set_counter("orbital")
-        name = f"orbital{cnt}"
+        if wp is None:
+            cnt = dialog._set_counter("orbital")
+            name = f"orbital{cnt}"
+        else:
+            cnt = dialog._set_counter(wp)
+            name = f"{wp}({cnt})"
 
     default = detail["multipole"]
     if size is None:
@@ -425,8 +437,12 @@ def plot_orbital_cluster(dialog, site, samb, X="Q", size=None, color=None, opaci
     if opacity is None:
         opacity = default["opacity"]
 
-    for no, (v, s) in enumerate(zip(samb, site)):
+    if label is None:
+        label = list(range(len(site)))
+
+    for no, v, s in zip(label, samb, site):
         if v == 0:
             continue
-        label = f"O{no+1}:"
-        pvw.add_orbital(shape=v, surface=v, size=-size, color=color, opacity=opacity, position=s, name=name, label=label)
+        pvw.add_orbital(
+            shape=v, surface=v, size=-size, color=color, opacity=opacity, position=s, name=name, label=f"o{no}".replace(" ", "")
+        )
