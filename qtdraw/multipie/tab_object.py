@@ -101,12 +101,14 @@ class TabObject(QWidget):
     # ==================================================
     def show_site(self):
         site = self.edit_site.raw_text()
-        plot_cell_site(self.parent, site)
+        sites, mp = self.parent.group.create_cell_site(site)
+        plot_cell_site(self.parent, sites, label=mp)
 
     # ==================================================
     def show_bond(self):
         bond = self.edit_bond.raw_text()
-        plot_cell_bond(self.parent, bond)
+        bonds, mp = self.parent.group.create_cell_bond(bond)
+        plot_cell_bond(self.parent, bonds, label=mp)
 
     # ==================================================
     def show_vector(self):
@@ -114,11 +116,13 @@ class TabObject(QWidget):
         vector_type = self.combo_vector_type.currentText()
         cartesian = self.check_vector_cart.is_checked()
         av = self.check_vector_av.is_checked()
-        plot_cell_vector(self.parent, vector, vector_type, average=av, cartesian=cartesian)
+        vectors, sites, mp = self.parent.group.create_cell_vector(vector, vector_type, av, cartesian)
+        plot_cell_vector(self.parent, vectors, sites, vector_type, label=mp, average=av, cartesian=cartesian)
 
     # ==================================================
     def show_orbital(self):
         orbital = self.edit_orbital.raw_text()
         orbital_type = self.combo_orbital_type.currentText()
         av = self.check_orbital_av.is_checked()
-        plot_cell_multipole(self.parent, orbital, orbital_type, average=av)
+        orbitals, sites, mp = self.parent.group.create_cell_multipole(orbital, orbital_type, av)
+        plot_cell_multipole(self.parent, orbitals, sites, orbital_type, label=mp, average=av)

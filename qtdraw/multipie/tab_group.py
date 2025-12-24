@@ -4,6 +4,7 @@ Multipie group tab.
 This module provides group tab in MultiPie dialog.
 """
 
+import numpy as np
 import sympy as sp
 from PySide6.QtWidgets import QWidget
 from PySide6.QtCore import Qt
@@ -11,7 +12,7 @@ from PySide6.QtCore import Qt
 from qtdraw.util.util import distance, to_latex
 from qtdraw.widget.custom_widget import Label, Layout, Button, Combo, VSpacer, HSpacer, HBar, LineEdit, Check
 from qtdraw.multipie.info_dialog import show_harmonics_decomp, show_atomic_multipole, show_response
-from qtdraw.multipie.multipie_setting import setting_detail as detail
+from qtdraw.multipie.multipie_plot import plot_cell_site, plot_cell_bond
 
 
 # ==================================================
@@ -104,6 +105,7 @@ class TabGroup(QWidget):
         label_wyckoff = Label(parent, text="Wyckoff")
         self.edit_find_wyckoff_position = Label(parent, text="")
         self.edit_find_wyckoff_position.set_background(True)
+        self.edit_find_wyckoff_position.setMinimumWidth(400)
         label_symmetry = Label(parent, text="LS")
         self.edit_find_wyckoff_symmetry = Label(parent, text="")
         self.edit_find_wyckoff_symmetry.set_background(True)
@@ -121,7 +123,7 @@ class TabGroup(QWidget):
         layout8.addWidget(self.edit_find_wyckoff_symmetry, 1, 4, 1, 1)
 
         # Wyckoff site/bond.
-        label_wyckoff_site = Label(parent, text="Wyckoff Site/Bond (representative) (PG/SG)", bold=True)
+        label_wyckoff_site = Label(parent, text="Draw Wyckoff Site/Bond (representative) (PG/SG)", bold=True)
         label_ws_neighbor = Label(parent, text="neighbor")
         label_wyckoff_site_str = Label(parent, text="site")
         self.combo_wyckoff_site = Combo(parent)
@@ -326,32 +328,25 @@ class TabGroup(QWidget):
         # plot sites.
         sites = group.wyckoff["site"][wp]["fractional"].astype(float)
         mp = group.wyckoff["site"][wp]["mapping"]
-
-        default = detail["site"]
-        size = default["size"]
-        color = default["color"]
-        opacity = default["opacity"]
-        width = default["width"]
-
-        for no, (pt, m) in enumerate(zip(sites, mp)):
-            label = f"S{no+1}: " + f"{m}".replace(" ", "")
-            self.parent._pvw.add_site(position=pt, name=wp, label=label, size=size, color=color, opacity=opacity)
+        plot_cell_site(self.parent, sites, wp, mp)
 
         # plot bonds.
-        bond = self.edit_ws_neighbor.text()
-        bond = list(map(int, bond.strip("[]").split(",")))
+        neighbor = self.edit_ws_neighbor.text()
+        neighbor = list(map(int, neighbor.strip("[]").split(",")))
         G = self.parent._pvw.G_matrix[0:3, 0:3]
         d = distance(sites, sites, G)
         dkey = list(d.keys())
 
-        for i in bond:
-            name = f"b{i:02}"
+        for i in neighbor:
             if i < len(d):
+                name = f"{wp}_N{i}"
+                bonds = []
                 for idxs in d[dkey[i]]:
                     t, h = sites[idxs[0]], sites[idxs[1]]
                     c = (t + h) / 2
                     v = h - t
-                    self.parent._pvw.add_bond(position=c, direction=v, width=width, name=name)
+                    bonds.append(np.concatenate([v, c]).tolist())
+                plot_cell_bond(self.parent, bonds, name)
 
     # ==================================================
     def show_wyckoff_bond(self):
@@ -361,22 +356,7 @@ class TabGroup(QWidget):
         # plot bonds.
         bonds = group.wyckoff["bond"][wp]["fractional"].astype(float)
         mp = group.wyckoff["bond"][wp]["mapping"]
-
-        default = detail["bond"]
-        width = default["width"]
-        color = default["color1"]
-        color2 = default["color2"]
-        opacity = default["opacity"]
-
-        directional = not any(x < 0 for x in sum(mp, []))
-        if not directional:
-            color2 = color
-        for no, (b, m) in enumerate(zip(bonds, mp)):
-            v, c = b[0:3], b[3:6]
-            label = f"B{no+1}: " + f"{m}".replace(" ", "")
-            self.parent._pvw.add_bond(
-                direction=v, position=c, width=width, color=color, color2=color2, opacity=opacity, name=wp, label=label
-            )
+        plot_cell_bond(self.parent, bonds, wp, mp)
 
     # ==================================================
     def find_wyckoff_set(self):

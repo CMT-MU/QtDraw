@@ -6,24 +6,32 @@ CHOP = 1e-6
 
 
 # ==================================================
-def plot_cell_site(dialog, site, size=None, color=None, opacity=None, name=None):
+def plot_cell_site(dialog, sites, wp=None, label=None, size=None, color=None, opacity=None, name=None):
     """
     Plot cell site.
 
     Args:
             dialog (MultiPieDialog): multipie dialog.
-            site (str or ndarray): representative site (fractional, conventional).
+            sites (ndarray): sites (fractional, conventional).
+            wp (str, optional): Wyckoff site.
+            label (list, optional): label.
             size (float, optional): size [default: 0.05].
             color (str, optional): color [default: silver].
             opacity (float, optional): opacity [default: 1.0].
             name (str, optional): plot name.
     """
-    group = dialog.group
     pvw = dialog._pvw
 
     if name is None:
-        cnt = dialog._set_counter("site")
-        name = f"site{cnt}"
+        if wp is None:
+            cnt = dialog._set_counter("site")
+            name = f"site{cnt}"
+        else:
+            cnt = dialog._set_counter(wp)
+            name = f"{wp}({cnt})"
+
+    if label is None:
+        label = [""] * len(sites)
 
     default = detail["site"]
     if size is None:
@@ -33,33 +41,42 @@ def plot_cell_site(dialog, site, size=None, color=None, opacity=None, name=None)
     if opacity is None:
         opacity = default["opacity"]
 
-    sites, mp = group.create_cell_site(site)
-
-    for no, (pt, m) in enumerate(zip(sites, mp)):
-        label = f"S{no+1}: " + f"{m}".replace(" ", "")
-        pvw.add_site(position=pt, name=name, label=label, size=size, color=color, opacity=opacity)
+    for no, (pt, m) in enumerate(zip(sites, label)):
+        lbl = f"S{no+1}:" + f"{m}".replace(" ", "")
+        pvw.add_site(position=pt, name=name, label=lbl, size=size, color=color, opacity=opacity)
 
 
 # ==================================================
-def plot_cell_bond(dialog, bond, width=None, color=None, color2=None, opacity=None, name=None):
+def plot_cell_bond(dialog, bonds, wp=None, label=None, width=None, color=None, color2=None, opacity=None, name=None):
     """
     Plot cell bond.
 
     Args:
             dialog (MultiPieDialog): multipie dialog.
-            bond (str or ndarray): representative bond (fractional, conventional).
+            bonds (ndarray): bonds (fractional, conventional).
+            wp (str, optional): Wyckoff bond.
+            label (list, optional): label.
             width (float, optional): width [default: 0.01].
             color (str, optional): color [default: silver].
             color2 (str, optional): color for directional bond [default: iron].
             opacity (float, optional): opacity [default: 1.0].
             name (str, optional): plot name.
     """
-    group = dialog.group
     pvw = dialog._pvw
 
     if name is None:
-        cnt = dialog._set_counter("bond")
-        name = f"bond{cnt}"
+        if wp is None:
+            cnt = dialog._set_counter("bond")
+            name = f"bond{cnt}"
+        else:
+            cnt = dialog._set_counter(wp)
+            name = f"{wp}({cnt})"
+
+    if label is None:
+        label = [""] * len(bonds)
+        directional = False
+    else:
+        directional = not any(x < 0 for x in sum(label, []))
 
     default = detail["bond"]
     if width is None:
@@ -71,27 +88,41 @@ def plot_cell_bond(dialog, bond, width=None, color=None, color2=None, opacity=No
     if opacity is None:
         opacity = default["opacity"]
 
-    bonds, mp = group.create_cell_bond(bond)
-    directional = not any(x < 0 for x in sum(mp, []))
     if not directional:
         color2 = color
-    for no, (b, m) in enumerate(zip(bonds, mp)):
+
+    for no, (b, m) in enumerate(zip(bonds, label)):
         v, c = b[0:3], b[3:6]
-        label = f"B{no+1}: " + f"{m}".replace(" ", "")
-        pvw.add_bond(direction=v, position=c, width=width, color=color, color2=color2, opacity=opacity, name=name, label=label)
+        lbl = f"B{no+1}:" + f"{m}".replace(" ", "")
+        pvw.add_bond(direction=v, position=c, width=width, color=color, color2=color2, opacity=opacity, name=name, label=lbl)
 
 
 # ==================================================
 def plot_cell_vector(
-    dialog, vector, X="Q", length=None, width=None, color=None, opacity=None, average=True, cartesian=False, name=None
+    dialog,
+    vectors,
+    sites,
+    X="Q",
+    wp=None,
+    label=None,
+    length=None,
+    width=None,
+    color=None,
+    opacity=None,
+    average=True,
+    cartesian=False,
+    name=None,
 ):
     """
     Plot cell vector.
 
     Args:
         dialog (MultiPieDialog): multipie dialog.
-            vector (str): representative vector (fractional/cartesian) # site/bond (fractional, conventional).
+            vectors (ndarray): vectors (fractional/cartesian).
+            sites (ndarray): site/bond (fractional, conventional).
             X (str, optional): type, "Q/G/T/M".
+            wp (str, optional): Wyckoff site/bond.
+            label (list, optional): label.
             length (float, optional): length [default: 0.3].
             width (float, optional): width [default: 0.02].
             color (_type_, optional): color [default: orange/yellowgreen/hotpink/lightskyblue for Q/G/T/M].
@@ -100,12 +131,18 @@ def plot_cell_vector(
             cartesian (bool, optional): vector in cartesian coordinate ?
             name (str, optional): plot name.
     """
-    group = dialog.group
     pvw = dialog._pvw
 
     if name is None:
-        cnt = dialog._set_counter("vector")
-        name = f"vector{cnt}"
+        if wp is None:
+            cnt = dialog._set_counter("vector")
+            name = f"vector{cnt}"
+        else:
+            cnt = dialog._set_counter(wp)
+            name = f"{wp}({cnt})"
+
+    if label is None:
+        label = [""] * len(sites)
 
     default = detail["vector"]
     if length is None:
@@ -117,14 +154,13 @@ def plot_cell_vector(
     if opacity is None:
         opacity = default["opacity"]
 
-    vectors, sites, mp = group.create_cell_vector(vector, X, average, cartesian)
     vectors = vectors.astype(float)
 
     if average:
-        for no, (v, s, m) in enumerate(zip(vectors, sites, mp)):
+        for no, (v, s, m) in enumerate(zip(vectors, sites, label)):
             if np.linalg.norm(v) < CHOP:
                 continue
-            label = f"V{no+1}: " + f"{m}".replace(" ", "")
+            lbl = f"V{no+1}:" + f"{m}".replace(" ", "")
             pvw.add_vector(
                 direction=v,
                 length=-length,
@@ -134,16 +170,16 @@ def plot_cell_vector(
                 cartesian=cartesian,
                 position=s,
                 name=name,
-                label=label,
+                label=lbl,
             )
     else:
         no = -1
-        for vl, s, ml in zip(vectors, sites, mp):
+        for vl, s, ml in zip(vectors, sites, label):
             for v, m in zip(vl, ml):
                 no += 1
                 if np.linalg.norm(v) < CHOP:
                     continue
-                label = f"V{no+1}: " + f"[{m}]".replace(" ", "")
+                lbl = f"V{no+1}:" + f"[{m}]".replace(" ", "")
                 pvw.add_vector(
                     direction=v,
                     length=-length,
@@ -153,31 +189,42 @@ def plot_cell_vector(
                     cartesian=cartesian,
                     position=s,
                     name=name,
-                    label=label,
+                    label=lbl,
                 )
 
 
 # ==================================================
-def plot_cell_multipole(dialog, multipole, X="Q", size=None, color=None, opacity=None, average=True, name=None):
+def plot_cell_multipole(
+    dialog, multipoles, sites, X="Q", wp=None, label=None, size=None, color=None, opacity=None, average=True, name=None
+):
     """
     Plot cell multipole.
 
     Args:
         dialog (MultiPieDialog): multipie dialog.
-            multipole (str): representative multipole (cartesian) # site/bond (fractional, conventional).
+            multipoles (ndarray): multipoles (cartesian).
+            sites (ndarray): site/bond (fractional, conventional).
             X (str, optional): type, "Q/G/T/M".
+            wp (str, optional): Wyckoff site/bond.
+            label (list, optional): label.
             size (float, optional): size [default: 0.2].
             color (_type_, optional): color [default: Wistia/PiYG/coolwarm/GnBu for Q/G/T/M].
             opacity (float, optional): opacity [default: 1.0].
             average (bool, optional): average at each site ?
             name (str, optional): plot name.
     """
-    group = dialog.group
     pvw = dialog._pvw
 
     if name is None:
-        cnt = dialog._set_counter("orbital")
-        name = f"orbital{cnt}"
+        if wp is None:
+            cnt = dialog._set_counter("orbital")
+            name = f"orbital{cnt}"
+        else:
+            cnt = dialog._set_counter(wp)
+            name = f"{wp}({cnt})"
+
+    if label is None:
+        label = [""] * len(sites)
 
     default = detail["multipole"]
     if size is None:
@@ -187,23 +234,21 @@ def plot_cell_multipole(dialog, multipole, X="Q", size=None, color=None, opacity
     if opacity is None:
         opacity = default["opacity"]
 
-    multipoles, sites, mp = group.create_cell_multipole(multipole, X, average)
-
     if average:
-        for no, (v, s, m) in enumerate(zip(multipoles, sites, mp)):
+        for no, (v, s, m) in enumerate(zip(multipoles, sites, label)):
             if v == 0:
                 continue
-            label = f"O{no+1}: " + f"{m}".replace(" ", "")
-            pvw.add_orbital(shape=v, surface=v, size=-size, color=color, opacity=opacity, position=s, name=name, label=label)
+            lbl = f"O{no+1}:" + f"{m}".replace(" ", "")
+            pvw.add_orbital(shape=v, surface=v, size=-size, color=color, opacity=opacity, position=s, name=name, label=lbl)
     else:
         no = -1
-        for vl, s, ml in zip(multipoles, sites, mp):
+        for vl, s, ml in zip(multipoles, sites, label):
             for v, m in zip(vl, ml):
                 no += 1
                 if v == 0:
                     continue
-                label = f"O{no+1}: " + f"[{m}]".replace(" ", "")
-                pvw.add_orbital(shape=v, surface=v, size=-size, color=color, opacity=opacity, position=s, name=name, label=label)
+                lbl = f"O{no+1}:" + f"[{m}]".replace(" ", "")
+                pvw.add_orbital(shape=v, surface=v, size=-size, color=color, opacity=opacity, position=s, name=name, label=lbl)
 
 
 # ==================================================
@@ -285,7 +330,11 @@ def plot_site_cluster(
     cnt = dialog._set_counter(wp)
     name = f"{wp}({cnt})"
 
-    for s, v in zip(site, samb):
+    if label is None:
+        label = [""] * len(site)
+
+    for i, (no, s, v) in enumerate(zip(label, site, samb)):
+        lbl = f"S{i+1}{no}".replace(" ", "")
         if v > 0:
             c = color_pos
         elif v < 0:
@@ -293,7 +342,7 @@ def plot_site_cluster(
         else:
             c = color
             v = zero_size
-        pvw.add_site(position=s, size=size_ratio * abs(v), color=c, name=name, label=label)
+        pvw.add_site(position=s, size=size_ratio * abs(v), color=c, name=name, label=lbl)
 
 
 # ==================================================
@@ -302,8 +351,8 @@ def plot_bond_cluster(
     bond,
     samb,
     wp,
-    sym=True,
     label=None,
+    sym=True,
     color=None,
     color_neg=None,
     color_pos=None,
@@ -336,20 +385,25 @@ def plot_bond_cluster(
     cnt = dialog._set_counter(wp)
     name = f"{wp}({cnt})"
 
+    if label is None:
+        label = [""] * len(bond)
+
     if sym:
-        for b, h in zip(bond, samb):
+        for i, (no, b, h) in enumerate(zip(label, bond, samb)):
             v, c = b[0:3], b[3:6]
+            lbl = f"B{i+1}{no}".replace(" ", "")
             if abs(h) < CHOP:
                 pvw.add_bond(
-                    position=c, direction=v, color=color, color2=color, width=width, cartesian=False, name=name, label=label
+                    position=c, direction=v, color=color, color2=color, width=width, cartesian=False, name=name, label=lbl
                 )
             else:
                 cl = color_neg if h < 0 else color_pos
                 width = width_ratio * abs(h)
-                pvw.add_bond(position=c, direction=v, color=cl, color2=cl, width=width, cartesian=False, name=name, label=label)
+                pvw.add_bond(position=c, direction=v, color=cl, color2=cl, width=width, cartesian=False, name=name, label=lbl)
     else:
-        for b, h in zip(bond, samb):
+        for i, (no, b, h) in enumerate(zip(label, bond, samb)):
             v, c = b[0:3], b[3:6]
+            lbl = f"B{i+1}{no}".replace(" ", "")
             if abs(h) < CHOP:
                 pvw.add_bond(
                     position=c,
@@ -359,7 +413,7 @@ def plot_bond_cluster(
                     width=width,
                     cartesian=False,
                     name=name,
-                    label=label,
+                    label=lbl,
                 )
             else:
                 if h < 0:
@@ -367,13 +421,13 @@ def plot_bond_cluster(
                 cl = color_pos
                 width = width_ratio * abs(h)
                 pvw.add_vector(
-                    position=c, direction=v, length=-arrow_ratio, color=cl, width=width, cartesian=False, name=name, label=label
+                    position=c, direction=v, length=-arrow_ratio, color=cl, width=width, cartesian=False, name=name, label=lbl
                 )
 
 
 # ==================================================
 def plot_vector_cluster(
-    dialog, site, samb, X="Q", wp=None, label=None, length=None, width=None, color=None, opacity=None, name=None
+    dialog, site, samb, X="Q", wp=None, label=None, cartesian=True, length=None, width=None, color=None, opacity=None, name=None
 ):
     pvw = dialog._pvw
 
@@ -410,7 +464,7 @@ def plot_vector_cluster(
             width=width,
             color=color,
             opacity=opacity,
-            cartesian=True,
+            cartesian=cartesian,
             position=s,
             name=name,
             label=f"v{no}".replace(" ", ""),

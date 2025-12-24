@@ -206,6 +206,7 @@ class TabBasis(QWidget):
         site = self.edit_site.raw_text()
 
         self._site_wp, self._sites = group.find_wyckoff_site(site)
+        self._site_mapping = group.wyckoff["site"][self._site_wp]["mapping"]
         self._site_samb = group.cluster_samb(self._site_wp)
 
         lst, self._site_samb_list = self.parent._get_index_list(self._site_samb.keys())
@@ -218,6 +219,7 @@ class TabBasis(QWidget):
         bond = self.edit_bond.raw_text()
 
         self._bond_wp, self._bonds = group.find_wyckoff_bond(bond)
+        self._bond_mapping = group.wyckoff["bond"][self._bond_wp]["mapping"]
         self._bond_samb = group.cluster_samb(self._bond_wp, "bond")
 
         lst, self._bond_samb_list = self.parent._get_index_list(self._bond_samb.keys())
@@ -286,7 +288,13 @@ class TabBasis(QWidget):
         samb, comp = self._site_samb_list[self.combo_site_samb.currentIndex()]
 
         samb = self._site_samb[samb][0][comp]
-        plot_site_cluster(self.parent, self._sites, samb, self._site_wp)
+        mp = [str(i) for i in self._site_mapping]
+        if len(samb) != len(self._sites):
+            n_pset = len(self._sites) // len(samb)
+            samb = np.tile(samb, n_pset)
+            mp = mp * n_pset
+
+        plot_site_cluster(self.parent, self._sites, samb, self._site_wp, mp)
 
     # ==================================================
     def show_bond(self):
@@ -294,7 +302,13 @@ class TabBasis(QWidget):
         sym = samb[0] in ["Q", "G"]
 
         samb = self._bond_samb[samb][0][comp]
-        plot_bond_cluster(self.parent, self._bonds, samb, self._bond_wp, sym)
+        mp = [str(i) for i in self._bond_mapping]
+        if len(samb) != len(self._bonds):
+            n_pset = len(self._bonds) // len(samb)
+            samb = np.tile(samb, n_pset)
+            mp = mp * n_pset
+
+        plot_bond_cluster(self.parent, self._bonds, samb, self._bond_wp, mp, sym)
 
     # ==================================================
     def show_vector(self):
@@ -308,7 +322,7 @@ class TabBasis(QWidget):
 
         obj = create_samb_object(self.parent.ps_group, tp, samb, wp, site)
         obj = convert_vector_object(obj)
-        plot_vector_cluster(self.parent, site, obj, X)
+        plot_vector_cluster(self.parent, site, obj, X, wp)
 
     # ==================================================
     def show_vector_lc(self):
@@ -331,7 +345,7 @@ class TabBasis(QWidget):
             lc_obj[i] = sp.Matrix(convert_vector_object(lc_obj[i]))
 
         obj = np.array(ex.subs(lc_obj))
-        plot_vector_cluster(self.parent, site, obj, X)
+        plot_vector_cluster(self.parent, site, obj, X, wp)
 
     # ==================================================
     def show_orbital(self):
@@ -344,7 +358,7 @@ class TabBasis(QWidget):
         site = self._orbital_samb_site
 
         obj = create_samb_object(self.parent.ps_group, tp, samb, wp, site)
-        plot_orbital_cluster(self.parent, site, obj, X)
+        plot_orbital_cluster(self.parent, site, obj, X, wp)
 
     # ==================================================
     def show_orbital_lc(self):
@@ -366,7 +380,7 @@ class TabBasis(QWidget):
             lc_obj[i] = sp.Matrix(create_samb_object(self.parent.ps_group, tp, samb, wp, site))
 
         obj = np.array(ex.subs(lc_obj)).reshape(-1)
-        plot_orbital_cluster(self.parent, site, obj, X)
+        plot_orbital_cluster(self.parent, site, obj, X, wp)
 
     # ==================================================
     def create_vector_modulation(self):
@@ -403,7 +417,7 @@ class TabBasis(QWidget):
         )
         obj = convert_vector_object(obj)
 
-        plot_vector_cluster(self.parent, full_site, obj, X)
+        plot_vector_cluster(self.parent, full_site, obj, X, wp, site_idx)
 
     # ==================================================
     def create_orbital_samb_modulation(self, modulation, phase_dict, igrid, pset):
@@ -415,7 +429,7 @@ class TabBasis(QWidget):
             self.parent.ps_group, modulation, phase_dict, igrid, pset, self._orbital_samb, self._orbital_samb_list, wp, site
         )
 
-        plot_orbital_cluster(self.parent, full_site, obj, X)
+        plot_orbital_cluster(self.parent, full_site, obj, X, wp, site_idx)
 
     # ==================================================
     def closeEvent(self, event):
