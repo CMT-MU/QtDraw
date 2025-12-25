@@ -8,6 +8,7 @@ from PySide6.QtWidgets import QWidget
 from PySide6.QtCore import Qt
 
 from qtdraw.widget.custom_widget import Label, Layout, Combo, VSpacer, HBar, LineEdit, Check
+from qtdraw.widget.validator import convert_to_bond
 from qtdraw.multipie.multipie_plot import plot_cell_site, plot_cell_bond, plot_cell_vector, plot_cell_multipole
 
 
@@ -28,7 +29,7 @@ class TabObject(QWidget):
             parent,
             text='<span style="font-weight:bold;">Site</span> : draw equivalent sites.<br>&nbsp;&nbsp;1. input representative site, + ENTER.',
         )
-        self.edit_site = LineEdit(parent, text="[0,0,0]", validator=("site", {"use_var": False}))
+        self.edit_site = LineEdit(parent, text="[1/3,2/3,0]", validator=("site", {"use_var": False}))
 
         panel1 = QWidget(parent)
         layout1 = Layout(panel1)
@@ -40,7 +41,7 @@ class TabObject(QWidget):
             parent,
             text='<span style="font-weight:bold;">Bond</span> : draw equivalent bonds.<br>&nbsp;&nbsp;1. input representative bond, + ENTER.',
         )
-        self.edit_bond = LineEdit(parent, text="[0,0,1]@[0,0,0]", validator=("bond", {"use_var": False}))
+        self.edit_bond = LineEdit(parent, text="[0,0,0];[1,0,0]", validator=("bond", {"use_var": False}))
 
         panel2 = QWidget(parent)
         layout2 = Layout(panel2)
@@ -53,7 +54,7 @@ class TabObject(QWidget):
             text='<span style="font-weight:bold;">Vector</span> : draw vectors at equivalent sites or bonds.<br>&nbsp;&nbsp;1. choose type (and check average), 2. input vector # site/bond, + ENTER.',
         )
         self.combo_vector_type = Combo(parent, ["Q", "G", "T", "M"])
-        self.edit_vector = LineEdit(parent, text="[0,0,1] # [0,0,1]@[0,0,0]", validator=("vector_site_bond", {"use_var": False}))
+        self.edit_vector = LineEdit(parent, text="[0,0,1] # [1/3,2/3,0]", validator=("vector_site_bond", {"use_var": False}))
         self.check_vector_av = Check(parent, text="av.")
         self.check_vector_cart = Check(parent, text="cartesian")
         self.check_vector_cart.setChecked(True)
@@ -72,7 +73,7 @@ class TabObject(QWidget):
             text='<span style="font-weight:bold;">Orbital</span> : draw orbitals at equivalent sites or bonds.<br>&nbsp;&nbsp;1. choose type (and check average), 2. input orbital # site/bond, + ENTER.',
         )
         self.combo_orbital_type = Combo(parent, ["Q", "G", "T", "M"])
-        self.edit_orbital = LineEdit(parent, text="x # [0,0,1]@[0,0,0]", validator=("orbital_site_bond", {"use_var": False}))
+        self.edit_orbital = LineEdit(parent, text="x # [0,0,0];[1,0,0]", validator=("orbital_site_bond", {"use_var": False}))
         self.check_orbital_av = Check(parent, text="av.")
 
         panel4 = QWidget(parent)
@@ -101,14 +102,14 @@ class TabObject(QWidget):
     # ==================================================
     def show_site(self):
         site = self.edit_site.raw_text()
-        sites, mp = self.parent.group.create_cell_site(site)
-        plot_cell_site(self.parent, sites, label=mp)
+        sites, mp, wp = self.parent.group.create_cell_site(site)
+        plot_cell_site(self.parent, sites, wp=wp, label=mp)
 
     # ==================================================
     def show_bond(self):
         bond = self.edit_bond.raw_text()
-        bonds, mp = self.parent.group.create_cell_bond(bond)
-        plot_cell_bond(self.parent, bonds, label=mp)
+        bonds, mp, wp = self.parent.group.create_cell_bond(bond)
+        plot_cell_bond(self.parent, bonds, wp=wp, label=mp)
 
     # ==================================================
     def show_vector(self):
@@ -116,13 +117,13 @@ class TabObject(QWidget):
         vector_type = self.combo_vector_type.currentText()
         cartesian = self.check_vector_cart.is_checked()
         av = self.check_vector_av.is_checked()
-        vectors, sites, mp = self.parent.group.create_cell_vector(vector, vector_type, av, cartesian)
-        plot_cell_vector(self.parent, vectors, sites, vector_type, label=mp, average=av, cartesian=cartesian)
+        vectors, sites, mp, wp = self.parent.group.create_cell_vector(vector, vector_type, av, cartesian)
+        plot_cell_vector(self.parent, vectors, sites, vector_type, wp=wp, label=mp, average=av, cartesian=cartesian)
 
     # ==================================================
     def show_orbital(self):
         orbital = self.edit_orbital.raw_text()
         orbital_type = self.combo_orbital_type.currentText()
         av = self.check_orbital_av.is_checked()
-        orbitals, sites, mp = self.parent.group.create_cell_multipole(orbital, orbital_type, av)
-        plot_cell_multipole(self.parent, orbitals, sites, orbital_type, label=mp, average=av)
+        orbitals, sites, mp, wp = self.parent.group.create_cell_multipole(orbital, orbital_type, av)
+        plot_cell_multipole(self.parent, orbitals, sites, orbital_type, wp=wp, label=mp, average=av)

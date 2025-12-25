@@ -14,7 +14,7 @@ from qtdraw.multipie.tab_group import TabGroup
 from qtdraw.multipie.tab_object import TabObject
 from qtdraw.multipie.tab_basis import TabBasis
 from qtdraw.multipie.multipie_setting import setting_detail as detail
-from qtdraw.multipie.multipie_setting import group_list
+from qtdraw.multipie.multipie_group_list import group_list
 
 
 # ==================================================

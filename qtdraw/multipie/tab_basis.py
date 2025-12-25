@@ -18,12 +18,7 @@ from qtdraw.multipie.multipie_plot import (
     plot_vector_cluster,
     plot_orbital_cluster,
 )
-from qtdraw.multipie.multipie_util import (
-    create_samb_object,
-    check_linear_combination,
-    convert_vector_object,
-    create_samb_modulation,
-)
+from qtdraw.multipie.multipie_util import check_linear_combination, convert_vector_object, create_samb_modulation
 from qtdraw.multipie.multipie_modulation_dialog import ModulationDialog
 
 
@@ -47,7 +42,7 @@ class TabBasis(QWidget):
             parent,
             text='<span style="font-weight:bold;">Bond Definition</span> : draw bond definition.<br>&nbsp;&nbsp;1. input representative bond, + ENTER.',
         )
-        self.edit_def_bond = LineEdit(parent, text="[0,0,1]@[0,0,0]", validator=("bond", {"use_var": False}))
+        self.edit_def_bond = LineEdit(parent, text="[0,0,0];[1,0,0]", validator=("bond", {"use_var": False}))
 
         panel1 = QWidget(parent)
         layout1 = Layout(panel1)
@@ -60,7 +55,7 @@ class TabBasis(QWidget):
             parent,
             text='<span style="font-weight:bold;">Site</span> : draw site-cluster basis.<br>&nbsp;&nbsp;1. input representative site, + ENTER, \u21d2 2. choose basis, 3. push "draw".',
         )
-        self.edit_site = LineEdit(parent, text="[0,0,0]", validator=("site", {"use_var": False}))
+        self.edit_site = LineEdit(parent, text="[1/3,2/3,0]", validator=("site", {"use_var": False}))
 
         label_site_to = Label(parent, text="\u21d2 basis")
         self.combo_site_samb = Combo(parent)
@@ -79,7 +74,7 @@ class TabBasis(QWidget):
             parent,
             text='<span style="font-weight:bold;">Bond</span> : draw bond-cluster basis.<br>&nbsp;&nbsp;1. input representative bond, + ENTER, \u21d2 2. choose basis, 3. push "draw".',
         )
-        self.edit_bond = LineEdit(parent, text="[0,0,1]@[0,0,0]", validator=("bond", {"use_var": False}))
+        self.edit_bond = LineEdit(parent, text="[0,0,0];[1,0,0]", validator=("bond", {"use_var": False}))
         label_bond_to = Label(parent, text="\u21d2 basis")
         self.combo_bond_samb = Combo(parent)
         self.button_bond_draw = Button(parent, text="draw")
@@ -98,14 +93,14 @@ class TabBasis(QWidget):
             text='<span style="font-weight:bold;">Vector</span> : draw symmetry-adapted vector.<br>&nbsp;&nbsp;1. choose type, 2. input representative site/bond, + ENTER,<br>&nbsp;&nbsp;\u21d2  3. choose (type,basis), 4. push "draw" or 3. input linear combination, + ENTER or 3. push "modulation".',
         )
         self.combo_vector_type = Combo(parent, ["Q", "G", "T", "M"])
-        self.edit_vector = LineEdit(parent, text="[0,0,1]@[0,0,0]", validator=("site_bond", {"use_var": False}))
+        self.edit_vector = LineEdit(parent, text="[1/3,2/3,0]", validator=("site_bond", {"use_var": False}))
         label_vector_to = Label(parent, text="\u21d2 basis")
         self.combo_vector_samb_type = Combo(parent, ["Q", "G", "T", "M"])
         self.combo_vector_samb = Combo(parent)
         self.button_vector_draw = Button(parent, text="draw")
 
         label_vector_lc = Label(parent, text="linear combination")
-        self.edit_vector_lc = LineEdit(parent)
+        self.edit_vector_lc = LineEdit(parent, text="Q01")
         self.button_vector_modulation = Button(parent, text="modulation (SG)")
         self.combo_vector_modulation_type = Combo(parent, ["Q,G", "T,M"])
         self.edit_vector_modulation = LineEdit(parent)
@@ -132,14 +127,14 @@ class TabBasis(QWidget):
         )
         self.combo_orbital_type = Combo(parent, ["Q", "G", "T", "M"])
         self.combo_orbital_rank = Combo(parent, map(str, range(12)))
-        self.edit_orbital = LineEdit(parent, text="[0,0,1]@[0,0,0]", validator=("site_bond", {"use_var": False}))
+        self.edit_orbital = LineEdit(parent, text="[0,0,0];[1,0,0]", validator=("site_bond", {"use_var": False}))
         label_orbital_to = Label(parent, text="\u21d2 basis")
         self.combo_orbital_samb_type = Combo(parent, ["Q", "G", "T", "M"])
         self.combo_orbital_samb = Combo(parent)
         self.button_orbital_draw = Button(parent, text="draw")
 
         label_orbital_lc = Label(parent, text="linear combination")
-        self.edit_orbital_lc = LineEdit(parent)
+        self.edit_orbital_lc = LineEdit(parent, text="Q01")
         self.button_orbital_modulation = Button(parent, text="modulation (SG)")
         self.combo_orbital_modulation_type = Combo(parent, ["Q,G", "T,M"])
         self.edit_orbital_modulation = LineEdit(parent)
@@ -206,8 +201,10 @@ class TabBasis(QWidget):
         site = self.edit_site.raw_text()
 
         self._site_wp, self._sites = group.find_wyckoff_site(site)
-        self._site_mapping = group.wyckoff["site"][self._site_wp]["mapping"]
+        self._site_mp = group.wyckoff["site"][self._site_wp]["mapping"]
         self._site_samb = group.cluster_samb(self._site_wp)
+        if len(self._site_mp) != len(self._sites):
+            self._site_mp = self._site_mp * (len(self._sites) // len(self._site_mp))
 
         lst, self._site_samb_list = self.parent._get_index_list(self._site_samb.keys())
         self.combo_site_samb.set_item(lst)
@@ -219,8 +216,10 @@ class TabBasis(QWidget):
         bond = self.edit_bond.raw_text()
 
         self._bond_wp, self._bonds = group.find_wyckoff_bond(bond)
-        self._bond_mapping = group.wyckoff["bond"][self._bond_wp]["mapping"]
+        self._bond_mp = group.wyckoff["bond"][self._bond_wp]["mapping"]
         self._bond_samb = group.cluster_samb(self._bond_wp, "bond")
+        if len(self._bond_mp) != len(self._bonds):
+            self._bond_mp = self._bond_mp * (len(self._bonds) // len(self._bond_mp))
 
         lst, self._bond_samb_list = self.parent._get_index_list(self._bond_samb.keys())
         self.combo_bond_samb.set_item(lst)
@@ -232,6 +231,16 @@ class TabBasis(QWidget):
         site_bond = self.edit_vector.raw_text()
         vector_type = self.combo_vector_type.currentText()
         samb, self._vector_wp, self._vector_samb_site = group.multipole_cluster_samb(vector_type, 1, site_bond)
+        self._vector_mp = (
+            group.wyckoff["bond"][self._vector_wp]["mapping"]
+            if "@" in self._vector_wp
+            else group.wyckoff["site"][self._vector_wp]["mapping"]
+        )
+        if len(self._vector_mp) != len(self._vector_samb_site):
+            self._vector_n_pset = len(self._vector_samb_site) // len(self._vector_mp)
+            self._vector_mp = self._vector_mp * self._vector_n_pset
+        else:
+            self._vector_n_pset = 1
 
         self._vector_samb = {}
         self._vector_samb_list = {}
@@ -257,6 +266,16 @@ class TabBasis(QWidget):
         orbital_type = self.combo_orbital_type.currentText()
         orbital_rank = int(self.combo_orbital_rank.currentText())
         samb, self._orbital_wp, self._orbital_samb_site = group.multipole_cluster_samb(orbital_type, orbital_rank, site_bond)
+        self._orbital_mp = (
+            group.wyckoff["bond"][self._orbital_wp]["mapping"]
+            if "@" in self._orbital_wp
+            else group.wyckoff["site"][self._orbital_wp]["mapping"]
+        )
+        if len(self._orbital_mp) != len(self._orbital_samb_site):
+            self._orbital_n_pset = len(self._orbital_samb_site) // len(self._orbital_mp)
+            self._orbital_mp = self._orbital_mp * self._orbital_n_pset
+        else:
+            self._orbital_n_pset = 1
 
         self._orbital_samb = {}
         self._orbital_samb_list = {}
@@ -280,21 +299,20 @@ class TabBasis(QWidget):
         group = self.parent.ps_group
         bond = self.edit_def_bond.raw_text()
         wp, bonds = group.find_wyckoff_bond(bond)
+        mp = group.wyckoff["bond"][wp]["mapping"]
+        if len(bonds) != len(mp):
+            mp = mp * (len(bonds) // len(mp))
 
-        plot_bond_definition(self.parent, bonds, wp)
+        plot_bond_definition(self.parent, bonds, wp=wp, label=mp)
 
     # ==================================================
     def show_site(self):
         samb, comp = self._site_samb_list[self.combo_site_samb.currentIndex()]
-
         samb = self._site_samb[samb][0][comp]
-        mp = [str(i) for i in self._site_mapping]
+        mp = self._site_mp
         if len(samb) != len(self._sites):
-            n_pset = len(self._sites) // len(samb)
-            samb = np.tile(samb, n_pset)
-            mp = mp * n_pset
-
-        plot_site_cluster(self.parent, self._sites, samb, self._site_wp, mp)
+            samb = np.tile(samb, len(self._sites) // len(samb))
+        plot_site_cluster(self.parent, self._sites, samb, wp=self._site_wp, label=mp)
 
     # ==================================================
     def show_bond(self):
@@ -302,13 +320,10 @@ class TabBasis(QWidget):
         sym = samb[0] in ["Q", "G"]
 
         samb = self._bond_samb[samb][0][comp]
-        mp = [str(i) for i in self._bond_mapping]
+        mp = self._bond_mp
         if len(samb) != len(self._bonds):
-            n_pset = len(self._bonds) // len(samb)
-            samb = np.tile(samb, n_pset)
-            mp = mp * n_pset
-
-        plot_bond_cluster(self.parent, self._bonds, samb, self._bond_wp, mp, sym)
+            samb = np.tile(samb, len(self._bonds) // len(samb))
+        plot_bond_cluster(self.parent, self._bonds, samb, wp=self._bond_wp, label=mp, sym=sym)
 
     # ==================================================
     def show_vector(self):
@@ -319,10 +334,12 @@ class TabBasis(QWidget):
         samb = self._vector_samb[tp][samb][0][comp]
         wp = self._vector_wp
         site = self._vector_samb_site
+        mp = self._vector_mp
 
-        obj = create_samb_object(self.parent.ps_group, tp, samb, wp, site)
+        obj = self.parent.ps_group.combined_object(wp, tp, samb)
+        obj = np.tile(obj, self._vector_n_pset)
         obj = convert_vector_object(obj)
-        plot_vector_cluster(self.parent, site, obj, X, wp)
+        plot_vector_cluster(self.parent, site, obj, X, wp=wp, label=mp)
 
     # ==================================================
     def show_vector_lc(self):
@@ -334,6 +351,7 @@ class TabBasis(QWidget):
         X = self.combo_vector_type.currentText()
         wp = self._vector_wp
         site = self._vector_samb_site
+        mp = self._vector_mp
 
         lc_obj = {}
         for i in var:
@@ -341,11 +359,12 @@ class TabBasis(QWidget):
             idx = int(i[1:]) - 1
             samb, comp = self._vector_samb_list[tp][idx]
             samb = self._vector_samb[tp][samb][0][comp]
-            lc_obj[i] = create_samb_object(self.parent.ps_group, tp, samb, wp, site)
-            lc_obj[i] = sp.Matrix(convert_vector_object(lc_obj[i]))
+            obj1 = self.parent.ps_group.combined_object(wp, tp, samb)
+            obj1 = np.tile(obj1, self._vector_n_pset)
+            lc_obj[i] = sp.Matrix(convert_vector_object(obj1))
 
         obj = np.array(ex.subs(lc_obj))
-        plot_vector_cluster(self.parent, site, obj, X, wp)
+        plot_vector_cluster(self.parent, site, obj, X, wp=wp, label=mp)
 
     # ==================================================
     def show_orbital(self):
@@ -356,9 +375,11 @@ class TabBasis(QWidget):
         samb = self._orbital_samb[tp][samb][0][comp]
         wp = self._orbital_wp
         site = self._orbital_samb_site
+        mp = self._orbital_mp
 
-        obj = create_samb_object(self.parent.ps_group, tp, samb, wp, site)
-        plot_orbital_cluster(self.parent, site, obj, X, wp)
+        obj = self.parent.ps_group.combined_object(wp, tp, samb)
+        obj = np.tile(obj, self._orbital_n_pset)
+        plot_orbital_cluster(self.parent, site, obj, X, wp=wp, label=mp)
 
     # ==================================================
     def show_orbital_lc(self):
@@ -370,6 +391,7 @@ class TabBasis(QWidget):
         X = self.combo_orbital_type.currentText()
         wp = self._orbital_wp
         site = self._orbital_samb_site
+        mp = self._orbital_mp
 
         lc_obj = {}
         for i in var:
@@ -377,10 +399,11 @@ class TabBasis(QWidget):
             idx = int(i[1:]) - 1
             samb, comp = self._orbital_samb_list[tp][idx]
             samb = self._orbital_samb[tp][samb][0][comp]
-            lc_obj[i] = sp.Matrix(create_samb_object(self.parent.ps_group, tp, samb, wp, site))
+            obj1 = self.parent.ps_group.combined_object(wp, tp, samb)
+            lc_obj[i] = sp.Matrix(np.tile(obj1, self._orbital_n_pset))
 
         obj = np.array(ex.subs(lc_obj)).reshape(-1)
-        plot_orbital_cluster(self.parent, site, obj, X, wp)
+        plot_orbital_cluster(self.parent, site, obj, X, wp=wp, label=mp)
 
     # ==================================================
     def create_vector_modulation(self):
@@ -407,7 +430,7 @@ class TabBasis(QWidget):
             self._orbital_modulation_dialog = ModulationDialog(self, modulation, var, vec=False)
 
     # ==================================================
-    def create_vector_samb_modulation(self, modulation, phase_dict, igrid, pset):
+    def show_vector_samb_modulation(self, modulation, phase_dict, igrid, pset):
         wp = self._vector_wp
         site = self._vector_samb_site
         X = self.combo_vector_type.currentText()
@@ -417,10 +440,10 @@ class TabBasis(QWidget):
         )
         obj = convert_vector_object(obj)
 
-        plot_vector_cluster(self.parent, full_site, obj, X, wp, site_idx)
+        plot_vector_cluster(self.parent, full_site, obj, X, wp=wp, label=site_idx)
 
     # ==================================================
-    def create_orbital_samb_modulation(self, modulation, phase_dict, igrid, pset):
+    def show_orbital_samb_modulation(self, modulation, phase_dict, igrid, pset):
         wp = self._orbital_wp
         site = self._orbital_samb_site
         X = self.combo_orbital_type.currentText()
@@ -429,7 +452,7 @@ class TabBasis(QWidget):
             self.parent.ps_group, modulation, phase_dict, igrid, pset, self._orbital_samb, self._orbital_samb_list, wp, site
         )
 
-        plot_orbital_cluster(self.parent, full_site, obj, X, wp, site_idx)
+        plot_orbital_cluster(self.parent, full_site, obj, X, wp=wp, label=site_idx)
 
     # ==================================================
     def closeEvent(self, event):

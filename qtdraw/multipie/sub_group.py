@@ -7,7 +7,7 @@ This module provides side panel in MultiPie dialog.
 from PySide6.QtWidgets import QWidget
 
 from qtdraw.widget.custom_widget import Label, Layout, Button, Combo, VSpacer, HBar
-from qtdraw.multipie.info_dialog import (
+from qtdraw.multipie.multipie_info_dialog import (
     show_symmetry_operation,
     show_character_table,
     show_wyckoff_site,

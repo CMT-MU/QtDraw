@@ -42,7 +42,7 @@ def plot_cell_site(dialog, sites, wp=None, label=None, size=None, color=None, op
         opacity = default["opacity"]
 
     for no, (pt, m) in enumerate(zip(sites, label)):
-        lbl = f"S{no+1}:" + f"{m}".replace(" ", "")
+        lbl = f"S{no+1}:{m}".replace(" ", "")
         pvw.add_site(position=pt, name=name, label=lbl, size=size, color=color, opacity=opacity)
 
 
@@ -93,7 +93,7 @@ def plot_cell_bond(dialog, bonds, wp=None, label=None, width=None, color=None, c
 
     for no, (b, m) in enumerate(zip(bonds, label)):
         v, c = b[0:3], b[3:6]
-        lbl = f"B{no+1}:" + f"{m}".replace(" ", "")
+        lbl = f"B{no+1}:{m}".replace(" ", "")
         pvw.add_bond(direction=v, position=c, width=width, color=color, color2=color2, opacity=opacity, name=name, label=lbl)
 
 
@@ -160,7 +160,7 @@ def plot_cell_vector(
         for no, (v, s, m) in enumerate(zip(vectors, sites, label)):
             if np.linalg.norm(v) < CHOP:
                 continue
-            lbl = f"V{no+1}:" + f"{m}".replace(" ", "")
+            lbl = f"V{no+1}:{m}".replace(" ", "")
             pvw.add_vector(
                 direction=v,
                 length=-length,
@@ -179,7 +179,7 @@ def plot_cell_vector(
                 no += 1
                 if np.linalg.norm(v) < CHOP:
                     continue
-                lbl = f"V{no+1}:" + f"[{m}]".replace(" ", "")
+                lbl = f"V{no+1}:[{m}]".replace(" ", "")
                 pvw.add_vector(
                     direction=v,
                     length=-length,
@@ -226,7 +226,7 @@ def plot_cell_multipole(
     if label is None:
         label = [""] * len(sites)
 
-    default = detail["multipole"]
+    default = detail["orbital"]
     if size is None:
         size = default["size"]
     if color is None:
@@ -238,7 +238,7 @@ def plot_cell_multipole(
         for no, (v, s, m) in enumerate(zip(multipoles, sites, label)):
             if v == 0:
                 continue
-            lbl = f"O{no+1}:" + f"{m}".replace(" ", "")
+            lbl = f"O{no+1}:{m}".replace(" ", "")
             pvw.add_orbital(shape=v, surface=v, size=-size, color=color, opacity=opacity, position=s, name=name, label=lbl)
     else:
         no = -1
@@ -247,7 +247,7 @@ def plot_cell_multipole(
                 no += 1
                 if v == 0:
                     continue
-                lbl = f"O{no+1}:" + f"[{m}]".replace(" ", "")
+                lbl = f"O{no+1}:[{m}]".replace(" ", "")
                 pvw.add_orbital(shape=v, surface=v, size=-size, color=color, opacity=opacity, position=s, name=name, label=lbl)
 
 
@@ -256,6 +256,7 @@ def plot_bond_definition(
     dialog,
     bonds,
     wp,
+    label=None,
     rep=True,
     name=None,
     length=None,
@@ -286,9 +287,13 @@ def plot_bond_definition(
         cnt = dialog._set_counter(wp)
         name = f"{wp}({cnt})"
 
+    if label is None:
+        label = [""] * len(bonds)
+
     opt = opacity
-    for no, b in enumerate(bonds):
+    for no, (b, m) in enumerate(zip(bonds, label)):
         v, c = b[0:3], b[3:6]
+        lbl = f"B{no+1}:{m}".replace(" ", "")
         pvw.add_bond(
             position=c,
             direction=v,
@@ -297,13 +302,11 @@ def plot_bond_definition(
             width=width,
             cartesian=False,
             opacity=opt,
-            label=f"b{no+1}",
+            label=lbl,
             name=name,
         )
         acolor = arrow_color_rep if rep and no == 0 else arrow_color
-        pvw.add_vector(
-            position=c, direction=v, length=-length, color=acolor, width=0.01, cartesian=False, label=f"b{no+1}", name=name
-        )
+        pvw.add_vector(position=c, direction=v, length=-length, color=acolor, width=0.01, cartesian=False, label=lbl, name=name)
 
 
 # ==================================================
@@ -334,7 +337,7 @@ def plot_site_cluster(
         label = [""] * len(site)
 
     for i, (no, s, v) in enumerate(zip(label, site, samb)):
-        lbl = f"S{i+1}{no}".replace(" ", "")
+        lbl = f"S{i+1}:{no}".replace(" ", "")
         if v > 0:
             c = color_pos
         elif v < 0:
@@ -391,7 +394,7 @@ def plot_bond_cluster(
     if sym:
         for i, (no, b, h) in enumerate(zip(label, bond, samb)):
             v, c = b[0:3], b[3:6]
-            lbl = f"B{i+1}{no}".replace(" ", "")
+            lbl = f"B{i+1}:{no}".replace(" ", "")
             if abs(h) < CHOP:
                 pvw.add_bond(
                     position=c, direction=v, color=color, color2=color, width=width, cartesian=False, name=name, label=lbl
@@ -403,7 +406,7 @@ def plot_bond_cluster(
     else:
         for i, (no, b, h) in enumerate(zip(label, bond, samb)):
             v, c = b[0:3], b[3:6]
-            lbl = f"B{i+1}{no}".replace(" ", "")
+            lbl = f"B{i+1}:{no}".replace(" ", "")
             if abs(h) < CHOP:
                 pvw.add_bond(
                     position=c,
@@ -453,11 +456,12 @@ def plot_vector_cluster(
         samb = samb.astype(float)
 
     if label is None:
-        label = list(range(len(site)))
+        label = [""] * len(site)
 
-    for no, v, s in zip(label, samb, site):
+    for i, (no, v, s) in enumerate(zip(label, samb, site)):
         if np.linalg.norm(v) < CHOP:
             continue
+        lbl = f"V{i+1}:{no}".replace(" ", "")
         pvw.add_vector(
             direction=v,
             length=-length,
@@ -467,7 +471,7 @@ def plot_vector_cluster(
             cartesian=cartesian,
             position=s,
             name=name,
-            label=f"v{no}".replace(" ", ""),
+            label=lbl,
         )
 
 
@@ -483,7 +487,7 @@ def plot_orbital_cluster(dialog, site, samb, X="Q", wp=None, label=None, size=No
             cnt = dialog._set_counter(wp)
             name = f"{wp}({cnt})"
 
-    default = detail["multipole"]
+    default = detail["orbital"]
     if size is None:
         size = default["size"]
     if color is None:
@@ -492,11 +496,10 @@ def plot_orbital_cluster(dialog, site, samb, X="Q", wp=None, label=None, size=No
         opacity = default["opacity"]
 
     if label is None:
-        label = list(range(len(site)))
+        label = [""] * len(site)
 
-    for no, v, s in zip(label, samb, site):
+    for i, (no, v, s) in enumerate(zip(label, samb, site)):
         if v == 0:
             continue
-        pvw.add_orbital(
-            shape=v, surface=v, size=-size, color=color, opacity=opacity, position=s, name=name, label=f"o{no}".replace(" ", "")
-        )
+        lbl = f"O{i+1}:{no}".replace(" ", "")
+        pvw.add_orbital(shape=v, surface=v, size=-size, color=color, opacity=opacity, position=s, name=name, label=lbl)

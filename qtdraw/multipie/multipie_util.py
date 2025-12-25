@@ -5,23 +5,6 @@ from qtdraw.util.util import str_to_sympy, igrid
 
 
 # ==================================================
-def create_samb_object(group, samb_tp, samb, wp, site):
-    sgn = {"Q": 1, "G": 1, "T": -1, "M": -1}
-    tp = "bond" if "@" in wp else "site"
-    c_samb = group.cluster_samb(wp, tp)
-
-    obj = np.full(len(site), sp.S(0))
-    for coeff, a_key, a_comp, c_key, c_comp in samb:
-        s = 1 if sgn[samb_tp] * sgn[a_key[0]] == 1 else -sp.I
-        a_key = (a_key[0].replace("T", "Q").replace("M", "G"), *a_key[1:])
-        a_val = group.harmonics[a_key][0][a_comp]
-        c_val = c_samb[c_key][0][c_comp]
-        obj += s * coeff * a_val * c_val
-
-    return obj
-
-
-# ==================================================
 def phase_factor(modulation, repeat, pset):
     """
     Create phase factor.
@@ -29,12 +12,15 @@ def phase_factor(modulation, repeat, pset):
     Args:
         modulation (list): modulation info. [(basis, coeff, k, n)].
         repeat (list): repeat.
+        pset (ndarray): plus_set.
 
     Returns:
         - (dict) -- {(k(str),n(int),plus_set no(int)): [phase at each grid(float)]}.
         - (list) -- cell grid.
     """
     grid = igrid(repeat)
+    if pset is None:
+        pset = np.ndarray([[0, 0, 0]])
 
     phase_dict = {}
     for _, _, k, n in modulation:
@@ -66,57 +52,22 @@ def create_samb_modulation(group, modulation, phase_dict, igrid, pset, samb, sam
         idx = int(basis[1:]) - 1
         coeff = str_to_sympy(coeff)
         samb1, comp = samb_list[tp][idx]
-        samb_ = samb[tp][samb1][0][comp]
-        m_obj = create_samb_object(group, tp, samb_, wp, site)
+        samb = samb[tp][samb1][0][comp]
+        m_obj = group.combined_object(wp, tp, samb)
+        m_obj = np.tile(m_obj, n_pset)
         phase_all = np.empty((n_grid, n_pset), dtype=object)
         for p_no in range(n_pset):
             phase_all[:, p_no] = phase_dict[(k, n, p_no)]
-        m = m_obj.reshape(n_pset, n_prim)
+        m = m_obj.reshape(n_pset, -1)
         obj += coeff * (phase_all[:, :, None] * m[None, :, :]).reshape(n_grid, ns)
     obj = obj.reshape(-1)
 
-    i_no = np.repeat(np.arange(n_grid), ns)
     fs_no = np.tile(np.arange(ns), n_grid)
     p_no = fs_no // n_prim
     s_no = fs_no % n_prim
-    site_idx = np.column_stack((i_no, p_no, s_no))
+    site_idx = np.column_stack((p_no, s_no))
+    site_idx = [f"(p{i[0]+1},s{i[1]+1})" for i in site_idx]
     full_site = (igrid[:, None] + site[None, :]).reshape(-1, site.shape[1])
-
-    return obj, site_idx, full_site
-
-
-# ==================================================
-def create_samb_modulation2(group, modulation, phase_dict, igrid, pset, samb, samb_list, wp, site):
-    ns = len(site)
-    n_pset = len(pset)
-    n_prim = ns // n_pset
-
-    obj = np.full(len(igrid) * len(site), sp.S(0))
-    for basis, coeff, k, n in modulation:
-        tp = basis[0]
-        idx = int(basis[1:]) - 1
-        samb1, comp = samb_list[tp][idx]
-        samb = samb[tp][samb1][0][comp]
-        m_obj = create_samb_object(group, tp, samb, wp, site)
-        coeff = str_to_sympy(coeff)
-        for p_no in range(n_pset):
-            phase = phase_dict[(k, n, p_no)]
-            for i_no, g in enumerate(igrid):
-                obj[i_no * ns + p_no * n_prim : i_no * ns + (p_no + 1) * n_prim] += (
-                    coeff * phase[i_no] * m_obj[p_no * n_prim : (p_no + 1) * n_prim]
-                )
-
-    site_idx = []
-    full_site = []
-    for i_no, g in enumerate(igrid):
-        for fs_no, s in enumerate(site):
-            p_no = fs_no // n_prim
-            s_no = fs_no % n_prim
-            site_idx.append((i_no, p_no, s_no))
-            full_site.append(s + g)
-
-    site_idx = np.asarray(site_idx)
-    full_site = np.asarray(full_site)
 
     return obj, site_idx, full_site
 

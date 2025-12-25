@@ -1,5 +1,3 @@
-import numpy as np
-import sympy as sp
 import copy
 from PySide6.QtWidgets import QDialog
 from PySide6.QtCore import Qt
@@ -7,8 +5,16 @@ from PySide6.QtCore import Qt
 from qtdraw.widget.custom_widget import Layout, Button, LineEdit, Label
 from qtdraw.widget.group_model import GroupModel
 from qtdraw.widget.group_view import GroupView
-from qtdraw.multipie.multipie_setting import modulation_panel
 from qtdraw.multipie.multipie_util import phase_factor
+
+# ==================================================
+modulation_panel = {
+    "id": ("hide", {}, "0"),
+    "basis": ("combo", ["Q01"], "Q01"),
+    "coeff": ("list_float", {"digit": 4}, "1"),
+    "k_vector": ("list_float", {"shape": (3,), "var": [""], "digit": 4}, "[1,0,0]"),
+    "phase": ("combo", ["cos", "sin"], "cos"),
+}
 
 
 # ==================================================
@@ -143,9 +149,9 @@ class ModulationDialog(QDialog):
 
         phase_dict, igrid = phase_factor(modulation, rng, self.pset)
         if self._vec:
-            self.parent.create_vector_samb_modulation(modulation, phase_dict, igrid, self.pset)
+            self.parent.show_vector_samb_modulation(modulation, phase_dict, igrid, self.pset)
         else:
-            self.parent.create_orbital_samb_modulation(modulation, phase_dict, igrid, self.pset)
+            self.parent.show_orbital_samb_modulation(modulation, phase_dict, igrid, self.pset)
 
     # ==================================================
     def add_data(self):

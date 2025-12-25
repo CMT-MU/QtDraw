@@ -11,7 +11,7 @@ from PySide6.QtCore import Qt
 
 from qtdraw.util.util import distance, to_latex
 from qtdraw.widget.custom_widget import Label, Layout, Button, Combo, VSpacer, HSpacer, HBar, LineEdit, Check
-from qtdraw.multipie.info_dialog import show_harmonics_decomp, show_atomic_multipole, show_response
+from qtdraw.multipie.multipie_info_dialog import show_harmonics_decomp, show_atomic_multipole, show_response
 from qtdraw.multipie.multipie_plot import plot_cell_site, plot_cell_bond
 
 
@@ -328,7 +328,9 @@ class TabGroup(QWidget):
         # plot sites.
         sites = group.wyckoff["site"][wp]["fractional"].astype(float)
         mp = group.wyckoff["site"][wp]["mapping"]
-        plot_cell_site(self.parent, sites, wp, mp)
+        if len(sites) != len(mp):
+            mp = mp * (len(sites) // len(mp))
+        plot_cell_site(self.parent, sites, wp=wp, label=mp)
 
         # plot bonds.
         neighbor = self.edit_ws_neighbor.text()
@@ -346,7 +348,7 @@ class TabGroup(QWidget):
                     c = (t + h) / 2
                     v = h - t
                     bonds.append(np.concatenate([v, c]).tolist())
-                plot_cell_bond(self.parent, bonds, name)
+                plot_cell_bond(self.parent, bonds, name=name)
 
     # ==================================================
     def show_wyckoff_bond(self):
@@ -356,7 +358,9 @@ class TabGroup(QWidget):
         # plot bonds.
         bonds = group.wyckoff["bond"][wp]["fractional"].astype(float)
         mp = group.wyckoff["bond"][wp]["mapping"]
-        plot_cell_bond(self.parent, bonds, wp, mp)
+        if len(bonds) != len(mp):
+            mp = mp * (len(bonds) // len(mp))
+        plot_cell_bond(self.parent, bonds, wp=wp, label=mp)
 
     # ==================================================
     def find_wyckoff_set(self):
