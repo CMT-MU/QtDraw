@@ -2,8 +2,47 @@
 Default setting for MultiPie plugin.
 """
 
-# ==================================================
 default_status = {
+    "general": {
+        "crystal": "triclinic",
+        "type": "PG",
+        "index": 0,
+    },
+    "group": {
+        "find_wyckoff": "[0,0,0]",
+    },
+    "object": {
+        "site": "[1/3,2/3,0]",
+        "bond": "[0,0,0];[1,0,0]",
+        "vector_type": "Q",
+        "vector": "[0,0,1] # [1/3,2/3,0]",
+        "vector_average": False,
+        "vector_cartesian": True,
+        "orbital_type": "Q",
+        "orbital": "x # [0,0,0];[1,0,0]",
+        "orbital_average": False,
+    },
+    "basis": {
+        "bond_definition": "[0,0,0];[1,0,0]",
+        "site": "[1/3,2/3,0]",
+        "bond": "[0,0,0];[1,0,0]",
+        "vector_type": "Q",
+        "vector": "[1/3,2/3,0]",
+        "vector_lc": "Q01",
+        "vector_modulation_type": "Q,G",
+        "vector_modulation": "",
+        "orbital_type": "Q",
+        "orbital_rank": 0,
+        "orbital": "[0,0,0];[1,0,0]",
+        "orbital_lc": "Q01",
+        "orbital_modulation_type": "Q,G",
+        "orbital_modulation": "",
+    },
+    "counter": {},
+}
+
+# ==================================================
+default_status1 = {
     "group": {
         "group": "Oh",
         #
@@ -105,7 +144,6 @@ setting_detail = {
         "arrow_color_rep": "red",
         "arrow_ratio": 0.7,
     },
-    "general": {"label": False},  # show label ?
 }
 
 

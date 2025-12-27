@@ -29,13 +29,6 @@ class SubGroup(QWidget):
         layout.setHorizontalSpacing(30)
         layout.setVerticalSpacing(10)
 
-        # initial value.
-        self._symmetry_operation_dialog = None
-        self._character_table_dialog = None
-        self._wyckoff_site_dialog = None
-        self._wyckoff_bond_dialog = None
-        self._product_table_dialog = None
-
         # widget.
         label_group = Label(parent, text="Group", bold=True)
         self._type_list = {"Point Group": "PG", "Space Group": "SG", "Magnetic Point Group": "MPG", "Magnetic Space Group": "MSG"}
@@ -91,22 +84,23 @@ class SubGroup(QWidget):
         self.button_wyckoff_bond.clicked.connect(self.show_wyckoff_bond)
         self.button_product_table.clicked.connect(self.show_product_table)
 
-        # set initial values.
-        self.combo_crystal_type.setCurrentText(self.parent._crystal)
-        self.combo_group_type.setCurrentText(self.parent._type)
-        self.combo_group.set_item(self.parent._get_group_list())
+    # ==================================================
+    def set_axis(self):
         if self.parent._type in ["PG", "MPG"]:
             self.parent._qtdraw.set_cell("off")
+            self.parent._qtdraw.set_axis("full")
         else:
             self.parent._qtdraw.set_cell("single")
+            self.parent._qtdraw.set_axis("on")
 
     # ==================================================
     def set_crystal_type(self, crystal):
         group_list = self.parent._get_group_list(crystal)
         group = group_list[0]  # top.
-
-        self.set_group(group, crystal=crystal)
+        self.parent._crystal = crystal
         self.combo_group.set_item(group_list)
+        self.combo_group.setCurrentText(group)
+        self.set_group(group)
         self.parent._qtdraw._set_crystal(crystal)
 
     # ==================================================
@@ -114,23 +108,22 @@ class SubGroup(QWidget):
         tp = self._type_list[group_type]
         group = self.parent._get_group_name()[tp]
         group_list = self.parent._get_group_list(tp=tp)
+        self.parent._type = tp
         self.combo_group.set_item(group_list)
-        self.set_group(group, tp=tp)
-
-        if tp in ["PG", "MPG"]:
-            self.parent._qtdraw.set_cell("off")
-        else:
-            self.parent._qtdraw.set_cell("single")
+        self.combo_group.setCurrentText(group)
+        self.set_group(group)
+        self.set_axis()
 
     # ==================================================
-    def set_group(self, group, crystal=None, tp=None):
-        if crystal is None:
-            crystal = self.combo_crystal_type.currentText()
-        if tp is None:
-            tp = self._type_list[self.combo_group_type.currentText()]
-        self.parent._set_group_data(group, crystal=crystal, tp=tp)
-        self.combo_group.setCurrentText(group)
+    def set_group(self, group):
+        self.parent._tag = self.parent._to_tag[group]
+        self.parent._group = None
+        self.parent._p_group = None
+        self.parent._ps_group = None
+        self.parent._mp_group = None
+
         self.set_group_name()
+        self.parent.group_changed.emit()
 
     # ==================================================
     def set_group_name(self):
@@ -167,6 +160,32 @@ class SubGroup(QWidget):
 
     # ==================================================
     def closeEvent(self, event):
+        self.clear_data()
+        super().closeEvent(event)
+
+    # ==================================================
+    def set_data(self, data):
+        d = {"PG": 0, "SG": 1, "MPG": 2, "MSG": 3}
+        crystal = data["general"]["crystal"]
+        tp = data["general"]["type"]
+        idx = data["general"]["index"]
+        group = self.parent._crystal_list[crystal][tp][idx]
+        self.combo_crystal_type.setCurrentText(crystal)
+        self.combo_group_type.setCurrentIndex(d[tp])
+        group_list = self.parent._get_group_list(crystal, tp)
+        self.combo_group.set_item(group_list)
+        self.combo_group.setCurrentText(group)
+        self.set_group_name()
+        self.set_axis()
+
+        self._symmetry_operation_dialog = None
+        self._character_table_dialog = None
+        self._wyckoff_site_dialog = None
+        self._wyckoff_bond_dialog = None
+        self._product_table_dialog = None
+
+    # ==================================================
+    def clear_data(self):
         if self._symmetry_operation_dialog is not None:
             self._symmetry_operation_dialog.close()
         if self._character_table_dialog is not None:
@@ -177,4 +196,20 @@ class SubGroup(QWidget):
             self._wyckoff_bond_dialog.close()
         if self._product_table_dialog is not None:
             self._product_table_dialog.close()
-        super().closeEvent(event)
+
+        self._symmetry_operation_dialog = None
+        self._character_table_dialog = None
+        self._wyckoff_site_dialog = None
+        self._wyckoff_bond_dialog = None
+        self._product_table_dialog = None
+
+    # ==================================================
+    def get_status(self):
+        status = {
+            "general": {
+                "crystal": self.parent._crystal,
+                "type": self.parent._type,
+                "index": self.combo_group.currentIndex(),
+            }
+        }
+        return status

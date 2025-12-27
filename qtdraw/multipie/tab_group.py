@@ -101,7 +101,7 @@ class TabGroup(QWidget):
         # find Wyckoff.
         label_fwyckoff = Label(parent, text="Find Wyckoff Site/Bond (PG/SG)", bold=True)
         label_fwyckoff_sb = Label(parent, text="site/bond")
-        self.edit_find_wyckoff = LineEdit(parent, text="[0,0,0]", validator=("site_bond", {"use_var": False}))
+        self.edit_find_wyckoff = LineEdit(parent, text="", validator=("site_bond", {"use_var": False}))
         label_wyckoff = Label(parent, text="Wyckoff")
         self.edit_find_wyckoff_position = Label(parent, text="")
         self.edit_find_wyckoff_position.set_background(True)
@@ -239,10 +239,6 @@ class TabGroup(QWidget):
         self.button_atomic.clicked.connect(self.show_atomic)
 
         self.button_response.clicked.connect(self.show_response)
-
-        self._harmonics_decomp_dialog = None
-        self._atomic_dialog = None
-        self._response_dialog = None
 
     # ==================================================
     def set_irrep_list(self):
@@ -398,10 +394,31 @@ class TabGroup(QWidget):
 
     # ==================================================
     def closeEvent(self, event):
+        self.clear_data()
+        super().closeEvent(event)
+
+    # ==================================================
+    def set_data(self, data):
+        find_wyckoff = data["group"]["find_wyckoff"]
+        self.edit_find_wyckoff.setText(find_wyckoff)
+        self._harmonics_decomp_dialog = None
+        self._atomic_dialog = None
+        self._response_dialog = None
+
+    # ==================================================
+    def clear_data(self):
         if self._harmonics_decomp_dialog is not None:
             self._harmonics_decomp_dialog.close()
         if self._atomic_dialog is not None:
             self._atomic_dialog.close()
         if self._response_dialog is not None:
             self._response_dialog.close()
-        super().closeEvent(event)
+
+        self._harmonics_decomp_dialog = None
+        self._atomic_dialog = None
+        self._response_dialog = None
+
+    # ==================================================
+    def get_status(self):
+        d = {"find_wyckoff": self.edit_find_wyckoff.raw_text()}
+        return {"group": d}

@@ -8,7 +8,6 @@ from PySide6.QtWidgets import QWidget
 from PySide6.QtCore import Qt
 
 from qtdraw.widget.custom_widget import Label, Layout, Combo, VSpacer, HBar, LineEdit, Check
-from qtdraw.widget.validator import convert_to_bond
 from qtdraw.multipie.multipie_plot import plot_cell_site, plot_cell_bond, plot_cell_vector, plot_cell_multipole
 
 
@@ -29,7 +28,7 @@ class TabObject(QWidget):
             parent,
             text='<span style="font-weight:bold;">Site</span> : draw equivalent sites.<br>&nbsp;&nbsp;1. input representative site, + ENTER.',
         )
-        self.edit_site = LineEdit(parent, text="[1/3,2/3,0]", validator=("site", {"use_var": False}))
+        self.edit_site = LineEdit(parent, text="", validator=("site", {"use_var": False}))
 
         panel1 = QWidget(parent)
         layout1 = Layout(panel1)
@@ -41,7 +40,7 @@ class TabObject(QWidget):
             parent,
             text='<span style="font-weight:bold;">Bond</span> : draw equivalent bonds.<br>&nbsp;&nbsp;1. input representative bond, + ENTER.',
         )
-        self.edit_bond = LineEdit(parent, text="[0,0,0];[1,0,0]", validator=("bond", {"use_var": False}))
+        self.edit_bond = LineEdit(parent, text="", validator=("bond", {"use_var": False}))
 
         panel2 = QWidget(parent)
         layout2 = Layout(panel2)
@@ -54,10 +53,9 @@ class TabObject(QWidget):
             text='<span style="font-weight:bold;">Vector</span> : draw vectors at equivalent sites or bonds.<br>&nbsp;&nbsp;1. choose type (and check average), 2. input vector # site/bond, + ENTER.',
         )
         self.combo_vector_type = Combo(parent, ["Q", "G", "T", "M"])
-        self.edit_vector = LineEdit(parent, text="[0,0,1] # [1/3,2/3,0]", validator=("vector_site_bond", {"use_var": False}))
+        self.edit_vector = LineEdit(parent, text="", validator=("vector_site_bond", {"use_var": False}))
         self.check_vector_av = Check(parent, text="av.")
         self.check_vector_cart = Check(parent, text="cartesian")
-        self.check_vector_cart.setChecked(True)
 
         panel3 = QWidget(parent)
         layout3 = Layout(panel3)
@@ -73,7 +71,7 @@ class TabObject(QWidget):
             text='<span style="font-weight:bold;">Orbital</span> : draw orbitals at equivalent sites or bonds.<br>&nbsp;&nbsp;1. choose type (and check average), 2. input orbital # site/bond, + ENTER.',
         )
         self.combo_orbital_type = Combo(parent, ["Q", "G", "T", "M"])
-        self.edit_orbital = LineEdit(parent, text="x # [0,0,0];[1,0,0]", validator=("orbital_site_bond", {"use_var": False}))
+        self.edit_orbital = LineEdit(parent, text="", validator=("orbital_site_bond", {"use_var": False}))
         self.check_orbital_av = Check(parent, text="av.")
 
         panel4 = QWidget(parent)
@@ -127,3 +125,40 @@ class TabObject(QWidget):
         av = self.check_orbital_av.is_checked()
         orbitals, sites, mp, wp = self.parent.group.create_cell_multipole(orbital, orbital_type, av)
         plot_cell_multipole(self.parent, orbitals, sites, orbital_type, wp=wp, label=mp, average=av)
+
+    # ==================================================
+    def closeEvent(self, event):
+        self.clear_data()
+        super().closeEvent(event)
+
+    # ==================================================
+    def set_data(self, data):
+        d = data["object"]
+        self.edit_site.setText(d["site"])
+        self.edit_bond.setText(d["bond"])
+        self.combo_vector_type.setCurrentText(d["vector_type"])
+        self.edit_vector.setText(d["vector"])
+        self.check_vector_av.setChecked(d["vector_average"])
+        self.check_vector_cart.setChecked(d["vector_cartesian"])
+        self.combo_orbital_type.setCurrentText(d["orbital_type"])
+        self.edit_orbital.setText(d["orbital"])
+        self.check_orbital_av.setChecked(d["orbital_average"])
+
+    # ==================================================
+    def clear_data(self):
+        pass
+
+    # ==================================================
+    def get_status(self):
+        d = {
+            "site": self.edit_site.raw_text(),
+            "bond": self.edit_bond.raw_text(),
+            "vector_type": self.combo_vector_type.currentText(),
+            "vector": self.edit_vector.raw_text(),
+            "vector_average": self.check_vector_av.is_checked(),
+            "vector_cartesian": self.check_vector_cart.is_checked(),
+            "orbital_type": self.combo_orbital_type.currentText(),
+            "orbital": self.edit_orbital.raw_text(),
+            "orbital_average": self.check_orbital_av.is_checked(),
+        }
+        return {"object": d}

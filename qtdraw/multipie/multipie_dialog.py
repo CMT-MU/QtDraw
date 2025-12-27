@@ -13,8 +13,8 @@ from qtdraw.multipie.sub_group import SubGroup
 from qtdraw.multipie.tab_group import TabGroup
 from qtdraw.multipie.tab_object import TabObject
 from qtdraw.multipie.tab_basis import TabBasis
-from qtdraw.multipie.multipie_setting import setting_detail as detail
 from qtdraw.multipie.multipie_group_list import group_list
+from qtdraw.multipie.multipie_setting import default_status
 
 
 # ==================================================
@@ -47,35 +47,33 @@ class MultiPieDialog(QDialog):
         self.resize(600, 500)
 
         # initial value.
-        crystal, tp, idx = "triclinic", "PG", 0  # PG#1.
-        self._set_group_data(self._crystal_list[crystal][tp][idx], crystal, tp)
+        # crystal, tp, idx = "triclinic", "PG", 0  # PG#1.
+        # self._set_group_data(self._crystal_list[crystal][tp][idx], crystal, tp)
 
-        self._pvw.update_preference("label", "default_check", detail["general"]["label"])
-
-        sub_panel = SubGroup(self)
-        group_panel = TabGroup(self)
-        object_panel = TabObject(self)
-        basis_panel = TabBasis(self)
+        self._sub_panel = SubGroup(self)
+        self._group_panel = TabGroup(self)
+        self._object_panel = TabObject(self)
+        self._basis_panel = TabBasis(self)
 
         # tab content.
         tab = QTabWidget(self)
-        tab.addTab(group_panel, "Group Info.")
-        tab.addTab(object_panel, "Object Drawing")
-        tab.addTab(basis_panel, "Basis Drawing")
+        tab.addTab(self._group_panel, "Group Info.")
+        tab.addTab(self._object_panel, "Object Drawing")
+        tab.addTab(self._basis_panel, "Basis Drawing")
 
         # main layout.
         layout = Layout(self)
         layout.setContentsMargins(10, 5, 10, 5)
-        layout.addWidget(sub_panel, 0, 0, 1, 1)
+        layout.addWidget(self._sub_panel, 0, 0, 1, 1)
         layout.addWidget(tab, 0, 1, 1, 1)
 
-        self.group_changed.connect(group_panel.set_irrep_list)
-        self.group_changed.connect(group_panel.set_wyckoff_list)
-        self.group_changed.connect(group_panel.set_harm_list)
+        self.group_changed.connect(self._group_panel.set_irrep_list)
+        self.group_changed.connect(self._group_panel.set_wyckoff_list)
+        self.group_changed.connect(self._group_panel.set_harm_list)
         self._pvw.data_removed.connect(self.clear_data)
 
-        self.group_changed.emit()
-        sub_panel.set_group_name()
+        self.set_data()
+        self.clear_data()
 
         self.show()
 
@@ -124,21 +122,6 @@ class MultiPieDialog(QDialog):
         self.setWindowTitle(title)
 
     # ==================================================
-    def _set_group_data(self, name, crystal=None, tp=None):
-        if crystal is not None:
-            self._crystal = crystal
-        if tp is not None:
-            self._type = tp
-
-        self._tag = self._to_tag[name]
-        self._group = None
-        self._p_group = None
-        self._ps_group = None
-        self._mp_group = None
-
-        self.group_changed.emit()
-
-    # ==================================================
     def _get_group_list(self, crystal=None, tp=None):
         if crystal is None:
             crystal = self._crystal
@@ -158,11 +141,48 @@ class MultiPieDialog(QDialog):
         return name
 
     # ==================================================
+    def set_data(self, data=None):
+        dic = default_status
+        if data is not None:
+            dic.update(data)
+
+        self._crystal = dic["general"]["crystal"]
+        self._type = dic["general"]["type"]
+        idx = dic["general"]["index"]
+        group = self._crystal_list[self._crystal][self._type][idx]
+        self._tag = self._to_tag[group]
+        self._group = None
+        self._p_group = None
+        self._ps_group = None
+        self._mp_group = None
+
+        self._counter = dic["counter"]
+        self._sub_panel.set_data(dic)
+        self._group_panel.set_data(dic)
+        self._object_panel.set_data(dic)
+        self._basis_panel.set_data(dic)
+
+    # ==================================================
     def clear_data(self):
+        self._sub_panel.clear_data()
+        self._group_panel.clear_data()
+        self._object_panel.clear_data()
+        self._basis_panel.clear_data()
         self._counter = {}
 
     # ==================================================
+    def load_data(self):
+        status = {}
+        self.set_data(status)
+
+    # ==================================================
+    def save_data(self):
+        status = self.get_status()
+        # save.
+
+    # ==================================================
     def closeEvent(self, event):
+        print(self.get_status())
         super().closeEvent(event)
 
     # ==================================================
@@ -173,7 +193,17 @@ class MultiPieDialog(QDialog):
 
     # ==================================================
     def get_status(self):
-        status = {"version": __version__}
+        status = default_status
+        dic = {
+            "version": __version__,
+            "counter": self._counter,
+        }
+        status.update(self._sub_panel.get_status())
+        status.update(self._group_panel.get_status())
+        status.update(self._object_panel.get_status())
+        status.update(self._basis_panel.get_status())
+        status.update(dic)
+
         return status
 
     # ==================================================

@@ -2310,11 +2310,15 @@ class PyVistaWidget(QtInteractor):
             self._status["axis_type"] = axis_type
 
         viewport = True
+        self.remove_actor("axes_arrow_0")
+        self.remove_actor("axes_arrow_1")
+        self.remove_actor("axes_arrow_2")
         if axis_type == "on":
             label = self._preference["axis"]["label"]
         elif axis_type == "axis":
             label = None
         elif axis_type == "full":
+            self.renderer.hide_axes()
             label = None
             viewport = False
         else:
@@ -2332,6 +2336,7 @@ class PyVistaWidget(QtInteractor):
                 label_italic=label_italic,
                 label_color=label_color,
                 viewport=viewport,
+                full=(axis_type == "full"),
             )
             self.screen_on()
 
