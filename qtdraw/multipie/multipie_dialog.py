@@ -4,6 +4,7 @@ Multipie dialog.
 This module provides a dialog for drawing objects with the help of MultiPie.
 """
 
+import copy
 from PySide6.QtWidgets import QDialog, QTabWidget
 from PySide6.QtCore import Signal
 
@@ -32,7 +33,6 @@ class MultiPieDialog(QDialog):
         super().__init__()
         self._qtdraw = parent  # QtDraw.
         self._pvw = parent.pyvista_widget  # PyVistaWidget.
-        self._counter = {}
 
         self._crystal_list = {crystal: {tp: i[1] for tp, i in v.items()} for crystal, v in group_list.items()}
         self._to_tag = {}
@@ -45,10 +45,6 @@ class MultiPieDialog(QDialog):
 
         self.set_title()
         self.resize(600, 500)
-
-        # initial value.
-        # crystal, tp, idx = "triclinic", "PG", 0  # PG#1.
-        # self._set_group_data(self._crystal_list[crystal][tp][idx], crystal, tp)
 
         self._sub_panel = SubGroup(self)
         self._group_panel = TabGroup(self)
@@ -142,7 +138,7 @@ class MultiPieDialog(QDialog):
 
     # ==================================================
     def set_data(self, data=None):
-        dic = default_status
+        dic = copy.deepcopy(default_status)
         if data is not None:
             dic.update(data)
 
@@ -169,16 +165,6 @@ class MultiPieDialog(QDialog):
         self._object_panel.clear_data()
         self._basis_panel.clear_data()
         self._counter = {}
-
-    # ==================================================
-    def load_data(self):
-        status = {}
-        self.set_data(status)
-
-    # ==================================================
-    def save_data(self):
-        status = self.get_status()
-        # save.
 
     # ==================================================
     def closeEvent(self, event):

@@ -42,7 +42,7 @@ from qtdraw.widget.logging_util import LogWidget
 from qtdraw.widget.color_palette import all_colors, custom_colormap, check_color
 from qtdraw.parser.read_material import read_draw
 from qtdraw.parser.xsf import extract_data_xsf
-from qtdraw.parser.converter import convert_version2
+from qtdraw.parser.converter import convert_version3
 
 from qtdraw.util.util import text_to_list, apply
 
@@ -212,9 +212,9 @@ def create_qtdraw_file(filename, callback):
 
 
 # ==================================================
-def convert_qtdraw_v2(filename):
+def convert_qtdraw_v3(filename):
     """
-    Convert qtdraw file to version 2.
+    Convert qtdraw file to version 3.
 
     Args:
         filename (str): filename.
@@ -223,7 +223,7 @@ def convert_qtdraw_v2(filename):
     widget = PyVistaWidget(off_screen=True)
     widget.load(filename)
     path_abs, path_rel, base, ext, folder = split_filename(filename)
-    filename2 = cat_filename(base + "_v2", ext)
+    filename2 = cat_filename(base + "_v3", ext)
     widget.save(filename2)
     app.quit()
 
@@ -358,7 +358,7 @@ class PyVistaWidget(QtInteractor):
         """
         self.set_theme()
         self._status = copy.deepcopy(default_status)
-        self._status["multipie"] = {"plus": {}}  # for multipie.
+        self._status["multipie"] = {}  # for multipie.
         self._status["plus"] = {}  #  for temporaly working purpose.
         self.set_additional_status()
         self._preference = copy.deepcopy(default_preference)
@@ -1569,9 +1569,9 @@ class PyVistaWidget(QtInteractor):
         if file.suffix == detail["extension"]:
             all_data = read_dict(f)
             ver = int(all_data["version"].split(".")[0])  # major version.
-            if ver < 2:
+            if ver < 3:
                 widget = PyVistaWidget(off_screen=True)
-                all_data = convert_version2(all_data, widget)  # for old version.
+                all_data = convert_version3(all_data, ver, widget)  # for old version.
                 widget.close()
         elif file.suffix in detail["ext_material"]:
             all_data = read_draw(f, self)
@@ -1674,8 +1674,6 @@ class PyVistaWidget(QtInteractor):
         # remove temp. info.
         if "plus" in self._backup["status"].keys():
             del self._backup["status"]["plus"]
-        if "multipie" in self._backup["status"].keys() and "plus" in self._backup["status"]["multipie"].keys():
-            del self._backup["status"]["multipie"]["plus"]
 
         isosurface = self._backup["data"].get("isosurface")
         if isosurface and len(isosurface) > 0:

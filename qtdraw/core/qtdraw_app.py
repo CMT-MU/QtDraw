@@ -173,6 +173,12 @@ class QtDraw(Window):
         self.view_edit_lower.returnPressed.connect(self._set_lower)
         self.view_edit_upper.returnPressed.connect(self._set_upper)
 
+        dic = self.pyvista_widget._status["multipie"]
+        if dic:
+            self._show_multipie()
+            if self.multipie_dialog is not None:
+                self.multipie_dialog.set_data(dic)
+
     # ==================================================
     def save_file(self):
         """
@@ -192,6 +198,8 @@ class QtDraw(Window):
             if cur_ext == "":
                 filename = filename / ext
             if cur_ext == ext:
+                if self.multipie_dialog is not None:
+                    self.pyvista_widget._status["multipie"] = self.multipie_dialog.get_status()
                 self.pyvista_widget.save(str(filename))
                 self._update_title()
 

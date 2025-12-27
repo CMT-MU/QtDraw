@@ -1,10 +1,10 @@
 """
-Convert QtDraw to version 2.
+Convert QtDraw to version 3.
 """
 
 import click
 from pathlib import Path
-from qtdraw.core.pyvista_widget import convert_qtdraw_v2
+from qtdraw.core.pyvista_widget import convert_qtdraw_v3
 
 
 # ================================================== execute converter
@@ -21,4 +21,4 @@ def cmd(filename):
         exit()
 
     filename = Path(filename[0]).resolve()
-    convert_qtdraw_v2(filename)
+    convert_qtdraw_v3(filename)
