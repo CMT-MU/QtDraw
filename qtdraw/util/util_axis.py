@@ -195,7 +195,7 @@ def _create_axes_actor_full(
 
     length = 2.5
     offset = -0.5 * length
-    width = shaft_radius * 3.0
+    width = shaft_radius * 2.5
 
     for no, (d, c) in enumerate(zip(A[0:3, 0:3].T, shaft_color)):
         d = np.asarray(d) / np.linalg.norm(d)

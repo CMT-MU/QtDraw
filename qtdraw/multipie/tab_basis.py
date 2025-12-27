@@ -296,7 +296,10 @@ class TabBasis(QWidget):
 
     # ==================================================
     def show_site(self):
-        samb, comp = self._site_samb_list[self.combo_site_samb.currentIndex()]
+        idx = self.combo_site_samb.currentIndex()
+        if idx == -1:
+            return
+        samb, comp = self._site_samb_list[idx]
         samb = self._site_samb[samb][0][comp]
         mp = self._site_mp
         if len(samb) != len(self._sites):
@@ -305,7 +308,10 @@ class TabBasis(QWidget):
 
     # ==================================================
     def show_bond(self):
-        samb, comp = self._bond_samb_list[self.combo_bond_samb.currentIndex()]
+        idx = self.combo_bond_samb.currentIndex()
+        if idx == -1:
+            return
+        samb, comp = self._bond_samb_list[idx]
         sym = samb[0] in ["Q", "G"]
 
         samb = self._bond_samb[samb][0][comp]
@@ -316,9 +322,12 @@ class TabBasis(QWidget):
 
     # ==================================================
     def show_vector(self):
+        idx = self.combo_vector_samb.currentIndex()
+        if idx == -1:
+            return
         X = self.combo_vector_type.currentText()
         tp = self.combo_vector_samb_type.currentText()
-        samb, comp = self._vector_samb_list[tp][self.combo_vector_samb.currentIndex()]
+        samb, comp = self._vector_samb_list[tp][idx]
 
         samb = self._vector_samb[tp][samb][0][comp]
         wp = self._vector_wp
@@ -357,9 +366,12 @@ class TabBasis(QWidget):
 
     # ==================================================
     def show_orbital(self):
+        idx = self.combo_orbital_samb.currentIndex()
+        if idx == -1:
+            return
         X = self.combo_orbital_type.currentText()
         tp = self.combo_orbital_samb_type.currentText()
-        samb, comp = self._orbital_samb_list[tp][self.combo_orbital_samb.currentIndex()]
+        samb, comp = self._orbital_samb_list[tp][idx]
 
         samb = self._orbital_samb[tp][samb][0][comp]
         wp = self._orbital_wp
@@ -475,12 +487,14 @@ class TabBasis(QWidget):
         self._site_mp = [[]]
         self._site_samb = {}
         self._site_samb_list = {}
+        self.combo_site_samb.set_item([])
 
         self._bond_wp = ""
         self._bonds = [[]]
         self._bond_mp = [[]]
         self._bond_samb = {}
         self._bond_samb_list = {}
+        self.combo_bond_samb.set_item([])
 
         self._vector_list = {"Q": [], "G": [], "T": [], "M": []}
         self._vector_wp = ""
@@ -489,7 +503,8 @@ class TabBasis(QWidget):
         self._vector_n_pset = 1
         self._vector_samb = {}
         self._vector_samb_list = {}
-        self._vector_samb_var = {}
+        self._vector_samb_var = {"Q": [], "G": [], "T": [], "M": []}
+        self.combo_vector_samb.set_item([])
 
         self._orbital_list = {"Q": [], "G": [], "T": [], "M": []}
         self._orbital_wp = ""
@@ -498,7 +513,8 @@ class TabBasis(QWidget):
         self._orbital_n_pset = 1
         self._orbital_samb = {}
         self._orbital_samb_list = {}
-        self._orbital_samb_var = {}
+        self._orbital_samb_var = {"Q": [], "G": [], "T": [], "M": []}
+        self.combo_orbital_samb.set_item([])
 
     # ==================================================
     def clear_data(self):
@@ -515,12 +531,14 @@ class TabBasis(QWidget):
         self._site_mp = [[]]
         self._site_samb = {}
         self._site_samb_list = {}
+        self.combo_site_samb.set_item([])
 
         self._bond_wp = ""
         self._bonds = [[]]
         self._bond_mp = [[]]
         self._bond_samb = {}
         self._bond_samb_list = {}
+        self.combo_bond_samb.set_item([])
 
         self._vector_list = {"Q": [], "G": [], "T": [], "M": []}
         self._vector_wp = ""
@@ -529,7 +547,8 @@ class TabBasis(QWidget):
         self._vector_n_pset = 1
         self._vector_samb = {}
         self._vector_samb_list = {}
-        self._vector_samb_var = {}
+        self._vector_samb_var = {"Q": [], "G": [], "T": [], "M": []}
+        self.combo_vector_samb.set_item([])
 
         self._orbital_list = {"Q": [], "G": [], "T": [], "M": []}
         self._orbital_wp = ""
@@ -538,7 +557,8 @@ class TabBasis(QWidget):
         self._orbital_n_pset = 1
         self._orbital_samb = {}
         self._orbital_samb_list = {}
-        self._orbital_samb_var = {}
+        self._orbital_samb_var = {"Q": [], "G": [], "T": [], "M": []}
+        self.combo_orbital_samb.set_item([])
 
     # ==================================================
     def get_status(self):

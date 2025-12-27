@@ -92,6 +92,7 @@ class SubGroup(QWidget):
         else:
             self.parent._qtdraw.set_cell("single")
             self.parent._qtdraw.set_axis("on")
+        self.parent._qtdraw._set_view_default()
 
     # ==================================================
     def set_crystal_type(self, crystal):
@@ -177,6 +178,7 @@ class SubGroup(QWidget):
         self.combo_group.setCurrentText(group)
         self.set_group_name()
         self.set_axis()
+        self.parent.group_changed.emit()
 
         self._symmetry_operation_dialog = None
         self._character_table_dialog = None
