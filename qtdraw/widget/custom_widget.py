@@ -461,6 +461,7 @@ class LineEdit(QLineEdit):
         self._validator_func = None
         self._read_only = False
         self._valid = True
+        self._suspend = False
         self._raw = ""
         self._validated = ""
 
@@ -562,17 +563,22 @@ class LineEdit(QLineEdit):
 
     # ==================================================
     def focusOutEvent(self, event):
-        super().setText(self._validated)
-        self._valid = True
-        self._update_style()
-
+        if self._raw == self.text():
+            super().setText(self._validated)
+            self._valid = True
+            self._update_style()
+        else:
+            self._suspend = True
         super().focusOutEvent(event)
         self.focusOut.emit()
 
     # ==================================================
     def focusInEvent(self, event):
-        super().setText(self._raw)
-        self._update_style()
+        if self._suspend:
+            self._suspend = False
+        else:
+            super().setText(self._raw)
+            self._update_style()
         super().focusInEvent(event)
 
     # ==================================================
