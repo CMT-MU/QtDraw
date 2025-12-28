@@ -64,11 +64,11 @@ class QtDraw(Window):
         self._update_panel()
         self.create_connection()
 
-        if filename is not None and os.path.exists(filename):
-            self.load_file(filename)
-
         # event loop.
         self.show()
+
+        if filename is not None and os.path.exists(filename):
+            self.load_file(filename)
 
     # ==================================================
     def create_gui(self):
