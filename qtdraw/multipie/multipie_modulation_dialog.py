@@ -16,8 +16,8 @@ from qtdraw.widget.group_view import GroupView
 modulation_panel = {
     "id": ("hide", {}, "0"),
     "basis": ("combo", ["Q01"], "Q01"),
-    "coeff": ("list_float", {"digit": 4}, "1"),
-    "k_vector": ("list_float", {"shape": (3,), "var": [""], "digit": 4}, "[1,0,0]"),
+    "coeff": ("math", {"var": [""]}, "1"),
+    "k_vector": ("math", {"shape": (3,), "var": [""]}, "[1,0,0]"),
     "phase": ("combo", ["cos", "sin"], "cos"),
 }
 

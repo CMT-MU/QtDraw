@@ -461,7 +461,7 @@ class LineEdit(QLineEdit):
         self._validator_func = None
         self._read_only = False
         self._valid = True
-        self._suspend = False
+        self._in_edit = False
         self._raw = ""
         self._validated = ""
 
@@ -550,6 +550,7 @@ class LineEdit(QLineEdit):
             super().setText(self._validated)
             self._valid = True
             self._update_style()
+            self._in_edit = False
             return
 
         if k in (Qt.Key_Return, Qt.Key_Enter):
@@ -557,26 +558,25 @@ class LineEdit(QLineEdit):
             self.clearFocus()
             if self._valid:
                 self.returnPressed.emit()
+                self._in_edit = False
             return
+
+        self._in_edit = True
 
         super().keyPressEvent(event)
 
     # ==================================================
     def focusOutEvent(self, event):
-        if self._raw == self.text():
+        if not self._in_edit:
             super().setText(self._validated)
             self._valid = True
             self._update_style()
-        else:
-            self._suspend = True
         super().focusOutEvent(event)
         self.focusOut.emit()
 
     # ==================================================
     def focusInEvent(self, event):
-        if self._suspend:
-            self._suspend = False
-        else:
+        if not self._in_edit:
             super().setText(self._raw)
             self._update_style()
         super().focusInEvent(event)
@@ -627,8 +627,8 @@ class Editor(Panel):
             else Label(parent=parent, text=validated, color=color, bold=bold, size=size)
         )
 
-        self.layout.addWidget(self._display, 0, 0)
-        self.layout.addWidget(self._editor, 0, 0)
+        self.layout.addWidget(self._display, 0, 0, alignment=Qt.AlignVCenter)
+        self.layout.addWidget(self._editor, 0, 0, alignment=Qt.AlignVCenter)
         self._editor.hide()
 
         self._in_edit = False
@@ -730,6 +730,7 @@ class Editor(Panel):
             if self._math_mode:
                 e_sz = self._editor.sizeHint()
                 d_sz = self._display.sizeHint()
-                return QSize(max(e_sz.width(), d_sz.width()), d_sz.height())
+                return QSize(max(e_sz.width(), d_sz.width()), d_sz.height() + 8)
             else:
-                return self._display.sizeHint()
+                sz = self._display.sizeHint()
+                return QSize(sz.width(), sz.height() + 4)
