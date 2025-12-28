@@ -293,6 +293,11 @@ class GroupView(QTreeView):
         self.selectionModel().select(selection, QItemSelectionModel.ClearAndSelect)
 
     # ==================================================
+    def closeEvent(self, event):
+        self.clear_selection()
+        super().closeEvent(event)
+
+    # ==================================================
     def set_row_height_hint(self, row, height):
         prev = self._row_heights.get(row, 0)
         if height > prev:
