@@ -20,11 +20,10 @@ modulation_panel = {
 # ==================================================
 class ModulationDialog(QDialog):
     # ==================================================
-    def __init__(self, parent, modulation, var, vec):
+    def __init__(self, parent, modulation_range, var, vec):
         super().__init__(parent)
         self.parent = parent
         self.parent.parent._pvw.save_current()
-        self.pset = self.parent.parent.ps_group.symmetry_operation["plus_set"].astype(float)
         self._vec = vec
         mod_panel = copy.deepcopy(modulation_panel)
         mod_panel["basis"] = ("combo", var, var[0])
@@ -46,12 +45,20 @@ class ModulationDialog(QDialog):
         label_repeat = Label(self, text="repeat")
         self.edit_range = LineEdit(self, text="[1,1,1]", validator=("list_int", {"shape": (3,)}))
 
-        # modulation view.
-        self.data = self.parse(modulation)
+        # modulation data.
+        if modulation_range.count(":"):
+            modulation, rng = modulation_range.split(":")
+        else:
+            modulation = modulation_range
+            rng = "[1,1,1]"
+        mod_list = self.parent._parse_modulation(modulation)
+        self.mod_list = [[str(no), *i] for no, i in enumerate(mod_list)]
+
         model = GroupModel(self, "modulation", mod_panel)
-        model.set_data(self.data)
+        model.set_data(self.mod_list)
         self.view = GroupView(self, model)
         self.view.customContextMenuRequested.disconnect()
+        self.edit_range.setText(rng)
 
         # main layout.
         layout.addWidget(self.view, 0, 0, 1, 4)
@@ -74,84 +81,26 @@ class ModulationDialog(QDialog):
         self.show()
 
     # ==================================================
-    def parse(self, s):
-        """
-        Parse modulation list.
-
-        Args:
-            s (str): modulation list in str, [[basis,coeff,k,cos/sin]] : [repeat range].
-
-        Returns:
-            - (list) -- modulation list.
-        """
-        if s.count(":"):
-            s, r = s.split(":")
-            self.edit_range.setText(r)
-        rows = []
-        row, token, depth = None, "", 0
-        for c in s:
-            try:
-                if c == "[":
-                    depth += 1
-                    if depth == 2:
-                        row, token = [], ""
-                    continue
-
-                if c == "]":
-                    if depth == 2:
-                        row.append(token.strip())
-                        rows.append(row)
-                        token = ""
-                    depth -= 1
-                    if depth < 0:
-                        return []
-                    continue
-
-                if c == "," and depth == 2:
-                    row.append(token.strip())
-                    token = ""
-                    continue
-
-                if depth >= 2:
-                    token += c
-
-            except Exception as e:
-                return []
-
-        if depth != 0:
-            return []
-
-        rows = [[str(no), r[0], r[1], "[" + r[2] + "]", r[3]] for no, r in enumerate(rows)]
-        return rows
-
-    # ==================================================
-    def raw_data(self):
+    def modulation_range(self):
         data = self.view.model().tolist()
+        rng = self.edit_range.text()
         if len(data) < 1:
-            return None
+            return ""
         data = [i[1:] for i in data]
-
-        return data
+        s = str(data).replace("'", "") + " : " + rng
+        return s
 
     # ==================================================
     def create_modulation(self):
-        modulation = self.raw_data()
-        if modulation is None:
+        mr = self.modulation_range()
+        if mr == "":
             return
 
         self.reset()
-        rng = list(map(int, self.edit_range.text().strip("[]").split(",")))
-        upper = [rng[0] - 0.01, rng[1] - 0.01, rng[2] - 0.01]
-
-        self.parent.parent._qtdraw.set_range([0, 0, 0], upper)
-        self.parent.parent._qtdraw.set_repeat(True)
-        self.parent.parent._qtdraw.set_nonrepeat()
-
-        phase_dict, igrid = phase_factor(modulation, rng, self.pset)
         if self._vec:
-            self.parent.show_vector_samb_modulation(modulation, phase_dict, igrid, self.pset)
+            self.parent.show_vector_samb_modulation(mr)
         else:
-            self.parent.show_orbital_samb_modulation(modulation, phase_dict, igrid, self.pset)
+            self.parent.show_orbital_samb_modulation(mr)
 
     # ==================================================
     def add_data(self):
@@ -175,13 +124,11 @@ class ModulationDialog(QDialog):
 
     # ==================================================
     def accept_data(self):
-        data = self.raw_data()
-        if data is not None:
-            data = str(data).replace("'", "") + " : " + self.edit_range.text()
-            if self._vec:
-                self.parent.edit_vector_modulation.setText(data)
-            else:
-                self.parent.edit_orbital_modulation.setText(data)
+        mr = self.modulation_range()
+        if self._vec:
+            self.parent.edit_vector_modulation.setText(mr)
+        else:
+            self.parent.edit_orbital_modulation.setText(mr)
         super().accept()
 
     # ==================================================

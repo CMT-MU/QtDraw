@@ -9,8 +9,8 @@ import copy
 from qtdraw.core.pyvista_widget_setting import default_status, default_preference
 from qtdraw.core.qtdraw_info import __version__
 
-from qtdraw.parser.util_parser import create_group_list
-from qtdraw.multipie.multipie_setting import default_status as multipie_default
+from qtdraw.multipie.multipie_group_list import group_list_index
+from qtdraw.multipie.multipie_setting import default_status
 
 
 # ==================================================
@@ -331,16 +331,14 @@ def get_multipie(dic):
     Returns:
         - (dict) -- updated multipie info.
     """
-    lst = create_group_list()
-
     old = dic["multipie"]
     if len(old) == 0:
         return {}
-    multipie = copy.deepcopy(multipie_default)
+    multipie = copy.deepcopy(default_status)
 
     if "group" in old.keys():
         group = old["group"]["group"]
-        crystal, tp, idx = lst[group]
+        crystal, tp, idx = group_list_index[group]
 
         multipie["general"] = {
             "crystal": crystal,

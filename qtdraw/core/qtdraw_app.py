@@ -5,6 +5,7 @@ This module provides application of QtDraw.
 """
 
 import os
+import copy
 import warnings
 from pathlib import Path
 import logging
@@ -16,11 +17,11 @@ from qtdraw.core.pyvista_widget_setting import widget_detail as detail
 from qtdraw.core.dialog_preference import PreferenceDialog
 from qtdraw.core.dialog_about import AboutDialog
 from qtdraw.core.dialog_about import get_version_info
-
 from qtdraw.widget.custom_widget import Label, Layout, LineEdit, HBar, Button, Combo, VSpacer
 from qtdraw.widget.logging_util import LogWidget
-
 from qtdraw.util.util import check_multipie
+from qtdraw.multipie.multipie_setting import default_status
+from qtdraw.multipie.multipie_group_list import group_list_index
 
 
 # ==================================================
@@ -1235,7 +1236,7 @@ class QtDraw(Window):
             self.logger.close()
             self.info_dialog.close()
             self.pyvista_widget.close()
-            super().close()
+            super().closeEvent(event)
 
     # ==================================================
     def update_status(self, key, value):
@@ -2602,138 +2603,144 @@ class QtDraw(Window):
     # ==================================================
     # MultiPie interface
     # ==================================================
-    def mp_set_group(self, tag=None):
+    def _check_multipie(self):
+        if not check_multipie():
+            raise Exception("MultiPie is not installed.")
+        if self.multipie_dialog is None:
+            QMessageBox.question(self, "", "Call 'mp_set_group(tag)' at first.", QMessageBox.Ok)
+            return True
+        return False
+
+    # ==================================================
+    def mp_set_group(self, tag):
         """
         MultiPie: Set point/sapce group.
 
         Args:
-            tag (str, optional): group tag in Schoenflies notation [default: C1].
+            tag (str): group tag in Schoenflies notation [default: C1].
         """
         if not check_multipie():
             raise Exception("MultiPie is not installed.")
 
         if self.multipie_dialog is not None:
             self.multipie_dialog.close()
-            del self.multipie_dialog
             self.multipie_dialog = None
 
-        if tag is None:
-            tag = "C1"
+        multipie = copy.deepcopy(default_status)
+        crystal, tp, idx = group_list_index[tag]
+        multipie["general"] = {
+            "crystal": crystal,
+            "type": tp,
+            "index": idx,
+        }
 
-        multipie = {"group": {"group": tag}}
-        self.pyvista_widget.update_status("multipie", multipie)
+        self.pyvista_widget._status["multipie"] = multipie
         self.misc_button_multipie.pressed.emit()
-        self._set_axis_type()
 
     # ==================================================
-    def mp_add_site(self, site, scale=1.0, color=None):
+    def mp_add_site(self, site, size=None, color=None, opacity=None):
         """
         MultiPie: Add equivalent sites.
 
         Args:
             site (str): representative site.
-            scale (float, optional): size scale.
+            size (float, optional): size.
             color (str, optional): color.
+            opacity (float, optional): opacity.
         """
-        if self.multipie_dialog is None:
-            self.mp_set_group()
+        if self._check_multipie():
+            return
 
-        self.multipie_dialog.dialog.object_edit_site.setText(site)
-        self.multipie_dialog.dialog.obj_add_site(scale, color)
+        self.multipie_dialog._object_panel.edit_site.setText(site)
+        self.multipie_dialog._object_panel.show_site(size, color, opacity)
 
     # ==================================================
-    def mp_add_bond(self, bond, scale=1.0, color=None, color2=None):
+    def mp_add_bond(self, bond, width=None, color=None, color2=None, opacity=None):
         """
         MultiPie: Add equivalent bonds.
 
         Args:
             bond (str): representative bond.
-            scale (float, optional): width scale.
+            width (float, optional): width.
             color (str, optional): color.
             color2 (str, optional): color2.
+            opacity (float, optional): opacity.
         """
-        if self.multipie_dialog is None:
-            self.mp_set_group()
+        if self._check_multipie():
+            return
 
-        self.multipie_dialog.dialog.object_edit_bond.setText(bond)
-        self.multipie_dialog.dialog.obj_add_bond(scale, color, color2)
+        self.multipie_dialog._object_panel.edit_bond.setText(bond)
+        self.multipie_dialog._object_panel.show_bond(width, color, color2, opacity)
 
     # ==================================================
-    def mp_add_vector(self, type, vector, site_bond, scale=1.0):
+    def mp_add_vector(
+        self, vector_sb, type="Q", cartesian=True, average=False, length=None, width=None, color=None, opacity=None
+    ):
         """
-        MultiPie: Add vectors at equivalent sites or bonds.
+        MultiPie: Add transformed vectors at equivalent sites or bonds.
 
         Args:
-            type (str): type of vector, Q/G/T/M.
-            vector (str): vector (cartesian).
-            site_bond (str): representative site or bond.
-            scale (float, optional): length scale.
+            vector_sb (str): vector, "v # site_bond".
+            type (str, optional): type of vector, Q/G/T/M.
+            cartesian (bool, optional): cartesian vector ?
+            average (bool, optional): average ?
+            length (float, optional): length.
+            width (float, optional): width.
+            color (str, optional): color.
+            opacity (float, optional): opacity.
         """
-        if self.multipie_dialog is None:
-            self.mp_set_group()
+        if self._check_multipie():
+            return
 
-        self.multipie_dialog.dialog.object_combo_vector_type.setCurrentText(type)
-        self.multipie_dialog.dialog.object_edit_vector.setText(vector + " # " + site_bond)
-        self.multipie_dialog.dialog.obj_add_vector(scale)
+        self.multipie_dialog._object_panel.combo_vector_type.setCurrentText(type)
+        self.multipie_dialog._object_panel.edit_vector.setText(vector_sb)
+        self.multipie_dialog._object_panel.check_vector_cart.setChecked(cartesian)
+        self.multipie_dialog._object_panel.check_vector_av.setChecked(average)
+        self.multipie_dialog._object_panel.show_vector(length, width, color, opacity)
 
     # ==================================================
-    def mp_add_orbital(self, type, orbital, site_bond, scale=1.0):
+    def mp_add_orbital(self, orbital_sb, type="Q", average=False, size=None, color=None, opacity=None):
         """
-        MultiPie: Add orbitals at equivalent sites or bonds.
+        MultiPie: Add transformed orbitals at equivalent sites or bonds.
 
         Args:
-            type (str): type of orbital, Q/G/T/M.
-            orbital (str): orbital in terms of x,y,z,r (cartesian).
-            site_bond (str): representative site or bond.
-            scale (float, optional): size scale.
+            orbital_sb (str): orbital, "f(r) # site_bond".
+            type (str, optional): type of orbital, Q/G/T/M.
+            average (bool, optional): average ?
+            size (float, optional): size.
+            color (str, optional): color.
+            opacity (float, optional): opacity.
         """
-        if self.multipie_dialog is None:
-            self.mp_set_group()
+        if self._check_multipie():
+            return
 
-        self.multipie_dialog.dialog.object_combo_orbital_type.setCurrentText(type)
-        self.multipie_dialog.dialog.object_edit_orbital.setText(orbital + " # " + site_bond)
-        self.multipie_dialog.dialog.obj_add_orbital(scale)
+        self.multipie_dialog._object_panel.combo_orbital_type.setCurrentText(type)
+        self.multipie_dialog._object_panel.edit_orbital.setText(orbital_sb)
+        self.multipie_dialog._object_panel.check_orbital_av.setChecked(average)
+        self.multipie_dialog._object_panel.show_orbital(size, color, opacity)
 
     # ==================================================
-    def mp_create_harmonics(self, type, rank):
+    def mp_add_bond_definition(self, bond, length=None, width=None, color=None, opacity=None):
         """
-        MultiPie: Create harmonics list.
+        MultiPie: Create bond definition.
 
         Args:
-            type (str): type of harmonics, Q/G/T/M.
-            rank (int or str): rank.
-
-        Returns:
-            - (list) -- list of harmonics, [str].
+            bond (str): representative bond.
+            length (float, optional): length.
+            width (float, optional): width.
+            color (str, optional): color.
+            opacity (float, optional): opacity.
         """
-        if self.multipie_dialog is None:
-            self.mp_set_group()
+        if self._check_multipie():
+            return
 
-        self.multipie_dialog.dialog.object_combo_harmonics_type.setCurrentText(type)
-        self.multipie_dialog.dialog.object_combo_harmonics_rank.setCurrentText(str(rank))
-
-        lst = self.multipie_dialog.dialog.object_combo_harmonics_irrep.get_item()
-
-        return lst
+        self.multipie_dialog._basis_panel.edit_def_bond.setText(bond)
+        self.multipie_dialog._basis_panel.show_bond_definition(length, width, color, opacity)
 
     # ==================================================
-    def mp_add_harmonics(self, tag, site_bond, scale=1.0):
+    def mp_site_samb_list(self, site):
         """
-        MultiPie: Add harmonics at equivalent sites or bonds.
-
-        Args:
-            tag (str): harmonics tag, obtained by mp_create_harmonics.
-            site_bond (str): representative site or bond.
-            scale (float, optional): size scale.
-        """
-        self.multipie_dialog.dialog.object_combo_harmonics_irrep.setCurrentText(tag)
-        self.multipie_dialog.dialog.object_edit_harmonics.setText(site_bond)
-        self.multipie_dialog.dialog.obj_add_harmonics(scale)
-
-    # ==================================================
-    def mp_create_site_samb(self, site):
-        """
-        MultiPie: Create site SAMB.
+        MultiPie: Create site SAMB list.
 
         Args:
             site (str): representative site.
@@ -2741,30 +2748,38 @@ class QtDraw(Window):
         Returns:
             - (list) -- list of site SAMB, [str].
         """
-        if self.multipie_dialog is None:
-            self.mp_set_group()
+        if self._check_multipie():
+            return
 
-        self.multipie_dialog.dialog.basis_edit_site.setText(site)
-        d = self.multipie_dialog.dialog.basis_gen_site()
+        self.multipie_dialog._basis_panel.edit_site.setText(site)
+        self.multipie_dialog._basis_panel.set_site()
+        d = self.multipie_dialog._get_index_list(self.multipie_dialog._basis_panel._site_samb.keys())[0]
 
         return d
 
     # ==================================================
-    def mp_add_site_samb(self, tag, scale=1.0):
+    def mp_add_site_samb(self, tag, size=None, p_color=None, n_color=None, z_color=None, z_size=None):
         """
         MultiPie: Add site SAMB.
 
         Args:
-            tag (str): site SAMB, obtained by mp_create_site_samb.
-            scale (float, optional): size scale.
+            tag (str): site SAMB, obtained by mp_site_samb_list.
+            size (float, optional): relative size.
+            p_color (str, optional): positive SAMB color.
+            n_color (str, optional): negative SAMB color.
+            z_color (str, optional): zero SAMB color.
+            z_size (float, optional): zero SAMB size.
         """
-        self.multipie_dialog.dialog.basis_combo_site_samb.setCurrentText(tag)
-        self.multipie_dialog.dialog.basis_add_site(scale)
+        if self.multipie_dialog._basis_panel._site_samb is None:
+            return
+
+        self.multipie_dialog._basis_panel.combo_site_samb.setCurrentText(tag)
+        self.multipie_dialog._basis_panel.show_site(size, p_color, n_color, z_color, z_size)
 
     # ==================================================
-    def mp_create_bond_samb(self, bond):
+    def mp_bond_samb_list(self, bond):
         """
-        MultiPie: Create bond SAMB.
+        MultiPie: Create bond SAMB list.
 
         Args:
             bond (str): representative bond.
@@ -2772,151 +2787,132 @@ class QtDraw(Window):
         Returns:
             - (list) -- list of bond SAMB, [str].
         """
-        if self.multipie_dialog is None:
-            self.mp_set_group()
+        if self._check_multipie():
+            return
 
-        self.multipie_dialog.dialog.basis_edit_bond.setText(bond)
-        d = self.multipie_dialog.dialog.basis_gen_bond()
+        self.multipie_dialog._basis_panel.edit_bond.setText(bond)
+        self.multipie_dialog._basis_panel.set_bond()
+        d = self.multipie_dialog._get_index_list(self.multipie_dialog._basis_panel._bond_samb.keys())[0]
 
         return d
 
     # ==================================================
-    def mp_add_bond_samb(self, tag, scale=1.0):
+    def mp_add_bond_samb(self, tag, width=None, p_color=None, n_color=None, z_color=None, z_width=None, a_size=None):
         """
         MultiPie: Add bond SAMB.
 
         Args:
-            tag (str): bond SAMB, obtained by mp_create_bond_samb.
-            scale (float, optional): width scale.
+            tag (str): bond SAMB, obtained by mp_bond_samb_list.
+            width (float, optional): relative width.
+            p_color (str, optional): positive SAMB color.
+            n_color (str, optional): negative SAMB color.
+            z_color (str, optional): zero SAMB color.
+            z_width (float, optional): zero SAMB width.
+            a_size (float, optional): relative arrow size.
         """
-        self.multipie_dialog.dialog.basis_combo_bond_samb.setCurrentText(tag)
-        self.multipie_dialog.dialog.basis_add_bond(scale)
+        self.multipie_dialog._basis_panel.combo_bond_samb.setCurrentText(tag)
+        self.multipie_dialog._basis_panel.show_bond(width, p_color, n_color, z_color, z_width, a_size)
 
     # ==================================================
-    def mp_create_vector_samb(self, type, site_bond):
+    def mp_vector_samb_list(self, site_bond, type="Q"):
         """
-        MultiPie: Create vector SAMB.
+        MultiPie: Create vector SAMB list.
 
         Args:
-            type (str): type of vector, Q/G/T/M.
             site_bond (str): representative site or bond.
+            type (str, optional): type of vector, Q/G/T/M.
 
         Returns:
-            - (list) -- list of vector SAMB, [str].
+            - (dict) -- list of vector SAMB, {samb_type: [str]}.
         """
-        if self.multipie_dialog is None:
-            self.mp_set_group()
+        if self._check_multipie():
+            return
 
-        self.multipie_dialog.dialog.basis_combo_vector_type.setCurrentText(type)
-        self.multipie_dialog.dialog.basis_edit_vector.setText(site_bond)
-        self.multipie_dialog.dialog.basis_gen_vector()
-
-        z_samb = self.multipie_dialog.dialog.plus["vector_z_samb"]
-        d = []
-        for select in z_samb.values():
-            d += [f"{i[0][0]}{no+1:02d}: {i[0]}" for no, i in enumerate(select)]
+        self.multipie_dialog._basis_panel.combo_vector_type.setCurrentText(type)
+        self.multipie_dialog._basis_panel.edit_vector.setText(site_bond)
+        self.multipie_dialog._basis_panel.set_vector()
+        d = self.multipie_dialog._basis_panel._vector_list
 
         return d
 
     # ==================================================
-    def mp_add_vector_samb(self, lc, scale=1.0):
+    def mp_add_vector_samb(self, lc, length=None, width=None, color=None, opacity=None):
         """
         MultiPie: Add vector SAMB.
 
         Args:
-            lc (str): linear combination of vector SAMBs, obtained by mp_create_vector_samb.
-            scale (float, optional): length scale.
+            lc (str): linear combination of vector SAMBs, obtained by mp_vector_samb_list.
+            length (float, optional): relative length.
+            width (float, optional): relative width.
+            color (str, optional): color.
+            opacity (float, optional): opacity.
         """
-        num = {k: lc.count(k) for k in ["Q", "G", "T", "M"]}
-        z_type = "Q" if num["Q"] + num["G"] > 0 else "T"
-        self.multipie_dialog.dialog.basis_combo_vector_samb_type.setCurrentText(z_type)
-        self.multipie_dialog.dialog.basis_edit_vector_lc.setText(lc)
-        self.multipie_dialog.dialog.basis_add_vector_lc(scale)
+        self.multipie_dialog._basis_panel.edit_vector_lc.setText(lc)
+        self.multipie_dialog._basis_panel.show_vector_lc(length, width, color, opacity)
 
     # ==================================================
-    def mp_add_vector_samb_modulation(self, mod_list):
+    def mp_add_vector_samb_modulation(self, modulation_range, length=None, width=None, color=None, opacity=None):
         """
         MultiPie: Add vector SAMB with modulation.
 
         Args:
-            mod_list (str): modulation list, "[[tag, coeff, k_vector, cos/sin]]".
+            modulation_range (str): modulation and range, "[[tag, coeff, k_vector, cos/sin]] : [r1, r2, r3]".
+            length (float, optional): relative length.
+            width (float, optional): relative width.
+            color (str, optional): color.
+            opacity (float, optional): opacity.
         """
-        num = {k: mod_list.count(k) for k in ["Q", "G", "T", "M"]}
-        z_type = "Q,G" if num["Q"] + num["G"] > 0 else "T,M"
-        self.multipie_dialog.dialog.basis_combo_vector_modulation_type.setCurrentText(z_type)
-        self.multipie_dialog.dialog.basis_edit_vector_modulation.setText(mod_list)
-        self.multipie_dialog.dialog.basis_gen_vector_modulation()
-        self.multipie_dialog.dialog._vector_modulation_dialog.accept()
+        self.multipie_dialog._basis_panel.edit_vector_modulation.setText(modulation_range)
+        self.multipie_dialog._basis_panel.show_vector_samb_modulation(modulation_range, length, width, color, opacity)
 
     # ==================================================
-    def mp_create_orbital_samb(self, type, rank, site_bond):
+    def mp_orbital_samb_list(self, site_bond, type="Q", rank=0):
         """
         MultiPie: Create orbital SAMB.
 
         Args:
-            type (str): type of orbital, Q/G/T/M.
-            rank (int or str): rank.
             site_bond (str): representative site or bond.
+            type (str, optional): type of orbital, Q/G/T/M.
+            rank (int or str, optional): rank.
 
         Returns:
             - (list) -- list of orbital SAMB, [str].
         """
-        if self.multipie_dialog is None:
-            self.mp_set_group()
+        if self._check_multipie():
+            return
 
-        self.multipie_dialog.dialog.basis_combo_orbital_type.setCurrentText(type)
-        self.multipie_dialog.dialog.basis_combo_orbital_rank.setCurrentText(str(rank))
-        self.multipie_dialog.dialog.basis_edit_orbital.setText(site_bond)
-        self.multipie_dialog.dialog.basis_gen_orbital()
-
-        z_samb = self.multipie_dialog.dialog.plus["orbital_z_samb"]
-        d = []
-        for select in z_samb.values():
-            d += [f"{i[0][0]}{no+1:02d}: {i[0]}" for no, i in enumerate(select)]
+        self.multipie_dialog._basis_panel.combo_orbital_type.setCurrentText(type)
+        self.multipie_dialog._basis_panel.combo_orbital_rank.setCurrentText(str(rank))
+        self.multipie_dialog._basis_panel.edit_orbital.setText(site_bond)
+        self.multipie_dialog._basis_panel.set_orbital()
+        d = self.multipie_dialog._basis_panel._orbital_list
 
         return d
 
     # ==================================================
-    def mp_add_orbital_samb(self, lc, scale=1.0):
+    def mp_add_orbital_samb(self, lc, size=None, color=None, opacity=None):
         """
         MultiPie: Add orbital SAMB.
 
         Args:
-            lc (str): linear combination of orbital SAMBs, obtained by mp_create_orbital_samb.
-            scale (float, optional): size scale.
+            lc (str): linear combination of orbital SAMBs, obtained by mp_orbital_samb_list.
+            size (float, optional): relative size.
+            color (str, optional): color.
+            opacity (float, optional): opacity.
         """
-        num = {k: lc.count(k) for k in ["Q", "G", "T", "M"]}
-        z_type = "Q" if num["Q"] + num["G"] > 0 else "T"
-        self.multipie_dialog.dialog.basis_combo_orbital_samb_type.setCurrentText(z_type)
-        self.multipie_dialog.dialog.basis_edit_orbital_lc.setText(lc)
-        self.multipie_dialog.dialog.basis_add_orbital_lc(scale)
+        self.multipie_dialog._basis_panel.edit_orbital_lc.setText(lc)
+        self.multipie_dialog._basis_panel.show_orbital_lc(size, color, opacity)
 
     # ==================================================
-    def mp_add_orbital_samb_modulation(self, mod_list):
+    def mp_add_orbital_samb_modulation(self, modulation_range, size=None, color=None, opacity=None):
         """
         MultiPie: Add orbital SAMB with modulation.
 
         Args:
-            mod_list (str): modulation list, "[[tag, coeff, k_vector, cos/sin]]".
+            modulation_range (str): modulation and range, "[[tag, coeff, k_vector, cos/sin]] : [r1, r2, r3]".
+            size (float, optional): relative size.
+            color (str, optional): color.
+            opacity (float, optional): opacity.
         """
-        num = {k: mod_list.count(k) for k in ["Q", "G", "T", "M"]}
-        z_type = "Q,G" if num["Q"] + num["G"] > 0 else "T,M"
-        self.multipie_dialog.dialog.basis_combo_orbital_modulation_type.setCurrentText(z_type)
-        self.multipie_dialog.dialog.basis_edit_orbital_modulation.setText(mod_list)
-        self.multipie_dialog.dialog.basis_gen_orbital_modulation()
-        self.multipie_dialog.dialog._orbital_modulation_dialog.accept()
-
-    # ==================================================
-    def mp_add_hopping(self, bond, scale=1.0):
-        """
-        MultiPie: Add hopping bond directions.
-
-        Args:
-            bond (str): representative bond.
-            scale (float, optional): length scale.
-        """
-        if self.multipie_dialog is None:
-            self.mp_set_group()
-
-        self.multipie_dialog.dialog.basis_edit_hopping.setText(bond)
-        self.multipie_dialog.dialog.basis_add_hopping(scale)
+        self.multipie_dialog._basis_panel.edit_orbital_modulation.setText(modulation_range)
+        self.multipie_dialog._basis_panel.show_orbital_samb_modulation(modulation_range, size, color, opacity)

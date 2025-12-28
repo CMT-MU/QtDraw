@@ -52,8 +52,8 @@ def create_samb_modulation(group, modulation, phase_dict, igrid, pset, samb, sam
         idx = int(basis[1:]) - 1
         coeff = str_to_sympy(coeff)
         samb1, comp = samb_list[tp][idx]
-        samb = samb[tp][samb1][0][comp]
-        m_obj = group.combined_object(wp, tp, samb)
+        samb2 = samb[tp][samb1][0][comp]
+        m_obj = group.combined_object(wp, tp, samb2)
         m_obj = np.tile(m_obj, n_pset)
         phase_all = np.empty((n_grid, n_pset), dtype=object)
         for p_no in range(n_pset):

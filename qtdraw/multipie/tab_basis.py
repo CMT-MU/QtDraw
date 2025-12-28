@@ -18,7 +18,7 @@ from qtdraw.multipie.multipie_plot import (
     plot_vector_cluster,
     plot_orbital_cluster,
 )
-from qtdraw.multipie.multipie_util import check_linear_combination, convert_vector_object, create_samb_modulation
+from qtdraw.multipie.multipie_util import check_linear_combination, convert_vector_object, create_samb_modulation, phase_factor
 from qtdraw.multipie.multipie_modulation_dialog import ModulationDialog
 
 
@@ -284,7 +284,7 @@ class TabBasis(QWidget):
         self.combo_orbital_samb.setCurrentIndex(0)
 
     # ==================================================
-    def show_bond_definition(self):
+    def show_bond_definition(self, length=None, width=None, color=None, opacity=None):
         group = self.parent.ps_group
         bond = self.edit_def_bond.raw_text()
         wp, bonds = group.find_wyckoff_bond(bond)
@@ -292,10 +292,10 @@ class TabBasis(QWidget):
         if len(bonds) != len(mp):
             mp = mp * (len(bonds) // len(mp))
 
-        plot_bond_definition(self.parent, bonds, wp=wp, label=mp)
+        plot_bond_definition(self.parent, bonds, wp=wp, label=mp, length=length, width=width, color=color, opacity=opacity)
 
     # ==================================================
-    def show_site(self):
+    def show_site(self, size, p_color, n_color, z_color, z_size):
         idx = self.combo_site_samb.currentIndex()
         if idx == -1:
             return
@@ -304,10 +304,21 @@ class TabBasis(QWidget):
         mp = self._site_mp
         if len(samb) != len(self._sites):
             samb = np.tile(samb, len(self._sites) // len(samb))
-        plot_site_cluster(self.parent, self._sites, samb, wp=self._site_wp, label=mp)
+        plot_site_cluster(
+            self.parent,
+            self._sites,
+            samb,
+            wp=self._site_wp,
+            label=mp,
+            color=z_color,
+            color_neg=n_color,
+            color_pos=p_color,
+            zero_size=z_size,
+            size_ratio=size,
+        )
 
     # ==================================================
-    def show_bond(self):
+    def show_bond(self, width=None, p_color=None, n_color=None, z_color=None, z_width=None, a_size=None):
         idx = self.combo_bond_samb.currentIndex()
         if idx == -1:
             return
@@ -318,7 +329,20 @@ class TabBasis(QWidget):
         mp = self._bond_mp
         if len(samb) != len(self._bonds):
             samb = np.tile(samb, len(self._bonds) // len(samb))
-        plot_bond_cluster(self.parent, self._bonds, samb, wp=self._bond_wp, label=mp, sym=sym)
+        plot_bond_cluster(
+            self.parent,
+            self._bonds,
+            samb,
+            wp=self._bond_wp,
+            label=mp,
+            sym=sym,
+            color=z_color,
+            color_neg=n_color,
+            color_pos=p_color,
+            width=z_width,
+            arrow_ratio=a_size,
+            width_ratio=width,
+        )
 
     # ==================================================
     def show_vector(self):
@@ -340,7 +364,7 @@ class TabBasis(QWidget):
         plot_vector_cluster(self.parent, site, obj, X, wp=wp, label=mp)
 
     # ==================================================
-    def show_vector_lc(self):
+    def show_vector_lc(self, length=None, width=None, color=None, opacity=None):
         ex = self.edit_vector_lc.raw_text()
         ex, var = check_linear_combination(ex, self._vector_samb_var)
         if ex is None:
@@ -362,7 +386,7 @@ class TabBasis(QWidget):
             lc_obj[i] = sp.Matrix(convert_vector_object(obj1))
 
         obj = np.array(ex.subs(lc_obj))
-        plot_vector_cluster(self.parent, site, obj, X, wp=wp, label=mp)
+        plot_vector_cluster(self.parent, site, obj, X, wp=wp, label=mp, length=length, width=width, color=color, opacity=opacity)
 
     # ==================================================
     def show_orbital(self):
@@ -383,7 +407,7 @@ class TabBasis(QWidget):
         plot_orbital_cluster(self.parent, site, obj, X, wp=wp, label=mp)
 
     # ==================================================
-    def show_orbital_lc(self):
+    def show_orbital_lc(self, size=None, color=None, opacity=None):
         ex = self.edit_orbital_lc.raw_text()
         ex, var = check_linear_combination(ex, self._orbital_samb_var)
         if ex is None:
@@ -404,7 +428,7 @@ class TabBasis(QWidget):
             lc_obj[i] = sp.Matrix(np.tile(obj1, self._orbital_n_pset))
 
         obj = np.array(ex.subs(lc_obj)).reshape(-1)
-        plot_orbital_cluster(self.parent, site, obj, X, wp=wp, label=mp)
+        plot_orbital_cluster(self.parent, site, obj, X, wp=wp, label=mp, size=size, color=color, opacity=opacity)
 
     # ==================================================
     def create_vector_modulation(self):
@@ -431,29 +455,53 @@ class TabBasis(QWidget):
             self._orbital_modulation_dialog = ModulationDialog(self, modulation, var, vec=False)
 
     # ==================================================
-    def show_vector_samb_modulation(self, modulation, phase_dict, igrid, pset):
+    def show_vector_samb_modulation(self, modulation_range, length=None, width=None, color=None, opacity=None):
+        modulation, rng = modulation_range.split(":")
+        mod_list = self._parse_modulation(modulation)
+        if not mod_list:
+            return
+        rng, upper = self._parse_range(rng)
+        pset = self.parent.ps_group.symmetry_operation["plus_set"].astype(float)
+        phase_dict, igrid = phase_factor(mod_list, rng, pset)
+
         wp = self._vector_wp
         site = self._vector_samb_site
         X = self.combo_vector_type.currentText()
 
         obj, site_idx, full_site = create_samb_modulation(
-            self.parent.ps_group, modulation, phase_dict, igrid, pset, self._vector_samb, self._vector_samb_list, wp, site
+            self.parent.ps_group, mod_list, phase_dict, igrid, pset, self._vector_samb, self._vector_samb_list, wp, site
         )
         obj = convert_vector_object(obj)
 
-        plot_vector_cluster(self.parent, full_site, obj, X, wp=wp, label=site_idx)
+        self.parent._qtdraw.set_range([0, 0, 0], upper)
+        self.parent._qtdraw.set_repeat(True)
+        self.parent._qtdraw.set_nonrepeat()
+        plot_vector_cluster(
+            self.parent, full_site, obj, X, wp=wp, label=site_idx, length=length, width=width, color=color, opacity=opacity
+        )
 
     # ==================================================
-    def show_orbital_samb_modulation(self, modulation, phase_dict, igrid, pset):
+    def show_orbital_samb_modulation(self, modulation_range, size=None, color=None, opacity=None):
+        modulation, rng = modulation_range.split(":")
+        mod_list = self._parse_modulation(modulation)
+        if not mod_list:
+            return
+        rng, upper = self._parse_range(rng)
+        pset = self.parent.ps_group.symmetry_operation["plus_set"].astype(float)
+        phase_dict, igrid = phase_factor(mod_list, rng, pset)
+
         wp = self._orbital_wp
         site = self._orbital_samb_site
         X = self.combo_orbital_type.currentText()
 
         obj, site_idx, full_site = create_samb_modulation(
-            self.parent.ps_group, modulation, phase_dict, igrid, pset, self._orbital_samb, self._orbital_samb_list, wp, site
+            self.parent.ps_group, mod_list, phase_dict, igrid, pset, self._orbital_samb, self._orbital_samb_list, wp, site
         )
 
-        plot_orbital_cluster(self.parent, full_site, obj, X, wp=wp, label=site_idx)
+        self.parent._qtdraw.set_range([0, 0, 0], upper)
+        self.parent._qtdraw.set_repeat(True)
+        self.parent._qtdraw.set_nonrepeat()
+        plot_orbital_cluster(self.parent, full_site, obj, X, wp=wp, label=site_idx, size=size, color=color, opacity=opacity)
 
     # ==================================================
     def closeEvent(self, event):
@@ -579,3 +627,71 @@ class TabBasis(QWidget):
             "orbital_modulation": self.edit_orbital_modulation.raw_text(),
         }
         return {"basis": d}
+
+    # ==================================================
+    @staticmethod
+    def _parse_modulation(s):
+        """
+        Parse modulation list.
+
+        Args:
+            s (str): modulation list in str, [[basis,coeff,k,cos/sin]].
+
+        Returns:
+            - (list) -- modulation list.
+        """
+        rows = []
+        row, token, depth = None, "", 0
+        for c in s:
+            try:
+                if c == "[":
+                    depth += 1
+                    if depth == 2:
+                        row, token = [], ""
+                    continue
+
+                if c == "]":
+                    if depth == 2:
+                        row.append(token.strip())
+                        rows.append(row)
+                        token = ""
+                    depth -= 1
+                    if depth < 0:
+                        return []
+                    continue
+
+                if c == "," and depth == 2:
+                    row.append(token.strip())
+                    token = ""
+                    continue
+
+                if depth >= 2:
+                    token += c
+
+            except Exception as e:
+                return []
+
+        if depth != 0:
+            return []
+
+        rows = [[r[0], r[1], "[" + r[2] + "]", r[3]] for r in rows]
+
+        return rows
+
+    # ==================================================
+    @staticmethod
+    def _parse_range(r):
+        """
+        Parse range.
+
+        Args:
+            r (str): range, [r1,r2,r3].
+
+        Returns:
+            - (list) -- integer range.
+            - (list) -- upper bound.
+        """
+        eps = 0.001
+        rng = list(map(int, r.strip(" [] ").split(",")))
+        upper = [rng[0] - eps, rng[1] - eps, rng[2] - eps]
+        return rng, upper

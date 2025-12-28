@@ -68,8 +68,12 @@ class MultiPieDialog(QDialog):
         self.group_changed.connect(self._group_panel.set_harm_list)
         self._pvw.data_removed.connect(self.clear_data)
 
-        self.set_data()
-        self.clear_data()
+        status = self._pvw._status.get("multipie", {})
+        if status:
+            self.set_data(status)
+        else:
+            self.set_data()
+            self.clear_data()
 
         self.show()
 
@@ -168,7 +172,6 @@ class MultiPieDialog(QDialog):
 
     # ==================================================
     def closeEvent(self, event):
-        print(self.get_status())
         super().closeEvent(event)
 
     # ==================================================

@@ -1,3 +1,9 @@
+"""
+Create function table for jupyterbook document.
+
+Run this to create "docs/src/function_table.md".
+"""
+
 import os
 import ast
 

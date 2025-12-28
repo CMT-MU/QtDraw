@@ -98,33 +98,48 @@ class TabObject(QWidget):
         self.edit_orbital.returnPressed.connect(self.show_orbital)
 
     # ==================================================
-    def show_site(self):
+    def show_site(self, size=None, color=None, opacity=None):
         site = self.edit_site.raw_text()
         sites, mp, wp = self.parent.group.create_cell_site(site)
-        plot_cell_site(self.parent, sites, wp=wp, label=mp)
+        plot_cell_site(self.parent, sites, wp=wp, label=mp, size=size, color=color, opacity=opacity)
 
     # ==================================================
-    def show_bond(self):
+    def show_bond(self, width=None, color=None, color2=None, opacity=None):
         bond = self.edit_bond.raw_text()
         bonds, mp, wp = self.parent.group.create_cell_bond(bond)
-        plot_cell_bond(self.parent, bonds, wp=wp, label=mp)
+        plot_cell_bond(self.parent, bonds, wp=wp, label=mp, width=width, color=color, color2=color2, opacity=opacity)
 
     # ==================================================
-    def show_vector(self):
+    def show_vector(self, length=None, width=None, color=None, opacity=None):
         vector = self.edit_vector.raw_text()
         vector_type = self.combo_vector_type.currentText()
         cartesian = self.check_vector_cart.is_checked()
         av = self.check_vector_av.is_checked()
         vectors, sites, mp, wp = self.parent.group.create_cell_vector(vector, vector_type, av, cartesian)
-        plot_cell_vector(self.parent, vectors, sites, vector_type, wp=wp, label=mp, average=av, cartesian=cartesian)
+        plot_cell_vector(
+            self.parent,
+            vectors,
+            sites,
+            vector_type,
+            wp=wp,
+            label=mp,
+            average=av,
+            cartesian=cartesian,
+            length=length,
+            width=width,
+            color=color,
+            opacity=opacity,
+        )
 
     # ==================================================
-    def show_orbital(self):
+    def show_orbital(self, size=None, color=None, opacity=None):
         orbital = self.edit_orbital.raw_text()
         orbital_type = self.combo_orbital_type.currentText()
         av = self.check_orbital_av.is_checked()
         orbitals, sites, mp, wp = self.parent.group.create_cell_multipole(orbital, orbital_type, av)
-        plot_cell_multipole(self.parent, orbitals, sites, orbital_type, wp=wp, label=mp, average=av)
+        plot_cell_multipole(
+            self.parent, orbitals, sites, orbital_type, wp=wp, label=mp, average=av, size=size, color=color, opacity=opacity
+        )
 
     # ==================================================
     def closeEvent(self, event):

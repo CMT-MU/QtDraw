@@ -17,7 +17,7 @@ from qtdraw.core.pyvista_widget_setting import widget_detail as detail
 from qtdraw.core.qtdraw_info import __version__
 from qtdraw.parser.element import element_color
 from qtdraw.parser.vesta import parse_vesta, create_structure_vesta
-from qtdraw.multipie.multipie_group_list import group_list
+from qtdraw.multipie.multipie_group_list import group_list_index
 from qtdraw.multipie.multipie_setting import default_status as multipie_default
 
 
@@ -197,9 +197,8 @@ def parse_material(filename):
     name, cell = get_model_cell(graph)
     crystal = sga.get_crystal_system()
 
-    group_list = create_group_list()
     multipie = copy.deepcopy(multipie_default)
-    crystal, tp, idx = group_list[sg_no]
+    crystal, tp, idx = group_list_index[sg_no]
     multipie["general"] = {
         "crystal": crystal,
         "type": tp,
@@ -216,17 +215,3 @@ def parse_material(filename):
     bond_info = get_bond_info(graph, site_info)
 
     return all_data, site_info, bond_info, symmetrized
-
-
-# ==================================================
-def create_group_list():
-    lst = {}
-    for tp in ["PG", "SG"]:
-        for c, v in group_list.items():
-            for no, i in enumerate(v[tp][1]):
-                gno, g = i.split(" ")[:2]
-                gno = int(gno[1:-1])
-                lst[g] = (c, tp, no)
-                lst[gno] = (c, tp, no)
-
-    return lst
