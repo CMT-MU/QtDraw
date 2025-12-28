@@ -421,7 +421,6 @@
 | Delegate |  |
 | setEditorData |  |
 | setModelData |  |
-| updateEditorGeometry |  |
 | paint |  |
 
 
@@ -431,6 +430,7 @@
 |--------|----------|
 | ComboDelegate |  |
 | createEditor |  |
+| updateEditorGeometry |  |
 | sizeHint |  |
 
 
@@ -440,6 +440,7 @@
 |--------|----------|
 | ColorDelegate |  |
 | createEditor |  |
+| updateEditorGeometry |  |
 | sizeHint |  |
 
 
@@ -449,6 +450,8 @@
 |--------|----------|
 | EditorDelegate |  |
 | createEditor |  |
+| _set_data_size |  |
+| updateEditorGeometry |  |
 | sizeHint |  |
 
 
@@ -507,6 +510,11 @@
 | set_widget | Set widget. |
 | selection_changed | For Selection changed. |
 | select_row | Select row. |
+| closeEvent |  |
+| set_row_height_hint |  |
+| row_height_hint |  |
+| clear_row_heights |  |
+| setModel |  |
 
 
 ## <div class='my-heading' style='color: darkgreen;'>qt_event_util.py
@@ -692,6 +700,7 @@
 | Function | Summary |
 |--------|----------|
 | TabGroupView | Data view group. |
+| tab_change |  |
 | select_tab | Select tab. |
 | closeEvent | Close event for deselect all. |
 

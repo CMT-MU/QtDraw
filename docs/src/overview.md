@@ -15,4 +15,9 @@ By `non-repeat` button, the repeated objects can be converted to those at the sa
 By installing the Pyhton package, [MultiPie](https://github.com/CMT-MU/MultiPie), which provides the various crystallographic symmetry operations and symmetry-adapted basis construction, object drawing in **QtDraw** is also associated by the symmetry operation and symmetry-adapted basis.
 To use this functionality, after installing `MultiPie`, push `MultiPie` button in the bottom right.
 The additional window for `MultiPie` plug-in is shown as below.
-![multipie.jpg](fig/multipie.jpg)
+- Group Info.
+![multipie_group.jpg](fig/multipie_group.jpg)
+- Object Drawing
+![multipie_object.jpg](fig/multipie_object.jpg)
+- Basis Drawing
+![multipie_basis.jpg](fig/multipie_basis.jpg)
