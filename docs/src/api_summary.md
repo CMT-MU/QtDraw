@@ -14,11 +14,15 @@
 
 ```{eval-rst}
 .. autosummary::
-    qtdraw.multipie.plugin_multipie
-    qtdraw.multipie.dialog_multipie
-    qtdraw.multipie.dialog_info
-    qtdraw.multipie.dialog_modulation
-    qtdraw.multipie.util_multipie
+    qtdraw.multipie.multipie_dialog
+    qtdraw.multipie.sub_group
+    qtdraw.multipie.tab_group
+    qtdraw.multipie.tab_object
+    qtdraw.multipie.tab_basis
+    qtdraw.multipie.multipie_info_dialog
+    qtdraw.multipie.multipie_modulation_dialog
+    qtdraw.multipie.multipie_util
+    qtdraw.multipie.multipie_plot
 ```
 
 ## Parser
@@ -37,7 +41,7 @@
 ```{eval-rst}
 .. autosummary::
     qtdraw.scripts.qtdraw
-    qtdraw.scripts.conv_qtdraw2
+    qtdraw.scripts.conv_qtdraw3
 ```
 
 ## Utility

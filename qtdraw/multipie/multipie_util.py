@@ -1,3 +1,9 @@
+"""
+MultiPie utility.
+
+This module provides utilities for MultiPie dialog.
+"""
+
 import numpy as np
 import sympy as sp
 

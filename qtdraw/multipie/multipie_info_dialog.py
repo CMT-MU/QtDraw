@@ -1,5 +1,5 @@
 """
-Info. dialog.
+MultiPie information dialog.
 
 This module provides a dialog for group info. in MultiPie dialog.
 """

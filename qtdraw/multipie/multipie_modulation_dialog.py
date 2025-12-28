@@ -1,3 +1,9 @@
+"""
+MultiPie modulation dialog.
+
+This module provides a dialog for modulation editor.
+"""
+
 import copy
 from PySide6.QtWidgets import QDialog
 from PySide6.QtCore import Qt
@@ -5,7 +11,6 @@ from PySide6.QtCore import Qt
 from qtdraw.widget.custom_widget import Layout, Button, LineEdit, Label
 from qtdraw.widget.group_model import GroupModel
 from qtdraw.widget.group_view import GroupView
-from qtdraw.multipie.multipie_util import phase_factor
 
 # ==================================================
 modulation_panel = {

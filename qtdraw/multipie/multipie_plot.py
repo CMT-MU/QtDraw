@@ -1,3 +1,9 @@
+"""
+MultiPie plot.
+
+This module provides plot functions for MultiPie dialog.
+"""
+
 import numpy as np
 
 from qtdraw.multipie.multipie_setting import setting_detail as detail
