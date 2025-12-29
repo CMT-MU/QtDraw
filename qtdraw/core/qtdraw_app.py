@@ -20,8 +20,6 @@ from qtdraw.core.dialog_about import get_version_info
 from qtdraw.widget.custom_widget import Label, Layout, LineEdit, HBar, Button, Combo, VSpacer
 from qtdraw.widget.logging_util import LogWidget
 from qtdraw.util.util import check_multipie
-from qtdraw.multipie.multipie_setting import default_status
-from qtdraw.multipie.multipie_group_list import group_list_index
 
 
 # ==================================================
@@ -2626,15 +2624,7 @@ class QtDraw(Window):
             self.multipie_dialog.close()
             self.multipie_dialog = None
 
-        multipie = copy.deepcopy(default_status)
-        crystal, tp, idx = group_list_index[tag]
-        multipie["general"] = {
-            "crystal": crystal,
-            "type": tp,
-            "index": idx,
-        }
-
-        self.pyvista_widget._status["multipie"] = multipie
+        self.pyvista_widget.add_multipie_status(tag)
         self.misc_button_multipie.pressed.emit()
 
     # ==================================================

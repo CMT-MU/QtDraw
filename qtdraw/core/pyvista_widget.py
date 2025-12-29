@@ -30,9 +30,9 @@ from qtdraw.core.pyvista_widget_setting import (
     COLUMN_CELL,
     COLUMN_POSITION,
     COLUMN_ISOSURFACE_FILE,
+    DIGIT,
 )
 from qtdraw.core.pyvista_widget_setting import widget_detail as detail
-from qtdraw.core.pyvista_widget_setting import DIGIT
 from qtdraw.core.qtdraw_info import __version__, __date__, __author__
 from qtdraw.widget.mathjax import MathJaxSVG
 from qtdraw.widget.group_model import GroupModel
@@ -43,11 +43,7 @@ from qtdraw.widget.color_palette import all_colors, custom_colormap, check_color
 from qtdraw.parser.read_material import read_draw
 from qtdraw.parser.xsf import extract_data_xsf
 from qtdraw.parser.converter import convert_version3
-
-from qtdraw.util.util import text_to_list, apply
-
-
-from qtdraw.util.util import read_dict, str_to_sympy
+from qtdraw.util.util import text_to_list, apply, read_dict, str_to_sympy
 from qtdraw.util.util_axis import (
     create_axes_widget,
     get_view_vector,
@@ -79,6 +75,8 @@ from qtdraw.util.basic_object import (
     create_orbital_data,
     create_stream_data,
 )
+from qtdraw.multipie.multipie_group_list import group_list_index
+from qtdraw.multipie.multipie_setting import default_status as multipie_default
 
 
 # ==================================================
@@ -1780,6 +1778,25 @@ class PyVistaWidget(QtInteractor):
         :meta private:
         """
         self.set_property(preference={category: {key: value}})
+
+    # ==================================================
+    def add_multipie_status(self, tag):
+        """
+        Add default MultiPie status.
+
+        Args:
+            tag (str): group tag.
+
+        :meta private:
+        """
+        multipie = copy.deepcopy(multipie_default)
+        crystal, tp, idx = group_list_index[tag]
+        multipie["general"] = {
+            "crystal": crystal,
+            "type": tp,
+            "index": idx,
+        }
+        self._status["multipie"] = multipie
 
     # ==================================================
     def reload(self, data=None):
