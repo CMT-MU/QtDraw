@@ -8,7 +8,7 @@
 
 ## Installation
 
-1. Construct Python & LaTeX environments
+1. Construct Python environment
 - Install Python
 - [MacOS or Linux] Add path for LaTeX and Python in .zshrc.
     ```bash

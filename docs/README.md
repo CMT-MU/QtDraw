@@ -17,10 +17,10 @@ Drawings are associated with crystallographic symmetry operations provided by [M
 
 - **Shell commands**:
   - `qtdraw [filename]` : Open QtDraw file.
-  - `conv_qtdraw2 [ver1_file.qtdw]` : Convert Version 1 `.qtdw` file into this version (Version 2).
+  - `conv_qtdraw3 [ver1_file.qtdw]` : Convert Version 1 `.qtdw` file into this version (Version 3).
 
 - **Requirements**:
-  - Symmetry operation supports are provided by [MultiPie](https://github.com/CMT-MU/MultiPie).
+  - [Optional] Symmetry operation supports are provided by [MultiPie](https://github.com/CMT-MU/MultiPie).
 
 - **See also**:
   - [Manual](https://cmt-mu.github.io/QtDraw/src/overview.html).
