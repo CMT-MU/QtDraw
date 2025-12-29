@@ -115,7 +115,6 @@ class QtDraw(Window):
         cwd = os.getcwd()
         ext_set = f"QtDraw, CIF, VESTA, XSF Files (*{ext} {mat})"
         filename, _ = QFileDialog.getOpenFileName(self, "Open File", cwd, ext_set, options=QFileDialog.Options())
-        self.sender().setDown(False)  # reset push button.
 
         if filename:
             filename = Path(filename)
@@ -150,7 +149,7 @@ class QtDraw(Window):
         # disconnect view.
         self.view_button_clip.toggled.disconnect(self._set_clip)
         self.view_button_repeat.toggled.disconnect(self._set_repeat)
-        self.view_button_nonrepeat.pressed.disconnect(self._nonrepeat)
+        self.view_button_nonrepeat.clicked.disconnect(self._nonrepeat)
         self.view_edit_lower.returnPressed.disconnect(self._set_lower)
         self.view_edit_upper.returnPressed.disconnect(self._set_upper)
 
@@ -168,7 +167,7 @@ class QtDraw(Window):
         # reconnect view.
         self.view_button_clip.toggled.connect(self._set_clip)
         self.view_button_repeat.toggled.connect(self._set_repeat)
-        self.view_button_nonrepeat.pressed.connect(self._nonrepeat)
+        self.view_button_nonrepeat.clicked.connect(self._nonrepeat)
         self.view_edit_lower.returnPressed.connect(self._set_lower)
         self.view_edit_upper.returnPressed.connect(self._set_upper)
 
@@ -189,7 +188,6 @@ class QtDraw(Window):
         file = Path.cwd() / (self.pyvista_widget._status["model"] + ext)
         ext_set = f"QtDraw Files (*{ext})"
         filename, _ = QFileDialog.getSaveFileName(self, "Save File", str(file.name), ext_set, options=QFileDialog.Options())
-        self.sender().setDown(False)  # reset push button.
 
         if filename:
             filename = Path(filename)
@@ -217,7 +215,6 @@ class QtDraw(Window):
 
         ext_set = f"Image Files ({ifile});;Graphic Files ({gfile})"
         filename, _ = QFileDialog.getSaveFileName(self, "Save Screenshot", str(file.name), ext_set)
-        self.sender().setDown(False)  # reset push button.
 
         self.pyvista_widget.save_screenshot(filename)
 
@@ -967,17 +964,17 @@ class QtDraw(Window):
         # view panel.
         self.view_button_clip.toggled.connect(self._set_clip)
         self.view_button_repeat.toggled.connect(self._set_repeat)
-        self.view_button_nonrepeat.pressed.connect(self._nonrepeat)
+        self.view_button_nonrepeat.clicked.connect(self._nonrepeat)
         self.view_edit_lower.returnPressed.connect(self._set_lower)
         self.view_edit_upper.returnPressed.connect(self._set_upper)
         self.view_button_bar.toggled.connect(self._set_bar)
-        self.view_button_default.pressed.connect(self._set_view_default)
-        self.view_button_x.pressed.connect(self.pyvista_widget.view_yz)
-        self.view_button_y.pressed.connect(self.pyvista_widget.view_zx)
-        self.view_button_z.pressed.connect(self.pyvista_widget.view_xy)
-        self.view_button_xm.pressed.connect(self.pyvista_widget.view_zy)
-        self.view_button_ym.pressed.connect(self.pyvista_widget.view_xz)
-        self.view_button_zm.pressed.connect(self.pyvista_widget.view_yx)
+        self.view_button_default.clicked.connect(self._set_view_default)
+        self.view_button_x.clicked.connect(self.pyvista_widget.view_yz)
+        self.view_button_y.clicked.connect(self.pyvista_widget.view_zx)
+        self.view_button_z.clicked.connect(self.pyvista_widget.view_xy)
+        self.view_button_xm.clicked.connect(self.pyvista_widget.view_zy)
+        self.view_button_ym.clicked.connect(self.pyvista_widget.view_xz)
+        self.view_button_zm.clicked.connect(self.pyvista_widget.view_yx)
         self.view_combo_a.currentTextChanged.connect(lambda x: self._set_view(x, 0))
         self.view_combo_b.currentTextChanged.connect(lambda x: self._set_view(x, 1))
         self.view_combo_c.currentTextChanged.connect(lambda x: self._set_view(x, 2))
@@ -987,27 +984,27 @@ class QtDraw(Window):
         self.view_combo_cell.currentTextChanged.connect(self._set_cell_mode)
 
         # dataset panel.
-        self.ds_button_edit.pressed.connect(self.pyvista_widget.open_tab_group_view)
-        self.ds_button_clear.pressed.connect(self._clear_data)
-        self.ds_button_load.pressed.connect(self.open_file)
-        self.ds_button_save.pressed.connect(self.save_file)
-        self.ds_button_screenshot.pressed.connect(self._save_screenshot)
+        self.ds_button_edit.released.connect(self.pyvista_widget.open_tab_group_view)
+        self.ds_button_clear.released.connect(self._clear_data)
+        self.ds_button_load.released.connect(self.open_file)
+        self.ds_button_save.released.connect(self.save_file)
+        self.ds_button_screenshot.released.connect(self._save_screenshot)
 
         # misc panel.
-        self.misc_button_info.pressed.connect(lambda: self.info_dialog.show())
-        self.misc_button_pref.pressed.connect(self._show_preference)
-        self.misc_button_about.pressed.connect(self._show_about)
-        self.misc_button_log.pressed.connect(self.logger.show)
+        self.misc_button_info.released.connect(lambda: self.info_dialog.show())
+        self.misc_button_pref.released.connect(self._show_preference)
+        self.misc_button_about.released.connect(self._show_about)
+        self.misc_button_log.released.connect(self.logger.show)
         if check_multipie():
-            self.misc_button_multipie.pressed.connect(self._show_multipie)
+            self.misc_button_multipie.released.connect(self._show_multipie)
 
         # debug panel.
         if self.debug:
-            self.debug_button_camera.pressed.connect(self._show_camera_info)
-            self.debug_button_data.pressed.connect(self._show_raw_data)
-            self.debug_button_actor.pressed.connect(self._show_actor_list)
-            self.debug_button_status.pressed.connect(self._show_status_data)
-            self.debug_button_preference.pressed.connect(self._show_preference_data)
+            self.debug_button_camera.released.connect(self._show_camera_info)
+            self.debug_button_data.released.connect(self._show_raw_data)
+            self.debug_button_actor.released.connect(self._show_actor_list)
+            self.debug_button_status.released.connect(self._show_status_data)
+            self.debug_button_preference.released.connect(self._show_preference_data)
 
         # info message.
         self.pyvista_widget.message.connect(self.write_info)
@@ -1031,7 +1028,6 @@ class QtDraw(Window):
         self.pyvista_widget.save_current()
         self.pref_dialog = PreferenceDialog(self.pyvista_widget, self)
         status = self.pref_dialog.exec()  # open as modal mode.
-        self.sender().setDown(False)  # reset push button.
 
         if status != QDialog.Accepted:
             self.pyvista_widget.restore()
@@ -1053,7 +1049,6 @@ class QtDraw(Window):
         """
         self.about_dialog = AboutDialog(self.pyvista_widget, self)
         self.about_dialog.exec()  # open as modal mode.
-        self.sender().setDown(False)  # reset push button.
 
     # ==================================================
     def _show_multipie(self):
@@ -1069,7 +1064,6 @@ class QtDraw(Window):
                 self.multipie_dialog = MultiPieDialog(self)
             else:
                 self.multipie_dialog.show()
-            self.sender().setDown(False)  # reset push button.
 
     # ==================================================
     def _show_status_data(self):
@@ -1181,7 +1175,6 @@ class QtDraw(Window):
         :meta private:
         """
         ret = QMessageBox.question(self, "", "Are you sure ?", QMessageBox.Cancel, QMessageBox.Ok)
-        self.sender().setDown(False)  # reset push button.
         if ret == QMessageBox.Ok:
             self.clear_data()
 
@@ -2625,7 +2618,7 @@ class QtDraw(Window):
             self.multipie_dialog = None
 
         self.pyvista_widget.add_multipie_status(tag)
-        self.misc_button_multipie.pressed.emit()
+        self.misc_button_multipie.released.emit()
 
     # ==================================================
     def mp_add_site(self, site, size=None, color=None, opacity=None):

@@ -16,7 +16,7 @@ dependencies = [
     "ipython",
     "pymatgen",
     "gcoreutils",
-    "multipie",
+    "multipie>=2",
     "playwright",
 ]
 dynamic = ["version"]
@@ -50,7 +50,7 @@ Issues = "https://github.com/CMT-MU/QtDraw/issues"
 
 [project.optional-dependencies]
 dev = [
-    "jupyter-book",
+    "jupyter-book<2",
     "ghp-import",
 ]
 

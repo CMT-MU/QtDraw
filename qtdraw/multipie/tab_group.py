@@ -224,7 +224,7 @@ class TabGroup(QWidget):
         self.combo_irrep2.currentTextChanged.connect(self.set_irrep_decomp)
         self.combo_irrep.currentTextChanged.connect(self.set_irrep_decomp)
 
-        self.button_harmonics_decomp.clicked.connect(self.show_harmonics_decomp)
+        self.button_harmonics_decomp.released.connect(self.show_harmonics_decomp)
 
         self.combo_harmonics1_type.currentTextChanged.connect(self.set_harm_list)
         self.combo_harmonics1_rank.currentTextChanged.connect(self.set_harm_list)
@@ -234,11 +234,11 @@ class TabGroup(QWidget):
         self.edit_find_wyckoff.returnPressed.connect(self.find_wyckoff_set)
 
         self.edit_ws_neighbor.returnPressed.connect(self.show_wyckoff_site)
-        self.button_wyckoff_bond.clicked.connect(self.show_wyckoff_bond)
+        self.button_wyckoff_bond.released.connect(self.show_wyckoff_bond)
 
-        self.button_atomic.clicked.connect(self.show_atomic)
+        self.button_atomic.released.connect(self.show_atomic)
 
-        self.button_response.clicked.connect(self.show_response)
+        self.button_response.released.connect(self.show_response)
 
     # ==================================================
     def set_irrep_list(self):

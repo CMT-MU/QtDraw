@@ -20,7 +20,6 @@ Drawings are associated with crystallographic symmetry operations provided by [M
   - `conv_qtdraw2 [ver1_file.qtdw]` : Convert Version 1 `.qtdw` file into this version (Version 2).
 
 - **Requirements**:
-  - This library requires [TeXLive](https://www.tug.org/texlive/) environment.
   - Symmetry operation supports are provided by [MultiPie](https://github.com/CMT-MU/MultiPie).
 
 - **See also**:

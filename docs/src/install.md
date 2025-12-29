@@ -4,8 +4,7 @@
 
 
 ## Requirements:
-- This library requires [TeXLive](https://www.tug.org/texlive/) environment.
-- Symmetry operation supports are provided by [MultiPie](https://github.com/CMT-MU/MultiPie).
+- [Optional] Symmetry operation supports are provided by [MultiPie](https://github.com/CMT-MU/MultiPie).
 
 ## Installation
 
@@ -13,7 +12,6 @@
 - Install Python
 - [MacOS or Linux] Add path for LaTeX and Python in .zshrc.
     ```bash
-    export PATH=/Library/TeX/texbin:$PATH
     export PATH=/opt/homebrew/opt/python@3.13/libexec/bin:$PATH
     ```
 - If a virtual environment (e.g. `~/.venv`) is used, set PATH to `.venv/bin` prior to global one as well.
@@ -24,9 +22,7 @@
     ```
 - [Windows] Install PowerShell & Python [https://www.python.jp/install/windows/install.html](https://www.python.jp/install/windows/install.html)
 
-- Install LaTeX: [TeX Live](https://www.tug.org/texlive/doc/texlive-ja/texlive-ja.pdf)
-
-2. Install relevant modules (all are installed just by installing qtdraw, thus this procedure can be skipped)
+1. Install relevant modules (all are installed just by installing qtdraw, thus this procedure can be skipped)
     ```bash
     $ pip install -U pip
     $ pip install Cython
@@ -42,10 +38,10 @@
     $ pip install black # format python and .qtdw files
     $ pip install pandas # need for pymatgen
     $ pip install pymatgen # to read .cif, .vesta, and .xsf files
-    $ pip install multipie # if use MultiPie extension
+    $ pip install "multipie>=2" # if use MultiPie extension
     ```
 
-3. Install [QtDraw](https://cmt-mu.github.io/QtDraw/)
+2. Install [QtDraw](https://cmt-mu.github.io/QtDraw/)
 
     ```bash
     $ pip install qtdraw
@@ -59,7 +55,7 @@
     sudo apt install libxcb-cursor0
     ```
 
-4. Associate QtDraw file (**.qtdw**) to the application
+3. Associate QtDraw file (**.qtdw**) to the application
 
     It is useful to associate with the following application with `.qtdw`, `.cif`, `.vesta`, and `.xsf` extensions.
 

@@ -78,11 +78,11 @@ class SubGroup(QWidget):
         self.combo_group_type.currentTextChanged.connect(self.set_group_type)
         self.combo_crystal_type.currentTextChanged.connect(self.set_crystal_type)
         self.combo_group.currentTextChanged.connect(self.set_group)
-        self.button_symmetry_operation.clicked.connect(self.show_symmetry_operation)
-        self.button_character_table.clicked.connect(self.show_character_table)
-        self.button_wyckoff_site.clicked.connect(self.show_wyckoff_site)
-        self.button_wyckoff_bond.clicked.connect(self.show_wyckoff_bond)
-        self.button_product_table.clicked.connect(self.show_product_table)
+        self.button_symmetry_operation.released.connect(self.show_symmetry_operation)
+        self.button_character_table.released.connect(self.show_character_table)
+        self.button_wyckoff_site.released.connect(self.show_wyckoff_site)
+        self.button_wyckoff_bond.released.connect(self.show_wyckoff_bond)
+        self.button_product_table.released.connect(self.show_product_table)
 
     # ==================================================
     def set_axis(self):

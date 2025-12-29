@@ -181,8 +181,8 @@ class TabBasis(QWidget):
         self.button_orbital_draw.clicked.connect(self.show_orbital)
         self.edit_vector_lc.returnPressed.connect(self.show_vector_lc)
         self.edit_orbital_lc.returnPressed.connect(self.show_orbital_lc)
-        self.button_vector_modulation.clicked.connect(self.create_vector_modulation)
-        self.button_orbital_modulation.clicked.connect(self.create_orbital_modulation)
+        self.button_vector_modulation.released.connect(self.create_vector_modulation)
+        self.button_orbital_modulation.released.connect(self.create_orbital_modulation)
 
     # ==================================================
     def set_site(self):
