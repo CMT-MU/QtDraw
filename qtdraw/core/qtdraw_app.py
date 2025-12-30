@@ -5,7 +5,6 @@ This module provides application of QtDraw.
 """
 
 import os
-import copy
 import warnings
 from pathlib import Path
 import logging
@@ -2806,7 +2805,7 @@ class QtDraw(Window):
             type (str, optional): type of vector, Q/G/T/M.
 
         Returns:
-            - (dict) -- list of vector SAMB, {samb_type: [str]}.
+            - (dict) -- list of vector SAMB, Dict[samb_type, [str] ].
         """
         if self._check_multipie():
             return
@@ -2859,7 +2858,7 @@ class QtDraw(Window):
             rank (int or str, optional): rank.
 
         Returns:
-            - (list) -- list of orbital SAMB, [str].
+            - (dict) -- list of orbital SAMB, Dict[samb_type, [str] ].
         """
         if self._check_multipie():
             return

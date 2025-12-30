@@ -35,7 +35,6 @@ class SubGroup(QWidget):
         self.combo_group_type = Combo(parent, self._type_list.keys())
         self.combo_crystal_type = Combo(parent, parent._crystal_list.keys())
         self.combo_group = Combo(parent, [])
-        label_assoc_group = Label(parent, text="Associated Group (PG/SG/MPG/MSG)", bold=True)
         self.label_pg_name = Label(parent, text="")
         self.label_sg_name = Label(parent, text="")
         self.label_mpg_name = Label(parent, text="")
@@ -58,7 +57,6 @@ class SubGroup(QWidget):
         layout.addWidget(self.combo_crystal_type)
         layout.addWidget(self.combo_group_type)
         layout.addWidget(self.combo_group)
-        layout.addWidget(label_assoc_group)
         layout.addWidget(self.label_pg_name)
         layout.addWidget(self.label_sg_name)
         layout.addWidget(self.label_mpg_name)
@@ -128,11 +126,19 @@ class SubGroup(QWidget):
 
     # ==================================================
     def set_group_name(self):
+        d = {"PG": 0, "SG": 1, "MPG": 2, "MSG": 3}
         name = self.parent._get_group_name()
-        self.label_pg_name.setText("  " + name["PG"])
-        self.label_sg_name.setText("  " + name["SG"])
-        self.label_mpg_name.setText("  " + name["MPG"])
-        self.label_msg_name.setText("  " + name["MSG"])
+        name = [
+            "&nbsp;<b>PG:</b>&nbsp;" + name["PG"],
+            "&nbsp;<b>SG:</b>&nbsp;" + name["SG"],
+            "&nbsp;<b>MPG:</b>&nbsp;" + name["MPG"],
+            "&nbsp;<b>MSG:</b>&nbsp;" + name["MSG"],
+        ]
+        name[d[self.parent._type]] = name[d[self.parent._type]].replace(r"</b>", "") + "</b>"
+        self.label_pg_name.setText(name[0])
+        self.label_sg_name.setText(name[1])
+        self.label_mpg_name.setText(name[2])
+        self.label_msg_name.setText(name[3])
 
     # ==================================================
     def show_symmetry_operation(self):

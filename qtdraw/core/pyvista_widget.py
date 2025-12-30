@@ -572,11 +572,10 @@ class PyVistaWidget(QtInteractor):
 
         if shape is not None:
             row_data["shape"] = shape
-        if surface is not None:
-            if surface == "":
-                row_data["surface"] = row_data["shape"]
-            else:
-                row_data["surface"] = surface
+        if surface is None or surface == "":
+            row_data["surface"] = row_data["shape"]
+        else:
+            row_data["surface"] = surface
         if size is not None:
             row_data["size"] = convert_to_str(size)
         if range is not None:

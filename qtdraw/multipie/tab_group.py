@@ -174,7 +174,7 @@ class TabGroup(QWidget):
         self.combo_response_type = Combo(parent, ["Q", "G", "T", "M"])
         label_response_type = Label(parent, text="type")
         label_response_rank = Label(parent, text="rank")
-        self.combo_response_rank = Combo(parent, map(str, range(1, 5)))
+        self.combo_response_rank = Combo(parent, map(str, range(5)))
 
         panel13 = QWidget(parent)
         layout13 = Layout(panel13)
