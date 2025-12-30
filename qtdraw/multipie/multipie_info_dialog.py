@@ -339,7 +339,7 @@ def show_response(group, rank, r_type, parent):
     Returns:
         - (InfoPanel) -- response tensor panel.
     """
-    rank_dict = {0: "s", 1: "p", 2: "d", 3: "f"}
+    rank_dict = {0: "s", 1: "p", 2: "d", 3: "f", 4: "g"}
     d = group.response_tensor_all(r_type)
     lst0 = group.active_multipole
     lst = {}
