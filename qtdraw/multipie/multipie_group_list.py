@@ -1543,7 +1543,7 @@ group_list = {  # crystal: "PG/SG/MPG/MSG": [tag_list, name_list].
     },
     "tetragonal": {
         "PG": [
-            ["PG:9", "PG:10", "PG:11", "PG:12", "PG:13", "PG:14", "PG:15", "PG:33", "PG:38", "PG:39", "PG:40"],
+            ["PG:9", "PG:10", "PG:11", "PG:12", "PG:13", "PG:14", "PG:15", "PG:33"],
             [
                 "#9: C4 (4)",
                 "#10: S4 (-4)",
@@ -1553,9 +1553,6 @@ group_list = {  # crystal: "PG/SG/MPG/MSG": [tag_list, name_list].
                 "#14: D2d (-42m)",
                 "#15: D4h (4/mmm)",
                 "#33: D2d-1 (-42m)",
-                "#38: C4-c (4)",
-                "#39: S4-c (-4)",
-                "#40: C4h-c (4/m)",
             ],
         ],
         "SG": [
@@ -2935,7 +2932,7 @@ group_list = {  # crystal: "PG/SG/MPG/MSG": [tag_list, name_list].
     },
     "trigonal": {
         "PG": [
-            ["PG:16", "PG:17", "PG:18", "PG:19", "PG:20", "PG:34", "PG:35", "PG:36", "PG:41", "PG:42"],
+            ["PG:16", "PG:17", "PG:18", "PG:19", "PG:20", "PG:34", "PG:35", "PG:36"],
             [
                 "#16: C3 (3)",
                 "#17: C3i (-3)",
@@ -2945,8 +2942,6 @@ group_list = {  # crystal: "PG/SG/MPG/MSG": [tag_list, name_list].
                 "#34: D3-1 (32)",
                 "#35: C3v-1 (3m)",
                 "#36: D3d-1 (-3m)",
-                "#41: C3-c (3)",
-                "#42: C3i-c (-3)",
             ],
         ],
         "SG": [
@@ -3290,7 +3285,7 @@ group_list = {  # crystal: "PG/SG/MPG/MSG": [tag_list, name_list].
     },
     "hexagonal": {
         "PG": [
-            ["PG:21", "PG:22", "PG:23", "PG:24", "PG:25", "PG:26", "PG:27", "PG:37", "PG:43", "PG:44", "PG:45"],
+            ["PG:21", "PG:22", "PG:23", "PG:24", "PG:25", "PG:26", "PG:27", "PG:37"],
             [
                 "#21: C6 (6)",
                 "#22: C3h (-6)",
@@ -3300,9 +3295,6 @@ group_list = {  # crystal: "PG/SG/MPG/MSG": [tag_list, name_list].
                 "#26: D3h (-6m2)",
                 "#27: D6h (6/mmm)",
                 "#37: D3h-1 (-6m2)",
-                "#43: C6-c (6)",
-                "#44: C3h-c (-6)",
-                "#45: C6h-c (6/m)",
             ],
         ],
         "SG": [
@@ -3788,16 +3780,8 @@ group_list = {  # crystal: "PG/SG/MPG/MSG": [tag_list, name_list].
     },
     "cubic": {
         "PG": [
-            ["PG:28", "PG:29", "PG:30", "PG:31", "PG:32", "PG:46", "PG:47"],
-            [
-                "#28: T (23)",
-                "#29: Th (m-3)",
-                "#30: O (432)",
-                "#31: Td (-43m)",
-                "#32: Oh (m-3m)",
-                "#46: T-c (23)",
-                "#47: Th-c (m-3)",
-            ],
+            ["PG:28", "PG:29", "PG:30", "PG:31", "PG:32"],
+            ["#28: T (23)", "#29: Th (m-3)", "#30: O (432)", "#31: Td (-43m)", "#32: Oh (m-3m)"],
         ],
         "SG": [
             [
@@ -4256,12 +4240,6 @@ group_list_index = {  # tag: (crystal, type, index).
     "PG:15": ("tetragonal", "PG", 6),
     "D2d-1": ("tetragonal", "PG", 7),
     "PG:33": ("tetragonal", "PG", 7),
-    "C4-c": ("tetragonal", "PG", 8),
-    "PG:38": ("tetragonal", "PG", 8),
-    "S4-c": ("tetragonal", "PG", 9),
-    "PG:39": ("tetragonal", "PG", 9),
-    "C4h-c": ("tetragonal", "PG", 10),
-    "PG:40": ("tetragonal", "PG", 10),
     "C3": ("trigonal", "PG", 0),
     "PG:16": ("trigonal", "PG", 0),
     "C3i": ("trigonal", "PG", 1),
@@ -4278,10 +4256,6 @@ group_list_index = {  # tag: (crystal, type, index).
     "PG:35": ("trigonal", "PG", 6),
     "D3d-1": ("trigonal", "PG", 7),
     "PG:36": ("trigonal", "PG", 7),
-    "C3-c": ("trigonal", "PG", 8),
-    "PG:41": ("trigonal", "PG", 8),
-    "C3i-c": ("trigonal", "PG", 9),
-    "PG:42": ("trigonal", "PG", 9),
     "C6": ("hexagonal", "PG", 0),
     "PG:21": ("hexagonal", "PG", 0),
     "C3h": ("hexagonal", "PG", 1),
@@ -4298,12 +4272,6 @@ group_list_index = {  # tag: (crystal, type, index).
     "PG:27": ("hexagonal", "PG", 6),
     "D3h-1": ("hexagonal", "PG", 7),
     "PG:37": ("hexagonal", "PG", 7),
-    "C6-c": ("hexagonal", "PG", 8),
-    "PG:43": ("hexagonal", "PG", 8),
-    "C3h-c": ("hexagonal", "PG", 9),
-    "PG:44": ("hexagonal", "PG", 9),
-    "C6h-c": ("hexagonal", "PG", 10),
-    "PG:45": ("hexagonal", "PG", 10),
     "T": ("cubic", "PG", 0),
     "PG:28": ("cubic", "PG", 0),
     "Th": ("cubic", "PG", 1),
@@ -4314,10 +4282,6 @@ group_list_index = {  # tag: (crystal, type, index).
     "PG:31": ("cubic", "PG", 3),
     "Oh": ("cubic", "PG", 4),
     "PG:32": ("cubic", "PG", 4),
-    "T-c": ("cubic", "PG", 5),
-    "PG:46": ("cubic", "PG", 5),
-    "Th-c": ("cubic", "PG", 6),
-    "PG:47": ("cubic", "PG", 6),
     "C1^1": ("triclinic", "SG", 0),
     1: ("triclinic", "SG", 0),
     "SG:1": ("triclinic", "SG", 0),

@@ -15,6 +15,8 @@ def create_group_list():
         dic[c] = {"PG": [], "SG": [], "MPG": [], "MSG": []}
         for i in Group.global_info()["id_set"]["PG"]["crystal"][c]:
             info = Group(i).info
+            if info.tag.count("-c"):
+                continue
             tag = f"#{info.no}: {info.tag} ({info.international})"
             dic[c]["PG"].append((i, tag))
         for i in Group.global_info()["id_set"]["SG"]["crystal"][c]:
