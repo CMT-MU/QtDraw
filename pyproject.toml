@@ -1,21 +1,17 @@
 [build-system]
-requires = ["setuptools"]
+requires = ["setuptools", "Cython"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "qtdraw"
 dependencies = [
     "numpy",
-    "Cython",
     "matplotlib",
     "PySide6",
     "pyvista",
     "pyvistaqt",
     "click",
-    "black",
-    "ipython",
     "pymatgen",
-    "gcoreutils",
     "multipie>=2",
     "playwright",
 ]
@@ -25,12 +21,13 @@ authors = [
   { name="Hiroaki Kusunose", email="hiroaki.kusunose@gmail.com" },
 ]
 description = "3D drawing tool for molecules and crystals based on Pyvista and PySide6."
-readme = "docs/README.md"
+readme = {file = "docs/README.md", content-type = "text/markdown"}
 keywords = ['pyvista', 'PySide6', 'multipie']
-license = {text = "MIT"}
+license = {file = "LICENSE"}
 classifiers = [
     'Intended Audience :: Science/Research',
-    'Topic :: Scientific/Engineering :: Information Analysis',
+    'Topic :: Scientific/Engineering :: Visualization',
+    'Framework :: Qt',
     'License :: OSI Approved :: MIT License',
     'Operating System :: Microsoft :: Windows',
     'Operating System :: POSIX',
@@ -46,10 +43,12 @@ Issues = "https://github.com/CMT-MU/QtDraw/issues"
 
 [project.scripts]
 "qtdraw" = "qtdraw.scripts.qtdraw:cmd"
-"conv_qtdraw2" = "qtdraw.scripts.conv_qtdraw2:cmd"
+"conv_qtdraw3" = "qtdraw.scripts.conv_qtdraw3:cmd"
 
 [project.optional-dependencies]
 dev = [
+    "black",
+    "ipython",
     "jupyter-book<2",
     "ghp-import",
 ]
