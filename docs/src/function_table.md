@@ -201,6 +201,7 @@
 | set_property | Set status and preference. |
 | update_status | Update status. |
 | update_preference | Update preference. |
+| add_multipie_status | Add default MultiPie status. |
 | reload | Reload data and draw object. |
 | refresh | Refresh widget setting. |
 | a1 | Get a1 unit vector. |
