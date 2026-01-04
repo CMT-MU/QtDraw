@@ -476,6 +476,7 @@ class TabBasis(QWidget):
         self.parent._qtdraw.set_range([0, 0, 0], upper)
         self.parent._qtdraw.set_repeat(True)
         self.parent._qtdraw.set_nonrepeat()
+        self.parent._qtdraw.set_repeat(False)
         plot_vector_cluster(
             self.parent, full_site, obj, X, wp=wp, label=site_idx, length=length, width=width, color=color, opacity=opacity
         )
@@ -501,6 +502,7 @@ class TabBasis(QWidget):
         self.parent._qtdraw.set_range([0, 0, 0], upper)
         self.parent._qtdraw.set_repeat(True)
         self.parent._qtdraw.set_nonrepeat()
+        self.parent._qtdraw.set_repeat(False)
         plot_orbital_cluster(self.parent, full_site, obj, X, wp=wp, label=site_idx, size=size, color=color, opacity=opacity)
 
     # ==================================================
