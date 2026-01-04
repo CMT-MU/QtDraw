@@ -56,6 +56,8 @@ dev = [
 [tool.setuptools.dynamic]
 version = {attr = "qtdraw.__version__"}
 
+[tool.setuptools]
+include-package-data = true
 [tool.setuptools.packages.find]
 include = ['qtdraw', 'qtdraw.*']
 exclude = ["build", "tests"]
