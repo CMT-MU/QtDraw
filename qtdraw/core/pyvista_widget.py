@@ -2534,6 +2534,7 @@ class PyVistaWidget(QtInteractor):
         """
         Clear Data.
         """
+        self._tab_group_view.close()
         self.reload()
         self.data_removed.emit()
 

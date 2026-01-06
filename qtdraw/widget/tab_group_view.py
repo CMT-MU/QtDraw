@@ -78,5 +78,5 @@ class TabGroupView(QDialog):
         :meta private:
         """
         for view in self.view.values():
-            view.closeEvent(event)
+            view.close()
         super().closeEvent(event)

@@ -1182,7 +1182,7 @@ class QtDraw(Window):
         """
         Clear data (actor and data).
         """
-        self.pyvista_widget.reload()
+        self.pyvista_widget.clear_data()
         self._update_panel()
         if self.multipie_dialog is not None:
             self.multipie_dialog.clear_data()
