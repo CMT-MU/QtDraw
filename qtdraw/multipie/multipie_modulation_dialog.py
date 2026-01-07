@@ -30,7 +30,7 @@ class ModulationDialog(QDialog):
         self.parent = parent
         self.parent.parent._pvw.save_current()
         self._vec = vec
-        self._var = var
+        self._var = {"Q": var["Q"] + var["G"], "T": var["T"] + var["M"]}
 
         title = "Modulation - vector" if vec else "Modulation - orbital"
         self.setWindowTitle(title)
@@ -82,7 +82,7 @@ class ModulationDialog(QDialog):
         button_cancel.clicked.connect(self.reject_data)
         button_ok.clicked.connect(self.accept_data)
         self.edit_range.returnPressed.connect(self.create_modulation)
-        self.check_magnetic.checkStateChanged.connect(self.set_view)
+        self.check_magnetic.toggled.connect(self.set_view)
 
         self.show()
 
@@ -90,9 +90,12 @@ class ModulationDialog(QDialog):
     def create_panel(self):
         magnetic = self.check_magnetic.is_checked()
         if magnetic:
-            var = self._var["T"] + self._var["M"]
+            var = self._var["T"]
         else:
-            var = self._var["Q"] + self._var["G"]
+            var = self._var["Q"]
+
+        if len(var) == 0:
+            return None
 
         mod_panel = copy.deepcopy(modulation_panel)
         mod_panel["basis"] = ("combo", var, var[0])
@@ -105,10 +108,15 @@ class ModulationDialog(QDialog):
         return view
 
     # ==================================================
-    def set_view(self):
-        self.layout.removeWidget(self.view)
-        self.view = self.create_panel()
-        self.layout.addWidget(self.view, 0, 0, 1, 4)
+    def set_view(self, magnetic):
+        view = self.create_panel()
+        if view is None:
+            if magnetic:
+                self.check_magnetic.setChecked(False)
+        else:
+            self.layout.removeWidget(self.view)
+            self.view = view
+            self.layout.addWidget(self.view, 0, 0, 1, 4)
 
     # ==================================================
     def modulation_range(self):
