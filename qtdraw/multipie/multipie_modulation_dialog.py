@@ -8,7 +8,7 @@ import copy
 from PySide6.QtWidgets import QDialog
 from PySide6.QtCore import Qt
 
-from qtdraw.widget.custom_widget import Layout, Button, LineEdit, Label
+from qtdraw.widget.custom_widget import Layout, Button, LineEdit, Label, Check
 from qtdraw.widget.group_model import GroupModel
 from qtdraw.widget.group_view import GroupView
 
@@ -30,16 +30,11 @@ class ModulationDialog(QDialog):
         self.parent = parent
         self.parent.parent._pvw.save_current()
         self._vec = vec
-        mod_panel = copy.deepcopy(modulation_panel)
-        mod_panel["basis"] = ("combo", var, var[0])
+        self._var = var
 
         title = "Modulation - vector" if vec else "Modulation - orbital"
         self.setWindowTitle(title)
         self.resize(600, 300)
-
-        layout = Layout(self)
-        layout.setContentsMargins(10, 10, 10, 10)
-        layout.setSpacing(5)
 
         # widget.
         button_add = Button(self, text="Add")
@@ -49,6 +44,7 @@ class ModulationDialog(QDialog):
         button_ok = Button(self, text="OK")
         label_repeat = Label(self, text="repeat")
         self.edit_range = LineEdit(self, text="[1,1,1]", validator=("list_int", {"shape": (3,)}))
+        self.check_magnetic = Check(self, "magnetic")
 
         # modulation data.
         if modulation_range.count(":"):
@@ -56,24 +52,28 @@ class ModulationDialog(QDialog):
         else:
             modulation = modulation_range
             rng = "[1,1,1]"
-        mod_list = self.parent._parse_modulation(modulation)
-        self.mod_list = [[str(no), *i] for no, i in enumerate(mod_list)]
 
-        model = GroupModel(self, "modulation", mod_panel)
-        model.set_data(self.mod_list)
-        self.view = GroupView(self, model)
-        self.view.customContextMenuRequested.disconnect()
         self.edit_range.setText(rng)
 
+        mod_list, is_magnetic = self.parent.data._parse_modulation(modulation)
+        self.mod_list = [[str(no), *i] for no, i in enumerate(mod_list)]
+        self.check_magnetic.setChecked(is_magnetic)
+        self.view = self.create_panel()
+
         # main layout.
-        layout.addWidget(self.view, 0, 0, 1, 4)
-        layout.addWidget(button_add, 1, 0, 1, 1)
-        layout.addWidget(button_remove, 1, 1, 1, 1)
-        layout.addWidget(label_repeat, 2, 0, 1, 1, Qt.AlignRight)
-        layout.addWidget(self.edit_range, 2, 1, 1, 2)
-        layout.addWidget(button_reset, 2, 3, 1, 1)
-        layout.addWidget(button_cancel, 3, 2, 1, 1)
-        layout.addWidget(button_ok, 3, 3, 1, 1)
+        self.layout = Layout(self)
+        self.layout.setContentsMargins(10, 10, 10, 10)
+        self.layout.setSpacing(5)
+
+        self.layout.addWidget(self.view, 0, 0, 1, 4)
+        self.layout.addWidget(self.check_magnetic, 1, 0, 1, 1)
+        self.layout.addWidget(button_add, 1, 1, 1, 1)
+        self.layout.addWidget(button_remove, 1, 2, 1, 1)
+        self.layout.addWidget(label_repeat, 2, 0, 1, 1, Qt.AlignRight)
+        self.layout.addWidget(self.edit_range, 2, 1, 1, 2)
+        self.layout.addWidget(button_reset, 2, 3, 1, 1)
+        self.layout.addWidget(button_cancel, 3, 2, 1, 1)
+        self.layout.addWidget(button_ok, 3, 3, 1, 1)
 
         # connections.
         button_add.clicked.connect(self.add_data)
@@ -82,8 +82,33 @@ class ModulationDialog(QDialog):
         button_cancel.clicked.connect(self.reject_data)
         button_ok.clicked.connect(self.accept_data)
         self.edit_range.returnPressed.connect(self.create_modulation)
+        self.check_magnetic.checkStateChanged.connect(self.set_view)
 
         self.show()
+
+    # ==================================================
+    def create_panel(self):
+        magnetic = self.check_magnetic.is_checked()
+        if magnetic:
+            var = self._var["T"] + self._var["M"]
+        else:
+            var = self._var["Q"] + self._var["G"]
+
+        mod_panel = copy.deepcopy(modulation_panel)
+        mod_panel["basis"] = ("combo", var, var[0])
+
+        model = GroupModel(self, "modulation", mod_panel)
+        model.set_data(self.mod_list)
+        view = GroupView(self, model)
+        view.customContextMenuRequested.disconnect()
+
+        return view
+
+    # ==================================================
+    def set_view(self):
+        self.layout.removeWidget(self.view)
+        self.view = self.create_panel()
+        self.layout.addWidget(self.view, 0, 0, 1, 4)
 
     # ==================================================
     def modulation_range(self):

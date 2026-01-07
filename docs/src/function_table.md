@@ -99,7 +99,7 @@
 | load | Load all info. |
 | save | save all info. |
 | _check_multipie |  |
-| mp_set_group | MultiPie: Set point/sapce group. |
+| mp_set_group | MultiPie: Set group. |
 | mp_add_site | MultiPie: Add equivalent sites. |
 | mp_add_bond | MultiPie: Add equivalent bonds. |
 | mp_add_vector | MultiPie: Add transformed vectors at equivalent sites or bonds. |
@@ -201,7 +201,6 @@
 | set_property | Set status and preference. |
 | update_status | Update status. |
 | update_preference | Update preference. |
-| add_multipie_status | Add default MultiPie status. |
 | reload | Reload data and draw object. |
 | refresh | Refresh widget setting. |
 | a1 | Get a1 unit vector. |
@@ -291,6 +290,22 @@
 | set_isosurface_data | Set isosurface data. |
 | plot_orbital_from_data | Plot orbital from data. |
 | plot_stream_from_data | Plot stream from data (vectors in cartesian coordinate). |
+| mp_set_group | MultiPie: Set group or group status. |
+| mp_add_site | MultiPie: Add equivalent sites. |
+| mp_add_bond | MultiPie: Add equivalent bonds. |
+| mp_add_vector | MultiPie: Add transformed vectors at equivalent sites or bonds. |
+| mp_add_orbital | MultiPie: Add transformed orbitals at equivalent sites or bonds. |
+| mp_add_bond_definition | MultiPie: Create bond definition. |
+| mp_site_samb_list | MultiPie: Create site SAMB list. |
+| mp_add_site_samb | MultiPie: Add site SAMB. |
+| mp_bond_samb_list | MultiPie: Create bond SAMB list. |
+| mp_add_bond_samb | MultiPie: Add bond SAMB. |
+| mp_vector_samb_list | MultiPie: Create vector SAMB list. |
+| mp_add_vector_samb | MultiPie: Add vector SAMB. |
+| mp_add_vector_samb_modulation | MultiPie: Add vector SAMB with modulation. |
+| mp_orbital_samb_list | MultiPie: Create orbital SAMB. |
+| mp_add_orbital_samb | MultiPie: Add orbital SAMB. |
+| mp_add_orbital_samb_modulation | MultiPie: Add orbital SAMB with modulation. |
 
 
 ## <div class='my-heading' style='color: darkgreen;'>dialog_preference.py
@@ -879,7 +894,46 @@
 | closeEvent |  |
 | set_data |  |
 | clear_data |  |
-| get_status |  |
+
+
+## <div class='my-heading' style='color: darkgreen;'>multipie_data.py
+
+### <div class='my-heading' style='color: royalblue;'>MultiPieData
+
+| Function | Summary |
+|--------|----------|
+| MultiPieData | MultiPie data manager. |
+| group |  |
+| ps_group |  |
+| p_group |  |
+| mp_group |  |
+| _get_group_list |  |
+| _get_group_name |  |
+| _type_list |  |
+| set_crystal_type |  |
+| set_group_type |  |
+| set_group |  |
+| set_status |  |
+| set_axis |  |
+| clear_data |  |
+| _set_counter |  |
+| _get_index_list |  |
+| set_group_find_wyckoff |  |
+| add_site |  |
+| add_bond |  |
+| add_vector |  |
+| add_orbital |  |
+| add_bond_definition |  |
+| site_samb_list |  |
+| add_site_samb |  |
+| bond_samb_list |  |
+| add_bond_samb |  |
+| vector_samb_list |  |
+| add_vector_samb |  |
+| add_vector_samb_modulation |  |
+| orbital_samb_list |  |
+| add_orbital_samb |  |
+| add_orbital_samb_modulation |  |
 | _parse_modulation | Parse modulation list. |
 | _parse_range | Parse range. |
 
@@ -891,19 +945,10 @@
 | Function | Summary |
 |--------|----------|
 | MultiPieDialog | MultiPie dialog. |
-| group |  |
-| ps_group |  |
-| p_group |  |
-| mp_group |  |
 | set_title |  |
-| _get_group_list |  |
-| _get_group_name |  |
 | set_data |  |
 | clear_data |  |
 | closeEvent |  |
-| _set_counter |  |
-| get_status |  |
-| _get_index_list |  |
 
 
 ## <div class='my-heading' style='color: darkgreen;'>multipie_modulation_dialog.py
@@ -913,6 +958,8 @@
 | Function | Summary |
 |--------|----------|
 | ModulationDialog |  |
+| create_panel |  |
+| set_view |  |
 | modulation_range |  |
 | create_modulation |  |
 | add_data |  |
@@ -929,7 +976,6 @@
 | Function | Summary |
 |--------|----------|
 | SubGroup |  |
-| set_axis |  |
 | set_crystal_type |  |
 | set_group_type |  |
 | set_group |  |
@@ -942,7 +988,6 @@
 | closeEvent |  |
 | set_data |  |
 | clear_data |  |
-| get_status |  |
 
 
 ## <div class='my-heading' style='color: darkgreen;'>tab_group.py
@@ -966,7 +1011,6 @@
 | closeEvent |  |
 | set_data |  |
 | clear_data |  |
-| get_status |  |
 
 
 ### <div class='my-heading' style='color: royalblue;'>Global function
@@ -1002,7 +1046,6 @@
 | closeEvent |  |
 | set_data |  |
 | clear_data |  |
-| get_status |  |
 
 
 ## <div class='my-heading' style='color: darkgreen;'>multipie_info_dialog.py

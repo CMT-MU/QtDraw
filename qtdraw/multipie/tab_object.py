@@ -8,7 +8,6 @@ from PySide6.QtWidgets import QWidget
 from PySide6.QtCore import Qt
 
 from qtdraw.widget.custom_widget import Label, Layout, Combo, VSpacer, HBar, LineEdit, Check
-from qtdraw.multipie.multipie_plot import plot_cell_site, plot_cell_bond, plot_cell_vector, plot_cell_multipole
 
 
 # ==================================================
@@ -17,6 +16,7 @@ class TabObject(QWidget):
     def __init__(self, parent):
         super().__init__(parent)
         self.parent = parent
+        self.data = parent._data
 
         layout = Layout(self)
         layout.setContentsMargins(10, 10, 10, 10)
@@ -98,48 +98,29 @@ class TabObject(QWidget):
         self.edit_orbital.returnPressed.connect(self.show_orbital)
 
     # ==================================================
-    def show_site(self, size=None, color=None, opacity=None):
+    def show_site(self):
         site = self.edit_site.raw_text()
-        sites, mp, wp = self.parent.group.create_cell_site(site)
-        plot_cell_site(self.parent, sites, wp=wp, label=mp, size=size, color=color, opacity=opacity)
+        self.data.add_site(site)
 
     # ==================================================
-    def show_bond(self, width=None, color=None, color2=None, opacity=None):
+    def show_bond(self):
         bond = self.edit_bond.raw_text()
-        bonds, mp, wp = self.parent.group.create_cell_bond(bond)
-        plot_cell_bond(self.parent, bonds, wp=wp, label=mp, width=width, color=color, color2=color2, opacity=opacity)
+        self.data.add_bond(bond)
 
     # ==================================================
-    def show_vector(self, length=None, width=None, color=None, opacity=None):
+    def show_vector(self):
         vector = self.edit_vector.raw_text()
         vector_type = self.combo_vector_type.currentText()
         cartesian = self.check_vector_cart.is_checked()
         av = self.check_vector_av.is_checked()
-        vectors, sites, mp, wp = self.parent.group.create_cell_vector(vector, vector_type, av, cartesian)
-        plot_cell_vector(
-            self.parent,
-            vectors,
-            sites,
-            vector_type,
-            wp=wp,
-            label=mp,
-            average=av,
-            cartesian=cartesian,
-            length=length,
-            width=width,
-            color=color,
-            opacity=opacity,
-        )
+        self.data.add_vector(vector, vector_type, cartesian, av)
 
     # ==================================================
-    def show_orbital(self, size=None, color=None, opacity=None):
+    def show_orbital(self):
         orbital = self.edit_orbital.raw_text()
         orbital_type = self.combo_orbital_type.currentText()
         av = self.check_orbital_av.is_checked()
-        orbitals, sites, mp, wp = self.parent.group.create_cell_multipole(orbital, orbital_type, av)
-        plot_cell_multipole(
-            self.parent, orbitals, sites, orbital_type, wp=wp, label=mp, average=av, size=size, color=color, opacity=opacity
-        )
+        self.data.add_orbital(orbital, orbital_type, av)
 
     # ==================================================
     def closeEvent(self, event):
@@ -147,8 +128,8 @@ class TabObject(QWidget):
         super().closeEvent(event)
 
     # ==================================================
-    def set_data(self, data):
-        d = data["object"]
+    def set_data(self):
+        d = self.data.status["object"]
         self.edit_site.setText(d["site"])
         self.edit_bond.setText(d["bond"])
         self.combo_vector_type.setCurrentText(d["vector_type"])
@@ -162,18 +143,3 @@ class TabObject(QWidget):
     # ==================================================
     def clear_data(self):
         pass
-
-    # ==================================================
-    def get_status(self):
-        d = {
-            "site": self.edit_site.raw_text(),
-            "bond": self.edit_bond.raw_text(),
-            "vector_type": self.combo_vector_type.currentText(),
-            "vector": self.edit_vector.raw_text(),
-            "vector_average": self.check_vector_av.is_checked(),
-            "vector_cartesian": self.check_vector_cart.is_checked(),
-            "orbital_type": self.combo_orbital_type.currentText(),
-            "orbital": self.edit_orbital.raw_text(),
-            "orbital_average": self.check_orbital_av.is_checked(),
-        }
-        return {"object": d}

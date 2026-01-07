@@ -9,7 +9,6 @@ import copy
 from qtdraw.core.pyvista_widget_setting import default_status, default_preference
 from qtdraw.core.qtdraw_info import __version__
 
-from qtdraw.multipie.multipie_group_list import group_list_index
 from qtdraw.multipie.multipie_setting import default_status
 
 
@@ -337,14 +336,7 @@ def get_multipie(dic):
     multipie = copy.deepcopy(default_status)
 
     if "group" in old.keys():
-        group = old["group"]["group"]
-        crystal, tp, idx = group_list_index[group]
-
-        multipie["general"] = {
-            "crystal": crystal,
-            "type": tp,
-            "index": idx,
-        }
+        multipie["group"]["tag"] = old["group"]["group"]
 
     if "object" in old.keys():
         for k in ["site", "bond", "vector_type", "vector", "orbital_type", "orbital"]:

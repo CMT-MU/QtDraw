@@ -17,7 +17,6 @@ from qtdraw.core.pyvista_widget_setting import widget_detail as detail
 from qtdraw.core.qtdraw_info import __version__
 from qtdraw.parser.element import element_color
 from qtdraw.parser.vesta import parse_vesta, create_structure_vesta
-from qtdraw.multipie.multipie_group_list import group_list_index
 from qtdraw.multipie.multipie_setting import default_status as multipie_default
 
 
@@ -198,12 +197,7 @@ def parse_material(filename):
     crystal = sga.get_crystal_system()
 
     multipie = copy.deepcopy(multipie_default)
-    crystal, tp, idx = group_list_index[sg_no]
-    multipie["general"] = {
-        "crystal": crystal,
-        "type": tp,
-        "index": idx,
-    }
+    multipie["group"]["tag"] = f"SG:{sg_no}"
     status = copy.deepcopy(default_status)
     status.update({"model": name, "crystal": crystal, "cell": cell, "clip": False, "multipie": multipie})
     preference = copy.deepcopy(default_preference)

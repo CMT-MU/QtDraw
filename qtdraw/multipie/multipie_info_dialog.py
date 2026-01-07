@@ -267,7 +267,7 @@ def show_harmonics_decomp(group, basis, rank, head, parent):
     decomp = harmonics_decomposition(basis, pg, rank, head)
 
     name = head + "_harmonics decomposition to " + basis
-    header = [pg, " \u21d2 " + basis]
+    header = [pg, basis]
 
     data = []
     for h, d in decomp:

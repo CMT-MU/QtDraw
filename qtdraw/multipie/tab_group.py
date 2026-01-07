@@ -21,6 +21,7 @@ class TabGroup(QWidget):
     def __init__(self, parent):
         super().__init__(parent)
         self.parent = parent
+        self.data = parent._data
 
         layout = Layout(self)
         layout.setContentsMargins(10, 10, 10, 10)
@@ -58,7 +59,7 @@ class TabGroup(QWidget):
         label_harmonics_rank = Label(parent, text="rank")
         self.combo_harmonics_rank = Combo(parent, map(str, range(12)))
         label_harmonics_decomp = Label(parent, text="target PG")
-        point_group_all_list = sum([i["PG"] for i in self.parent._crystal_list.values()], [])
+        point_group_all_list = sum([i["PG"] for i in self.data._crystal_list.values()], [])
         self.combo_harmonics_decomp = Combo(parent, point_group_all_list)
         self.button_harmonics_decomp = Button(parent, text="decompose")
 
@@ -242,7 +243,7 @@ class TabGroup(QWidget):
 
     # ==================================================
     def set_irrep_list(self):
-        group = self.parent.p_group
+        group = self.data.p_group
         lst = list(group.character["table"].keys())
         self.combo_irrep1.set_item(lst)
         self.combo_irrep2.set_item(lst)
@@ -251,16 +252,16 @@ class TabGroup(QWidget):
 
     # ==================================================
     def set_harm_list(self):
-        group = self.parent.p_group
+        group = self.data.p_group
         rank = int(self.combo_harmonics1_rank.currentText())
         head = self.combo_harmonics1_type.currentText()
-        lst, self._harm_list = self.parent._get_index_list(group.harmonics.select(l=rank, X=head).keys())
+        lst, self._harm_list = self.data._get_index_list(group.harmonics.select(l=rank, X=head).keys())
         self.combo_harmonics1.set_item(lst)
         self.combo_harmonics1.currentIndexChanged.emit(0)
 
     # ==================================================
     def set_wyckoff_list(self):
-        group = self.parent.ps_group
+        group = self.data.ps_group
 
         self.combo_wyckoff_site.set_item(group.wyckoff["site"].keys())
         self.combo_wyckoff_bond.set_item(group.wyckoff["bond"].keys())
@@ -279,7 +280,7 @@ class TabGroup(QWidget):
             )
             return s
 
-        pg = self.parent.p_group
+        pg = self.data.p_group
 
         irrep1 = self.combo_irrep1.currentText()
         irrep2 = self.combo_irrep2.currentText()
@@ -295,7 +296,7 @@ class TabGroup(QWidget):
 
     # ==================================================
     def show_harmonics_decomp(self):
-        group = self.parent.p_group
+        group = self.data.p_group
         head = self.combo_harmonics_type.currentText()
         rank = int(self.combo_harmonics_rank.currentText())
         basis = self.combo_harmonics_decomp.currentText()
@@ -304,7 +305,7 @@ class TabGroup(QWidget):
 
     # ==================================================
     def show_harmonics(self):
-        group = self.parent.p_group
+        group = self.data.p_group
         harm, comp = self._harm_list[self.combo_harmonics1.currentIndex()]
         check = self.check_harmonics1_latex.is_checked()
 
@@ -318,7 +319,7 @@ class TabGroup(QWidget):
 
     # ==================================================
     def show_wyckoff_site(self):
-        group = self.parent.ps_group
+        group = self.data.ps_group
         wp = self.combo_wyckoff_site.currentText()
 
         # plot sites.
@@ -326,7 +327,7 @@ class TabGroup(QWidget):
         mp = group.wyckoff["site"][wp]["mapping"]
         if len(sites) != len(mp):
             mp = mp * (len(sites) // len(mp))
-        plot_cell_site(self.parent, sites, wp=wp, label=mp)
+        plot_cell_site(self.data, sites, wp=wp, label=mp)
 
         # plot bonds.
         neighbor = self.edit_ws_neighbor.text()
@@ -344,11 +345,11 @@ class TabGroup(QWidget):
                     c = (t + h) / 2
                     v = h - t
                     bonds.append(np.concatenate([v, c]).tolist())
-                plot_cell_bond(self.parent, bonds, name=name)
+                plot_cell_bond(self.data, bonds, name=name)
 
     # ==================================================
     def show_wyckoff_bond(self):
-        group = self.parent.ps_group
+        group = self.data.ps_group
         wp = self.combo_wyckoff_bond.currentText()
 
         # plot bonds.
@@ -356,12 +357,13 @@ class TabGroup(QWidget):
         mp = group.wyckoff["bond"][wp]["mapping"]
         if len(bonds) != len(mp):
             mp = mp * (len(bonds) // len(mp))
-        plot_cell_bond(self.parent, bonds, wp=wp, label=mp)
+        plot_cell_bond(self.data, bonds, wp=wp, label=mp)
 
     # ==================================================
     def find_wyckoff_set(self):
-        group = self.parent.ps_group
+        group = self.data.ps_group
         text = self.edit_find_wyckoff.raw_text()
+        self.data.set_group_find_wyckoff(text)
 
         if text.count("[") == 2:
             wp, r = group.find_wyckoff_bond(text)
@@ -376,17 +378,17 @@ class TabGroup(QWidget):
 
     # ==================================================
     def show_atomic(self):
+        group = self.data.p_group
         head = self.combo_atomic_type.currentText()
         basis_type = self.combo_atomic_basis_type.currentText()
         bra = self.combo_atomic_bra_basis.currentText()
         ket = self.combo_atomic_ket_basis.currentText()
-        group = self.parent.p_group
 
         self._atomic_dialog = show_atomic_multipole(group, bra, ket, head, basis_type, self)
 
     # ==================================================
     def show_response(self):
-        group = self.parent.mp_group
+        group = self.data.mp_group
         rank = int(self.combo_response_rank.currentText())
         r_type = self.combo_response_type.currentText()
 
@@ -398,9 +400,10 @@ class TabGroup(QWidget):
         super().closeEvent(event)
 
     # ==================================================
-    def set_data(self, data):
-        find_wyckoff = data["group"]["find_wyckoff"]
+    def set_data(self):
+        find_wyckoff = self.data.status["group"]["find_wyckoff"]
         self.edit_find_wyckoff.setText(find_wyckoff)
+
         self._harmonics_decomp_dialog = None
         self._atomic_dialog = None
         self._response_dialog = None
@@ -417,8 +420,3 @@ class TabGroup(QWidget):
         self._harmonics_decomp_dialog = None
         self._atomic_dialog = None
         self._response_dialog = None
-
-    # ==================================================
-    def get_status(self):
-        d = {"find_wyckoff": self.edit_find_wyckoff.raw_text()}
-        return {"group": d}

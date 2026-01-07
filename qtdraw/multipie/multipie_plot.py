@@ -12,12 +12,12 @@ CHOP = 1e-6
 
 
 # ==================================================
-def plot_cell_site(dialog, sites, wp=None, label=None, size=None, color=None, opacity=None, name=None):
+def plot_cell_site(mp_data, sites, wp=None, label=None, size=None, color=None, opacity=None, name=None):
     """
     Plot cell site.
 
     Args:
-            dialog (MultiPieDialog): multipie dialog.
+            mp_data (MultiPieData): multipie data.
             sites (ndarray): sites (fractional, conventional).
             wp (str, optional): Wyckoff site.
             label (list, optional): label.
@@ -26,14 +26,14 @@ def plot_cell_site(dialog, sites, wp=None, label=None, size=None, color=None, op
             opacity (float, optional): opacity [default: 1.0].
             name (str, optional): plot name.
     """
-    pvw = dialog._pvw
+    pvw = mp_data.pvw
 
     if name is None:
         if wp is None:
-            cnt = dialog._set_counter("site")
+            cnt = mp_data._set_counter("site")
             name = f"site{cnt}"
         else:
-            cnt = dialog._set_counter(wp)
+            cnt = mp_data._set_counter(wp)
             name = f"{wp}({cnt})"
 
     if label is None:
@@ -53,12 +53,12 @@ def plot_cell_site(dialog, sites, wp=None, label=None, size=None, color=None, op
 
 
 # ==================================================
-def plot_cell_bond(dialog, bonds, wp=None, label=None, width=None, color=None, color2=None, opacity=None, name=None):
+def plot_cell_bond(mp_data, bonds, wp=None, label=None, width=None, color=None, color2=None, opacity=None, name=None):
     """
     Plot cell bond.
 
     Args:
-            dialog (MultiPieDialog): multipie dialog.
+            mp_data (MultiPieData): multipie data.
             bonds (ndarray): bonds (fractional, conventional).
             wp (str, optional): Wyckoff bond.
             label (list, optional): label.
@@ -68,14 +68,14 @@ def plot_cell_bond(dialog, bonds, wp=None, label=None, width=None, color=None, c
             opacity (float, optional): opacity [default: 1.0].
             name (str, optional): plot name.
     """
-    pvw = dialog._pvw
+    pvw = mp_data.pvw
 
     if name is None:
         if wp is None:
-            cnt = dialog._set_counter("bond")
+            cnt = mp_data._set_counter("bond")
             name = f"bond{cnt}"
         else:
-            cnt = dialog._set_counter(wp)
+            cnt = mp_data._set_counter(wp)
             name = f"{wp}({cnt})"
 
     if label is None:
@@ -105,7 +105,7 @@ def plot_cell_bond(dialog, bonds, wp=None, label=None, width=None, color=None, c
 
 # ==================================================
 def plot_cell_vector(
-    dialog,
+    mp_data,
     vectors,
     sites,
     X="Q",
@@ -123,7 +123,7 @@ def plot_cell_vector(
     Plot cell vector.
 
     Args:
-        dialog (MultiPieDialog): multipie dialog.
+        mp_data (MultiPieData): multipie data.
             vectors (ndarray): vectors (fractional/cartesian).
             sites (ndarray): site/bond (fractional, conventional).
             X (str, optional): type, "Q/G/T/M".
@@ -137,14 +137,14 @@ def plot_cell_vector(
             cartesian (bool, optional): vector in cartesian coordinate ?
             name (str, optional): plot name.
     """
-    pvw = dialog._pvw
+    pvw = mp_data.pvw
 
     if name is None:
         if wp is None:
-            cnt = dialog._set_counter("vector")
+            cnt = mp_data._set_counter("vector")
             name = f"vector{cnt}"
         else:
-            cnt = dialog._set_counter(wp)
+            cnt = mp_data._set_counter(wp)
             name = f"{wp}({cnt})"
 
     if label is None:
@@ -201,13 +201,13 @@ def plot_cell_vector(
 
 # ==================================================
 def plot_cell_multipole(
-    dialog, multipoles, sites, X="Q", wp=None, label=None, size=None, color=None, opacity=None, average=True, name=None
+    mp_data, multipoles, sites, X="Q", wp=None, label=None, size=None, color=None, opacity=None, average=True, name=None
 ):
     """
     Plot cell multipole.
 
     Args:
-        dialog (MultiPieDialog): multipie dialog.
+        mp_data (MultiPieData): multipie data.
             multipoles (ndarray): multipoles (cartesian).
             sites (ndarray): site/bond (fractional, conventional).
             X (str, optional): type, "Q/G/T/M".
@@ -219,14 +219,14 @@ def plot_cell_multipole(
             average (bool, optional): average at each site ?
             name (str, optional): plot name.
     """
-    pvw = dialog._pvw
+    pvw = mp_data.pvw
 
     if name is None:
         if wp is None:
-            cnt = dialog._set_counter("orbital")
+            cnt = mp_data._set_counter("orbital")
             name = f"orbital{cnt}"
         else:
-            cnt = dialog._set_counter(wp)
+            cnt = mp_data._set_counter(wp)
             name = f"{wp}({cnt})"
 
     if label is None:
@@ -259,7 +259,7 @@ def plot_cell_multipole(
 
 # ==================================================
 def plot_bond_definition(
-    dialog,
+    mp_data,
     bonds,
     wp,
     label=None,
@@ -272,7 +272,7 @@ def plot_bond_definition(
     arrow_color=None,
     arrow_color_rep=None,
 ):
-    pvw = dialog._pvw
+    pvw = mp_data.pvw
 
     default = detail["bond_samb"]
 
@@ -290,7 +290,7 @@ def plot_bond_definition(
         arrow_color_rep = default["arrow_color_rep"]
 
     if name is None:
-        cnt = dialog._set_counter(wp)
+        cnt = mp_data._set_counter(wp)
         name = f"{wp}({cnt})"
 
     if label is None:
@@ -317,9 +317,9 @@ def plot_bond_definition(
 
 # ==================================================
 def plot_site_cluster(
-    dialog, site, samb, wp, label=None, color=None, color_neg=None, color_pos=None, zero_size=None, size_ratio=None
+    mp_data, site, samb, wp, label=None, color=None, color_neg=None, color_pos=None, zero_size=None, size_ratio=None
 ):
-    pvw = dialog._pvw
+    pvw = mp_data.pvw
 
     if isinstance(samb, np.ndarray):
         samb = samb.astype(float)
@@ -336,7 +336,7 @@ def plot_site_cluster(
     if size_ratio is None:
         size_ratio = default["size_ratio"]
 
-    cnt = dialog._set_counter(wp)
+    cnt = mp_data._set_counter(wp)
     name = f"{wp}({cnt})"
 
     if label is None:
@@ -356,7 +356,7 @@ def plot_site_cluster(
 
 # ==================================================
 def plot_bond_cluster(
-    dialog,
+    mp_data,
     bond,
     samb,
     wp,
@@ -369,7 +369,7 @@ def plot_bond_cluster(
     arrow_ratio=None,
     width_ratio=None,
 ):
-    pvw = dialog._pvw
+    pvw = mp_data.pvw
 
     if isinstance(samb, np.ndarray):
         if sym:
@@ -391,7 +391,7 @@ def plot_bond_cluster(
     if width_ratio is None:
         width_ratio = default["width_ratio"]
 
-    cnt = dialog._set_counter(wp)
+    cnt = mp_data._set_counter(wp)
     name = f"{wp}({cnt})"
 
     if label is None:
@@ -436,16 +436,16 @@ def plot_bond_cluster(
 
 # ==================================================
 def plot_vector_cluster(
-    dialog, site, samb, X="Q", wp=None, label=None, cartesian=True, length=None, width=None, color=None, opacity=None, name=None
+    mp_data, site, samb, X="Q", wp=None, label=None, cartesian=True, length=None, width=None, color=None, opacity=None, name=None
 ):
-    pvw = dialog._pvw
+    pvw = mp_data.pvw
 
     if name is None:
         if wp is None:
-            cnt = dialog._set_counter("vector")
+            cnt = mp_data._set_counter("vector")
             name = f"vector{cnt}"
         else:
-            cnt = dialog._set_counter(wp)
+            cnt = mp_data._set_counter(wp)
             name = f"{wp}({cnt})"
 
     default = detail["vector"]
@@ -482,15 +482,15 @@ def plot_vector_cluster(
 
 
 # ==================================================
-def plot_orbital_cluster(dialog, site, samb, X="Q", wp=None, label=None, size=None, color=None, opacity=None, name=None):
-    pvw = dialog._pvw
+def plot_orbital_cluster(mp_data, site, samb, X="Q", wp=None, label=None, size=None, color=None, opacity=None, name=None):
+    pvw = mp_data.pvw
 
     if name is None:
         if wp is None:
-            cnt = dialog._set_counter("orbital")
+            cnt = mp_data._set_counter("orbital")
             name = f"orbital{cnt}"
         else:
-            cnt = dialog._set_counter(wp)
+            cnt = mp_data._set_counter(wp)
             name = f"{wp}({cnt})"
 
     default = detail["orbital"]

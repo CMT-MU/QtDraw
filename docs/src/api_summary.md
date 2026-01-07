@@ -14,6 +14,7 @@
 
 ```{eval-rst}
 .. autosummary::
+    qtdraw.multipie.multipie_data
     qtdraw.multipie.multipie_dialog
     qtdraw.multipie.sub_group
     qtdraw.multipie.tab_group

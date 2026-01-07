@@ -4,12 +4,8 @@ Default setting for MultiPie plugin.
 
 # ==================================================
 default_status = {
-    "general": {
-        "crystal": "triclinic",
-        "type": "PG",
-        "index": 0,
-    },
     "group": {
+        "tag": "C1",
         "find_wyckoff": "[0,0,0]",
     },
     "object": {
@@ -30,13 +26,11 @@ default_status = {
         "vector_type": "Q",
         "vector": "[1/3,2/3,0]",
         "vector_lc": "Q01",
-        "vector_modulation_type": "Q,G",
         "vector_modulation": "",
         "orbital_type": "Q",
         "orbital_rank": 0,
         "orbital": "[0,0,0];[1,0,0]",
         "orbital_lc": "Q01",
-        "orbital_modulation_type": "Q,G",
         "orbital_modulation": "",
     },
     "counter": {},

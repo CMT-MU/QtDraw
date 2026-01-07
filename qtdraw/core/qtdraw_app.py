@@ -170,11 +170,10 @@ class QtDraw(Window):
         self.view_edit_lower.returnPressed.connect(self._set_lower)
         self.view_edit_upper.returnPressed.connect(self._set_upper)
 
-        dic = self.pyvista_widget._status["multipie"]
-        if dic:
+        if self.pyvista_widget._mp_data is not None:
             self._show_multipie()
             if self.multipie_dialog is not None:
-                self.multipie_dialog.set_data(dic)
+                self.multipie_dialog.set_data()
 
     # ==================================================
     def save_file(self):
@@ -194,8 +193,6 @@ class QtDraw(Window):
             if cur_ext == "":
                 filename = filename / ext
             if cur_ext == ext:
-                if self.multipie_dialog is not None:
-                    self.pyvista_widget._status["multipie"] = self.multipie_dialog.get_status()
                 self.pyvista_widget.save(str(filename))
                 self._update_title()
 
@@ -2602,21 +2599,18 @@ class QtDraw(Window):
         return False
 
     # ==================================================
-    def mp_set_group(self, tag):
+    def mp_set_group(self, group):
         """
-        MultiPie: Set point/sapce group.
+        MultiPie: Set group.
 
         Args:
-            tag (str): group tag in Schoenflies notation [default: C1].
+            group (str): group tag [default: C1].
         """
-        if not check_multipie():
-            raise Exception("MultiPie is not installed.")
-
         if self.multipie_dialog is not None:
             self.multipie_dialog.close()
             self.multipie_dialog = None
 
-        self.pyvista_widget.add_multipie_status(tag)
+        self.pyvista_widget.mp_set_group(group=group)
         self.misc_button_multipie.released.emit()
 
     # ==================================================
@@ -2633,8 +2627,8 @@ class QtDraw(Window):
         if self._check_multipie():
             return
 
+        self.pyvista_widget.mp_add_site(site, size, color, opacity)
         self.multipie_dialog._object_panel.edit_site.setText(site)
-        self.multipie_dialog._object_panel.show_site(size, color, opacity)
 
     # ==================================================
     def mp_add_bond(self, bond, width=None, color=None, color2=None, opacity=None):
@@ -2651,8 +2645,8 @@ class QtDraw(Window):
         if self._check_multipie():
             return
 
+        self.pyvista_widget.mp_add_bond(bond, width, color, color2, opacity)
         self.multipie_dialog._object_panel.edit_bond.setText(bond)
-        self.multipie_dialog._object_panel.show_bond(width, color, color2, opacity)
 
     # ==================================================
     def mp_add_vector(
@@ -2674,11 +2668,11 @@ class QtDraw(Window):
         if self._check_multipie():
             return
 
+        self.pyvista_widget.mp_add_vector(vector_sb, type, cartesian, average, length, width, color, opacity)
         self.multipie_dialog._object_panel.combo_vector_type.setCurrentText(type)
         self.multipie_dialog._object_panel.edit_vector.setText(vector_sb)
         self.multipie_dialog._object_panel.check_vector_cart.setChecked(cartesian)
         self.multipie_dialog._object_panel.check_vector_av.setChecked(average)
-        self.multipie_dialog._object_panel.show_vector(length, width, color, opacity)
 
     # ==================================================
     def mp_add_orbital(self, orbital_sb, type="Q", average=False, size=None, color=None, opacity=None):
@@ -2696,10 +2690,10 @@ class QtDraw(Window):
         if self._check_multipie():
             return
 
+        self.pyvista_widget.mp_add_orbital(orbital_sb, type, average, size, color, opacity)
         self.multipie_dialog._object_panel.combo_orbital_type.setCurrentText(type)
         self.multipie_dialog._object_panel.edit_orbital.setText(orbital_sb)
         self.multipie_dialog._object_panel.check_orbital_av.setChecked(average)
-        self.multipie_dialog._object_panel.show_orbital(size, color, opacity)
 
     # ==================================================
     def mp_add_bond_definition(self, bond, length=None, width=None, color=None, opacity=None):
@@ -2716,8 +2710,8 @@ class QtDraw(Window):
         if self._check_multipie():
             return
 
+        self.pyvista_widget.mp_add_bond_definition(bond, length, width, color, opacity)
         self.multipie_dialog._basis_panel.edit_def_bond.setText(bond)
-        self.multipie_dialog._basis_panel.show_bond_definition(length, width, color, opacity)
 
     # ==================================================
     def mp_site_samb_list(self, site):
@@ -2734,10 +2728,7 @@ class QtDraw(Window):
             return
 
         self.multipie_dialog._basis_panel.edit_site.setText(site)
-        self.multipie_dialog._basis_panel.set_site()
-        d = self.multipie_dialog._get_index_list(self.multipie_dialog._basis_panel._site_samb.keys())[0]
-
-        return d
+        return self.pyvista_widget.mp_site_samb_list(site)
 
     # ==================================================
     def mp_add_site_samb(self, tag, size=None, p_color=None, n_color=None, z_color=None, z_size=None):
@@ -2752,11 +2743,8 @@ class QtDraw(Window):
             z_color (str, optional): zero SAMB color.
             z_size (float, optional): zero SAMB size.
         """
-        if self.multipie_dialog._basis_panel._site_samb is None:
-            return
-
+        self.pyvista_widget.mp_add_site_samb(tag, size, p_color, n_color, z_color, z_size)
         self.multipie_dialog._basis_panel.combo_site_samb.setCurrentText(tag)
-        self.multipie_dialog._basis_panel.show_site(size, p_color, n_color, z_color, z_size)
 
     # ==================================================
     def mp_bond_samb_list(self, bond):
@@ -2773,10 +2761,7 @@ class QtDraw(Window):
             return
 
         self.multipie_dialog._basis_panel.edit_bond.setText(bond)
-        self.multipie_dialog._basis_panel.set_bond()
-        d = self.multipie_dialog._get_index_list(self.multipie_dialog._basis_panel._bond_samb.keys())[0]
-
-        return d
+        return self.pyvista_widget.mp_bond_samb_list(bond)
 
     # ==================================================
     def mp_add_bond_samb(self, tag, width=None, p_color=None, n_color=None, z_color=None, z_width=None, a_size=None):
@@ -2792,8 +2777,8 @@ class QtDraw(Window):
             z_width (float, optional): zero SAMB width.
             a_size (float, optional): relative arrow size.
         """
+        self.pyvista_widget.mp_add_bond_samb(tag, width, p_color, n_color, z_color, z_width, a_size)
         self.multipie_dialog._basis_panel.combo_bond_samb.setCurrentText(tag)
-        self.multipie_dialog._basis_panel.show_bond(width, p_color, n_color, z_color, z_width, a_size)
 
     # ==================================================
     def mp_vector_samb_list(self, site_bond, type="Q"):
@@ -2812,10 +2797,7 @@ class QtDraw(Window):
 
         self.multipie_dialog._basis_panel.combo_vector_type.setCurrentText(type)
         self.multipie_dialog._basis_panel.edit_vector.setText(site_bond)
-        self.multipie_dialog._basis_panel.set_vector()
-        d = self.multipie_dialog._basis_panel._vector_list
-
-        return d
+        return self.pyvista_widget.mp_vector_samb_list(site_bond, type)
 
     # ==================================================
     def mp_add_vector_samb(self, lc, length=None, width=None, color=None, opacity=None):
@@ -2829,8 +2811,8 @@ class QtDraw(Window):
             color (str, optional): color.
             opacity (float, optional): opacity.
         """
+        self.pyvista_widget.mp_add_vector_samb(lc, length, width, color, opacity)
         self.multipie_dialog._basis_panel.edit_vector_lc.setText(lc)
-        self.multipie_dialog._basis_panel.show_vector_lc(length, width, color, opacity)
 
     # ==================================================
     def mp_add_vector_samb_modulation(self, modulation_range, length=None, width=None, color=None, opacity=None):
@@ -2844,8 +2826,8 @@ class QtDraw(Window):
             color (str, optional): color.
             opacity (float, optional): opacity.
         """
+        self.pyvista_widget.mp_add_vector_samb_modulation(modulation_range, length, width, color, opacity)
         self.multipie_dialog._basis_panel.edit_vector_modulation.setText(modulation_range)
-        self.multipie_dialog._basis_panel.show_vector_samb_modulation(modulation_range, length, width, color, opacity)
 
     # ==================================================
     def mp_orbital_samb_list(self, site_bond, type="Q", rank=0):
@@ -2866,10 +2848,7 @@ class QtDraw(Window):
         self.multipie_dialog._basis_panel.combo_orbital_type.setCurrentText(type)
         self.multipie_dialog._basis_panel.combo_orbital_rank.setCurrentText(str(rank))
         self.multipie_dialog._basis_panel.edit_orbital.setText(site_bond)
-        self.multipie_dialog._basis_panel.set_orbital()
-        d = self.multipie_dialog._basis_panel._orbital_list
-
-        return d
+        return self.pyvista_widget.mp_orbital_samb_list(site_bond, type, rank)
 
     # ==================================================
     def mp_add_orbital_samb(self, lc, size=None, color=None, opacity=None):
@@ -2882,8 +2861,8 @@ class QtDraw(Window):
             color (str, optional): color.
             opacity (float, optional): opacity.
         """
+        self.pyvista_widget.mp_add_orbital_samb(lc, size, color, opacity)
         self.multipie_dialog._basis_panel.edit_orbital_lc.setText(lc)
-        self.multipie_dialog._basis_panel.show_orbital_lc(size, color, opacity)
 
     # ==================================================
     def mp_add_orbital_samb_modulation(self, modulation_range, size=None, color=None, opacity=None):
@@ -2896,5 +2875,5 @@ class QtDraw(Window):
             color (str, optional): color.
             opacity (float, optional): opacity.
         """
+        self.pyvista_widget.mp_add_orbital_samb_modulation(modulation_range, size, color, opacity)
         self.multipie_dialog._basis_panel.edit_orbital_modulation.setText(modulation_range)
-        self.multipie_dialog._basis_panel.show_orbital_samb_modulation(modulation_range, size, color, opacity)
