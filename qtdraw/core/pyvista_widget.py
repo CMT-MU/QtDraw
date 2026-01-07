@@ -2594,8 +2594,10 @@ class PyVistaWidget(QtInteractor):
         if sum(len(i) for i in data.values()) == 0:
             return
 
+        self.screen_off()
         for object_type, model in data.items():
             self._data[object_type].set_data(model)
+        self.screen_on()
 
     # ==================================================
     def repeat_data(self):
