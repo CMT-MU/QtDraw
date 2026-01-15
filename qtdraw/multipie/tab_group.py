@@ -100,16 +100,17 @@ class TabGroup(QWidget):
         layout6.addWidget(self.edit_harmonics1_ex, 1, 1, 1, 3)
 
         # find Wyckoff.
-        label_fwyckoff = Label(parent, text="Find Wyckoff Site/Bond (PG/SG)", bold=True)
+        label_fwyckoff = Label(parent, text="Find Wyckoff Site(PG/SG/MPG/MSG)/Bond(PG/SG)", bold=True)
         label_fwyckoff_sb = Label(parent, text="site/bond")
         self.edit_find_wyckoff = LineEdit(parent, text="", validator=("site_bond", {"use_var": False}))
         label_wyckoff = Label(parent, text="Wyckoff")
         self.edit_find_wyckoff_position = Label(parent, text="")
         self.edit_find_wyckoff_position.set_background(True)
-        self.edit_find_wyckoff_position.setMinimumWidth(400)
-        label_symmetry = Label(parent, text="LS")
+        self.edit_find_wyckoff_position.setMinimumWidth(200)
+        label_symmetry = Label(parent, text="site symmetry")
         self.edit_find_wyckoff_symmetry = Label(parent, text="")
         self.edit_find_wyckoff_symmetry.set_background(True)
+        self.edit_find_wyckoff_symmetry.setMinimumWidth(100)
 
         panel7 = QWidget(parent)
         layout7 = Layout(panel7)
@@ -124,12 +125,12 @@ class TabGroup(QWidget):
         layout8.addWidget(self.edit_find_wyckoff_symmetry, 1, 4, 1, 1)
 
         # Wyckoff site/bond.
-        label_wyckoff_site = Label(parent, text="Draw Wyckoff Site/Bond (representative) (PG/SG)", bold=True)
+        label_wyckoff_site = Label(parent, text="Draw Wyckoff Site(PG/SG/MPG/MSG)/Bond(PG/SG) (representative)", bold=True)
         label_ws_neighbor = Label(parent, text="neighbor")
         label_wyckoff_site_str = Label(parent, text="site")
         self.combo_wyckoff_site = Combo(parent)
         self.edit_ws_neighbor = LineEdit(parent, text="[1]", validator=("list_int", {"shape": (0,)}))
-        self.button_wyckoff_bond = Button(parent, text="show")
+        self.button_wyckoff_bond = Button(parent, text="show bond")
         label_wyckoff_bond_str = Label(parent, text="bond")
         self.combo_wyckoff_bond = Combo(parent)
 
@@ -319,11 +320,11 @@ class TabGroup(QWidget):
 
     # ==================================================
     def show_wyckoff_site(self):
-        group = self.data.ps_group
+        group = self.data.group
         wp = self.combo_wyckoff_site.currentText()
 
         # plot sites.
-        sites = group.wyckoff["site"][wp]["fractional"].astype(float)
+        sites = group.wyckoff["site"][wp]["reference"].astype(float)
         mp = group.wyckoff["site"][wp]["mapping"]
         if len(sites) != len(mp):
             mp = mp * (len(sites) // len(mp))
@@ -353,7 +354,7 @@ class TabGroup(QWidget):
         wp = self.combo_wyckoff_bond.currentText()
 
         # plot bonds.
-        bonds = group.wyckoff["bond"][wp]["fractional"].astype(float)
+        bonds = group.wyckoff["bond"][wp]["reference"].astype(float)
         mp = group.wyckoff["bond"][wp]["mapping"]
         if len(bonds) != len(mp):
             mp = mp * (len(bonds) // len(mp))
@@ -361,15 +362,16 @@ class TabGroup(QWidget):
 
     # ==================================================
     def find_wyckoff_set(self):
-        group = self.data.ps_group
         text = self.edit_find_wyckoff.raw_text()
         self.data.set_group_find_wyckoff(text)
 
         if text.count("[") == 2:
+            group = self.data.ps_group
             wp, r = group.find_wyckoff_bond(text)
             # sym = group.wyckoff["bond"][wp]["symmetry"]
             sym = ""
         else:
+            group = self.data.group
             wp, r = group.find_wyckoff_site(text)
             sym = group.wyckoff["site"][wp]["symmetry"]
 

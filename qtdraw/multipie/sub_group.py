@@ -43,7 +43,7 @@ class SubGroup(QWidget):
         label_info = Label(parent, text="Info.", bold=True)
         self.button_symmetry_operation = Button(parent, text="Symmetry Operation")
         self.button_character_table = Button(parent, text="Character Table (PG)")
-        self.button_wyckoff_site = Button(parent, text="Wyckoff Site (PG/SG)")
+        self.button_wyckoff_site = Button(parent, text="Wyckoff Site")
         self.button_wyckoff_bond = Button(parent, text="Wyckoff Bond (PG/SG)")
         self.button_product_table = Button(parent, text="Product Table (PG)")
 
@@ -130,7 +130,7 @@ class SubGroup(QWidget):
 
     # ==================================================
     def show_wyckoff_site(self):
-        group = self.data.ps_group
+        group = self.data.group
         self._wyckoff_site_dialog = show_wyckoff_site(group, self)
 
     # ==================================================

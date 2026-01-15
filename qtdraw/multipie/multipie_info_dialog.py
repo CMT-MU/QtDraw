@@ -139,7 +139,7 @@ def show_wyckoff_site(group, parent):
     Show Wyckoff position panel.
 
     Args:
-        group (Group): point/space group.
+        group (Group): group.
         parent (QWidget): parent.
 
     Returns:
@@ -158,7 +158,7 @@ def show_wyckoff_site(group, parent):
 
     for w, val in wp.items():
         sym = val["symmetry"]
-        pos = val["expression"]
+        pos = val["conventional"]
         mp = val["mapping"]
         data.append([r"{\rm " + w + "}", r"{\rm " + sym + "}", "", "", ""])
         for no, (i, m) in enumerate(zip(pos, mp)):
@@ -200,7 +200,7 @@ def show_wyckoff_bond(group, parent):
 
     for b_wp, val in wp.items():
         # sym = val["symmetry"]
-        bond = val["expression"]
+        bond = val["conventional"]
         mp = val["mapping"]
         vector, center = bond[:, 0:3], bond[:, 3:6]
         data.append([r"{\rm " + b_wp + "}", "", "", "", ""])
