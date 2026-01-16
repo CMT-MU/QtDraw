@@ -30,6 +30,7 @@ class GroupView(QTreeView):
             use_delegate (bool, optional): use delegate or plain text ?
         """
         super().__init__(parent)
+        self._row_heights = {}
 
         if mathjax is None:
             self._mathjax = MathJaxSVG()
@@ -196,6 +197,7 @@ class GroupView(QTreeView):
         indexes = self.selectedIndexes()
         idx = self.model().action_insert_row(indexes)
         if idx.isValid():
+            self.clear_row_heights()
             self.expand(idx)
 
     # ==================================================
@@ -205,6 +207,7 @@ class GroupView(QTreeView):
         """
         indexes = self.selectedIndexes()
         self.model().action_copy_row(indexes)
+        self.clear_row_heights()
 
     # ==================================================
     def remove_row(self):
@@ -213,6 +216,7 @@ class GroupView(QTreeView):
         """
         indexes = self.selectedIndexes()
         self.model().action_remove_row(indexes)
+        self.clear_row_heights()
 
     # ==================================================
     def set_widget(self, item=None):
@@ -287,3 +291,29 @@ class GroupView(QTreeView):
         index1 = index.siblingAtColumn(self.model().columnCount() - 1)
         selection = QItemSelection(index, index1)  # all columns.
         self.selectionModel().select(selection, QItemSelectionModel.ClearAndSelect)
+
+    # ==================================================
+    def closeEvent(self, event):
+        self.clear_selection()
+        super().closeEvent(event)
+
+    # ==================================================
+    def set_row_height_hint(self, row, height):
+        prev = self._row_heights.get(row, 0)
+        if height > prev:
+            self._row_heights[row] = height
+            self.scheduleDelayedItemsLayout()
+
+    # ==================================================
+    def row_height_hint(self, row):
+        return self._row_heights.get(row)
+
+    # ==================================================
+    def clear_row_heights(self):
+        self._row_heights.clear()
+        self.scheduleDelayedItemsLayout()
+
+    # ==================================================
+    def setModel(self, model):
+        super().setModel(model)
+        self.clear_row_heights()

@@ -30,9 +30,9 @@ from qtdraw.core.pyvista_widget_setting import (
     COLUMN_CELL,
     COLUMN_POSITION,
     COLUMN_ISOSURFACE_FILE,
+    DIGIT,
 )
 from qtdraw.core.pyvista_widget_setting import widget_detail as detail
-from qtdraw.core.pyvista_widget_setting import DIGIT
 from qtdraw.core.qtdraw_info import __version__, __date__, __author__
 from qtdraw.widget.mathjax import MathJaxSVG
 from qtdraw.widget.group_model import GroupModel
@@ -42,12 +42,8 @@ from qtdraw.widget.logging_util import LogWidget
 from qtdraw.widget.color_palette import all_colors, custom_colormap, check_color
 from qtdraw.parser.read_material import read_draw
 from qtdraw.parser.xsf import extract_data_xsf
-from qtdraw.parser.converter import convert_version2
-
-from qtdraw.util.util import text_to_list, apply
-
-
-from qtdraw.util.util import read_dict, str_to_sympy
+from qtdraw.parser.converter import convert_version3
+from qtdraw.util.util import text_to_list, apply, read_dict, str_to_sympy, check_multipie
 from qtdraw.util.util_axis import (
     create_axes_widget,
     get_view_vector,
@@ -79,6 +75,7 @@ from qtdraw.util.basic_object import (
     create_orbital_data,
     create_stream_data,
 )
+from qtdraw.multipie.multipie_data import MultiPieData
 
 
 # ==================================================
@@ -212,9 +209,9 @@ def create_qtdraw_file(filename, callback):
 
 
 # ==================================================
-def convert_qtdraw_v2(filename):
+def convert_qtdraw_v3(filename):
     """
-    Convert qtdraw file to version 2.
+    Convert qtdraw file to version 3.
 
     Args:
         filename (str): filename.
@@ -223,7 +220,7 @@ def convert_qtdraw_v2(filename):
     widget = PyVistaWidget(off_screen=True)
     widget.load(filename)
     path_abs, path_rel, base, ext, folder = split_filename(filename)
-    filename2 = cat_filename(base + "_v2", ext)
+    filename2 = cat_filename(base + "_v3", ext)
     widget.save(filename2)
     app.quit()
 
@@ -255,6 +252,7 @@ class PlotSignal(QObject):
 class PyVistaWidget(QtInteractor):
     # signal for write info.
     message = Signal(str)  # messsage.
+    data_removed = Signal()
 
     # ==================================================
     def __init__(self, parent=None, off_screen=False):
@@ -339,6 +337,8 @@ class PyVistaWidget(QtInteractor):
             f = getattr(PyVistaWidget, "plot_data_" + object_type)
             self._plot_signal[object_type] = PlotSignal(self, f)
 
+        self._mp_data = None
+
         # refresh.
         self.refresh()
         self.set_view()
@@ -357,7 +357,7 @@ class PyVistaWidget(QtInteractor):
         """
         self.set_theme()
         self._status = copy.deepcopy(default_status)
-        self._status["multipie"] = {"plus": {}}  # for multipie.
+        self._status["multipie"] = {}  # for multipie.
         self._status["plus"] = {}  #  for temporaly working purpose.
         self.set_additional_status()
         self._preference = copy.deepcopy(default_preference)
@@ -573,11 +573,10 @@ class PyVistaWidget(QtInteractor):
 
         if shape is not None:
             row_data["shape"] = shape
-        if surface is not None:
-            if surface == "":
-                row_data["surface"] = row_data["shape"]
-            else:
-                row_data["surface"] = surface
+        if surface is None or surface == "":
+            row_data["surface"] = row_data["shape"]
+        else:
+            row_data["surface"] = surface
         if size is not None:
             row_data["size"] = convert_to_str(size)
         if range is not None:
@@ -1568,9 +1567,9 @@ class PyVistaWidget(QtInteractor):
         if file.suffix == detail["extension"]:
             all_data = read_dict(f)
             ver = int(all_data["version"].split(".")[0])  # major version.
-            if ver < 2:
+            if ver < 3:
                 widget = PyVistaWidget(off_screen=True)
-                all_data = convert_version2(all_data, widget)  # for old version.
+                all_data = convert_version3(all_data, ver, widget)  # for old version.
                 widget.close()
         elif file.suffix in detail["ext_material"]:
             all_data = read_draw(f, self)
@@ -1581,7 +1580,13 @@ class PyVistaWidget(QtInteractor):
         # set data.
         if "latex" in all_data["preference"].keys():  # "latex" is deprecated for ver.2.5 or later.
             del all_data["preference"]["latex"]
+
         self.set_property(all_data["status"], all_data["preference"])
+
+        multipie = all_data["status"].get("multipie", {})
+        if multipie:
+            self.mp_set_group(status=multipie)
+
         if file.suffix == detail["extension"]:
             self.set_camera_info(all_data["camera"])
             self.reload(all_data["data"])
@@ -1673,8 +1678,6 @@ class PyVistaWidget(QtInteractor):
         # remove temp. info.
         if "plus" in self._backup["status"].keys():
             del self._backup["status"]["plus"]
-        if "multipie" in self._backup["status"].keys() and "plus" in self._backup["status"]["multipie"].keys():
-            del self._backup["status"]["multipie"]["plus"]
 
         isosurface = self._backup["data"].get("isosurface")
         if isosurface and len(isosurface) > 0:
@@ -1682,6 +1685,9 @@ class PyVistaWidget(QtInteractor):
                 name = iso[COLUMN_ISOSURFACE_FILE]
                 with open(name, mode="w", encoding="utf-8") as f:
                     print(self._isosurface_data[name], file=f)
+
+        if self._mp_data is not None:
+            self._backup["status"]["multipie"] = self._mp_data.status
 
         # write.
         file = file.resolve().as_posix()
@@ -2309,11 +2315,15 @@ class PyVistaWidget(QtInteractor):
             self._status["axis_type"] = axis_type
 
         viewport = True
+        self.remove_actor("axes_arrow_0")
+        self.remove_actor("axes_arrow_1")
+        self.remove_actor("axes_arrow_2")
         if axis_type == "on":
             label = self._preference["axis"]["label"]
         elif axis_type == "axis":
             label = None
         elif axis_type == "full":
+            self.renderer.hide_axes()
             label = None
             viewport = False
         else:
@@ -2331,6 +2341,7 @@ class PyVistaWidget(QtInteractor):
                 label_italic=label_italic,
                 label_color=label_color,
                 viewport=viewport,
+                full=(axis_type == "full"),
             )
             self.screen_on()
 
@@ -2514,7 +2525,9 @@ class PyVistaWidget(QtInteractor):
         """
         Clear Data.
         """
+        self._tab_group_view.close()
         self.reload()
+        self.data_removed.emit()
 
     # ==================================================
     def get_camera_info(self):
@@ -2581,8 +2594,10 @@ class PyVistaWidget(QtInteractor):
         if sum(len(i) for i in data.values()) == 0:
             return
 
+        self.screen_off()
         for object_type, model in data.items():
             self._data[object_type].set_data(model)
+        self.screen_on()
 
     # ==================================================
     def repeat_data(self):
@@ -4196,3 +4211,262 @@ class PyVistaWidget(QtInteractor):
         option = option | option_add
 
         self.add_mesh(**option)
+
+    # ==================================================
+    # MultiPie interface
+    # ==================================================
+    def mp_set_group(self, group=None, status=None):
+        """
+        MultiPie: Set group or group status.
+
+        Args:
+            group (str, optional): group tag [default: C1].
+            status (dict, optional): multipie status update dict.
+        """
+        if not check_multipie():
+            raise Exception("MultiPie is not installed.")
+
+        self._mp_data = MultiPieData(self)
+        self._mp_data.set_status(status, group)
+
+    # ==================================================
+    def mp_add_site(self, site, size=None, color=None, opacity=None):
+        """
+        MultiPie: Add equivalent sites.
+
+        Args:
+            site (str): representative site.
+            size (float, optional): size.
+            color (str, optional): color.
+            opacity (float, optional): opacity.
+        """
+        if self._mp_data is None:
+            return
+
+        self._mp_data.add_site(site, size, color, opacity)
+
+    # ==================================================
+    def mp_add_bond(self, bond, width=None, color=None, color2=None, opacity=None):
+        """
+        MultiPie: Add equivalent bonds.
+
+        Args:
+            bond (str): representative bond.
+            width (float, optional): width.
+            color (str, optional): color.
+            color2 (str, optional): color2.
+            opacity (float, optional): opacity.
+        """
+        if self._mp_data is None:
+            return
+
+        self._mp_data.add_bond(bond, width, color, color2, opacity)
+
+    # ==================================================
+    def mp_add_vector(
+        self, vector_sb, type="Q", cartesian=True, average=False, length=None, width=None, color=None, opacity=None
+    ):
+        """
+        MultiPie: Add transformed vectors at equivalent sites or bonds.
+
+        Args:
+            vector_sb (str): vector, "v # site_bond".
+            type (str, optional): type of vector, Q/G/T/M.
+            cartesian (bool, optional): cartesian vector ?
+            average (bool, optional): average ?
+            length (float, optional): length.
+            width (float, optional): width.
+            color (str, optional): color.
+            opacity (float, optional): opacity.
+        """
+        if self._mp_data is None:
+            return
+
+        self._mp_data.add_vector(vector_sb, type, cartesian, average, length, width, color, opacity)
+
+    # ==================================================
+    def mp_add_orbital(self, orbital_sb, type="Q", average=False, size=None, color=None, opacity=None):
+        """
+        MultiPie: Add transformed orbitals at equivalent sites or bonds.
+
+        Args:
+            orbital_sb (str): orbital, "f(r) # site_bond".
+            type (str, optional): type of orbital, Q/G/T/M.
+            average (bool, optional): average ?
+            size (float, optional): size.
+            color (str, optional): color.
+            opacity (float, optional): opacity.
+        """
+        if self._mp_data is None:
+            return
+
+        self._mp_data.add_orbital(orbital_sb, type, average, size, color, opacity)
+
+    # ==================================================
+    def mp_add_bond_definition(self, bond, length=None, width=None, color=None, opacity=None):
+        """
+        MultiPie: Create bond definition.
+
+        Args:
+            bond (str): representative bond.
+            length (float, optional): length.
+            width (float, optional): width.
+            color (str, optional): color.
+            opacity (float, optional): opacity.
+        """
+        if self._mp_data is None:
+            return
+
+        self._mpdata.add_bond_definition(bond, length, width, color, opacity)
+
+    # ==================================================
+    def mp_site_samb_list(self, site):
+        """
+        MultiPie: Create site SAMB list.
+
+        Args:
+            site (str): representative site.
+
+        Returns:
+            - (list) -- list of site SAMB, [str].
+        """
+        if self._mp_data is None:
+            return
+
+        return self._mp_data.site_samb_list(site)
+
+    # ==================================================
+    def mp_add_site_samb(self, tag, size=None, p_color=None, n_color=None, z_color=None, z_size=None):
+        """
+        MultiPie: Add site SAMB.
+
+        Args:
+            tag (str): site SAMB, obtained by mp_site_samb_list.
+            size (float, optional): relative size.
+            p_color (str, optional): positive SAMB color.
+            n_color (str, optional): negative SAMB color.
+            z_color (str, optional): zero SAMB color.
+            z_size (float, optional): zero SAMB size.
+        """
+        self._mp_data.add_site_samb(tag, size, p_color, n_color, z_color, z_size)
+
+    # ==================================================
+    def mp_bond_samb_list(self, bond):
+        """
+        MultiPie: Create bond SAMB list.
+
+        Args:
+            bond (str): representative bond.
+
+        Returns:
+            - (list) -- list of bond SAMB, [str].
+        """
+        if self._mp_data is None:
+            return
+
+        return self._mp_data.bond_samb_list(bond)
+
+    # ==================================================
+    def mp_add_bond_samb(self, tag, width=None, p_color=None, n_color=None, z_color=None, z_width=None, a_size=None):
+        """
+        MultiPie: Add bond SAMB.
+
+        Args:
+            tag (str): bond SAMB, obtained by mp_bond_samb_list.
+            width (float, optional): relative width.
+            p_color (str, optional): positive SAMB color.
+            n_color (str, optional): negative SAMB color.
+            z_color (str, optional): zero SAMB color.
+            z_width (float, optional): zero SAMB width.
+            a_size (float, optional): relative arrow size.
+        """
+        self._mp_data.add_bond_samb(tag, width, p_color, n_color, z_color, z_width, a_size)
+
+    # ==================================================
+    def mp_vector_samb_list(self, site_bond, type="Q"):
+        """
+        MultiPie: Create vector SAMB list.
+
+        Args:
+            site_bond (str): representative site or bond.
+            type (str, optional): type of vector, Q/G/T/M.
+
+        Returns:
+            - (dict) -- list of vector SAMB, Dict[samb_type, [str] ].
+        """
+        if self._mp_data is None:
+            return
+
+        return self._mp_data.vector_samb_list(site_bond, type)
+
+    # ==================================================
+    def mp_add_vector_samb(self, lc, length=None, width=None, color=None, opacity=None):
+        """
+        MultiPie: Add vector SAMB.
+
+        Args:
+            lc (str): linear combination of vector SAMBs, obtained by mp_vector_samb_list.
+            length (float, optional): relative length.
+            width (float, optional): relative width.
+            color (str, optional): color.
+            opacity (float, optional): opacity.
+        """
+        self._mp_data.add_vector_samb(lc, length, width, color, opacity)
+
+    # ==================================================
+    def mp_add_vector_samb_modulation(self, modulation_range, length=None, width=None, color=None, opacity=None):
+        """
+        MultiPie: Add vector SAMB with modulation.
+
+        Args:
+            modulation_range (str): modulation and range, "[[tag, coeff, k_vector, cos/sin]] : [r1, r2, r3]".
+            length (float, optional): relative length.
+            width (float, optional): relative width.
+            color (str, optional): color.
+            opacity (float, optional): opacity.
+        """
+        self._mp_data.add_vector_samb_modulation(modulation_range, length, width, color, opacity)
+
+    # ==================================================
+    def mp_orbital_samb_list(self, site_bond, type="Q", rank=0):
+        """
+        MultiPie: Create orbital SAMB.
+
+        Args:
+            site_bond (str): representative site or bond.
+            type (str, optional): type of orbital, Q/G/T/M.
+            rank (int or str, optional): rank.
+
+        Returns:
+            - (dict) -- list of orbital SAMB, Dict[samb_type, [str] ].
+        """
+        if self._mp_data is None:
+            return
+
+        return self._mp_data.orbital_samb_list(site_bond, type, rank)
+
+    # ==================================================
+    def mp_add_orbital_samb(self, lc, size=None, color=None, opacity=None):
+        """
+        MultiPie: Add orbital SAMB.
+
+        Args:
+            lc (str): linear combination of orbital SAMBs, obtained by mp_orbital_samb_list.
+            size (float, optional): relative size.
+            color (str, optional): color.
+            opacity (float, optional): opacity.
+        """
+        self._mp_data.add_orbital_samb(lc, size, color, opacity)
+
+    # ==================================================
+    def mp_add_orbital_samb_modulation(self, modulation_range, size=None, color=None, opacity=None):
+        """
+        MultiPie: Add orbital SAMB with modulation.
+
+        Args:
+            modulation_range (str): modulation and range, "[[tag, coeff, k_vector, cos/sin]] : [r1, r2, r3]".
+            size (float, optional): relative size.
+            color (str, optional): color.
+            opacity (float, optional): opacity.
+        """
+        self._mp_data.add_orbital_samb_modulation(modulation_range, size, color, opacity)

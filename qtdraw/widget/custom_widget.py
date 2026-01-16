@@ -99,6 +99,22 @@ class Label(QLabel):
         self.setIndent(6)
 
     # ==================================================
+    def set_background(self, flag):
+        if flag:
+            base_style = """
+                padding-left: 3px;
+                padding-right: 3px;
+                background: white;
+                border: 1px solid grey;
+            """
+            self.setStyleSheet(base_style)
+        else:
+            self.setStyleSheet("")
+            self.style().unpolish(self)
+            self.style().polish(self)
+            self.update()
+
+    # ==================================================
     def sizeHint(self):
         sz = super().sizeHint()
         extra = 12
@@ -283,6 +299,7 @@ class Combo(QComboBox):
             bold (bool, optional): bold face ?
         """
         super().__init__(parent)
+        self.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
 
         if size is None:
             size = self.font().pointSize()
@@ -444,6 +461,7 @@ class LineEdit(QLineEdit):
         self._validator_func = None
         self._read_only = False
         self._valid = True
+        self._in_edit = False
         self._raw = ""
         self._validated = ""
 
@@ -532,29 +550,35 @@ class LineEdit(QLineEdit):
             super().setText(self._validated)
             self._valid = True
             self._update_style()
+            self._in_edit = False
             return
 
         if k in (Qt.Key_Return, Qt.Key_Enter):
             self.setText(self.text())
+            self.clearFocus()
             if self._valid:
                 self.returnPressed.emit()
+                self._in_edit = False
             return
+
+        self._in_edit = True
 
         super().keyPressEvent(event)
 
     # ==================================================
     def focusOutEvent(self, event):
-        super().setText(self._validated)
-        self._valid = True
-        self._update_style()
-
+        if not self._in_edit:
+            super().setText(self._validated)
+            self._valid = True
+            self._update_style()
         super().focusOutEvent(event)
         self.focusOut.emit()
 
     # ==================================================
     def focusInEvent(self, event):
-        super().setText(self._raw)
-        self._update_style()
+        if not self._in_edit:
+            super().setText(self._raw)
+            self._update_style()
         super().focusInEvent(event)
 
     # ==================================================
@@ -603,8 +627,8 @@ class Editor(Panel):
             else Label(parent=parent, text=validated, color=color, bold=bold, size=size)
         )
 
-        self.layout.addWidget(self._display, 0, 0)
-        self.layout.addWidget(self._editor, 0, 0)
+        self.layout.addWidget(self._display, 0, 0, alignment=Qt.AlignVCenter)
+        self.layout.addWidget(self._editor, 0, 0, alignment=Qt.AlignVCenter)
         self._editor.hide()
 
         self._in_edit = False
@@ -706,6 +730,7 @@ class Editor(Panel):
             if self._math_mode:
                 e_sz = self._editor.sizeHint()
                 d_sz = self._display.sizeHint()
-                return QSize(max(e_sz.width(), d_sz.width()), d_sz.height())
+                return QSize(max(e_sz.width(), d_sz.width()), d_sz.height() + 8)
             else:
-                return self._display.sizeHint()
+                sz = self._display.sizeHint()
+                return QSize(sz.width(), sz.height() + 4)

@@ -15,10 +15,9 @@ from pymatgen.io.cif import CifParser
 from qtdraw.core.pyvista_widget_setting import DIGIT, default_preference, default_status
 from qtdraw.core.pyvista_widget_setting import widget_detail as detail
 from qtdraw.core.qtdraw_info import __version__
-
 from qtdraw.parser.element import element_color
-from qtdraw.parser.data_group import _data_no_space_group
 from qtdraw.parser.vesta import parse_vesta, create_structure_vesta
+from qtdraw.multipie.multipie_setting import default_status as multipie_default
 
 
 # ==================================================
@@ -197,9 +196,8 @@ def parse_material(filename):
     name, cell = get_model_cell(graph)
     crystal = sga.get_crystal_system()
 
-    group_name = _data_no_space_group[sg_no]
-    multipie = {"group": {"group": group_name}}
-
+    multipie = copy.deepcopy(multipie_default)
+    multipie["group"]["tag"] = f"SG:{sg_no}"
     status = copy.deepcopy(default_status)
     status.update({"model": name, "crystal": crystal, "cell": cell, "clip": False, "multipie": multipie})
     preference = copy.deepcopy(default_preference)

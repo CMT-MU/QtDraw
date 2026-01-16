@@ -16,10 +16,8 @@ from qtdraw.core.pyvista_widget_setting import widget_detail as detail
 from qtdraw.core.dialog_preference import PreferenceDialog
 from qtdraw.core.dialog_about import AboutDialog
 from qtdraw.core.dialog_about import get_version_info
-
 from qtdraw.widget.custom_widget import Label, Layout, LineEdit, HBar, Button, Combo, VSpacer
 from qtdraw.widget.logging_util import LogWidget
-
 from qtdraw.util.util import check_multipie
 
 
@@ -63,11 +61,11 @@ class QtDraw(Window):
         self._update_panel()
         self.create_connection()
 
-        if filename is not None and os.path.exists(filename):
-            self.load_file(filename)
-
         # event loop.
         self.show()
+
+        if filename is not None and os.path.exists(filename):
+            self.load_file(filename)
 
     # ==================================================
     def create_gui(self):
@@ -116,7 +114,6 @@ class QtDraw(Window):
         cwd = os.getcwd()
         ext_set = f"QtDraw, CIF, VESTA, XSF Files (*{ext} {mat})"
         filename, _ = QFileDialog.getOpenFileName(self, "Open File", cwd, ext_set, options=QFileDialog.Options())
-        self.sender().setDown(False)  # reset push button.
 
         if filename:
             filename = Path(filename)
@@ -151,7 +148,7 @@ class QtDraw(Window):
         # disconnect view.
         self.view_button_clip.toggled.disconnect(self._set_clip)
         self.view_button_repeat.toggled.disconnect(self._set_repeat)
-        self.view_button_nonrepeat.pressed.disconnect(self._nonrepeat)
+        self.view_button_nonrepeat.clicked.disconnect(self._nonrepeat)
         self.view_edit_lower.returnPressed.disconnect(self._set_lower)
         self.view_edit_upper.returnPressed.disconnect(self._set_upper)
 
@@ -169,9 +166,14 @@ class QtDraw(Window):
         # reconnect view.
         self.view_button_clip.toggled.connect(self._set_clip)
         self.view_button_repeat.toggled.connect(self._set_repeat)
-        self.view_button_nonrepeat.pressed.connect(self._nonrepeat)
+        self.view_button_nonrepeat.clicked.connect(self._nonrepeat)
         self.view_edit_lower.returnPressed.connect(self._set_lower)
         self.view_edit_upper.returnPressed.connect(self._set_upper)
+
+        if self.pyvista_widget._mp_data is not None:
+            self._show_multipie()
+            if self.multipie_dialog is not None:
+                self.multipie_dialog.set_data()
 
     # ==================================================
     def save_file(self):
@@ -184,7 +186,6 @@ class QtDraw(Window):
         file = Path.cwd() / (self.pyvista_widget._status["model"] + ext)
         ext_set = f"QtDraw Files (*{ext})"
         filename, _ = QFileDialog.getSaveFileName(self, "Save File", str(file.name), ext_set, options=QFileDialog.Options())
-        self.sender().setDown(False)  # reset push button.
 
         if filename:
             filename = Path(filename)
@@ -210,7 +211,6 @@ class QtDraw(Window):
 
         ext_set = f"Image Files ({ifile});;Graphic Files ({gfile})"
         filename, _ = QFileDialog.getSaveFileName(self, "Save Screenshot", str(file.name), ext_set)
-        self.sender().setDown(False)  # reset push button.
 
         self.pyvista_widget.save_screenshot(filename)
 
@@ -587,8 +587,7 @@ class QtDraw(Window):
         self.setWindowTitle(title)
         self.pyvista_widget._tab_group_view.setWindowTitle(data_title)
         if self.multipie_dialog is not None:
-            multipie_title = title.replace("QtDraw", "MultiPie Plugin")
-            self.multipie_dialog.dialog.setWindowTitle(multipie_title)
+            self.multipie_dialog.set_title()
 
     # ==================================================
     def _update_unit_cell(self):
@@ -961,17 +960,17 @@ class QtDraw(Window):
         # view panel.
         self.view_button_clip.toggled.connect(self._set_clip)
         self.view_button_repeat.toggled.connect(self._set_repeat)
-        self.view_button_nonrepeat.pressed.connect(self._nonrepeat)
+        self.view_button_nonrepeat.clicked.connect(self._nonrepeat)
         self.view_edit_lower.returnPressed.connect(self._set_lower)
         self.view_edit_upper.returnPressed.connect(self._set_upper)
         self.view_button_bar.toggled.connect(self._set_bar)
-        self.view_button_default.pressed.connect(self._set_view_default)
-        self.view_button_x.pressed.connect(self.pyvista_widget.view_yz)
-        self.view_button_y.pressed.connect(self.pyvista_widget.view_zx)
-        self.view_button_z.pressed.connect(self.pyvista_widget.view_xy)
-        self.view_button_xm.pressed.connect(self.pyvista_widget.view_zy)
-        self.view_button_ym.pressed.connect(self.pyvista_widget.view_xz)
-        self.view_button_zm.pressed.connect(self.pyvista_widget.view_yx)
+        self.view_button_default.clicked.connect(self._set_view_default)
+        self.view_button_x.clicked.connect(self.pyvista_widget.view_yz)
+        self.view_button_y.clicked.connect(self.pyvista_widget.view_zx)
+        self.view_button_z.clicked.connect(self.pyvista_widget.view_xy)
+        self.view_button_xm.clicked.connect(self.pyvista_widget.view_zy)
+        self.view_button_ym.clicked.connect(self.pyvista_widget.view_xz)
+        self.view_button_zm.clicked.connect(self.pyvista_widget.view_yx)
         self.view_combo_a.currentTextChanged.connect(lambda x: self._set_view(x, 0))
         self.view_combo_b.currentTextChanged.connect(lambda x: self._set_view(x, 1))
         self.view_combo_c.currentTextChanged.connect(lambda x: self._set_view(x, 2))
@@ -981,27 +980,27 @@ class QtDraw(Window):
         self.view_combo_cell.currentTextChanged.connect(self._set_cell_mode)
 
         # dataset panel.
-        self.ds_button_edit.pressed.connect(self.pyvista_widget.open_tab_group_view)
-        self.ds_button_clear.pressed.connect(self._clear_data)
-        self.ds_button_load.pressed.connect(self.open_file)
-        self.ds_button_save.pressed.connect(self.save_file)
-        self.ds_button_screenshot.pressed.connect(self._save_screenshot)
+        self.ds_button_edit.released.connect(self.pyvista_widget.open_tab_group_view)
+        self.ds_button_clear.released.connect(self._clear_data)
+        self.ds_button_load.released.connect(self.open_file)
+        self.ds_button_save.released.connect(self.save_file)
+        self.ds_button_screenshot.released.connect(self._save_screenshot)
 
         # misc panel.
-        self.misc_button_info.pressed.connect(lambda: self.info_dialog.show())
-        self.misc_button_pref.pressed.connect(self._show_preference)
-        self.misc_button_about.pressed.connect(self._show_about)
-        self.misc_button_log.pressed.connect(self.logger.show)
+        self.misc_button_info.released.connect(lambda: self.info_dialog.show())
+        self.misc_button_pref.released.connect(self._show_preference)
+        self.misc_button_about.released.connect(self._show_about)
+        self.misc_button_log.released.connect(self.logger.show)
         if check_multipie():
-            self.misc_button_multipie.pressed.connect(self._show_multipie)
+            self.misc_button_multipie.released.connect(self._show_multipie)
 
         # debug panel.
         if self.debug:
-            self.debug_button_camera.pressed.connect(self._show_camera_info)
-            self.debug_button_data.pressed.connect(self._show_raw_data)
-            self.debug_button_actor.pressed.connect(self._show_actor_list)
-            self.debug_button_status.pressed.connect(self._show_status_data)
-            self.debug_button_preference.pressed.connect(self._show_preference_data)
+            self.debug_button_camera.released.connect(self._show_camera_info)
+            self.debug_button_data.released.connect(self._show_raw_data)
+            self.debug_button_actor.released.connect(self._show_actor_list)
+            self.debug_button_status.released.connect(self._show_status_data)
+            self.debug_button_preference.released.connect(self._show_preference_data)
 
         # info message.
         self.pyvista_widget.message.connect(self.write_info)
@@ -1025,7 +1024,6 @@ class QtDraw(Window):
         self.pyvista_widget.save_current()
         self.pref_dialog = PreferenceDialog(self.pyvista_widget, self)
         status = self.pref_dialog.exec()  # open as modal mode.
-        self.sender().setDown(False)  # reset push button.
 
         if status != QDialog.Accepted:
             self.pyvista_widget.restore()
@@ -1047,7 +1045,6 @@ class QtDraw(Window):
         """
         self.about_dialog = AboutDialog(self.pyvista_widget, self)
         self.about_dialog.exec()  # open as modal mode.
-        self.sender().setDown(False)  # reset push button.
 
     # ==================================================
     def _show_multipie(self):
@@ -1057,13 +1054,12 @@ class QtDraw(Window):
         :meta private:
         """
         if check_multipie():
-            from qtdraw.multipie.plugin_multipie import MultiPiePlugin
+            from qtdraw.multipie.multipie_dialog import MultiPieDialog
 
             if self.multipie_dialog is None:
-                self.multipie_dialog = MultiPiePlugin(self)
+                self.multipie_dialog = MultiPieDialog(self)
             else:
-                self.multipie_dialog.dialog.show()
-            self.sender().setDown(False)  # reset push button.
+                self.multipie_dialog.show()
 
     # ==================================================
     def _show_status_data(self):
@@ -1175,7 +1171,6 @@ class QtDraw(Window):
         :meta private:
         """
         ret = QMessageBox.question(self, "", "Are you sure ?", QMessageBox.Cancel, QMessageBox.Ok)
-        self.sender().setDown(False)  # reset push button.
         if ret == QMessageBox.Ok:
             self.clear_data()
 
@@ -1184,10 +1179,10 @@ class QtDraw(Window):
         """
         Clear data (actor and data).
         """
-        self.pyvista_widget.reload()
+        self.pyvista_widget.clear_data()
         self._update_panel()
         if self.multipie_dialog is not None:
-            self.multipie_dialog.clear_counter()
+            self.multipie_dialog.clear_data()
 
     # ==================================================
     def exec(self):
@@ -1212,32 +1207,23 @@ class QtDraw(Window):
         if ret != QMessageBox.Ok:
             event.ignore()
         else:
-            self.close()
-
-    # ==================================================
-    def close(self):
-        """
-        Close dialogs.
-
-        :meta private:
-        """
-        if self.debug:
-            if self.actor_dialog is not None:
-                self.actor_dialog.close()
-            if self.data_dialog is not None:
-                self.data_dialog.close()
-            if self.status_dialog is not None:
-                self.status_dialog.close()
-            if self.pref_data_dialog is not None:
-                self.pref_data_dialog.close()
-            if self.camera_dialog is not None:
-                self.camera_dialog.close()
-        if self.multipie_dialog is not None:
-            self.multipie_dialog.dialog.close()
-        self.logger.close()
-        self.info_dialog.close()
-        self.pyvista_widget.close()
-        super().close()
+            if self.debug:
+                if self.actor_dialog is not None:
+                    self.actor_dialog.close()
+                if self.data_dialog is not None:
+                    self.data_dialog.close()
+                if self.status_dialog is not None:
+                    self.status_dialog.close()
+                if self.pref_data_dialog is not None:
+                    self.pref_data_dialog.close()
+                if self.camera_dialog is not None:
+                    self.camera_dialog.close()
+            if self.multipie_dialog is not None:
+                self.multipie_dialog.close()
+            self.logger.close()
+            self.info_dialog.close()
+            self.pyvista_widget.close()
+            super().closeEvent(event)
 
     # ==================================================
     def update_status(self, key, value):
@@ -2604,138 +2590,133 @@ class QtDraw(Window):
     # ==================================================
     # MultiPie interface
     # ==================================================
-    def mp_set_group(self, tag=None):
-        """
-        MultiPie: Set point/sapce group.
-
-        Args:
-            tag (str, optional): group tag in Schoenflies notation [default: C1].
-        """
+    def _check_multipie(self):
         if not check_multipie():
             raise Exception("MultiPie is not installed.")
-
-        if self.multipie_dialog is not None:
-            self.multipie_dialog.dialog.close()
-            del self.multipie_dialog
-            self.multipie_dialog = None
-
-        if tag is None:
-            tag = "C1"
-
-        multipie = {"group": {"group": tag}}
-        self.pyvista_widget.update_status("multipie", multipie)
-        self.misc_button_multipie.pressed.emit()
-        self._set_axis_type()
+        if self.multipie_dialog is None:
+            QMessageBox.question(self, "", "Call 'mp_set_group(tag)' at first.", QMessageBox.Ok)
+            return True
+        return False
 
     # ==================================================
-    def mp_add_site(self, site, scale=1.0, color=None):
+    def mp_set_group(self, group):
+        """
+        MultiPie: Set group.
+
+        Args:
+            group (str): group tag [default: C1].
+        """
+        if self.multipie_dialog is not None:
+            self.multipie_dialog.close()
+            self.multipie_dialog = None
+
+        self.pyvista_widget.mp_set_group(group=group)
+        self.misc_button_multipie.released.emit()
+
+    # ==================================================
+    def mp_add_site(self, site, size=None, color=None, opacity=None):
         """
         MultiPie: Add equivalent sites.
 
         Args:
             site (str): representative site.
-            scale (float, optional): size scale.
+            size (float, optional): size.
             color (str, optional): color.
+            opacity (float, optional): opacity.
         """
-        if self.multipie_dialog is None:
-            self.mp_set_group()
+        if self._check_multipie():
+            return
 
-        self.multipie_dialog.dialog.object_edit_site.setText(site)
-        self.multipie_dialog.dialog.obj_add_site(scale, color)
+        self.pyvista_widget.mp_add_site(site, size, color, opacity)
+        self.multipie_dialog._object_panel.edit_site.setText(site)
 
     # ==================================================
-    def mp_add_bond(self, bond, scale=1.0, color=None, color2=None):
+    def mp_add_bond(self, bond, width=None, color=None, color2=None, opacity=None):
         """
         MultiPie: Add equivalent bonds.
 
         Args:
             bond (str): representative bond.
-            scale (float, optional): width scale.
+            width (float, optional): width.
             color (str, optional): color.
             color2 (str, optional): color2.
+            opacity (float, optional): opacity.
         """
-        if self.multipie_dialog is None:
-            self.mp_set_group()
+        if self._check_multipie():
+            return
 
-        self.multipie_dialog.dialog.object_edit_bond.setText(bond)
-        self.multipie_dialog.dialog.obj_add_bond(scale, color, color2)
+        self.pyvista_widget.mp_add_bond(bond, width, color, color2, opacity)
+        self.multipie_dialog._object_panel.edit_bond.setText(bond)
 
     # ==================================================
-    def mp_add_vector(self, type, vector, site_bond, scale=1.0):
+    def mp_add_vector(
+        self, vector_sb, type="Q", cartesian=True, average=False, length=None, width=None, color=None, opacity=None
+    ):
         """
-        MultiPie: Add vectors at equivalent sites or bonds.
+        MultiPie: Add transformed vectors at equivalent sites or bonds.
 
         Args:
-            type (str): type of vector, Q/G/T/M.
-            vector (str): vector (cartesian).
-            site_bond (str): representative site or bond.
-            scale (float, optional): length scale.
+            vector_sb (str): vector, "v # site_bond".
+            type (str, optional): type of vector, Q/G/T/M.
+            cartesian (bool, optional): cartesian vector ?
+            average (bool, optional): average ?
+            length (float, optional): length.
+            width (float, optional): width.
+            color (str, optional): color.
+            opacity (float, optional): opacity.
         """
-        if self.multipie_dialog is None:
-            self.mp_set_group()
+        if self._check_multipie():
+            return
 
-        self.multipie_dialog.dialog.object_combo_vector_type.setCurrentText(type)
-        self.multipie_dialog.dialog.object_edit_vector.setText(vector + " # " + site_bond)
-        self.multipie_dialog.dialog.obj_add_vector(scale)
+        self.pyvista_widget.mp_add_vector(vector_sb, type, cartesian, average, length, width, color, opacity)
+        self.multipie_dialog._object_panel.combo_vector_type.setCurrentText(type)
+        self.multipie_dialog._object_panel.edit_vector.setText(vector_sb)
+        self.multipie_dialog._object_panel.check_vector_cart.setChecked(cartesian)
+        self.multipie_dialog._object_panel.check_vector_av.setChecked(average)
 
     # ==================================================
-    def mp_add_orbital(self, type, orbital, site_bond, scale=1.0):
+    def mp_add_orbital(self, orbital_sb, type="Q", average=False, size=None, color=None, opacity=None):
         """
-        MultiPie: Add orbitals at equivalent sites or bonds.
+        MultiPie: Add transformed orbitals at equivalent sites or bonds.
 
         Args:
-            type (str): type of orbital, Q/G/T/M.
-            orbital (str): orbital in terms of x,y,z,r (cartesian).
-            site_bond (str): representative site or bond.
-            scale (float, optional): size scale.
+            orbital_sb (str): orbital, "f(r) # site_bond".
+            type (str, optional): type of orbital, Q/G/T/M.
+            average (bool, optional): average ?
+            size (float, optional): size.
+            color (str, optional): color.
+            opacity (float, optional): opacity.
         """
-        if self.multipie_dialog is None:
-            self.mp_set_group()
+        if self._check_multipie():
+            return
 
-        self.multipie_dialog.dialog.object_combo_orbital_type.setCurrentText(type)
-        self.multipie_dialog.dialog.object_edit_orbital.setText(orbital + " # " + site_bond)
-        self.multipie_dialog.dialog.obj_add_orbital(scale)
+        self.pyvista_widget.mp_add_orbital(orbital_sb, type, average, size, color, opacity)
+        self.multipie_dialog._object_panel.combo_orbital_type.setCurrentText(type)
+        self.multipie_dialog._object_panel.edit_orbital.setText(orbital_sb)
+        self.multipie_dialog._object_panel.check_orbital_av.setChecked(average)
 
     # ==================================================
-    def mp_create_harmonics(self, type, rank):
+    def mp_add_bond_definition(self, bond, length=None, width=None, color=None, opacity=None):
         """
-        MultiPie: Create harmonics list.
+        MultiPie: Create bond definition.
 
         Args:
-            type (str): type of harmonics, Q/G/T/M.
-            rank (int or str): rank.
-
-        Returns:
-            - (list) -- list of harmonics, [str].
+            bond (str): representative bond.
+            length (float, optional): length.
+            width (float, optional): width.
+            color (str, optional): color.
+            opacity (float, optional): opacity.
         """
-        if self.multipie_dialog is None:
-            self.mp_set_group()
+        if self._check_multipie():
+            return
 
-        self.multipie_dialog.dialog.object_combo_harmonics_type.setCurrentText(type)
-        self.multipie_dialog.dialog.object_combo_harmonics_rank.setCurrentText(str(rank))
-
-        lst = self.multipie_dialog.dialog.object_combo_harmonics_irrep.get_item()
-
-        return lst
+        self.pyvista_widget.mp_add_bond_definition(bond, length, width, color, opacity)
+        self.multipie_dialog._basis_panel.edit_def_bond.setText(bond)
 
     # ==================================================
-    def mp_add_harmonics(self, tag, site_bond, scale=1.0):
+    def mp_site_samb_list(self, site):
         """
-        MultiPie: Add harmonics at equivalent sites or bonds.
-
-        Args:
-            tag (str): harmonics tag, obtained by mp_create_harmonics.
-            site_bond (str): representative site or bond.
-            scale (float, optional): size scale.
-        """
-        self.multipie_dialog.dialog.object_combo_harmonics_irrep.setCurrentText(tag)
-        self.multipie_dialog.dialog.object_edit_harmonics.setText(site_bond)
-        self.multipie_dialog.dialog.obj_add_harmonics(scale)
-
-    # ==================================================
-    def mp_create_site_samb(self, site):
-        """
-        MultiPie: Create site SAMB.
+        MultiPie: Create site SAMB list.
 
         Args:
             site (str): representative site.
@@ -2743,30 +2724,32 @@ class QtDraw(Window):
         Returns:
             - (list) -- list of site SAMB, [str].
         """
-        if self.multipie_dialog is None:
-            self.mp_set_group()
+        if self._check_multipie():
+            return
 
-        self.multipie_dialog.dialog.basis_edit_site.setText(site)
-        d = self.multipie_dialog.dialog.basis_gen_site()
-
-        return d
+        self.multipie_dialog._basis_panel.edit_site.setText(site)
+        return self.pyvista_widget.mp_site_samb_list(site)
 
     # ==================================================
-    def mp_add_site_samb(self, tag, scale=1.0):
+    def mp_add_site_samb(self, tag, size=None, p_color=None, n_color=None, z_color=None, z_size=None):
         """
         MultiPie: Add site SAMB.
 
         Args:
-            tag (str): site SAMB, obtained by mp_create_site_samb.
-            scale (float, optional): size scale.
+            tag (str): site SAMB, obtained by mp_site_samb_list.
+            size (float, optional): relative size.
+            p_color (str, optional): positive SAMB color.
+            n_color (str, optional): negative SAMB color.
+            z_color (str, optional): zero SAMB color.
+            z_size (float, optional): zero SAMB size.
         """
-        self.multipie_dialog.dialog.basis_combo_site_samb.setCurrentText(tag)
-        self.multipie_dialog.dialog.basis_add_site(scale)
+        self.pyvista_widget.mp_add_site_samb(tag, size, p_color, n_color, z_color, z_size)
+        self.multipie_dialog._basis_panel.combo_site_samb.setCurrentText(tag)
 
     # ==================================================
-    def mp_create_bond_samb(self, bond):
+    def mp_bond_samb_list(self, bond):
         """
-        MultiPie: Create bond SAMB.
+        MultiPie: Create bond SAMB list.
 
         Args:
             bond (str): representative bond.
@@ -2774,151 +2757,123 @@ class QtDraw(Window):
         Returns:
             - (list) -- list of bond SAMB, [str].
         """
-        if self.multipie_dialog is None:
-            self.mp_set_group()
+        if self._check_multipie():
+            return
 
-        self.multipie_dialog.dialog.basis_edit_bond.setText(bond)
-        d = self.multipie_dialog.dialog.basis_gen_bond()
-
-        return d
+        self.multipie_dialog._basis_panel.edit_bond.setText(bond)
+        return self.pyvista_widget.mp_bond_samb_list(bond)
 
     # ==================================================
-    def mp_add_bond_samb(self, tag, scale=1.0):
+    def mp_add_bond_samb(self, tag, width=None, p_color=None, n_color=None, z_color=None, z_width=None, a_size=None):
         """
         MultiPie: Add bond SAMB.
 
         Args:
-            tag (str): bond SAMB, obtained by mp_create_bond_samb.
-            scale (float, optional): width scale.
+            tag (str): bond SAMB, obtained by mp_bond_samb_list.
+            width (float, optional): relative width.
+            p_color (str, optional): positive SAMB color.
+            n_color (str, optional): negative SAMB color.
+            z_color (str, optional): zero SAMB color.
+            z_width (float, optional): zero SAMB width.
+            a_size (float, optional): relative arrow size.
         """
-        self.multipie_dialog.dialog.basis_combo_bond_samb.setCurrentText(tag)
-        self.multipie_dialog.dialog.basis_add_bond(scale)
+        self.pyvista_widget.mp_add_bond_samb(tag, width, p_color, n_color, z_color, z_width, a_size)
+        self.multipie_dialog._basis_panel.combo_bond_samb.setCurrentText(tag)
 
     # ==================================================
-    def mp_create_vector_samb(self, type, site_bond):
+    def mp_vector_samb_list(self, site_bond, type="Q"):
         """
-        MultiPie: Create vector SAMB.
+        MultiPie: Create vector SAMB list.
 
         Args:
-            type (str): type of vector, Q/G/T/M.
             site_bond (str): representative site or bond.
+            type (str, optional): type of vector, Q/G/T/M.
 
         Returns:
-            - (list) -- list of vector SAMB, [str].
+            - (dict) -- list of vector SAMB, Dict[samb_type, [str] ].
         """
-        if self.multipie_dialog is None:
-            self.mp_set_group()
+        if self._check_multipie():
+            return
 
-        self.multipie_dialog.dialog.basis_combo_vector_type.setCurrentText(type)
-        self.multipie_dialog.dialog.basis_edit_vector.setText(site_bond)
-        self.multipie_dialog.dialog.basis_gen_vector()
-
-        z_samb = self.multipie_dialog.dialog.plus["vector_z_samb"]
-        d = []
-        for select in z_samb.values():
-            d += [f"{i[0][0]}{no+1:02d}: {i[0]}" for no, i in enumerate(select)]
-
-        return d
+        self.multipie_dialog._basis_panel.combo_vector_type.setCurrentText(type)
+        self.multipie_dialog._basis_panel.edit_vector.setText(site_bond)
+        return self.pyvista_widget.mp_vector_samb_list(site_bond, type)
 
     # ==================================================
-    def mp_add_vector_samb(self, lc, scale=1.0):
+    def mp_add_vector_samb(self, lc, length=None, width=None, color=None, opacity=None):
         """
         MultiPie: Add vector SAMB.
 
         Args:
-            lc (str): linear combination of vector SAMBs, obtained by mp_create_vector_samb.
-            scale (float, optional): length scale.
+            lc (str): linear combination of vector SAMBs, obtained by mp_vector_samb_list.
+            length (float, optional): relative length.
+            width (float, optional): relative width.
+            color (str, optional): color.
+            opacity (float, optional): opacity.
         """
-        num = {k: lc.count(k) for k in ["Q", "G", "T", "M"]}
-        z_type = "Q" if num["Q"] + num["G"] > 0 else "T"
-        self.multipie_dialog.dialog.basis_combo_vector_samb_type.setCurrentText(z_type)
-        self.multipie_dialog.dialog.basis_edit_vector_lc.setText(lc)
-        self.multipie_dialog.dialog.basis_add_vector_lc(scale)
+        self.pyvista_widget.mp_add_vector_samb(lc, length, width, color, opacity)
+        self.multipie_dialog._basis_panel.edit_vector_lc.setText(lc)
 
     # ==================================================
-    def mp_add_vector_samb_modulation(self, mod_list):
+    def mp_add_vector_samb_modulation(self, modulation_range, length=None, width=None, color=None, opacity=None):
         """
         MultiPie: Add vector SAMB with modulation.
 
         Args:
-            mod_list (str): modulation list, "[[tag, coeff, k_vector, cos/sin]]".
+            modulation_range (str): modulation and range, "[[tag, coeff, k_vector, cos/sin]] : [r1, r2, r3]".
+            length (float, optional): relative length.
+            width (float, optional): relative width.
+            color (str, optional): color.
+            opacity (float, optional): opacity.
         """
-        num = {k: mod_list.count(k) for k in ["Q", "G", "T", "M"]}
-        z_type = "Q,G" if num["Q"] + num["G"] > 0 else "T,M"
-        self.multipie_dialog.dialog.basis_combo_vector_modulation_type.setCurrentText(z_type)
-        self.multipie_dialog.dialog.basis_edit_vector_modulation.setText(mod_list)
-        self.multipie_dialog.dialog.basis_gen_vector_modulation()
-        self.multipie_dialog.dialog._vector_modulation_dialog.accept()
+        self.pyvista_widget.mp_add_vector_samb_modulation(modulation_range, length, width, color, opacity)
+        self.multipie_dialog._basis_panel.edit_vector_modulation.setText(modulation_range)
 
     # ==================================================
-    def mp_create_orbital_samb(self, type, rank, site_bond):
+    def mp_orbital_samb_list(self, site_bond, type="Q", rank=0):
         """
         MultiPie: Create orbital SAMB.
 
         Args:
-            type (str): type of orbital, Q/G/T/M.
-            rank (int or str): rank.
             site_bond (str): representative site or bond.
+            type (str, optional): type of orbital, Q/G/T/M.
+            rank (int or str, optional): rank.
 
         Returns:
-            - (list) -- list of orbital SAMB, [str].
+            - (dict) -- list of orbital SAMB, Dict[samb_type, [str] ].
         """
-        if self.multipie_dialog is None:
-            self.mp_set_group()
+        if self._check_multipie():
+            return
 
-        self.multipie_dialog.dialog.basis_combo_orbital_type.setCurrentText(type)
-        self.multipie_dialog.dialog.basis_combo_orbital_rank.setCurrentText(str(rank))
-        self.multipie_dialog.dialog.basis_edit_orbital.setText(site_bond)
-        self.multipie_dialog.dialog.basis_gen_orbital()
-
-        z_samb = self.multipie_dialog.dialog.plus["orbital_z_samb"]
-        d = []
-        for select in z_samb.values():
-            d += [f"{i[0][0]}{no+1:02d}: {i[0]}" for no, i in enumerate(select)]
-
-        return d
+        self.multipie_dialog._basis_panel.combo_orbital_type.setCurrentText(type)
+        self.multipie_dialog._basis_panel.combo_orbital_rank.setCurrentText(str(rank))
+        self.multipie_dialog._basis_panel.edit_orbital.setText(site_bond)
+        return self.pyvista_widget.mp_orbital_samb_list(site_bond, type, rank)
 
     # ==================================================
-    def mp_add_orbital_samb(self, lc, scale=1.0):
+    def mp_add_orbital_samb(self, lc, size=None, color=None, opacity=None):
         """
         MultiPie: Add orbital SAMB.
 
         Args:
-            lc (str): linear combination of orbital SAMBs, obtained by mp_create_orbital_samb.
-            scale (float, optional): size scale.
+            lc (str): linear combination of orbital SAMBs, obtained by mp_orbital_samb_list.
+            size (float, optional): relative size.
+            color (str, optional): color.
+            opacity (float, optional): opacity.
         """
-        num = {k: lc.count(k) for k in ["Q", "G", "T", "M"]}
-        z_type = "Q" if num["Q"] + num["G"] > 0 else "T"
-        self.multipie_dialog.dialog.basis_combo_orbital_samb_type.setCurrentText(z_type)
-        self.multipie_dialog.dialog.basis_edit_orbital_lc.setText(lc)
-        self.multipie_dialog.dialog.basis_add_orbital_lc(scale)
+        self.pyvista_widget.mp_add_orbital_samb(lc, size, color, opacity)
+        self.multipie_dialog._basis_panel.edit_orbital_lc.setText(lc)
 
     # ==================================================
-    def mp_add_orbital_samb_modulation(self, mod_list):
+    def mp_add_orbital_samb_modulation(self, modulation_range, size=None, color=None, opacity=None):
         """
         MultiPie: Add orbital SAMB with modulation.
 
         Args:
-            mod_list (str): modulation list, "[[tag, coeff, k_vector, cos/sin]]".
+            modulation_range (str): modulation and range, "[[tag, coeff, k_vector, cos/sin]] : [r1, r2, r3]".
+            size (float, optional): relative size.
+            color (str, optional): color.
+            opacity (float, optional): opacity.
         """
-        num = {k: mod_list.count(k) for k in ["Q", "G", "T", "M"]}
-        z_type = "Q,G" if num["Q"] + num["G"] > 0 else "T,M"
-        self.multipie_dialog.dialog.basis_combo_orbital_modulation_type.setCurrentText(z_type)
-        self.multipie_dialog.dialog.basis_edit_orbital_modulation.setText(mod_list)
-        self.multipie_dialog.dialog.basis_gen_orbital_modulation()
-        self.multipie_dialog.dialog._orbital_modulation_dialog.accept()
-
-    # ==================================================
-    def mp_add_hopping(self, bond, scale=1.0):
-        """
-        MultiPie: Add hopping bond directions.
-
-        Args:
-            bond (str): representative bond.
-            scale (float, optional): length scale.
-        """
-        if self.multipie_dialog is None:
-            self.mp_set_group()
-
-        self.multipie_dialog.dialog.basis_edit_hopping.setText(bond)
-        self.multipie_dialog.dialog.basis_add_hopping(scale)
+        self.pyvista_widget.mp_add_orbital_samb_modulation(modulation_range, size, color, opacity)
+        self.multipie_dialog._basis_panel.edit_orbital_modulation.setText(modulation_range)

@@ -8,3 +8,11 @@ The following API is avalilable to draw objects.
 ```{eval-rst}
 .. automodule:: qtdraw.core.qtdraw_app
 ```
+
+## API in PyVistaWidget
+
+```{eval-rst}
+.. autoclass:: qtdraw.core.pyvista_widget.PyVistaWidget
+   :members:
+   :show-inheritance:
+```

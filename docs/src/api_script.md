@@ -6,8 +6,8 @@
 .. automodule:: qtdraw.scripts.qtdraw
 ```
 
-## Converter to QtDraw Ver. 2
+## Converter to QtDraw Ver. 3
 
 ```{eval-rst}
-.. automodule:: qtdraw.scripts.conv_qtdraw2
+.. automodule:: qtdraw.scripts.conv_qtdraw3
 ```

@@ -1,3 +1,9 @@
+"""
+Create function table for jupyterbook document.
+
+Run this to create "docs/src/function_table.md".
+"""
+
 import os
 import ast
 
@@ -137,10 +143,9 @@ def create_function_table(directory, file):
 
 # ==================================================
 if __name__ == "__main__":
-    from pathlib import Path
     from qtdraw.core.qtdraw_info import __top_dir__
 
-    directory = Path(__top_dir__) / "qtdraw"
-    file = Path(__top_dir__) / "docs/src/function_table.md"
+    directory = __top_dir__ + "qtdraw"
+    file = __top_dir__ + "docs/src/function_table.md"
 
     create_function_table(directory, file)

@@ -27,24 +27,6 @@ class Delegate(QStyledItemDelegate):
         return
 
     # ==================================================
-    def updateEditorGeometry(self, editor, option, index):
-        rect = option.rect
-        size = editor.sizeHint()
-
-        width = size.width()
-        height = size.height()
-
-        max_width = rect.width() - 2 * self.padding
-        max_height = rect.height() - 2 * self.padding
-        width = min(width, max_width)
-        height = min(height, max_height)
-
-        x = rect.x() + (rect.width() - width) // 2
-        y = rect.y() + (rect.height() - height) // 2
-
-        editor.setGeometry(QRect(x, y, width, height))
-
-    # ==================================================
     def paint(self, painter, option, index):
         if index.isValid():
             value = index.model().data(index, Qt.DisplayRole)
@@ -69,10 +51,23 @@ class ComboDelegate(Delegate):
         return editor
 
     # ==================================================
+    def updateEditorGeometry(self, editor, option, index):
+        rect = option.rect
+        size = editor.sizeHint()
+
+        width = size.width() + self.padding
+        height = size.height() - self.padding
+
+        x = rect.x() + (rect.width() - width) // 2
+        y = rect.y() + (rect.height() - height) // 2
+
+        editor.setGeometry(QRect(x, y, width, height))
+
+    # ==================================================
     def sizeHint(self, option, index):
         sz = super().sizeHint(option, index)
-        w, h = 6 * self.padding, self.padding
-        return QSize(sz.width() + w, sz.height() + h)
+        w, h = sz.width() + 6 * self.padding, sz.height() + 2 * self.padding
+        return QSize(w, h)
 
 
 # ==================================================
@@ -91,10 +86,23 @@ class ColorDelegate(Delegate):
         return editor
 
     # ==================================================
+    def updateEditorGeometry(self, editor, option, index):
+        rect = option.rect
+        size = editor.sizeHint()
+
+        width = size.width() - 2 * self.padding
+        height = size.height() - self.padding
+
+        x = rect.x() + (rect.width() - width) // 2
+        y = rect.y() + (rect.height() - height) // 2
+
+        editor.setGeometry(QRect(x, y, width, height))
+
+    # ==================================================
     def sizeHint(self, option, index):
         sz = super().sizeHint(option, index)
-        w, h = 6 * self.padding, self.padding
-        return QSize(sz.width() + w, sz.height() + h)
+        w, h = sz.width() + 6 * self.padding, sz.height() + 2 * self.padding
+        return QSize(w, h)
 
 
 # ==================================================
@@ -113,11 +121,35 @@ class EditorDelegate(Delegate):
     def createEditor(self, parent, option, index):
         model = index.model()
         editor = Editor(parent, self.default, (self.type, self.option), color=self.color, size=self.size, mathjax=self.mathjax)
-        editor.returnPressed.connect(lambda data: model.setData(index, data))
+        editor.returnPressed.connect(lambda data: self._set_data_size(editor, model, index, data))
         return editor
 
     # ==================================================
+    def _set_data_size(self, editor, model, index, data):
+        model.setData(index, data)
+        h = editor.sizeHint().height() + 2 * self.padding
+        editor.setFixedHeight(h)
+        view = self.parent()
+        view.set_row_height_hint(index.row(), h)
+
+    # ==================================================
+    def updateEditorGeometry(self, editor, option, index):
+        rect = option.rect
+        size = editor.sizeHint()
+
+        width = size.width()
+        height = size.height() + 2 * self.padding
+
+        x = rect.x() + (rect.width() - width) // 2
+        y = rect.y() + (rect.height() - height) // 2
+
+        editor.setGeometry(QRect(x, y, width, height))
+
+    # ==================================================
     def sizeHint(self, option, index):
-        sz = super().sizeHint(option, index)
-        w, h = 2 * self.padding, 4 * self.padding
-        return QSize(sz.width() + w, sz.height() + h)
+        view = self.parent()
+        h = view.row_height_hint(index.row())
+        if h is not None:
+            w = super().sizeHint(option, index).width() + 2 * self.padding
+            return QSize(w, h)
+        return super().sizeHint(option, index)

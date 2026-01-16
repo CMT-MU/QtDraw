@@ -11,9 +11,7 @@ from math import floor, ceil
 
 from qtdraw.core.pyvista_widget_setting import widget_detail as detail
 from qtdraw.core.pyvista_widget_setting import CHOP, DIGIT
-
 from qtdraw.widget.color_palette import all_colors
-
 from qtdraw.util.util import text_to_list
 
 
@@ -167,6 +165,58 @@ def _create_axes_actor(
 
 
 # ==================================================
+def _create_axes_actor_full(
+    pv_widget,
+    A,
+    label_color,
+    shaft_color,
+    shaft_radius,
+    shaft_resolution,
+    tip_radius,
+    tip_length,
+    tip_resolution,
+):
+    """
+    Create custom axes actor (crossed axes).
+
+    Args:
+        pv_widget (PyVistaWidget): pyvista widget.
+        A (numpy.ndarray): (a1, a2, a3) unit vectors, 4x4 [float].
+        label_color (list): axes label color names, [str].
+        shaft_color (list): axes color names, [str].
+        shaft_radius (float): axes cylinder radius.
+        shaft_resolution (int): axes shaft resolution.
+        tip_radius (float): axes tip radius.
+        tip_length (float): axes tip length.
+        tip_resolution (int): axes tip resolution.
+    """
+    shaft_color = [(np.array(all_colors[c][1]) / 255) for c in shaft_color]
+    label_color = [all_colors[c][1] for c in label_color]
+
+    length = 2.5
+    offset = -0.5 * length
+    width = shaft_radius * 2.5
+
+    for no, (d, c) in enumerate(zip(A[0:3, 0:3].T, shaft_color)):
+        d = np.asarray(d) / np.linalg.norm(d)
+
+        obj = pv.Arrow(
+            start=offset * d,
+            direction=d,
+            scale=length,
+            shaft_radius=shaft_radius * width / length,
+            tip_radius=1.2 * tip_radius * width / length,
+            tip_length=tip_length * 0.15,
+            shaft_resolution=shaft_resolution,
+            tip_resolution=tip_resolution,
+        )
+
+        pv_widget.add_mesh(mesh=obj, smooth_shading=True, color=c, name=f"axes_arrow_{no}")
+
+    return None
+
+
+# ==================================================
 def create_axes_widget(
     pv_widget,
     A,
@@ -176,6 +226,7 @@ def create_axes_widget(
     label_italic=False,
     label_color=["black", "black", "black"],
     viewport=True,
+    full=False,
 ):
     """
     Create axes widget.
@@ -189,6 +240,7 @@ def create_axes_widget(
         label_italic (bool, optional): italic ?
         label_color (list, optional): axes label color names, [str].
         viewport (bool, optional): set viewport ?
+        full (bool, optional): full axes ?
 
     Note:
         - if label is None, no label is used.
@@ -198,6 +250,7 @@ def create_axes_widget(
     shaft_color = detail["shaft_color"]
     sphere_color = detail["sphere_color"]
     shaft_radius = detail["shaft_radius"]
+    shaft_resolution = detail["shaft_resolution"]
     tip_radius = detail["tip_radius"]
     tip_length = detail["tip_length"]
     tip_resolution = detail["tip_resolution"]
@@ -211,27 +264,40 @@ def create_axes_widget(
         pickable = False
 
     # create axes actor.
-    marker = _create_axes_actor(
-        A,
-        label=label,
-        label_size=label_size,
-        label_bold=label_bold,
-        label_italic=label_italic,
-        label_color=label_color,
-        scale=scale,
-        shaft_color=shaft_color,
-        sphere_color=sphere_color,
-        shaft_radius=shaft_radius,
-        tip_radius=tip_radius,
-        tip_length=tip_length,
-        tip_resolution=tip_resolution,
-        sphere_radius=sphere_radius,
-        theta_phi_resolution=theta_phi_resolution,
-    )
+    if full:
+        _create_axes_actor_full(
+            pv_widget,
+            A,
+            label_color=label_color,
+            shaft_color=shaft_color,
+            shaft_radius=shaft_radius,
+            shaft_resolution=shaft_resolution,
+            tip_radius=tip_radius,
+            tip_length=tip_length,
+            tip_resolution=tip_resolution,
+        )
+    else:
+        marker = _create_axes_actor(
+            A,
+            label=label,
+            label_size=label_size,
+            label_bold=label_bold,
+            label_italic=label_italic,
+            label_color=label_color,
+            scale=scale,
+            shaft_color=shaft_color,
+            sphere_color=sphere_color,
+            shaft_radius=shaft_radius,
+            tip_radius=tip_radius,
+            tip_length=tip_length,
+            tip_resolution=tip_resolution,
+            sphere_radius=sphere_radius,
+            theta_phi_resolution=theta_phi_resolution,
+        )
 
-    # create axes widget.
-    pv_widget.add_orientation_widget(marker, interactive=pickable, viewport=viewport)
-    pv_widget.renderer.axes_widget.SetZoom(scale)
+        # create axes widget.
+        pv_widget.add_orientation_widget(marker, interactive=pickable, viewport=viewport)
+        pv_widget.renderer.axes_widget.SetZoom(scale)
 
 
 # ==================================================
