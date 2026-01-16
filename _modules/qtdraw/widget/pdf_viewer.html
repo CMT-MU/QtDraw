@@ -36,7 +36,7 @@
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=5f1b4820" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=34ddd5e8" />
   
   <!-- So that users can add custom icons -->
   <script src="../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
@@ -161,7 +161,7 @@
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../../../src/overview.html">Overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../src/install.html">Install QtDraw (and MultiPie)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../src/install.html">Installing QtDraw</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../src/getting_started.html">Getting Started</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Documentation</span></p>
@@ -367,9 +367,9 @@
         <span class="n">view</span><span class="o">.</span><span class="n">setZoomMode</span><span class="p">(</span><span class="n">QPdfView</span><span class="o">.</span><span class="n">ZoomMode</span><span class="o">.</span><span class="n">FitToWidth</span><span class="p">)</span>
 
         <span class="n">open_btn</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;Open&quot;</span><span class="p">)</span>
-        <span class="n">open_btn</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">load</span><span class="p">)</span>
+        <span class="n">open_btn</span><span class="o">.</span><span class="n">released</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">load</span><span class="p">)</span>
         <span class="n">save_btn</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;Save&quot;</span><span class="p">)</span>
-        <span class="n">save_btn</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">save</span><span class="p">)</span>
+        <span class="n">save_btn</span><span class="o">.</span><span class="n">released</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">save</span><span class="p">)</span>
 
         <span class="n">layout</span> <span class="o">=</span> <span class="n">QGridLayout</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="n">layout</span><span class="o">.</span><span class="n">setContentsMargins</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
@@ -456,7 +456,7 @@ By Hiroaki Kusunose
 
   <p class="copyright">
     
-      © Copyright 2021-2024.
+      © Copyright 2021-.
       <br/>
     
   </p>

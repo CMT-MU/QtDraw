@@ -37,7 +37,7 @@
     <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
-    <link rel="stylesheet" type="text/css" href="_static/custom.css?v=5f1b4820" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css?v=34ddd5e8" />
   
   <!-- So that users can add custom icons -->
   <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
@@ -163,7 +163,7 @@
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="src/overview.html">Overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="src/install.html">Install QtDraw (and MultiPie)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="src/install.html">Installing QtDraw</a></li>
 <li class="toctree-l1"><a class="reference internal" href="src/getting_started.html">Getting Started</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Documentation</span></p>
@@ -394,42 +394,34 @@
                   
   <section class="tex2jax_ignore mathjax_ignore" id="qtdraw">
 <h1><a class="reference external" href="https://cmt-mu.github.io/QtDraw/">QtDraw</a><a class="headerlink" href="#qtdraw" title="Link to this heading">#</a></h1>
-<p>3D drawing tool for molecules and crystals based on <a class="reference external" href="https://docs.pyvista.org/">PyVista</a> and <a class="reference external" href="https://doc.qt.io/qtforpython-6/index.html">PySide6</a>.
+<p>3D drawing tool especially for molecules and crystals based on <a class="reference external" href="https://docs.pyvista.org/">PyVista</a> and <a class="reference external" href="https://doc.qt.io/qtforpython-6/index.html">PySide6</a>.
 Drawings are associated with crystallographic symmetry operations provided by <a class="reference external" href="https://github.com/CMT-MU/MultiPie">MultiPie</a>.</p>
 <ul>
 <li><p><strong>Authors</strong>: Hiroaki Kusunose</p></li>
-<li><p><strong>Citing QtDraw and MultiPie</strong>: If you are using QtDraw and/or MultiPie in your scientific research, please help our scientific visibility by citing our work:</p>
-<blockquote>
-<div><p>Hiroaki Kusunose, Rikuto Oiwa, and Satoru Hayami, Symmetry-adapted modeling for molecules and crystals, Phys. Rev. B <b>107</b>, 195118 (2023).<br>
-DOI: <a class="reference external" href="https://doi.org/10.1103/PhysRevB.107.195118">https://doi.org/10.1103/PhysRevB.107.195118</a></p>
-</div></blockquote>
-</li>
-<li><p><strong>Installation</strong>: QtDraw can be installed from PyPI using pip on Python &gt;= 3.11:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>qtdraw
-$<span class="w"> </span>playwright<span class="w"> </span>instll<span class="w"> </span>chromium
+<li><p><strong>Installation</strong>: QtDraw can be installed from PyPI using pip on Python &gt;= 3.11:
+In order to use MathJax rendering for LaTeX, install playwright browser such as chromium.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>qtdraw
+playwright<span class="w"> </span>instll<span class="w"> </span>chromium
 </pre></div>
 </div>
 </li>
 <li><p><strong>Shell commands</strong>:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">qtdraw</span> <span class="pre">[filename]</span></code> : Open QtDraw file.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">conv_qtdraw2</span> <span class="pre">[ver1_file.qtdw]</span></code> : Convert Version 1 <code class="docutils literal notranslate"><span class="pre">.qtdw</span></code> file into this version (Version 2).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">conv_qtdraw3</span> <span class="pre">[ver1_file.qtdw]</span></code> : Convert Version 1 <code class="docutils literal notranslate"><span class="pre">.qtdw</span></code> file into this version (Version 3).</p></li>
 </ul>
 </li>
 <li><p><strong>Requirements</strong>:</p>
 <ul class="simple">
-<li><p>This library requires <a class="reference external" href="https://www.tug.org/texlive/">TeXLive</a> environment.</p></li>
-<li><p>Symmetry operation supports are provided by <a class="reference external" href="https://github.com/CMT-MU/MultiPie">MultiPie</a>.</p></li>
-</ul>
-</li>
-<li><p><strong>See also</strong>:</p>
-<ul class="simple">
-<li><p><a class="reference external" href="https://cmt-mu.github.io/QtDraw/src/overview.html">Manual</a>.</p></li>
-<li><p><a class="reference external" href="https://cmt-mu.github.io/MultiPieTutorial/">MultiPie tutorial (in Japanese)</a></p></li>
-<li><p><a class="reference external" href="https://cmt-mu.github.io/QtDrawTutorial/">QtDraw tutorial (in Japanese)</a></p></li>
-<li><p>Source : <a class="reference external" href="https://pypi.org/project/qtdraw/">PyPI</a> or <a class="reference external" href="https://github.com/CMT-MU/QtDraw">GitHub</a></p></li>
+<li><p>[Optional] Symmetry operation supports are provided by <a class="reference external" href="https://github.com/CMT-MU/MultiPie">MultiPie</a>.</p></li>
 <li><p>This project includes <a class="reference external" href="https://www.mathjax.org/">MathJax</a>, which is licensed under the Apache License 2.0.</p></li>
 </ul>
+</li>
+<li><p><strong>Citing QtDraw and MultiPie</strong>: If you are using QtDraw and/or MultiPie in your scientific research, please help our scientific visibility by citing our work:</p>
+<blockquote>
+<div><p>Hiroaki Kusunose, Rikuto Oiwa, and Satoru Hayami, Symmetry-adapted modeling for molecules and crystals, Phys. Rev. B <b>107</b>, 195118 (2023).<br>
+DOI: <a class="reference external" href="https://doi.org/10.1103/PhysRevB.107.195118">https://doi.org/10.1103/PhysRevB.107.195118</a></p>
+</div></blockquote>
 </li>
 </ul>
 <div class="toctree-wrapper compound">
@@ -488,7 +480,7 @@ By Hiroaki Kusunose
 
   <p class="copyright">
     
-      © Copyright 2021-2024.
+      © Copyright 2021-.
       <br/>
     
   </p>

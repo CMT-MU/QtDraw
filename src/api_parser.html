@@ -37,7 +37,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
-    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=5f1b4820" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=34ddd5e8" />
   
   <!-- So that users can add custom icons -->
   <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
@@ -162,7 +162,7 @@
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="install.html">Install QtDraw (and MultiPie)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installing QtDraw</a></li>
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Documentation</span></p>
@@ -399,6 +399,7 @@
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-qtdraw.parser.xsf">For XSF</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.parser.xsf.create_data"><code class="docutils literal notranslate"><span class="pre">create_data()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.parser.xsf.extract_data_xsf"><code class="docutils literal notranslate"><span class="pre">extract_data_xsf()</span></code></a></li>
 </ul>
 </li>
@@ -411,7 +412,7 @@
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-qtdraw.parser.converter">Converter</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.parser.converter.convert_version2"><code class="docutils literal notranslate"><span class="pre">convert_version2()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.parser.converter.convert_version3"><code class="docutils literal notranslate"><span class="pre">convert_version3()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.parser.converter.get_camera"><code class="docutils literal notranslate"><span class="pre">get_camera()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.parser.converter.get_data"><code class="docutils literal notranslate"><span class="pre">get_data()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.parser.converter.get_multipie"><code class="docutils literal notranslate"><span class="pre">get_multipie()</span></code></a></li>
@@ -445,7 +446,7 @@
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>filename</strong> (<em>str</em>) -- filename.</p></li>
-<li><p><strong>widget</strong> (<a class="reference internal" href="api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget" title="qtdraw.core.pyvista_widget.PyVistaWidget"><em>PyVistaWidget</em></a>) -- PyVista widget.</p></li>
+<li><p><strong>widget</strong> (<a class="reference internal" href="from_python.html#qtdraw.core.pyvista_widget.PyVistaWidget" title="qtdraw.core.pyvista_widget.PyVistaWidget"><em>PyVistaWidget</em></a>) -- PyVista widget.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -507,6 +508,11 @@
 </ul>
 </div>
 <dl class="py function">
+<dt class="sig sig-object py" id="qtdraw.parser.xsf.create_data">
+<span class="sig-name descname"><span class="pre">create_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">origin</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">A</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endpoint</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f_surface</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/parser/xsf.html#create_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.parser.xsf.create_data" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="qtdraw.parser.xsf.extract_data_xsf">
 <span class="sig-name descname"><span class="pre">extract_data_xsf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/parser/xsf.html#extract_data_xsf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.parser.xsf.extract_data_xsf" title="Link to this definition">#</a></dt>
 <dd><p>Read xsf file (grid data part only).</p>
@@ -547,7 +553,7 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>widget</strong> (<a class="reference internal" href="api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget" title="qtdraw.core.pyvista_widget.PyVistaWidget"><em>PyVistaWidget</em></a>) -- widget.</p></li>
+<li><p><strong>widget</strong> (<a class="reference internal" href="from_python.html#qtdraw.core.pyvista_widget.PyVistaWidget" title="qtdraw.core.pyvista_widget.PyVistaWidget"><em>PyVistaWidget</em></a>) -- widget.</p></li>
 <li><p><strong>name</strong> (<em>str</em>) -- name of model.</p></li>
 <li><p><strong>site_info</strong> (<em>list</em>) -- site info.</p></li>
 <li><p><strong>bond_info</strong> (<em>list</em>) -- bond info.</p></li>
@@ -637,19 +643,20 @@
 <p>Converter for QtDraw ver. 1.</p>
 <p>This module contains the converter for version 1 format.</p>
 <dl class="py function">
-<dt class="sig sig-object py" id="qtdraw.parser.converter.convert_version2">
-<span class="sig-name descname"><span class="pre">convert_version2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dic</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">widget</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/parser/converter.html#convert_version2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.parser.converter.convert_version2" title="Link to this definition">#</a></dt>
-<dd><p>Converter from ver.1 to ver. 2.</p>
+<dt class="sig sig-object py" id="qtdraw.parser.converter.convert_version3">
+<span class="sig-name descname"><span class="pre">convert_version3</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dic</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ver</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">widget</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/parser/converter.html#convert_version3"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.parser.converter.convert_version3" title="Link to this definition">#</a></dt>
+<dd><p>Converter from ver.1/2 to ver. 3.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>dic</strong> (<em>dict</em>) -- ver.1 dict.</p></li>
-<li><p><strong>widget</strong> (<a class="reference internal" href="api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget" title="qtdraw.core.pyvista_widget.PyVistaWidget"><em>PyVistaWidget</em></a>) -- PyVistaWidget.</p></li>
+<li><p><strong>dic</strong> (<em>dict</em>) -- ver.1/2 dict.</p></li>
+<li><p><strong>ver</strong> (<em>int</em>) -- major version.</p></li>
+<li><p><strong>widget</strong> (<a class="reference internal" href="from_python.html#qtdraw.core.pyvista_widget.PyVistaWidget" title="qtdraw.core.pyvista_widget.PyVistaWidget"><em>PyVistaWidget</em></a>) -- PyVistaWidget.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><ul class="simple">
-<li><p>(dict) -- all data dict in ver. 2.</p></li>
+<li><p>(dict) -- all data dict in ver. 3.</p></li>
 </ul>
 </p>
 </dd>
@@ -681,7 +688,7 @@
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>dic</strong> (<em>dict</em>) -- read data.</p></li>
-<li><p><strong>widget</strong> (<a class="reference internal" href="api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget" title="qtdraw.core.pyvista_widget.PyVistaWidget"><em>PyVistaWidget</em></a>) -- PyVistaWidget.</p></li>
+<li><p><strong>widget</strong> (<a class="reference internal" href="from_python.html#qtdraw.core.pyvista_widget.PyVistaWidget" title="qtdraw.core.pyvista_widget.PyVistaWidget"><em>PyVistaWidget</em></a>) -- PyVistaWidget.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -696,7 +703,7 @@
 <dl class="py function">
 <dt class="sig sig-object py" id="qtdraw.parser.converter.get_multipie">
 <span class="sig-name descname"><span class="pre">get_multipie</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dic</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/parser/converter.html#get_multipie"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.parser.converter.get_multipie" title="Link to this definition">#</a></dt>
-<dd><p>Get multipie info.</p>
+<dd><p>Get multipie info. (v2-&gt;v3)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>dic</strong> (<em>dict</em>) -- read multipie info.</p>
@@ -815,6 +822,7 @@
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-qtdraw.parser.xsf">For XSF</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.parser.xsf.create_data"><code class="docutils literal notranslate"><span class="pre">create_data()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.parser.xsf.extract_data_xsf"><code class="docutils literal notranslate"><span class="pre">extract_data_xsf()</span></code></a></li>
 </ul>
 </li>
@@ -827,7 +835,7 @@
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-qtdraw.parser.converter">Converter</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.parser.converter.convert_version2"><code class="docutils literal notranslate"><span class="pre">convert_version2()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.parser.converter.convert_version3"><code class="docutils literal notranslate"><span class="pre">convert_version3()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.parser.converter.get_camera"><code class="docutils literal notranslate"><span class="pre">get_camera()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.parser.converter.get_data"><code class="docutils literal notranslate"><span class="pre">get_data()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.parser.converter.get_multipie"><code class="docutils literal notranslate"><span class="pre">get_multipie()</span></code></a></li>
@@ -860,7 +868,7 @@ By Hiroaki Kusunose
 
   <p class="copyright">
     
-      © Copyright 2021-2024.
+      © Copyright 2021-.
       <br/>
     
   </p>

@@ -36,7 +36,7 @@
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=5f1b4820" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=34ddd5e8" />
   
   <!-- So that users can add custom icons -->
   <script src="../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
@@ -161,7 +161,7 @@
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../../../src/overview.html">Overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../src/install.html">Install QtDraw (and MultiPie)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../src/install.html">Installing QtDraw</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../src/getting_started.html">Getting Started</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Documentation</span></p>
@@ -360,6 +360,7 @@
 <span class="sd">            use_delegate (bool, optional): use delegate or plain text ?</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_row_heights</span> <span class="o">=</span> <span class="p">{}</span>
 
         <span class="k">if</span> <span class="n">mathjax</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_mathjax</span> <span class="o">=</span> <span class="n">MathJaxSVG</span><span class="p">()</span>
@@ -440,10 +441,13 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">clear_selection</span><span class="p">()</span>
 
     <span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="GroupView.update_widget">
+<a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.group_view.GroupView.update_widget">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">update_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">()</span><span class="o">.</span><span class="n">column_widget</span><span class="p">:</span>
             <span class="n">index</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">siblingAtColumn</span><span class="p">(</span><span class="n">column</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">openPersistentEditor</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">openPersistentEditor</span><span class="p">(</span><span class="n">index</span><span class="p">)</span></div>
+
 
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="GroupView.clear_selection">
@@ -540,6 +544,7 @@
         <span class="n">indexes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">selectedIndexes</span><span class="p">()</span>
         <span class="n">idx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">()</span><span class="o">.</span><span class="n">action_insert_row</span><span class="p">(</span><span class="n">indexes</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">idx</span><span class="o">.</span><span class="n">isValid</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">clear_row_heights</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span></div>
 
 
@@ -551,7 +556,8 @@
 <span class="sd">        Copy row.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">indexes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">selectedIndexes</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">()</span><span class="o">.</span><span class="n">action_copy_row</span><span class="p">(</span><span class="n">indexes</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">()</span><span class="o">.</span><span class="n">action_copy_row</span><span class="p">(</span><span class="n">indexes</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clear_row_heights</span><span class="p">()</span></div>
 
 
     <span class="c1"># ==================================================</span>
@@ -562,7 +568,8 @@
 <span class="sd">        Remove row.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">indexes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">selectedIndexes</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">()</span><span class="o">.</span><span class="n">action_remove_row</span><span class="p">(</span><span class="n">indexes</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">()</span><span class="o">.</span><span class="n">action_remove_row</span><span class="p">(</span><span class="n">indexes</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clear_row_heights</span><span class="p">()</span></div>
 
 
     <span class="c1"># ==================================================</span>
@@ -646,6 +653,47 @@
         <span class="n">index1</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">siblingAtColumn</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">()</span><span class="o">.</span><span class="n">columnCount</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
         <span class="n">selection</span> <span class="o">=</span> <span class="n">QItemSelection</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">index1</span><span class="p">)</span>  <span class="c1"># all columns.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">selectionModel</span><span class="p">()</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">selection</span><span class="p">,</span> <span class="n">QItemSelectionModel</span><span class="o">.</span><span class="n">ClearAndSelect</span><span class="p">)</span></div>
+
+
+    <span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="GroupView.closeEvent">
+<a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.group_view.GroupView.closeEvent">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">closeEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clear_selection</span><span class="p">()</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">closeEvent</span><span class="p">(</span><span class="n">event</span><span class="p">)</span></div>
+
+
+    <span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="GroupView.set_row_height_hint">
+<a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.group_view.GroupView.set_row_height_hint">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_row_height_hint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">height</span><span class="p">):</span>
+        <span class="n">prev</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_row_heights</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">height</span> <span class="o">&gt;</span> <span class="n">prev</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_row_heights</span><span class="p">[</span><span class="n">row</span><span class="p">]</span> <span class="o">=</span> <span class="n">height</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">scheduleDelayedItemsLayout</span><span class="p">()</span></div>
+
+
+    <span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="GroupView.row_height_hint">
+<a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.group_view.GroupView.row_height_hint">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">row_height_hint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_row_heights</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">row</span><span class="p">)</span></div>
+
+
+    <span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="GroupView.clear_row_heights">
+<a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.group_view.GroupView.clear_row_heights">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">clear_row_heights</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_row_heights</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scheduleDelayedItemsLayout</span><span class="p">()</span></div>
+
+
+    <span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="GroupView.setModel">
+<a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.group_view.GroupView.setModel">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">setModel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clear_row_heights</span><span class="p">()</span></div>
 </div>
 
 </pre></div>
@@ -680,7 +728,7 @@ By Hiroaki Kusunose
 
   <p class="copyright">
     
-      © Copyright 2021-2024.
+      © Copyright 2021-.
       <br/>
     
   </p>

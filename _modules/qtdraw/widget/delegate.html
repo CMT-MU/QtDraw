@@ -36,7 +36,7 @@
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=5f1b4820" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=34ddd5e8" />
   
   <!-- So that users can add custom icons -->
   <script src="../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
@@ -161,7 +161,7 @@
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../../../src/overview.html">Overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../src/install.html">Install QtDraw (and MultiPie)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../src/install.html">Installing QtDraw</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../src/getting_started.html">Getting Started</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Documentation</span></p>
@@ -348,39 +348,30 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">padding</span> <span class="o">=</span> <span class="mi">5</span>
 
     <span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="Delegate.setEditorData">
+<a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.delegate.Delegate.setEditorData">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">setEditorData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">editor</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
         <span class="n">value</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">EditRole</span><span class="p">)</span>
-        <span class="n">editor</span><span class="o">.</span><span class="n">setCurrentText</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="n">editor</span><span class="o">.</span><span class="n">setCurrentText</span><span class="p">(</span><span class="n">value</span><span class="p">)</span></div>
+
 
     <span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="Delegate.setModelData">
+<a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.delegate.Delegate.setModelData">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">setModelData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">editor</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
-        <span class="k">return</span>
+        <span class="k">return</span></div>
+
 
     <span class="c1"># ==================================================</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">updateEditorGeometry</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">editor</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
-        <span class="n">rect</span> <span class="o">=</span> <span class="n">option</span><span class="o">.</span><span class="n">rect</span>
-        <span class="n">size</span> <span class="o">=</span> <span class="n">editor</span><span class="o">.</span><span class="n">sizeHint</span><span class="p">()</span>
-
-        <span class="n">width</span> <span class="o">=</span> <span class="n">size</span><span class="o">.</span><span class="n">width</span><span class="p">()</span>
-        <span class="n">height</span> <span class="o">=</span> <span class="n">size</span><span class="o">.</span><span class="n">height</span><span class="p">()</span>
-
-        <span class="n">max_width</span> <span class="o">=</span> <span class="n">rect</span><span class="o">.</span><span class="n">width</span><span class="p">()</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding</span>
-        <span class="n">max_height</span> <span class="o">=</span> <span class="n">rect</span><span class="o">.</span><span class="n">height</span><span class="p">()</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding</span>
-        <span class="n">width</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">max_width</span><span class="p">)</span>
-        <span class="n">height</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">height</span><span class="p">,</span> <span class="n">max_height</span><span class="p">)</span>
-
-        <span class="n">x</span> <span class="o">=</span> <span class="n">rect</span><span class="o">.</span><span class="n">x</span><span class="p">()</span> <span class="o">+</span> <span class="p">(</span><span class="n">rect</span><span class="o">.</span><span class="n">width</span><span class="p">()</span> <span class="o">-</span> <span class="n">width</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
-        <span class="n">y</span> <span class="o">=</span> <span class="n">rect</span><span class="o">.</span><span class="n">y</span><span class="p">()</span> <span class="o">+</span> <span class="p">(</span><span class="n">rect</span><span class="o">.</span><span class="n">height</span><span class="p">()</span> <span class="o">-</span> <span class="n">height</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
-
-        <span class="n">editor</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="n">QRect</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">))</span>
-
-    <span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="Delegate.paint">
+<a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.delegate.Delegate.paint">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">paint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">painter</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">index</span><span class="o">.</span><span class="n">isValid</span><span class="p">():</span>
             <span class="n">value</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">model</span><span class="p">()</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">DisplayRole</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">value</span><span class="p">:</span>
                 <span class="n">option</span><span class="o">.</span><span class="n">displayAlignment</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">AlignHCenter</span> <span class="o">|</span> <span class="n">Qt</span><span class="o">.</span><span class="n">AlignVCenter</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="p">()</span><span class="o">.</span><span class="n">style</span><span class="p">()</span><span class="o">.</span><span class="n">drawControl</span><span class="p">(</span><span class="n">QStyle</span><span class="o">.</span><span class="n">CE_ItemViewItem</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">painter</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="p">())</span></div>
+</div>
 
 
 
@@ -395,17 +386,39 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">option</span> <span class="o">=</span> <span class="n">option</span>
 
     <span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="ComboDelegate.createEditor">
+<a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.delegate.ComboDelegate.createEditor">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">createEditor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
         <span class="n">model</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">model</span><span class="p">()</span>
         <span class="n">editor</span> <span class="o">=</span> <span class="n">Combo</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">option</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">default</span><span class="p">)</span>
         <span class="n">editor</span><span class="o">.</span><span class="n">currentTextChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="k">lambda</span> <span class="n">data</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">data</span><span class="p">))</span>
-        <span class="k">return</span> <span class="n">editor</span>
+        <span class="k">return</span> <span class="n">editor</span></div>
+
 
     <span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="ComboDelegate.updateEditorGeometry">
+<a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.delegate.ComboDelegate.updateEditorGeometry">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">updateEditorGeometry</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">editor</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="n">rect</span> <span class="o">=</span> <span class="n">option</span><span class="o">.</span><span class="n">rect</span>
+        <span class="n">size</span> <span class="o">=</span> <span class="n">editor</span><span class="o">.</span><span class="n">sizeHint</span><span class="p">()</span>
+
+        <span class="n">width</span> <span class="o">=</span> <span class="n">size</span><span class="o">.</span><span class="n">width</span><span class="p">()</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding</span>
+        <span class="n">height</span> <span class="o">=</span> <span class="n">size</span><span class="o">.</span><span class="n">height</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding</span>
+
+        <span class="n">x</span> <span class="o">=</span> <span class="n">rect</span><span class="o">.</span><span class="n">x</span><span class="p">()</span> <span class="o">+</span> <span class="p">(</span><span class="n">rect</span><span class="o">.</span><span class="n">width</span><span class="p">()</span> <span class="o">-</span> <span class="n">width</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">rect</span><span class="o">.</span><span class="n">y</span><span class="p">()</span> <span class="o">+</span> <span class="p">(</span><span class="n">rect</span><span class="o">.</span><span class="n">height</span><span class="p">()</span> <span class="o">-</span> <span class="n">height</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+
+        <span class="n">editor</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="n">QRect</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">))</span></div>
+
+
+    <span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="ComboDelegate.sizeHint">
+<a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.delegate.ComboDelegate.sizeHint">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">sizeHint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
         <span class="n">sz</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">sizeHint</span><span class="p">(</span><span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
-        <span class="n">w</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="mi">6</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding</span>
-        <span class="k">return</span> <span class="n">QSize</span><span class="p">(</span><span class="n">sz</span><span class="o">.</span><span class="n">width</span><span class="p">()</span> <span class="o">+</span> <span class="n">w</span><span class="p">,</span> <span class="n">sz</span><span class="o">.</span><span class="n">height</span><span class="p">()</span> <span class="o">+</span> <span class="n">h</span><span class="p">)</span></div>
+        <span class="n">w</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="n">sz</span><span class="o">.</span><span class="n">width</span><span class="p">()</span> <span class="o">+</span> <span class="mi">6</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding</span><span class="p">,</span> <span class="n">sz</span><span class="o">.</span><span class="n">height</span><span class="p">()</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding</span>
+        <span class="k">return</span> <span class="n">QSize</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span></div>
+</div>
 
 
 
@@ -420,17 +433,39 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">option</span> <span class="o">=</span> <span class="n">option</span>
 
     <span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="ColorDelegate.createEditor">
+<a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.delegate.ColorDelegate.createEditor">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">createEditor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
         <span class="n">model</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">model</span><span class="p">()</span>
         <span class="n">editor</span> <span class="o">=</span> <span class="n">ColorSelector</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">default</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">option</span><span class="p">)</span>
         <span class="n">editor</span><span class="o">.</span><span class="n">currentTextChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="k">lambda</span> <span class="n">data</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">data</span><span class="p">))</span>
-        <span class="k">return</span> <span class="n">editor</span>
+        <span class="k">return</span> <span class="n">editor</span></div>
+
 
     <span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="ColorDelegate.updateEditorGeometry">
+<a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.delegate.ColorDelegate.updateEditorGeometry">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">updateEditorGeometry</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">editor</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="n">rect</span> <span class="o">=</span> <span class="n">option</span><span class="o">.</span><span class="n">rect</span>
+        <span class="n">size</span> <span class="o">=</span> <span class="n">editor</span><span class="o">.</span><span class="n">sizeHint</span><span class="p">()</span>
+
+        <span class="n">width</span> <span class="o">=</span> <span class="n">size</span><span class="o">.</span><span class="n">width</span><span class="p">()</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding</span>
+        <span class="n">height</span> <span class="o">=</span> <span class="n">size</span><span class="o">.</span><span class="n">height</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding</span>
+
+        <span class="n">x</span> <span class="o">=</span> <span class="n">rect</span><span class="o">.</span><span class="n">x</span><span class="p">()</span> <span class="o">+</span> <span class="p">(</span><span class="n">rect</span><span class="o">.</span><span class="n">width</span><span class="p">()</span> <span class="o">-</span> <span class="n">width</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">rect</span><span class="o">.</span><span class="n">y</span><span class="p">()</span> <span class="o">+</span> <span class="p">(</span><span class="n">rect</span><span class="o">.</span><span class="n">height</span><span class="p">()</span> <span class="o">-</span> <span class="n">height</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+
+        <span class="n">editor</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="n">QRect</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">))</span></div>
+
+
+    <span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="ColorDelegate.sizeHint">
+<a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.delegate.ColorDelegate.sizeHint">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">sizeHint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
         <span class="n">sz</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">sizeHint</span><span class="p">(</span><span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
-        <span class="n">w</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="mi">6</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding</span>
-        <span class="k">return</span> <span class="n">QSize</span><span class="p">(</span><span class="n">sz</span><span class="o">.</span><span class="n">width</span><span class="p">()</span> <span class="o">+</span> <span class="n">w</span><span class="p">,</span> <span class="n">sz</span><span class="o">.</span><span class="n">height</span><span class="p">()</span> <span class="o">+</span> <span class="n">h</span><span class="p">)</span></div>
+        <span class="n">w</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="n">sz</span><span class="o">.</span><span class="n">width</span><span class="p">()</span> <span class="o">+</span> <span class="mi">6</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding</span><span class="p">,</span> <span class="n">sz</span><span class="o">.</span><span class="n">height</span><span class="p">()</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding</span>
+        <span class="k">return</span> <span class="n">QSize</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span></div>
+</div>
 
 
 
@@ -449,17 +484,50 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">mathjax</span> <span class="o">=</span> <span class="n">mathjax</span>
 
     <span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="EditorDelegate.createEditor">
+<a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.delegate.EditorDelegate.createEditor">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">createEditor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
         <span class="n">model</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">model</span><span class="p">()</span>
         <span class="n">editor</span> <span class="o">=</span> <span class="n">Editor</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">default</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">option</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">color</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">mathjax</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">mathjax</span><span class="p">)</span>
-        <span class="n">editor</span><span class="o">.</span><span class="n">returnPressed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="k">lambda</span> <span class="n">data</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">data</span><span class="p">))</span>
-        <span class="k">return</span> <span class="n">editor</span>
+        <span class="n">editor</span><span class="o">.</span><span class="n">returnPressed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="k">lambda</span> <span class="n">data</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_set_data_size</span><span class="p">(</span><span class="n">editor</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">data</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">editor</span></div>
+
 
     <span class="c1"># ==================================================</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_set_data_size</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">editor</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+        <span class="n">h</span> <span class="o">=</span> <span class="n">editor</span><span class="o">.</span><span class="n">sizeHint</span><span class="p">()</span><span class="o">.</span><span class="n">height</span><span class="p">()</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding</span>
+        <span class="n">editor</span><span class="o">.</span><span class="n">setFixedHeight</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
+        <span class="n">view</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="p">()</span>
+        <span class="n">view</span><span class="o">.</span><span class="n">set_row_height_hint</span><span class="p">(</span><span class="n">index</span><span class="o">.</span><span class="n">row</span><span class="p">(),</span> <span class="n">h</span><span class="p">)</span>
+
+    <span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="EditorDelegate.updateEditorGeometry">
+<a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.delegate.EditorDelegate.updateEditorGeometry">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">updateEditorGeometry</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">editor</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="n">rect</span> <span class="o">=</span> <span class="n">option</span><span class="o">.</span><span class="n">rect</span>
+        <span class="n">size</span> <span class="o">=</span> <span class="n">editor</span><span class="o">.</span><span class="n">sizeHint</span><span class="p">()</span>
+
+        <span class="n">width</span> <span class="o">=</span> <span class="n">size</span><span class="o">.</span><span class="n">width</span><span class="p">()</span>
+        <span class="n">height</span> <span class="o">=</span> <span class="n">size</span><span class="o">.</span><span class="n">height</span><span class="p">()</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding</span>
+
+        <span class="n">x</span> <span class="o">=</span> <span class="n">rect</span><span class="o">.</span><span class="n">x</span><span class="p">()</span> <span class="o">+</span> <span class="p">(</span><span class="n">rect</span><span class="o">.</span><span class="n">width</span><span class="p">()</span> <span class="o">-</span> <span class="n">width</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">rect</span><span class="o">.</span><span class="n">y</span><span class="p">()</span> <span class="o">+</span> <span class="p">(</span><span class="n">rect</span><span class="o">.</span><span class="n">height</span><span class="p">()</span> <span class="o">-</span> <span class="n">height</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+
+        <span class="n">editor</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="n">QRect</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">))</span></div>
+
+
+    <span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="EditorDelegate.sizeHint">
+<a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.delegate.EditorDelegate.sizeHint">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">sizeHint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
-        <span class="n">sz</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">sizeHint</span><span class="p">(</span><span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
-        <span class="n">w</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding</span><span class="p">,</span> <span class="mi">4</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding</span>
-        <span class="k">return</span> <span class="n">QSize</span><span class="p">(</span><span class="n">sz</span><span class="o">.</span><span class="n">width</span><span class="p">()</span> <span class="o">+</span> <span class="n">w</span><span class="p">,</span> <span class="n">sz</span><span class="o">.</span><span class="n">height</span><span class="p">()</span> <span class="o">+</span> <span class="n">h</span><span class="p">)</span></div>
+        <span class="n">view</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="p">()</span>
+        <span class="n">h</span> <span class="o">=</span> <span class="n">view</span><span class="o">.</span><span class="n">row_height_hint</span><span class="p">(</span><span class="n">index</span><span class="o">.</span><span class="n">row</span><span class="p">())</span>
+        <span class="k">if</span> <span class="n">h</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">w</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">sizeHint</span><span class="p">(</span><span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span><span class="o">.</span><span class="n">width</span><span class="p">()</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding</span>
+            <span class="k">return</span> <span class="n">QSize</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">sizeHint</span><span class="p">(</span><span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span></div>
+</div>
 
 </pre></div>
 
@@ -493,7 +561,7 @@ By Hiroaki Kusunose
 
   <p class="copyright">
     
-      © Copyright 2021-2024.
+      © Copyright 2021-.
       <br/>
     
   </p>

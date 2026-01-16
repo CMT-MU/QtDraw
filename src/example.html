@@ -37,7 +37,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
-    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=5f1b4820" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=34ddd5e8" />
   
   <!-- So that users can add custom icons -->
   <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
@@ -162,7 +162,7 @@
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="install.html">Install QtDraw (and MultiPie)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installing QtDraw</a></li>
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Documentation</span></p>
@@ -415,7 +415,7 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw</span><span class="w"> </span><span class="kn">import</span> <span class="n">QtDraw</span>
 
-<span class="n">files</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;sample.qtdw&quot;</span><span class="p">,</span> <span class="s2">&quot;sample_ver1.qtdw&quot;</span><span class="p">,</span> <span class="s2">&quot;icon.qtdw&quot;</span><span class="p">,</span> <span class="s2">&quot;color_pattern.qtdw&quot;</span><span class="p">,</span> <span class="s2">&quot;helimag.qtdw&quot;</span><span class="p">,</span> <span class="s2">&quot;Si.cif&quot;</span><span class="p">,</span> <span class="s2">&quot;Si.vesta&quot;</span><span class="p">,</span> <span class="s2">&quot;Si.xsf&quot;</span><span class="p">]</span>
+<span class="n">files</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;sample.qtdw&quot;</span><span class="p">,</span> <span class="s2">&quot;sample_ver1.qtdw&quot;</span><span class="p">,</span> <span class="s2">&quot;icon.qtdw&quot;</span><span class="p">,</span> <span class="s2">&quot;color_pattern.qtdw&quot;</span><span class="p">,</span> <span class="s2">&quot;helimag.qtdw&quot;</span><span class="p">]</span>
 
 <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span>
 <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
@@ -427,11 +427,16 @@
 <section id="from-jupyter-notebook">
 <h2>from Jupyter Notebook<a class="headerlink" href="#from-jupyter-notebook" title="Link to this heading">#</a></h2>
 <ul class="simple">
-<li><p><a class="reference internal" href="examples/qtdraw.html"><span class="std std-doc">QtDraw</span></a></p></li>
-<li><p><a class="reference internal" href="examples/mp_graphene.html"><span class="std std-doc">Graphene with MultiPie</span></a></p></li>
-<li><p><a class="reference internal" href="examples/mp_Te.html"><span class="std std-doc">Te with MultiPie</span></a></p></li>
-<li><p><a class="reference internal" href="examples/pyvista_widget.html"><span class="std std-doc">PyVistaWidget</span></a></p></li>
-<li><p><a class="reference internal" href="examples/multipie.html"><span class="std std-doc">with MultiPie</span></a></p></li>
+<li><p><a class="reference internal" href="examples/qtdraw.html"><span class="std std-doc">QtDraw</span></a>
+<img alt="sample.jpg" src="../_images/sample.jpg" /></p></li>
+<li><p><a class="reference internal" href="examples/mp_graphene.html"><span class="std std-doc">Graphene with MultiPie</span></a>
+<img alt="sample.jpg" src="../_images/mp_graphene.jpg" /></p></li>
+<li><p><a class="reference internal" href="examples/mp_Te.html"><span class="std std-doc">Te with MultiPie</span></a>
+<img alt="sample.jpg" src="../_images/mp_Te.jpg" /></p></li>
+<li><p><a class="reference internal" href="examples/pyvista_widget.html"><span class="std std-doc">PyVistaWidget</span></a>
+<img alt="sample.jpg" src="../_images/pyvista.jpg" /></p></li>
+<li><p><a class="reference internal" href="examples/multipie.html"><span class="std std-doc">with MultiPie</span></a>
+<img alt="sample.jpg" src="../_images/multipie.jpg" /></p></li>
 </ul>
 </section>
 <section id="background-plot">
@@ -462,6 +467,7 @@
 <span class="n">app</span><span class="o">.</span><span class="n">quit</span><span class="p">()</span>
 </pre></div>
 </div>
+<p><img alt="sample.jpg" src="../_images/background.jpg" /></p>
 </section>
 <section id="isosurface-plot">
 <h2>isosurface plot<a class="headerlink" href="#isosurface-plot" title="Link to this heading">#</a></h2>
@@ -509,6 +515,7 @@
 <span class="n">win</span><span class="o">.</span><span class="n">exec</span><span class="p">()</span>
 </pre></div>
 </div>
+<p><img alt="sample.jpg" src="../_images/isosurface.jpg" /></p>
 </section>
 </section>
 
@@ -581,7 +588,7 @@ By Hiroaki Kusunose
 
   <p class="copyright">
     
-      © Copyright 2021-2024.
+      © Copyright 2021-.
       <br/>
     
   </p>

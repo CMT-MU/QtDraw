@@ -37,7 +37,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
-    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=5f1b4820" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=34ddd5e8" />
   
   <!-- So that users can add custom icons -->
   <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
@@ -162,7 +162,7 @@
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="install.html">Install QtDraw (and MultiPie)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installing QtDraw</a></li>
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Documentation</span></p>
@@ -390,35 +390,86 @@
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-qtdraw.widget.custom_widget">Custom Widget, etc.</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.Button"><code class="docutils literal notranslate"><span class="pre">Button</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.Check"><code class="docutils literal notranslate"><span class="pre">Check</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.Check.is_checked"><code class="docutils literal notranslate"><span class="pre">Check.is_checked()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.Button"><code class="docutils literal notranslate"><span class="pre">Button</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.Button.staticMetaObject"><code class="docutils literal notranslate"><span class="pre">Button.staticMetaObject</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.ColorSelector"><code class="docutils literal notranslate"><span class="pre">ColorSelector</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.Check"><code class="docutils literal notranslate"><span class="pre">Check</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.Check.is_checked"><code class="docutils literal notranslate"><span class="pre">Check.is_checked()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.Check.staticMetaObject"><code class="docutils literal notranslate"><span class="pre">Check.staticMetaObject</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.ColorSelector"><code class="docutils literal notranslate"><span class="pre">ColorSelector</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.ColorSelector.staticMetaObject"><code class="docutils literal notranslate"><span class="pre">ColorSelector.staticMetaObject</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.Combo"><code class="docutils literal notranslate"><span class="pre">Combo</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.Combo.find_index"><code class="docutils literal notranslate"><span class="pre">Combo.find_index()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.Combo.get_item"><code class="docutils literal notranslate"><span class="pre">Combo.get_item()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.Combo.set_item"><code class="docutils literal notranslate"><span class="pre">Combo.set_item()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.Combo.staticMetaObject"><code class="docutils literal notranslate"><span class="pre">Combo.staticMetaObject</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.DSpin"><code class="docutils literal notranslate"><span class="pre">DSpin</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.DSpin"><code class="docutils literal notranslate"><span class="pre">DSpin</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.DSpin.staticMetaObject"><code class="docutils literal notranslate"><span class="pre">DSpin.staticMetaObject</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.Editor"><code class="docutils literal notranslate"><span class="pre">Editor</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.Editor.clearFocus"><code class="docutils literal notranslate"><span class="pre">Editor.clearFocus()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.Editor.mouseDoubleClickEvent"><code class="docutils literal notranslate"><span class="pre">Editor.mouseDoubleClickEvent()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.Editor.mousePressEvent"><code class="docutils literal notranslate"><span class="pre">Editor.mousePressEvent()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.Editor.setCurrentText"><code class="docutils literal notranslate"><span class="pre">Editor.setCurrentText()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.Editor.setText"><code class="docutils literal notranslate"><span class="pre">Editor.setText()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.Editor.sizeHint"><code class="docutils literal notranslate"><span class="pre">Editor.sizeHint()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.Editor.text"><code class="docutils literal notranslate"><span class="pre">Editor.text()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.Editor.returnPressed"><code class="docutils literal notranslate"><span class="pre">Editor.returnPressed</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.Editor.staticMetaObject"><code class="docutils literal notranslate"><span class="pre">Editor.staticMetaObject</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.HBar"><code class="docutils literal notranslate"><span class="pre">HBar</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.HBar"><code class="docutils literal notranslate"><span class="pre">HBar</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.HBar.staticMetaObject"><code class="docutils literal notranslate"><span class="pre">HBar.staticMetaObject</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.HSpacer"><code class="docutils literal notranslate"><span class="pre">HSpacer</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.Label"><code class="docutils literal notranslate"><span class="pre">Label</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.Layout"><code class="docutils literal notranslate"><span class="pre">Layout</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.LineEdit"><code class="docutils literal notranslate"><span class="pre">LineEdit</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.MathWidget"><code class="docutils literal notranslate"><span class="pre">MathWidget</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.Panel"><code class="docutils literal notranslate"><span class="pre">Panel</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.Spin"><code class="docutils literal notranslate"><span class="pre">Spin</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.Label"><code class="docutils literal notranslate"><span class="pre">Label</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.Label.set_background"><code class="docutils literal notranslate"><span class="pre">Label.set_background()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.Label.sizeHint"><code class="docutils literal notranslate"><span class="pre">Label.sizeHint()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.Label.staticMetaObject"><code class="docutils literal notranslate"><span class="pre">Label.staticMetaObject</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.Layout"><code class="docutils literal notranslate"><span class="pre">Layout</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.Layout.staticMetaObject"><code class="docutils literal notranslate"><span class="pre">Layout.staticMetaObject</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.LineEdit"><code class="docutils literal notranslate"><span class="pre">LineEdit</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.LineEdit.focusInEvent"><code class="docutils literal notranslate"><span class="pre">LineEdit.focusInEvent()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.LineEdit.focusOutEvent"><code class="docutils literal notranslate"><span class="pre">LineEdit.focusOutEvent()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.LineEdit.keyPressEvent"><code class="docutils literal notranslate"><span class="pre">LineEdit.keyPressEvent()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.LineEdit.raw_text"><code class="docutils literal notranslate"><span class="pre">LineEdit.raw_text()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.LineEdit.setText"><code class="docutils literal notranslate"><span class="pre">LineEdit.setText()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.LineEdit.set_read_only"><code class="docutils literal notranslate"><span class="pre">LineEdit.set_read_only()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.LineEdit.set_validator"><code class="docutils literal notranslate"><span class="pre">LineEdit.set_validator()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.LineEdit.sizeHint"><code class="docutils literal notranslate"><span class="pre">LineEdit.sizeHint()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.LineEdit.focusOut"><code class="docutils literal notranslate"><span class="pre">LineEdit.focusOut</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.LineEdit.staticMetaObject"><code class="docutils literal notranslate"><span class="pre">LineEdit.staticMetaObject</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.MathWidget"><code class="docutils literal notranslate"><span class="pre">MathWidget</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.MathWidget.paintEvent"><code class="docutils literal notranslate"><span class="pre">MathWidget.paintEvent()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.MathWidget.setText"><code class="docutils literal notranslate"><span class="pre">MathWidget.setText()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.MathWidget.sizeHint"><code class="docutils literal notranslate"><span class="pre">MathWidget.sizeHint()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.MathWidget.text"><code class="docutils literal notranslate"><span class="pre">MathWidget.text()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.MathWidget.staticMetaObject"><code class="docutils literal notranslate"><span class="pre">MathWidget.staticMetaObject</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.Panel"><code class="docutils literal notranslate"><span class="pre">Panel</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.Panel.staticMetaObject"><code class="docutils literal notranslate"><span class="pre">Panel.staticMetaObject</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.Spin"><code class="docutils literal notranslate"><span class="pre">Spin</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.Spin.staticMetaObject"><code class="docutils literal notranslate"><span class="pre">Spin.staticMetaObject</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.VSpacer"><code class="docutils literal notranslate"><span class="pre">VSpacer</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.validator.check_symbol"><code class="docutils literal notranslate"><span class="pre">check_symbol()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.validator.convert_to_bond"><code class="docutils literal notranslate"><span class="pre">convert_to_bond()</span></code></a></li>
@@ -432,32 +483,77 @@
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.validator.validator_site"><code class="docutils literal notranslate"><span class="pre">validator_site()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.validator.validator_site_bond"><code class="docutils literal notranslate"><span class="pre">validator_site_bond()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.validator.validator_vector_site_bond"><code class="docutils literal notranslate"><span class="pre">validator_vector_site_bond()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.message_box.MessageBox"><code class="docutils literal notranslate"><span class="pre">MessageBox</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.table_view.TableView"><code class="docutils literal notranslate"><span class="pre">TableView</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.message_box.MessageBox"><code class="docutils literal notranslate"><span class="pre">MessageBox</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.message_box.MessageBox.staticMetaObject"><code class="docutils literal notranslate"><span class="pre">MessageBox.staticMetaObject</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.table_view.TableView"><code class="docutils literal notranslate"><span class="pre">TableView</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.table_view.TableView.staticMetaObject"><code class="docutils literal notranslate"><span class="pre">TableView.staticMetaObject</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.mathjax.MathJaxSVG"><code class="docutils literal notranslate"><span class="pre">MathJaxSVG</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.mathjax.MathJaxSVG.close"><code class="docutils literal notranslate"><span class="pre">MathJaxSVG.close()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.mathjax.MathJaxSVG.convert"><code class="docutils literal notranslate"><span class="pre">MathJaxSVG.convert()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-qtdraw.widget.tab_group_view">Data View and Model</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.tab_group_view.TabGroupView"><code class="docutils literal notranslate"><span class="pre">TabGroupView</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.tab_group_view.TabGroupView.select_tab"><code class="docutils literal notranslate"><span class="pre">TabGroupView.select_tab()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.tab_group_view.TabGroupView.tab_change"><code class="docutils literal notranslate"><span class="pre">TabGroupView.tab_change()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.tab_group_view.TabGroupView.staticMetaObject"><code class="docutils literal notranslate"><span class="pre">TabGroupView.staticMetaObject</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.group_view.GroupView"><code class="docutils literal notranslate"><span class="pre">GroupView</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.group_view.GroupView.clear_row_heights"><code class="docutils literal notranslate"><span class="pre">GroupView.clear_row_heights()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.group_view.GroupView.clear_selection"><code class="docutils literal notranslate"><span class="pre">GroupView.clear_selection()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.group_view.GroupView.closeEvent"><code class="docutils literal notranslate"><span class="pre">GroupView.closeEvent()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.group_view.GroupView.context_menu"><code class="docutils literal notranslate"><span class="pre">GroupView.context_menu()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.group_view.GroupView.copy_row"><code class="docutils literal notranslate"><span class="pre">GroupView.copy_row()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.group_view.GroupView.insert_row"><code class="docutils literal notranslate"><span class="pre">GroupView.insert_row()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.group_view.GroupView.keyPressEvent"><code class="docutils literal notranslate"><span class="pre">GroupView.keyPressEvent()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.group_view.GroupView.mousePressEvent"><code class="docutils literal notranslate"><span class="pre">GroupView.mousePressEvent()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.group_view.GroupView.remove_row"><code class="docutils literal notranslate"><span class="pre">GroupView.remove_row()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.group_view.GroupView.row_height_hint"><code class="docutils literal notranslate"><span class="pre">GroupView.row_height_hint()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.group_view.GroupView.select_row"><code class="docutils literal notranslate"><span class="pre">GroupView.select_row()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.group_view.GroupView.selection_changed"><code class="docutils literal notranslate"><span class="pre">GroupView.selection_changed()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.group_view.GroupView.setModel"><code class="docutils literal notranslate"><span class="pre">GroupView.setModel()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.group_view.GroupView.set_row_height_hint"><code class="docutils literal notranslate"><span class="pre">GroupView.set_row_height_hint()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.group_view.GroupView.set_widget"><code class="docutils literal notranslate"><span class="pre">GroupView.set_widget()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.group_view.GroupView.update_widget"><code class="docutils literal notranslate"><span class="pre">GroupView.update_widget()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.group_view.GroupView.selectionChanged"><code class="docutils literal notranslate"><span class="pre">GroupView.selectionChanged</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.group_view.GroupView.staticMetaObject"><code class="docutils literal notranslate"><span class="pre">GroupView.staticMetaObject</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.delegate.ColorDelegate"><code class="docutils literal notranslate"><span class="pre">ColorDelegate</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.delegate.ComboDelegate"><code class="docutils literal notranslate"><span class="pre">ComboDelegate</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.delegate.Delegate"><code class="docutils literal notranslate"><span class="pre">Delegate</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.delegate.EditorDelegate"><code class="docutils literal notranslate"><span class="pre">EditorDelegate</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.delegate.ColorDelegate"><code class="docutils literal notranslate"><span class="pre">ColorDelegate</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.delegate.ColorDelegate.createEditor"><code class="docutils literal notranslate"><span class="pre">ColorDelegate.createEditor()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.delegate.ColorDelegate.sizeHint"><code class="docutils literal notranslate"><span class="pre">ColorDelegate.sizeHint()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.delegate.ColorDelegate.updateEditorGeometry"><code class="docutils literal notranslate"><span class="pre">ColorDelegate.updateEditorGeometry()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.delegate.ColorDelegate.staticMetaObject"><code class="docutils literal notranslate"><span class="pre">ColorDelegate.staticMetaObject</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.delegate.ComboDelegate"><code class="docutils literal notranslate"><span class="pre">ComboDelegate</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.delegate.ComboDelegate.createEditor"><code class="docutils literal notranslate"><span class="pre">ComboDelegate.createEditor()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.delegate.ComboDelegate.sizeHint"><code class="docutils literal notranslate"><span class="pre">ComboDelegate.sizeHint()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.delegate.ComboDelegate.updateEditorGeometry"><code class="docutils literal notranslate"><span class="pre">ComboDelegate.updateEditorGeometry()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.delegate.ComboDelegate.staticMetaObject"><code class="docutils literal notranslate"><span class="pre">ComboDelegate.staticMetaObject</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.delegate.Delegate"><code class="docutils literal notranslate"><span class="pre">Delegate</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.delegate.Delegate.paint"><code class="docutils literal notranslate"><span class="pre">Delegate.paint()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.delegate.Delegate.setEditorData"><code class="docutils literal notranslate"><span class="pre">Delegate.setEditorData()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.delegate.Delegate.setModelData"><code class="docutils literal notranslate"><span class="pre">Delegate.setModelData()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.delegate.Delegate.staticMetaObject"><code class="docutils literal notranslate"><span class="pre">Delegate.staticMetaObject</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.delegate.EditorDelegate"><code class="docutils literal notranslate"><span class="pre">EditorDelegate</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.delegate.EditorDelegate.createEditor"><code class="docutils literal notranslate"><span class="pre">EditorDelegate.createEditor()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.delegate.EditorDelegate.sizeHint"><code class="docutils literal notranslate"><span class="pre">EditorDelegate.sizeHint()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.delegate.EditorDelegate.updateEditorGeometry"><code class="docutils literal notranslate"><span class="pre">EditorDelegate.updateEditorGeometry()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.delegate.EditorDelegate.staticMetaObject"><code class="docutils literal notranslate"><span class="pre">EditorDelegate.staticMetaObject</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.group_model.GroupModel"><code class="docutils literal notranslate"><span class="pre">GroupModel</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.group_model.GroupModel.action_copy_row"><code class="docutils literal notranslate"><span class="pre">GroupModel.action_copy_row()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.group_model.GroupModel.action_insert_row"><code class="docutils literal notranslate"><span class="pre">GroupModel.action_insert_row()</span></code></a></li>
@@ -484,8 +580,17 @@
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.group_model.GroupModel.tolist"><code class="docutils literal notranslate"><span class="pre">GroupModel.tolist()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.group_model.GroupModel.tolist_index"><code class="docutils literal notranslate"><span class="pre">GroupModel.tolist_index()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.group_model.GroupModel.update_check_state"><code class="docutils literal notranslate"><span class="pre">GroupModel.update_check_state()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.group_model.GroupModel.AppendRow"><code class="docutils literal notranslate"><span class="pre">GroupModel.AppendRow</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.group_model.GroupModel.MoveRow"><code class="docutils literal notranslate"><span class="pre">GroupModel.MoveRow</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.group_model.GroupModel.RemoveRow"><code class="docutils literal notranslate"><span class="pre">GroupModel.RemoveRow</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.group_model.GroupModel.checkChanged"><code class="docutils literal notranslate"><span class="pre">GroupModel.checkChanged</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.group_model.GroupModel.dataModified"><code class="docutils literal notranslate"><span class="pre">GroupModel.dataModified</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.group_model.GroupModel.dataRemoved"><code class="docutils literal notranslate"><span class="pre">GroupModel.dataRemoved</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.group_model.GroupModel.group_name"><code class="docutils literal notranslate"><span class="pre">GroupModel.group_name</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.group_model.GroupModel.header"><code class="docutils literal notranslate"><span class="pre">GroupModel.header</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.group_model.GroupModel.staticMetaObject"><code class="docutils literal notranslate"><span class="pre">GroupModel.staticMetaObject</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.group_model.GroupModel.updateData"><code class="docutils literal notranslate"><span class="pre">GroupModel.updateData</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.group_model.GroupModel.updateWidget"><code class="docutils literal notranslate"><span class="pre">GroupModel.updateWidget</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -494,6 +599,8 @@
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.qt_event_util.ExceptionHook"><code class="docutils literal notranslate"><span class="pre">ExceptionHook</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.qt_event_util.ExceptionHook.hook"><code class="docutils literal notranslate"><span class="pre">ExceptionHook.hook()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.qt_event_util.ExceptionHook.reset"><code class="docutils literal notranslate"><span class="pre">ExceptionHook.reset()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.qt_event_util.ExceptionHook.msg_signal"><code class="docutils literal notranslate"><span class="pre">ExceptionHook.msg_signal</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.qt_event_util.ExceptionHook.staticMetaObject"><code class="docutils literal notranslate"><span class="pre">ExceptionHook.staticMetaObject</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.qt_event_util.get_qt_application"><code class="docutils literal notranslate"><span class="pre">get_qt_application()</span></code></a></li>
@@ -507,6 +614,7 @@
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.logging_util.LogWidget.clear"><code class="docutils literal notranslate"><span class="pre">LogWidget.clear()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.logging_util.LogWidget.save"><code class="docutils literal notranslate"><span class="pre">LogWidget.save()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.logging_util.LogWidget.set_text"><code class="docutils literal notranslate"><span class="pre">LogWidget.set_text()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.logging_util.LogWidget.staticMetaObject"><code class="docutils literal notranslate"><span class="pre">LogWidget.staticMetaObject</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.logging_util.start_logging"><code class="docutils literal notranslate"><span class="pre">start_logging()</span></code></a></li>
@@ -517,6 +625,7 @@
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.pdf_viewer.PDFViewer.load"><code class="docutils literal notranslate"><span class="pre">PDFViewer.load()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.pdf_viewer.PDFViewer.save"><code class="docutils literal notranslate"><span class="pre">PDFViewer.save()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.pdf_viewer.PDFViewer.set_title"><code class="docutils literal notranslate"><span class="pre">PDFViewer.set_title()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.pdf_viewer.PDFViewer.staticMetaObject"><code class="docutils literal notranslate"><span class="pre">PDFViewer.staticMetaObject</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.color_selector_util.color2pixmap"><code class="docutils literal notranslate"><span class="pre">color2pixmap()</span></code></a></li>
@@ -556,6 +665,11 @@
 </ul>
 </dd>
 </dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qtdraw.widget.custom_widget.Button.staticMetaObject">
+<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;Button&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;QPushButton&quot;:</span> <span class="pre">)</span></em><a class="headerlink" href="#qtdraw.widget.custom_widget.Button.staticMetaObject" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -587,6 +701,11 @@
 </dl>
 </dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qtdraw.widget.custom_widget.Check.staticMetaObject">
+<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;Check&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;QCheckBox&quot;:</span> <span class="pre">)</span></em><a class="headerlink" href="#qtdraw.widget.custom_widget.Check.staticMetaObject" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -609,6 +728,11 @@
 <ul class="simple">
 <li><p>connect currentTextChanged.</p></li>
 </ul>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qtdraw.widget.custom_widget.ColorSelector.staticMetaObject">
+<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;ColorSelector&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;QComboBox&quot;:</span> <span class="pre">)</span></em><a class="headerlink" href="#qtdraw.widget.custom_widget.ColorSelector.staticMetaObject" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -669,6 +793,11 @@
 </dl>
 </dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qtdraw.widget.custom_widget.Combo.staticMetaObject">
+<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;Combo&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;QComboBox&quot;:</span> <span class="pre">)</span></em><a class="headerlink" href="#qtdraw.widget.custom_widget.Combo.staticMetaObject" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -688,6 +817,11 @@
 </ul>
 </dd>
 </dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qtdraw.widget.custom_widget.DSpin.staticMetaObject">
+<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;DSpin&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;QDoubleSpinBox&quot;:</span> <span class="pre">)</span></em><a class="headerlink" href="#qtdraw.widget.custom_widget.DSpin.staticMetaObject" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -704,7 +838,7 @@
 <li><p><strong>color</strong> (<em>str</em><em>, </em><em>optional</em>) -- color name.</p></li>
 <li><p><strong>size</strong> (<em>int</em><em>, </em><em>optional</em>) -- font size.</p></li>
 <li><p><strong>bold</strong> (<em>bool</em><em>, </em><em>optional</em>) -- bold face ?</p></li>
-<li><p><strong>mathjax</strong> (<em>MathJaxSVG</em><em>, </em><em>optional</em>) -- mathjax converter.</p></li>
+<li><p><strong>mathjax</strong> (<a class="reference internal" href="#qtdraw.widget.mathjax.MathJaxSVG" title="qtdraw.widget.mathjax.MathJaxSVG"><em>MathJaxSVG</em></a><em>, </em><em>optional</em>) -- mathjax converter.</p></li>
 </ul>
 </dd>
 </dl>
@@ -727,10 +861,20 @@
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.widget.custom_widget.Editor.setCurrentText">
+<span class="sig-name descname"><span class="pre">setCurrentText</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/custom_widget.html#Editor.setCurrentText"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.custom_widget.Editor.setCurrentText" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="qtdraw.widget.custom_widget.Editor.setText">
 <span class="sig-name descname"><span class="pre">setText</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/custom_widget.html#Editor.setText"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.custom_widget.Editor.setText" title="Link to this definition">#</a></dt>
 <dd><p>Set editor and display text.</p>
 </dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.widget.custom_widget.Editor.sizeHint">
+<span class="sig-name descname"><span class="pre">sizeHint</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/custom_widget.html#Editor.sizeHint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.custom_widget.Editor.sizeHint" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="qtdraw.widget.custom_widget.Editor.text">
@@ -741,6 +885,16 @@
 <li><p>Otherwise: return display text.</p></li>
 </ul>
 </dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qtdraw.widget.custom_widget.Editor.returnPressed">
+<span class="sig-name descname"><span class="pre">returnPressed</span></span><a class="headerlink" href="#qtdraw.widget.custom_widget.Editor.returnPressed" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qtdraw.widget.custom_widget.Editor.staticMetaObject">
+<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;Editor&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;Panel&quot;:</span> <span class="pre">Methods:</span>&#160;&#160; <span class="pre">#33</span> <span class="pre">type=Signal,</span> <span class="pre">signature=returnPressed(QString),</span> <span class="pre">parameters=QString</span> <span class="pre">)</span></em><a class="headerlink" href="#qtdraw.widget.custom_widget.Editor.staticMetaObject" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -754,6 +908,11 @@
 <dd class="field-odd"><p><strong>parent</strong> (<em>QWidget</em><em>, </em><em>optional</em>) -- parent.</p>
 </dd>
 </dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qtdraw.widget.custom_widget.HBar.staticMetaObject">
+<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;HBar&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;QFrame&quot;:</span> <span class="pre">)</span></em><a class="headerlink" href="#qtdraw.widget.custom_widget.HBar.staticMetaObject" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -779,6 +938,21 @@
 </ul>
 </dd>
 </dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.widget.custom_widget.Label.set_background">
+<span class="sig-name descname"><span class="pre">set_background</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">flag</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/custom_widget.html#Label.set_background"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.custom_widget.Label.set_background" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.widget.custom_widget.Label.sizeHint">
+<span class="sig-name descname"><span class="pre">sizeHint</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/custom_widget.html#Label.sizeHint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.custom_widget.Label.sizeHint" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qtdraw.widget.custom_widget.Label.staticMetaObject">
+<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;Label&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;QLabel&quot;:</span> <span class="pre">)</span></em><a class="headerlink" href="#qtdraw.widget.custom_widget.Label.staticMetaObject" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -791,18 +965,98 @@
 <dd class="field-odd"><p><strong>parent</strong> (<em>QWidget</em><em>, </em><em>optional</em>) -- parent.</p>
 </dd>
 </dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qtdraw.widget.custom_widget.Layout.staticMetaObject">
+<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;Layout&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;QGridLayout&quot;:</span> <span class="pre">)</span></em><a class="headerlink" href="#qtdraw.widget.custom_widget.Layout.staticMetaObject" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="qtdraw.widget.custom_widget.LineEdit">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">LineEdit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">validator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/custom_widget.html#LineEdit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.custom_widget.LineEdit" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">QLineEdit</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.widget.custom_widget.LineEdit.focusInEvent">
+<span class="sig-name descname"><span class="pre">focusInEvent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/custom_widget.html#LineEdit.focusInEvent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.custom_widget.LineEdit.focusInEvent" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.widget.custom_widget.LineEdit.focusOutEvent">
+<span class="sig-name descname"><span class="pre">focusOutEvent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/custom_widget.html#LineEdit.focusOutEvent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.custom_widget.LineEdit.focusOutEvent" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.widget.custom_widget.LineEdit.keyPressEvent">
+<span class="sig-name descname"><span class="pre">keyPressEvent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/custom_widget.html#LineEdit.keyPressEvent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.custom_widget.LineEdit.keyPressEvent" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.widget.custom_widget.LineEdit.raw_text">
+<span class="sig-name descname"><span class="pre">raw_text</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/custom_widget.html#LineEdit.raw_text"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.custom_widget.LineEdit.raw_text" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.widget.custom_widget.LineEdit.setText">
+<span class="sig-name descname"><span class="pre">setText</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/custom_widget.html#LineEdit.setText"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.custom_widget.LineEdit.setText" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.widget.custom_widget.LineEdit.set_read_only">
+<span class="sig-name descname"><span class="pre">set_read_only</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">flag</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/custom_widget.html#LineEdit.set_read_only"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.custom_widget.LineEdit.set_read_only" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.widget.custom_widget.LineEdit.set_validator">
+<span class="sig-name descname"><span class="pre">set_validator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">validator</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/custom_widget.html#LineEdit.set_validator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.custom_widget.LineEdit.set_validator" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.widget.custom_widget.LineEdit.sizeHint">
+<span class="sig-name descname"><span class="pre">sizeHint</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/custom_widget.html#LineEdit.sizeHint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.custom_widget.LineEdit.sizeHint" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qtdraw.widget.custom_widget.LineEdit.focusOut">
+<span class="sig-name descname"><span class="pre">focusOut</span></span><a class="headerlink" href="#qtdraw.widget.custom_widget.LineEdit.focusOut" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qtdraw.widget.custom_widget.LineEdit.staticMetaObject">
+<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;LineEdit&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;QLineEdit&quot;:</span> <span class="pre">Methods:</span>&#160;&#160; <span class="pre">#49</span> <span class="pre">type=Signal,</span> <span class="pre">signature=focusOut()</span> <span class="pre">)</span></em><a class="headerlink" href="#qtdraw.widget.custom_widget.LineEdit.staticMetaObject" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="qtdraw.widget.custom_widget.MathWidget">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MathWidget</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'black'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mathjax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/custom_widget.html#MathWidget"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.custom_widget.MathWidget" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">QWidget</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.widget.custom_widget.MathWidget.paintEvent">
+<span class="sig-name descname"><span class="pre">paintEvent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/custom_widget.html#MathWidget.paintEvent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.custom_widget.MathWidget.paintEvent" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.widget.custom_widget.MathWidget.setText">
+<span class="sig-name descname"><span class="pre">setText</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/custom_widget.html#MathWidget.setText"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.custom_widget.MathWidget.setText" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.widget.custom_widget.MathWidget.sizeHint">
+<span class="sig-name descname"><span class="pre">sizeHint</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/custom_widget.html#MathWidget.sizeHint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.custom_widget.MathWidget.sizeHint" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.widget.custom_widget.MathWidget.text">
+<span class="sig-name descname"><span class="pre">text</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/custom_widget.html#MathWidget.text"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.custom_widget.MathWidget.text" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qtdraw.widget.custom_widget.MathWidget.staticMetaObject">
+<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;MathWidget&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;QWidget&quot;:</span> <span class="pre">)</span></em><a class="headerlink" href="#qtdraw.widget.custom_widget.MathWidget.staticMetaObject" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -815,6 +1069,11 @@
 <dd class="field-odd"><p><strong>parent</strong> (<em>QWidget</em><em>, </em><em>optional</em>) -- parent.</p>
 </dd>
 </dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qtdraw.widget.custom_widget.Panel.staticMetaObject">
+<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;Panel&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;QWidget&quot;:</span> <span class="pre">)</span></em><a class="headerlink" href="#qtdraw.widget.custom_widget.Panel.staticMetaObject" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -833,6 +1092,11 @@
 </ul>
 </dd>
 </dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qtdraw.widget.custom_widget.Spin.staticMetaObject">
+<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;Spin&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;QSpinBox&quot;:</span> <span class="pre">)</span></em><a class="headerlink" href="#qtdraw.widget.custom_widget.Spin.staticMetaObject" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -1147,6 +1411,11 @@ e.g., (), (n,), (n,m), ..., [&quot;x&quot;, &quot;y&quot;, ...].</p></li>
 </ul>
 </dd>
 </dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qtdraw.widget.message_box.MessageBox.staticMetaObject">
+<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;MessageBox&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;QDialog&quot;:</span> <span class="pre">)</span></em><a class="headerlink" href="#qtdraw.widget.message_box.MessageBox.staticMetaObject" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <p id="module-qtdraw.widget.table_view">TableView widget.</p>
@@ -1168,10 +1437,57 @@ e.g., (), (n,), (n,m), ..., [&quot;x&quot;, &quot;y&quot;, ...].</p></li>
 </ul>
 </dd>
 </dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qtdraw.widget.table_view.TableView.staticMetaObject">
+<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;TableView&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;QTableWidget&quot;:</span> <span class="pre">)</span></em><a class="headerlink" href="#qtdraw.widget.table_view.TableView.staticMetaObject" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <p id="module-qtdraw.widget.mathjax">MathJaxSVG converter.</p>
 <p>This module provides mathjax to SVG converter.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="qtdraw.widget.mathjax.MathJaxSVG">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MathJaxSVG</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cache_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clear_cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/mathjax.html#MathJaxSVG"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.mathjax.MathJaxSVG" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>MathJax converter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cache_dir</strong> (<em>str</em><em>, </em><em>optional</em>) -- cache directory.</p></li>
+<li><p><strong>clear_cache</strong> (<em>bool</em><em>, </em><em>optional</em>) -- clear disk cache ?</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.widget.mathjax.MathJaxSVG.close">
+<span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/mathjax.html#MathJaxSVG.close"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.mathjax.MathJaxSVG.close" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.widget.mathjax.MathJaxSVG.convert">
+<span class="sig-name descname"><span class="pre">convert</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">latex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'black'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/mathjax.html#MathJaxSVG.convert"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.mathjax.MathJaxSVG.convert" title="Link to this definition">#</a></dt>
+<dd><p>Convert latex to SVG string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>latex</strong> (<em>str</em>) -- LaTeX code w/o $.</p></li>
+<li><p><strong>color</strong> (<em>str</em><em>, </em><em>optional</em>) -- color name.</p></li>
+<li><p><strong>size</strong> (<em>int</em><em>, </em><em>optional</em>) -- point.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>(str) -- SVG string.</p></li>
+<li><p>(tuple) -- width and height.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 <section id="module-qtdraw.widget.tab_group_view">
 <span id="data-view-and-model"></span><h2>Data View and Model<a class="headerlink" href="#module-qtdraw.widget.tab_group_view" title="Link to this heading">#</a></h2>
@@ -1202,6 +1518,16 @@ e.g., (), (n,), (n,m), ..., [&quot;x&quot;, &quot;y&quot;, ...].</p></li>
 </dl>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.widget.tab_group_view.TabGroupView.tab_change">
+<span class="sig-name descname"><span class="pre">tab_change</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">idx</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/tab_group_view.html#TabGroupView.tab_change"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.tab_group_view.TabGroupView.tab_change" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qtdraw.widget.tab_group_view.TabGroupView.staticMetaObject">
+<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;TabGroupView&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;QDialog&quot;:</span> <span class="pre">)</span></em><a class="headerlink" href="#qtdraw.widget.tab_group_view.TabGroupView.staticMetaObject" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <p id="module-qtdraw.widget.group_view">View panel for GroupModel.</p>
@@ -1222,10 +1548,20 @@ By clicking right button of mouse, the context menu appears.</p>
 </dd>
 </dl>
 <dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.widget.group_view.GroupView.clear_row_heights">
+<span class="sig-name descname"><span class="pre">clear_row_heights</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/group_view.html#GroupView.clear_row_heights"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.group_view.GroupView.clear_row_heights" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="qtdraw.widget.group_view.GroupView.clear_selection">
 <span class="sig-name descname"><span class="pre">clear_selection</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/group_view.html#GroupView.clear_selection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.group_view.GroupView.clear_selection" title="Link to this definition">#</a></dt>
 <dd><p>Clear selection.</p>
 </dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.widget.group_view.GroupView.closeEvent">
+<span class="sig-name descname"><span class="pre">closeEvent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/group_view.html#GroupView.closeEvent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.group_view.GroupView.closeEvent" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="qtdraw.widget.group_view.GroupView.context_menu">
@@ -1264,6 +1600,11 @@ By clicking right button of mouse, the context menu appears.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.widget.group_view.GroupView.row_height_hint">
+<span class="sig-name descname"><span class="pre">row_height_hint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">row</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/group_view.html#GroupView.row_height_hint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.group_view.GroupView.row_height_hint" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="qtdraw.widget.group_view.GroupView.select_row">
 <span class="sig-name descname"><span class="pre">select_row</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/group_view.html#GroupView.select_row"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.group_view.GroupView.select_row" title="Link to this definition">#</a></dt>
 <dd><p>Select row.</p>
@@ -1289,6 +1630,16 @@ By clicking right button of mouse, the context menu appears.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.widget.group_view.GroupView.setModel">
+<span class="sig-name descname"><span class="pre">setModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/group_view.html#GroupView.setModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.group_view.GroupView.setModel" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.widget.group_view.GroupView.set_row_height_hint">
+<span class="sig-name descname"><span class="pre">set_row_height_hint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">row</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/group_view.html#GroupView.set_row_height_hint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.group_view.GroupView.set_row_height_hint" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="qtdraw.widget.group_view.GroupView.set_widget">
 <span class="sig-name descname"><span class="pre">set_widget</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">item</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/group_view.html#GroupView.set_widget"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.group_view.GroupView.set_widget" title="Link to this definition">#</a></dt>
 <dd><p>Set widget.</p>
@@ -1299,6 +1650,21 @@ By clicking right button of mouse, the context menu appears.</p>
 </dl>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.widget.group_view.GroupView.update_widget">
+<span class="sig-name descname"><span class="pre">update_widget</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/group_view.html#GroupView.update_widget"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.group_view.GroupView.update_widget" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qtdraw.widget.group_view.GroupView.selectionChanged">
+<span class="sig-name descname"><span class="pre">selectionChanged</span></span><a class="headerlink" href="#qtdraw.widget.group_view.GroupView.selectionChanged" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qtdraw.widget.group_view.GroupView.staticMetaObject">
+<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;GroupView&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;QTreeView&quot;:</span> <span class="pre">Methods:</span>&#160;&#160; <span class="pre">#88</span> <span class="pre">type=Signal,</span> <span class="pre">signature=selectionChanged(QString,QVariantList,QVariantList),</span> <span class="pre">parameters=QString,</span> <span class="pre">QVariantList,</span> <span class="pre">QVariantList</span> <span class="pre">)</span></em><a class="headerlink" href="#qtdraw.widget.group_view.GroupView.staticMetaObject" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <p id="module-qtdraw.widget.delegate">Delegate for GroupModel and GroupView.</p>
@@ -1307,24 +1673,104 @@ By clicking right button of mouse, the context menu appears.</p>
 <dt class="sig sig-object py" id="qtdraw.widget.delegate.ColorDelegate">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ColorDelegate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">option</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/delegate.html#ColorDelegate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.delegate.ColorDelegate" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#qtdraw.widget.delegate.Delegate" title="qtdraw.widget.delegate.Delegate"><code class="xref py py-class docutils literal notranslate"><span class="pre">Delegate</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.widget.delegate.ColorDelegate.createEditor">
+<span class="sig-name descname"><span class="pre">createEditor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">option</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/delegate.html#ColorDelegate.createEditor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.delegate.ColorDelegate.createEditor" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.widget.delegate.ColorDelegate.sizeHint">
+<span class="sig-name descname"><span class="pre">sizeHint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">option</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/delegate.html#ColorDelegate.sizeHint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.delegate.ColorDelegate.sizeHint" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.widget.delegate.ColorDelegate.updateEditorGeometry">
+<span class="sig-name descname"><span class="pre">updateEditorGeometry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">editor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">option</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/delegate.html#ColorDelegate.updateEditorGeometry"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.delegate.ColorDelegate.updateEditorGeometry" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qtdraw.widget.delegate.ColorDelegate.staticMetaObject">
+<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;ColorDelegate&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;Delegate&quot;:</span> <span class="pre">)</span></em><a class="headerlink" href="#qtdraw.widget.delegate.ColorDelegate.staticMetaObject" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="qtdraw.widget.delegate.ComboDelegate">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ComboDelegate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">option</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/delegate.html#ComboDelegate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.delegate.ComboDelegate" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#qtdraw.widget.delegate.Delegate" title="qtdraw.widget.delegate.Delegate"><code class="xref py py-class docutils literal notranslate"><span class="pre">Delegate</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.widget.delegate.ComboDelegate.createEditor">
+<span class="sig-name descname"><span class="pre">createEditor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">option</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/delegate.html#ComboDelegate.createEditor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.delegate.ComboDelegate.createEditor" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.widget.delegate.ComboDelegate.sizeHint">
+<span class="sig-name descname"><span class="pre">sizeHint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">option</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/delegate.html#ComboDelegate.sizeHint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.delegate.ComboDelegate.sizeHint" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.widget.delegate.ComboDelegate.updateEditorGeometry">
+<span class="sig-name descname"><span class="pre">updateEditorGeometry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">editor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">option</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/delegate.html#ComboDelegate.updateEditorGeometry"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.delegate.ComboDelegate.updateEditorGeometry" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qtdraw.widget.delegate.ComboDelegate.staticMetaObject">
+<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;ComboDelegate&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;Delegate&quot;:</span> <span class="pre">)</span></em><a class="headerlink" href="#qtdraw.widget.delegate.ComboDelegate.staticMetaObject" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="qtdraw.widget.delegate.Delegate">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Delegate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/delegate.html#Delegate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.delegate.Delegate" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">QStyledItemDelegate</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.widget.delegate.Delegate.paint">
+<span class="sig-name descname"><span class="pre">paint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">painter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">option</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/delegate.html#Delegate.paint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.delegate.Delegate.paint" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.widget.delegate.Delegate.setEditorData">
+<span class="sig-name descname"><span class="pre">setEditorData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">editor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/delegate.html#Delegate.setEditorData"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.delegate.Delegate.setEditorData" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.widget.delegate.Delegate.setModelData">
+<span class="sig-name descname"><span class="pre">setModelData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">editor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/delegate.html#Delegate.setModelData"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.delegate.Delegate.setModelData" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qtdraw.widget.delegate.Delegate.staticMetaObject">
+<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;Delegate&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;QStyledItemDelegate&quot;:</span> <span class="pre">)</span></em><a class="headerlink" href="#qtdraw.widget.delegate.Delegate.staticMetaObject" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="qtdraw.widget.delegate.EditorDelegate">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">EditorDelegate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">option</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mathjax</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/delegate.html#EditorDelegate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.delegate.EditorDelegate" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#qtdraw.widget.delegate.Delegate" title="qtdraw.widget.delegate.Delegate"><code class="xref py py-class docutils literal notranslate"><span class="pre">Delegate</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.widget.delegate.EditorDelegate.createEditor">
+<span class="sig-name descname"><span class="pre">createEditor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">option</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/delegate.html#EditorDelegate.createEditor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.delegate.EditorDelegate.createEditor" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.widget.delegate.EditorDelegate.sizeHint">
+<span class="sig-name descname"><span class="pre">sizeHint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">option</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/delegate.html#EditorDelegate.sizeHint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.delegate.EditorDelegate.sizeHint" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.widget.delegate.EditorDelegate.updateEditorGeometry">
+<span class="sig-name descname"><span class="pre">updateEditorGeometry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">editor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">option</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/delegate.html#EditorDelegate.updateEditorGeometry"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.delegate.EditorDelegate.updateEditorGeometry" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qtdraw.widget.delegate.EditorDelegate.staticMetaObject">
+<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;EditorDelegate&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;Delegate&quot;:</span> <span class="pre">)</span></em><a class="headerlink" href="#qtdraw.widget.delegate.EditorDelegate.staticMetaObject" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <p id="module-qtdraw.widget.group_model">Two-layer tree model for managing objects.</p>
@@ -1730,6 +2176,36 @@ which is necessary to use other Qt functionalities.</p>
 </div>
 </dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qtdraw.widget.group_model.GroupModel.AppendRow">
+<span class="sig-name descname"><span class="pre">AppendRow</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">267</span></em><a class="headerlink" href="#qtdraw.widget.group_model.GroupModel.AppendRow" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qtdraw.widget.group_model.GroupModel.MoveRow">
+<span class="sig-name descname"><span class="pre">MoveRow</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">269</span></em><a class="headerlink" href="#qtdraw.widget.group_model.GroupModel.MoveRow" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qtdraw.widget.group_model.GroupModel.RemoveRow">
+<span class="sig-name descname"><span class="pre">RemoveRow</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">268</span></em><a class="headerlink" href="#qtdraw.widget.group_model.GroupModel.RemoveRow" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qtdraw.widget.group_model.GroupModel.checkChanged">
+<span class="sig-name descname"><span class="pre">checkChanged</span></span><a class="headerlink" href="#qtdraw.widget.group_model.GroupModel.checkChanged" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qtdraw.widget.group_model.GroupModel.dataModified">
+<span class="sig-name descname"><span class="pre">dataModified</span></span><a class="headerlink" href="#qtdraw.widget.group_model.GroupModel.dataModified" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qtdraw.widget.group_model.GroupModel.dataRemoved">
+<span class="sig-name descname"><span class="pre">dataRemoved</span></span><a class="headerlink" href="#qtdraw.widget.group_model.GroupModel.dataRemoved" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
 <dl class="py property">
 <dt class="sig sig-object py" id="qtdraw.widget.group_model.GroupModel.group_name">
 <em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">group_name</span></span><a class="headerlink" href="#qtdraw.widget.group_model.GroupModel.group_name" title="Link to this definition">#</a></dt>
@@ -1757,6 +2233,21 @@ which is necessary to use other Qt functionalities.</p>
 </dd>
 </dl>
 </dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qtdraw.widget.group_model.GroupModel.staticMetaObject">
+<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;GroupModel&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;QStandardItemModel&quot;:</span> <span class="pre">Methods:</span>&#160;&#160; <span class="pre">#78</span> <span class="pre">type=Signal,</span> <span class="pre">signature=updateData(QString,QVariantList,int,QModelIndex),</span> <span class="pre">parameters=QString,</span> <span class="pre">QVariantList,</span> <span class="pre">int,</span> <span class="pre">QModelIndex</span>&#160;&#160; <span class="pre">#79</span> <span class="pre">type=Signal,</span> <span class="pre">signature=updateWidget(QModelIndex),</span> <span class="pre">parameters=QModelIndex</span>&#160;&#160; <span class="pre">#80</span> <span class="pre">type=Signal,</span> <span class="pre">signature=dataRemoved(QString,QVariantList,QModelIndex),</span> <span class="pre">parameters=QString,</span> <span class="pre">QVariantList,</span> <span class="pre">QModelIndex</span>&#160;&#160; <span class="pre">#81</span> <span class="pre">type=Signal,</span> <span class="pre">signature=dataModified(QString,QVariantList,QModelIndex),</span> <span class="pre">parameters=QString,</span> <span class="pre">QVariantList,</span> <span class="pre">QModelIndex</span>&#160;&#160; <span class="pre">#82</span> <span class="pre">type=Signal,</span> <span class="pre">signature=checkChanged(QString,QVariantList,QModelIndex),</span> <span class="pre">parameters=QString,</span> <span class="pre">QVariantList,</span> <span class="pre">QModelIndex</span> <span class="pre">)</span></em><a class="headerlink" href="#qtdraw.widget.group_model.GroupModel.staticMetaObject" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qtdraw.widget.group_model.GroupModel.updateData">
+<span class="sig-name descname"><span class="pre">updateData</span></span><a class="headerlink" href="#qtdraw.widget.group_model.GroupModel.updateData" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qtdraw.widget.group_model.GroupModel.updateWidget">
+<span class="sig-name descname"><span class="pre">updateWidget</span></span><a class="headerlink" href="#qtdraw.widget.group_model.GroupModel.updateWidget" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -1808,6 +2299,16 @@ which is necessary to use other Qt functionalities.</p>
 <span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/qt_event_util.html#ExceptionHook.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.qt_event_util.ExceptionHook.reset" title="Link to this definition">#</a></dt>
 <dd><p>Reset exception hook.</p>
 </dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qtdraw.widget.qt_event_util.ExceptionHook.msg_signal">
+<span class="sig-name descname"><span class="pre">msg_signal</span></span><a class="headerlink" href="#qtdraw.widget.qt_event_util.ExceptionHook.msg_signal" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qtdraw.widget.qt_event_util.ExceptionHook.staticMetaObject">
+<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;ExceptionHook&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;QObject&quot;:</span> <span class="pre">Methods:</span>&#160;&#160; <span class="pre">#4</span> <span class="pre">type=Signal,</span> <span class="pre">signature=msg_signal(QString),</span> <span class="pre">parameters=QString</span> <span class="pre">)</span></em><a class="headerlink" href="#qtdraw.widget.qt_event_util.ExceptionHook.staticMetaObject" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -1936,6 +2437,11 @@ which is necessary to use other Qt functionalities.</p>
 </dl>
 </dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qtdraw.widget.logging_util.LogWidget.staticMetaObject">
+<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;LogWidget&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;QWidget&quot;:</span> <span class="pre">)</span></em><a class="headerlink" href="#qtdraw.widget.logging_util.LogWidget.staticMetaObject" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <dl class="py function">
@@ -1999,6 +2505,11 @@ different directory (just by copying it).</p>
 </dd>
 </dl>
 </dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qtdraw.widget.pdf_viewer.PDFViewer.staticMetaObject">
+<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;PDFViewer&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;QWidget&quot;:</span> <span class="pre">)</span></em><a class="headerlink" href="#qtdraw.widget.pdf_viewer.PDFViewer.staticMetaObject" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -2089,35 +2600,86 @@ different directory (just by copying it).</p>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-qtdraw.widget.custom_widget">Custom Widget, etc.</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.Button"><code class="docutils literal notranslate"><span class="pre">Button</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.Check"><code class="docutils literal notranslate"><span class="pre">Check</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.Check.is_checked"><code class="docutils literal notranslate"><span class="pre">Check.is_checked()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.Button"><code class="docutils literal notranslate"><span class="pre">Button</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.Button.staticMetaObject"><code class="docutils literal notranslate"><span class="pre">Button.staticMetaObject</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.ColorSelector"><code class="docutils literal notranslate"><span class="pre">ColorSelector</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.Check"><code class="docutils literal notranslate"><span class="pre">Check</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.Check.is_checked"><code class="docutils literal notranslate"><span class="pre">Check.is_checked()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.Check.staticMetaObject"><code class="docutils literal notranslate"><span class="pre">Check.staticMetaObject</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.ColorSelector"><code class="docutils literal notranslate"><span class="pre">ColorSelector</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.ColorSelector.staticMetaObject"><code class="docutils literal notranslate"><span class="pre">ColorSelector.staticMetaObject</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.Combo"><code class="docutils literal notranslate"><span class="pre">Combo</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.Combo.find_index"><code class="docutils literal notranslate"><span class="pre">Combo.find_index()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.Combo.get_item"><code class="docutils literal notranslate"><span class="pre">Combo.get_item()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.Combo.set_item"><code class="docutils literal notranslate"><span class="pre">Combo.set_item()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.Combo.staticMetaObject"><code class="docutils literal notranslate"><span class="pre">Combo.staticMetaObject</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.DSpin"><code class="docutils literal notranslate"><span class="pre">DSpin</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.DSpin"><code class="docutils literal notranslate"><span class="pre">DSpin</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.DSpin.staticMetaObject"><code class="docutils literal notranslate"><span class="pre">DSpin.staticMetaObject</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.Editor"><code class="docutils literal notranslate"><span class="pre">Editor</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.Editor.clearFocus"><code class="docutils literal notranslate"><span class="pre">Editor.clearFocus()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.Editor.mouseDoubleClickEvent"><code class="docutils literal notranslate"><span class="pre">Editor.mouseDoubleClickEvent()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.Editor.mousePressEvent"><code class="docutils literal notranslate"><span class="pre">Editor.mousePressEvent()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.Editor.setCurrentText"><code class="docutils literal notranslate"><span class="pre">Editor.setCurrentText()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.Editor.setText"><code class="docutils literal notranslate"><span class="pre">Editor.setText()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.Editor.sizeHint"><code class="docutils literal notranslate"><span class="pre">Editor.sizeHint()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.Editor.text"><code class="docutils literal notranslate"><span class="pre">Editor.text()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.Editor.returnPressed"><code class="docutils literal notranslate"><span class="pre">Editor.returnPressed</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.Editor.staticMetaObject"><code class="docutils literal notranslate"><span class="pre">Editor.staticMetaObject</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.HBar"><code class="docutils literal notranslate"><span class="pre">HBar</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.HBar"><code class="docutils literal notranslate"><span class="pre">HBar</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.HBar.staticMetaObject"><code class="docutils literal notranslate"><span class="pre">HBar.staticMetaObject</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.HSpacer"><code class="docutils literal notranslate"><span class="pre">HSpacer</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.Label"><code class="docutils literal notranslate"><span class="pre">Label</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.Layout"><code class="docutils literal notranslate"><span class="pre">Layout</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.LineEdit"><code class="docutils literal notranslate"><span class="pre">LineEdit</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.MathWidget"><code class="docutils literal notranslate"><span class="pre">MathWidget</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.Panel"><code class="docutils literal notranslate"><span class="pre">Panel</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.Spin"><code class="docutils literal notranslate"><span class="pre">Spin</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.Label"><code class="docutils literal notranslate"><span class="pre">Label</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.Label.set_background"><code class="docutils literal notranslate"><span class="pre">Label.set_background()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.Label.sizeHint"><code class="docutils literal notranslate"><span class="pre">Label.sizeHint()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.Label.staticMetaObject"><code class="docutils literal notranslate"><span class="pre">Label.staticMetaObject</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.Layout"><code class="docutils literal notranslate"><span class="pre">Layout</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.Layout.staticMetaObject"><code class="docutils literal notranslate"><span class="pre">Layout.staticMetaObject</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.LineEdit"><code class="docutils literal notranslate"><span class="pre">LineEdit</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.LineEdit.focusInEvent"><code class="docutils literal notranslate"><span class="pre">LineEdit.focusInEvent()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.LineEdit.focusOutEvent"><code class="docutils literal notranslate"><span class="pre">LineEdit.focusOutEvent()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.LineEdit.keyPressEvent"><code class="docutils literal notranslate"><span class="pre">LineEdit.keyPressEvent()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.LineEdit.raw_text"><code class="docutils literal notranslate"><span class="pre">LineEdit.raw_text()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.LineEdit.setText"><code class="docutils literal notranslate"><span class="pre">LineEdit.setText()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.LineEdit.set_read_only"><code class="docutils literal notranslate"><span class="pre">LineEdit.set_read_only()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.LineEdit.set_validator"><code class="docutils literal notranslate"><span class="pre">LineEdit.set_validator()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.LineEdit.sizeHint"><code class="docutils literal notranslate"><span class="pre">LineEdit.sizeHint()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.LineEdit.focusOut"><code class="docutils literal notranslate"><span class="pre">LineEdit.focusOut</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.LineEdit.staticMetaObject"><code class="docutils literal notranslate"><span class="pre">LineEdit.staticMetaObject</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.MathWidget"><code class="docutils literal notranslate"><span class="pre">MathWidget</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.MathWidget.paintEvent"><code class="docutils literal notranslate"><span class="pre">MathWidget.paintEvent()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.MathWidget.setText"><code class="docutils literal notranslate"><span class="pre">MathWidget.setText()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.MathWidget.sizeHint"><code class="docutils literal notranslate"><span class="pre">MathWidget.sizeHint()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.MathWidget.text"><code class="docutils literal notranslate"><span class="pre">MathWidget.text()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.MathWidget.staticMetaObject"><code class="docutils literal notranslate"><span class="pre">MathWidget.staticMetaObject</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.Panel"><code class="docutils literal notranslate"><span class="pre">Panel</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.Panel.staticMetaObject"><code class="docutils literal notranslate"><span class="pre">Panel.staticMetaObject</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.Spin"><code class="docutils literal notranslate"><span class="pre">Spin</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.Spin.staticMetaObject"><code class="docutils literal notranslate"><span class="pre">Spin.staticMetaObject</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.VSpacer"><code class="docutils literal notranslate"><span class="pre">VSpacer</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.validator.check_symbol"><code class="docutils literal notranslate"><span class="pre">check_symbol()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.validator.convert_to_bond"><code class="docutils literal notranslate"><span class="pre">convert_to_bond()</span></code></a></li>
@@ -2131,32 +2693,77 @@ different directory (just by copying it).</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.validator.validator_site"><code class="docutils literal notranslate"><span class="pre">validator_site()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.validator.validator_site_bond"><code class="docutils literal notranslate"><span class="pre">validator_site_bond()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.validator.validator_vector_site_bond"><code class="docutils literal notranslate"><span class="pre">validator_vector_site_bond()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.message_box.MessageBox"><code class="docutils literal notranslate"><span class="pre">MessageBox</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.table_view.TableView"><code class="docutils literal notranslate"><span class="pre">TableView</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.message_box.MessageBox"><code class="docutils literal notranslate"><span class="pre">MessageBox</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.message_box.MessageBox.staticMetaObject"><code class="docutils literal notranslate"><span class="pre">MessageBox.staticMetaObject</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.table_view.TableView"><code class="docutils literal notranslate"><span class="pre">TableView</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.table_view.TableView.staticMetaObject"><code class="docutils literal notranslate"><span class="pre">TableView.staticMetaObject</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.mathjax.MathJaxSVG"><code class="docutils literal notranslate"><span class="pre">MathJaxSVG</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.mathjax.MathJaxSVG.close"><code class="docutils literal notranslate"><span class="pre">MathJaxSVG.close()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.mathjax.MathJaxSVG.convert"><code class="docutils literal notranslate"><span class="pre">MathJaxSVG.convert()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-qtdraw.widget.tab_group_view">Data View and Model</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.tab_group_view.TabGroupView"><code class="docutils literal notranslate"><span class="pre">TabGroupView</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.tab_group_view.TabGroupView.select_tab"><code class="docutils literal notranslate"><span class="pre">TabGroupView.select_tab()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.tab_group_view.TabGroupView.tab_change"><code class="docutils literal notranslate"><span class="pre">TabGroupView.tab_change()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.tab_group_view.TabGroupView.staticMetaObject"><code class="docutils literal notranslate"><span class="pre">TabGroupView.staticMetaObject</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.group_view.GroupView"><code class="docutils literal notranslate"><span class="pre">GroupView</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.group_view.GroupView.clear_row_heights"><code class="docutils literal notranslate"><span class="pre">GroupView.clear_row_heights()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.group_view.GroupView.clear_selection"><code class="docutils literal notranslate"><span class="pre">GroupView.clear_selection()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.group_view.GroupView.closeEvent"><code class="docutils literal notranslate"><span class="pre">GroupView.closeEvent()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.group_view.GroupView.context_menu"><code class="docutils literal notranslate"><span class="pre">GroupView.context_menu()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.group_view.GroupView.copy_row"><code class="docutils literal notranslate"><span class="pre">GroupView.copy_row()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.group_view.GroupView.insert_row"><code class="docutils literal notranslate"><span class="pre">GroupView.insert_row()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.group_view.GroupView.keyPressEvent"><code class="docutils literal notranslate"><span class="pre">GroupView.keyPressEvent()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.group_view.GroupView.mousePressEvent"><code class="docutils literal notranslate"><span class="pre">GroupView.mousePressEvent()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.group_view.GroupView.remove_row"><code class="docutils literal notranslate"><span class="pre">GroupView.remove_row()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.group_view.GroupView.row_height_hint"><code class="docutils literal notranslate"><span class="pre">GroupView.row_height_hint()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.group_view.GroupView.select_row"><code class="docutils literal notranslate"><span class="pre">GroupView.select_row()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.group_view.GroupView.selection_changed"><code class="docutils literal notranslate"><span class="pre">GroupView.selection_changed()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.group_view.GroupView.setModel"><code class="docutils literal notranslate"><span class="pre">GroupView.setModel()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.group_view.GroupView.set_row_height_hint"><code class="docutils literal notranslate"><span class="pre">GroupView.set_row_height_hint()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.group_view.GroupView.set_widget"><code class="docutils literal notranslate"><span class="pre">GroupView.set_widget()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.group_view.GroupView.update_widget"><code class="docutils literal notranslate"><span class="pre">GroupView.update_widget()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.group_view.GroupView.selectionChanged"><code class="docutils literal notranslate"><span class="pre">GroupView.selectionChanged</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.group_view.GroupView.staticMetaObject"><code class="docutils literal notranslate"><span class="pre">GroupView.staticMetaObject</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.delegate.ColorDelegate"><code class="docutils literal notranslate"><span class="pre">ColorDelegate</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.delegate.ComboDelegate"><code class="docutils literal notranslate"><span class="pre">ComboDelegate</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.delegate.Delegate"><code class="docutils literal notranslate"><span class="pre">Delegate</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.delegate.EditorDelegate"><code class="docutils literal notranslate"><span class="pre">EditorDelegate</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.delegate.ColorDelegate"><code class="docutils literal notranslate"><span class="pre">ColorDelegate</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.delegate.ColorDelegate.createEditor"><code class="docutils literal notranslate"><span class="pre">ColorDelegate.createEditor()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.delegate.ColorDelegate.sizeHint"><code class="docutils literal notranslate"><span class="pre">ColorDelegate.sizeHint()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.delegate.ColorDelegate.updateEditorGeometry"><code class="docutils literal notranslate"><span class="pre">ColorDelegate.updateEditorGeometry()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.delegate.ColorDelegate.staticMetaObject"><code class="docutils literal notranslate"><span class="pre">ColorDelegate.staticMetaObject</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.delegate.ComboDelegate"><code class="docutils literal notranslate"><span class="pre">ComboDelegate</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.delegate.ComboDelegate.createEditor"><code class="docutils literal notranslate"><span class="pre">ComboDelegate.createEditor()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.delegate.ComboDelegate.sizeHint"><code class="docutils literal notranslate"><span class="pre">ComboDelegate.sizeHint()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.delegate.ComboDelegate.updateEditorGeometry"><code class="docutils literal notranslate"><span class="pre">ComboDelegate.updateEditorGeometry()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.delegate.ComboDelegate.staticMetaObject"><code class="docutils literal notranslate"><span class="pre">ComboDelegate.staticMetaObject</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.delegate.Delegate"><code class="docutils literal notranslate"><span class="pre">Delegate</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.delegate.Delegate.paint"><code class="docutils literal notranslate"><span class="pre">Delegate.paint()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.delegate.Delegate.setEditorData"><code class="docutils literal notranslate"><span class="pre">Delegate.setEditorData()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.delegate.Delegate.setModelData"><code class="docutils literal notranslate"><span class="pre">Delegate.setModelData()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.delegate.Delegate.staticMetaObject"><code class="docutils literal notranslate"><span class="pre">Delegate.staticMetaObject</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.delegate.EditorDelegate"><code class="docutils literal notranslate"><span class="pre">EditorDelegate</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.delegate.EditorDelegate.createEditor"><code class="docutils literal notranslate"><span class="pre">EditorDelegate.createEditor()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.delegate.EditorDelegate.sizeHint"><code class="docutils literal notranslate"><span class="pre">EditorDelegate.sizeHint()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.delegate.EditorDelegate.updateEditorGeometry"><code class="docutils literal notranslate"><span class="pre">EditorDelegate.updateEditorGeometry()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.delegate.EditorDelegate.staticMetaObject"><code class="docutils literal notranslate"><span class="pre">EditorDelegate.staticMetaObject</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.group_model.GroupModel"><code class="docutils literal notranslate"><span class="pre">GroupModel</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.group_model.GroupModel.action_copy_row"><code class="docutils literal notranslate"><span class="pre">GroupModel.action_copy_row()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.group_model.GroupModel.action_insert_row"><code class="docutils literal notranslate"><span class="pre">GroupModel.action_insert_row()</span></code></a></li>
@@ -2183,8 +2790,17 @@ different directory (just by copying it).</p>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.group_model.GroupModel.tolist"><code class="docutils literal notranslate"><span class="pre">GroupModel.tolist()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.group_model.GroupModel.tolist_index"><code class="docutils literal notranslate"><span class="pre">GroupModel.tolist_index()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.group_model.GroupModel.update_check_state"><code class="docutils literal notranslate"><span class="pre">GroupModel.update_check_state()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.group_model.GroupModel.AppendRow"><code class="docutils literal notranslate"><span class="pre">GroupModel.AppendRow</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.group_model.GroupModel.MoveRow"><code class="docutils literal notranslate"><span class="pre">GroupModel.MoveRow</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.group_model.GroupModel.RemoveRow"><code class="docutils literal notranslate"><span class="pre">GroupModel.RemoveRow</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.group_model.GroupModel.checkChanged"><code class="docutils literal notranslate"><span class="pre">GroupModel.checkChanged</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.group_model.GroupModel.dataModified"><code class="docutils literal notranslate"><span class="pre">GroupModel.dataModified</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.group_model.GroupModel.dataRemoved"><code class="docutils literal notranslate"><span class="pre">GroupModel.dataRemoved</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.group_model.GroupModel.group_name"><code class="docutils literal notranslate"><span class="pre">GroupModel.group_name</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.group_model.GroupModel.header"><code class="docutils literal notranslate"><span class="pre">GroupModel.header</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.group_model.GroupModel.staticMetaObject"><code class="docutils literal notranslate"><span class="pre">GroupModel.staticMetaObject</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.group_model.GroupModel.updateData"><code class="docutils literal notranslate"><span class="pre">GroupModel.updateData</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.group_model.GroupModel.updateWidget"><code class="docutils literal notranslate"><span class="pre">GroupModel.updateWidget</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -2193,6 +2809,8 @@ different directory (just by copying it).</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.qt_event_util.ExceptionHook"><code class="docutils literal notranslate"><span class="pre">ExceptionHook</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.qt_event_util.ExceptionHook.hook"><code class="docutils literal notranslate"><span class="pre">ExceptionHook.hook()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.qt_event_util.ExceptionHook.reset"><code class="docutils literal notranslate"><span class="pre">ExceptionHook.reset()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.qt_event_util.ExceptionHook.msg_signal"><code class="docutils literal notranslate"><span class="pre">ExceptionHook.msg_signal</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.qt_event_util.ExceptionHook.staticMetaObject"><code class="docutils literal notranslate"><span class="pre">ExceptionHook.staticMetaObject</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.qt_event_util.get_qt_application"><code class="docutils literal notranslate"><span class="pre">get_qt_application()</span></code></a></li>
@@ -2206,6 +2824,7 @@ different directory (just by copying it).</p>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.logging_util.LogWidget.clear"><code class="docutils literal notranslate"><span class="pre">LogWidget.clear()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.logging_util.LogWidget.save"><code class="docutils literal notranslate"><span class="pre">LogWidget.save()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.logging_util.LogWidget.set_text"><code class="docutils literal notranslate"><span class="pre">LogWidget.set_text()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.logging_util.LogWidget.staticMetaObject"><code class="docutils literal notranslate"><span class="pre">LogWidget.staticMetaObject</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.logging_util.start_logging"><code class="docutils literal notranslate"><span class="pre">start_logging()</span></code></a></li>
@@ -2216,6 +2835,7 @@ different directory (just by copying it).</p>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.pdf_viewer.PDFViewer.load"><code class="docutils literal notranslate"><span class="pre">PDFViewer.load()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.pdf_viewer.PDFViewer.save"><code class="docutils literal notranslate"><span class="pre">PDFViewer.save()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.pdf_viewer.PDFViewer.set_title"><code class="docutils literal notranslate"><span class="pre">PDFViewer.set_title()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.pdf_viewer.PDFViewer.staticMetaObject"><code class="docutils literal notranslate"><span class="pre">PDFViewer.staticMetaObject</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.color_selector_util.color2pixmap"><code class="docutils literal notranslate"><span class="pre">color2pixmap()</span></code></a></li>
@@ -2246,7 +2866,7 @@ By Hiroaki Kusunose
 
   <p class="copyright">
     
-      © Copyright 2021-2024.
+      © Copyright 2021-.
       <br/>
     
   </p>

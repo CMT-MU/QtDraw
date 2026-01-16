@@ -37,7 +37,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
-    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=5f1b4820" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=34ddd5e8" />
   
   <!-- So that users can add custom icons -->
   <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
@@ -162,7 +162,7 @@
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="install.html">Install QtDraw (and MultiPie)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installing QtDraw</a></li>
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Documentation</span></p>
@@ -415,14 +415,10 @@
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.create_grid"><code class="docutils literal notranslate"><span class="pre">create_grid()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.distance"><code class="docutils literal notranslate"><span class="pre">distance()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.igrid"><code class="docutils literal notranslate"><span class="pre">igrid()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.list_to_table"><code class="docutils literal notranslate"><span class="pre">list_to_table()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.read_dict"><code class="docutils literal notranslate"><span class="pre">read_dict()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.remove_space"><code class="docutils literal notranslate"><span class="pre">remove_space()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.str_to_list"><code class="docutils literal notranslate"><span class="pre">str_to_list()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.str_to_sympy"><code class="docutils literal notranslate"><span class="pre">str_to_sympy()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.text_to_list"><code class="docutils literal notranslate"><span class="pre">text_to_list()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.to_latex"><code class="docutils literal notranslate"><span class="pre">to_latex()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.vector3d"><code class="docutils literal notranslate"><span class="pre">vector3d()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.write_dict"><code class="docutils literal notranslate"><span class="pre">write_dict()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util_axis.create_axes_widget"><code class="docutils literal notranslate"><span class="pre">create_axes_widget()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util_axis.create_cell_grid"><code class="docutils literal notranslate"><span class="pre">create_cell_grid()</span></code></a></li>
@@ -901,7 +897,7 @@ The following objects are available.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>latex</strong> (<em>str</em>) -- LaTeX with $.</p></li>
-<li><p><strong>mathjax</strong> (<em>MathJaxSVG</em>) -- mathjax converter.</p></li>
+<li><p><strong>mathjax</strong> (<a class="reference internal" href="api_widget.html#qtdraw.widget.mathjax.MathJaxSVG" title="qtdraw.widget.mathjax.MathJaxSVG"><em>MathJaxSVG</em></a>) -- mathjax converter.</p></li>
 <li><p><strong>x</strong> (<em>int</em>) -- x position from left.</p></li>
 <li><p><strong>y</strong> (<em>int</em>) -- y position from bottom.</p></li>
 <li><p><strong>size</strong> (<em>int</em>) -- size (height).</p></li>
@@ -1138,27 +1134,6 @@ The following objects are available.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="qtdraw.util.util.list_to_table">
-<span class="sig-name descname"><span class="pre">list_to_table</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lst1d</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">col</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/util.html#list_to_table"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.util.list_to_table" title="Link to this definition">#</a></dt>
-<dd><p>Convert from list to table</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>lst1d</strong> (<em>list</em>) -- 1d list</p></li>
-<li><p><strong>col</strong> (<em>int</em>) -- number of columns</p></li>
-<li><p><strong>p</strong> (<em>any</em><em>, </em><em>optional</em>) -- padding value (no padding for None)</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><ul class="simple">
-<li><p>(list) -- 2d list.</p></li>
-</ul>
-</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
 <dt class="sig sig-object py" id="qtdraw.util.util.read_dict">
 <span class="sig-name descname"><span class="pre">read_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/util.html#read_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.util.read_dict" title="Link to this definition">#</a></dt>
 <dd><p>Read dict text file.</p>
@@ -1173,47 +1148,6 @@ The following objects are available.</p>
 </p>
 </dd>
 </dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="qtdraw.util.util.remove_space">
-<span class="sig-name descname"><span class="pre">remove_space</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/util.html#remove_space"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.util.remove_space" title="Link to this definition">#</a></dt>
-<dd><p>Remove space, tab, and newline.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>s</strong> (<em>str</em>) -- string</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><ul class="simple">
-<li><p>(str) -- removed string.</p></li>
-</ul>
-</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="qtdraw.util.util.str_to_list">
-<span class="sig-name descname"><span class="pre">str_to_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/util.html#str_to_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.util.str_to_list" title="Link to this definition">#</a></dt>
-<dd><p>Convert a string to a list of strings.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>s</strong> (<em>str</em>) -- a string with irregular-shaped list format.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><ul class="simple">
-<li><p>(list) -- a list of strings.</p></li>
-</ul>
-</p>
-</dd>
-</dl>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<ul class="simple">
-<li><p>in case of no bracket, return as it is.</p></li>
-<li><p>raise ValueError for invalid brackets.</p></li>
-</ul>
-</div>
 </dd></dl>
 
 <dl class="py function">
@@ -1287,26 +1221,6 @@ The following objects are available.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="qtdraw.util.util.vector3d">
-<span class="sig-name descname"><span class="pre">vector3d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">head</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Q'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pre</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/util.html#vector3d"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.util.vector3d" title="Link to this definition">#</a></dt>
-<dd><p>3d vector.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>head</strong> (<em>str</em><em>, </em><em>optional</em>) -- type of vector, Q/G/T/M.</p></li>
-<li><p><strong>pre</strong> (<em>str</em><em>, </em><em>optional</em>) -- head of symbol.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><ul class="simple">
-<li><p>(ndarray) -- 3d vector.</p></li>
-</ul>
-</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
 <dt class="sig sig-object py" id="qtdraw.util.util.write_dict">
 <span class="sig-name descname"><span class="pre">write_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dic</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">header</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">var</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/util.html#write_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.util.write_dict" title="Link to this definition">#</a></dt>
 <dd><p>write dict text file.</p>
@@ -1326,12 +1240,12 @@ The following objects are available.</p>
 <p>This module contains utility for axis, etc.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="qtdraw.util.util_axis.create_axes_widget">
-<span class="sig-name descname"><span class="pre">create_axes_widget</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pv_widget</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">A</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'[x,y,z]'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">28</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_bold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_italic</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['black',</span> <span class="pre">'black',</span> <span class="pre">'black']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">viewport</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/util_axis.html#create_axes_widget"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.util_axis.create_axes_widget" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">create_axes_widget</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pv_widget</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">A</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'[x,y,z]'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">28</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_bold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_italic</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['black',</span> <span class="pre">'black',</span> <span class="pre">'black']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">viewport</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">full</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/util_axis.html#create_axes_widget"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.util_axis.create_axes_widget" title="Link to this definition">#</a></dt>
 <dd><p>Create axes widget.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>pv_widget</strong> (<a class="reference internal" href="api_core.html#qtdraw.core.pyvista_widget.PyVistaWidget" title="qtdraw.core.pyvista_widget.PyVistaWidget"><em>PyVistaWidget</em></a>) -- pyvista widget.</p></li>
+<li><p><strong>pv_widget</strong> (<a class="reference internal" href="from_python.html#qtdraw.core.pyvista_widget.PyVistaWidget" title="qtdraw.core.pyvista_widget.PyVistaWidget"><em>PyVistaWidget</em></a>) -- pyvista widget.</p></li>
 <li><p><strong>A</strong> (<em>numpy.ndarray</em>) -- (a1, a2, a3) unit vectors, 4x4 [float].</p></li>
 <li><p><strong>label</strong> (<em>str</em><em>, </em><em>optional</em>) -- axes labels.</p></li>
 <li><p><strong>label_size</strong> (<em>int</em><em>, </em><em>optional</em>) -- font size.</p></li>
@@ -1339,6 +1253,7 @@ The following objects are available.</p>
 <li><p><strong>label_italic</strong> (<em>bool</em><em>, </em><em>optional</em>) -- italic ?</p></li>
 <li><p><strong>label_color</strong> (<em>list</em><em>, </em><em>optional</em>) -- axes label color names, [str].</p></li>
 <li><p><strong>viewport</strong> (<em>bool</em><em>, </em><em>optional</em>) -- set viewport ?</p></li>
+<li><p><strong>full</strong> (<em>bool</em><em>, </em><em>optional</em>) -- full axes ?</p></li>
 </ul>
 </dd>
 </dl>
@@ -1551,14 +1466,10 @@ The following objects are available.</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.create_grid"><code class="docutils literal notranslate"><span class="pre">create_grid()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.distance"><code class="docutils literal notranslate"><span class="pre">distance()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.igrid"><code class="docutils literal notranslate"><span class="pre">igrid()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.list_to_table"><code class="docutils literal notranslate"><span class="pre">list_to_table()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.read_dict"><code class="docutils literal notranslate"><span class="pre">read_dict()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.remove_space"><code class="docutils literal notranslate"><span class="pre">remove_space()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.str_to_list"><code class="docutils literal notranslate"><span class="pre">str_to_list()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.str_to_sympy"><code class="docutils literal notranslate"><span class="pre">str_to_sympy()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.text_to_list"><code class="docutils literal notranslate"><span class="pre">text_to_list()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.to_latex"><code class="docutils literal notranslate"><span class="pre">to_latex()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.vector3d"><code class="docutils literal notranslate"><span class="pre">vector3d()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.write_dict"><code class="docutils literal notranslate"><span class="pre">write_dict()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util_axis.create_axes_widget"><code class="docutils literal notranslate"><span class="pre">create_axes_widget()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util_axis.create_cell_grid"><code class="docutils literal notranslate"><span class="pre">create_cell_grid()</span></code></a></li>
@@ -1593,7 +1504,7 @@ By Hiroaki Kusunose
 
   <p class="copyright">
     
-      © Copyright 2021-2024.
+      © Copyright 2021-.
       <br/>
     
   </p>

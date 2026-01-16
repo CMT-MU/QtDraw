@@ -36,7 +36,7 @@
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=5f1b4820" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=34ddd5e8" />
   
   <!-- So that users can add custom icons -->
   <script src="../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
@@ -161,7 +161,7 @@
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../../../src/overview.html">Overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../src/install.html">Install QtDraw (and MultiPie)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../src/install.html">Installing QtDraw</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../src/getting_started.html">Getting Started</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Documentation</span></p>
@@ -339,9 +339,7 @@
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw.core.pyvista_widget_setting</span><span class="w"> </span><span class="kn">import</span> <span class="n">widget_detail</span> <span class="k">as</span> <span class="n">detail</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw.core.pyvista_widget_setting</span><span class="w"> </span><span class="kn">import</span> <span class="n">CHOP</span><span class="p">,</span> <span class="n">DIGIT</span>
-
 <span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw.widget.color_palette</span><span class="w"> </span><span class="kn">import</span> <span class="n">all_colors</span>
-
 <span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw.util.util</span><span class="w"> </span><span class="kn">import</span> <span class="n">text_to_list</span>
 
 
@@ -495,6 +493,58 @@
 
 
 <span class="c1"># ==================================================</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_create_axes_actor_full</span><span class="p">(</span>
+    <span class="n">pv_widget</span><span class="p">,</span>
+    <span class="n">A</span><span class="p">,</span>
+    <span class="n">label_color</span><span class="p">,</span>
+    <span class="n">shaft_color</span><span class="p">,</span>
+    <span class="n">shaft_radius</span><span class="p">,</span>
+    <span class="n">shaft_resolution</span><span class="p">,</span>
+    <span class="n">tip_radius</span><span class="p">,</span>
+    <span class="n">tip_length</span><span class="p">,</span>
+    <span class="n">tip_resolution</span><span class="p">,</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Create custom axes actor (crossed axes).</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        pv_widget (PyVistaWidget): pyvista widget.</span>
+<span class="sd">        A (numpy.ndarray): (a1, a2, a3) unit vectors, 4x4 [float].</span>
+<span class="sd">        label_color (list): axes label color names, [str].</span>
+<span class="sd">        shaft_color (list): axes color names, [str].</span>
+<span class="sd">        shaft_radius (float): axes cylinder radius.</span>
+<span class="sd">        shaft_resolution (int): axes shaft resolution.</span>
+<span class="sd">        tip_radius (float): axes tip radius.</span>
+<span class="sd">        tip_length (float): axes tip length.</span>
+<span class="sd">        tip_resolution (int): axes tip resolution.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">shaft_color</span> <span class="o">=</span> <span class="p">[(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">all_colors</span><span class="p">[</span><span class="n">c</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="mi">255</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">shaft_color</span><span class="p">]</span>
+    <span class="n">label_color</span> <span class="o">=</span> <span class="p">[</span><span class="n">all_colors</span><span class="p">[</span><span class="n">c</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">label_color</span><span class="p">]</span>
+
+    <span class="n">length</span> <span class="o">=</span> <span class="mf">2.5</span>
+    <span class="n">offset</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">length</span>
+    <span class="n">width</span> <span class="o">=</span> <span class="n">shaft_radius</span> <span class="o">*</span> <span class="mf">2.5</span>
+
+    <span class="k">for</span> <span class="n">no</span><span class="p">,</span> <span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">shaft_color</span><span class="p">)):</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+
+        <span class="n">obj</span> <span class="o">=</span> <span class="n">pv</span><span class="o">.</span><span class="n">Arrow</span><span class="p">(</span>
+            <span class="n">start</span><span class="o">=</span><span class="n">offset</span> <span class="o">*</span> <span class="n">d</span><span class="p">,</span>
+            <span class="n">direction</span><span class="o">=</span><span class="n">d</span><span class="p">,</span>
+            <span class="n">scale</span><span class="o">=</span><span class="n">length</span><span class="p">,</span>
+            <span class="n">shaft_radius</span><span class="o">=</span><span class="n">shaft_radius</span> <span class="o">*</span> <span class="n">width</span> <span class="o">/</span> <span class="n">length</span><span class="p">,</span>
+            <span class="n">tip_radius</span><span class="o">=</span><span class="mf">1.2</span> <span class="o">*</span> <span class="n">tip_radius</span> <span class="o">*</span> <span class="n">width</span> <span class="o">/</span> <span class="n">length</span><span class="p">,</span>
+            <span class="n">tip_length</span><span class="o">=</span><span class="n">tip_length</span> <span class="o">*</span> <span class="mf">0.15</span><span class="p">,</span>
+            <span class="n">shaft_resolution</span><span class="o">=</span><span class="n">shaft_resolution</span><span class="p">,</span>
+            <span class="n">tip_resolution</span><span class="o">=</span><span class="n">tip_resolution</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="n">pv_widget</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="n">mesh</span><span class="o">=</span><span class="n">obj</span><span class="p">,</span> <span class="n">smooth_shading</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">c</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;axes_arrow_</span><span class="si">{</span><span class="n">no</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="kc">None</span>
+
+
+<span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="create_axes_widget">
 <a class="viewcode-back" href="../../../src/api_util.html#qtdraw.util.util_axis.create_axes_widget">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">create_axes_widget</span><span class="p">(</span>
@@ -506,6 +556,7 @@
     <span class="n">label_italic</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
     <span class="n">label_color</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="s2">&quot;black&quot;</span><span class="p">],</span>
     <span class="n">viewport</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">full</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Create axes widget.</span>
@@ -519,6 +570,7 @@
 <span class="sd">        label_italic (bool, optional): italic ?</span>
 <span class="sd">        label_color (list, optional): axes label color names, [str].</span>
 <span class="sd">        viewport (bool, optional): set viewport ?</span>
+<span class="sd">        full (bool, optional): full axes ?</span>
 
 <span class="sd">    Note:</span>
 <span class="sd">        - if label is None, no label is used.</span>
@@ -528,6 +580,7 @@
     <span class="n">shaft_color</span> <span class="o">=</span> <span class="n">detail</span><span class="p">[</span><span class="s2">&quot;shaft_color&quot;</span><span class="p">]</span>
     <span class="n">sphere_color</span> <span class="o">=</span> <span class="n">detail</span><span class="p">[</span><span class="s2">&quot;sphere_color&quot;</span><span class="p">]</span>
     <span class="n">shaft_radius</span> <span class="o">=</span> <span class="n">detail</span><span class="p">[</span><span class="s2">&quot;shaft_radius&quot;</span><span class="p">]</span>
+    <span class="n">shaft_resolution</span> <span class="o">=</span> <span class="n">detail</span><span class="p">[</span><span class="s2">&quot;shaft_resolution&quot;</span><span class="p">]</span>
     <span class="n">tip_radius</span> <span class="o">=</span> <span class="n">detail</span><span class="p">[</span><span class="s2">&quot;tip_radius&quot;</span><span class="p">]</span>
     <span class="n">tip_length</span> <span class="o">=</span> <span class="n">detail</span><span class="p">[</span><span class="s2">&quot;tip_length&quot;</span><span class="p">]</span>
     <span class="n">tip_resolution</span> <span class="o">=</span> <span class="n">detail</span><span class="p">[</span><span class="s2">&quot;tip_resolution&quot;</span><span class="p">]</span>
@@ -541,27 +594,40 @@
         <span class="n">pickable</span> <span class="o">=</span> <span class="kc">False</span>
 
     <span class="c1"># create axes actor.</span>
-    <span class="n">marker</span> <span class="o">=</span> <span class="n">_create_axes_actor</span><span class="p">(</span>
-        <span class="n">A</span><span class="p">,</span>
-        <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">,</span>
-        <span class="n">label_size</span><span class="o">=</span><span class="n">label_size</span><span class="p">,</span>
-        <span class="n">label_bold</span><span class="o">=</span><span class="n">label_bold</span><span class="p">,</span>
-        <span class="n">label_italic</span><span class="o">=</span><span class="n">label_italic</span><span class="p">,</span>
-        <span class="n">label_color</span><span class="o">=</span><span class="n">label_color</span><span class="p">,</span>
-        <span class="n">scale</span><span class="o">=</span><span class="n">scale</span><span class="p">,</span>
-        <span class="n">shaft_color</span><span class="o">=</span><span class="n">shaft_color</span><span class="p">,</span>
-        <span class="n">sphere_color</span><span class="o">=</span><span class="n">sphere_color</span><span class="p">,</span>
-        <span class="n">shaft_radius</span><span class="o">=</span><span class="n">shaft_radius</span><span class="p">,</span>
-        <span class="n">tip_radius</span><span class="o">=</span><span class="n">tip_radius</span><span class="p">,</span>
-        <span class="n">tip_length</span><span class="o">=</span><span class="n">tip_length</span><span class="p">,</span>
-        <span class="n">tip_resolution</span><span class="o">=</span><span class="n">tip_resolution</span><span class="p">,</span>
-        <span class="n">sphere_radius</span><span class="o">=</span><span class="n">sphere_radius</span><span class="p">,</span>
-        <span class="n">theta_phi_resolution</span><span class="o">=</span><span class="n">theta_phi_resolution</span><span class="p">,</span>
-    <span class="p">)</span>
+    <span class="k">if</span> <span class="n">full</span><span class="p">:</span>
+        <span class="n">_create_axes_actor_full</span><span class="p">(</span>
+            <span class="n">pv_widget</span><span class="p">,</span>
+            <span class="n">A</span><span class="p">,</span>
+            <span class="n">label_color</span><span class="o">=</span><span class="n">label_color</span><span class="p">,</span>
+            <span class="n">shaft_color</span><span class="o">=</span><span class="n">shaft_color</span><span class="p">,</span>
+            <span class="n">shaft_radius</span><span class="o">=</span><span class="n">shaft_radius</span><span class="p">,</span>
+            <span class="n">shaft_resolution</span><span class="o">=</span><span class="n">shaft_resolution</span><span class="p">,</span>
+            <span class="n">tip_radius</span><span class="o">=</span><span class="n">tip_radius</span><span class="p">,</span>
+            <span class="n">tip_length</span><span class="o">=</span><span class="n">tip_length</span><span class="p">,</span>
+            <span class="n">tip_resolution</span><span class="o">=</span><span class="n">tip_resolution</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">marker</span> <span class="o">=</span> <span class="n">_create_axes_actor</span><span class="p">(</span>
+            <span class="n">A</span><span class="p">,</span>
+            <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">,</span>
+            <span class="n">label_size</span><span class="o">=</span><span class="n">label_size</span><span class="p">,</span>
+            <span class="n">label_bold</span><span class="o">=</span><span class="n">label_bold</span><span class="p">,</span>
+            <span class="n">label_italic</span><span class="o">=</span><span class="n">label_italic</span><span class="p">,</span>
+            <span class="n">label_color</span><span class="o">=</span><span class="n">label_color</span><span class="p">,</span>
+            <span class="n">scale</span><span class="o">=</span><span class="n">scale</span><span class="p">,</span>
+            <span class="n">shaft_color</span><span class="o">=</span><span class="n">shaft_color</span><span class="p">,</span>
+            <span class="n">sphere_color</span><span class="o">=</span><span class="n">sphere_color</span><span class="p">,</span>
+            <span class="n">shaft_radius</span><span class="o">=</span><span class="n">shaft_radius</span><span class="p">,</span>
+            <span class="n">tip_radius</span><span class="o">=</span><span class="n">tip_radius</span><span class="p">,</span>
+            <span class="n">tip_length</span><span class="o">=</span><span class="n">tip_length</span><span class="p">,</span>
+            <span class="n">tip_resolution</span><span class="o">=</span><span class="n">tip_resolution</span><span class="p">,</span>
+            <span class="n">sphere_radius</span><span class="o">=</span><span class="n">sphere_radius</span><span class="p">,</span>
+            <span class="n">theta_phi_resolution</span><span class="o">=</span><span class="n">theta_phi_resolution</span><span class="p">,</span>
+        <span class="p">)</span>
 
-    <span class="c1"># create axes widget.</span>
-    <span class="n">pv_widget</span><span class="o">.</span><span class="n">add_orientation_widget</span><span class="p">(</span><span class="n">marker</span><span class="p">,</span> <span class="n">interactive</span><span class="o">=</span><span class="n">pickable</span><span class="p">,</span> <span class="n">viewport</span><span class="o">=</span><span class="n">viewport</span><span class="p">)</span>
-    <span class="n">pv_widget</span><span class="o">.</span><span class="n">renderer</span><span class="o">.</span><span class="n">axes_widget</span><span class="o">.</span><span class="n">SetZoom</span><span class="p">(</span><span class="n">scale</span><span class="p">)</span></div>
+        <span class="c1"># create axes widget.</span>
+        <span class="n">pv_widget</span><span class="o">.</span><span class="n">add_orientation_widget</span><span class="p">(</span><span class="n">marker</span><span class="p">,</span> <span class="n">interactive</span><span class="o">=</span><span class="n">pickable</span><span class="p">,</span> <span class="n">viewport</span><span class="o">=</span><span class="n">viewport</span><span class="p">)</span>
+        <span class="n">pv_widget</span><span class="o">.</span><span class="n">renderer</span><span class="o">.</span><span class="n">axes_widget</span><span class="o">.</span><span class="n">SetZoom</span><span class="p">(</span><span class="n">scale</span><span class="p">)</span></div>
 
 
 
@@ -835,7 +901,7 @@ By Hiroaki Kusunose
 
   <p class="copyright">
     
-      © Copyright 2021-2024.
+      © Copyright 2021-.
       <br/>
     
   </p>

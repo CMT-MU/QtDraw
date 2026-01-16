@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>&lt;no title&gt; &#8212; QtDraw</title>
+    <title>Example for MultiPie functionalities &#8212; QtDraw</title>
   
   
   
@@ -37,7 +37,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
-    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=5f1b4820" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=34ddd5e8" />
   
   <!-- So that users can add custom icons -->
   <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
@@ -162,7 +162,7 @@
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../overview.html">Overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../install.html">Install QtDraw (and MultiPie)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Installing QtDraw</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting Started</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Documentation</span></p>
@@ -366,9 +366,7 @@
 <button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
 </button>
-<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="fa-solid fa-list"></span>
-</button>
+
 </div></div>
       
     </div>
@@ -379,19 +377,11 @@
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1><no title></h1>
+    <h1>Example for MultiPie functionalities</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
-            <div>
-                <h2> Contents </h2>
-            </div>
-            <nav aria-label="Page">
-                <ul class="simple visible nav section-nav flex-column">
-</ul>
-
-            </nav>
         </div>
     </div>
 </div>
@@ -401,7 +391,9 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <div class="cell docutils container">
+  <section class="tex2jax_ignore mathjax_ignore" id="example-for-multipie-functionalities">
+<h1>Example for MultiPie functionalities<a class="headerlink" href="#example-for-multipie-functionalities" title="Link to this heading">#</a></h1>
+<div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#</span>
 <span class="c1"># multipie.ipynb</span>
@@ -411,201 +403,84 @@
 <span class="c1"># show tag list.</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">show_list</span><span class="p">(</span><span class="n">header</span><span class="p">,</span> <span class="n">lst</span><span class="p">):</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">header</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">lst</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">lst</span><span class="p">)</span><span class="o">==</span><span class="nb">list</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">lst</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">lst</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
 
 <span class="c1"># draw objects.</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">draw_equivalent</span><span class="p">(</span><span class="n">win</span><span class="p">):</span>
     <span class="c1"># draw equivalent site, bond, vector, and orbital.</span>
     <span class="n">win</span><span class="o">.</span><span class="n">mp_add_site</span><span class="p">(</span><span class="s2">&quot;[1/4,0,1/3]&quot;</span><span class="p">)</span>
     <span class="n">win</span><span class="o">.</span><span class="n">mp_add_bond</span><span class="p">(</span><span class="s2">&quot;[1/4,0,1/3];[0,1/4,2/3]&quot;</span><span class="p">)</span>
-    <span class="n">win</span><span class="o">.</span><span class="n">mp_add_vector</span><span class="p">(</span><span class="s2">&quot;Q&quot;</span><span class="p">,</span> <span class="s2">&quot;[0,0,1]&quot;</span><span class="p">,</span> <span class="s2">&quot;[1/2,1/2,0]&quot;</span><span class="p">)</span>
-    <span class="n">win</span><span class="o">.</span><span class="n">mp_add_orbital</span><span class="p">(</span><span class="s2">&quot;Q&quot;</span><span class="p">,</span> <span class="s2">&quot;3z**2-r**2&quot;</span><span class="p">,</span> <span class="s2">&quot;[1/2,1/2,1/2]&quot;</span><span class="p">)</span>
-
-<span class="k">def</span><span class="w"> </span><span class="nf">draw_harmonics</span><span class="p">(</span><span class="n">win</span><span class="p">):</span>
-    <span class="c1"># create harmonics tag, and draw one of them.</span>
-    <span class="n">lst</span> <span class="o">=</span> <span class="n">win</span><span class="o">.</span><span class="n">mp_create_harmonics</span><span class="p">(</span><span class="s2">&quot;Q&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
-    <span class="n">show_list</span><span class="p">(</span><span class="s2">&quot;Harmonics:&quot;</span><span class="p">,</span> <span class="n">lst</span><span class="p">)</span>
-    <span class="n">win</span><span class="o">.</span><span class="n">mp_add_harmonics</span><span class="p">(</span><span class="n">lst</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;[1/2,1/2,1/4]&quot;</span><span class="p">)</span>
+    <span class="n">win</span><span class="o">.</span><span class="n">mp_add_vector</span><span class="p">(</span><span class="s2">&quot;[0,0,1] # [1/2,1/2,0]&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;Q&quot;</span><span class="p">)</span>
+    <span class="n">win</span><span class="o">.</span><span class="n">mp_add_orbital</span><span class="p">(</span><span class="s2">&quot;3z**2-r**2 # [1/2,1/2,1/2]&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;Q&quot;</span><span class="p">)</span>
 
 <span class="k">def</span><span class="w"> </span><span class="nf">draw_site</span><span class="p">(</span><span class="n">win</span><span class="p">):</span>
     <span class="c1"># create site SAMB, and draw one of them.</span>
-    <span class="n">lst</span> <span class="o">=</span> <span class="n">win</span><span class="o">.</span><span class="n">mp_create_site_samb</span><span class="p">(</span><span class="s2">&quot;[1/4,0,1/3]&quot;</span><span class="p">)</span>
+    <span class="n">lst</span> <span class="o">=</span> <span class="n">win</span><span class="o">.</span><span class="n">mp_site_samb_list</span><span class="p">(</span><span class="s2">&quot;[1/4,0,1/3]&quot;</span><span class="p">)</span>
     <span class="n">show_list</span><span class="p">(</span><span class="s2">&quot;site SAMB:&quot;</span><span class="p">,</span> <span class="n">lst</span><span class="p">)</span>
     <span class="n">win</span><span class="o">.</span><span class="n">mp_add_site_samb</span><span class="p">(</span><span class="n">lst</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 
 <span class="k">def</span><span class="w"> </span><span class="nf">draw_bond</span><span class="p">(</span><span class="n">win</span><span class="p">):</span>
     <span class="c1"># create bond SAMB, and draw one of them.</span>
-    <span class="n">lst</span> <span class="o">=</span> <span class="n">win</span><span class="o">.</span><span class="n">mp_create_bond_samb</span><span class="p">(</span><span class="s2">&quot;[1/2,1/2,0]@[1/4,1/4,0]&quot;</span><span class="p">)</span>
+    <span class="n">lst</span> <span class="o">=</span> <span class="n">win</span><span class="o">.</span><span class="n">mp_bond_samb_list</span><span class="p">(</span><span class="s2">&quot;[1/2,1/2,0]@[1/4,1/4,0]&quot;</span><span class="p">)</span>
     <span class="n">show_list</span><span class="p">(</span><span class="s2">&quot;bond SAMB:&quot;</span><span class="p">,</span> <span class="n">lst</span><span class="p">)</span>
     <span class="n">win</span><span class="o">.</span><span class="n">mp_add_bond_samb</span><span class="p">(</span><span class="n">lst</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
 
 <span class="k">def</span><span class="w"> </span><span class="nf">draw_vector</span><span class="p">(</span><span class="n">win</span><span class="p">):</span>
     <span class="c1"># create vector SAMB, and draw one of them.</span>
-    <span class="n">lst</span> <span class="o">=</span> <span class="n">win</span><span class="o">.</span><span class="n">mp_create_vector_samb</span><span class="p">(</span><span class="s2">&quot;Q&quot;</span><span class="p">,</span> <span class="s2">&quot;[1/2, 1/2, 0]&quot;</span><span class="p">)</span>
+    <span class="n">lst</span> <span class="o">=</span> <span class="n">win</span><span class="o">.</span><span class="n">mp_vector_samb_list</span><span class="p">(</span><span class="s2">&quot;[1/2, 1/2, 0]&quot;</span><span class="p">,</span> <span class="s2">&quot;Q&quot;</span><span class="p">)</span>
     <span class="n">show_list</span><span class="p">(</span><span class="s2">&quot;vector SAMB:&quot;</span><span class="p">,</span> <span class="n">lst</span><span class="p">)</span>
-    <span class="n">win</span><span class="o">.</span><span class="n">mp_add_vector_samb</span><span class="p">(</span><span class="s2">&quot;Q02+G02&quot;</span><span class="p">)</span>
+    <span class="n">win</span><span class="o">.</span><span class="n">mp_add_vector_samb</span><span class="p">(</span><span class="s2">&quot;Q02+G01&quot;</span><span class="p">)</span>
 
 <span class="k">def</span><span class="w"> </span><span class="nf">draw_vector_modulation</span><span class="p">(</span><span class="n">win</span><span class="p">):</span>
     <span class="c1"># create vector SAMB, and draw one of them.</span>
-    <span class="n">lst</span> <span class="o">=</span> <span class="n">win</span><span class="o">.</span><span class="n">mp_create_vector_samb</span><span class="p">(</span><span class="s2">&quot;Q&quot;</span><span class="p">,</span> <span class="s2">&quot;[1/2, 1/2, 0]&quot;</span><span class="p">)</span>
+    <span class="n">lst</span> <span class="o">=</span> <span class="n">win</span><span class="o">.</span><span class="n">mp_vector_samb_list</span><span class="p">(</span><span class="s2">&quot;[1/2, 1/2, 0]&quot;</span><span class="p">,</span> <span class="s2">&quot;Q&quot;</span><span class="p">)</span>
     <span class="n">show_list</span><span class="p">(</span><span class="s2">&quot;vector SAMB:&quot;</span><span class="p">,</span> <span class="n">lst</span><span class="p">)</span>
-    <span class="n">win</span><span class="o">.</span><span class="n">mp_add_vector_samb_modulation</span><span class="p">(</span><span class="s2">&quot;[[Q02, 1, [1,0,0], cos], [Q02, 1, [0,1,0], sin]]&quot;</span><span class="p">)</span>
+    <span class="n">win</span><span class="o">.</span><span class="n">mp_add_vector_samb_modulation</span><span class="p">(</span><span class="s2">&quot;[[Q02, 1, [1/2,0,0], cos], [Q02, 1, [0,1/2,0], sin]] : [2,2,1]&quot;</span><span class="p">)</span>
 
 <span class="k">def</span><span class="w"> </span><span class="nf">draw_orbital</span><span class="p">(</span><span class="n">win</span><span class="p">):</span>
     <span class="c1"># create orbital SAMB, and draw one of them.</span>
-    <span class="n">lst</span> <span class="o">=</span> <span class="n">win</span><span class="o">.</span><span class="n">mp_create_orbital_samb</span><span class="p">(</span><span class="s2">&quot;Q&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;[0,0,0];[1/2,1/2,0]&quot;</span><span class="p">)</span>
+    <span class="n">lst</span> <span class="o">=</span> <span class="n">win</span><span class="o">.</span><span class="n">mp_orbital_samb_list</span><span class="p">(</span><span class="s2">&quot;[0,0,0];[1/2,1/2,0]&quot;</span><span class="p">,</span> <span class="s2">&quot;Q&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
     <span class="n">show_list</span><span class="p">(</span><span class="s2">&quot;orital SAMB:&quot;</span><span class="p">,</span> <span class="n">lst</span><span class="p">)</span>
-    <span class="n">win</span><span class="o">.</span><span class="n">mp_add_orbital_samb</span><span class="p">(</span><span class="s2">&quot;Q02+G02&quot;</span><span class="p">)</span>
+    <span class="n">win</span><span class="o">.</span><span class="n">mp_add_orbital_samb</span><span class="p">(</span><span class="s2">&quot;Q02+G01&quot;</span><span class="p">)</span>
 
 <span class="k">def</span><span class="w"> </span><span class="nf">draw_orbital_modulation</span><span class="p">(</span><span class="n">win</span><span class="p">):</span>
     <span class="c1"># create orbital SAMB, and draw one of them.</span>
-    <span class="n">lst</span> <span class="o">=</span> <span class="n">win</span><span class="o">.</span><span class="n">mp_create_orbital_samb</span><span class="p">(</span><span class="s2">&quot;Q&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;[0,0,0];[1/2,1/2,0]&quot;</span><span class="p">)</span>
+    <span class="n">lst</span> <span class="o">=</span> <span class="n">win</span><span class="o">.</span><span class="n">mp_orbital_samb_list</span><span class="p">(</span><span class="s2">&quot;[0,0,0];[1/2,1/2,0]&quot;</span><span class="p">,</span> <span class="s2">&quot;Q&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
     <span class="n">show_list</span><span class="p">(</span><span class="s2">&quot;orital SAMB:&quot;</span><span class="p">,</span> <span class="n">lst</span><span class="p">)</span>
-    <span class="n">win</span><span class="o">.</span><span class="n">mp_add_orbital_samb_modulation</span><span class="p">(</span><span class="s2">&quot;[[Q02, 1, [1,0,0], cos], [Q02, 1, [0,1,0], sin]]&quot;</span><span class="p">)</span>
-
-<span class="k">def</span><span class="w"> </span><span class="nf">draw_hopping</span><span class="p">(</span><span class="n">win</span><span class="p">):</span>
-    <span class="c1"># draw hopping direction.</span>
-    <span class="n">win</span><span class="o">.</span><span class="n">mp_add_hopping</span><span class="p">(</span><span class="s2">&quot;[0,0,0];[1/2,1/2,0]&quot;</span><span class="p">)</span>
+    <span class="n">win</span><span class="o">.</span><span class="n">mp_add_orbital_samb_modulation</span><span class="p">(</span><span class="s2">&quot;[[Q01, 1, [1/2,0,0], cos], [Q02, 1, [0,1/2,0], sin]] : [2,2,1]&quot;</span><span class="p">)</span>
 
 <span class="c1"># === initialization for example ===</span>
 <span class="n">win</span> <span class="o">=</span> <span class="n">QtDraw</span><span class="p">()</span> <span class="c1"># create QtDraw application.</span>
 <span class="n">win</span><span class="o">.</span><span class="n">mp_set_group</span><span class="p">(</span><span class="s2">&quot;D3^4&quot;</span><span class="p">)</span> <span class="c1"># set space/point group by Schoenflies notation.</span>
 <span class="n">win</span><span class="o">.</span><span class="n">set_model</span><span class="p">(</span><span class="s2">&quot;multipie&quot;</span><span class="p">)</span>
+<span class="n">fl</span> <span class="o">=</span> <span class="p">[</span><span class="n">draw_equivalent</span><span class="p">,</span><span class="n">draw_site</span><span class="p">,</span><span class="n">draw_bond</span><span class="p">,</span><span class="n">draw_vector</span><span class="p">,</span><span class="n">draw_orbital</span><span class="p">,</span><span class="n">draw_vector_modulation</span><span class="p">,</span><span class="n">draw_orbital_modulation</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># === example ===</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># example</span>
+<span class="c1">#   0: equivalent objects</span>
+<span class="c1">#   1: site SAMB</span>
+<span class="c1">#   2: bond SAMB</span>
+<span class="c1">#   3: vector SAMB</span>
+<span class="c1">#   4: orbital SAMB</span>
+<span class="c1">#   5: vector modulation</span>
+<span class="c1">#   6: orbital modulation)</span>
+<span class="n">no</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="n">win</span><span class="o">.</span><span class="n">clear_data</span><span class="p">()</span>
-<span class="n">draw_equivalent</span><span class="p">(</span><span class="n">win</span><span class="p">)</span>
-<span class="n">draw_harmonics</span><span class="p">(</span><span class="n">win</span><span class="p">)</span>
-<span class="n">draw_site</span><span class="p">(</span><span class="n">win</span><span class="p">)</span>
-<span class="n">draw_bond</span><span class="p">(</span><span class="n">win</span><span class="p">)</span>
-<span class="n">draw_vector</span><span class="p">(</span><span class="n">win</span><span class="p">)</span>
-<span class="n">draw_orbital</span><span class="p">(</span><span class="n">win</span><span class="p">)</span>
-<span class="n">draw_hopping</span><span class="p">(</span><span class="n">win</span><span class="p">)</span>
-<span class="n">draw_vector_modulation</span><span class="p">(</span><span class="n">win</span><span class="p">)</span>
-<span class="n">draw_orbital_modulation</span><span class="p">(</span><span class="n">win</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Harmonics:
-  Q(3,A1,,)
-  Q(3,A2,1,)
-  Q(3,A2,2,)
-  Q(3,E,1,0)
-  Q(3,E,1,1)
-  Q(3,E,2,0)
-  Q(3,E,2,1)
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>site SAMB:
-  Q01: Q(0,A1,,) = Qa(0,A1,) x Qs(0,A1,)
-  Q02: Q(1,A2,,) = Qa(0,A1,) x Qs(1,A2,)
-  Q03: Q(1,E,,0) = Qa(0,A1,) x Qs(1,E,)
-  Q04: Q(1,E,,1) = Qa(0,A1,) x Qs(1,E,)
-  Q05: Q(2,E,1,0) = Qa(0,A1,) x Qs(2,E,1)
-  Q06: Q(2,E,1,1) = Qa(0,A1,) x Qs(2,E,1)
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>bond SAMB:
-  Q01: Q(0,A1,,) = Qa(0,A1,) x Qb(0,A1,)
-  Q02: Q(2,E,1,0) = Qa(0,A1,) x Qb(2,E,1)
-  Q03: Q(2,E,1,1) = Qa(0,A1,) x Qb(2,E,1)
-  T01: T(0,A1,,) = Qa(0,A1,) x Tb(0,A1,)
-  T02: T(2,E,1,0) = Qa(0,A1,) x Tb(2,E,1)
-  T03: T(2,E,1,1) = Qa(0,A1,) x Tb(2,E,1)
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>vector SAMB:
-  Q01: Q(1,A2,,) = Qa(1,A2,) x Qs(0,A1,)
-  Q02: Q(1,A2,,) = Qa(1,E,) x Qs(2,E,1)
-  Q03: Q(1,E,,0) = Qa(1,A2,) x Qs(2,E,1)
-  Q04: Q(1,E,,0) = Qa(1,E,) x Qs(0,A1,)
-  Q05: Q(1,E,,1) = Qa(1,A2,) x Qs(2,E,1)
-  Q06: Q(1,E,,1) = Qa(1,E,) x Qs(0,A1,)
-  G01: G(2,A1,,) = Qa(1,E,) x Qs(2,E,1)
-  G02: G(2,E,2,0) = Qa(1,E,) x Qs(2,E,1)
-  G03: G(2,E,2,1) = Qa(1,E,) x Qs(2,E,1)
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>orital SAMB:
-  Q01: Q(1,A2,,) = Qa(1,A2,) x Qb(0,A1,)
-  Q02: Q(1,A2,,) = Qa(1,E,) x Qb(2,E,1)
-  Q03: Q(1,E,,0) = Qa(1,A2,) x Qb(2,E,1)
-  Q04: Q(1,E,,0) = Qa(1,E,) x Qb(0,A1,)
-  Q05: Q(1,E,,1) = Qa(1,A2,) x Qb(2,E,1)
-  Q06: Q(1,E,,1) = Qa(1,E,) x Qb(0,A1,)
-  G01: G(2,A1,,) = Qa(1,E,) x Qb(2,E,1)
-  G02: G(2,E,2,0) = Qa(1,E,) x Qb(2,E,1)
-  G03: G(2,E,2,1) = Qa(1,E,) x Qb(2,E,1)
-  T01: T(1,A2,,) = Qa(1,A2,) x Tb(0,A1,)
-  T02: T(1,A2,,) = Qa(1,E,) x Tb(2,E,1)
-  T03: T(1,E,,0) = Qa(1,A2,) x Tb(2,E,1)
-  T04: T(1,E,,0) = Qa(1,E,) x Tb(0,A1,)
-  T05: T(1,E,,1) = Qa(1,A2,) x Tb(2,E,1)
-  T06: T(1,E,,1) = Qa(1,E,) x Tb(0,A1,)
-  M01: M(2,A1,,) = Qa(1,E,) x Tb(2,E,1)
-  M02: M(2,E,2,0) = Qa(1,E,) x Tb(2,E,1)
-  M03: M(2,E,2,1) = Qa(1,E,) x Tb(2,E,1)
-</pre></div>
-</div>
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">TypeError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">line</span> <span class="mi">9</span>
-<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="n">draw_vector</span><span class="p">(</span><span class="n">win</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="n">draw_orbital</span><span class="p">(</span><span class="n">win</span><span class="p">)</span>
-<span class="ne">----&gt; </span><span class="mi">9</span> <span class="n">draw_hopping</span><span class="p">(</span><span class="n">win</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">10</span> <span class="n">draw_vector_modulation</span><span class="p">(</span><span class="n">win</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">11</span> <span class="n">draw_orbital_modulation</span><span class="p">(</span><span class="n">win</span><span class="p">)</span>
-
-<span class="nn">Cell In[1], line 64,</span> in <span class="ni">draw_hopping</span><span class="nt">(win)</span>
-<span class="g g-Whitespace">     </span><span class="mi">62</span> <span class="k">def</span><span class="w"> </span><span class="nf">draw_hopping</span><span class="p">(</span><span class="n">win</span><span class="p">):</span>
-<span class="g g-Whitespace">     </span><span class="mi">63</span>     <span class="c1"># draw hopping direction.</span>
-<span class="ne">---&gt; </span><span class="mi">64</span>     <span class="n">win</span><span class="o">.</span><span class="n">mp_add_hopping</span><span class="p">(</span><span class="s2">&quot;[0,0,0];[1/2,1/2,0]&quot;</span><span class="p">)</span>
-
-<span class="nn">File ~/.venv/lib/python3.13/site-packages/qtdraw/core/qtdraw_app.py:2924,</span> in <span class="ni">QtDraw.mp_add_hopping</span><span class="nt">(self, bond, scale)</span>
-<span class="g g-Whitespace">   </span><span class="mi">2921</span>     <span class="bp">self</span><span class="o">.</span><span class="n">mp_set_group</span><span class="p">()</span>
-<span class="g g-Whitespace">   </span><span class="mi">2923</span> <span class="bp">self</span><span class="o">.</span><span class="n">multipie_dialog</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">basis_edit_hopping</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">bond</span><span class="p">)</span>
-<span class="ne">-&gt; </span><span class="mi">2924</span> <span class="bp">self</span><span class="o">.</span><span class="n">multipie_dialog</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">basis_add_hopping</span><span class="p">(</span><span class="n">scale</span><span class="p">)</span>
-
-<span class="nn">File ~/.venv/lib/python3.13/site-packages/qtdraw/multipie/dialog_multipie.py:1679,</span> in <span class="ni">MultiPieDialog.basis_add_hopping</span><span class="nt">(self, scale)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1676</span> <span class="n">bond</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">plugin</span><span class="o">.</span><span class="n">create_hopping_direction</span><span class="p">(</span><span class="n">pos</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1677</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;T </span><span class="se">\u21d0</span><span class="s2"> &quot;</span> <span class="o">+</span> <span class="n">remove_space</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">pos</span><span class="p">))</span>
-<span class="ne">-&gt; </span><span class="mi">1679</span> <span class="bp">self</span><span class="o">.</span><span class="n">plugin</span><span class="o">.</span><span class="n">add_hopping_samb</span><span class="p">(</span><span class="n">bond</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">scale</span><span class="p">)</span>
-
-<span class="nn">File ~/.venv/lib/python3.13/site-packages/qtdraw/multipie/plugin_multipie.py:1005,</span> in <span class="ni">MultiPiePlugin.add_hopping_samb</span><span class="nt">(self, bond, label, scale)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1003</span> <span class="n">count</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">counter</span><span class="p">(</span><span class="s2">&quot;hopping&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
-<span class="g g-Whitespace">   </span><span class="mi">1004</span> <span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Z_</span><span class="si">{</span><span class="n">count</span><span class="si">:</span><span class="s2">02</span><span class="si">}</span><span class="s2">&quot;</span>
-<span class="ne">-&gt; </span><span class="mi">1005</span> <span class="n">A</span> <span class="o">=</span> <span class="n">str_to_sympy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_pvw</span><span class="o">.</span><span class="n">A_matrix</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1006</span> <span class="k">for</span> <span class="n">no</span><span class="p">,</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">pset</span><span class="p">):</span>
-<span class="g g-Whitespace">   </span><span class="mi">1007</span>     <span class="n">name1</span> <span class="o">=</span> <span class="n">name</span>
-
-<span class="nn">File ~/.venv/lib/python3.13/site-packages/qtdraw/util/util.py:58,</span> in <span class="ni">str_to_sympy</span><span class="nt">(s, check_var, check_shape, rational, subs, **assumptions)</span>
-<span class="g g-Whitespace">     </span><span class="mi">55</span> <span class="n">reserved</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">sp</span><span class="o">.</span><span class="n">__all__</span><span class="p">)</span> <span class="o">|</span> <span class="p">{</span><span class="s2">&quot;pi&quot;</span><span class="p">,</span> <span class="s2">&quot;E&quot;</span><span class="p">,</span> <span class="s2">&quot;I&quot;</span><span class="p">,</span> <span class="s2">&quot;oo&quot;</span><span class="p">,</span> <span class="s2">&quot;zoo&quot;</span><span class="p">}</span>
-<span class="g g-Whitespace">     </span><span class="mi">57</span> <span class="c1"># extract candidate variable names.</span>
-<span class="ne">---&gt; </span><span class="mi">58</span> <span class="n">var</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;[A-Za-z_]\w*&quot;</span><span class="p">,</span> <span class="n">s</span><span class="p">)))</span>
-<span class="g g-Whitespace">     </span><span class="mi">59</span> <span class="c1"># remove reserved ones.</span>
-<span class="g g-Whitespace">     </span><span class="mi">60</span> <span class="n">var</span> <span class="o">=</span> <span class="p">[</span><span class="n">v</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">var</span> <span class="k">if</span> <span class="n">v</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">reserved</span><span class="p">]</span>
-
-<span class="nn">File /opt/homebrew/Cellar/python@3.13/3.13.9_1/Frameworks/Python.framework/Versions/3.13/lib/python3.13/re/__init__.py:278,</span> in <span class="ni">findall</span><span class="nt">(pattern, string, flags)</span>
-<span class="g g-Whitespace">    </span><span class="mi">270</span> <span class="k">def</span><span class="w"> </span><span class="nf">findall</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">string</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
-<span class="g g-Whitespace">    </span><span class="mi">271</span><span class="w">     </span><span class="sd">&quot;&quot;&quot;Return a list of all non-overlapping matches in the string.</span>
-<span class="g g-Whitespace">    </span><span class="mi">272</span><span class="sd"> </span>
-<span class="g g-Whitespace">    </span><span class="mi">273</span><span class="sd">     If one or more capturing groups are present in the pattern, return</span>
-<span class="sd">   (...)    276 </span>
-<span class="g g-Whitespace">    </span><span class="mi">277</span><span class="sd">     Empty matches are included in the result.&quot;&quot;&quot;</span>
-<span class="ne">--&gt; </span><span class="mi">278</span>     <span class="k">return</span> <span class="n">_compile</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">flags</span><span class="p">)</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
-
-<span class="ne">TypeError</span>: cannot use a string pattern on a bytes-like object
+<span class="n">fl</span><span class="p">[</span><span class="n">no</span><span class="p">](</span><span class="n">win</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -638,22 +513,6 @@
             
             
               
-                <dialog id="pst-secondary-sidebar-modal"></dialog>
-                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
-
-
-  <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> Contents
-  </div>
-  <nav class="bd-toc-nav page-toc">
-    <ul class="simple visible nav section-nav flex-column">
-</ul>
-
-  </nav></div>
-
-</div></div>
-              
             
           </div>
           <footer class="bd-footer-content">
@@ -673,7 +532,7 @@ By Hiroaki Kusunose
 
   <p class="copyright">
     
-      © Copyright 2021-2024.
+      © Copyright 2021-.
       <br/>
     
   </p>

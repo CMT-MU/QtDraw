@@ -37,7 +37,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
-    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=5f1b4820" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=34ddd5e8" />
   
   <!-- So that users can add custom icons -->
   <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
@@ -62,7 +62,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'src/overview';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Install QtDraw (and MultiPie)" href="install.html" />
+    <link rel="next" title="Installing QtDraw" href="install.html" />
     <link rel="prev" title="QtDraw" href="../README.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="jp"/>
@@ -162,7 +162,7 @@
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="install.html">Install QtDraw (and MultiPie)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installing QtDraw</a></li>
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Documentation</span></p>
@@ -393,17 +393,35 @@
                   
   <section class="tex2jax_ignore mathjax_ignore" id="overview">
 <h1>Overview<a class="headerlink" href="#overview" title="Link to this heading">#</a></h1>
-<p><strong>QtDraw</strong> is 3D drawing tool for molecules and crystals based on <a class="reference external" href="https://docs.pyvista.org/">PyVista</a> and <a class="reference external" href="https://doc.qt.io/qtforpython-6/index.html">PySide6</a>.
+<p><strong>QtDraw</strong> is 3D drawing tool especially for molecules and crystals based on <a class="reference external" href="https://docs.pyvista.org/">PyVista</a> and <a class="reference external" href="https://doc.qt.io/qtforpython-6/index.html">PySide6</a>.
 The main window and available objects looks like the following.</p>
 <p><img alt="sample.jpg" src="../_images/sample.jpg" /></p>
 <p>All objects can be modified by GUI in the <code class="docutils literal notranslate"><span class="pre">Dataset</span></code> window.</p>
 <p><img alt="dataset.jpg" src="../_images/dataset.jpg" /></p>
 <p>All objectes are located at the <code class="docutils literal notranslate"><span class="pre">position</span></code> + <code class="docutils literal notranslate"><span class="pre">cell</span></code> in the fractional coordinate of the <code class="docutils literal notranslate"><span class="pre">crystal</span></code> system with the <code class="docutils literal notranslate"><span class="pre">origin</span></code>, which allows us to repeat the drawn objects just by pushing <code class="docutils literal notranslate"><span class="pre">repeat</span></code> button.
 By <code class="docutils literal notranslate"><span class="pre">non-repeat</span></code> button, the repeated objects can be converted to those at the same <code class="docutils literal notranslate"><span class="pre">position</span></code> with the home cell, i.e., <code class="docutils literal notranslate"><span class="pre">cell=[0,0,0]</span></code>.</p>
-<p>By installing the Pyhton package, <a class="reference external" href="https://github.com/CMT-MU/MultiPie">MultiPie</a>, which provides the various crystallographic symmetry operations and symmetry-adapted basis construction, object drawing in <strong>QtDraw</strong> is also associated by the symmetry operation and symmetry-adapted basis.
+<p>By installing the Pyhton package, <a class="reference external" href="https://github.com/CMT-MU/MultiPie">MultiPie</a>, which provides the various crystallographic symmetry operations and symmetry-adapted multipole basis (SAMB) construction, object drawing in <strong>QtDraw</strong> is also associated by the symmetry operation and the SAMB.
 To use this functionality, after installing <code class="docutils literal notranslate"><span class="pre">MultiPie</span></code>, push <code class="docutils literal notranslate"><span class="pre">MultiPie</span></code> button in the bottom right.
-The additional window for <code class="docutils literal notranslate"><span class="pre">MultiPie</span></code> plug-in is shown as below.
-<img alt="multipie.jpg" src="../_images/multipie.jpg" /></p>
+The additional window for <code class="docutils literal notranslate"><span class="pre">MultiPie</span></code> plug-in is shown, which consists of three panels:</p>
+<ul>
+<li><p><strong>Group Info.</strong></p>
+<p>show various group information.
+<img alt="multipie_group.jpg" src="../_images/multipie_group.jpg" /></p>
+</li>
+<li><p><strong>Object Drawing</strong></p>
+<p>draw objects by given symmetry operations.
+<img alt="multipie_object.jpg" src="../_images/multipie_object.jpg" /></p>
+</li>
+<li><p><strong>Basis Drawing</strong></p>
+<p>draw SAMB object (with modulation over multiple cells)
+<img alt="multipie_basis.jpg" src="../_images/multipie_basis.jpg" /></p>
+</li>
+</ul>
+<p>For the API, please refer to the following:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="api_core.html"><span class="std std-doc">Core module</span></a> core modules for end users.</p></li>
+<li><p><a class="reference internal" href="api_summary.html"><span class="std std-doc">Summary</span></a> for various modules for implementation purpose.</p></li>
+</ul>
 </section>
 
     <script type="text/x-thebe-config">
@@ -456,7 +474,7 @@ By Hiroaki Kusunose
 
   <p class="copyright">
     
-      © Copyright 2021-2024.
+      © Copyright 2021-.
       <br/>
     
   </p>

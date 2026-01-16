@@ -37,7 +37,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
-    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=5f1b4820" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=34ddd5e8" />
   
   <!-- So that users can add custom icons -->
   <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
@@ -162,7 +162,7 @@
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="install.html">Install QtDraw (and MultiPie)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installing QtDraw</a></li>
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Documentation</span></p>
@@ -412,6 +412,23 @@
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.add_vector"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.add_vector()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.clear_data"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.clear_data()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.load"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.load()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.mp_add_bond"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.mp_add_bond()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.mp_add_bond_definition"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.mp_add_bond_definition()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.mp_add_bond_samb"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.mp_add_bond_samb()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.mp_add_orbital"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.mp_add_orbital()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.mp_add_orbital_samb"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.mp_add_orbital_samb()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.mp_add_orbital_samb_modulation"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.mp_add_orbital_samb_modulation()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.mp_add_site"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.mp_add_site()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.mp_add_site_samb"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.mp_add_site_samb()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.mp_add_vector"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.mp_add_vector()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.mp_add_vector_samb"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.mp_add_vector_samb()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.mp_add_vector_samb_modulation"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.mp_add_vector_samb_modulation()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.mp_bond_samb_list"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.mp_bond_samb_list()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.mp_orbital_samb_list"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.mp_orbital_samb_list()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.mp_set_group"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.mp_set_group()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.mp_site_samb_list"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.mp_site_samb_list()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.mp_vector_samb_list"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.mp_vector_samb_list()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.paintEvent"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.paintEvent()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.plot_orbital_from_data"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.plot_orbital_from_data()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.plot_stream_from_data"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.plot_stream_from_data()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.save"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.save()</span></code></a></li>
@@ -441,16 +458,23 @@
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.actor_list"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.actor_list</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.cell_volume"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.cell_volume</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.copyright"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.copyright</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.data_removed"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.data_removed</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.message"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.message</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.origin"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.origin</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.staticMetaObject"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.staticMetaObject</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.window_title"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.window_title</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.Window"><code class="docutils literal notranslate"><span class="pre">Window</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.Window"><code class="docutils literal notranslate"><span class="pre">Window</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.Window.staticMetaObject"><code class="docutils literal notranslate"><span class="pre">Window.staticMetaObject</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.cat_filename"><code class="docutils literal notranslate"><span class="pre">cat_filename()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.convert_qtdraw_v2"><code class="docutils literal notranslate"><span class="pre">convert_qtdraw_v2()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.convert_qtdraw_v3"><code class="docutils literal notranslate"><span class="pre">convert_qtdraw_v3()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.convert_str_vector"><code class="docutils literal notranslate"><span class="pre">convert_str_vector()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.convert_to_str"><code class="docutils literal notranslate"><span class="pre">convert_to_str()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.create_qtdraw_file"><code class="docutils literal notranslate"><span class="pre">create_qtdraw_file()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.get_data_range"><code class="docutils literal notranslate"><span class="pre">get_data_range()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.split_filename"><code class="docutils literal notranslate"><span class="pre">split_filename()</span></code></a></li>
 </ul>
 </li>
@@ -479,9 +503,8 @@
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.clear_data"><code class="docutils literal notranslate"><span class="pre">QtDraw.clear_data()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.load"><code class="docutils literal notranslate"><span class="pre">QtDraw.load()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.mp_add_bond"><code class="docutils literal notranslate"><span class="pre">QtDraw.mp_add_bond()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.mp_add_bond_definition"><code class="docutils literal notranslate"><span class="pre">QtDraw.mp_add_bond_definition()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.mp_add_bond_samb"><code class="docutils literal notranslate"><span class="pre">QtDraw.mp_add_bond_samb()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.mp_add_harmonics"><code class="docutils literal notranslate"><span class="pre">QtDraw.mp_add_harmonics()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.mp_add_hopping"><code class="docutils literal notranslate"><span class="pre">QtDraw.mp_add_hopping()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.mp_add_orbital"><code class="docutils literal notranslate"><span class="pre">QtDraw.mp_add_orbital()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.mp_add_orbital_samb"><code class="docutils literal notranslate"><span class="pre">QtDraw.mp_add_orbital_samb()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.mp_add_orbital_samb_modulation"><code class="docutils literal notranslate"><span class="pre">QtDraw.mp_add_orbital_samb_modulation()</span></code></a></li>
@@ -490,12 +513,11 @@
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.mp_add_vector"><code class="docutils literal notranslate"><span class="pre">QtDraw.mp_add_vector()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.mp_add_vector_samb"><code class="docutils literal notranslate"><span class="pre">QtDraw.mp_add_vector_samb()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.mp_add_vector_samb_modulation"><code class="docutils literal notranslate"><span class="pre">QtDraw.mp_add_vector_samb_modulation()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.mp_create_bond_samb"><code class="docutils literal notranslate"><span class="pre">QtDraw.mp_create_bond_samb()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.mp_create_harmonics"><code class="docutils literal notranslate"><span class="pre">QtDraw.mp_create_harmonics()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.mp_create_orbital_samb"><code class="docutils literal notranslate"><span class="pre">QtDraw.mp_create_orbital_samb()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.mp_create_site_samb"><code class="docutils literal notranslate"><span class="pre">QtDraw.mp_create_site_samb()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.mp_create_vector_samb"><code class="docutils literal notranslate"><span class="pre">QtDraw.mp_create_vector_samb()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.mp_bond_samb_list"><code class="docutils literal notranslate"><span class="pre">QtDraw.mp_bond_samb_list()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.mp_orbital_samb_list"><code class="docutils literal notranslate"><span class="pre">QtDraw.mp_orbital_samb_list()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.mp_set_group"><code class="docutils literal notranslate"><span class="pre">QtDraw.mp_set_group()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.mp_site_samb_list"><code class="docutils literal notranslate"><span class="pre">QtDraw.mp_site_samb_list()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.mp_vector_samb_list"><code class="docutils literal notranslate"><span class="pre">QtDraw.mp_vector_samb_list()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.plot_orbital_from_data"><code class="docutils literal notranslate"><span class="pre">QtDraw.plot_orbital_from_data()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.plot_stream_from_data"><code class="docutils literal notranslate"><span class="pre">QtDraw.plot_stream_from_data()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.remove_actor"><code class="docutils literal notranslate"><span class="pre">QtDraw.remove_actor()</span></code></a></li>
@@ -514,6 +536,7 @@
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.set_repeat"><code class="docutils literal notranslate"><span class="pre">QtDraw.set_repeat()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.set_unit_cell"><code class="docutils literal notranslate"><span class="pre">QtDraw.set_unit_cell()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.set_view"><code class="docutils literal notranslate"><span class="pre">QtDraw.set_view()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.staticMetaObject"><code class="docutils literal notranslate"><span class="pre">QtDraw.staticMetaObject</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -525,6 +548,7 @@
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.dialog_preference.PreferenceDialog.create_general_panel"><code class="docutils literal notranslate"><span class="pre">PreferenceDialog.create_general_panel()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.dialog_preference.PreferenceDialog.create_label_panel"><code class="docutils literal notranslate"><span class="pre">PreferenceDialog.create_label_panel()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.dialog_preference.PreferenceDialog.create_light_panel"><code class="docutils literal notranslate"><span class="pre">PreferenceDialog.create_light_panel()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.dialog_preference.PreferenceDialog.staticMetaObject"><code class="docutils literal notranslate"><span class="pre">PreferenceDialog.staticMetaObject</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -532,6 +556,7 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-qtdraw.core.dialog_about">About Dialog</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.dialog_about.AboutDialog"><code class="docutils literal notranslate"><span class="pre">AboutDialog</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.dialog_about.AboutDialog.create_about_panel"><code class="docutils literal notranslate"><span class="pre">AboutDialog.create_about_panel()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.dialog_about.AboutDialog.staticMetaObject"><code class="docutils literal notranslate"><span class="pre">AboutDialog.staticMetaObject</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.dialog_about.get_version_info"><code class="docutils literal notranslate"><span class="pre">get_version_info()</span></code></a></li>
@@ -1181,6 +1206,291 @@
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.core.pyvista_widget.PyVistaWidget.mp_add_bond">
+<span class="sig-name descname"><span class="pre">mp_add_bond</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bond</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">opacity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/pyvista_widget.html#PyVistaWidget.mp_add_bond"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.pyvista_widget.PyVistaWidget.mp_add_bond" title="Link to this definition">#</a></dt>
+<dd><p>MultiPie: Add equivalent bonds.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>bond</strong> (<em>str</em>) -- representative bond.</p></li>
+<li><p><strong>width</strong> (<em>float</em><em>, </em><em>optional</em>) -- width.</p></li>
+<li><p><strong>color</strong> (<em>str</em><em>, </em><em>optional</em>) -- color.</p></li>
+<li><p><strong>color2</strong> (<em>str</em><em>, </em><em>optional</em>) -- color2.</p></li>
+<li><p><strong>opacity</strong> (<em>float</em><em>, </em><em>optional</em>) -- opacity.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.core.pyvista_widget.PyVistaWidget.mp_add_bond_definition">
+<span class="sig-name descname"><span class="pre">mp_add_bond_definition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bond</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">opacity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/pyvista_widget.html#PyVistaWidget.mp_add_bond_definition"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.pyvista_widget.PyVistaWidget.mp_add_bond_definition" title="Link to this definition">#</a></dt>
+<dd><p>MultiPie: Create bond definition.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>bond</strong> (<em>str</em>) -- representative bond.</p></li>
+<li><p><strong>length</strong> (<em>float</em><em>, </em><em>optional</em>) -- length.</p></li>
+<li><p><strong>width</strong> (<em>float</em><em>, </em><em>optional</em>) -- width.</p></li>
+<li><p><strong>color</strong> (<em>str</em><em>, </em><em>optional</em>) -- color.</p></li>
+<li><p><strong>opacity</strong> (<em>float</em><em>, </em><em>optional</em>) -- opacity.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.core.pyvista_widget.PyVistaWidget.mp_add_bond_samb">
+<span class="sig-name descname"><span class="pre">mp_add_bond_samb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tag</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p_color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z_color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z_width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/pyvista_widget.html#PyVistaWidget.mp_add_bond_samb"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.pyvista_widget.PyVistaWidget.mp_add_bond_samb" title="Link to this definition">#</a></dt>
+<dd><p>MultiPie: Add bond SAMB.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tag</strong> (<em>str</em>) -- bond SAMB, obtained by mp_bond_samb_list.</p></li>
+<li><p><strong>width</strong> (<em>float</em><em>, </em><em>optional</em>) -- relative width.</p></li>
+<li><p><strong>p_color</strong> (<em>str</em><em>, </em><em>optional</em>) -- positive SAMB color.</p></li>
+<li><p><strong>n_color</strong> (<em>str</em><em>, </em><em>optional</em>) -- negative SAMB color.</p></li>
+<li><p><strong>z_color</strong> (<em>str</em><em>, </em><em>optional</em>) -- zero SAMB color.</p></li>
+<li><p><strong>z_width</strong> (<em>float</em><em>, </em><em>optional</em>) -- zero SAMB width.</p></li>
+<li><p><strong>a_size</strong> (<em>float</em><em>, </em><em>optional</em>) -- relative arrow size.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.core.pyvista_widget.PyVistaWidget.mp_add_orbital">
+<span class="sig-name descname"><span class="pre">mp_add_orbital</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">orbital_sb</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Q'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">average</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">opacity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/pyvista_widget.html#PyVistaWidget.mp_add_orbital"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.pyvista_widget.PyVistaWidget.mp_add_orbital" title="Link to this definition">#</a></dt>
+<dd><p>MultiPie: Add transformed orbitals at equivalent sites or bonds.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>orbital_sb</strong> (<em>str</em>) -- orbital, &quot;f(r) # site_bond&quot;.</p></li>
+<li><p><strong>type</strong> (<em>str</em><em>, </em><em>optional</em>) -- type of orbital, Q/G/T/M.</p></li>
+<li><p><strong>average</strong> (<em>bool</em><em>, </em><em>optional</em>) -- average ?</p></li>
+<li><p><strong>size</strong> (<em>float</em><em>, </em><em>optional</em>) -- size.</p></li>
+<li><p><strong>color</strong> (<em>str</em><em>, </em><em>optional</em>) -- color.</p></li>
+<li><p><strong>opacity</strong> (<em>float</em><em>, </em><em>optional</em>) -- opacity.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.core.pyvista_widget.PyVistaWidget.mp_add_orbital_samb">
+<span class="sig-name descname"><span class="pre">mp_add_orbital_samb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">opacity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/pyvista_widget.html#PyVistaWidget.mp_add_orbital_samb"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.pyvista_widget.PyVistaWidget.mp_add_orbital_samb" title="Link to this definition">#</a></dt>
+<dd><p>MultiPie: Add orbital SAMB.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>lc</strong> (<em>str</em>) -- linear combination of orbital SAMBs, obtained by mp_orbital_samb_list.</p></li>
+<li><p><strong>size</strong> (<em>float</em><em>, </em><em>optional</em>) -- relative size.</p></li>
+<li><p><strong>color</strong> (<em>str</em><em>, </em><em>optional</em>) -- color.</p></li>
+<li><p><strong>opacity</strong> (<em>float</em><em>, </em><em>optional</em>) -- opacity.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.core.pyvista_widget.PyVistaWidget.mp_add_orbital_samb_modulation">
+<span class="sig-name descname"><span class="pre">mp_add_orbital_samb_modulation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">modulation_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">opacity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/pyvista_widget.html#PyVistaWidget.mp_add_orbital_samb_modulation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.pyvista_widget.PyVistaWidget.mp_add_orbital_samb_modulation" title="Link to this definition">#</a></dt>
+<dd><p>MultiPie: Add orbital SAMB with modulation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>modulation_range</strong> (<em>str</em>) -- modulation and range, &quot;[[tag, coeff, k_vector, cos/sin]] : [r1, r2, r3]&quot;.</p></li>
+<li><p><strong>size</strong> (<em>float</em><em>, </em><em>optional</em>) -- relative size.</p></li>
+<li><p><strong>color</strong> (<em>str</em><em>, </em><em>optional</em>) -- color.</p></li>
+<li><p><strong>opacity</strong> (<em>float</em><em>, </em><em>optional</em>) -- opacity.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.core.pyvista_widget.PyVistaWidget.mp_add_site">
+<span class="sig-name descname"><span class="pre">mp_add_site</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">site</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">opacity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/pyvista_widget.html#PyVistaWidget.mp_add_site"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.pyvista_widget.PyVistaWidget.mp_add_site" title="Link to this definition">#</a></dt>
+<dd><p>MultiPie: Add equivalent sites.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>site</strong> (<em>str</em>) -- representative site.</p></li>
+<li><p><strong>size</strong> (<em>float</em><em>, </em><em>optional</em>) -- size.</p></li>
+<li><p><strong>color</strong> (<em>str</em><em>, </em><em>optional</em>) -- color.</p></li>
+<li><p><strong>opacity</strong> (<em>float</em><em>, </em><em>optional</em>) -- opacity.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.core.pyvista_widget.PyVistaWidget.mp_add_site_samb">
+<span class="sig-name descname"><span class="pre">mp_add_site_samb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tag</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p_color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z_color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/pyvista_widget.html#PyVistaWidget.mp_add_site_samb"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.pyvista_widget.PyVistaWidget.mp_add_site_samb" title="Link to this definition">#</a></dt>
+<dd><p>MultiPie: Add site SAMB.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tag</strong> (<em>str</em>) -- site SAMB, obtained by mp_site_samb_list.</p></li>
+<li><p><strong>size</strong> (<em>float</em><em>, </em><em>optional</em>) -- relative size.</p></li>
+<li><p><strong>p_color</strong> (<em>str</em><em>, </em><em>optional</em>) -- positive SAMB color.</p></li>
+<li><p><strong>n_color</strong> (<em>str</em><em>, </em><em>optional</em>) -- negative SAMB color.</p></li>
+<li><p><strong>z_color</strong> (<em>str</em><em>, </em><em>optional</em>) -- zero SAMB color.</p></li>
+<li><p><strong>z_size</strong> (<em>float</em><em>, </em><em>optional</em>) -- zero SAMB size.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.core.pyvista_widget.PyVistaWidget.mp_add_vector">
+<span class="sig-name descname"><span class="pre">mp_add_vector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vector_sb</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Q'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cartesian</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">average</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">opacity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/pyvista_widget.html#PyVistaWidget.mp_add_vector"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.pyvista_widget.PyVistaWidget.mp_add_vector" title="Link to this definition">#</a></dt>
+<dd><p>MultiPie: Add transformed vectors at equivalent sites or bonds.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vector_sb</strong> (<em>str</em>) -- vector, &quot;v # site_bond&quot;.</p></li>
+<li><p><strong>type</strong> (<em>str</em><em>, </em><em>optional</em>) -- type of vector, Q/G/T/M.</p></li>
+<li><p><strong>cartesian</strong> (<em>bool</em><em>, </em><em>optional</em>) -- cartesian vector ?</p></li>
+<li><p><strong>average</strong> (<em>bool</em><em>, </em><em>optional</em>) -- average ?</p></li>
+<li><p><strong>length</strong> (<em>float</em><em>, </em><em>optional</em>) -- length.</p></li>
+<li><p><strong>width</strong> (<em>float</em><em>, </em><em>optional</em>) -- width.</p></li>
+<li><p><strong>color</strong> (<em>str</em><em>, </em><em>optional</em>) -- color.</p></li>
+<li><p><strong>opacity</strong> (<em>float</em><em>, </em><em>optional</em>) -- opacity.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.core.pyvista_widget.PyVistaWidget.mp_add_vector_samb">
+<span class="sig-name descname"><span class="pre">mp_add_vector_samb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">opacity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/pyvista_widget.html#PyVistaWidget.mp_add_vector_samb"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.pyvista_widget.PyVistaWidget.mp_add_vector_samb" title="Link to this definition">#</a></dt>
+<dd><p>MultiPie: Add vector SAMB.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>lc</strong> (<em>str</em>) -- linear combination of vector SAMBs, obtained by mp_vector_samb_list.</p></li>
+<li><p><strong>length</strong> (<em>float</em><em>, </em><em>optional</em>) -- relative length.</p></li>
+<li><p><strong>width</strong> (<em>float</em><em>, </em><em>optional</em>) -- relative width.</p></li>
+<li><p><strong>color</strong> (<em>str</em><em>, </em><em>optional</em>) -- color.</p></li>
+<li><p><strong>opacity</strong> (<em>float</em><em>, </em><em>optional</em>) -- opacity.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.core.pyvista_widget.PyVistaWidget.mp_add_vector_samb_modulation">
+<span class="sig-name descname"><span class="pre">mp_add_vector_samb_modulation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">modulation_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">opacity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/pyvista_widget.html#PyVistaWidget.mp_add_vector_samb_modulation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.pyvista_widget.PyVistaWidget.mp_add_vector_samb_modulation" title="Link to this definition">#</a></dt>
+<dd><p>MultiPie: Add vector SAMB with modulation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>modulation_range</strong> (<em>str</em>) -- modulation and range, &quot;[[tag, coeff, k_vector, cos/sin]] : [r1, r2, r3]&quot;.</p></li>
+<li><p><strong>length</strong> (<em>float</em><em>, </em><em>optional</em>) -- relative length.</p></li>
+<li><p><strong>width</strong> (<em>float</em><em>, </em><em>optional</em>) -- relative width.</p></li>
+<li><p><strong>color</strong> (<em>str</em><em>, </em><em>optional</em>) -- color.</p></li>
+<li><p><strong>opacity</strong> (<em>float</em><em>, </em><em>optional</em>) -- opacity.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.core.pyvista_widget.PyVistaWidget.mp_bond_samb_list">
+<span class="sig-name descname"><span class="pre">mp_bond_samb_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bond</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/pyvista_widget.html#PyVistaWidget.mp_bond_samb_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.pyvista_widget.PyVistaWidget.mp_bond_samb_list" title="Link to this definition">#</a></dt>
+<dd><p>MultiPie: Create bond SAMB list.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>bond</strong> (<em>str</em>) -- representative bond.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>(list) -- list of bond SAMB, [str].</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.core.pyvista_widget.PyVistaWidget.mp_orbital_samb_list">
+<span class="sig-name descname"><span class="pre">mp_orbital_samb_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">site_bond</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Q'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rank</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/pyvista_widget.html#PyVistaWidget.mp_orbital_samb_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.pyvista_widget.PyVistaWidget.mp_orbital_samb_list" title="Link to this definition">#</a></dt>
+<dd><p>MultiPie: Create orbital SAMB.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>site_bond</strong> (<em>str</em>) -- representative site or bond.</p></li>
+<li><p><strong>type</strong> (<em>str</em><em>, </em><em>optional</em>) -- type of orbital, Q/G/T/M.</p></li>
+<li><p><strong>rank</strong> (<em>int</em><em> or </em><em>str</em><em>, </em><em>optional</em>) -- rank.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>(dict) -- list of orbital SAMB, Dict[samb_type, [str] ].</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.core.pyvista_widget.PyVistaWidget.mp_set_group">
+<span class="sig-name descname"><span class="pre">mp_set_group</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">group</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/pyvista_widget.html#PyVistaWidget.mp_set_group"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.pyvista_widget.PyVistaWidget.mp_set_group" title="Link to this definition">#</a></dt>
+<dd><p>MultiPie: Set group or group status.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>group</strong> (<em>str</em><em>, </em><em>optional</em>) -- group tag [default: C1].</p></li>
+<li><p><strong>status</strong> (<em>dict</em><em>, </em><em>optional</em>) -- multipie status update dict.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.core.pyvista_widget.PyVistaWidget.mp_site_samb_list">
+<span class="sig-name descname"><span class="pre">mp_site_samb_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">site</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/pyvista_widget.html#PyVistaWidget.mp_site_samb_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.pyvista_widget.PyVistaWidget.mp_site_samb_list" title="Link to this definition">#</a></dt>
+<dd><p>MultiPie: Create site SAMB list.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>site</strong> (<em>str</em>) -- representative site.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>(list) -- list of site SAMB, [str].</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.core.pyvista_widget.PyVistaWidget.mp_vector_samb_list">
+<span class="sig-name descname"><span class="pre">mp_vector_samb_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">site_bond</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Q'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/pyvista_widget.html#PyVistaWidget.mp_vector_samb_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.pyvista_widget.PyVistaWidget.mp_vector_samb_list" title="Link to this definition">#</a></dt>
+<dd><p>MultiPie: Create vector SAMB list.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>site_bond</strong> (<em>str</em>) -- representative site or bond.</p></li>
+<li><p><strong>type</strong> (<em>str</em><em>, </em><em>optional</em>) -- type of vector, Q/G/T/M.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>(dict) -- list of vector SAMB, Dict[samb_type, [str] ].</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.core.pyvista_widget.PyVistaWidget.paintEvent">
+<span class="sig-name descname"><span class="pre">paintEvent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/pyvista_widget.html#PyVistaWidget.paintEvent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.pyvista_widget.PyVistaWidget.paintEvent" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="qtdraw.core.pyvista_widget.PyVistaWidget.plot_orbital_from_data">
 <span class="sig-name descname"><span class="pre">plot_orbital_from_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shape</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">surface</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">point_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.03</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spherical_plot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'coolwarm'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">opacity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">position</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/pyvista_widget.html#PyVistaWidget.plot_orbital_from_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.pyvista_widget.PyVistaWidget.plot_orbital_from_data" title="Link to this definition">#</a></dt>
 <dd><p>Plot orbital from data.</p>
@@ -1642,6 +1952,16 @@
 </dl>
 </dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qtdraw.core.pyvista_widget.PyVistaWidget.data_removed">
+<span class="sig-name descname"><span class="pre">data_removed</span></span><a class="headerlink" href="#qtdraw.core.pyvista_widget.PyVistaWidget.data_removed" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qtdraw.core.pyvista_widget.PyVistaWidget.message">
+<span class="sig-name descname"><span class="pre">message</span></span><a class="headerlink" href="#qtdraw.core.pyvista_widget.PyVistaWidget.message" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
 <dl class="py property">
 <dt class="sig sig-object py" id="qtdraw.core.pyvista_widget.PyVistaWidget.origin">
 <em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">origin</span></span><a class="headerlink" href="#qtdraw.core.pyvista_widget.PyVistaWidget.origin" title="Link to this definition">#</a></dt>
@@ -1655,6 +1975,11 @@
 </dd>
 </dl>
 </dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qtdraw.core.pyvista_widget.PyVistaWidget.staticMetaObject">
+<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;PyVistaWidget&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;QtInteractor&quot;:</span> <span class="pre">Methods:</span>&#160;&#160; <span class="pre">#35</span> <span class="pre">type=Signal,</span> <span class="pre">signature=message(QString),</span> <span class="pre">parameters=QString</span>&#160;&#160; <span class="pre">#36</span> <span class="pre">type=Signal,</span> <span class="pre">signature=data_removed()</span> <span class="pre">)</span></em><a class="headerlink" href="#qtdraw.core.pyvista_widget.PyVistaWidget.staticMetaObject" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="qtdraw.core.pyvista_widget.PyVistaWidget.window_title">
@@ -1682,6 +2007,11 @@
 <dd class="field-odd"><p><strong>level</strong> (<em>Level</em>) -- log level.</p>
 </dd>
 </dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qtdraw.core.pyvista_widget.Window.staticMetaObject">
+<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;Window&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;QMainWindow&quot;:</span> <span class="pre">)</span></em><a class="headerlink" href="#qtdraw.core.pyvista_widget.Window.staticMetaObject" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <dl class="py function">
@@ -1705,9 +2035,9 @@
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="qtdraw.core.pyvista_widget.convert_qtdraw_v2">
-<span class="sig-name descname"><span class="pre">convert_qtdraw_v2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/pyvista_widget.html#convert_qtdraw_v2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.pyvista_widget.convert_qtdraw_v2" title="Link to this definition">#</a></dt>
-<dd><p>Convert qtdraw file to version 2.</p>
+<dt class="sig sig-object py" id="qtdraw.core.pyvista_widget.convert_qtdraw_v3">
+<span class="sig-name descname"><span class="pre">convert_qtdraw_v3</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/pyvista_widget.html#convert_qtdraw_v3"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.pyvista_widget.convert_qtdraw_v3" title="Link to this definition">#</a></dt>
+<dd><p>Convert qtdraw file to version 3.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>filename</strong> (<em>str</em>) -- filename.</p>
@@ -1767,6 +2097,11 @@
 </dd>
 </dl>
 </dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qtdraw.core.pyvista_widget.get_data_range">
+<span class="sig-name descname"><span class="pre">get_data_range</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/pyvista_widget.html#get_data_range"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.pyvista_widget.get_data_range" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="qtdraw.core.pyvista_widget.split_filename">
@@ -2429,15 +2764,33 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="qtdraw.core.qtdraw_app.QtDraw.mp_add_bond">
-<span class="sig-name descname"><span class="pre">mp_add_bond</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bond</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/qtdraw_app.html#QtDraw.mp_add_bond"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.qtdraw_app.QtDraw.mp_add_bond" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">mp_add_bond</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bond</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">opacity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/qtdraw_app.html#QtDraw.mp_add_bond"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.qtdraw_app.QtDraw.mp_add_bond" title="Link to this definition">#</a></dt>
 <dd><p>MultiPie: Add equivalent bonds.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>bond</strong> (<em>str</em>) -- representative bond.</p></li>
-<li><p><strong>scale</strong> (<em>float</em><em>, </em><em>optional</em>) -- width scale.</p></li>
+<li><p><strong>width</strong> (<em>float</em><em>, </em><em>optional</em>) -- width.</p></li>
 <li><p><strong>color</strong> (<em>str</em><em>, </em><em>optional</em>) -- color.</p></li>
 <li><p><strong>color2</strong> (<em>str</em><em>, </em><em>optional</em>) -- color2.</p></li>
+<li><p><strong>opacity</strong> (<em>float</em><em>, </em><em>optional</em>) -- opacity.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.core.qtdraw_app.QtDraw.mp_add_bond_definition">
+<span class="sig-name descname"><span class="pre">mp_add_bond_definition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bond</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">opacity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/qtdraw_app.html#QtDraw.mp_add_bond_definition"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.qtdraw_app.QtDraw.mp_add_bond_definition" title="Link to this definition">#</a></dt>
+<dd><p>MultiPie: Create bond definition.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>bond</strong> (<em>str</em>) -- representative bond.</p></li>
+<li><p><strong>length</strong> (<em>float</em><em>, </em><em>optional</em>) -- length.</p></li>
+<li><p><strong>width</strong> (<em>float</em><em>, </em><em>optional</em>) -- width.</p></li>
+<li><p><strong>color</strong> (<em>str</em><em>, </em><em>optional</em>) -- color.</p></li>
+<li><p><strong>opacity</strong> (<em>float</em><em>, </em><em>optional</em>) -- opacity.</p></li>
 </ul>
 </dd>
 </dl>
@@ -2445,42 +2798,18 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="qtdraw.core.qtdraw_app.QtDraw.mp_add_bond_samb">
-<span class="sig-name descname"><span class="pre">mp_add_bond_samb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tag</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/qtdraw_app.html#QtDraw.mp_add_bond_samb"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.qtdraw_app.QtDraw.mp_add_bond_samb" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">mp_add_bond_samb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tag</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p_color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z_color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z_width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/qtdraw_app.html#QtDraw.mp_add_bond_samb"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.qtdraw_app.QtDraw.mp_add_bond_samb" title="Link to this definition">#</a></dt>
 <dd><p>MultiPie: Add bond SAMB.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>tag</strong> (<em>str</em>) -- bond SAMB, obtained by mp_create_bond_samb.</p></li>
-<li><p><strong>scale</strong> (<em>float</em><em>, </em><em>optional</em>) -- width scale.</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="qtdraw.core.qtdraw_app.QtDraw.mp_add_harmonics">
-<span class="sig-name descname"><span class="pre">mp_add_harmonics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tag</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">site_bond</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/qtdraw_app.html#QtDraw.mp_add_harmonics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.qtdraw_app.QtDraw.mp_add_harmonics" title="Link to this definition">#</a></dt>
-<dd><p>MultiPie: Add harmonics at equivalent sites or bonds.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>tag</strong> (<em>str</em>) -- harmonics tag, obtained by mp_create_harmonics.</p></li>
-<li><p><strong>site_bond</strong> (<em>str</em>) -- representative site or bond.</p></li>
-<li><p><strong>scale</strong> (<em>float</em><em>, </em><em>optional</em>) -- size scale.</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="qtdraw.core.qtdraw_app.QtDraw.mp_add_hopping">
-<span class="sig-name descname"><span class="pre">mp_add_hopping</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bond</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/qtdraw_app.html#QtDraw.mp_add_hopping"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.qtdraw_app.QtDraw.mp_add_hopping" title="Link to this definition">#</a></dt>
-<dd><p>MultiPie: Add hopping bond directions.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>bond</strong> (<em>str</em>) -- representative bond.</p></li>
-<li><p><strong>scale</strong> (<em>float</em><em>, </em><em>optional</em>) -- length scale.</p></li>
+<li><p><strong>tag</strong> (<em>str</em>) -- bond SAMB, obtained by mp_bond_samb_list.</p></li>
+<li><p><strong>width</strong> (<em>float</em><em>, </em><em>optional</em>) -- relative width.</p></li>
+<li><p><strong>p_color</strong> (<em>str</em><em>, </em><em>optional</em>) -- positive SAMB color.</p></li>
+<li><p><strong>n_color</strong> (<em>str</em><em>, </em><em>optional</em>) -- negative SAMB color.</p></li>
+<li><p><strong>z_color</strong> (<em>str</em><em>, </em><em>optional</em>) -- zero SAMB color.</p></li>
+<li><p><strong>z_width</strong> (<em>float</em><em>, </em><em>optional</em>) -- zero SAMB width.</p></li>
+<li><p><strong>a_size</strong> (<em>float</em><em>, </em><em>optional</em>) -- relative arrow size.</p></li>
 </ul>
 </dd>
 </dl>
@@ -2488,15 +2817,17 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="qtdraw.core.qtdraw_app.QtDraw.mp_add_orbital">
-<span class="sig-name descname"><span class="pre">mp_add_orbital</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">orbital</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">site_bond</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/qtdraw_app.html#QtDraw.mp_add_orbital"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.qtdraw_app.QtDraw.mp_add_orbital" title="Link to this definition">#</a></dt>
-<dd><p>MultiPie: Add orbitals at equivalent sites or bonds.</p>
+<span class="sig-name descname"><span class="pre">mp_add_orbital</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">orbital_sb</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Q'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">average</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">opacity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/qtdraw_app.html#QtDraw.mp_add_orbital"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.qtdraw_app.QtDraw.mp_add_orbital" title="Link to this definition">#</a></dt>
+<dd><p>MultiPie: Add transformed orbitals at equivalent sites or bonds.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>type</strong> (<em>str</em>) -- type of orbital, Q/G/T/M.</p></li>
-<li><p><strong>orbital</strong> (<em>str</em>) -- orbital in terms of x,y,z,r (cartesian).</p></li>
-<li><p><strong>site_bond</strong> (<em>str</em>) -- representative site or bond.</p></li>
-<li><p><strong>scale</strong> (<em>float</em><em>, </em><em>optional</em>) -- size scale.</p></li>
+<li><p><strong>orbital_sb</strong> (<em>str</em>) -- orbital, &quot;f(r) # site_bond&quot;.</p></li>
+<li><p><strong>type</strong> (<em>str</em><em>, </em><em>optional</em>) -- type of orbital, Q/G/T/M.</p></li>
+<li><p><strong>average</strong> (<em>bool</em><em>, </em><em>optional</em>) -- average ?</p></li>
+<li><p><strong>size</strong> (<em>float</em><em>, </em><em>optional</em>) -- size.</p></li>
+<li><p><strong>color</strong> (<em>str</em><em>, </em><em>optional</em>) -- color.</p></li>
+<li><p><strong>opacity</strong> (<em>float</em><em>, </em><em>optional</em>) -- opacity.</p></li>
 </ul>
 </dd>
 </dl>
@@ -2504,13 +2835,15 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="qtdraw.core.qtdraw_app.QtDraw.mp_add_orbital_samb">
-<span class="sig-name descname"><span class="pre">mp_add_orbital_samb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/qtdraw_app.html#QtDraw.mp_add_orbital_samb"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.qtdraw_app.QtDraw.mp_add_orbital_samb" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">mp_add_orbital_samb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">opacity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/qtdraw_app.html#QtDraw.mp_add_orbital_samb"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.qtdraw_app.QtDraw.mp_add_orbital_samb" title="Link to this definition">#</a></dt>
 <dd><p>MultiPie: Add orbital SAMB.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>lc</strong> (<em>str</em>) -- linear combination of orbital SAMBs, obtained by mp_create_orbital_samb.</p></li>
-<li><p><strong>scale</strong> (<em>float</em><em>, </em><em>optional</em>) -- size scale.</p></li>
+<li><p><strong>lc</strong> (<em>str</em>) -- linear combination of orbital SAMBs, obtained by mp_orbital_samb_list.</p></li>
+<li><p><strong>size</strong> (<em>float</em><em>, </em><em>optional</em>) -- relative size.</p></li>
+<li><p><strong>color</strong> (<em>str</em><em>, </em><em>optional</em>) -- color.</p></li>
+<li><p><strong>opacity</strong> (<em>float</em><em>, </em><em>optional</em>) -- opacity.</p></li>
 </ul>
 </dd>
 </dl>
@@ -2518,25 +2851,31 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="qtdraw.core.qtdraw_app.QtDraw.mp_add_orbital_samb_modulation">
-<span class="sig-name descname"><span class="pre">mp_add_orbital_samb_modulation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mod_list</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/qtdraw_app.html#QtDraw.mp_add_orbital_samb_modulation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.qtdraw_app.QtDraw.mp_add_orbital_samb_modulation" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">mp_add_orbital_samb_modulation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">modulation_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">opacity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/qtdraw_app.html#QtDraw.mp_add_orbital_samb_modulation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.qtdraw_app.QtDraw.mp_add_orbital_samb_modulation" title="Link to this definition">#</a></dt>
 <dd><p>MultiPie: Add orbital SAMB with modulation.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>mod_list</strong> (<em>str</em>) -- modulation list, &quot;[[tag, coeff, k_vector, cos/sin]]&quot;.</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>modulation_range</strong> (<em>str</em>) -- modulation and range, &quot;[[tag, coeff, k_vector, cos/sin]] : [r1, r2, r3]&quot;.</p></li>
+<li><p><strong>size</strong> (<em>float</em><em>, </em><em>optional</em>) -- relative size.</p></li>
+<li><p><strong>color</strong> (<em>str</em><em>, </em><em>optional</em>) -- color.</p></li>
+<li><p><strong>opacity</strong> (<em>float</em><em>, </em><em>optional</em>) -- opacity.</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="qtdraw.core.qtdraw_app.QtDraw.mp_add_site">
-<span class="sig-name descname"><span class="pre">mp_add_site</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">site</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/qtdraw_app.html#QtDraw.mp_add_site"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.qtdraw_app.QtDraw.mp_add_site" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">mp_add_site</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">site</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">opacity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/qtdraw_app.html#QtDraw.mp_add_site"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.qtdraw_app.QtDraw.mp_add_site" title="Link to this definition">#</a></dt>
 <dd><p>MultiPie: Add equivalent sites.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>site</strong> (<em>str</em>) -- representative site.</p></li>
-<li><p><strong>scale</strong> (<em>float</em><em>, </em><em>optional</em>) -- size scale.</p></li>
+<li><p><strong>size</strong> (<em>float</em><em>, </em><em>optional</em>) -- size.</p></li>
 <li><p><strong>color</strong> (<em>str</em><em>, </em><em>optional</em>) -- color.</p></li>
+<li><p><strong>opacity</strong> (<em>float</em><em>, </em><em>optional</em>) -- opacity.</p></li>
 </ul>
 </dd>
 </dl>
@@ -2544,13 +2883,17 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="qtdraw.core.qtdraw_app.QtDraw.mp_add_site_samb">
-<span class="sig-name descname"><span class="pre">mp_add_site_samb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tag</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/qtdraw_app.html#QtDraw.mp_add_site_samb"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.qtdraw_app.QtDraw.mp_add_site_samb" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">mp_add_site_samb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tag</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p_color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z_color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/qtdraw_app.html#QtDraw.mp_add_site_samb"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.qtdraw_app.QtDraw.mp_add_site_samb" title="Link to this definition">#</a></dt>
 <dd><p>MultiPie: Add site SAMB.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>tag</strong> (<em>str</em>) -- site SAMB, obtained by mp_create_site_samb.</p></li>
-<li><p><strong>scale</strong> (<em>float</em><em>, </em><em>optional</em>) -- size scale.</p></li>
+<li><p><strong>tag</strong> (<em>str</em>) -- site SAMB, obtained by mp_site_samb_list.</p></li>
+<li><p><strong>size</strong> (<em>float</em><em>, </em><em>optional</em>) -- relative size.</p></li>
+<li><p><strong>p_color</strong> (<em>str</em><em>, </em><em>optional</em>) -- positive SAMB color.</p></li>
+<li><p><strong>n_color</strong> (<em>str</em><em>, </em><em>optional</em>) -- negative SAMB color.</p></li>
+<li><p><strong>z_color</strong> (<em>str</em><em>, </em><em>optional</em>) -- zero SAMB color.</p></li>
+<li><p><strong>z_size</strong> (<em>float</em><em>, </em><em>optional</em>) -- zero SAMB size.</p></li>
 </ul>
 </dd>
 </dl>
@@ -2558,15 +2901,19 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="qtdraw.core.qtdraw_app.QtDraw.mp_add_vector">
-<span class="sig-name descname"><span class="pre">mp_add_vector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vector</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">site_bond</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/qtdraw_app.html#QtDraw.mp_add_vector"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.qtdraw_app.QtDraw.mp_add_vector" title="Link to this definition">#</a></dt>
-<dd><p>MultiPie: Add vectors at equivalent sites or bonds.</p>
+<span class="sig-name descname"><span class="pre">mp_add_vector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vector_sb</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Q'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cartesian</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">average</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">opacity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/qtdraw_app.html#QtDraw.mp_add_vector"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.qtdraw_app.QtDraw.mp_add_vector" title="Link to this definition">#</a></dt>
+<dd><p>MultiPie: Add transformed vectors at equivalent sites or bonds.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>type</strong> (<em>str</em>) -- type of vector, Q/G/T/M.</p></li>
-<li><p><strong>vector</strong> (<em>str</em>) -- vector (cartesian).</p></li>
-<li><p><strong>site_bond</strong> (<em>str</em>) -- representative site or bond.</p></li>
-<li><p><strong>scale</strong> (<em>float</em><em>, </em><em>optional</em>) -- length scale.</p></li>
+<li><p><strong>vector_sb</strong> (<em>str</em>) -- vector, &quot;v # site_bond&quot;.</p></li>
+<li><p><strong>type</strong> (<em>str</em><em>, </em><em>optional</em>) -- type of vector, Q/G/T/M.</p></li>
+<li><p><strong>cartesian</strong> (<em>bool</em><em>, </em><em>optional</em>) -- cartesian vector ?</p></li>
+<li><p><strong>average</strong> (<em>bool</em><em>, </em><em>optional</em>) -- average ?</p></li>
+<li><p><strong>length</strong> (<em>float</em><em>, </em><em>optional</em>) -- length.</p></li>
+<li><p><strong>width</strong> (<em>float</em><em>, </em><em>optional</em>) -- width.</p></li>
+<li><p><strong>color</strong> (<em>str</em><em>, </em><em>optional</em>) -- color.</p></li>
+<li><p><strong>opacity</strong> (<em>float</em><em>, </em><em>optional</em>) -- opacity.</p></li>
 </ul>
 </dd>
 </dl>
@@ -2574,13 +2921,16 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="qtdraw.core.qtdraw_app.QtDraw.mp_add_vector_samb">
-<span class="sig-name descname"><span class="pre">mp_add_vector_samb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/qtdraw_app.html#QtDraw.mp_add_vector_samb"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.qtdraw_app.QtDraw.mp_add_vector_samb" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">mp_add_vector_samb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">opacity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/qtdraw_app.html#QtDraw.mp_add_vector_samb"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.qtdraw_app.QtDraw.mp_add_vector_samb" title="Link to this definition">#</a></dt>
 <dd><p>MultiPie: Add vector SAMB.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>lc</strong> (<em>str</em>) -- linear combination of vector SAMBs, obtained by mp_create_vector_samb.</p></li>
-<li><p><strong>scale</strong> (<em>float</em><em>, </em><em>optional</em>) -- length scale.</p></li>
+<li><p><strong>lc</strong> (<em>str</em>) -- linear combination of vector SAMBs, obtained by mp_vector_samb_list.</p></li>
+<li><p><strong>length</strong> (<em>float</em><em>, </em><em>optional</em>) -- relative length.</p></li>
+<li><p><strong>width</strong> (<em>float</em><em>, </em><em>optional</em>) -- relative width.</p></li>
+<li><p><strong>color</strong> (<em>str</em><em>, </em><em>optional</em>) -- color.</p></li>
+<li><p><strong>opacity</strong> (<em>float</em><em>, </em><em>optional</em>) -- opacity.</p></li>
 </ul>
 </dd>
 </dl>
@@ -2588,19 +2938,25 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="qtdraw.core.qtdraw_app.QtDraw.mp_add_vector_samb_modulation">
-<span class="sig-name descname"><span class="pre">mp_add_vector_samb_modulation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mod_list</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/qtdraw_app.html#QtDraw.mp_add_vector_samb_modulation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.qtdraw_app.QtDraw.mp_add_vector_samb_modulation" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">mp_add_vector_samb_modulation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">modulation_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">opacity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/qtdraw_app.html#QtDraw.mp_add_vector_samb_modulation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.qtdraw_app.QtDraw.mp_add_vector_samb_modulation" title="Link to this definition">#</a></dt>
 <dd><p>MultiPie: Add vector SAMB with modulation.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>mod_list</strong> (<em>str</em>) -- modulation list, &quot;[[tag, coeff, k_vector, cos/sin]]&quot;.</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>modulation_range</strong> (<em>str</em>) -- modulation and range, &quot;[[tag, coeff, k_vector, cos/sin]] : [r1, r2, r3]&quot;.</p></li>
+<li><p><strong>length</strong> (<em>float</em><em>, </em><em>optional</em>) -- relative length.</p></li>
+<li><p><strong>width</strong> (<em>float</em><em>, </em><em>optional</em>) -- relative width.</p></li>
+<li><p><strong>color</strong> (<em>str</em><em>, </em><em>optional</em>) -- color.</p></li>
+<li><p><strong>opacity</strong> (<em>float</em><em>, </em><em>optional</em>) -- opacity.</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="qtdraw.core.qtdraw_app.QtDraw.mp_create_bond_samb">
-<span class="sig-name descname"><span class="pre">mp_create_bond_samb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bond</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/qtdraw_app.html#QtDraw.mp_create_bond_samb"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.qtdraw_app.QtDraw.mp_create_bond_samb" title="Link to this definition">#</a></dt>
-<dd><p>MultiPie: Create bond SAMB.</p>
+<dt class="sig sig-object py" id="qtdraw.core.qtdraw_app.QtDraw.mp_bond_samb_list">
+<span class="sig-name descname"><span class="pre">mp_bond_samb_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bond</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/qtdraw_app.html#QtDraw.mp_bond_samb_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.qtdraw_app.QtDraw.mp_bond_samb_list" title="Link to this definition">#</a></dt>
+<dd><p>MultiPie: Create bond SAMB list.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>bond</strong> (<em>str</em>) -- representative bond.</p>
@@ -2615,40 +2971,20 @@
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="qtdraw.core.qtdraw_app.QtDraw.mp_create_harmonics">
-<span class="sig-name descname"><span class="pre">mp_create_harmonics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rank</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/qtdraw_app.html#QtDraw.mp_create_harmonics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.qtdraw_app.QtDraw.mp_create_harmonics" title="Link to this definition">#</a></dt>
-<dd><p>MultiPie: Create harmonics list.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>type</strong> (<em>str</em>) -- type of harmonics, Q/G/T/M.</p></li>
-<li><p><strong>rank</strong> (<em>int</em><em> or </em><em>str</em>) -- rank.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><ul class="simple">
-<li><p>(list) -- list of harmonics, [str].</p></li>
-</ul>
-</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="qtdraw.core.qtdraw_app.QtDraw.mp_create_orbital_samb">
-<span class="sig-name descname"><span class="pre">mp_create_orbital_samb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rank</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">site_bond</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/qtdraw_app.html#QtDraw.mp_create_orbital_samb"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.qtdraw_app.QtDraw.mp_create_orbital_samb" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="qtdraw.core.qtdraw_app.QtDraw.mp_orbital_samb_list">
+<span class="sig-name descname"><span class="pre">mp_orbital_samb_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">site_bond</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Q'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rank</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/qtdraw_app.html#QtDraw.mp_orbital_samb_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.qtdraw_app.QtDraw.mp_orbital_samb_list" title="Link to this definition">#</a></dt>
 <dd><p>MultiPie: Create orbital SAMB.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>type</strong> (<em>str</em>) -- type of orbital, Q/G/T/M.</p></li>
-<li><p><strong>rank</strong> (<em>int</em><em> or </em><em>str</em>) -- rank.</p></li>
 <li><p><strong>site_bond</strong> (<em>str</em>) -- representative site or bond.</p></li>
+<li><p><strong>type</strong> (<em>str</em><em>, </em><em>optional</em>) -- type of orbital, Q/G/T/M.</p></li>
+<li><p><strong>rank</strong> (<em>int</em><em> or </em><em>str</em><em>, </em><em>optional</em>) -- rank.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><ul class="simple">
-<li><p>(list) -- list of orbital SAMB, [str].</p></li>
+<li><p>(dict) -- list of orbital SAMB, Dict[samb_type, [str] ].</p></li>
 </ul>
 </p>
 </dd>
@@ -2656,9 +2992,20 @@
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="qtdraw.core.qtdraw_app.QtDraw.mp_create_site_samb">
-<span class="sig-name descname"><span class="pre">mp_create_site_samb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">site</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/qtdraw_app.html#QtDraw.mp_create_site_samb"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.qtdraw_app.QtDraw.mp_create_site_samb" title="Link to this definition">#</a></dt>
-<dd><p>MultiPie: Create site SAMB.</p>
+<dt class="sig sig-object py" id="qtdraw.core.qtdraw_app.QtDraw.mp_set_group">
+<span class="sig-name descname"><span class="pre">mp_set_group</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">group</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/qtdraw_app.html#QtDraw.mp_set_group"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.qtdraw_app.QtDraw.mp_set_group" title="Link to this definition">#</a></dt>
+<dd><p>MultiPie: Set group.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>group</strong> (<em>str</em>) -- group tag [default: C1].</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtdraw.core.qtdraw_app.QtDraw.mp_site_samb_list">
+<span class="sig-name descname"><span class="pre">mp_site_samb_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">site</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/qtdraw_app.html#QtDraw.mp_site_samb_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.qtdraw_app.QtDraw.mp_site_samb_list" title="Link to this definition">#</a></dt>
+<dd><p>MultiPie: Create site SAMB list.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>site</strong> (<em>str</em>) -- representative site.</p>
@@ -2673,32 +3020,21 @@
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="qtdraw.core.qtdraw_app.QtDraw.mp_create_vector_samb">
-<span class="sig-name descname"><span class="pre">mp_create_vector_samb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">site_bond</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/qtdraw_app.html#QtDraw.mp_create_vector_samb"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.qtdraw_app.QtDraw.mp_create_vector_samb" title="Link to this definition">#</a></dt>
-<dd><p>MultiPie: Create vector SAMB.</p>
+<dt class="sig sig-object py" id="qtdraw.core.qtdraw_app.QtDraw.mp_vector_samb_list">
+<span class="sig-name descname"><span class="pre">mp_vector_samb_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">site_bond</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Q'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/qtdraw_app.html#QtDraw.mp_vector_samb_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.qtdraw_app.QtDraw.mp_vector_samb_list" title="Link to this definition">#</a></dt>
+<dd><p>MultiPie: Create vector SAMB list.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>type</strong> (<em>str</em>) -- type of vector, Q/G/T/M.</p></li>
 <li><p><strong>site_bond</strong> (<em>str</em>) -- representative site or bond.</p></li>
+<li><p><strong>type</strong> (<em>str</em><em>, </em><em>optional</em>) -- type of vector, Q/G/T/M.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><ul class="simple">
-<li><p>(list) -- list of vector SAMB, [str].</p></li>
+<li><p>(dict) -- list of vector SAMB, Dict[samb_type, [str] ].</p></li>
 </ul>
 </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="qtdraw.core.qtdraw_app.QtDraw.mp_set_group">
-<span class="sig-name descname"><span class="pre">mp_set_group</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/qtdraw_app.html#QtDraw.mp_set_group"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.qtdraw_app.QtDraw.mp_set_group" title="Link to this definition">#</a></dt>
-<dd><p>MultiPie: Set point/sapce group.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>tag</strong> (<em>str</em><em>, </em><em>optional</em>) -- group tag in Schoenflies notation [default: C1].</p>
 </dd>
 </dl>
 </dd></dl>
@@ -3037,6 +3373,11 @@
 </div>
 </dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qtdraw.core.qtdraw_app.QtDraw.staticMetaObject">
+<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;QtDraw&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;Window&quot;:</span> <span class="pre">)</span></em><a class="headerlink" href="#qtdraw.core.qtdraw_app.QtDraw.staticMetaObject" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 </section>
@@ -3052,7 +3393,7 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>widget</strong> (<a class="reference internal" href="#qtdraw.core.pyvista_widget.PyVistaWidget" title="qtdraw.core.pyvista_widget.PyVistaWidget"><em>PyVistaWidget</em></a>) -- widget.</p></li>
+<li><p><strong>widget</strong> (<a class="reference internal" href="from_python.html#qtdraw.core.pyvista_widget.PyVistaWidget" title="qtdraw.core.pyvista_widget.PyVistaWidget"><em>PyVistaWidget</em></a>) -- widget.</p></li>
 <li><p><strong>parent</strong> (<em>QWidget</em><em>, </em><em>optional</em>) -- parent.</p></li>
 </ul>
 </dd>
@@ -3087,6 +3428,11 @@
 <dd><p>Create light panel.</p>
 </dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qtdraw.core.dialog_preference.PreferenceDialog.staticMetaObject">
+<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;PreferenceDialog&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;QDialog&quot;:</span> <span class="pre">)</span></em><a class="headerlink" href="#qtdraw.core.dialog_preference.PreferenceDialog.staticMetaObject" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 </section>
@@ -3102,7 +3448,7 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>widget</strong> (<a class="reference internal" href="#qtdraw.core.pyvista_widget.PyVistaWidget" title="qtdraw.core.pyvista_widget.PyVistaWidget"><em>PyVistaWidget</em></a>) -- widget.</p></li>
+<li><p><strong>widget</strong> (<a class="reference internal" href="from_python.html#qtdraw.core.pyvista_widget.PyVistaWidget" title="qtdraw.core.pyvista_widget.PyVistaWidget"><em>PyVistaWidget</em></a>) -- widget.</p></li>
 <li><p><strong>parent</strong> (<em>QWidget</em><em>, </em><em>optional</em>) -- parent.</p></li>
 </ul>
 </dd>
@@ -3112,6 +3458,11 @@
 <span class="sig-name descname"><span class="pre">create_about_panel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/dialog_about.html#AboutDialog.create_about_panel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.dialog_about.AboutDialog.create_about_panel" title="Link to this definition">#</a></dt>
 <dd><p>Create about panel.</p>
 </dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qtdraw.core.dialog_about.AboutDialog.staticMetaObject">
+<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;AboutDialog&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;QDialog&quot;:</span> <span class="pre">)</span></em><a class="headerlink" href="#qtdraw.core.dialog_about.AboutDialog.staticMetaObject" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -3196,6 +3547,23 @@
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.add_vector"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.add_vector()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.clear_data"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.clear_data()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.load"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.load()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.mp_add_bond"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.mp_add_bond()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.mp_add_bond_definition"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.mp_add_bond_definition()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.mp_add_bond_samb"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.mp_add_bond_samb()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.mp_add_orbital"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.mp_add_orbital()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.mp_add_orbital_samb"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.mp_add_orbital_samb()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.mp_add_orbital_samb_modulation"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.mp_add_orbital_samb_modulation()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.mp_add_site"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.mp_add_site()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.mp_add_site_samb"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.mp_add_site_samb()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.mp_add_vector"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.mp_add_vector()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.mp_add_vector_samb"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.mp_add_vector_samb()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.mp_add_vector_samb_modulation"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.mp_add_vector_samb_modulation()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.mp_bond_samb_list"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.mp_bond_samb_list()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.mp_orbital_samb_list"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.mp_orbital_samb_list()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.mp_set_group"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.mp_set_group()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.mp_site_samb_list"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.mp_site_samb_list()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.mp_vector_samb_list"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.mp_vector_samb_list()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.paintEvent"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.paintEvent()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.plot_orbital_from_data"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.plot_orbital_from_data()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.plot_stream_from_data"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.plot_stream_from_data()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.save"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.save()</span></code></a></li>
@@ -3225,16 +3593,23 @@
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.actor_list"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.actor_list</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.cell_volume"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.cell_volume</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.copyright"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.copyright</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.data_removed"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.data_removed</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.message"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.message</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.origin"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.origin</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.staticMetaObject"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.staticMetaObject</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.window_title"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.window_title</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.Window"><code class="docutils literal notranslate"><span class="pre">Window</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.Window"><code class="docutils literal notranslate"><span class="pre">Window</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.Window.staticMetaObject"><code class="docutils literal notranslate"><span class="pre">Window.staticMetaObject</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.cat_filename"><code class="docutils literal notranslate"><span class="pre">cat_filename()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.convert_qtdraw_v2"><code class="docutils literal notranslate"><span class="pre">convert_qtdraw_v2()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.convert_qtdraw_v3"><code class="docutils literal notranslate"><span class="pre">convert_qtdraw_v3()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.convert_str_vector"><code class="docutils literal notranslate"><span class="pre">convert_str_vector()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.convert_to_str"><code class="docutils literal notranslate"><span class="pre">convert_to_str()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.create_qtdraw_file"><code class="docutils literal notranslate"><span class="pre">create_qtdraw_file()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.get_data_range"><code class="docutils literal notranslate"><span class="pre">get_data_range()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.split_filename"><code class="docutils literal notranslate"><span class="pre">split_filename()</span></code></a></li>
 </ul>
 </li>
@@ -3263,9 +3638,8 @@
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.clear_data"><code class="docutils literal notranslate"><span class="pre">QtDraw.clear_data()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.load"><code class="docutils literal notranslate"><span class="pre">QtDraw.load()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.mp_add_bond"><code class="docutils literal notranslate"><span class="pre">QtDraw.mp_add_bond()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.mp_add_bond_definition"><code class="docutils literal notranslate"><span class="pre">QtDraw.mp_add_bond_definition()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.mp_add_bond_samb"><code class="docutils literal notranslate"><span class="pre">QtDraw.mp_add_bond_samb()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.mp_add_harmonics"><code class="docutils literal notranslate"><span class="pre">QtDraw.mp_add_harmonics()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.mp_add_hopping"><code class="docutils literal notranslate"><span class="pre">QtDraw.mp_add_hopping()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.mp_add_orbital"><code class="docutils literal notranslate"><span class="pre">QtDraw.mp_add_orbital()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.mp_add_orbital_samb"><code class="docutils literal notranslate"><span class="pre">QtDraw.mp_add_orbital_samb()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.mp_add_orbital_samb_modulation"><code class="docutils literal notranslate"><span class="pre">QtDraw.mp_add_orbital_samb_modulation()</span></code></a></li>
@@ -3274,12 +3648,11 @@
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.mp_add_vector"><code class="docutils literal notranslate"><span class="pre">QtDraw.mp_add_vector()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.mp_add_vector_samb"><code class="docutils literal notranslate"><span class="pre">QtDraw.mp_add_vector_samb()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.mp_add_vector_samb_modulation"><code class="docutils literal notranslate"><span class="pre">QtDraw.mp_add_vector_samb_modulation()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.mp_create_bond_samb"><code class="docutils literal notranslate"><span class="pre">QtDraw.mp_create_bond_samb()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.mp_create_harmonics"><code class="docutils literal notranslate"><span class="pre">QtDraw.mp_create_harmonics()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.mp_create_orbital_samb"><code class="docutils literal notranslate"><span class="pre">QtDraw.mp_create_orbital_samb()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.mp_create_site_samb"><code class="docutils literal notranslate"><span class="pre">QtDraw.mp_create_site_samb()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.mp_create_vector_samb"><code class="docutils literal notranslate"><span class="pre">QtDraw.mp_create_vector_samb()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.mp_bond_samb_list"><code class="docutils literal notranslate"><span class="pre">QtDraw.mp_bond_samb_list()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.mp_orbital_samb_list"><code class="docutils literal notranslate"><span class="pre">QtDraw.mp_orbital_samb_list()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.mp_set_group"><code class="docutils literal notranslate"><span class="pre">QtDraw.mp_set_group()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.mp_site_samb_list"><code class="docutils literal notranslate"><span class="pre">QtDraw.mp_site_samb_list()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.mp_vector_samb_list"><code class="docutils literal notranslate"><span class="pre">QtDraw.mp_vector_samb_list()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.plot_orbital_from_data"><code class="docutils literal notranslate"><span class="pre">QtDraw.plot_orbital_from_data()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.plot_stream_from_data"><code class="docutils literal notranslate"><span class="pre">QtDraw.plot_stream_from_data()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.remove_actor"><code class="docutils literal notranslate"><span class="pre">QtDraw.remove_actor()</span></code></a></li>
@@ -3298,6 +3671,7 @@
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.set_repeat"><code class="docutils literal notranslate"><span class="pre">QtDraw.set_repeat()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.set_unit_cell"><code class="docutils literal notranslate"><span class="pre">QtDraw.set_unit_cell()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.set_view"><code class="docutils literal notranslate"><span class="pre">QtDraw.set_view()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.qtdraw_app.QtDraw.staticMetaObject"><code class="docutils literal notranslate"><span class="pre">QtDraw.staticMetaObject</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -3309,6 +3683,7 @@
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.dialog_preference.PreferenceDialog.create_general_panel"><code class="docutils literal notranslate"><span class="pre">PreferenceDialog.create_general_panel()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.dialog_preference.PreferenceDialog.create_label_panel"><code class="docutils literal notranslate"><span class="pre">PreferenceDialog.create_label_panel()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.dialog_preference.PreferenceDialog.create_light_panel"><code class="docutils literal notranslate"><span class="pre">PreferenceDialog.create_light_panel()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.dialog_preference.PreferenceDialog.staticMetaObject"><code class="docutils literal notranslate"><span class="pre">PreferenceDialog.staticMetaObject</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -3316,6 +3691,7 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-qtdraw.core.dialog_about">About Dialog</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.dialog_about.AboutDialog"><code class="docutils literal notranslate"><span class="pre">AboutDialog</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.dialog_about.AboutDialog.create_about_panel"><code class="docutils literal notranslate"><span class="pre">AboutDialog.create_about_panel()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.dialog_about.AboutDialog.staticMetaObject"><code class="docutils literal notranslate"><span class="pre">AboutDialog.staticMetaObject</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.dialog_about.get_version_info"><code class="docutils literal notranslate"><span class="pre">get_version_info()</span></code></a></li>
@@ -3345,7 +3721,7 @@ By Hiroaki Kusunose
 
   <p class="copyright">
     
-      © Copyright 2021-2024.
+      © Copyright 2021-.
       <br/>
     
   </p>

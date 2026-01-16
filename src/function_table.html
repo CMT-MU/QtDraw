@@ -37,7 +37,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
-    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=5f1b4820" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=34ddd5e8" />
   
   <!-- So that users can add custom icons -->
   <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
@@ -161,7 +161,7 @@
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="install.html">Install QtDraw (and MultiPie)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installing QtDraw</a></li>
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Documentation</span></p>
@@ -521,30 +521,50 @@
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id16"><div class="my-heading" style="color: royalblue;">Global function</div></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conv-qtdraw2-py"><div class="my-heading" style="color: darkgreen;">conv_qtdraw2.py</div></a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conv-qtdraw3-py"><div class="my-heading" style="color: darkgreen;">conv_qtdraw3.py</div></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id17"><div class="my-heading" style="color: royalblue;">Global function</div></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plugin-multipie-py"><div class="my-heading" style="color: darkgreen;">plugin_multipie.py</div></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id18"><div class="my-heading" style="color: royalblue;">Global function</div></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multipieplugin"><div class="my-heading" style="color: royalblue;">MultiPiePlugin</div></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tab-basis-py"><div class="my-heading" style="color: darkgreen;">tab_basis.py</div></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tabbasis"><div class="my-heading" style="color: royalblue;">TabBasis</div></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#util-multipie-py"><div class="my-heading" style="color: darkgreen;">util_multipie.py</div></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id19"><div class="my-heading" style="color: royalblue;">Global function</div></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multipie-data-py"><div class="my-heading" style="color: darkgreen;">multipie_data.py</div></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multipiedata"><div class="my-heading" style="color: royalblue;">MultiPieData</div></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dialog-modulation-py"><div class="my-heading" style="color: darkgreen;">dialog_modulation.py</div></a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multipie-dialog-py"><div class="my-heading" style="color: darkgreen;">multipie_dialog.py</div></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multipiedialog"><div class="my-heading" style="color: royalblue;">MultiPieDialog</div></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multipie-modulation-dialog-py"><div class="my-heading" style="color: darkgreen;">multipie_modulation_dialog.py</div></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#modulationdialog"><div class="my-heading" style="color: royalblue;">ModulationDialog</div></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dialog-info-py"><div class="my-heading" style="color: darkgreen;">dialog_info.py</div></a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sub-group-py"><div class="my-heading" style="color: darkgreen;">sub_group.py</div></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#subgroup"><div class="my-heading" style="color: royalblue;">SubGroup</div></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tab-group-py"><div class="my-heading" style="color: darkgreen;">tab_group.py</div></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tabgroup"><div class="my-heading" style="color: royalblue;">TabGroup</div></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id18"><div class="my-heading" style="color: royalblue;">Global function</div></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multipie-util-py"><div class="my-heading" style="color: darkgreen;">multipie_util.py</div></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id19"><div class="my-heading" style="color: royalblue;">Global function</div></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tab-object-py"><div class="my-heading" style="color: darkgreen;">tab_object.py</div></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tabobject"><div class="my-heading" style="color: royalblue;">TabObject</div></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multipie-info-dialog-py"><div class="my-heading" style="color: darkgreen;">multipie_info_dialog.py</div></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id20"><div class="my-heading" style="color: royalblue;">Global function</div></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#infopanel"><div class="my-heading" style="color: royalblue;">InfoPanel</div></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dialog-multipie-py"><div class="my-heading" style="color: darkgreen;">dialog_multipie.py</div></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multipiedialog"><div class="my-heading" style="color: royalblue;">MultiPieDialog</div></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multipie-plot-py"><div class="my-heading" style="color: darkgreen;">multipie_plot.py</div></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id21"><div class="my-heading" style="color: royalblue;">Global function</div></a></li>
 </ul>
 </li>
 </ul>
@@ -721,137 +741,137 @@
 <tr class="row-odd"><td><p>closeEvent</p></td>
 <td><p>Close with dialog.</p></td>
 </tr>
-<tr class="row-even"><td><p>close</p></td>
-<td><p>Close dialogs.</p></td>
-</tr>
-<tr class="row-odd"><td><p>update_status</p></td>
+<tr class="row-even"><td><p>update_status</p></td>
 <td><p>Update status.</p></td>
 </tr>
-<tr class="row-even"><td><p>update_preference</p></td>
+<tr class="row-odd"><td><p>update_preference</p></td>
 <td><p>Update preference.</p></td>
 </tr>
-<tr class="row-odd"><td><p>write_info</p></td>
+<tr class="row-even"><td><p>write_info</p></td>
 <td><p>Write text message into Info dialog.</p></td>
 </tr>
-<tr class="row-even"><td><p>add_site</p></td>
+<tr class="row-odd"><td><p>add_site</p></td>
 <td><p>Add site.</p></td>
 </tr>
-<tr class="row-odd"><td><p>add_bond</p></td>
+<tr class="row-even"><td><p>add_bond</p></td>
 <td><p>Add bond.</p></td>
 </tr>
-<tr class="row-even"><td><p>add_vector</p></td>
+<tr class="row-odd"><td><p>add_vector</p></td>
 <td><p>Add vector.</p></td>
 </tr>
-<tr class="row-odd"><td><p>add_orbital</p></td>
+<tr class="row-even"><td><p>add_orbital</p></td>
 <td><p>Add orbital.</p></td>
 </tr>
-<tr class="row-even"><td><p>add_stream</p></td>
+<tr class="row-odd"><td><p>add_stream</p></td>
 <td><p>Add stream.</p></td>
 </tr>
-<tr class="row-odd"><td><p>add_line</p></td>
+<tr class="row-even"><td><p>add_line</p></td>
 <td><p>Add line.</p></td>
 </tr>
-<tr class="row-even"><td><p>add_plane</p></td>
+<tr class="row-odd"><td><p>add_plane</p></td>
 <td><p>Add plane.</p></td>
 </tr>
-<tr class="row-odd"><td><p>add_circle</p></td>
+<tr class="row-even"><td><p>add_circle</p></td>
 <td><p>Add circle.</p></td>
 </tr>
-<tr class="row-even"><td><p>add_torus</p></td>
+<tr class="row-odd"><td><p>add_torus</p></td>
 <td><p>Add torus.</p></td>
 </tr>
-<tr class="row-odd"><td><p>add_ellipsoid</p></td>
+<tr class="row-even"><td><p>add_ellipsoid</p></td>
 <td><p>Add ellipsoid.</p></td>
 </tr>
-<tr class="row-even"><td><p>add_toroid</p></td>
+<tr class="row-odd"><td><p>add_toroid</p></td>
 <td><p>Add toroid.</p></td>
 </tr>
-<tr class="row-odd"><td><p>add_box</p></td>
+<tr class="row-even"><td><p>add_box</p></td>
 <td><p>Add box.</p></td>
 </tr>
-<tr class="row-even"><td><p>add_polygon</p></td>
+<tr class="row-odd"><td><p>add_polygon</p></td>
 <td><p>Add polygon.</p></td>
 </tr>
-<tr class="row-odd"><td><p>add_spline</p></td>
+<tr class="row-even"><td><p>add_spline</p></td>
 <td><p>Add spline.</p></td>
 </tr>
-<tr class="row-even"><td><p>add_spline_t</p></td>
+<tr class="row-odd"><td><p>add_spline_t</p></td>
 <td><p>Add spline (parametric).</p></td>
 </tr>
-<tr class="row-odd"><td><p>add_text3d</p></td>
+<tr class="row-even"><td><p>add_text3d</p></td>
 <td><p>Add text 3d.</p></td>
 </tr>
-<tr class="row-even"><td><p>add_isosurface</p></td>
+<tr class="row-odd"><td><p>add_isosurface</p></td>
 <td><p>Add isosurface.</p></td>
 </tr>
-<tr class="row-odd"><td><p>add_caption</p></td>
+<tr class="row-even"><td><p>add_caption</p></td>
 <td><p>Add caption.</p></td>
 </tr>
-<tr class="row-even"><td><p>add_text2d</p></td>
+<tr class="row-odd"><td><p>add_text2d</p></td>
 <td><p>Add text 2d.</p></td>
 </tr>
-<tr class="row-odd"><td><p>plot_orbital_from_data</p></td>
+<tr class="row-even"><td><p>plot_orbital_from_data</p></td>
 <td><p>Plot orbital from data.</p></td>
 </tr>
-<tr class="row-even"><td><p>plot_stream_from_data</p></td>
+<tr class="row-odd"><td><p>plot_stream_from_data</p></td>
 <td><p>Plot stream from data (vectors in cartesian coordinate).</p></td>
 </tr>
-<tr class="row-odd"><td><p>set_model</p></td>
+<tr class="row-even"><td><p>set_model</p></td>
 <td><p>Set model name.</p></td>
 </tr>
-<tr class="row-even"><td><p>set_unit_cell</p></td>
+<tr class="row-odd"><td><p>set_unit_cell</p></td>
 <td><p>Set unit cell.</p></td>
 </tr>
-<tr class="row-odd"><td><p>set_crystal</p></td>
+<tr class="row-even"><td><p>set_crystal</p></td>
 <td><p>Set crystal.</p></td>
 </tr>
-<tr class="row-even"><td><p>set_origin</p></td>
+<tr class="row-odd"><td><p>set_origin</p></td>
 <td><p>Set origin.</p></td>
 </tr>
-<tr class="row-odd"><td><p>set_clip</p></td>
+<tr class="row-even"><td><p>set_clip</p></td>
 <td><p>Set clip mode.</p></td>
 </tr>
-<tr class="row-even"><td><p>set_repeat</p></td>
+<tr class="row-odd"><td><p>set_repeat</p></td>
 <td><p>Set repeat mode.</p></td>
 </tr>
-<tr class="row-odd"><td><p>set_nonrepeat</p></td>
+<tr class="row-even"><td><p>set_nonrepeat</p></td>
 <td><p>Transform data to non-repeat data.</p></td>
 </tr>
-<tr class="row-even"><td><p>set_range</p></td>
+<tr class="row-odd"><td><p>set_range</p></td>
 <td><p>Set cell range.</p></td>
 </tr>
-<tr class="row-odd"><td><p>set_view</p></td>
+<tr class="row-even"><td><p>set_view</p></td>
 <td><p>Set view point.</p></td>
 </tr>
-<tr class="row-even"><td><p>set_parallel_projection</p></td>
+<tr class="row-odd"><td><p>set_parallel_projection</p></td>
 <td><p>Set parallel projection mode.</p></td>
 </tr>
-<tr class="row-odd"><td><p>set_grid</p></td>
+<tr class="row-even"><td><p>set_grid</p></td>
 <td><p>Set grid mode.</p></td>
 </tr>
-<tr class="row-even"><td><p>set_bar</p></td>
+<tr class="row-odd"><td><p>set_bar</p></td>
 <td><p>Set scalar bar mode.</p></td>
 </tr>
-<tr class="row-odd"><td><p>set_axis</p></td>
+<tr class="row-even"><td><p>set_axis</p></td>
 <td><p>Set axis widget.</p></td>
 </tr>
-<tr class="row-even"><td><p>set_cell</p></td>
+<tr class="row-odd"><td><p>set_cell</p></td>
 <td><p>Set unit cell.</p></td>
 </tr>
-<tr class="row-odd"><td><p>add_mesh</p></td>
+<tr class="row-even"><td><p>add_mesh</p></td>
 <td><p>Add any PyVista/VTK mesh or dataset that PyVista can wrap to the scene.</p></td>
 </tr>
-<tr class="row-even"><td><p>remove_actor</p></td>
+<tr class="row-odd"><td><p>remove_actor</p></td>
 <td><p>Remove actor.</p></td>
 </tr>
-<tr class="row-odd"><td><p>load</p></td>
+<tr class="row-even"><td><p>load</p></td>
 <td><p>Load all info.</p></td>
 </tr>
-<tr class="row-even"><td><p>save</p></td>
+<tr class="row-odd"><td><p>save</p></td>
 <td><p>save all info.</p></td>
 </tr>
+<tr class="row-even"><td><p>_check_multipie</p></td>
+<td><p></p></td>
+</tr>
 <tr class="row-odd"><td><p>mp_set_group</p></td>
-<td><p>MultiPie: Set point/sapce group.</p></td>
+<td><p>MultiPie: Set group.</p></td>
 </tr>
 <tr class="row-even"><td><p>mp_add_site</p></td>
 <td><p>MultiPie: Add equivalent sites.</p></td>
@@ -860,49 +880,43 @@
 <td><p>MultiPie: Add equivalent bonds.</p></td>
 </tr>
 <tr class="row-even"><td><p>mp_add_vector</p></td>
-<td><p>MultiPie: Add vectors at equivalent sites or bonds.</p></td>
+<td><p>MultiPie: Add transformed vectors at equivalent sites or bonds.</p></td>
 </tr>
 <tr class="row-odd"><td><p>mp_add_orbital</p></td>
-<td><p>MultiPie: Add orbitals at equivalent sites or bonds.</p></td>
+<td><p>MultiPie: Add transformed orbitals at equivalent sites or bonds.</p></td>
 </tr>
-<tr class="row-even"><td><p>mp_create_harmonics</p></td>
-<td><p>MultiPie: Create harmonics list.</p></td>
+<tr class="row-even"><td><p>mp_add_bond_definition</p></td>
+<td><p>MultiPie: Create bond definition.</p></td>
 </tr>
-<tr class="row-odd"><td><p>mp_add_harmonics</p></td>
-<td><p>MultiPie: Add harmonics at equivalent sites or bonds.</p></td>
+<tr class="row-odd"><td><p>mp_site_samb_list</p></td>
+<td><p>MultiPie: Create site SAMB list.</p></td>
 </tr>
-<tr class="row-even"><td><p>mp_create_site_samb</p></td>
-<td><p>MultiPie: Create site SAMB.</p></td>
-</tr>
-<tr class="row-odd"><td><p>mp_add_site_samb</p></td>
+<tr class="row-even"><td><p>mp_add_site_samb</p></td>
 <td><p>MultiPie: Add site SAMB.</p></td>
 </tr>
-<tr class="row-even"><td><p>mp_create_bond_samb</p></td>
-<td><p>MultiPie: Create bond SAMB.</p></td>
+<tr class="row-odd"><td><p>mp_bond_samb_list</p></td>
+<td><p>MultiPie: Create bond SAMB list.</p></td>
 </tr>
-<tr class="row-odd"><td><p>mp_add_bond_samb</p></td>
+<tr class="row-even"><td><p>mp_add_bond_samb</p></td>
 <td><p>MultiPie: Add bond SAMB.</p></td>
 </tr>
-<tr class="row-even"><td><p>mp_create_vector_samb</p></td>
-<td><p>MultiPie: Create vector SAMB.</p></td>
+<tr class="row-odd"><td><p>mp_vector_samb_list</p></td>
+<td><p>MultiPie: Create vector SAMB list.</p></td>
 </tr>
-<tr class="row-odd"><td><p>mp_add_vector_samb</p></td>
+<tr class="row-even"><td><p>mp_add_vector_samb</p></td>
 <td><p>MultiPie: Add vector SAMB.</p></td>
 </tr>
-<tr class="row-even"><td><p>mp_add_vector_samb_modulation</p></td>
+<tr class="row-odd"><td><p>mp_add_vector_samb_modulation</p></td>
 <td><p>MultiPie: Add vector SAMB with modulation.</p></td>
 </tr>
-<tr class="row-odd"><td><p>mp_create_orbital_samb</p></td>
+<tr class="row-even"><td><p>mp_orbital_samb_list</p></td>
 <td><p>MultiPie: Create orbital SAMB.</p></td>
 </tr>
-<tr class="row-even"><td><p>mp_add_orbital_samb</p></td>
+<tr class="row-odd"><td><p>mp_add_orbital_samb</p></td>
 <td><p>MultiPie: Add orbital SAMB.</p></td>
 </tr>
-<tr class="row-odd"><td><p>mp_add_orbital_samb_modulation</p></td>
+<tr class="row-even"><td><p>mp_add_orbital_samb_modulation</p></td>
 <td><p>MultiPie: Add orbital SAMB with modulation.</p></td>
-</tr>
-<tr class="row-even"><td><p>mp_add_hopping</p></td>
-<td><p>MultiPie: Add hopping bond directions.</p></td>
 </tr>
 </tbody>
 </table>
@@ -976,8 +990,8 @@
 <tr class="row-odd"><td><p>create_qtdraw_file</p></td>
 <td><p>Create QtDraw file as background.</p></td>
 </tr>
-<tr class="row-even"><td><p>convert_qtdraw_v2</p></td>
-<td><p>Convert qtdraw file to version 2.</p></td>
+<tr class="row-even"><td><p>convert_qtdraw_v3</p></td>
+<td><p>Convert qtdraw file to version 3.</p></td>
 </tr>
 <tr class="row-odd"><td><p>set_light_prop</p></td>
 <td><p></p></td>
@@ -1393,6 +1407,54 @@
 <tr class="row-odd"><td><p>plot_stream_from_data</p></td>
 <td><p>Plot stream from data (vectors in cartesian coordinate).</p></td>
 </tr>
+<tr class="row-even"><td><p>mp_set_group</p></td>
+<td><p>MultiPie: Set group or group status.</p></td>
+</tr>
+<tr class="row-odd"><td><p>mp_add_site</p></td>
+<td><p>MultiPie: Add equivalent sites.</p></td>
+</tr>
+<tr class="row-even"><td><p>mp_add_bond</p></td>
+<td><p>MultiPie: Add equivalent bonds.</p></td>
+</tr>
+<tr class="row-odd"><td><p>mp_add_vector</p></td>
+<td><p>MultiPie: Add transformed vectors at equivalent sites or bonds.</p></td>
+</tr>
+<tr class="row-even"><td><p>mp_add_orbital</p></td>
+<td><p>MultiPie: Add transformed orbitals at equivalent sites or bonds.</p></td>
+</tr>
+<tr class="row-odd"><td><p>mp_add_bond_definition</p></td>
+<td><p>MultiPie: Create bond definition.</p></td>
+</tr>
+<tr class="row-even"><td><p>mp_site_samb_list</p></td>
+<td><p>MultiPie: Create site SAMB list.</p></td>
+</tr>
+<tr class="row-odd"><td><p>mp_add_site_samb</p></td>
+<td><p>MultiPie: Add site SAMB.</p></td>
+</tr>
+<tr class="row-even"><td><p>mp_bond_samb_list</p></td>
+<td><p>MultiPie: Create bond SAMB list.</p></td>
+</tr>
+<tr class="row-odd"><td><p>mp_add_bond_samb</p></td>
+<td><p>MultiPie: Add bond SAMB.</p></td>
+</tr>
+<tr class="row-even"><td><p>mp_vector_samb_list</p></td>
+<td><p>MultiPie: Create vector SAMB list.</p></td>
+</tr>
+<tr class="row-odd"><td><p>mp_add_vector_samb</p></td>
+<td><p>MultiPie: Add vector SAMB.</p></td>
+</tr>
+<tr class="row-even"><td><p>mp_add_vector_samb_modulation</p></td>
+<td><p>MultiPie: Add vector SAMB with modulation.</p></td>
+</tr>
+<tr class="row-odd"><td><p>mp_orbital_samb_list</p></td>
+<td><p>MultiPie: Create orbital SAMB.</p></td>
+</tr>
+<tr class="row-even"><td><p>mp_add_orbital_samb</p></td>
+<td><p>MultiPie: Add orbital SAMB.</p></td>
+</tr>
+<tr class="row-odd"><td><p>mp_add_orbital_samb_modulation</p></td>
+<td><p>MultiPie: Add orbital SAMB with modulation.</p></td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -1725,10 +1787,7 @@
 <tr class="row-even"><td><p>setModelData</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p>updateEditorGeometry</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p>paint</p></td>
+<tr class="row-odd"><td><p>paint</p></td>
 <td><p></p></td>
 </tr>
 </tbody>
@@ -1750,7 +1809,10 @@
 <tr class="row-odd"><td><p>createEditor</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p>sizeHint</p></td>
+<tr class="row-even"><td><p>updateEditorGeometry</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>sizeHint</p></td>
 <td><p></p></td>
 </tr>
 </tbody>
@@ -1772,7 +1834,10 @@
 <tr class="row-odd"><td><p>createEditor</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p>sizeHint</p></td>
+<tr class="row-even"><td><p>updateEditorGeometry</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>sizeHint</p></td>
 <td><p></p></td>
 </tr>
 </tbody>
@@ -1792,6 +1857,12 @@
 <td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p>createEditor</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p>_set_data_size</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>updateEditorGeometry</p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-even"><td><p>sizeHint</p></td>
@@ -1934,6 +2005,21 @@
 <tr class="row-odd"><td><p>select_row</p></td>
 <td><p>Select row.</p></td>
 </tr>
+<tr class="row-even"><td><p>closeEvent</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>set_row_height_hint</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p>row_height_hint</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>clear_row_heights</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p>setModel</p></td>
+<td><p></p></td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -2057,7 +2143,10 @@
 <tr class="row-even"><td><p>Label</p></td>
 <td><p>Label widget.</p></td>
 </tr>
-<tr class="row-odd"><td><p>sizeHint</p></td>
+<tr class="row-odd"><td><p>set_background</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p>sizeHint</p></td>
 <td><p></p></td>
 </tr>
 </tbody>
@@ -2371,10 +2460,13 @@
 <tr class="row-even"><td><p>TabGroupView</p></td>
 <td><p>Data view group.</p></td>
 </tr>
-<tr class="row-odd"><td><p>select_tab</p></td>
+<tr class="row-odd"><td><p>tab_change</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p>select_tab</p></td>
 <td><p>Select tab.</p></td>
 </tr>
-<tr class="row-even"><td><p>closeEvent</p></td>
+<tr class="row-odd"><td><p>closeEvent</p></td>
 <td><p>Close event for deselect all.</p></td>
 </tr>
 </tbody>
@@ -2399,25 +2491,28 @@
 <tr class="row-odd"><td><p>_create_axes_actor</p></td>
 <td><p>Create custom axes actor.</p></td>
 </tr>
-<tr class="row-even"><td><p>create_axes_widget</p></td>
+<tr class="row-even"><td><p>_create_axes_actor_full</p></td>
+<td><p>Create custom axes actor (crossed axes).</p></td>
+</tr>
+<tr class="row-odd"><td><p>create_axes_widget</p></td>
 <td><p>Create axes widget.</p></td>
 </tr>
-<tr class="row-odd"><td><p>create_unit_cell</p></td>
+<tr class="row-even"><td><p>create_unit_cell</p></td>
 <td><p>Create unit cell mesh.</p></td>
 </tr>
-<tr class="row-even"><td><p>get_view_vector</p></td>
+<tr class="row-odd"><td><p>get_view_vector</p></td>
 <td><p>Get view and viewup.</p></td>
 </tr>
-<tr class="row-odd"><td><p>create_cell_grid</p></td>
+<tr class="row-even"><td><p>create_cell_grid</p></td>
 <td><p>Create grid point.</p></td>
 </tr>
-<tr class="row-even"><td><p>get_lattice_vector</p></td>
+<tr class="row-odd"><td><p>get_lattice_vector</p></td>
 <td><p>Get lattice vector.</p></td>
 </tr>
-<tr class="row-odd"><td><p>get_repeat_range</p></td>
+<tr class="row-even"><td><p>get_repeat_range</p></td>
 <td><p>Get repeart range.</p></td>
 </tr>
-<tr class="row-even"><td><p>get_outside_box</p></td>
+<tr class="row-odd"><td><p>get_outside_box</p></td>
 <td><p>Get indices outside range.</p></td>
 </tr>
 </tbody>
@@ -2457,23 +2552,11 @@
 <tr class="row-even"><td><p>write_dict</p></td>
 <td><p>write dict text file.</p></td>
 </tr>
-<tr class="row-odd"><td><p>str_to_list</p></td>
-<td><p>Convert a string to a list of strings.</p></td>
-</tr>
-<tr class="row-even"><td><p>text_to_list</p></td>
+<tr class="row-odd"><td><p>text_to_list</p></td>
 <td><p>Convert single text to list.</p></td>
 </tr>
-<tr class="row-odd"><td><p>apply</p></td>
+<tr class="row-even"><td><p>apply</p></td>
 <td><p>Apply function to (nested) list.</p></td>
-</tr>
-<tr class="row-even"><td><p>list_to_table</p></td>
-<td><p>Convert from list to table</p></td>
-</tr>
-<tr class="row-odd"><td><p>remove_space</p></td>
-<td><p>Remove space, tab, and newline.</p></td>
-</tr>
-<tr class="row-even"><td><p>vector3d</p></td>
-<td><p>3d vector.</p></td>
 </tr>
 <tr class="row-odd"><td><p>distance</p></td>
 <td><p>group of sites with the same distance (in increasing order).</p></td>
@@ -2654,13 +2737,13 @@
 <td><p>Get update preference.</p></td>
 </tr>
 <tr class="row-even"><td><p>get_multipie</p></td>
-<td><p>Get multipie info.</p></td>
+<td><p>Get multipie info. (v2-&gt;v3)</p></td>
 </tr>
 <tr class="row-odd"><td><p>get_data</p></td>
 <td><p>Get updated data.</p></td>
 </tr>
-<tr class="row-even"><td><p>convert_version2</p></td>
-<td><p>Converter from ver.1 to ver. 2.</p></td>
+<tr class="row-even"><td><p>convert_version3</p></td>
+<td><p>Converter from ver.1/2 to ver. 3.</p></td>
 </tr>
 </tbody>
 </table>
@@ -2730,8 +2813,8 @@
 </div>
 </section>
 </section>
-<section id="conv-qtdraw2-py">
-<h2><div class='my-heading' style='color: darkgreen;'>conv_qtdraw2.py<a class="headerlink" href="#conv-qtdraw2-py" title="Link to this heading">#</a></h2>
+<section id="conv-qtdraw3-py">
+<h2><div class='my-heading' style='color: darkgreen;'>conv_qtdraw3.py<a class="headerlink" href="#conv-qtdraw3-py" title="Link to this heading">#</a></h2>
 <section id="id17">
 <h3><div class='my-heading' style='color: royalblue;'>Global function<a class="headerlink" href="#id17" title="Link to this heading">#</a></h3>
 <div class="pst-scrollable-table-container"><table class="table">
@@ -2749,10 +2832,10 @@
 </div>
 </section>
 </section>
-<section id="plugin-multipie-py">
-<h2><div class='my-heading' style='color: darkgreen;'>plugin_multipie.py<a class="headerlink" href="#plugin-multipie-py" title="Link to this heading">#</a></h2>
-<section id="id18">
-<h3><div class='my-heading' style='color: royalblue;'>Global function<a class="headerlink" href="#id18" title="Link to this heading">#</a></h3>
+<section id="tab-basis-py">
+<h2><div class='my-heading' style='color: darkgreen;'>tab_basis.py<a class="headerlink" href="#tab-basis-py" title="Link to this heading">#</a></h2>
+<section id="tabbasis">
+<h3><div class='my-heading' style='color: royalblue;'>TabBasis<a class="headerlink" href="#tabbasis" title="Link to this heading">#</a></h3>
 <div class="pst-scrollable-table-container"><table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>Function</p></th>
@@ -2760,18 +2843,78 @@
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>_mapping_str</p></td>
-<td><p>Convert mapping No. to those start from one.</p></td>
+<tr class="row-even"><td><p>TabBasis</p></td>
+<td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p>remove_latex</p></td>
+<tr class="row-odd"><td><p>set_site</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p>set_bond</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>set_vector</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p>set_vector_list</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>set_orbital</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p>set_orbital_list</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>show_bond_definition</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p>show_site</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>show_bond</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p>show_vector</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>show_vector_lc</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p>show_orbital</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>show_orbital_lc</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p>create_vector_modulation</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>create_orbital_modulation</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p>show_vector_samb_modulation</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>show_orbital_samb_modulation</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p>closeEvent</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>set_data</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p>clear_data</p></td>
 <td><p></p></td>
 </tr>
 </tbody>
 </table>
 </div>
 </section>
-<section id="multipieplugin">
-<h3><div class='my-heading' style='color: royalblue;'>MultiPiePlugin<a class="headerlink" href="#multipieplugin" title="Link to this heading">#</a></h3>
+</section>
+<section id="multipie-data-py">
+<h2><div class='my-heading' style='color: darkgreen;'>multipie_data.py<a class="headerlink" href="#multipie-data-py" title="Link to this heading">#</a></h2>
+<section id="multipiedata">
+<h3><div class='my-heading' style='color: royalblue;'>MultiPieData<a class="headerlink" href="#multipiedata" title="Link to this heading">#</a></h3>
 <div class="pst-scrollable-table-container"><table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>Function</p></th>
@@ -2779,120 +2922,117 @@
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>MultiPiePlugin</p></td>
-<td><p>MultiPie plugin.</p></td>
+<tr class="row-even"><td><p>MultiPieData</p></td>
+<td><p>MultiPie data manager.</p></td>
 </tr>
-<tr class="row-odd"><td><p>version</p></td>
-<td><p>Version.</p></td>
+<tr class="row-odd"><td><p>group</p></td>
+<td><p></p></td>
 </tr>
-<tr class="row-even"><td><p>group</p></td>
-<td><p>Group status dict.</p></td>
+<tr class="row-even"><td><p>ps_group</p></td>
+<td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p>obj</p></td>
-<td><p>Object status dict.</p></td>
+<tr class="row-odd"><td><p>p_group</p></td>
+<td><p></p></td>
 </tr>
-<tr class="row-even"><td><p>basis</p></td>
-<td><p>Basis status dict.</p></td>
+<tr class="row-even"><td><p>mp_group</p></td>
+<td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p>plus</p></td>
-<td><p>Plus status dict.</p></td>
+<tr class="row-odd"><td><p>_get_group_list</p></td>
+<td><p></p></td>
 </tr>
-<tr class="row-even"><td><p>counter</p></td>
-<td><p>Counter number and increment.</p></td>
+<tr class="row-even"><td><p>_get_group_name</p></td>
+<td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p>clear_counter</p></td>
-<td><p>Clear counter.</p></td>
+<tr class="row-odd"><td><p>_type_list</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p>set_crystal_type</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>set_group_type</p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p>set_group</p></td>
-<td><p>Set group and plus dict.</p></td>
+<td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p>get_product_decomp</p></td>
-<td><p>Set product decomposition.</p></td>
+<tr class="row-odd"><td><p>set_status</p></td>
+<td><p></p></td>
 </tr>
-<tr class="row-even"><td><p>get_harmonics_irrep</p></td>
-<td><p>Get harmonics irrep.</p></td>
+<tr class="row-even"><td><p>set_axis</p></td>
+<td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p>get_harmonics</p></td>
-<td><p>Get harmonics.</p></td>
+<tr class="row-odd"><td><p>clear_data</p></td>
+<td><p></p></td>
 </tr>
-<tr class="row-even"><td><p>find_wyckoff</p></td>
-<td><p>Find Wyckoff position.</p></td>
+<tr class="row-even"><td><p>_set_counter</p></td>
+<td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p>add_equivalent_site</p></td>
-<td><p>Add equivalent sites.</p></td>
+<tr class="row-odd"><td><p>_get_index_list</p></td>
+<td><p></p></td>
 </tr>
-<tr class="row-even"><td><p>add_equivalent_bond</p></td>
-<td><p>Add equivalent bonds.</p></td>
+<tr class="row-even"><td><p>set_group_find_wyckoff</p></td>
+<td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p>add_vector_equivalent_site</p></td>
-<td><p>Add vectors at equivalent sites.</p></td>
+<tr class="row-odd"><td><p>add_site</p></td>
+<td><p></p></td>
 </tr>
-<tr class="row-even"><td><p>add_orbital_equivalent_site</p></td>
-<td><p>Add orbitals at equivalent sites.</p></td>
+<tr class="row-even"><td><p>add_bond</p></td>
+<td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p>create_combined</p></td>
-<td><p>Create combined SAMB.</p></td>
+<tr class="row-odd"><td><p>add_vector</p></td>
+<td><p></p></td>
 </tr>
-<tr class="row-even"><td><p>gen_site_samb</p></td>
-<td><p>Generate site cluster SAMB.</p></td>
+<tr class="row-even"><td><p>add_orbital</p></td>
+<td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p>gen_bond_samb</p></td>
-<td><p>Generate bond cluster SAMB.</p></td>
+<tr class="row-odd"><td><p>add_bond_definition</p></td>
+<td><p></p></td>
 </tr>
-<tr class="row-even"><td><p>gen_vector_samb</p></td>
-<td><p>Generate vector cluster SAMB.</p></td>
+<tr class="row-even"><td><p>site_samb_list</p></td>
+<td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p>gen_orbital_samb</p></td>
-<td><p>Generate orbital cluster SAMB.</p></td>
+<tr class="row-odd"><td><p>add_site_samb</p></td>
+<td><p></p></td>
 </tr>
-<tr class="row-even"><td><p>gen_hopping_samb</p></td>
-<td><p>Generate hopping SAMB.</p></td>
-</tr>
-<tr class="row-odd"><td><p>create_hopping_direction</p></td>
-<td><p>Create normal bond direction.</p></td>
-</tr>
-<tr class="row-even"><td><p>add_site_samb</p></td>
-<td><p>Add site cluster SAMB.</p></td>
+<tr class="row-even"><td><p>bond_samb_list</p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p>add_bond_samb</p></td>
-<td><p>Add bond cluster SAMB.</p></td>
+<td><p></p></td>
 </tr>
-<tr class="row-even"><td><p>add_vector_samb</p></td>
-<td><p>Add vector cluster SAMB.</p></td>
+<tr class="row-even"><td><p>vector_samb_list</p></td>
+<td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p>add_orbital_samb</p></td>
-<td><p>Add orbital cluster SAMB.</p></td>
+<tr class="row-odd"><td><p>add_vector_samb</p></td>
+<td><p></p></td>
 </tr>
-<tr class="row-even"><td><p>add_vector_modulation</p></td>
-<td><p>Add vector SAMB modulation.</p></td>
+<tr class="row-even"><td><p>add_vector_samb_modulation</p></td>
+<td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p>add_orbital_modulation</p></td>
-<td><p>Add orbitl SAMB modulation.</p></td>
+<tr class="row-odd"><td><p>orbital_samb_list</p></td>
+<td><p></p></td>
 </tr>
-<tr class="row-even"><td><p>add_hopping_samb</p></td>
-<td><p>Add normal hopping direction.</p></td>
+<tr class="row-even"><td><p>add_orbital_samb</p></td>
+<td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p>add_harmonics_set</p></td>
-<td><p>Add harmonics set.</p></td>
+<tr class="row-odd"><td><p>add_orbital_samb_modulation</p></td>
+<td><p></p></td>
 </tr>
-<tr class="row-even"><td><p>add_virtual_cluster</p></td>
-<td><p>Add virtual cluster.</p></td>
+<tr class="row-even"><td><p>_parse_modulation</p></td>
+<td><p>Parse modulation list.</p></td>
 </tr>
-<tr class="row-odd"><td><p>create_samb_modulation</p></td>
-<td><p>Create SAMB modulation object.</p></td>
-</tr>
-<tr class="row-even"><td><p>create_phase_factor</p></td>
-<td><p>Create phase factor.</p></td>
+<tr class="row-odd"><td><p>_parse_range</p></td>
+<td><p>Parse range.</p></td>
 </tr>
 </tbody>
 </table>
 </div>
 </section>
 </section>
-<section id="util-multipie-py">
-<h2><div class='my-heading' style='color: darkgreen;'>util_multipie.py<a class="headerlink" href="#util-multipie-py" title="Link to this heading">#</a></h2>
-<section id="id19">
-<h3><div class='my-heading' style='color: royalblue;'>Global function<a class="headerlink" href="#id19" title="Link to this heading">#</a></h3>
+<section id="multipie-dialog-py">
+<h2><div class='my-heading' style='color: darkgreen;'>multipie_dialog.py<a class="headerlink" href="#multipie-dialog-py" title="Link to this heading">#</a></h2>
+<section id="multipiedialog">
+<h3><div class='my-heading' style='color: royalblue;'>MultiPieDialog<a class="headerlink" href="#multipiedialog" title="Link to this heading">#</a></h3>
 <div class="pst-scrollable-table-container"><table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>Function</p></th>
@@ -2900,34 +3040,28 @@
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>check_get_site</p></td>
-<td><p>Check and get site.</p></td>
+<tr class="row-even"><td><p>MultiPieDialog</p></td>
+<td><p>MultiPie dialog.</p></td>
 </tr>
-<tr class="row-odd"><td><p>check_get_bond</p></td>
-<td><p>Check and get bond.</p></td>
+<tr class="row-odd"><td><p>set_title</p></td>
+<td><p></p></td>
 </tr>
-<tr class="row-even"><td><p>check_get_site_bond</p></td>
-<td><p>Check and get site (bond center) from site_bond.</p></td>
+<tr class="row-even"><td><p>set_data</p></td>
+<td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p>create_samb_object</p></td>
-<td><p>Create SAMB object.</p></td>
+<tr class="row-odd"><td><p>clear_data</p></td>
+<td><p></p></td>
 </tr>
-<tr class="row-even"><td><p>check_linear_combination</p></td>
-<td><p>Check form of linear combination.</p></td>
-</tr>
-<tr class="row-odd"><td><p>combined_format</p></td>
-<td><p>Create formatted combined SAMB.</p></td>
-</tr>
-<tr class="row-even"><td><p>parse_modulation_list</p></td>
-<td><p>Parse modulation list.</p></td>
+<tr class="row-even"><td><p>closeEvent</p></td>
+<td><p></p></td>
 </tr>
 </tbody>
 </table>
 </div>
 </section>
 </section>
-<section id="dialog-modulation-py">
-<h2><div class='my-heading' style='color: darkgreen;'>dialog_modulation.py<a class="headerlink" href="#dialog-modulation-py" title="Link to this heading">#</a></h2>
+<section id="multipie-modulation-dialog-py">
+<h2><div class='my-heading' style='color: darkgreen;'>multipie_modulation_dialog.py<a class="headerlink" href="#multipie-modulation-dialog-py" title="Link to this heading">#</a></h2>
 <section id="modulationdialog">
 <h3><div class='my-heading' style='color: royalblue;'>ModulationDialog<a class="headerlink" href="#modulationdialog" title="Link to this heading">#</a></h3>
 <div class="pst-scrollable-table-container"><table class="table">
@@ -2938,42 +3072,242 @@
 </thead>
 <tbody>
 <tr class="row-even"><td><p>ModulationDialog</p></td>
-<td><p>Modulation dialog.</p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p>create_panel</p></td>
-<td><p>Create panel.</p></td>
+<td><p></p></td>
 </tr>
-<tr class="row-even"><td><p>get_raw_data</p></td>
-<td><p>Get raw modulation list.</p></td>
+<tr class="row-even"><td><p>set_view</p></td>
+<td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p>add_modulation</p></td>
-<td><p>Add modulation.</p></td>
+<tr class="row-odd"><td><p>modulation_range</p></td>
+<td><p></p></td>
 </tr>
-<tr class="row-even"><td><p>add_data</p></td>
-<td><p>Add data in panel.</p></td>
+<tr class="row-even"><td><p>create_modulation</p></td>
+<td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p>remove_data</p></td>
-<td><p>Remove data in panel.</p></td>
+<tr class="row-odd"><td><p>add_data</p></td>
+<td><p></p></td>
 </tr>
-<tr class="row-even"><td><p>accept</p></td>
-<td><p>Accept input.</p></td>
+<tr class="row-even"><td><p>remove_data</p></td>
+<td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p>reject</p></td>
-<td><p>Reject input.</p></td>
+<tr class="row-odd"><td><p>accept_data</p></td>
+<td><p></p></td>
 </tr>
-<tr class="row-even"><td><p>apply</p></td>
-<td><p>Apply input.</p></td>
+<tr class="row-even"><td><p>reject_data</p></td>
+<td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p>close</p></td>
-<td><p>Close.</p></td>
+<tr class="row-odd"><td><p>reset</p></td>
+<td><p></p></td>
 </tr>
 </tbody>
 </table>
 </div>
 </section>
 </section>
-<section id="dialog-info-py">
-<h2><div class='my-heading' style='color: darkgreen;'>dialog_info.py<a class="headerlink" href="#dialog-info-py" title="Link to this heading">#</a></h2>
+<section id="sub-group-py">
+<h2><div class='my-heading' style='color: darkgreen;'>sub_group.py<a class="headerlink" href="#sub-group-py" title="Link to this heading">#</a></h2>
+<section id="subgroup">
+<h3><div class='my-heading' style='color: royalblue;'>SubGroup<a class="headerlink" href="#subgroup" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Function</p></th>
+<th class="head"><p>Summary</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>SubGroup</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>set_crystal_type</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p>set_group_type</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>set_group</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p>set_group_name</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>show_symmetry_operation</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p>show_character_table</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>show_wyckoff_site</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p>show_wyckoff_bond</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>show_product_table</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p>closeEvent</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>set_data</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p>clear_data</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</section>
+<section id="tab-group-py">
+<h2><div class='my-heading' style='color: darkgreen;'>tab_group.py<a class="headerlink" href="#tab-group-py" title="Link to this heading">#</a></h2>
+<section id="tabgroup">
+<h3><div class='my-heading' style='color: royalblue;'>TabGroup<a class="headerlink" href="#tabgroup" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Function</p></th>
+<th class="head"><p>Summary</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>TabGroup</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>set_irrep_list</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p>set_harm_list</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>set_wyckoff_list</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p>set_irrep_decomp</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>show_harmonics_decomp</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p>show_harmonics</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>show_wyckoff_site</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p>show_wyckoff_bond</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>find_wyckoff_set</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p>show_atomic</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>show_response</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p>closeEvent</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>set_data</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p>clear_data</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="id18">
+<h3><div class='my-heading' style='color: royalblue;'>Global function<a class="headerlink" href="#id18" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Function</p></th>
+<th class="head"><p>Summary</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>_remove_latex</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</section>
+<section id="multipie-util-py">
+<h2><div class='my-heading' style='color: darkgreen;'>multipie_util.py<a class="headerlink" href="#multipie-util-py" title="Link to this heading">#</a></h2>
+<section id="id19">
+<h3><div class='my-heading' style='color: royalblue;'>Global function<a class="headerlink" href="#id19" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Function</p></th>
+<th class="head"><p>Summary</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>phase_factor</p></td>
+<td><p>Create phase factor.</p></td>
+</tr>
+<tr class="row-odd"><td><p>create_samb_modulation</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p>convert_vector_object</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>check_linear_combination</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</section>
+<section id="tab-object-py">
+<h2><div class='my-heading' style='color: darkgreen;'>tab_object.py<a class="headerlink" href="#tab-object-py" title="Link to this heading">#</a></h2>
+<section id="tabobject">
+<h3><div class='my-heading' style='color: royalblue;'>TabObject<a class="headerlink" href="#tabobject" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Function</p></th>
+<th class="head"><p>Summary</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>TabObject</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>show_site</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p>show_bond</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>show_vector</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p>show_orbital</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>closeEvent</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p>set_data</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>clear_data</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</section>
+<section id="multipie-info-dialog-py">
+<h2><div class='my-heading' style='color: darkgreen;'>multipie_info_dialog.py<a class="headerlink" href="#multipie-info-dialog-py" title="Link to this heading">#</a></h2>
 <section id="id20">
 <h3><div class='my-heading' style='color: royalblue;'>Global function<a class="headerlink" href="#id20" title="Link to this heading">#</a></h3>
 <div class="pst-scrollable-table-container"><table class="table">
@@ -2992,25 +3326,22 @@
 <tr class="row-even"><td><p>show_character_table</p></td>
 <td><p>Show character table panel.</p></td>
 </tr>
-<tr class="row-odd"><td><p>show_wyckoff</p></td>
+<tr class="row-odd"><td><p>show_wyckoff_site</p></td>
 <td><p>Show Wyckoff position panel.</p></td>
 </tr>
-<tr class="row-even"><td><p>show_product_table</p></td>
-<td><p>Show product table panel.</p></td>
+<tr class="row-even"><td><p>show_wyckoff_bond</p></td>
+<td><p>Show Wyckoff position panel.</p></td>
 </tr>
-<tr class="row-odd"><td><p>show_harmonics</p></td>
-<td><p>Show harmonics panel.</p></td>
+<tr class="row-odd"><td><p>show_product_table</p></td>
+<td><p>Show product table panel.</p></td>
 </tr>
 <tr class="row-even"><td><p>show_harmonics_decomp</p></td>
 <td><p>Show harmonics decomposition panel.</p></td>
 </tr>
-<tr class="row-odd"><td><p>show_virtual_cluster</p></td>
-<td><p>Show virtual cluster panel.</p></td>
-</tr>
-<tr class="row-even"><td><p>show_atomic_multipole</p></td>
+<tr class="row-odd"><td><p>show_atomic_multipole</p></td>
 <td><p>Show atomic multipole panel.</p></td>
 </tr>
-<tr class="row-odd"><td><p>show_response</p></td>
+<tr class="row-even"><td><p>show_response</p></td>
 <td><p>Show response tensor panel.</p></td>
 </tr>
 </tbody>
@@ -3034,10 +3365,10 @@
 </div>
 </section>
 </section>
-<section id="dialog-multipie-py">
-<h2><div class='my-heading' style='color: darkgreen;'>dialog_multipie.py<a class="headerlink" href="#dialog-multipie-py" title="Link to this heading">#</a></h2>
-<section id="multipiedialog">
-<h3><div class='my-heading' style='color: royalblue;'>MultiPieDialog<a class="headerlink" href="#multipiedialog" title="Link to this heading">#</a></h3>
+<section id="multipie-plot-py">
+<h2><div class='my-heading' style='color: darkgreen;'>multipie_plot.py<a class="headerlink" href="#multipie-plot-py" title="Link to this heading">#</a></h2>
+<section id="id21">
+<h3><div class='my-heading' style='color: royalblue;'>Global function<a class="headerlink" href="#id21" title="Link to this heading">#</a></h3>
 <div class="pst-scrollable-table-container"><table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>Function</p></th>
@@ -3045,221 +3376,32 @@
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>MultiPieDialog</p></td>
-<td><p>MultiPie dialog.</p></td>
+<tr class="row-even"><td><p>plot_cell_site</p></td>
+<td><p>Plot cell site.</p></td>
 </tr>
-<tr class="row-odd"><td><p>group</p></td>
-<td><p>Group status dict.</p></td>
+<tr class="row-odd"><td><p>plot_cell_bond</p></td>
+<td><p>Plot cell bond.</p></td>
 </tr>
-<tr class="row-even"><td><p>obj</p></td>
-<td><p>Object status dict.</p></td>
+<tr class="row-even"><td><p>plot_cell_vector</p></td>
+<td><p>Plot cell vector.</p></td>
 </tr>
-<tr class="row-odd"><td><p>basis</p></td>
-<td><p>Basis status dict.</p></td>
+<tr class="row-odd"><td><p>plot_cell_multipole</p></td>
+<td><p>Plot cell multipole.</p></td>
 </tr>
-<tr class="row-even"><td><p>plus</p></td>
-<td><p>Plus status dict.</p></td>
+<tr class="row-even"><td><p>plot_bond_definition</p></td>
+<td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p>set_group_panel_value</p></td>
-<td><p>Set initial values in group panel.</p></td>
+<tr class="row-odd"><td><p>plot_site_cluster</p></td>
+<td><p></p></td>
 </tr>
-<tr class="row-even"><td><p>set_object_panel_value</p></td>
-<td><p>Set initial values in object panel.</p></td>
+<tr class="row-even"><td><p>plot_bond_cluster</p></td>
+<td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p>set_basis_panel_value</p></td>
-<td><p>Set initial values in basis panel.</p></td>
+<tr class="row-odd"><td><p>plot_vector_cluster</p></td>
+<td><p></p></td>
 </tr>
-<tr class="row-even"><td><p>create_sub_group_panel</p></td>
-<td><p>Create subgroup panel.</p></td>
-</tr>
-<tr class="row-odd"><td><p>create_group_panel</p></td>
-<td><p>Create group panel.</p></td>
-</tr>
-<tr class="row-even"><td><p>create_object_panel</p></td>
-<td><p>Create object panel.</p></td>
-</tr>
-<tr class="row-odd"><td><p>create_basis_panel</p></td>
-<td><p>Create basis panel.</p></td>
-</tr>
-<tr class="row-even"><td><p>set_group_connection</p></td>
-<td><p>Set connections in group panel.</p></td>
-</tr>
-<tr class="row-odd"><td><p>set_object_connection</p></td>
-<td><p>Set connections in object panel.</p></td>
-</tr>
-<tr class="row-even"><td><p>set_basis_connection</p></td>
-<td><p>Set connections in basis panel.</p></td>
-</tr>
-<tr class="row-odd"><td><p>set_group_item</p></td>
-<td><p>Set group widgets.</p></td>
-</tr>
-<tr class="row-even"><td><p>set_irrep_item</p></td>
-<td><p>Set irrep widgets.</p></td>
-</tr>
-<tr class="row-odd"><td><p>set_wyckoff_item</p></td>
-<td><p>Set Wyckoff list.</p></td>
-</tr>
-<tr class="row-even"><td><p>set_basis_item</p></td>
-<td><p>Set basis widgets.</p></td>
-</tr>
-<tr class="row-odd"><td><p>set_harmonics_item</p></td>
-<td><p>Set harmonics widgets.</p></td>
-</tr>
-<tr class="row-even"><td><p>set_group_type</p></td>
-<td><p>Set group type.</p></td>
-</tr>
-<tr class="row-odd"><td><p>set_crystal_type</p></td>
-<td><p>Set crystal type.</p></td>
-</tr>
-<tr class="row-even"><td><p>set_group</p></td>
-<td><p>Set current group.</p></td>
-</tr>
-<tr class="row-odd"><td><p>set_irrep_decomp</p></td>
-<td><p>Set decomposition of product of irreps.</p></td>
-</tr>
-<tr class="row-even"><td><p>set_harmonics_type</p></td>
-<td><p>Set harmonics type.</p></td>
-</tr>
-<tr class="row-odd"><td><p>set_harmonics_rank</p></td>
-<td><p>Set harmonics rank.</p></td>
-</tr>
-<tr class="row-even"><td><p>set_harmonics_decomp</p></td>
-<td><p>Set harmonics decomposition.</p></td>
-</tr>
-<tr class="row-odd"><td><p>set_vc_wyckoff</p></td>
-<td><p>Set wyckoff in virtual cluster.</p></td>
-</tr>
-<tr class="row-even"><td><p>set_vc_neighbor</p></td>
-<td><p>Set neighbor list in virtual cluster.</p></td>
-</tr>
-<tr class="row-odd"><td><p>set_atomic_type</p></td>
-<td><p>Set atomic multipole type.</p></td>
-</tr>
-<tr class="row-even"><td><p>set_atomic_basis_type</p></td>
-<td><p>Set atomic multipole basis type.</p></td>
-</tr>
-<tr class="row-odd"><td><p>set_atomic_bra_ket</p></td>
-<td><p>Set bra and ket basis of atomic multipole.</p></td>
-</tr>
-<tr class="row-even"><td><p>set_response_type</p></td>
-<td><p>Set type of response tensor.</p></td>
-</tr>
-<tr class="row-odd"><td><p>set_response_rank</p></td>
-<td><p>Set rank of response tensor.</p></td>
-</tr>
-<tr class="row-even"><td><p>set_obj_vector_type</p></td>
-<td><p>Set vector type in object panel.</p></td>
-</tr>
-<tr class="row-odd"><td><p>set_obj_orbital_type</p></td>
-<td><p>Set orbital type in object panel.</p></td>
-</tr>
-<tr class="row-even"><td><p>set_obj_harmonics_type</p></td>
-<td><p>Set harmonics type in object panel.</p></td>
-</tr>
-<tr class="row-odd"><td><p>set_obj_harmonics_rank</p></td>
-<td><p>Set harmonics rank in object panel.</p></td>
-</tr>
-<tr class="row-even"><td><p>set_obj_harmonics</p></td>
-<td><p>Set harmonics in object panel.</p></td>
-</tr>
-<tr class="row-odd"><td><p>set_obj_wyckoff</p></td>
-<td><p>Set Wyckoff position in object panel.</p></td>
-</tr>
-<tr class="row-even"><td><p>show_symmetry_operation</p></td>
-<td><p>Show symmetry operation panel.</p></td>
-</tr>
-<tr class="row-odd"><td><p>show_character_table</p></td>
-<td><p>Show character table panel.</p></td>
-</tr>
-<tr class="row-even"><td><p>show_wyckoff</p></td>
-<td><p>Show Wyckoff position panel.</p></td>
-</tr>
-<tr class="row-odd"><td><p>show_product_table</p></td>
-<td><p>Show product table panel.</p></td>
-</tr>
-<tr class="row-even"><td><p>show_harmonics</p></td>
-<td><p>Show harmonics panel.</p></td>
-</tr>
-<tr class="row-odd"><td><p>show_harmonics_decomp</p></td>
-<td><p>Show harmonics decomposition panel.</p></td>
-</tr>
-<tr class="row-even"><td><p>show_virtual_cluster</p></td>
-<td><p>Show virtual cluster panel.</p></td>
-</tr>
-<tr class="row-odd"><td><p>show_atomic</p></td>
-<td><p>Show atomic multipole panel.</p></td>
-</tr>
-<tr class="row-even"><td><p>show_response</p></td>
-<td><p>Show response tensor panel.</p></td>
-</tr>
-<tr class="row-odd"><td><p>obj_add_site</p></td>
-<td><p>Add representative site in object dict.</p></td>
-</tr>
-<tr class="row-even"><td><p>obj_add_bond</p></td>
-<td><p>Add representative bond in object dict.</p></td>
-</tr>
-<tr class="row-odd"><td><p>obj_add_vector</p></td>
-<td><p>Add equivalent vectors in object dict.</p></td>
-</tr>
-<tr class="row-even"><td><p>obj_add_orbital</p></td>
-<td><p>Add equivalent orbitals in object dict.</p></td>
-</tr>
-<tr class="row-odd"><td><p>obj_add_harmonics</p></td>
-<td><p>Add equivalent poing-group harmonics in object dict.</p></td>
-</tr>
-<tr class="row-even"><td><p>basis_gen_site</p></td>
-<td><p>Generate site cluster SAMB.</p></td>
-</tr>
-<tr class="row-odd"><td><p>basis_set_site_select</p></td>
-<td><p>Set site cluster SAMB selection list.</p></td>
-</tr>
-<tr class="row-even"><td><p>basis_add_site</p></td>
-<td><p>Add site cluster SAMB.</p></td>
-</tr>
-<tr class="row-odd"><td><p>basis_gen_bond</p></td>
-<td><p>Generate bond cluster SAMB.</p></td>
-</tr>
-<tr class="row-even"><td><p>basis_set_bond_select</p></td>
-<td><p>Set bond cluster SAMB selection list.</p></td>
-</tr>
-<tr class="row-odd"><td><p>basis_add_bond</p></td>
-<td><p>Add bond cluster SAMB.</p></td>
-</tr>
-<tr class="row-even"><td><p>basis_gen_vector</p></td>
-<td><p>Generate vector cluster SAMB.</p></td>
-</tr>
-<tr class="row-odd"><td><p>basis_set_vector_select</p></td>
-<td><p>Set vector cluster SAMB selection list.</p></td>
-</tr>
-<tr class="row-even"><td><p>basis_add_vector</p></td>
-<td><p>Add vector cluster SAMB.</p></td>
-</tr>
-<tr class="row-odd"><td><p>basis_add_vector_lc</p></td>
-<td><p>Add linear combination of vector cluster SAMB.</p></td>
-</tr>
-<tr class="row-even"><td><p>basis_gen_vector_modulation</p></td>
-<td><p>Generate vector modulation.</p></td>
-</tr>
-<tr class="row-odd"><td><p>basis_gen_orbital</p></td>
-<td><p>Generate orbital cluster SAMB.</p></td>
-</tr>
-<tr class="row-even"><td><p>basis_set_orbital_select</p></td>
-<td><p>Set orbital cluster SAMB selection list.</p></td>
-</tr>
-<tr class="row-odd"><td><p>basis_add_orbital</p></td>
-<td><p>Add orbital cluster SAMB.</p></td>
-</tr>
-<tr class="row-even"><td><p>basis_add_orbital_lc</p></td>
-<td><p>Add linear combination of orbital cluster SAMB.</p></td>
-</tr>
-<tr class="row-odd"><td><p>basis_gen_orbital_modulation</p></td>
-<td><p>Generate orbital modulation.</p></td>
-</tr>
-<tr class="row-even"><td><p>basis_add_hopping</p></td>
-<td><p>Add hopping SAMB.</p></td>
-</tr>
-<tr class="row-odd"><td><p>close</p></td>
-<td><p>Close dialogs.</p></td>
+<tr class="row-even"><td><p>plot_orbital_cluster</p></td>
+<td><p></p></td>
 </tr>
 </tbody>
 </table>
@@ -3442,30 +3584,50 @@
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id16"><div class="my-heading" style="color: royalblue;">Global function</div></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conv-qtdraw2-py"><div class="my-heading" style="color: darkgreen;">conv_qtdraw2.py</div></a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conv-qtdraw3-py"><div class="my-heading" style="color: darkgreen;">conv_qtdraw3.py</div></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id17"><div class="my-heading" style="color: royalblue;">Global function</div></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plugin-multipie-py"><div class="my-heading" style="color: darkgreen;">plugin_multipie.py</div></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id18"><div class="my-heading" style="color: royalblue;">Global function</div></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multipieplugin"><div class="my-heading" style="color: royalblue;">MultiPiePlugin</div></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tab-basis-py"><div class="my-heading" style="color: darkgreen;">tab_basis.py</div></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tabbasis"><div class="my-heading" style="color: royalblue;">TabBasis</div></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#util-multipie-py"><div class="my-heading" style="color: darkgreen;">util_multipie.py</div></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id19"><div class="my-heading" style="color: royalblue;">Global function</div></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multipie-data-py"><div class="my-heading" style="color: darkgreen;">multipie_data.py</div></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multipiedata"><div class="my-heading" style="color: royalblue;">MultiPieData</div></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dialog-modulation-py"><div class="my-heading" style="color: darkgreen;">dialog_modulation.py</div></a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multipie-dialog-py"><div class="my-heading" style="color: darkgreen;">multipie_dialog.py</div></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multipiedialog"><div class="my-heading" style="color: royalblue;">MultiPieDialog</div></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multipie-modulation-dialog-py"><div class="my-heading" style="color: darkgreen;">multipie_modulation_dialog.py</div></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#modulationdialog"><div class="my-heading" style="color: royalblue;">ModulationDialog</div></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dialog-info-py"><div class="my-heading" style="color: darkgreen;">dialog_info.py</div></a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sub-group-py"><div class="my-heading" style="color: darkgreen;">sub_group.py</div></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#subgroup"><div class="my-heading" style="color: royalblue;">SubGroup</div></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tab-group-py"><div class="my-heading" style="color: darkgreen;">tab_group.py</div></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tabgroup"><div class="my-heading" style="color: royalblue;">TabGroup</div></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id18"><div class="my-heading" style="color: royalblue;">Global function</div></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multipie-util-py"><div class="my-heading" style="color: darkgreen;">multipie_util.py</div></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id19"><div class="my-heading" style="color: royalblue;">Global function</div></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tab-object-py"><div class="my-heading" style="color: darkgreen;">tab_object.py</div></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tabobject"><div class="my-heading" style="color: royalblue;">TabObject</div></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multipie-info-dialog-py"><div class="my-heading" style="color: darkgreen;">multipie_info_dialog.py</div></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id20"><div class="my-heading" style="color: royalblue;">Global function</div></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#infopanel"><div class="my-heading" style="color: royalblue;">InfoPanel</div></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dialog-multipie-py"><div class="my-heading" style="color: darkgreen;">dialog_multipie.py</div></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multipiedialog"><div class="my-heading" style="color: royalblue;">MultiPieDialog</div></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multipie-plot-py"><div class="my-heading" style="color: darkgreen;">multipie_plot.py</div></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id21"><div class="my-heading" style="color: royalblue;">Global function</div></a></li>
 </ul>
 </li>
 </ul>
@@ -3492,7 +3654,7 @@ By Hiroaki Kusunose
 
   <p class="copyright">
     
-      © Copyright 2021-2024.
+      © Copyright 2021-.
       <br/>
     
   </p>

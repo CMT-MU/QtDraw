@@ -37,7 +37,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
-    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=5f1b4820" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=34ddd5e8" />
   
   <!-- So that users can add custom icons -->
   <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
@@ -63,7 +63,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="User Guide" href="user_guide.html" />
-    <link rel="prev" title="Install QtDraw (and MultiPie)" href="install.html" />
+    <link rel="prev" title="Installing QtDraw" href="install.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="jp"/>
   <meta name="docsearch:version" content="" />
@@ -162,7 +162,7 @@
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="install.html">Install QtDraw (and MultiPie)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installing QtDraw</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Getting Started</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Documentation</span></p>
@@ -390,7 +390,7 @@
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#main-window">Main window</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-object">Create Object</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-and-edit-object">Create and Edit Object</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#preference">Preference</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-object-from-python-code">Create Object from Python Code</a></li>
 </ul>
@@ -411,11 +411,12 @@
 <p>The main window of <strong>QtDraw</strong> is the following, which has the main and control panels.</p>
 <p><img alt="sample.jpg" src="../_images/sample.jpg" /></p>
 </section>
-<section id="create-object">
-<h2>Create Object<a class="headerlink" href="#create-object" title="Link to this heading">#</a></h2>
+<section id="create-and-edit-object">
+<h2>Create and Edit Object<a class="headerlink" href="#create-and-edit-object" title="Link to this heading">#</a></h2>
 <p>To draw these objects, push <code class="docutils literal notranslate"><span class="pre">e</span></code> key or <code class="docutils literal notranslate"><span class="pre">edit</span></code> button in the right panel, and then the <code class="docutils literal notranslate"><span class="pre">Dataset</span></code> window appears as follows.</p>
 <p><img alt="sample.jpg" src="../_images/dataset.jpg" /></p>
 <p>In the <code class="docutils literal notranslate"><span class="pre">Dataset</span></code> window, you can choose the object in the tab, and in each tab, you can create or copy an object in the context menu by right-clicking. The easiest way to create an object, you first create an object with the default value, and then you can edit it freely.</p>
+<p>By right-clicking at the object in the main panel, the context menu shows up, and you can remove, hide, or open the corresponding object.</p>
 </section>
 <section id="preference">
 <h2>Preference<a class="headerlink" href="#preference" title="Link to this heading">#</a></h2>
@@ -480,6 +481,7 @@ See the example in</p>
 <span class="n">create_qtdraw_file</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s2">&quot;output.qtdw&quot;</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">draw</span><span class="p">)</span>
 </pre></div>
 </div>
+<p>For more examples, see <a class="reference internal" href="example.html"><span class="std std-doc">example page</span></a></p>
 </section>
 </section>
 
@@ -525,7 +527,7 @@ See the example in</p>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#main-window">Main window</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-object">Create Object</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-and-edit-object">Create and Edit Object</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#preference">Preference</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-object-from-python-code">Create Object from Python Code</a></li>
 </ul>
@@ -552,7 +554,7 @@ By Hiroaki Kusunose
 
   <p class="copyright">
     
-      © Copyright 2021-2024.
+      © Copyright 2021-.
       <br/>
     
   </p>
