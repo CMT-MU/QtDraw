@@ -12,7 +12,6 @@ from PySide6.QtGui import QFont
 from PySide6.QtWidgets import QApplication
 
 from qtdraw.core.pyvista_widget_setting import default_preference
-from qtdraw.core.qtdraw_info import __top_dir__
 
 from qtdraw.widget.message_box import MessageBox
 

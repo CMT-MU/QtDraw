@@ -52,6 +52,13 @@ class TabGroupView(QDialog):
 
         self.setLayout(layout)
 
+        self._tabname = self.tab.tabText(self.tab.currentIndex())
+        self.tab.currentChanged.connect(self.tab_change)
+
+    def tab_change(self, idx):
+        self.view[self._tabname].clear_selection()
+        self._tabname = self.tab.tabText(idx)
+
     # ==================================================
     def select_tab(self, object_type):
         """
@@ -71,5 +78,5 @@ class TabGroupView(QDialog):
         :meta private:
         """
         for view in self.view.values():
-            view.closeEvent(event)
+            view.close()
         super().closeEvent(event)

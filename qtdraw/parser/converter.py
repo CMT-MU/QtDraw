@@ -9,8 +9,7 @@ import copy
 from qtdraw.core.pyvista_widget_setting import default_status, default_preference
 from qtdraw.core.qtdraw_info import __version__
 
-from qtdraw.multipie.plugin_multipie_setting import space_group_list, point_group_list, crystal_list
-from qtdraw.multipie.plugin_multipie_setting import default_status as multipie_default
+from qtdraw.multipie.multipie_setting import default_status
 
 
 # ==================================================
@@ -323,7 +322,7 @@ def get_preference(dic):
 # ==================================================
 def get_multipie(dic):
     """
-    Get multipie info.
+    Get multipie info. (v2->v3)
 
     Args:
         dic (dict): read multipie info.
@@ -331,78 +330,25 @@ def get_multipie(dic):
     Returns:
         - (dict) -- updated multipie info.
     """
-    type_str = {0: "Q", 1: "G", 2: "T", 3: "M"}
-    type_str1 = {0: "Q,G", 1: "T,M"}
+    old = dic["multipie"]
+    if len(old) == 0:
+        return {}
+    multipie = copy.deepcopy(default_status)
 
-    multipie = copy.deepcopy(multipie_default)
-    multipie["plus"] = {}
-    if "multipie" in dic.keys():
-        old = dic["multipie"]
-        multipie["version"] = old["version"]
+    if "group" in old.keys():
+        multipie["group"]["tag"] = old["group"]["group"]
 
-        # main panel.
-        g_type, crystal, group = old["main"]["group"]
-        crystal = crystal_list[crystal]
-        if g_type == 0:
-            tag = space_group_list[crystal][group]
-        else:
-            tag = point_group_list[crystal][group]
-        if tag.count(" ") > 0:
-            tag = tag.split(" ")[1]
-        multipie["group"]["group"] = tag
+    if "object" in old.keys():
+        for k in ["site", "bond", "vector_type", "vector", "orbital_type", "orbital"]:
+            if k in old["object"].keys():
+                multipie["object"][k] = old["object"][k]
 
-        multipie["group"]["irrep1"] = 0
-        multipie["group"]["irrep2"] = 0
-        multipie["group"]["irrep"] = 0
+    if "basis" in old.keys():
+        for k in ["site", "bond", "vector_type", "vector", "orbital_type", "orbital_rank", "orbital"]:
+            if k in old["basis"].keys():
+                multipie["basis"][k] = old["basis"][k]
 
-        multipie["group"]["vc_wyckoff"] = 0
-
-        # tab1.
-        multipie["object"]["site"] = old["tab1"]["site"][0]
-
-        multipie["object"]["bond"] = old["tab1"]["bond"][0]
-
-        vector, v_type = old["tab1"]["vector"]
-        multipie["object"]["vector"] = vector
-        multipie["object"]["vector_type"] = type_str[v_type]
-
-        orbital, o_type = old["tab1"]["orbital"]
-        multipie["object"]["orbital"] = orbital
-        multipie["object"]["orbital_type"] = type_str[o_type]
-
-        harmonics, h_type, h_rank, _ = old["tab1"]["harmonics"]
-        multipie["object"]["harmonics_type"] = type_str[h_type]
-        multipie["object"]["harmonics_rank"] = h_rank
-        multipie["object"]["harmonics"] = harmonics
-
-        multipie["object"]["wyckoff"] = old["tab1"]["wyckoff"][0]
-
-        # tab2.
-        site = old["tab2"]["site"][0]
-        multipie["basis"]["site"] = site
-
-        bond = old["tab2"]["bond"][0]
-        multipie["basis"]["bond"] = bond
-
-        vector, v_type, v_samb_type, _, v_lc, v_mod_type, v_mod = old["tab2"]["vector"]
-        multipie["basis"]["vector_type"] = type_str[v_type]
-        multipie["basis"]["vector"] = vector
-        multipie["basis"]["vector_samb_type"] = type_str[v_samb_type]
-        multipie["basis"]["vector_lc"] = v_lc
-        multipie["basis"]["vector_modulation_type"] = type_str1[v_mod_type]
-        multipie["basis"]["vector_modulation"] = v_mod
-
-        orbital, o_type, o_rank, o_samb_type, _, o_lc, o_mod_type, o_mod = old["tab2"]["orbital"]
-        multipie["basis"]["orbital_type"] = type_str[o_type]
-        multipie["basis"]["orbital_rank"] = o_rank
-        multipie["basis"]["orbital"] = orbital
-        multipie["basis"]["orbital_samb_type"] = type_str[o_samb_type]
-        multipie["basis"]["orbital_lc"] = o_lc
-        multipie["basis"]["orbital_modulation_type"] = type_str1[o_mod_type]
-        multipie["basis"]["orbital_modulation"] = o_mod
-
-        hopping = old["tab2"]["hopping"][0]
-        multipie["basis"]["hopping"] = hopping
+    multipie["version"] = "2.0.0"
 
     return multipie
 
@@ -657,25 +603,33 @@ def get_data(dic, widget):
 
 
 # ==================================================
-def convert_version2(dic, widget):
+def convert_version3(dic, ver, widget):
     """
-    Converter from ver.1 to ver. 2.
+    Converter from ver.1/2 to ver. 3.
 
     Args:
-        dic (dict): ver.1 dict.
+        dic (dict): ver.1/2 dict.
+        ver (int): major version.
         widget (PyVistaWidget): PyVistaWidget.
 
     Returns:
-        - (dict) -- all data dict in ver. 2.
+        - (dict) -- all data dict in ver. 3.
     """
-    # all data.
-    all_data = {
-        "version": __version__,
-        "data": get_data(dic, widget),
-        "status": get_status(dic),
-        "preference": get_preference(dic),
-        "camera": get_camera(dic),
-    }
-    all_data["status"].update({"multipie": get_multipie(dic)})
+    all_data = {}
+    if ver < 2:  # v1 -> v3.
+        # all data.
+        all_data = {
+            "version": __version__,
+            "data": get_data(dic, widget),
+            "status": get_status(dic),
+            "preference": get_preference(dic),
+            "camera": get_camera(dic),
+        }
+    elif ver < 3:  # v2 -> v3.
+        all_data = dic
+        if "multipie" in dic["status"].keys():
+            all_data["status"]["multipie"] = get_multipie(dic["status"])
+    else:
+        all_data = dic
 
     return all_data

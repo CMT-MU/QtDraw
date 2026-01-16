@@ -37,9 +37,9 @@ class PDFViewer(QWidget):
         view.setZoomMode(QPdfView.ZoomMode.FitToWidth)
 
         open_btn = QPushButton("Open")
-        open_btn.clicked.connect(self.load)
+        open_btn.released.connect(self.load)
         save_btn = QPushButton("Save")
-        save_btn.clicked.connect(self.save)
+        save_btn.released.connect(self.save)
 
         layout = QGridLayout(self)
         layout.setContentsMargins(0, 0, 0, 0)

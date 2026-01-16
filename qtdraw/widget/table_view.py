@@ -66,7 +66,7 @@ class TableView(QTableWidget):
                     layout = Layout(wrapper)
                     layout.setContentsMargins(10, 10, 10, 10)
                     layout.addWidget(math)
-                    layout.setAlignment(math, Qt.AlignCenter)
+                    layout.setAlignment(Qt.AlignLeft | Qt.AlignVCenter)
 
                     math.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Minimum)
                     wrapper.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Minimum)

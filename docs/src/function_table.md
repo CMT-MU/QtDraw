@@ -56,7 +56,6 @@
 | clear_data | Clear data (actor and data). |
 | exec | Execute QtDraw. |
 | closeEvent | Close with dialog. |
-| close | Close dialogs. |
 | update_status | Update status. |
 | update_preference | Update preference. |
 | write_info | Write text message into Info dialog. |
@@ -99,24 +98,23 @@
 | remove_actor | Remove actor. |
 | load | Load all info. |
 | save | save all info. |
-| mp_set_group | MultiPie: Set point/sapce group. |
+| _check_multipie |  |
+| mp_set_group | MultiPie: Set group. |
 | mp_add_site | MultiPie: Add equivalent sites. |
 | mp_add_bond | MultiPie: Add equivalent bonds. |
-| mp_add_vector | MultiPie: Add vectors at equivalent sites or bonds. |
-| mp_add_orbital | MultiPie: Add orbitals at equivalent sites or bonds. |
-| mp_create_harmonics | MultiPie: Create harmonics list. |
-| mp_add_harmonics | MultiPie: Add harmonics at equivalent sites or bonds. |
-| mp_create_site_samb | MultiPie: Create site SAMB. |
+| mp_add_vector | MultiPie: Add transformed vectors at equivalent sites or bonds. |
+| mp_add_orbital | MultiPie: Add transformed orbitals at equivalent sites or bonds. |
+| mp_add_bond_definition | MultiPie: Create bond definition. |
+| mp_site_samb_list | MultiPie: Create site SAMB list. |
 | mp_add_site_samb | MultiPie: Add site SAMB. |
-| mp_create_bond_samb | MultiPie: Create bond SAMB. |
+| mp_bond_samb_list | MultiPie: Create bond SAMB list. |
 | mp_add_bond_samb | MultiPie: Add bond SAMB. |
-| mp_create_vector_samb | MultiPie: Create vector SAMB. |
+| mp_vector_samb_list | MultiPie: Create vector SAMB list. |
 | mp_add_vector_samb | MultiPie: Add vector SAMB. |
 | mp_add_vector_samb_modulation | MultiPie: Add vector SAMB with modulation. |
-| mp_create_orbital_samb | MultiPie: Create orbital SAMB. |
+| mp_orbital_samb_list | MultiPie: Create orbital SAMB. |
 | mp_add_orbital_samb | MultiPie: Add orbital SAMB. |
 | mp_add_orbital_samb_modulation | MultiPie: Add orbital SAMB with modulation. |
-| mp_add_hopping | MultiPie: Add hopping bond directions. |
 
 
 ## <div class='my-heading' style='color: darkgreen;'>dialog_about.py
@@ -148,7 +146,7 @@
 | split_filename | Split file name. |
 | cat_filename | Cat filename. |
 | create_qtdraw_file | Create QtDraw file as background. |
-| convert_qtdraw_v2 | Convert qtdraw file to version 2. |
+| convert_qtdraw_v3 | Convert qtdraw file to version 3. |
 | set_light_prop |  |
 
 
@@ -292,6 +290,22 @@
 | set_isosurface_data | Set isosurface data. |
 | plot_orbital_from_data | Plot orbital from data. |
 | plot_stream_from_data | Plot stream from data (vectors in cartesian coordinate). |
+| mp_set_group | MultiPie: Set group or group status. |
+| mp_add_site | MultiPie: Add equivalent sites. |
+| mp_add_bond | MultiPie: Add equivalent bonds. |
+| mp_add_vector | MultiPie: Add transformed vectors at equivalent sites or bonds. |
+| mp_add_orbital | MultiPie: Add transformed orbitals at equivalent sites or bonds. |
+| mp_add_bond_definition | MultiPie: Create bond definition. |
+| mp_site_samb_list | MultiPie: Create site SAMB list. |
+| mp_add_site_samb | MultiPie: Add site SAMB. |
+| mp_bond_samb_list | MultiPie: Create bond SAMB list. |
+| mp_add_bond_samb | MultiPie: Add bond SAMB. |
+| mp_vector_samb_list | MultiPie: Create vector SAMB list. |
+| mp_add_vector_samb | MultiPie: Add vector SAMB. |
+| mp_add_vector_samb_modulation | MultiPie: Add vector SAMB with modulation. |
+| mp_orbital_samb_list | MultiPie: Create orbital SAMB. |
+| mp_add_orbital_samb | MultiPie: Add orbital SAMB. |
+| mp_add_orbital_samb_modulation | MultiPie: Add orbital SAMB with modulation. |
 
 
 ## <div class='my-heading' style='color: darkgreen;'>dialog_preference.py
@@ -423,7 +437,6 @@
 | Delegate |  |
 | setEditorData |  |
 | setModelData |  |
-| updateEditorGeometry |  |
 | paint |  |
 
 
@@ -433,6 +446,7 @@
 |--------|----------|
 | ComboDelegate |  |
 | createEditor |  |
+| updateEditorGeometry |  |
 | sizeHint |  |
 
 
@@ -442,6 +456,7 @@
 |--------|----------|
 | ColorDelegate |  |
 | createEditor |  |
+| updateEditorGeometry |  |
 | sizeHint |  |
 
 
@@ -451,6 +466,8 @@
 |--------|----------|
 | EditorDelegate |  |
 | createEditor |  |
+| _set_data_size |  |
+| updateEditorGeometry |  |
 | sizeHint |  |
 
 
@@ -509,6 +526,11 @@
 | set_widget | Set widget. |
 | selection_changed | For Selection changed. |
 | select_row | Select row. |
+| closeEvent |  |
+| set_row_height_hint |  |
+| row_height_hint |  |
+| clear_row_heights |  |
+| setModel |  |
 
 
 ## <div class='my-heading' style='color: darkgreen;'>qt_event_util.py
@@ -563,6 +585,7 @@
 | Function | Summary |
 |--------|----------|
 | Label | Label widget. |
+| set_background |  |
 | sizeHint |  |
 
 
@@ -693,6 +716,7 @@
 | Function | Summary |
 |--------|----------|
 | TabGroupView | Data view group. |
+| tab_change |  |
 | select_tab | Select tab. |
 | closeEvent | Close event for deselect all. |
 
@@ -705,6 +729,7 @@
 |--------|----------|
 | _create_label_axes_actor | Create label only orientation axes actor. |
 | _create_axes_actor | Create custom axes actor. |
+| _create_axes_actor_full | Create custom axes actor (crossed axes). |
 | create_axes_widget | Create axes widget. |
 | create_unit_cell | Create unit cell mesh. |
 | get_view_vector | Get view and viewup. |
@@ -727,12 +752,8 @@
 | create_grid | Create grid. |
 | read_dict | Read dict text file. |
 | write_dict | write dict text file. |
-| str_to_list | Convert a string to a list of strings. |
 | text_to_list | Convert single text to list. |
 | apply | Apply function to (nested) list. |
-| list_to_table | Convert from list to table |
-| remove_space | Remove space, tab, and newline. |
-| vector3d | 3d vector. |
 | distance | group of sites with the same distance (in increasing order). |
 | igrid | create integer grid points. |
 | vec_latex |  |
@@ -803,9 +824,9 @@
 | get_status | Get update status. |
 | get_camera | Get camera info. |
 | get_preference | Get update preference. |
-| get_multipie | Get multipie info. |
+| get_multipie | Get multipie info. (v2->v3) |
 | get_data | Get updated data. |
-| convert_version2 | Converter from ver.1 to ver. 2. |
+| convert_version3 | Converter from ver.1/2 to ver. 3. |
 
 
 ## <div class='my-heading' style='color: darkgreen;'>vesta.py
@@ -837,7 +858,7 @@
 | cmd | execute QtDraw. |
 
 
-## <div class='my-heading' style='color: darkgreen;'>conv_qtdraw2.py
+## <div class='my-heading' style='color: darkgreen;'>conv_qtdraw3.py
 
 ### <div class='my-heading' style='color: royalblue;'>Global function
 
@@ -846,91 +867,188 @@
 | cmd | Convert QtDraw to version 2. |
 
 
-## <div class='my-heading' style='color: darkgreen;'>plugin_multipie.py
+## <div class='my-heading' style='color: darkgreen;'>tab_basis.py
 
-### <div class='my-heading' style='color: royalblue;'>Global function
-
-| Function | Summary |
-|--------|----------|
-| _mapping_str | Convert mapping No. to those start from one. |
-| remove_latex |  |
-
-
-### <div class='my-heading' style='color: royalblue;'>MultiPiePlugin
+### <div class='my-heading' style='color: royalblue;'>TabBasis
 
 | Function | Summary |
 |--------|----------|
-| MultiPiePlugin | MultiPie plugin. |
-| version | Version. |
-| group | Group status dict. |
-| obj | Object status dict. |
-| basis | Basis status dict. |
-| plus | Plus status dict. |
-| counter | Counter number and increment. |
-| clear_counter | Clear counter. |
-| set_group | Set group and plus dict. |
-| get_product_decomp | Set product decomposition. |
-| get_harmonics_irrep | Get harmonics irrep. |
-| get_harmonics | Get harmonics. |
-| find_wyckoff | Find Wyckoff position. |
-| add_equivalent_site | Add equivalent sites. |
-| add_equivalent_bond | Add equivalent bonds. |
-| add_vector_equivalent_site | Add vectors at equivalent sites. |
-| add_orbital_equivalent_site | Add orbitals at equivalent sites. |
-| create_combined | Create combined SAMB. |
-| gen_site_samb | Generate site cluster SAMB. |
-| gen_bond_samb | Generate bond cluster SAMB. |
-| gen_vector_samb | Generate vector cluster SAMB. |
-| gen_orbital_samb | Generate orbital cluster SAMB. |
-| gen_hopping_samb | Generate hopping SAMB. |
-| create_hopping_direction | Create normal bond direction. |
-| add_site_samb | Add site cluster SAMB. |
-| add_bond_samb | Add bond cluster SAMB. |
-| add_vector_samb | Add vector cluster SAMB. |
-| add_orbital_samb | Add orbital cluster SAMB. |
-| add_vector_modulation | Add vector SAMB modulation. |
-| add_orbital_modulation | Add orbitl SAMB modulation. |
-| add_hopping_samb | Add normal hopping direction. |
-| add_harmonics_set | Add harmonics set. |
-| add_virtual_cluster | Add virtual cluster. |
-| create_samb_modulation | Create SAMB modulation object. |
-| create_phase_factor | Create phase factor. |
+| TabBasis |  |
+| set_site |  |
+| set_bond |  |
+| set_vector |  |
+| set_vector_list |  |
+| set_orbital |  |
+| set_orbital_list |  |
+| show_bond_definition |  |
+| show_site |  |
+| show_bond |  |
+| show_vector |  |
+| show_vector_lc |  |
+| show_orbital |  |
+| show_orbital_lc |  |
+| create_vector_modulation |  |
+| create_orbital_modulation |  |
+| show_vector_samb_modulation |  |
+| show_orbital_samb_modulation |  |
+| closeEvent |  |
+| set_data |  |
+| clear_data |  |
 
 
-## <div class='my-heading' style='color: darkgreen;'>util_multipie.py
+## <div class='my-heading' style='color: darkgreen;'>multipie_data.py
 
-### <div class='my-heading' style='color: royalblue;'>Global function
+### <div class='my-heading' style='color: royalblue;'>MultiPieData
 
 | Function | Summary |
 |--------|----------|
-| check_get_site | Check and get site. |
-| check_get_bond | Check and get bond. |
-| check_get_site_bond | Check and get site (bond center) from site_bond. |
-| create_samb_object | Create SAMB object. |
-| check_linear_combination | Check form of linear combination. |
-| combined_format | Create formatted combined SAMB. |
-| parse_modulation_list | Parse modulation list. |
+| MultiPieData | MultiPie data manager. |
+| group |  |
+| ps_group |  |
+| p_group |  |
+| mp_group |  |
+| _get_group_list |  |
+| _get_group_name |  |
+| _type_list |  |
+| set_crystal_type |  |
+| set_group_type |  |
+| set_group |  |
+| set_status |  |
+| set_axis |  |
+| clear_data |  |
+| _set_counter |  |
+| _get_index_list |  |
+| set_group_find_wyckoff |  |
+| add_site |  |
+| add_bond |  |
+| add_vector |  |
+| add_orbital |  |
+| add_bond_definition |  |
+| site_samb_list |  |
+| add_site_samb |  |
+| bond_samb_list |  |
+| add_bond_samb |  |
+| vector_samb_list |  |
+| add_vector_samb |  |
+| add_vector_samb_modulation |  |
+| orbital_samb_list |  |
+| add_orbital_samb |  |
+| add_orbital_samb_modulation |  |
+| _parse_modulation | Parse modulation list. |
+| _parse_range | Parse range. |
 
 
-## <div class='my-heading' style='color: darkgreen;'>dialog_modulation.py
+## <div class='my-heading' style='color: darkgreen;'>multipie_dialog.py
+
+### <div class='my-heading' style='color: royalblue;'>MultiPieDialog
+
+| Function | Summary |
+|--------|----------|
+| MultiPieDialog | MultiPie dialog. |
+| set_title |  |
+| set_data |  |
+| clear_data |  |
+| closeEvent |  |
+
+
+## <div class='my-heading' style='color: darkgreen;'>multipie_modulation_dialog.py
 
 ### <div class='my-heading' style='color: royalblue;'>ModulationDialog
 
 | Function | Summary |
 |--------|----------|
-| ModulationDialog | Modulation dialog. |
-| create_panel | Create panel. |
-| get_raw_data | Get raw modulation list. |
-| add_modulation | Add modulation. |
-| add_data | Add data in panel. |
-| remove_data | Remove data in panel. |
-| accept | Accept input. |
-| reject | Reject input. |
-| apply | Apply input. |
-| close | Close. |
+| ModulationDialog |  |
+| create_panel |  |
+| set_view |  |
+| modulation_range |  |
+| create_modulation |  |
+| add_data |  |
+| remove_data |  |
+| accept_data |  |
+| reject_data |  |
+| reset |  |
 
 
-## <div class='my-heading' style='color: darkgreen;'>dialog_info.py
+## <div class='my-heading' style='color: darkgreen;'>sub_group.py
+
+### <div class='my-heading' style='color: royalblue;'>SubGroup
+
+| Function | Summary |
+|--------|----------|
+| SubGroup |  |
+| set_crystal_type |  |
+| set_group_type |  |
+| set_group |  |
+| set_group_name |  |
+| show_symmetry_operation |  |
+| show_character_table |  |
+| show_wyckoff_site |  |
+| show_wyckoff_bond |  |
+| show_product_table |  |
+| closeEvent |  |
+| set_data |  |
+| clear_data |  |
+
+
+## <div class='my-heading' style='color: darkgreen;'>tab_group.py
+
+### <div class='my-heading' style='color: royalblue;'>TabGroup
+
+| Function | Summary |
+|--------|----------|
+| TabGroup |  |
+| set_irrep_list |  |
+| set_harm_list |  |
+| set_wyckoff_list |  |
+| set_irrep_decomp |  |
+| show_harmonics_decomp |  |
+| show_harmonics |  |
+| show_wyckoff_site |  |
+| show_wyckoff_bond |  |
+| find_wyckoff_set |  |
+| show_atomic |  |
+| show_response |  |
+| closeEvent |  |
+| set_data |  |
+| clear_data |  |
+
+
+### <div class='my-heading' style='color: royalblue;'>Global function
+
+| Function | Summary |
+|--------|----------|
+| _remove_latex |  |
+
+
+## <div class='my-heading' style='color: darkgreen;'>multipie_util.py
+
+### <div class='my-heading' style='color: royalblue;'>Global function
+
+| Function | Summary |
+|--------|----------|
+| phase_factor | Create phase factor. |
+| create_samb_modulation |  |
+| convert_vector_object |  |
+| check_linear_combination |  |
+
+
+## <div class='my-heading' style='color: darkgreen;'>tab_object.py
+
+### <div class='my-heading' style='color: royalblue;'>TabObject
+
+| Function | Summary |
+|--------|----------|
+| TabObject |  |
+| show_site |  |
+| show_bond |  |
+| show_vector |  |
+| show_orbital |  |
+| closeEvent |  |
+| set_data |  |
+| clear_data |  |
+
+
+## <div class='my-heading' style='color: darkgreen;'>multipie_info_dialog.py
 
 ### <div class='my-heading' style='color: royalblue;'>Global function
 
@@ -939,11 +1057,10 @@
 | show_group_info | Show group info. |
 | show_symmetry_operation | Show symmetry operation panel. |
 | show_character_table | Show character table panel. |
-| show_wyckoff | Show Wyckoff position panel. |
+| show_wyckoff_site | Show Wyckoff position panel. |
+| show_wyckoff_bond | Show Wyckoff position panel. |
 | show_product_table | Show product table panel. |
-| show_harmonics | Show harmonics panel. |
 | show_harmonics_decomp | Show harmonics decomposition panel. |
-| show_virtual_cluster | Show virtual cluster panel. |
 | show_atomic_multipole | Show atomic multipole panel. |
 | show_response | Show response tensor panel. |
 
@@ -955,83 +1072,20 @@
 | InfoPanel | Info panel. |
 
 
-## <div class='my-heading' style='color: darkgreen;'>dialog_multipie.py
+## <div class='my-heading' style='color: darkgreen;'>multipie_plot.py
 
-### <div class='my-heading' style='color: royalblue;'>MultiPieDialog
+### <div class='my-heading' style='color: royalblue;'>Global function
 
 | Function | Summary |
 |--------|----------|
-| MultiPieDialog | MultiPie dialog. |
-| group | Group status dict. |
-| obj | Object status dict. |
-| basis | Basis status dict. |
-| plus | Plus status dict. |
-| set_group_panel_value | Set initial values in group panel. |
-| set_object_panel_value | Set initial values in object panel. |
-| set_basis_panel_value | Set initial values in basis panel. |
-| create_sub_group_panel | Create subgroup panel. |
-| create_group_panel | Create group panel. |
-| create_object_panel | Create object panel. |
-| create_basis_panel | Create basis panel. |
-| set_group_connection | Set connections in group panel. |
-| set_object_connection | Set connections in object panel. |
-| set_basis_connection | Set connections in basis panel. |
-| set_group_item | Set group widgets. |
-| set_irrep_item | Set irrep widgets. |
-| set_wyckoff_item | Set Wyckoff list. |
-| set_basis_item | Set basis widgets. |
-| set_harmonics_item | Set harmonics widgets. |
-| set_group_type | Set group type. |
-| set_crystal_type | Set crystal type. |
-| set_group | Set current group. |
-| set_irrep_decomp | Set decomposition of product of irreps. |
-| set_harmonics_type | Set harmonics type. |
-| set_harmonics_rank | Set harmonics rank. |
-| set_harmonics_decomp | Set harmonics decomposition. |
-| set_vc_wyckoff | Set wyckoff in virtual cluster. |
-| set_vc_neighbor | Set neighbor list in virtual cluster. |
-| set_atomic_type | Set atomic multipole type. |
-| set_atomic_basis_type | Set atomic multipole basis type. |
-| set_atomic_bra_ket | Set bra and ket basis of atomic multipole. |
-| set_response_type | Set type of response tensor. |
-| set_response_rank | Set rank of response tensor. |
-| set_obj_vector_type | Set vector type in object panel. |
-| set_obj_orbital_type | Set orbital type in object panel. |
-| set_obj_harmonics_type | Set harmonics type in object panel. |
-| set_obj_harmonics_rank | Set harmonics rank in object panel. |
-| set_obj_harmonics | Set harmonics in object panel. |
-| set_obj_wyckoff | Set Wyckoff position in object panel. |
-| show_symmetry_operation | Show symmetry operation panel. |
-| show_character_table | Show character table panel. |
-| show_wyckoff | Show Wyckoff position panel. |
-| show_product_table | Show product table panel. |
-| show_harmonics | Show harmonics panel. |
-| show_harmonics_decomp | Show harmonics decomposition panel. |
-| show_virtual_cluster | Show virtual cluster panel. |
-| show_atomic | Show atomic multipole panel. |
-| show_response | Show response tensor panel. |
-| obj_add_site | Add representative site in object dict. |
-| obj_add_bond | Add representative bond in object dict. |
-| obj_add_vector | Add equivalent vectors in object dict. |
-| obj_add_orbital | Add equivalent orbitals in object dict. |
-| obj_add_harmonics | Add equivalent poing-group harmonics in object dict. |
-| basis_gen_site | Generate site cluster SAMB. |
-| basis_set_site_select | Set site cluster SAMB selection list. |
-| basis_add_site | Add site cluster SAMB. |
-| basis_gen_bond | Generate bond cluster SAMB. |
-| basis_set_bond_select | Set bond cluster SAMB selection list. |
-| basis_add_bond | Add bond cluster SAMB. |
-| basis_gen_vector | Generate vector cluster SAMB. |
-| basis_set_vector_select | Set vector cluster SAMB selection list. |
-| basis_add_vector | Add vector cluster SAMB. |
-| basis_add_vector_lc | Add linear combination of vector cluster SAMB. |
-| basis_gen_vector_modulation | Generate vector modulation. |
-| basis_gen_orbital | Generate orbital cluster SAMB. |
-| basis_set_orbital_select | Set orbital cluster SAMB selection list. |
-| basis_add_orbital | Add orbital cluster SAMB. |
-| basis_add_orbital_lc | Add linear combination of orbital cluster SAMB. |
-| basis_gen_orbital_modulation | Generate orbital modulation. |
-| basis_add_hopping | Add hopping SAMB. |
-| close | Close dialogs. |
+| plot_cell_site | Plot cell site. |
+| plot_cell_bond | Plot cell bond. |
+| plot_cell_vector | Plot cell vector. |
+| plot_cell_multipole | Plot cell multipole. |
+| plot_bond_definition |  |
+| plot_site_cluster |  |
+| plot_bond_cluster |  |
+| plot_vector_cluster |  |
+| plot_orbital_cluster |  |
 
 
