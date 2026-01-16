@@ -27,7 +27,6 @@ license = {file = "LICENSE"}
 classifiers = [
     'Intended Audience :: Science/Research',
     'Topic :: Scientific/Engineering :: Visualization',
-    'Framework :: Qt',
     'License :: OSI Approved :: MIT License',
     'Operating System :: Microsoft :: Windows',
     'Operating System :: POSIX',
