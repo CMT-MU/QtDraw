@@ -32,7 +32,7 @@
 
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
-    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=9c3e77be" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
@@ -46,15 +46,15 @@
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
     <script src="../../_static/documentation_options.js?v=8cf54648"></script>
-    <script src="../../_static/doctools.js?v=9bcbadda"></script>
-    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../../_static/copybutton.js?v=f281be69"></script>
     <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="../../_static/togglebutton.js?v=1ae7504c"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="../../_static/design-tabs.js?v=f930bc37"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
@@ -462,21 +462,6 @@
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">4</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1">#</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="c1"># multipie.ipynb</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="c1">#</span>
-<span class="ne">----&gt; </span><span class="mi">4</span> <span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw</span><span class="w"> </span><span class="kn">import</span> <span class="n">QtDraw</span>
-<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="c1"># show tag list.</span>
-<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="k">def</span><span class="w"> </span><span class="nf">show_list</span><span class="p">(</span><span class="n">header</span><span class="p">,</span> <span class="n">lst</span><span class="p">):</span>
-
-<span class="ne">ModuleNotFoundError</span>: No module named &#39;qtdraw&#39;
-</pre></div>
-</div>
-</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -491,23 +476,6 @@
 <span class="n">no</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="n">win</span><span class="o">.</span><span class="n">clear_data</span><span class="p">()</span>
 <span class="n">fl</span><span class="p">[</span><span class="n">no</span><span class="p">](</span><span class="n">win</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">line</span> <span class="mi">10</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># example</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="c1">#   0: equivalent objects</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="c1">#   1: site SAMB</span>
-   <span class="p">(</span><span class="o">...</span><span class="p">)</span>      <span class="mi">7</span> <span class="c1">#   5: vector modulation</span>
-<span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="c1">#   6: orbital modulation)</span>
-<span class="g g-Whitespace">      </span><span class="mi">9</span> <span class="n">no</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="ne">---&gt; </span><span class="mi">10</span> <span class="n">win</span><span class="o">.</span><span class="n">clear_data</span><span class="p">()</span>
-<span class="g g-Whitespace">     </span><span class="mi">11</span> <span class="n">fl</span><span class="p">[</span><span class="n">no</span><span class="p">](</span><span class="n">win</span><span class="p">)</span>
-
-<span class="ne">NameError</span>: name &#39;win&#39; is not defined
 </pre></div>
 </div>
 </div>

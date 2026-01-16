@@ -1,0 +1,1070 @@
+
+<!DOCTYPE html>
+
+
+<html lang="jp" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>qtdraw.multipie.multipie_data &#8212; QtDraw</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=34ddd5e8" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../_static/documentation_options.js?v=8cf54648"></script>
+    <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js?v=1ae7504c"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/qtdraw/multipie/multipie_data';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="jp"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../README.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/qtdraw_logo.png" class="logo__image only-light" alt="QtDraw - Home"/>
+    <img src="../../../_static/qtdraw_logo.png" class="logo__image only-dark pst-js-only" alt="QtDraw - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../src/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../src/install.html">Installing QtDraw</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../src/getting_started.html">Getting Started</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../src/user_guide.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../src/example.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../src/from_python.html">Usage from Python code</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../src/api_summary.html">API Reference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../src/api_core.html">Core</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../src/api_multipie.html">MultiPie</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../src/api_parser.html">Parser</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../src/api_script.html">Script</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../src/api_util.html">Utilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../src/api_widget.html">Widget</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../src/function_table.html">Function Summary</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/CMT-MU/QtDraw.git" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/CMT-MU/QtDraw.git/issues/new?title=Issue%20on%20page%20%2F_modules/qtdraw/multipie/multipie_data.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for qtdraw.multipie.multipie_data</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Multipie data.</span>
+
+<span class="sd">This module provides a data manager for MultiPie.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sympy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sp</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">copy</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">multipie</span><span class="w"> </span><span class="kn">import</span> <span class="n">__version__</span><span class="p">,</span> <span class="n">Group</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw.multipie.multipie_group_list</span><span class="w"> </span><span class="kn">import</span> <span class="n">group_list</span><span class="p">,</span> <span class="n">group_list_index</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw.multipie.multipie_setting</span><span class="w"> </span><span class="kn">import</span> <span class="n">default_status</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw.multipie.multipie_plot</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">plot_cell_site</span><span class="p">,</span>
+    <span class="n">plot_cell_bond</span><span class="p">,</span>
+    <span class="n">plot_cell_vector</span><span class="p">,</span>
+    <span class="n">plot_cell_multipole</span><span class="p">,</span>
+    <span class="n">plot_bond_definition</span><span class="p">,</span>
+    <span class="n">plot_site_cluster</span><span class="p">,</span>
+    <span class="n">plot_bond_cluster</span><span class="p">,</span>
+    <span class="n">plot_vector_cluster</span><span class="p">,</span>
+    <span class="n">plot_orbital_cluster</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw.multipie.multipie_util</span><span class="w"> </span><span class="kn">import</span> <span class="n">check_linear_combination</span><span class="p">,</span> <span class="n">convert_vector_object</span><span class="p">,</span> <span class="n">create_samb_modulation</span><span class="p">,</span> <span class="n">phase_factor</span>
+
+
+<span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="MultiPieData">
+<a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.multipie_data.MultiPieData">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">MultiPieData</span><span class="p">:</span>
+    <span class="c1"># ==================================================</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        MultiPie data manager.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pvw</span> <span class="o">=</span> <span class="n">parent</span>  <span class="c1"># PyVista Widget.</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_crystal_list</span> <span class="o">=</span> <span class="p">{</span><span class="n">crystal</span><span class="p">:</span> <span class="p">{</span><span class="n">tp</span><span class="p">:</span> <span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">tp</span><span class="p">,</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">v</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span> <span class="k">for</span> <span class="n">crystal</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">group_list</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_to_tag</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_to_name</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">group_list</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">v</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+                <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_to_tag</span><span class="p">[</span><span class="n">b</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_to_name</span><span class="p">[</span><span class="n">a</span><span class="p">]</span> <span class="o">=</span> <span class="n">b</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_crystal</span> <span class="o">=</span> <span class="s2">&quot;triclinic&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_type</span> <span class="o">=</span> <span class="s2">&quot;PG&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_idx</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_status</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="p">[</span><span class="s2">&quot;version&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">__version__</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clear_data</span><span class="p">()</span>
+
+    <span class="c1"># ==================================================</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">group</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_group</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_group</span> <span class="o">=</span> <span class="n">Group</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="p">[</span><span class="s2">&quot;group&quot;</span><span class="p">][</span><span class="s2">&quot;tag&quot;</span><span class="p">])</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_group</span>
+
+    <span class="c1"># ==================================================</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">ps_group</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">group_type</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;PG&quot;</span><span class="p">,</span> <span class="s2">&quot;SG&quot;</span><span class="p">]:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">group</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ps_group</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">ps</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">PG</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">group_type</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;MPG&quot;</span><span class="p">]</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">SG</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_ps_group</span> <span class="o">=</span> <span class="n">Group</span><span class="p">(</span><span class="n">ps</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ps_group</span>
+
+    <span class="c1"># ==================================================</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">p_group</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">group_type</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;PG&quot;</span><span class="p">]:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">group</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_p_group</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_p_group</span> <span class="o">=</span> <span class="n">Group</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">PG</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_p_group</span>
+
+    <span class="c1"># ==================================================</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">mp_group</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">group_type</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;MPG&quot;</span><span class="p">]:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">group</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mp_group</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_mp_group</span> <span class="o">=</span> <span class="n">Group</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">MPG</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mp_group</span>
+
+    <span class="c1"># ==================================================</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_group_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">crystal</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">tp</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">crystal</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">crystal</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_crystal</span>
+        <span class="k">if</span> <span class="n">tp</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">tp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_type</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_crystal_list</span><span class="p">[</span><span class="n">crystal</span><span class="p">][</span><span class="n">tp</span><span class="p">]</span>
+
+    <span class="c1"># ==================================================</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_group_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">info</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;PG&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_to_name</span><span class="p">[</span><span class="n">info</span><span class="o">.</span><span class="n">PG</span><span class="p">],</span>
+            <span class="s2">&quot;SG&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_to_name</span><span class="p">[</span><span class="n">info</span><span class="o">.</span><span class="n">SG</span><span class="p">],</span>
+            <span class="s2">&quot;MPG&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_to_name</span><span class="p">[</span><span class="n">info</span><span class="o">.</span><span class="n">MPG</span><span class="p">],</span>
+            <span class="s2">&quot;MSG&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_to_name</span><span class="p">[</span><span class="n">info</span><span class="o">.</span><span class="n">MSG</span><span class="p">],</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">name</span>
+
+    <span class="c1"># ==================================================</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_type_list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;Point Group&quot;</span><span class="p">:</span> <span class="s2">&quot;PG&quot;</span><span class="p">,</span> <span class="s2">&quot;Space Group&quot;</span><span class="p">:</span> <span class="s2">&quot;SG&quot;</span><span class="p">,</span> <span class="s2">&quot;Magnetic Point Group&quot;</span><span class="p">:</span> <span class="s2">&quot;MPG&quot;</span><span class="p">,</span> <span class="s2">&quot;Magnetic Space Group&quot;</span><span class="p">:</span> <span class="s2">&quot;MSG&quot;</span><span class="p">}</span>
+
+    <span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="MultiPieData.set_crystal_type">
+<a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.multipie_data.MultiPieData.set_crystal_type">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_crystal_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">crystal</span><span class="p">):</span>
+        <span class="n">group_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_group_list</span><span class="p">(</span><span class="n">crystal</span><span class="p">)</span>
+        <span class="n">group</span> <span class="o">=</span> <span class="n">group_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1">#  top.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_group</span><span class="p">(</span><span class="n">group</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">group_list</span><span class="p">,</span> <span class="n">group</span></div>
+
+
+    <span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="MultiPieData.set_group_type">
+<a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.multipie_data.MultiPieData.set_group_type">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_group_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">group_type</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">group_type</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">):</span>
+            <span class="n">group_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_type_list</span><span class="p">[</span><span class="n">group_type</span><span class="p">]</span>
+        <span class="n">group</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_group_name</span><span class="p">()[</span><span class="n">group_type</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_group</span><span class="p">(</span><span class="n">group</span><span class="p">)</span>
+        <span class="n">group_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_group_list</span><span class="p">(</span><span class="n">tp</span><span class="o">=</span><span class="n">group_type</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">group_list</span><span class="p">,</span> <span class="n">group</span></div>
+
+
+    <span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="MultiPieData.set_group">
+<a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.multipie_data.MultiPieData.set_group">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_group</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">group</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">group</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s2">&quot;#&quot;</span><span class="p">):</span>
+            <span class="n">group</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_to_tag</span><span class="p">[</span><span class="n">group</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_crystal</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_type</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_idx</span> <span class="o">=</span> <span class="n">group_list_index</span><span class="p">[</span><span class="n">group</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="p">[</span><span class="s2">&quot;group&quot;</span><span class="p">][</span><span class="s2">&quot;tag&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">group</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_group</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_p_group</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ps_group</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_mp_group</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_axis</span><span class="p">()</span></div>
+
+
+    <span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="MultiPieData.set_status">
+<a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.multipie_data.MultiPieData.set_status">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_status</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">group</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">default_status</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">status</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">status</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">status</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">group</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_group</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="p">[</span><span class="s2">&quot;group&quot;</span><span class="p">][</span><span class="s2">&quot;tag&quot;</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_group</span><span class="p">(</span><span class="n">group</span><span class="p">)</span></div>
+
+
+    <span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="MultiPieData.set_axis">
+<a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.multipie_data.MultiPieData.set_axis">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_axis</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_type</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;PG&quot;</span><span class="p">,</span> <span class="s2">&quot;MPG&quot;</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pvw</span><span class="o">.</span><span class="n">set_cell</span><span class="p">(</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pvw</span><span class="o">.</span><span class="n">set_axis</span><span class="p">(</span><span class="s2">&quot;full&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pvw</span><span class="o">.</span><span class="n">set_cell</span><span class="p">(</span><span class="s2">&quot;single&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pvw</span><span class="o">.</span><span class="n">set_axis</span><span class="p">(</span><span class="s2">&quot;on&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pvw</span><span class="o">.</span><span class="n">set_view</span><span class="p">()</span></div>
+
+
+    <span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="MultiPieData.clear_data">
+<a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.multipie_data.MultiPieData.clear_data">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">clear_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="p">[</span><span class="s2">&quot;counter&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="c1"># basis.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_site_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_site_wp</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sites</span> <span class="o">=</span> <span class="p">[[]]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_site_mp</span> <span class="o">=</span> <span class="p">[[]]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_site_samb</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_site_samb_list</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_bond_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_bond_wp</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_bonds</span> <span class="o">=</span> <span class="p">[[]]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_bond_mp</span> <span class="o">=</span> <span class="p">[[]]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_bond_samb</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_bond_samb_list</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_vector_list</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Q&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;G&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;T&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;M&quot;</span><span class="p">:</span> <span class="p">[]}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_vector_wp</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_vector_samb_site</span> <span class="o">=</span> <span class="p">[[]]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_vector_mp</span> <span class="o">=</span> <span class="p">[[]]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_vector_n_pset</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_vector_samb</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_vector_samb_list</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_vector_samb_var</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Q&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;G&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;T&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;M&quot;</span><span class="p">:</span> <span class="p">[]}</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_orbital_list</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Q&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;G&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;T&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;M&quot;</span><span class="p">:</span> <span class="p">[]}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_orbital_wp</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_orbital_samb_site</span> <span class="o">=</span> <span class="p">[[]]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_orbital_mp</span> <span class="o">=</span> <span class="p">[[]]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_orbital_n_pset</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_orbital_samb</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_orbital_samb_list</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_orbital_samb_var</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Q&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;G&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;T&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;M&quot;</span><span class="p">:</span> <span class="p">[]}</span></div>
+
+
+    <span class="c1"># ==================================================</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_set_counter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="n">cnt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="p">[</span><span class="s2">&quot;counter&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="p">[</span><span class="s2">&quot;counter&quot;</span><span class="p">][</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">cnt</span>
+        <span class="k">return</span> <span class="n">cnt</span>
+
+    <span class="c1"># ==================================================</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_index_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lst</span><span class="p">):</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="p">[(</span><span class="n">Group</span><span class="o">.</span><span class="n">tag_multipole</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">lst</span><span class="p">]</span>
+        <span class="n">tag_lst</span> <span class="o">=</span> <span class="p">[</span><span class="n">n</span> <span class="k">for</span> <span class="n">v</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">idx</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">v</span><span class="p">]</span>
+        <span class="n">idx_comp</span> <span class="o">=</span> <span class="p">[(</span><span class="n">i</span><span class="p">,</span> <span class="n">no</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span><span class="p">,</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">idx</span> <span class="k">for</span> <span class="n">no</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">v</span><span class="p">)]</span>
+
+        <span class="k">return</span> <span class="n">tag_lst</span><span class="p">,</span> <span class="n">idx_comp</span>
+
+    <span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="MultiPieData.set_group_find_wyckoff">
+<a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.multipie_data.MultiPieData.set_group_find_wyckoff">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_group_find_wyckoff</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">find_wyckoff</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="p">[</span><span class="s2">&quot;group&quot;</span><span class="p">][</span><span class="s2">&quot;find_wyckoff&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">find_wyckoff</span></div>
+
+
+    <span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="MultiPieData.add_site">
+<a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.multipie_data.MultiPieData.add_site">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_site</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">site</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">opacity</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="p">[</span><span class="s2">&quot;object&quot;</span><span class="p">][</span><span class="s2">&quot;site&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">site</span>
+
+        <span class="n">sites</span><span class="p">,</span> <span class="n">mp</span><span class="p">,</span> <span class="n">wp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">create_cell_site</span><span class="p">(</span><span class="n">site</span><span class="p">)</span>
+        <span class="n">plot_cell_site</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sites</span><span class="p">,</span> <span class="n">wp</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">mp</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">size</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">opacity</span><span class="o">=</span><span class="n">opacity</span><span class="p">)</span></div>
+
+
+    <span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="MultiPieData.add_bond">
+<a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.multipie_data.MultiPieData.add_bond">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_bond</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bond</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">color2</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">opacity</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="p">[</span><span class="s2">&quot;object&quot;</span><span class="p">][</span><span class="s2">&quot;bond&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">bond</span>
+
+        <span class="n">bonds</span><span class="p">,</span> <span class="n">mp</span><span class="p">,</span> <span class="n">wp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">create_cell_bond</span><span class="p">(</span><span class="n">bond</span><span class="p">)</span>
+        <span class="n">plot_cell_bond</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bonds</span><span class="p">,</span> <span class="n">wp</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">mp</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="n">width</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">color2</span><span class="o">=</span><span class="n">color2</span><span class="p">,</span> <span class="n">opacity</span><span class="o">=</span><span class="n">opacity</span><span class="p">)</span></div>
+
+
+    <span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="MultiPieData.add_vector">
+<a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.multipie_data.MultiPieData.add_vector">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_vector</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vector</span><span class="p">,</span> <span class="n">tp</span><span class="o">=</span><span class="s2">&quot;Q&quot;</span><span class="p">,</span> <span class="n">cartesian</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">average</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">opacity</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="p">[</span><span class="s2">&quot;object&quot;</span><span class="p">][</span><span class="s2">&quot;vector_type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tp</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="p">[</span><span class="s2">&quot;object&quot;</span><span class="p">][</span><span class="s2">&quot;vector&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">vector</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="p">[</span><span class="s2">&quot;object&quot;</span><span class="p">][</span><span class="s2">&quot;vector_average&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">average</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="p">[</span><span class="s2">&quot;object&quot;</span><span class="p">][</span><span class="s2">&quot;vector_cartesian&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cartesian</span>
+
+        <span class="n">vectors</span><span class="p">,</span> <span class="n">sites</span><span class="p">,</span> <span class="n">mp</span><span class="p">,</span> <span class="n">wp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">create_cell_vector</span><span class="p">(</span><span class="n">vector</span><span class="p">,</span> <span class="n">tp</span><span class="p">,</span> <span class="n">average</span><span class="p">,</span> <span class="n">cartesian</span><span class="p">)</span>
+        <span class="n">plot_cell_vector</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">vectors</span><span class="p">,</span>
+            <span class="n">sites</span><span class="p">,</span>
+            <span class="n">tp</span><span class="p">,</span>
+            <span class="n">wp</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span>
+            <span class="n">label</span><span class="o">=</span><span class="n">mp</span><span class="p">,</span>
+            <span class="n">average</span><span class="o">=</span><span class="n">average</span><span class="p">,</span>
+            <span class="n">cartesian</span><span class="o">=</span><span class="n">cartesian</span><span class="p">,</span>
+            <span class="n">length</span><span class="o">=</span><span class="n">length</span><span class="p">,</span>
+            <span class="n">width</span><span class="o">=</span><span class="n">width</span><span class="p">,</span>
+            <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span>
+            <span class="n">opacity</span><span class="o">=</span><span class="n">opacity</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+
+    <span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="MultiPieData.add_orbital">
+<a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.multipie_data.MultiPieData.add_orbital">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_orbital</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">orbital</span><span class="p">,</span> <span class="n">tp</span><span class="o">=</span><span class="s2">&quot;Q&quot;</span><span class="p">,</span> <span class="n">average</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">opacity</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="p">[</span><span class="s2">&quot;object&quot;</span><span class="p">][</span><span class="s2">&quot;orbital_type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tp</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="p">[</span><span class="s2">&quot;object&quot;</span><span class="p">][</span><span class="s2">&quot;orbital&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">orbital</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="p">[</span><span class="s2">&quot;object&quot;</span><span class="p">][</span><span class="s2">&quot;orbital_average&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">average</span>
+
+        <span class="n">orbitals</span><span class="p">,</span> <span class="n">sites</span><span class="p">,</span> <span class="n">mp</span><span class="p">,</span> <span class="n">wp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">create_cell_multipole</span><span class="p">(</span><span class="n">orbital</span><span class="p">,</span> <span class="n">tp</span><span class="p">,</span> <span class="n">average</span><span class="p">)</span>
+        <span class="n">plot_cell_multipole</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">orbitals</span><span class="p">,</span> <span class="n">sites</span><span class="p">,</span> <span class="n">tp</span><span class="p">,</span> <span class="n">wp</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">mp</span><span class="p">,</span> <span class="n">average</span><span class="o">=</span><span class="n">average</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">size</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">opacity</span><span class="o">=</span><span class="n">opacity</span><span class="p">)</span></div>
+
+
+    <span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="MultiPieData.add_bond_definition">
+<a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.multipie_data.MultiPieData.add_bond_definition">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_bond_definition</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bond</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">opacity</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="p">[</span><span class="s2">&quot;basis&quot;</span><span class="p">][</span><span class="s2">&quot;bond_definition&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">bond</span>
+
+        <span class="n">group</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ps_group</span>
+        <span class="n">wp</span><span class="p">,</span> <span class="n">bonds</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">find_wyckoff_bond</span><span class="p">(</span><span class="n">bond</span><span class="p">)</span>
+        <span class="n">mp</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">wyckoff</span><span class="p">[</span><span class="s2">&quot;bond&quot;</span><span class="p">][</span><span class="n">wp</span><span class="p">][</span><span class="s2">&quot;mapping&quot;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">bonds</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">mp</span><span class="p">):</span>
+            <span class="n">mp</span> <span class="o">=</span> <span class="n">mp</span> <span class="o">*</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">bonds</span><span class="p">)</span> <span class="o">//</span> <span class="nb">len</span><span class="p">(</span><span class="n">mp</span><span class="p">))</span>
+
+        <span class="n">plot_bond_definition</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bonds</span><span class="p">,</span> <span class="n">wp</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">mp</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="n">length</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="n">width</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">opacity</span><span class="o">=</span><span class="n">opacity</span><span class="p">)</span></div>
+
+
+    <span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="MultiPieData.site_samb_list">
+<a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.multipie_data.MultiPieData.site_samb_list">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">site_samb_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">site</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="p">[</span><span class="s2">&quot;basis&quot;</span><span class="p">][</span><span class="s2">&quot;site&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">site</span>
+
+        <span class="n">group</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ps_group</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_site_wp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sites</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">find_wyckoff_site</span><span class="p">(</span><span class="n">site</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_site_mp</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">wyckoff</span><span class="p">[</span><span class="s2">&quot;site&quot;</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">_site_wp</span><span class="p">][</span><span class="s2">&quot;mapping&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_site_samb</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">cluster_samb</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_site_wp</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_site_mp</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sites</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_site_mp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_site_mp</span> <span class="o">*</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sites</span><span class="p">)</span> <span class="o">//</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_site_mp</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_site_list</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_site_samb_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_index_list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_site_samb</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_site_list</span></div>
+
+
+    <span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="MultiPieData.add_site_samb">
+<a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.multipie_data.MultiPieData.add_site_samb">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_site_samb</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tag</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">p_color</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">n_color</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">z_color</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">z_size</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">tag</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_site_list</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="n">samb</span><span class="p">,</span> <span class="n">comp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_site_samb_list</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_site_list</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">tag</span><span class="p">)]</span>
+        <span class="n">samb</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_site_samb</span><span class="p">[</span><span class="n">samb</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="n">comp</span><span class="p">]</span>
+        <span class="n">mp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_site_mp</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">samb</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sites</span><span class="p">):</span>
+            <span class="n">samb</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">samb</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sites</span><span class="p">)</span> <span class="o">//</span> <span class="nb">len</span><span class="p">(</span><span class="n">samb</span><span class="p">))</span>
+
+        <span class="n">plot_site_cluster</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_sites</span><span class="p">,</span>
+            <span class="n">samb</span><span class="p">,</span>
+            <span class="n">wp</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_site_wp</span><span class="p">,</span>
+            <span class="n">label</span><span class="o">=</span><span class="n">mp</span><span class="p">,</span>
+            <span class="n">color</span><span class="o">=</span><span class="n">z_color</span><span class="p">,</span>
+            <span class="n">color_neg</span><span class="o">=</span><span class="n">n_color</span><span class="p">,</span>
+            <span class="n">color_pos</span><span class="o">=</span><span class="n">p_color</span><span class="p">,</span>
+            <span class="n">zero_size</span><span class="o">=</span><span class="n">z_size</span><span class="p">,</span>
+            <span class="n">size_ratio</span><span class="o">=</span><span class="n">size</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+
+    <span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="MultiPieData.bond_samb_list">
+<a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.multipie_data.MultiPieData.bond_samb_list">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">bond_samb_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bond</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="p">[</span><span class="s2">&quot;basis&quot;</span><span class="p">][</span><span class="s2">&quot;bond&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">bond</span>
+
+        <span class="n">group</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ps_group</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_bond_wp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bonds</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">find_wyckoff_bond</span><span class="p">(</span><span class="n">bond</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_bond_mp</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">wyckoff</span><span class="p">[</span><span class="s2">&quot;bond&quot;</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">_bond_wp</span><span class="p">][</span><span class="s2">&quot;mapping&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_bond_samb</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">cluster_samb</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_bond_wp</span><span class="p">,</span> <span class="s2">&quot;bond&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_bond_mp</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_bonds</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_bond_mp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bond_mp</span> <span class="o">*</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_bonds</span><span class="p">)</span> <span class="o">//</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_bond_mp</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_bond_list</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bond_samb_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_index_list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_bond_samb</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bond_list</span></div>
+
+
+    <span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="MultiPieData.add_bond_samb">
+<a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.multipie_data.MultiPieData.add_bond_samb">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_bond_samb</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tag</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">p_color</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">n_color</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">z_color</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">z_width</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">a_size</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">tag</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bond_list</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="n">samb</span><span class="p">,</span> <span class="n">comp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bond_samb_list</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_bond_list</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">tag</span><span class="p">)]</span>
+        <span class="n">sym</span> <span class="o">=</span> <span class="n">samb</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;Q&quot;</span><span class="p">,</span> <span class="s2">&quot;G&quot;</span><span class="p">]</span>
+
+        <span class="n">samb</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bond_samb</span><span class="p">[</span><span class="n">samb</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="n">comp</span><span class="p">]</span>
+        <span class="n">mp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bond_mp</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">samb</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_bonds</span><span class="p">):</span>
+            <span class="n">samb</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">samb</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_bonds</span><span class="p">)</span> <span class="o">//</span> <span class="nb">len</span><span class="p">(</span><span class="n">samb</span><span class="p">))</span>
+        <span class="n">plot_bond_cluster</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_bonds</span><span class="p">,</span>
+            <span class="n">samb</span><span class="p">,</span>
+            <span class="n">wp</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_bond_wp</span><span class="p">,</span>
+            <span class="n">label</span><span class="o">=</span><span class="n">mp</span><span class="p">,</span>
+            <span class="n">sym</span><span class="o">=</span><span class="n">sym</span><span class="p">,</span>
+            <span class="n">color</span><span class="o">=</span><span class="n">z_color</span><span class="p">,</span>
+            <span class="n">color_neg</span><span class="o">=</span><span class="n">n_color</span><span class="p">,</span>
+            <span class="n">color_pos</span><span class="o">=</span><span class="n">p_color</span><span class="p">,</span>
+            <span class="n">width</span><span class="o">=</span><span class="n">z_width</span><span class="p">,</span>
+            <span class="n">arrow_ratio</span><span class="o">=</span><span class="n">a_size</span><span class="p">,</span>
+            <span class="n">width_ratio</span><span class="o">=</span><span class="n">width</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+
+    <span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="MultiPieData.vector_samb_list">
+<a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.multipie_data.MultiPieData.vector_samb_list">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">vector_samb_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vector</span><span class="p">,</span> <span class="n">tp</span><span class="o">=</span><span class="s2">&quot;Q&quot;</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="p">[</span><span class="s2">&quot;basis&quot;</span><span class="p">][</span><span class="s2">&quot;vector_type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tp</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="p">[</span><span class="s2">&quot;basis&quot;</span><span class="p">][</span><span class="s2">&quot;vector&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">vector</span>
+
+        <span class="n">group</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ps_group</span>
+
+        <span class="n">samb</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vector_wp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vector_samb_site</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">multipole_cluster_samb</span><span class="p">(</span><span class="n">tp</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">vector</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_vector_mp</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">group</span><span class="o">.</span><span class="n">wyckoff</span><span class="p">[</span><span class="s2">&quot;bond&quot;</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">_vector_wp</span><span class="p">][</span><span class="s2">&quot;mapping&quot;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="s2">&quot;@&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vector_wp</span>
+            <span class="k">else</span> <span class="n">group</span><span class="o">.</span><span class="n">wyckoff</span><span class="p">[</span><span class="s2">&quot;site&quot;</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">_vector_wp</span><span class="p">][</span><span class="s2">&quot;mapping&quot;</span><span class="p">]</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_vector_mp</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_vector_samb_site</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_vector_n_pset</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_vector_samb_site</span><span class="p">)</span> <span class="o">//</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_vector_mp</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_vector_mp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vector_mp</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vector_n_pset</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_vector_n_pset</span> <span class="o">=</span> <span class="mi">1</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_vector_samb</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_vector_samb_list</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_vector_samb_var</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">tp</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;Q&quot;</span><span class="p">,</span> <span class="s2">&quot;G&quot;</span><span class="p">,</span> <span class="s2">&quot;T&quot;</span><span class="p">,</span> <span class="s2">&quot;M&quot;</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_vector_samb</span><span class="p">[</span><span class="n">tp</span><span class="p">]</span> <span class="o">=</span> <span class="n">samb</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">tp</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_vector_list</span><span class="p">[</span><span class="n">tp</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vector_samb_list</span><span class="p">[</span><span class="n">tp</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_index_list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_vector_samb</span><span class="p">[</span><span class="n">tp</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_vector_list</span><span class="p">[</span><span class="n">tp</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">tp</span><span class="si">}{</span><span class="n">no</span><span class="o">+</span><span class="mi">1</span><span class="si">:</span><span class="s2">02d</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">no</span><span class="p">,</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_vector_list</span><span class="p">[</span><span class="n">tp</span><span class="p">])]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_vector_samb_var</span><span class="p">[</span><span class="n">tp</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">tp</span><span class="si">}{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">:</span><span class="s2">02d</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_vector_list</span><span class="p">[</span><span class="n">tp</span><span class="p">]))]</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vector_list</span></div>
+
+
+    <span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="MultiPieData.add_vector_samb">
+<a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.multipie_data.MultiPieData.add_vector_samb">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_vector_samb</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lc</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">opacity</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">ex</span><span class="p">,</span> <span class="n">var</span> <span class="o">=</span> <span class="n">check_linear_combination</span><span class="p">(</span><span class="n">lc</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vector_samb_var</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">ex</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="p">[</span><span class="s2">&quot;basis&quot;</span><span class="p">][</span><span class="s2">&quot;vector_lc&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">lc</span>
+
+        <span class="n">X</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="p">[</span><span class="s2">&quot;basis&quot;</span><span class="p">][</span><span class="s2">&quot;vector_type&quot;</span><span class="p">]</span>
+        <span class="n">wp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vector_wp</span>
+        <span class="n">site</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vector_samb_site</span>
+        <span class="n">mp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vector_mp</span>
+
+        <span class="n">lc_obj</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">var</span><span class="p">:</span>
+            <span class="n">tp</span> <span class="o">=</span> <span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">idx</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span> <span class="o">-</span> <span class="mi">1</span>
+            <span class="n">samb</span><span class="p">,</span> <span class="n">comp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vector_samb_list</span><span class="p">[</span><span class="n">tp</span><span class="p">][</span><span class="n">idx</span><span class="p">]</span>
+            <span class="n">samb</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vector_samb</span><span class="p">[</span><span class="n">tp</span><span class="p">][</span><span class="n">samb</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="n">comp</span><span class="p">]</span>
+            <span class="n">obj1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ps_group</span><span class="o">.</span><span class="n">combined_object</span><span class="p">(</span><span class="n">wp</span><span class="p">,</span> <span class="n">tp</span><span class="p">,</span> <span class="n">samb</span><span class="p">)</span>
+            <span class="n">obj1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">obj1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vector_n_pset</span><span class="p">)</span>
+            <span class="n">lc_obj</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">Matrix</span><span class="p">(</span><span class="n">convert_vector_object</span><span class="p">(</span><span class="n">obj1</span><span class="p">))</span>
+
+        <span class="n">obj</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">ex</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">lc_obj</span><span class="p">))</span>
+
+        <span class="n">plot_vector_cluster</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">site</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">wp</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">mp</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="n">length</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="n">width</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">opacity</span><span class="o">=</span><span class="n">opacity</span><span class="p">)</span></div>
+
+
+    <span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="MultiPieData.add_vector_samb_modulation">
+<a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.multipie_data.MultiPieData.add_vector_samb_modulation">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_vector_samb_modulation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">modulation_range</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">opacity</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">modulation</span><span class="p">,</span> <span class="n">rng</span> <span class="o">=</span> <span class="n">modulation_range</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)</span>
+        <span class="n">mod_list</span><span class="p">,</span> <span class="n">is_magnetic</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_modulation</span><span class="p">(</span><span class="n">modulation</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">mod_list</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="p">[</span><span class="s2">&quot;basis&quot;</span><span class="p">][</span><span class="s2">&quot;vector_modulation&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">modulation_range</span>
+
+        <span class="n">rng</span><span class="p">,</span> <span class="n">upper</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_range</span><span class="p">(</span><span class="n">rng</span><span class="p">)</span>
+        <span class="n">pset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ps_group</span><span class="o">.</span><span class="n">symmetry_operation</span><span class="p">[</span><span class="s2">&quot;plus_set&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+        <span class="n">phase_dict</span><span class="p">,</span> <span class="n">igrid</span> <span class="o">=</span> <span class="n">phase_factor</span><span class="p">(</span><span class="n">mod_list</span><span class="p">,</span> <span class="n">rng</span><span class="p">,</span> <span class="n">pset</span><span class="p">)</span>
+
+        <span class="n">X</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="p">[</span><span class="s2">&quot;basis&quot;</span><span class="p">][</span><span class="s2">&quot;vector_type&quot;</span><span class="p">]</span>
+        <span class="n">wp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vector_wp</span>
+        <span class="n">site</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vector_samb_site</span>
+
+        <span class="n">obj</span><span class="p">,</span> <span class="n">site_idx</span><span class="p">,</span> <span class="n">full_site</span> <span class="o">=</span> <span class="n">create_samb_modulation</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ps_group</span><span class="p">,</span> <span class="n">mod_list</span><span class="p">,</span> <span class="n">phase_dict</span><span class="p">,</span> <span class="n">igrid</span><span class="p">,</span> <span class="n">pset</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vector_samb</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vector_samb_list</span><span class="p">,</span> <span class="n">wp</span><span class="p">,</span> <span class="n">site</span>
+        <span class="p">)</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="n">convert_vector_object</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">pvw</span><span class="o">.</span><span class="n">set_range</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">upper</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pvw</span><span class="o">.</span><span class="n">set_repeat</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pvw</span><span class="o">.</span><span class="n">set_nonrepeat</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pvw</span><span class="o">.</span><span class="n">set_repeat</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+
+        <span class="n">plot_vector_cluster</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span> <span class="n">full_site</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">wp</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">site_idx</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="n">length</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="n">width</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">opacity</span><span class="o">=</span><span class="n">opacity</span>
+        <span class="p">)</span></div>
+
+
+    <span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="MultiPieData.orbital_samb_list">
+<a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.multipie_data.MultiPieData.orbital_samb_list">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">orbital_samb_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">orbital</span><span class="p">,</span> <span class="n">tp</span><span class="o">=</span><span class="s2">&quot;Q&quot;</span><span class="p">,</span> <span class="n">rank</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="n">rank</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">rank</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="p">[</span><span class="s2">&quot;basis&quot;</span><span class="p">][</span><span class="s2">&quot;orbital_type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tp</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="p">[</span><span class="s2">&quot;basis&quot;</span><span class="p">][</span><span class="s2">&quot;orbital_rank&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">rank</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="p">[</span><span class="s2">&quot;basis&quot;</span><span class="p">][</span><span class="s2">&quot;orbital&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">orbital</span>
+
+        <span class="n">group</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ps_group</span>
+
+        <span class="n">samb</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_orbital_wp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_orbital_samb_site</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">multipole_cluster_samb</span><span class="p">(</span><span class="n">tp</span><span class="p">,</span> <span class="n">rank</span><span class="p">,</span> <span class="n">orbital</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_orbital_mp</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">group</span><span class="o">.</span><span class="n">wyckoff</span><span class="p">[</span><span class="s2">&quot;bond&quot;</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">_orbital_wp</span><span class="p">][</span><span class="s2">&quot;mapping&quot;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="s2">&quot;@&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_orbital_wp</span>
+            <span class="k">else</span> <span class="n">group</span><span class="o">.</span><span class="n">wyckoff</span><span class="p">[</span><span class="s2">&quot;site&quot;</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">_orbital_wp</span><span class="p">][</span><span class="s2">&quot;mapping&quot;</span><span class="p">]</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_orbital_mp</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_orbital_samb_site</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_orbital_n_pset</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_orbital_samb_site</span><span class="p">)</span> <span class="o">//</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_orbital_mp</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_orbital_mp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_orbital_mp</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_orbital_n_pset</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_orbital_n_pset</span> <span class="o">=</span> <span class="mi">1</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_orbital_samb</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_orbital_samb_list</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_orbital_samb_var</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">tp</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;Q&quot;</span><span class="p">,</span> <span class="s2">&quot;G&quot;</span><span class="p">,</span> <span class="s2">&quot;T&quot;</span><span class="p">,</span> <span class="s2">&quot;M&quot;</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_orbital_samb</span><span class="p">[</span><span class="n">tp</span><span class="p">]</span> <span class="o">=</span> <span class="n">samb</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">tp</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_orbital_list</span><span class="p">[</span><span class="n">tp</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">_orbital_samb_list</span><span class="p">[</span><span class="n">tp</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_index_list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_orbital_samb</span><span class="p">[</span><span class="n">tp</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_orbital_list</span><span class="p">[</span><span class="n">tp</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">tp</span><span class="si">}{</span><span class="n">no</span><span class="o">+</span><span class="mi">1</span><span class="si">:</span><span class="s2">02d</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">no</span><span class="p">,</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_orbital_list</span><span class="p">[</span><span class="n">tp</span><span class="p">])]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_orbital_samb_var</span><span class="p">[</span><span class="n">tp</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">tp</span><span class="si">}{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">:</span><span class="s2">02d</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_orbital_list</span><span class="p">[</span><span class="n">tp</span><span class="p">]))]</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_orbital_list</span></div>
+
+
+    <span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="MultiPieData.add_orbital_samb">
+<a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.multipie_data.MultiPieData.add_orbital_samb">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_orbital_samb</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lc</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">opacity</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">ex</span><span class="p">,</span> <span class="n">var</span> <span class="o">=</span> <span class="n">check_linear_combination</span><span class="p">(</span><span class="n">lc</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_orbital_samb_var</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">ex</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="p">[</span><span class="s2">&quot;basis&quot;</span><span class="p">][</span><span class="s2">&quot;orbital_lc&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">lc</span>
+
+        <span class="n">X</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="p">[</span><span class="s2">&quot;basis&quot;</span><span class="p">][</span><span class="s2">&quot;orbital_type&quot;</span><span class="p">]</span>
+        <span class="n">wp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_orbital_wp</span>
+        <span class="n">site</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_orbital_samb_site</span>
+        <span class="n">mp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_orbital_mp</span>
+
+        <span class="n">lc_obj</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">var</span><span class="p">:</span>
+            <span class="n">tp</span> <span class="o">=</span> <span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">idx</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span> <span class="o">-</span> <span class="mi">1</span>
+            <span class="n">samb</span><span class="p">,</span> <span class="n">comp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_orbital_samb_list</span><span class="p">[</span><span class="n">tp</span><span class="p">][</span><span class="n">idx</span><span class="p">]</span>
+            <span class="n">samb</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_orbital_samb</span><span class="p">[</span><span class="n">tp</span><span class="p">][</span><span class="n">samb</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="n">comp</span><span class="p">]</span>
+            <span class="n">obj1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ps_group</span><span class="o">.</span><span class="n">combined_object</span><span class="p">(</span><span class="n">wp</span><span class="p">,</span> <span class="n">tp</span><span class="p">,</span> <span class="n">samb</span><span class="p">)</span>
+            <span class="n">lc_obj</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">Matrix</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">obj1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_orbital_n_pset</span><span class="p">))</span>
+
+        <span class="n">obj</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">ex</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">lc_obj</span><span class="p">))</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="n">plot_orbital_cluster</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">site</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">wp</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">mp</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">size</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">opacity</span><span class="o">=</span><span class="n">opacity</span><span class="p">)</span></div>
+
+
+    <span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="MultiPieData.add_orbital_samb_modulation">
+<a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.multipie_data.MultiPieData.add_orbital_samb_modulation">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_orbital_samb_modulation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">modulation_range</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">opacity</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">modulation</span><span class="p">,</span> <span class="n">rng</span> <span class="o">=</span> <span class="n">modulation_range</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)</span>
+        <span class="n">mod_list</span><span class="p">,</span> <span class="n">is_magnetic</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_modulation</span><span class="p">(</span><span class="n">modulation</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">mod_list</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="p">[</span><span class="s2">&quot;basis&quot;</span><span class="p">][</span><span class="s2">&quot;orbital_modulation&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">modulation_range</span>
+
+        <span class="n">rng</span><span class="p">,</span> <span class="n">upper</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_range</span><span class="p">(</span><span class="n">rng</span><span class="p">)</span>
+        <span class="n">pset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ps_group</span><span class="o">.</span><span class="n">symmetry_operation</span><span class="p">[</span><span class="s2">&quot;plus_set&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+        <span class="n">phase_dict</span><span class="p">,</span> <span class="n">igrid</span> <span class="o">=</span> <span class="n">phase_factor</span><span class="p">(</span><span class="n">mod_list</span><span class="p">,</span> <span class="n">rng</span><span class="p">,</span> <span class="n">pset</span><span class="p">)</span>
+
+        <span class="n">X</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="p">[</span><span class="s2">&quot;basis&quot;</span><span class="p">][</span><span class="s2">&quot;orbital_type&quot;</span><span class="p">]</span>
+        <span class="n">wp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_orbital_wp</span>
+        <span class="n">site</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_orbital_samb_site</span>
+
+        <span class="n">obj</span><span class="p">,</span> <span class="n">site_idx</span><span class="p">,</span> <span class="n">full_site</span> <span class="o">=</span> <span class="n">create_samb_modulation</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ps_group</span><span class="p">,</span> <span class="n">mod_list</span><span class="p">,</span> <span class="n">phase_dict</span><span class="p">,</span> <span class="n">igrid</span><span class="p">,</span> <span class="n">pset</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_orbital_samb</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_orbital_samb_list</span><span class="p">,</span> <span class="n">wp</span><span class="p">,</span> <span class="n">site</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">pvw</span><span class="o">.</span><span class="n">set_range</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">upper</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pvw</span><span class="o">.</span><span class="n">set_repeat</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pvw</span><span class="o">.</span><span class="n">set_nonrepeat</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pvw</span><span class="o">.</span><span class="n">set_repeat</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+
+        <span class="n">plot_orbital_cluster</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">full_site</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">wp</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">site_idx</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">size</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">opacity</span><span class="o">=</span><span class="n">opacity</span><span class="p">)</span></div>
+
+
+    <span class="c1"># ==================================================</span>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_parse_modulation</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Parse modulation list.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            s (str): modulation list in str, [[basis,coeff,k,cos/sin]].</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            - (list) -- modulation list.</span>
+<span class="sd">            - (bool) -- magnetic ?</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">rows</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">row</span><span class="p">,</span> <span class="n">token</span><span class="p">,</span> <span class="n">depth</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">s</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">c</span> <span class="o">==</span> <span class="s2">&quot;[&quot;</span><span class="p">:</span>
+                    <span class="n">depth</span> <span class="o">+=</span> <span class="mi">1</span>
+                    <span class="k">if</span> <span class="n">depth</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                        <span class="n">row</span><span class="p">,</span> <span class="n">token</span> <span class="o">=</span> <span class="p">[],</span> <span class="s2">&quot;&quot;</span>
+                    <span class="k">continue</span>
+
+                <span class="k">if</span> <span class="n">c</span> <span class="o">==</span> <span class="s2">&quot;]&quot;</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">depth</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                        <span class="n">row</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+                        <span class="n">rows</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+                        <span class="n">token</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+                    <span class="n">depth</span> <span class="o">-=</span> <span class="mi">1</span>
+                    <span class="k">if</span> <span class="n">depth</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                        <span class="k">return</span> <span class="p">[]</span>
+                    <span class="k">continue</span>
+
+                <span class="k">if</span> <span class="n">c</span> <span class="o">==</span> <span class="s2">&quot;,&quot;</span> <span class="ow">and</span> <span class="n">depth</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                    <span class="n">row</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+                    <span class="n">token</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+                    <span class="k">continue</span>
+
+                <span class="k">if</span> <span class="n">depth</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">:</span>
+                    <span class="n">token</span> <span class="o">+=</span> <span class="n">c</span>
+
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="k">return</span> <span class="p">[]</span>
+
+        <span class="k">if</span> <span class="n">depth</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[]</span>
+
+        <span class="n">rows</span> <span class="o">=</span> <span class="p">[[</span><span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">r</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s2">&quot;[&quot;</span> <span class="o">+</span> <span class="n">r</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;]&quot;</span><span class="p">,</span> <span class="n">r</span><span class="p">[</span><span class="mi">3</span><span class="p">]]</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">rows</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">rows</span><span class="p">:</span>
+            <span class="n">is_magnetic</span> <span class="o">=</span> <span class="nb">all</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">startswith</span><span class="p">((</span><span class="s2">&quot;T&quot;</span><span class="p">,</span> <span class="s2">&quot;M&quot;</span><span class="p">))</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">rows</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">is_magnetic</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="k">return</span> <span class="n">rows</span><span class="p">,</span> <span class="n">is_magnetic</span>
+
+    <span class="c1"># ==================================================</span>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_parse_range</span><span class="p">(</span><span class="n">r</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Parse range.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            r (str): range, [r1,r2,r3].</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            - (list) -- integer range.</span>
+<span class="sd">            - (list) -- upper bound.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">eps</span> <span class="o">=</span> <span class="mf">0.001</span>
+        <span class="n">rng</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s2">&quot; [] &quot;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)))</span>
+        <span class="n">upper</span> <span class="o">=</span> <span class="p">[</span><span class="n">rng</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">eps</span><span class="p">,</span> <span class="n">rng</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">eps</span><span class="p">,</span> <span class="n">rng</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">eps</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">rng</span><span class="p">,</span> <span class="n">upper</span></div>
+
+</pre></div>
+
+                </article>
+              
+
+              
+              
+              
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Hiroaki Kusunose
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2021-.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
