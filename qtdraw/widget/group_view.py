@@ -317,3 +317,10 @@ class GroupView(QTreeView):
     def setModel(self, model):
         super().setModel(model)
         self.clear_row_heights()
+
+    # ==================================================
+    # def showEvent(self, event):
+    #    super().showEvent(event)
+    #    self.doItemsLayout()
+    #    self.updateGeometry()
+    #    self.viewport().update()
