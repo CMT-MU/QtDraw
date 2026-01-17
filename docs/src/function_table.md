@@ -716,9 +716,11 @@
 | Function | Summary |
 |--------|----------|
 | TabGroupView | Data view group. |
+| _refresh_view_logic |  |
 | tab_change |  |
 | select_tab | Select tab. |
 | closeEvent | Close event for deselect all. |
+| showEvent |  |
 
 
 ## <div class='my-heading' style='color: darkgreen;'>util_axis.py
