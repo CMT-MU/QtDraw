@@ -348,38 +348,6 @@ def create_unit_cell(A, origin, lower=None, dimensions=None):
 
 
 # ==================================================
-def get_view_vector(n, A):
-    """
-    Get view and viewup.
-
-    Args:
-        n (list): view indices of [a1,a2,a3], [int].
-        A (numpy.ndarray): (a1, a2, a3) unit vectors, 4x4 [float].
-
-    Returns:
-        - (numpy.ndarray) -- view.
-        - (numpy.ndarray) -- viewup.
-    """
-    view = n[0] * A[0:3, 0] + n[1] * A[0:3, 1] + n[2] * A[0:3, 2]
-    norm = np.linalg.norm(view)
-    view = view / norm
-
-    if np.allclose(view, [0, 1, 0]) or np.allclose(view, [0, 0, -1]):
-        viewup = np.array([1, 0, 0])
-    elif np.allclose(view, [0, 0, 1]) or np.allclose(view, [-1, 0, 0]):
-        viewup = np.array([0, 1, 0])
-    elif np.allclose(view, [1, 0, 0]) or np.allclose(view, [0, -1, 0]):
-        viewup = np.array([0, 0, 1])
-    else:
-        vz = np.sqrt(1.0 - view[2] * view[2])
-        vx = -view[2] * view[0] / vz
-        vy = -view[2] * view[1] / vz
-        viewup = np.array([vx, vy, vz], dtype=np.float64)
-
-    return view, viewup
-
-
-# ==================================================
 def create_cell_grid(ilower, dims):
     """
     Create grid point.
@@ -590,14 +558,14 @@ def get_hkl_from_camera(camera, A):
 
 
 # ==================================================
-def get_camera_params(hkl, A, camera):
+def get_camera_params(hkl, A, camera=None):
     """
     Get camera parameters.
 
     Args:
         hkl (list): index.
         A (ndarray): A = [a1, a2, a3].
-        camera (Camera): current camera.
+        camera (Camera, optional): current camera.
 
     Returns:
         - (ndarray) -- position.
@@ -605,43 +573,31 @@ def get_camera_params(hkl, A, camera):
         - (ndarray) -- view up.
     """
     A = np.array(A[0:3, 0:3])
-    hkl_vec = np.array(hkl)
-    focal = np.array(camera.focal_point)
-    distance = np.linalg.norm(np.array(camera.position) - focal)
+    n = np.array(hkl)
 
-    direction = A @ hkl_vec
-    norm = np.linalg.norm(direction)
-    unit_direction = direction / norm if norm > 1e-10 else np.array([0, 0, 1])
+    view = n[0] * A[:, 0] + n[1] * A[:, 1] + n[2] * A[:, 2]
+    norm = np.linalg.norm(view)
+    view = view / norm
 
-    new_position = focal + (unit_direction * distance)
-
-    a1, a2, a3 = A[:, 0], A[:, 1], A[:, 2]
-
-    hkl_tuple = tuple(map(int, np.sign(hkl_vec) * np.abs(hkl_vec)))
-
-    special_ups = {
-        (0, 1, 0): a1,
-        (0, -1, 0): a1,
-        (0, 0, 1): a2,
-        (0, 0, -1): a2,
-        (1, 0, 0): a3,
-        (-1, 0, 0): a3,
-    }
-
-    if hkl_tuple in special_ups:
-        target_up = special_ups[hkl_tuple]
+    if np.allclose(view, [0, 1, 0]) or np.allclose(view, [0, 0, -1]):
+        viewup = np.array([1, 0, 0])
+    elif np.allclose(view, [0, 0, 1]) or np.allclose(view, [-1, 0, 0]):
+        viewup = np.array([0, 1, 0])
+    elif np.allclose(view, [1, 0, 0]) or np.allclose(view, [0, -1, 0]):
+        viewup = np.array([0, 0, 1])
     else:
-        dot_a3 = abs(np.dot(unit_direction, a3 / np.linalg.norm(a3)))
-        target_up = a1 if dot_a3 > 0.9 else a3
+        vz = np.sqrt(1.0 - view[2] * view[2])
+        vx = -view[2] * view[0] / vz
+        vy = -view[2] * view[1] / vz
+        viewup = np.array([vx, vy, vz], dtype=np.float64)
 
-    up_proj = target_up - np.dot(target_up, unit_direction) * unit_direction
+    cell_center = np.sum(A, axis=1) / 2.0
+    focal = cell_center
 
-    if np.linalg.norm(up_proj) < 1e-5:
-        for fallback in [a3, a1, a2]:
-            up_proj = fallback - np.dot(fallback, unit_direction) * unit_direction
-            if np.linalg.norm(up_proj) > 1e-5:
-                break
+    if camera is not None:
+        distance = np.linalg.norm(np.array(camera.position) - np.array(camera.focal_point))
+        new_position = focal + (view * distance)
+    else:
+        new_position = view
 
-    new_up = up_proj / np.linalg.norm(up_proj)
-
-    return new_position, focal, new_up
+    return new_position, focal, viewup
