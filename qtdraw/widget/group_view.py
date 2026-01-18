@@ -30,6 +30,7 @@ class GroupView(QTreeView):
             use_delegate (bool, optional): use delegate or plain text ?
         """
         super().__init__(parent)
+        self._needs_widget_update = False
         self._row_heights = {}
 
         if mathjax is None:
@@ -112,9 +113,48 @@ class GroupView(QTreeView):
 
     # ==================================================
     def update_widget(self, index):
+        if not self.isVisible() or self.window().isMinimized():
+            self._needs_widget_update = True
+            return
+
+        self._open_editors_for_row(index)
+
+    # ==================================================
+    def force_refresh_widgets(self):
+        if self._needs_widget_update:
+            self._do_force_refresh()
+
+    # ==================================================
+    def _do_force_refresh(self):
+        self._needs_widget_update = False
+        self.set_widget()
+        self.header().geometriesChanged.emit()
+        self.viewport().update()
+
+    # ==================================================
+    def _open_editors_for_row(self, index):
         for column in self.model().column_widget:
-            index = index.siblingAtColumn(column)
-            self.openPersistentEditor(index)
+            col_index = index.siblingAtColumn(column)
+            self.closePersistentEditor(col_index)
+            self.openPersistentEditor(col_index)
+
+    # ==================================================
+    def set_widget(self, item=None):
+        """
+        Set widget.
+
+        Args:
+            item (QStandardItem, optional): item.
+        """
+        if item is None:
+            item = self.model().invisibleRootItem()
+
+        for row in range(item.rowCount()):
+            child_item = item.child(row, 0)
+            if child_item:
+                child_index = child_item.index()
+                self._open_editors_for_row(child_index)
+                self.set_widget(child_item)
 
     # ==================================================
     def clear_selection(self):
@@ -219,26 +259,6 @@ class GroupView(QTreeView):
         self.clear_row_heights()
 
     # ==================================================
-    def set_widget(self, item=None):
-        """
-        Set widget.
-
-        Args:
-            item (QStandardItem, optional): item.
-        """
-        if item is None:
-            item = self.model().invisibleRootItem()
-
-        for row in range(item.rowCount()):
-            child = item.child(row)
-            if child:
-                for column in self.model().column_widget:
-                    index = self.model().index(child.row(), column, self.model().parent(self.model().indexFromItem(child)))
-                    self.closePersistentEditor(index)
-                    self.openPersistentEditor(index)
-                self.set_widget(child)
-
-    # ==================================================
     def selection_changed(self, selected, deselected):
         """
         For Selection changed.
@@ -317,10 +337,3 @@ class GroupView(QTreeView):
     def setModel(self, model):
         super().setModel(model)
         self.clear_row_heights()
-
-    # ==================================================
-    # def showEvent(self, event):
-    #    super().showEvent(event)
-    #    self.doItemsLayout()
-    #    self.updateGeometry()
-    #    self.viewport().update()

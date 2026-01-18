@@ -516,6 +516,10 @@
 |--------|----------|
 | GroupView | Group view. |
 | update_widget |  |
+| force_refresh_widgets |  |
+| _do_force_refresh |  |
+| _open_editors_for_row |  |
+| set_widget | Set widget. |
 | clear_selection | Clear selection. |
 | mousePressEvent | Mouse press event for focus or clear selection. |
 | keyPressEvent | Key press event for ESC and up and down keys. |
@@ -523,7 +527,6 @@
 | insert_row | Insert row. |
 | copy_row | Copy row. |
 | remove_row | Remove row. |
-| set_widget | Set widget. |
 | selection_changed | For Selection changed. |
 | select_row | Select row. |
 | closeEvent |  |
@@ -716,11 +719,11 @@
 | Function | Summary |
 |--------|----------|
 | TabGroupView | Data view group. |
-| _refresh_view_logic |  |
-| tab_change |  |
 | select_tab | Select tab. |
 | closeEvent | Close event for deselect all. |
 | showEvent |  |
+| tab_change |  |
+| _refresh_view_logic |  |
 
 
 ## <div class='my-heading' style='color: darkgreen;'>util_axis.py

@@ -56,25 +56,6 @@ class TabGroupView(QDialog):
         self.tab.currentChanged.connect(self.tab_change)
 
     # ==================================================
-    def _refresh_view_logic(self, view):
-        if view:
-            view.updateGeometry()
-
-            if hasattr(view, "tree_view"):
-                view.tree_view.doItemsLayout()
-                view.tree_view.viewport().update()
-
-            view.update()
-
-    # ==================================================
-    def tab_change(self, idx):
-        if self._tabname in self.view:
-            self.view[self._tabname].clear_selection()
-        self._tabname = self.tab.tabText(idx)
-        current_view = self.tab.widget(idx)
-        self._refresh_view_logic(current_view)
-
-    # ==================================================
     def select_tab(self, object_type):
         """
         Select tab.
@@ -93,10 +74,24 @@ class TabGroupView(QDialog):
         :meta private:
         """
         for view in self.view.values():
-            view.close()
+            view.clear_selection()
         super().closeEvent(event)
 
     # ==================================================
     def showEvent(self, event):
         super().showEvent(event)
         self._refresh_view_logic(self.tab.currentWidget())
+
+    # ==================================================
+    def tab_change(self, idx):
+        if self._tabname in self.view:
+            self.view[self._tabname].clear_selection()
+        self._tabname = self.tab.tabText(idx)
+        current_view = self.tab.widget(idx)
+        self._refresh_view_logic(current_view)
+
+    # ==================================================
+    def _refresh_view_logic(self, view):
+        if view:
+            view.force_refresh_widgets()
+            view.viewport().update()
