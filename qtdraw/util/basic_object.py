@@ -41,7 +41,7 @@ from PySide6.QtCore import QByteArray
 from qtdraw.core.pyvista_widget_setting import widget_detail as detail
 from qtdraw.core.pyvista_widget_setting import CHOP
 
-from qtdraw.util.util_axis import get_view_vector
+from qtdraw.util.util_axis import get_camera_params
 from qtdraw.util.util import create_grid, str_to_sympy, text_to_list
 
 
@@ -676,7 +676,7 @@ def create_text3d(text, size=1.0, view=None, depth=1.0, offset=[0, 0, 0], A=None
     if A is None:
         A = np.eye(4)
 
-    view, viewup = get_view_vector(view, A)
+    view, _, viewup = get_camera_params(view, A)
 
     A = np.eye(4)
     A[0:3, 0] = np.cross(viewup, view)
