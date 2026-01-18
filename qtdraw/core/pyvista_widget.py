@@ -30,7 +30,6 @@ from qtdraw.core.pyvista_widget_setting import (
     COLUMN_CELL,
     COLUMN_POSITION,
     COLUMN_ISOSURFACE_FILE,
-    DIGIT,
 )
 from qtdraw.core.pyvista_widget_setting import widget_detail as detail
 from qtdraw.core.qtdraw_info import __version__, __date__, __author__
@@ -46,13 +45,13 @@ from qtdraw.parser.converter import convert_version3
 from qtdraw.util.util import text_to_list, apply, read_dict, str_to_sympy, check_multipie
 from qtdraw.util.util_axis import (
     create_axes_widget,
-    get_view_vector,
     create_unit_cell,
     create_cell_grid,
     get_lattice_vector,
     get_repeat_range,
     get_outside_box,
-    get_view_index,
+    get_camera_params,
+    # get_hkl_from_camera,
 )
 from qtdraw.util.basic_object import (
     create_sphere,
@@ -344,19 +343,14 @@ class PyVistaWidget(QtInteractor):
         self.refresh()
         self.set_view()
 
-        if self.iren is not None:
-            self.iren.add_observer("EndInteractionEvent", self._camera_view_changed)
+        # if self.iren is not None:
+        #    self.iren.add_observer("EndInteractionEvent", self._camera_view_changed)
 
     # ==================================================
-    def _camera_view_changed(self, observer=None, event=None, inverse=False):
-        try:
-            index = get_view_index(self.camera, self.A_matrix)
-            if inverse:
-                index = [-index[0], -index[1], -index[2]]
-            self.camera_view.emit(index)
-            self._status["view"] = index
-        except Exception as e:
-            pass
+    # def _camera_view_changed(self, observer=None, event=None):
+    #    view = get_hkl_from_camera(self.camera, self.A_matrix)
+    #    view = [0, 0, 0]
+    #    self.set_view(view)
 
     # ==================================================
     def paintEvent(self, event):
@@ -2226,51 +2220,18 @@ class PyVistaWidget(QtInteractor):
             view = convert_str_vector(view, transform=False)
             view = view.astype(int).tolist()
 
+        self._status["view"] = view
+        self.camera_view.emit(view)
+
         if view == [0, 0, 0]:
             return
 
-        self._status["view"] = view
-
-        n = self._status["view"]
-
         # set view and viewup in cartesian coordinate.
-        view, viewup = get_view_vector(n, self.A_matrix_norm)
+        pos, focal, up = get_camera_params(view, self.A_matrix, self.camera)
 
-        # set view and viewup of camera.
-        self.view_vector(view, viewup)
-
-        self._set_default_zoom()
-        self._camera_view_changed()
-
-    # ==================================================
-    def view_yz(self):
-        super().view_yz()
-        self._camera_view_changed(inverse=True)
-
-    # ==================================================
-    def view_zx(self):
-        super().view_zx()
-        self._camera_view_changed(inverse=True)
-
-    # ==================================================
-    def view_xy(self):
-        super().view_xy()
-        self._camera_view_changed(inverse=True)
-
-    # ==================================================
-    def view_zy(self):
-        super().view_zy()
-        self._camera_view_changed(inverse=True)
-
-    # ==================================================
-    def view_xz(self):
-        super().view_xz()
-        self._camera_view_changed(inverse=True)
-
-    # ==================================================
-    def view_yx(self):
-        super().view_yx()
-        self._camera_view_changed(inverse=True)
+        self.camera.position = pos
+        self.camera.focal_point = focal
+        self.camera.up = up
 
     # ==================================================
     def set_parallel_projection(self, mode=None):

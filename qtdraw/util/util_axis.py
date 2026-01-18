@@ -523,65 +523,125 @@ def get_outside_box(point, lower, upper):
 
 
 # ==================================================
-def get_view_index(camera, A):
+def get_hkl_from_camera(camera, A):
     """
-    Get view index.
+    Get index from camera.
 
     Args:
-        camera (plotter.camera): camera object.
-        A (ndarray): unit vectors in each column.
+        camera (Camera): camera.
+        A (ndarray): A = [a1, a2, a3].
 
     Returns:
-        - (list) -- list of indices.
+        - (list) -- index (cannot determine hkl, return [0,0,0]).
     """
-    A_3x3 = A[:3, :3]
+    rounding_tol = 0.1
+    angle_tol = 1.0
+
+    A = np.array(A[0:3, 0:3])
+    vec = np.array(camera.position) - np.array(camera.focal_point)
+    vec_norm = np.linalg.norm(vec)
+    if vec_norm < 1e-10:
+        return [0, 0, 0]
+    unit_vec = vec / vec_norm
+
     try:
-        A_inv = np.linalg.inv(A_3x3)
+        hkl_raw = np.linalg.solve(A, vec)
     except np.linalg.LinAlgError:
-        return None
+        return [0, 0, 0]
 
-    pos = np.array(camera.position)
+    max_abs = np.abs(hkl_raw).max()
+    if max_abs < 1e-10:
+        return [0, 0, 0]
+
+    scaled_base = hkl_raw / max_abs
+
+    best_candidate = [0, 0, 0]
+    min_err = float("inf")
+
+    for s in range(1, 10):
+        target = scaled_base * s
+        candidate = np.round(target)
+
+        if np.all(candidate == 0):
+            continue
+        if np.any(np.abs(candidate) > 9):
+            continue
+
+        candidate_vec = A @ candidate
+        c_norm = np.linalg.norm(candidate_vec)
+        if c_norm < 1e-10:
+            continue
+        unit_cand = candidate_vec / c_norm
+
+        cos_theta = np.clip(np.dot(unit_vec, unit_cand), -1.0, 1.0)
+        angle_err = np.degrees(np.arccos(cos_theta))
+
+        if angle_err > angle_tol:
+            continue
+
+        diff = np.abs(target - candidate).mean()
+
+        if diff < rounding_tol:
+            if angle_err < min_err:
+                min_err = angle_err
+                best_candidate = candidate.astype(int).tolist()
+
+    return best_candidate
+
+
+# ==================================================
+def get_camera_params(hkl, A, camera):
+    """
+    Get camera parameters.
+
+    Args:
+        hkl (list): index.
+        A (ndarray): A = [a1, a2, a3].
+        camera (Camera): current camera.
+
+    Returns:
+        - (ndarray) -- position.
+        - (ndarray) -- focal point.
+        - (ndarray) -- view up.
+    """
+    A = np.array(A[0:3, 0:3])
+    hkl_vec = np.array(hkl)
     focal = np.array(camera.focal_point)
-    v_view = focal - pos
+    distance = np.linalg.norm(np.array(camera.position) - focal)
 
-    norm = np.linalg.norm(v_view)
-    if norm < 1e-10:
-        return None
-    v_unit = v_view / norm
-    u_raw = A_inv @ v_unit
+    direction = A @ hkl_vec
+    norm = np.linalg.norm(direction)
+    unit_direction = direction / norm if norm > 1e-10 else np.array([0, 0, 1])
 
-    def to_minimal_int_ratio(vec, limit=9):
-        abs_vec = np.abs(vec)
-        max_val = np.max(abs_vec)
-        if max_val < 1e-10:
-            return None
+    new_position = focal + (unit_direction * distance)
 
-        normalized = vec / max_val
+    a1, a2, a3 = A[:, 0], A[:, 1], A[:, 2]
 
-        best_idx = np.array([0, 0, 0])
-        min_err = float("inf")
+    hkl_tuple = tuple(map(int, np.sign(hkl_vec) * np.abs(hkl_vec)))
 
-        for s in range(1, limit + 1):
-            trial = normalized * s
-            trial_int = np.round(trial).astype(int)
+    special_ups = {
+        (0, 1, 0): a1,
+        (0, -1, 0): a1,
+        (0, 0, 1): a2,
+        (0, 0, -1): a2,
+        (1, 0, 0): a3,
+        (-1, 0, 0): a3,
+    }
 
-            if np.any(np.abs(trial_int) > limit):
-                continue
+    if hkl_tuple in special_ups:
+        target_up = special_ups[hkl_tuple]
+    else:
+        dot_a3 = abs(np.dot(unit_direction, a3 / np.linalg.norm(a3)))
+        target_up = a1 if dot_a3 > 0.9 else a3
 
-            err = np.linalg.norm(trial - trial_int)
-            if err < min_err:
-                min_err = err
-                best_idx = trial_int
+    up_proj = target_up - np.dot(target_up, unit_direction) * unit_direction
 
-            if err < 1e-4:
+    if np.linalg.norm(up_proj) < 1e-5:
+        for fallback in [a3, a1, a2]:
+            up_proj = fallback - np.dot(fallback, unit_direction) * unit_direction
+            if np.linalg.norm(up_proj) > 1e-5:
                 break
 
-        if np.any(best_idx != 0):
-            gcd = np.gcd.reduce(np.abs(best_idx))
-            if gcd > 0:
-                best_idx = best_idx // gcd
-            return best_idx
-        return None
+    new_up = up_proj / np.linalg.norm(up_proj)
 
-    result = to_minimal_int_ratio(u_raw)
-    return result.tolist() if result is not None else None
+    return new_position, focal, new_up

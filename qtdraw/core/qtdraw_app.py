@@ -859,8 +859,11 @@ class QtDraw(Window):
 
         :meta private:
         """
+        if self._is_view_updating:
+            return
+
         self.pyvista_widget.set_view()
-        self._update_view()
+        # self._update_view()
 
     # ==================================================
     def _set_view(self, v, d):
@@ -973,12 +976,12 @@ class QtDraw(Window):
         self.view_edit_upper.returnPressed.connect(self._set_upper)
         self.view_button_bar.toggled.connect(self._set_bar)
         self.view_button_default.clicked.connect(self._set_view_default)
-        self.view_button_x.clicked.connect(self.pyvista_widget.view_yz)
-        self.view_button_y.clicked.connect(self.pyvista_widget.view_zx)
-        self.view_button_z.clicked.connect(self.pyvista_widget.view_xy)
-        self.view_button_xm.clicked.connect(self.pyvista_widget.view_zy)
-        self.view_button_ym.clicked.connect(self.pyvista_widget.view_xz)
-        self.view_button_zm.clicked.connect(self.pyvista_widget.view_yx)
+        self.view_button_x.clicked.connect(lambda: self.pyvista_widget.set_view([1, 0, 0]))
+        self.view_button_y.clicked.connect(lambda: self.pyvista_widget.set_view([0, 1, 0]))
+        self.view_button_z.clicked.connect(lambda: self.pyvista_widget.set_view([0, 0, 1]))
+        self.view_button_xm.clicked.connect(lambda: self.pyvista_widget.set_view([-1, 0, 0]))
+        self.view_button_ym.clicked.connect(lambda: self.pyvista_widget.set_view([0, -1, 0]))
+        self.view_button_zm.clicked.connect(lambda: self.pyvista_widget.set_view([0, 0, -1]))
         self.view_combo_a.currentTextChanged.connect(lambda x: self._set_view(x, 0))
         self.view_combo_b.currentTextChanged.connect(lambda x: self._set_view(x, 1))
         self.view_combo_c.currentTextChanged.connect(lambda x: self._set_view(x, 2))
@@ -2385,18 +2388,13 @@ class QtDraw(Window):
         Note:
             - if view is None, default is used.
         """
-        if self._is_view_updating:
-            return
-
         if view is None:
             self._set_view_default()
             return
 
         if type(view) == str:
             view = view.strip("[]").split(",")
-        self.view_combo_a.setCurrentText(str(view[0]))
-        self.view_combo_b.setCurrentText(str(view[1]))
-        self.view_combo_c.setCurrentText(str(view[2]))
+        self.pyvista_widget.set_view(view)
 
     # ==================================================
     def set_parallel_projection(self, mode=None):
