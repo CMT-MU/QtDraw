@@ -1,0 +1,1151 @@
+
+<!DOCTYPE html>
+
+
+<html lang="jp" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>qtdraw.widget.group_model &#8212; QtDraw</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=34ddd5e8" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../_static/documentation_options.js?v=8cf54648"></script>
+    <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js?v=1ae7504c"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/qtdraw/widget/group_model';</script>
+    <script src="../../../_static/custom.js?v=9c3a2667"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="jp"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../README.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/qtdraw_logo.png" class="logo__image only-light" alt="QtDraw - Home"/>
+    <img src="../../../_static/qtdraw_logo.png" class="logo__image only-dark pst-js-only" alt="QtDraw - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../src/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../src/install.html">Installing QtDraw</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../src/getting_started.html">Getting Started</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../src/user_guide.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../src/example.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../src/from_python.html">Usage from Python code</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../src/api_summary.html">API Reference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../src/api_core.html">Core</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../src/api_multipie.html">MultiPie</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../src/api_parser.html">Parser</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../src/api_script.html">Script</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../src/api_util.html">Utilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../src/api_widget.html">Widget</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../src/function_table.html">Function Summary</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/CMT-MU/QtDraw.git" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/CMT-MU/QtDraw.git/issues/new?title=Issue%20on%20page%20%2F_modules/qtdraw/widget/group_model.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for qtdraw.widget.group_model</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Two-layer tree model for managing objects.</span>
+
+<span class="sd">This module provides a class to manage objects to draw.</span>
+<span class="sd">The objects are grouped by the first column, &quot;name&quot;.</span>
+<span class="sd">All the objects in the same group can be modified together.</span>
+<span class="sd">When there are more than two objects in the same group,</span>
+<span class="sd">a child tree appears and the parent tree is the same as</span>
+<span class="sd">the first row of the child tree.</span>
+
+<span class="sd">The raw data is maintained by dict, and the index model</span>
+<span class="sd">is just to keep the relation between parent and child,</span>
+<span class="sd">which is necessary to use other Qt functionalities.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">copy</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">PySide6.QtGui</span><span class="w"> </span><span class="kn">import</span> <span class="n">QStandardItemModel</span><span class="p">,</span> <span class="n">QStandardItem</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">PySide6.QtCore</span><span class="w"> </span><span class="kn">import</span> <span class="n">Signal</span><span class="p">,</span> <span class="n">Qt</span><span class="p">,</span> <span class="n">QModelIndex</span><span class="p">,</span> <span class="n">QTimer</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw.core.pyvista_widget_setting</span><span class="w"> </span><span class="kn">import</span> <span class="n">CUSTOM_WIDGET</span><span class="p">,</span> <span class="n">COLUMN_NAME_ACTOR</span><span class="p">,</span> <span class="n">COLUMN_LABEL_ACTOR</span>
+
+
+<span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="GroupModel">
+<a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.group_model.GroupModel">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">GroupModel</span><span class="p">(</span><span class="n">QStandardItemModel</span><span class="p">):</span>
+    <span class="n">updateData</span> <span class="o">=</span> <span class="n">Signal</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="n">QModelIndex</span><span class="p">)</span>  <span class="c1"># name, row_data, role, index.</span>
+    <span class="n">updateWidget</span> <span class="o">=</span> <span class="n">Signal</span><span class="p">(</span><span class="n">QModelIndex</span><span class="p">)</span>  <span class="c1"># index.</span>
+
+    <span class="c1"># data/check state changed signal for user.</span>
+    <span class="n">dataRemoved</span> <span class="o">=</span> <span class="n">Signal</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">,</span> <span class="n">QModelIndex</span><span class="p">)</span>  <span class="c1"># object_type, row_data, index.</span>
+    <span class="n">dataModified</span> <span class="o">=</span> <span class="n">Signal</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">,</span> <span class="n">QModelIndex</span><span class="p">)</span>  <span class="c1"># object_type, row_data, index.</span>
+    <span class="n">checkChanged</span> <span class="o">=</span> <span class="n">Signal</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">,</span> <span class="n">QModelIndex</span><span class="p">)</span>  <span class="c1"># object_type, row_data, index.</span>
+
+    <span class="c1"># role.</span>
+    <span class="n">AppendRow</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">UserRole</span> <span class="o">+</span> <span class="mi">11</span>
+    <span class="n">RemoveRow</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">UserRole</span> <span class="o">+</span> <span class="mi">12</span>
+    <span class="n">MoveRow</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">UserRole</span> <span class="o">+</span> <span class="mi">13</span>
+
+    <span class="c1"># ==================================================</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;model&quot;</span><span class="p">,</span> <span class="n">column_info</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Group data model (2 layer parent-child tree model).</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            parent (QWidget, optional): parent.</span>
+<span class="sd">            name (str, optional): model name.</span>
+<span class="sd">            column_info (list, optional): {header: (type,option,default)} for each column.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">column_info</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">column_info</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">name</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">setHorizontalHeaderLabels</span><span class="p">(</span><span class="n">column_info</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">column_type</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">column_option</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">column_default</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">c_type</span><span class="p">,</span> <span class="n">c_option</span><span class="p">,</span> <span class="n">c_default</span> <span class="ow">in</span> <span class="n">column_info</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">column_type</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c_type</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">column_option</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c_option</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">column_default</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c_default</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">column_widget</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">column_type</span><span class="p">)</span> <span class="k">if</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">CUSTOM_WIDGET</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">update_check_state</span><span class="p">)</span>  <span class="c1"># to modify bool data in column+1.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">updateData</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">emit_update_data</span><span class="p">)</span>
+
+    <span class="c1"># ==================================================</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">group_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Group name.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            - (str) -- group name.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span>
+
+    <span class="c1"># ==================================================</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">header</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Header label.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            - (list) -- header label.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">headerData</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Horizontal</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">columnCount</span><span class="p">())]</span>
+
+    <span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="GroupModel.is_parent">
+<a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.group_model.GroupModel.is_parent">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_parent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Is parent index ?</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            index (QModelIndex): index.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            - (bool) -- parent index ?</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">depth</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="n">index</span>
+        <span class="k">while</span> <span class="n">idx</span><span class="o">.</span><span class="n">isValid</span><span class="p">():</span>
+            <span class="n">idx</span> <span class="o">=</span> <span class="n">idx</span><span class="o">.</span><span class="n">parent</span><span class="p">()</span>
+            <span class="n">depth</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">depth</span> <span class="o">==</span> <span class="mi">1</span></div>
+
+
+    <span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="GroupModel.update_check_state">
+<a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.group_model.GroupModel.update_check_state">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">update_check_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">topLeft</span><span class="p">,</span> <span class="n">bottomRight</span><span class="p">,</span> <span class="n">roles</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Update check state data.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            topLeft (QModelIndex): top left index.</span>
+<span class="sd">            bottomRight (QModelIndex): bottom right index.</span>
+<span class="sd">            roles (list, optional): list of roles.</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            - set check state (bool) in column+1.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">roles</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">roles</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">Qt</span><span class="o">.</span><span class="n">CheckStateRole</span> <span class="ow">in</span> <span class="n">roles</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">topLeft</span><span class="o">.</span><span class="n">row</span><span class="p">(),</span> <span class="n">bottomRight</span><span class="o">.</span><span class="n">row</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">col</span> <span class="o">=</span> <span class="n">topLeft</span><span class="o">.</span><span class="n">column</span><span class="p">()</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">,</span> <span class="n">topLeft</span><span class="o">.</span><span class="n">parent</span><span class="p">())</span>
+            <span class="n">index1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">topLeft</span><span class="o">.</span><span class="n">parent</span><span class="p">())</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">CheckStateRole</span><span class="p">)</span>
+            <span class="n">state</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">CheckState</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Checked</span><span class="p">)</span>
+            <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="n">index1</span><span class="p">,</span> <span class="n">state</span><span class="p">)</span></div>
+
+
+    <span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="GroupModel.set_data">
+<a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.group_model.GroupModel.set_data">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set data from list data.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            - (list) -- set data from string.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">row_data</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">append_row</span><span class="p">(</span><span class="n">row_data</span><span class="p">)</span></div>
+
+
+    <span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="GroupModel.set_row_data">
+<a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.group_model.GroupModel.set_row_data">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_row_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">column</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set row data.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            index (QModelIndex): index.</span>
+<span class="sd">            column (int): column.</span>
+<span class="sd">            data (str): data.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">blockSignals</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="n">index</span><span class="o">.</span><span class="n">siblingAtColumn</span><span class="p">(</span><span class="n">column</span><span class="p">),</span> <span class="n">data</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">EditRole</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">blockSignals</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span></div>
+
+
+    <span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="GroupModel.set_check">
+<a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.group_model.GroupModel.set_check">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_check</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">column</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set check state.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            index (QModelIndex): index.</span>
+<span class="sd">            column (int): column.</span>
+<span class="sd">            data (QCheckState): check state.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">index_c</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">siblingAtColumn</span><span class="p">(</span><span class="n">column</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="n">index_c</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">CheckStateRole</span><span class="p">)</span></div>
+
+
+    <span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="GroupModel.tolist">
+<a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.group_model.GroupModel.tolist">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">tolist</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Convert to list.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            raw (bool, optional): raw data ?</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            - (list) -- list data.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">root_item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">invisibleRootItem</span><span class="p">()</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">parent_row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">root_item</span><span class="o">.</span><span class="n">rowCount</span><span class="p">()):</span>
+            <span class="n">item</span> <span class="o">=</span> <span class="n">root_item</span><span class="o">.</span><span class="n">child</span><span class="p">(</span><span class="n">parent_row</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">hasChildren</span><span class="p">():</span>
+                <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">rowCount</span><span class="p">()):</span>
+                    <span class="n">row_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_row_data</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">child</span><span class="p">(</span><span class="n">row</span><span class="p">)</span><span class="o">.</span><span class="n">index</span><span class="p">())</span>
+                    <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row_data</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">row_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_row_data</span><span class="p">(</span><span class="n">root_item</span><span class="o">.</span><span class="n">child</span><span class="p">(</span><span class="n">parent_row</span><span class="p">)</span><span class="o">.</span><span class="n">index</span><span class="p">())</span>
+                <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row_data</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">data</span></div>
+
+
+    <span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="GroupModel.emit_update_all">
+<a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.group_model.GroupModel.emit_update_all">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">emit_update_all</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Emit update for all data.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">group_name</span>
+        <span class="n">root_item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">invisibleRootItem</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">parent_row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">root_item</span><span class="o">.</span><span class="n">rowCount</span><span class="p">()):</span>
+            <span class="n">item</span> <span class="o">=</span> <span class="n">root_item</span><span class="o">.</span><span class="n">child</span><span class="p">(</span><span class="n">parent_row</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">hasChildren</span><span class="p">():</span>
+                <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">rowCount</span><span class="p">()):</span>
+                    <span class="n">index</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">child</span><span class="p">(</span><span class="n">row</span><span class="p">)</span><span class="o">.</span><span class="n">index</span><span class="p">()</span>
+                    <span class="n">row_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_row_data</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">dataModified</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">row_data</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">index</span> <span class="o">=</span> <span class="n">root_item</span><span class="o">.</span><span class="n">child</span><span class="p">(</span><span class="n">parent_row</span><span class="p">)</span><span class="o">.</span><span class="n">index</span><span class="p">()</span>
+                <span class="n">row_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_row_data</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">dataModified</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">row_data</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span></div>
+
+
+    <span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="GroupModel.find_item">
+<a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.group_model.GroupModel.find_item">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">find_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">child</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Find item.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            text (str): str to find.</span>
+<span class="sd">            column (int, optional): column.</span>
+<span class="sd">            child (bool, optional): find also for child ?</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            - (list) -- found items.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">found</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="n">parent_item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">invisibleRootItem</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">parent_item</span><span class="o">.</span><span class="n">rowCount</span><span class="p">()):</span>
+            <span class="n">item</span> <span class="o">=</span> <span class="n">parent_item</span><span class="o">.</span><span class="n">child</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">column</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">item</span> <span class="ow">and</span> <span class="n">item</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">EditRole</span><span class="p">)</span> <span class="o">==</span> <span class="n">text</span><span class="p">:</span>
+                <span class="n">found</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">child</span><span class="p">:</span>
+                <span class="n">item0</span> <span class="o">=</span> <span class="n">parent_item</span><span class="o">.</span><span class="n">child</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">crow</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">item0</span><span class="o">.</span><span class="n">rowCount</span><span class="p">()):</span>
+                    <span class="n">item1</span> <span class="o">=</span> <span class="n">item0</span><span class="o">.</span><span class="n">child</span><span class="p">(</span><span class="n">crow</span><span class="p">,</span> <span class="n">column</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">item1</span> <span class="ow">and</span> <span class="n">item1</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">EditRole</span><span class="p">)</span> <span class="o">==</span> <span class="n">text</span><span class="p">:</span>
+                        <span class="n">found</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item1</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">found</span></div>
+
+
+    <span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="GroupModel.set_check_state">
+<a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.group_model.GroupModel.set_check_state">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_check_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="n">row_data</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set check state of row.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            item (QItemModel): item of row(s).</span>
+<span class="sd">            row_data (list): row data, [str].</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">columnCount</span><span class="p">()):</span>
+            <span class="n">itemc</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="n">column</span><span class="p">]</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">column_type</span><span class="p">[</span><span class="n">column</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;check&quot;</span><span class="p">:</span>
+                <span class="n">itemc</span><span class="o">.</span><span class="n">setCheckable</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">column_default</span><span class="p">[</span><span class="n">column</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+                    <span class="n">itemc</span><span class="o">.</span><span class="n">setEditable</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+                <span class="n">state</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">row_data</span><span class="p">[</span><span class="n">column</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span> <span class="o">==</span> <span class="s2">&quot;True&quot;</span>
+                <span class="k">if</span> <span class="n">state</span><span class="p">:</span>
+                    <span class="n">itemc</span><span class="o">.</span><span class="n">setCheckState</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Checked</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">itemc</span><span class="o">.</span><span class="n">setCheckState</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Unchecked</span><span class="p">)</span></div>
+
+
+    <span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="GroupModel.get_row_data">
+<a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.group_model.GroupModel.get_row_data">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_row_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get row data.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            index (QModelIndex): index.</span>
+<span class="sd">            column (int, optional): column.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            - (list) -- row data.</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            - bool string is replaced by bool.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">column</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">row_data</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">itemFromIndex</span><span class="p">(</span><span class="n">index</span><span class="o">.</span><span class="n">siblingAtColumn</span><span class="p">(</span><span class="n">c</span><span class="p">))</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">EditRole</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">columnCount</span><span class="p">())]</span>
+            <span class="n">row_data</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;True&quot;</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">column_type</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;bool&quot;</span> <span class="k">else</span> <span class="n">i</span> <span class="k">for</span> <span class="n">c</span><span class="p">,</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">row_data</span><span class="p">)]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">row_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">itemFromIndex</span><span class="p">(</span><span class="n">index</span><span class="o">.</span><span class="n">siblingAtColumn</span><span class="p">(</span><span class="n">column</span><span class="p">))</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">EditRole</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">column_type</span><span class="p">[</span><span class="n">column</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;bool&quot;</span><span class="p">:</span>
+                <span class="n">row_data</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">row_data</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;True&quot;</span>
+        <span class="k">return</span> <span class="n">row_data</span></div>
+
+
+    <span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="GroupModel.emit_update_data">
+<a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.group_model.GroupModel.emit_update_data">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">emit_update_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">row_data</span><span class="p">,</span> <span class="n">role</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Emit update data.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            name (str): group name.</span>
+<span class="sd">            row_data (list): row_data.</span>
+<span class="sd">            role (int): role.</span>
+<span class="sd">            index (QModelIndex): index.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">role</span> <span class="ow">in</span> <span class="p">[</span><span class="n">Qt</span><span class="o">.</span><span class="n">EditRole</span><span class="p">,</span> <span class="n">GroupModel</span><span class="o">.</span><span class="n">AppendRow</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dataModified</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">row_data</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">role</span> <span class="ow">in</span> <span class="p">[</span><span class="n">GroupModel</span><span class="o">.</span><span class="n">RemoveRow</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dataRemoved</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">row_data</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">role</span> <span class="ow">in</span> <span class="p">[</span><span class="n">Qt</span><span class="o">.</span><span class="n">CheckStateRole</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">checkChanged</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">row_data</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span></div>
+
+
+    <span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="GroupModel.append_row">
+<a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.group_model.GroupModel.append_row">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">append_row</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row_data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">role</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">QModelIndex</span><span class="p">(),</span> <span class="n">copy_row</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Append row.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            row_data (list, optional): row data.</span>
+<span class="sd">            role (int, optional): role.</span>
+<span class="sd">            index (QModelIndex, optional): index.</span>
+<span class="sd">            copy_row (bool, optional): copy from current index ?</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">role</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">role</span> <span class="o">=</span> <span class="n">GroupModel</span><span class="o">.</span><span class="n">AppendRow</span>
+
+        <span class="c1"># default.</span>
+        <span class="k">if</span> <span class="n">row_data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">row_data</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">column_default</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">row_data</span><span class="p">)</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">columnCount</span><span class="p">():</span>
+            <span class="k">return</span>
+
+        <span class="c1"># insert copy or default.</span>
+        <span class="k">if</span> <span class="n">index</span> <span class="o">!=</span> <span class="n">QModelIndex</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">copy_row</span><span class="p">:</span>
+                <span class="n">row_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_row_data</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+                <span class="n">row_data</span><span class="p">[</span><span class="n">COLUMN_NAME_ACTOR</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+                <span class="n">row_data</span><span class="p">[</span><span class="n">COLUMN_LABEL_ACTOR</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">row_data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_row_data</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+        <span class="n">name</span> <span class="o">=</span> <span class="n">row_data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># assume tuple at first column.</span>
+        <span class="n">parent_item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_item</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">child</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">parent_item</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">parent_item</span> <span class="o">=</span> <span class="n">parent_item</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">parent_item</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">if</span> <span class="n">parent_item</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1">#  new group.</span>
+            <span class="n">item</span> <span class="o">=</span> <span class="p">[</span><span class="n">QStandardItem</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">row_data</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_check_state</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">row_data</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">appendRow</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">updateData</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">group_name</span><span class="p">,</span> <span class="n">row_data</span><span class="p">,</span> <span class="n">role</span><span class="p">,</span> <span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">())</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">updateWidget</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">())</span>
+        <span class="k">else</span><span class="p">:</span>  <span class="c1"># existing group.</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">parent_item</span><span class="o">.</span><span class="n">hasChildren</span><span class="p">():</span>  <span class="c1"># no children.</span>
+                <span class="n">row</span> <span class="o">=</span> <span class="n">parent_item</span><span class="o">.</span><span class="n">row</span><span class="p">()</span>
+                <span class="n">row_data0</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">item</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">EditRole</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">columnCount</span><span class="p">())]</span>
+                <span class="n">item</span> <span class="o">=</span> <span class="p">[</span><span class="n">QStandardItem</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">row_data0</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">set_check_state</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">row_data0</span><span class="p">)</span>
+                <span class="n">parent_item</span><span class="o">.</span><span class="n">appendRow</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">updateWidget</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">())</span>
+            <span class="n">item</span> <span class="o">=</span> <span class="p">[</span><span class="n">QStandardItem</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">row_data</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_check_state</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">row_data</span><span class="p">)</span>
+            <span class="n">parent_item</span><span class="o">.</span><span class="n">appendRow</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">updateData</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">group_name</span><span class="p">,</span> <span class="n">row_data</span><span class="p">,</span> <span class="n">role</span><span class="p">,</span> <span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">())</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">updateWidget</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">())</span></div>
+
+
+    <span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="GroupModel.remove_row">
+<a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.group_model.GroupModel.remove_row">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">remove_row</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">role</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Remove row.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            index (QModelIndex): index.</span>
+<span class="sd">            role (int, optional): role.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">index</span><span class="o">.</span><span class="n">isValid</span><span class="p">():</span>
+            <span class="k">return</span>
+        <span class="k">if</span> <span class="n">role</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">role</span> <span class="o">=</span> <span class="n">GroupModel</span><span class="o">.</span><span class="n">RemoveRow</span>
+
+        <span class="n">index</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">siblingAtColumn</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">itemFromIndex</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">parent</span><span class="p">():</span>  <span class="c1"># child.</span>
+            <span class="n">row</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">row</span><span class="p">()</span>
+            <span class="n">n</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">parent</span><span class="p">()</span><span class="o">.</span><span class="n">rowCount</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">row</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># copy 2nd child to parent.</span>
+                <span class="n">row_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_row_data</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">parent</span><span class="p">()</span><span class="o">.</span><span class="n">child</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">index</span><span class="p">())</span>
+                <span class="k">for</span> <span class="n">c</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">row_data</span><span class="p">):</span>
+                    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">item</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">parent</span><span class="p">()</span><span class="o">.</span><span class="n">row</span><span class="p">(),</span> <span class="n">c</span><span class="p">)</span><span class="o">.</span><span class="n">index</span><span class="p">(),</span> <span class="n">d</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">updateData</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">group_name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_row_data</span><span class="p">(</span><span class="n">index</span><span class="p">),</span> <span class="n">role</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">row</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>  <span class="c1"># copy 1st child to parent.</span>
+                    <span class="n">row_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_row_data</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">parent</span><span class="p">()</span><span class="o">.</span><span class="n">child</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">index</span><span class="p">())</span>
+                    <span class="k">for</span> <span class="n">c</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">row_data</span><span class="p">):</span>
+                        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">item</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">parent</span><span class="p">()</span><span class="o">.</span><span class="n">row</span><span class="p">(),</span> <span class="n">c</span><span class="p">)</span><span class="o">.</span><span class="n">index</span><span class="p">(),</span> <span class="n">d</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">removeRow</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">index</span><span class="o">.</span><span class="n">parent</span><span class="p">())</span>  <span class="c1"># remove 2nd child.</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">removeRow</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">index</span><span class="o">.</span><span class="n">parent</span><span class="p">())</span>  <span class="c1"># remove first child.</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">removeRow</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">index</span><span class="o">.</span><span class="n">parent</span><span class="p">())</span>  <span class="c1"># remove row child.</span>
+        <span class="k">else</span><span class="p">:</span>  <span class="c1"># parent.</span>
+            <span class="n">n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rowCount</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+                <span class="n">cindex</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">updateData</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">group_name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_row_data</span><span class="p">(</span><span class="n">cindex</span><span class="p">),</span> <span class="n">role</span><span class="p">,</span> <span class="n">cindex</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">updateData</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">group_name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_row_data</span><span class="p">(</span><span class="n">index</span><span class="p">),</span> <span class="n">role</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">removeRow</span><span class="p">(</span><span class="n">index</span><span class="o">.</span><span class="n">row</span><span class="p">(),</span> <span class="n">index</span><span class="o">.</span><span class="n">parent</span><span class="p">())</span></div>
+
+
+    <span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="GroupModel.move_row">
+<a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.group_model.GroupModel.move_row">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">move_row</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Move row.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            index (QModelIndex): index.</span>
+<span class="sd">            value (QVariant): value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">cols</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">columnCount</span><span class="p">())</span>
+        <span class="k">if</span> <span class="n">index</span><span class="o">.</span><span class="n">parent</span><span class="p">()</span> <span class="o">==</span> <span class="n">QModelIndex</span><span class="p">():</span>  <span class="c1"># parent.</span>
+            <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">itemFromIndex</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">hasChildren</span><span class="p">():</span>
+                <span class="n">to_move</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">rowCount</span><span class="p">()):</span>
+                    <span class="n">row_data</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span><span class="o">.</span><span class="n">child</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">EditRole</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cols</span><span class="p">]</span>
+                    <span class="n">row_data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+                    <span class="n">to_move</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row_data</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">remove_row</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">GroupModel</span><span class="o">.</span><span class="n">MoveRow</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">row_data</span> <span class="ow">in</span> <span class="n">to_move</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">append_row</span><span class="p">(</span><span class="n">row_data</span><span class="o">=</span><span class="n">row_data</span><span class="p">,</span> <span class="n">role</span><span class="o">=</span><span class="n">GroupModel</span><span class="o">.</span><span class="n">MoveRow</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">to_move</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">invisibleRootItem</span><span class="p">()</span><span class="o">.</span><span class="n">child</span><span class="p">(</span><span class="n">index</span><span class="o">.</span><span class="n">row</span><span class="p">(),</span> <span class="n">c</span><span class="p">)</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">EditRole</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cols</span><span class="p">]</span>
+                <span class="n">to_move</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">remove_row</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">GroupModel</span><span class="o">.</span><span class="n">MoveRow</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">append_row</span><span class="p">(</span><span class="n">row_data</span><span class="o">=</span><span class="n">to_move</span><span class="p">,</span> <span class="n">role</span><span class="o">=</span><span class="n">GroupModel</span><span class="o">.</span><span class="n">MoveRow</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>  <span class="c1"># child.</span>
+            <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">itemFromIndex</span><span class="p">(</span><span class="n">index</span><span class="o">.</span><span class="n">parent</span><span class="p">())</span>
+            <span class="n">to_move</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span><span class="o">.</span><span class="n">child</span><span class="p">(</span><span class="n">index</span><span class="o">.</span><span class="n">row</span><span class="p">(),</span> <span class="n">c</span><span class="p">)</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">EditRole</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cols</span><span class="p">]</span>
+            <span class="n">to_move</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">remove_row</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">GroupModel</span><span class="o">.</span><span class="n">MoveRow</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">append_row</span><span class="p">(</span><span class="n">row_data</span><span class="o">=</span><span class="n">to_move</span><span class="p">,</span> <span class="n">role</span><span class="o">=</span><span class="n">GroupModel</span><span class="o">.</span><span class="n">MoveRow</span><span class="p">)</span></div>
+
+
+    <span class="c1"># ==================================================</span>
+    <span class="c1"># action.</span>
+    <span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="GroupModel.action_copy_row">
+<a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.group_model.GroupModel.action_copy_row">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">action_copy_row</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">indexes</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Slot for copy row action.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            indexes (list): list of index.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">indexes</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="n">indexes</span> <span class="o">=</span> <span class="p">[</span><span class="n">index</span> <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="n">indexes</span> <span class="k">if</span> <span class="n">index</span><span class="o">.</span><span class="n">column</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="n">indexes</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">append_row</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">index</span><span class="p">,</span> <span class="n">copy_row</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+
+    <span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="GroupModel.action_insert_row">
+<a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.group_model.GroupModel.action_insert_row">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">action_insert_row</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">indexes</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Slot for insert row action.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            indexes (list): list of index.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            - (QModelIndex) -- parent index of inserted row.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">indexes</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">append_row</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">indexes</span> <span class="o">=</span> <span class="p">[</span><span class="n">index</span> <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="n">indexes</span> <span class="k">if</span> <span class="n">index</span><span class="o">.</span><span class="n">column</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="n">indexes</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">append_row</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">index</span><span class="p">)</span>
+
+        <span class="c1"># return parent index of inserted row.</span>
+        <span class="n">last</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rowCount</span><span class="p">(</span><span class="n">QModelIndex</span><span class="p">())</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="n">child</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">last</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">QModelIndex</span><span class="p">())</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">rowCount</span><span class="p">(</span><span class="n">child</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">child</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">QModelIndex</span><span class="p">()</span></div>
+
+
+    <span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="GroupModel.action_remove_row">
+<a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.group_model.GroupModel.action_remove_row">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">action_remove_row</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">indexes</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Slot for remove row action.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            indexes (list): list of index.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">indexes</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="n">indexes</span> <span class="o">=</span> <span class="p">[</span><span class="n">index</span> <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="n">indexes</span> <span class="k">if</span> <span class="n">index</span><span class="o">.</span><span class="n">column</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span>
+
+        <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="n">indexes</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">remove_row</span><span class="p">(</span><span class="n">index</span><span class="p">)</span></div>
+
+
+    <span class="c1"># ==================================================</span>
+    <span class="c1"># override.</span>
+    <span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="GroupModel.setData">
+<a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.group_model.GroupModel.setData">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">setData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">role</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">EditRole</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set data (override).</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            index (QModelIndex): index.</span>
+<span class="sd">            value (QVariant): value to set.</span>
+<span class="sd">            role (int, optional): role.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            - (bool) -- success to set data ?</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">index</span><span class="o">.</span><span class="n">isValid</span><span class="p">():</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="c1"># no change.</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">role</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="c1"># move (special case).</span>
+        <span class="k">if</span> <span class="n">role</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">EditRole</span> <span class="ow">and</span> <span class="n">index</span><span class="o">.</span><span class="n">column</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1"># in order to close the editor, timer is used.</span>
+            <span class="n">QTimer</span><span class="o">.</span><span class="n">singleShot</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">move_row</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
+            <span class="k">return</span> <span class="kc">True</span>
+
+        <span class="c1"># update all children.</span>
+        <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">itemFromIndex</span><span class="p">(</span><span class="n">index</span><span class="o">.</span><span class="n">siblingAtColumn</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">hasChildren</span><span class="p">():</span>
+            <span class="c1"># update children.</span>
+            <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">rowCount</span><span class="p">()):</span>
+                <span class="n">citem</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">child</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">index</span><span class="o">.</span><span class="n">column</span><span class="p">())</span>
+                <span class="k">if</span> <span class="n">citem</span><span class="p">:</span>
+                    <span class="c1"># update each child.</span>
+                    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">indexFromItem</span><span class="p">(</span><span class="n">citem</span><span class="p">),</span> <span class="n">value</span><span class="p">,</span> <span class="n">role</span><span class="p">)</span>
+                    <span class="n">cindex</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">indexFromItem</span><span class="p">(</span><span class="n">citem</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">updateData</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">group_name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_row_data</span><span class="p">(</span><span class="n">cindex</span><span class="p">),</span> <span class="n">role</span><span class="p">,</span> <span class="n">cindex</span><span class="p">)</span>
+            <span class="c1"># update parent.</span>
+            <span class="n">status</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">role</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># update as usual (parent w/o children or one child).</span>
+            <span class="n">status</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">role</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">updateData</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">group_name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_row_data</span><span class="p">(</span><span class="n">index</span><span class="p">),</span> <span class="n">role</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
+
+            <span class="c1"># sync. with parent.</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_parent</span><span class="p">(</span><span class="n">index</span><span class="p">)</span> <span class="ow">and</span> <span class="n">index</span><span class="o">.</span><span class="n">row</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">pindex</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">parent</span><span class="p">()</span><span class="o">.</span><span class="n">siblingAtColumn</span><span class="p">(</span><span class="n">index</span><span class="o">.</span><span class="n">column</span><span class="p">())</span>
+                <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="n">pindex</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">role</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">status</span></div>
+
+
+    <span class="c1"># ==================================================</span>
+    <span class="c1"># for debug.</span>
+    <span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="GroupModel.debug_data_changed">
+<a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.group_model.GroupModel.debug_data_changed">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">debug_data_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">topLeft</span><span class="p">,</span> <span class="n">bottomRight</span><span class="p">,</span> <span class="n">roles</span><span class="o">=</span><span class="p">[]):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Debug for dataChanged signal.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            topLeft (QModelIndex): top left index.</span>
+<span class="sd">            bottomRight (QModelIndex): bottom right index.</span>
+<span class="sd">            roles (list, optional): list of roles.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">roles</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">get_role_str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">roles</span><span class="p">]</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;roles:&quot;</span><span class="p">,</span> <span class="n">roles</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tolist_index</span><span class="p">(</span><span class="n">topLeft</span><span class="p">,</span> <span class="n">bottomRight</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;data:&quot;</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span></div>
+
+
+    <span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="GroupModel.debug_updata_data">
+<a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.group_model.GroupModel.debug_updata_data">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">debug_updata_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">row_data</span><span class="p">,</span> <span class="n">role</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Debug for updateData signal.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            name (str): group name.</span>
+<span class="sd">            row_data (list): row data.</span>
+<span class="sd">            role (int): role.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">role</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_role_str</span><span class="p">(</span><span class="n">role</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">role</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">row_data</span><span class="p">)</span></div>
+
+
+    <span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="GroupModel.debug_item_tree">
+<a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.group_model.GroupModel.debug_item_tree">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">debug_item_tree</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Debug for showing item tree.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">root_item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">invisibleRootItem</span><span class="p">()</span>
+
+        <span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">root_item</span><span class="o">.</span><span class="n">rowCount</span><span class="p">()):</span>
+            <span class="n">row_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_row_data</span><span class="p">(</span><span class="n">root_item</span><span class="o">.</span><span class="n">child</span><span class="p">(</span><span class="n">row</span><span class="p">)</span><span class="o">.</span><span class="n">index</span><span class="p">())</span>
+            <span class="n">s</span> <span class="o">+=</span> <span class="nb">str</span><span class="p">(</span><span class="n">row_data</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="n">p_item</span> <span class="o">=</span> <span class="n">root_item</span><span class="o">.</span><span class="n">child</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">c_row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">p_item</span><span class="o">.</span><span class="n">rowCount</span><span class="p">()):</span>
+                <span class="n">row_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_row_data</span><span class="p">(</span><span class="n">p_item</span><span class="o">.</span><span class="n">child</span><span class="p">(</span><span class="n">c_row</span><span class="p">)</span><span class="o">.</span><span class="n">index</span><span class="p">())</span>
+                <span class="n">s</span> <span class="o">+=</span> <span class="s2">&quot; &quot;</span> <span class="o">*</span> <span class="mi">4</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">row_data</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">s</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span></div>
+
+
+    <span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="GroupModel.show_index">
+<a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.group_model.GroupModel.show_index">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">show_index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get raw index.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            index (QModelIndex): index.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            - (str) -- raw index, P/C(row,column).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="s2">&quot;P&quot;</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_parent</span><span class="p">(</span><span class="n">index</span><span class="p">)</span> <span class="k">else</span> <span class="s2">&quot;C&quot;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">p</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="n">index</span><span class="o">.</span><span class="n">row</span><span class="p">()</span><span class="si">}</span><span class="s2">,</span><span class="si">{</span><span class="n">index</span><span class="o">.</span><span class="n">column</span><span class="p">()</span><span class="si">}</span><span class="s2">)&quot;</span></div>
+
+
+    <span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="GroupModel.get_role_str">
+<a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.group_model.GroupModel.get_role_str">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_role_str</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">role</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get role string.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            role (int): role.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            - (str) -- role string.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># role string.</span>
+        <span class="n">role_str</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="n">Qt</span><span class="o">.</span><span class="n">EditRole</span><span class="p">:</span> <span class="s2">&quot;EditRole&quot;</span><span class="p">,</span>
+            <span class="n">Qt</span><span class="o">.</span><span class="n">DisplayRole</span><span class="p">:</span> <span class="s2">&quot;DisplayRole&quot;</span><span class="p">,</span>
+            <span class="n">Qt</span><span class="o">.</span><span class="n">UserRole</span><span class="p">:</span> <span class="s2">&quot;UserRole&quot;</span><span class="p">,</span>
+            <span class="n">Qt</span><span class="o">.</span><span class="n">CheckStateRole</span><span class="p">:</span> <span class="s2">&quot;CheckStateRole&quot;</span><span class="p">,</span>
+            <span class="n">Qt</span><span class="o">.</span><span class="n">ToolTipRole</span><span class="p">:</span> <span class="s2">&quot;ToolTipRole&quot;</span><span class="p">,</span>
+            <span class="n">Qt</span><span class="o">.</span><span class="n">StatusTipRole</span><span class="p">:</span> <span class="s2">&quot;StatusTipRole&quot;</span><span class="p">,</span>
+            <span class="n">Qt</span><span class="o">.</span><span class="n">FontRole</span><span class="p">:</span> <span class="s2">&quot;FontRole&quot;</span><span class="p">,</span>
+            <span class="n">Qt</span><span class="o">.</span><span class="n">TextAlignmentRole</span><span class="p">:</span> <span class="s2">&quot;TextAlignmentRole&quot;</span><span class="p">,</span>
+            <span class="n">Qt</span><span class="o">.</span><span class="n">BackgroundRole</span><span class="p">:</span> <span class="s2">&quot;BackgroundRole&quot;</span><span class="p">,</span>
+            <span class="n">Qt</span><span class="o">.</span><span class="n">ForegroundRole</span><span class="p">:</span> <span class="s2">&quot;ForegroundRole&quot;</span><span class="p">,</span>
+            <span class="n">Qt</span><span class="o">.</span><span class="n">DecorationRole</span><span class="p">:</span> <span class="s2">&quot;DecorationRole&quot;</span><span class="p">,</span>
+            <span class="n">Qt</span><span class="o">.</span><span class="n">SizeHintRole</span><span class="p">:</span> <span class="s2">&quot;SizeHintRole&quot;</span><span class="p">,</span>
+            <span class="n">Qt</span><span class="o">.</span><span class="n">ItemDataRole</span><span class="p">:</span> <span class="s2">&quot;ItemDataRole&quot;</span><span class="p">,</span>
+            <span class="n">GroupModel</span><span class="o">.</span><span class="n">AppendRow</span><span class="p">:</span> <span class="s2">&quot;AppendRow&quot;</span><span class="p">,</span>
+            <span class="n">GroupModel</span><span class="o">.</span><span class="n">RemoveRow</span><span class="p">:</span> <span class="s2">&quot;RemoveRow&quot;</span><span class="p">,</span>
+            <span class="n">GroupModel</span><span class="o">.</span><span class="n">MoveRow</span><span class="p">:</span> <span class="s2">&quot;MoveRow&quot;</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">role_str</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">role</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;UndefinedRole(</span><span class="si">{</span><span class="n">role</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span></div>
+
+
+    <span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="GroupModel.tolist_index">
+<a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.group_model.GroupModel.tolist_index">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">tolist_index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">topLeft</span><span class="p">,</span> <span class="n">bottomRight</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Row data for given index.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            topLeft (QModelIndex): index at top left.</span>
+<span class="sd">            bottomRight (QModelIndex): index at buttom right.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            - (list) -- row data.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">parent</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">itemFromIndex</span><span class="p">(</span><span class="n">topLeft</span><span class="o">.</span><span class="n">parent</span><span class="p">())</span>
+        <span class="k">if</span> <span class="n">parent</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">parent</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">invisibleRootItem</span><span class="p">()</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">get_row_data</span><span class="p">(</span><span class="n">parent</span><span class="o">.</span><span class="n">child</span><span class="p">(</span><span class="n">row</span><span class="p">)</span><span class="o">.</span><span class="n">index</span><span class="p">())</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">topLeft</span><span class="o">.</span><span class="n">row</span><span class="p">(),</span> <span class="n">bottomRight</span><span class="o">.</span><span class="n">row</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
+
+        <span class="k">return</span> <span class="n">data</span></div>
+
+
+    <span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="GroupModel.clear_data">
+<a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.group_model.GroupModel.clear_data">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">clear_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Clear data with keeping header and column info.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rowCount</span><span class="p">())):</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">row1</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rowCount</span><span class="p">(</span><span class="n">index</span><span class="p">))):</span>
+                <span class="n">cindex</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">row1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">remove_row</span><span class="p">(</span><span class="n">cindex</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">remove_row</span><span class="p">(</span><span class="n">index</span><span class="p">)</span></div>
+</div>
+
+</pre></div>
+
+                </article>
+              
+
+              
+              
+              
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Hiroaki Kusunose
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2021-.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
