@@ -43,6 +43,7 @@
 | _set_axis_type | set axis type. |
 | _set_cell_mode | set cell mode. |
 | create_connection | Create connections. |
+| set_view_index |  |
 | _nonrepeat | Transform data into non-repeat data. |
 | _show_preference | Show preference panel. |
 | _show_about | Show about panel. |
@@ -240,6 +241,7 @@
 | clear_data | Clear Data. |
 | get_camera_info | Get camera info. |
 | set_camera_info | Get camera info. |
+| _set_default_zoom |  |
 | add_data | Add data. |
 | repeat_data | Repeat data. |
 | set_nonrepeat | Transform data to non-repeat data. |
@@ -516,6 +518,10 @@
 |--------|----------|
 | GroupView | Group view. |
 | update_widget |  |
+| force_refresh_widgets |  |
+| _do_force_refresh |  |
+| _open_editors_for_row |  |
+| set_widget | Set widget. |
 | clear_selection | Clear selection. |
 | mousePressEvent | Mouse press event for focus or clear selection. |
 | keyPressEvent | Key press event for ESC and up and down keys. |
@@ -523,7 +529,6 @@
 | insert_row | Insert row. |
 | copy_row | Copy row. |
 | remove_row | Remove row. |
-| set_widget | Set widget. |
 | selection_changed | For Selection changed. |
 | select_row | Select row. |
 | closeEvent |  |
@@ -716,9 +721,11 @@
 | Function | Summary |
 |--------|----------|
 | TabGroupView | Data view group. |
-| tab_change |  |
 | select_tab | Select tab. |
 | closeEvent | Close event for deselect all. |
+| showEvent |  |
+| tab_change |  |
+| _refresh_view_logic |  |
 
 
 ## <div class='my-heading' style='color: darkgreen;'>util_axis.py
@@ -737,6 +744,8 @@
 | get_lattice_vector | Get lattice vector. |
 | get_repeat_range | Get repeart range. |
 | get_outside_box | Get indices outside range. |
+| get_hkl_from_camera | Get index from camera. |
+| get_camera_params | Get camera parameters. |
 
 
 ## <div class='my-heading' style='color: darkgreen;'>util.py

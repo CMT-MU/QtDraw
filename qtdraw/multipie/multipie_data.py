@@ -165,7 +165,7 @@ class MultiPieData:
         else:
             self.pvw.set_cell("single")
             self.pvw.set_axis("on")
-        self.pvw.set_view()
+        self.pvw._set_default_zoom()
 
     # ==================================================
     def clear_data(self):

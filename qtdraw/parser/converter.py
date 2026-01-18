@@ -256,22 +256,19 @@ def get_camera(dic):
     Returns:
         - (dict) -- updated camera info.
     """
-    setting = dic["setting"]
     camera = {
-        "position": [2.495208, 2.99401, 1.497604],
-        "viewup": [-0.186248, -0.23281, 0.954521],
+        "position": [-2.0497042434983572, -1.6247535362486305, 0.07504929275027392],
         "focal_point": [0.5, 0.5, 0.5],
+        "viewup": [0.0, 0.0, 0.1],
         "angle": 30.0,
-        "clipping_range": [1.68102, 5.450085],
-        "distance": 3.346065,
-        "scale": 0.866025,
+        "scale": 8660254037844386,
+        "clipping_range": [1.7962230464194453, 5.305068101988363],
     }
-    update_camera = {
-        "position": list(setting["camera.position"]),
-        "viewup": list(setting["camera.up"]),
-        "focal_point": list(setting["camera.focus"]),
-    }
-    camera.update(update_camera)
+    if "camera" in dic["setting"].keys():
+        camera.update(dic["setting"]["camera"])
+
+    if "distance" in camera.keys():
+        del camera["distance"]
 
     return camera
 

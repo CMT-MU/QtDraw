@@ -520,3 +520,128 @@ def get_outside_box(point, lower, upper):
     outside = np.where(~in_box)[0]
 
     return outside
+
+
+# ==================================================
+def get_hkl_from_camera(camera, A):
+    """
+    Get index from camera.
+
+    Args:
+        camera (Camera): camera.
+        A (ndarray): A = [a1, a2, a3].
+
+    Returns:
+        - (list) -- index (cannot determine hkl, return [0,0,0]).
+    """
+    rounding_tol = 0.1
+    angle_tol = 1.0
+
+    A = np.array(A[0:3, 0:3])
+    vec = np.array(camera.position) - np.array(camera.focal_point)
+    vec_norm = np.linalg.norm(vec)
+    if vec_norm < 1e-10:
+        return [0, 0, 0]
+    unit_vec = vec / vec_norm
+
+    try:
+        hkl_raw = np.linalg.solve(A, vec)
+    except np.linalg.LinAlgError:
+        return [0, 0, 0]
+
+    max_abs = np.abs(hkl_raw).max()
+    if max_abs < 1e-10:
+        return [0, 0, 0]
+
+    scaled_base = hkl_raw / max_abs
+
+    best_candidate = [0, 0, 0]
+    min_err = float("inf")
+
+    for s in range(1, 10):
+        target = scaled_base * s
+        candidate = np.round(target)
+
+        if np.all(candidate == 0):
+            continue
+        if np.any(np.abs(candidate) > 9):
+            continue
+
+        candidate_vec = A @ candidate
+        c_norm = np.linalg.norm(candidate_vec)
+        if c_norm < 1e-10:
+            continue
+        unit_cand = candidate_vec / c_norm
+
+        cos_theta = np.clip(np.dot(unit_vec, unit_cand), -1.0, 1.0)
+        angle_err = np.degrees(np.arccos(cos_theta))
+
+        if angle_err > angle_tol:
+            continue
+
+        diff = np.abs(target - candidate).mean()
+
+        if diff < rounding_tol:
+            if angle_err < min_err:
+                min_err = angle_err
+                best_candidate = candidate.astype(int).tolist()
+
+    return best_candidate
+
+
+# ==================================================
+def get_camera_params(hkl, A, camera):
+    """
+    Get camera parameters.
+
+    Args:
+        hkl (list): index.
+        A (ndarray): A = [a1, a2, a3].
+        camera (Camera): current camera.
+
+    Returns:
+        - (ndarray) -- position.
+        - (ndarray) -- focal point.
+        - (ndarray) -- view up.
+    """
+    A = np.array(A[0:3, 0:3])
+    hkl_vec = np.array(hkl)
+    focal = np.array(camera.focal_point)
+    distance = np.linalg.norm(np.array(camera.position) - focal)
+
+    direction = A @ hkl_vec
+    norm = np.linalg.norm(direction)
+    unit_direction = direction / norm if norm > 1e-10 else np.array([0, 0, 1])
+
+    new_position = focal + (unit_direction * distance)
+
+    a1, a2, a3 = A[:, 0], A[:, 1], A[:, 2]
+
+    hkl_tuple = tuple(map(int, np.sign(hkl_vec) * np.abs(hkl_vec)))
+
+    special_ups = {
+        (0, 1, 0): a1,
+        (0, -1, 0): a1,
+        (0, 0, 1): a2,
+        (0, 0, -1): a2,
+        (1, 0, 0): a3,
+        (-1, 0, 0): a3,
+    }
+
+    if hkl_tuple in special_ups:
+        target_up = special_ups[hkl_tuple]
+    else:
+        dot_a3 = abs(np.dot(unit_direction, a3 / np.linalg.norm(a3)))
+        target_up = a1 if dot_a3 > 0.9 else a3
+
+    up_proj = target_up - np.dot(target_up, unit_direction) * unit_direction
+
+    if np.linalg.norm(up_proj) < 1e-5:
+        for fallback in [a3, a1, a2]:
+            up_proj = fallback - np.dot(fallback, unit_direction) * unit_direction
+            if np.linalg.norm(up_proj) > 1e-5:
+                break
+
+    new_up = up_proj / np.linalg.norm(up_proj)
+
+    return new_position, focal, new_up
