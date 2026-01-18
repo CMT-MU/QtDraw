@@ -739,7 +739,6 @@
 | _create_axes_actor_full | Create custom axes actor (crossed axes). |
 | create_axes_widget | Create axes widget. |
 | create_unit_cell | Create unit cell mesh. |
-| get_view_vector | Get view and viewup. |
 | create_cell_grid | Create grid point. |
 | get_lattice_vector | Get lattice vector. |
 | get_repeat_range | Get repeart range. |
