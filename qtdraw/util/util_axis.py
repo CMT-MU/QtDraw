@@ -520,3 +520,68 @@ def get_outside_box(point, lower, upper):
     outside = np.where(~in_box)[0]
 
     return outside
+
+
+# ==================================================
+def get_view_index(camera, A):
+    """
+    Get view index.
+
+    Args:
+        camera (plotter.camera): camera object.
+        A (ndarray): unit vectors in each column.
+
+    Returns:
+        - (list) -- list of indices.
+    """
+    A_3x3 = A[:3, :3]
+    try:
+        A_inv = np.linalg.inv(A_3x3)
+    except np.linalg.LinAlgError:
+        return None
+
+    pos = np.array(camera.position)
+    focal = np.array(camera.focal_point)
+    v_view = focal - pos
+
+    norm = np.linalg.norm(v_view)
+    if norm < 1e-10:
+        return None
+    v_unit = v_view / norm
+    u_raw = A_inv @ v_unit
+
+    def to_minimal_int_ratio(vec, limit=9):
+        abs_vec = np.abs(vec)
+        max_val = np.max(abs_vec)
+        if max_val < 1e-10:
+            return None
+
+        normalized = vec / max_val
+
+        best_idx = np.array([0, 0, 0])
+        min_err = float("inf")
+
+        for s in range(1, limit + 1):
+            trial = normalized * s
+            trial_int = np.round(trial).astype(int)
+
+            if np.any(np.abs(trial_int) > limit):
+                continue
+
+            err = np.linalg.norm(trial - trial_int)
+            if err < min_err:
+                min_err = err
+                best_idx = trial_int
+
+            if err < 1e-4:
+                break
+
+        if np.any(best_idx != 0):
+            gcd = np.gcd.reduce(np.abs(best_idx))
+            if gcd > 0:
+                best_idx = best_idx // gcd
+            return best_idx
+        return None
+
+    result = to_minimal_int_ratio(u_raw)
+    return result.tolist() if result is not None else None

@@ -52,6 +52,7 @@ from qtdraw.util.util_axis import (
     get_lattice_vector,
     get_repeat_range,
     get_outside_box,
+    get_view_index,
 )
 from qtdraw.util.basic_object import (
     create_sphere,
@@ -253,6 +254,7 @@ class PyVistaWidget(QtInteractor):
     # signal for write info.
     message = Signal(str)  # messsage.
     data_removed = Signal()
+    camera_view = Signal(list)  # view index.
 
     # ==================================================
     def __init__(self, parent=None, off_screen=False):
@@ -297,7 +299,6 @@ class PyVistaWidget(QtInteractor):
         # set data model.
         self.init_data_model()
 
-        # self.set_theme()
         if detail["anti_aliasing"]:
             self.enable_anti_aliasing()
         else:
@@ -342,6 +343,20 @@ class PyVistaWidget(QtInteractor):
         # refresh.
         self.refresh()
         self.set_view()
+
+        if self.iren is not None:
+            self.iren.add_observer("EndInteractionEvent", self._camera_view_changed)
+
+    # ==================================================
+    def _camera_view_changed(self, observer=None, event=None, inverse=False):
+        try:
+            index = get_view_index(self.camera, self.A_matrix)
+            if inverse:
+                index = [-index[0], -index[1], -index[2]]
+            self.camera_view.emit(index)
+            self._status["view"] = index
+        except Exception as e:
+            pass
 
     # ==================================================
     def paintEvent(self, event):
@@ -1578,7 +1593,7 @@ class PyVistaWidget(QtInteractor):
         self.write_info(f"* read from {f}.")
 
         # set data.
-        if "latex" in all_data["preference"].keys():  # "latex" is deprecated for ver.2.5 or later.
+        if "latex" in all_data["preference"].keys():  # deprecated for ver.2.5 or later.
             del all_data["preference"]["latex"]
 
         self.set_property(all_data["status"], all_data["preference"])
@@ -1588,8 +1603,12 @@ class PyVistaWidget(QtInteractor):
             self.mp_set_group(status=multipie)
 
         if file.suffix == detail["extension"]:
-            self.set_camera_info(all_data["camera"])
+            if "distance" in all_data["camera"]:
+                del all_data["camera"]["distance"]
             self.reload(all_data["data"])
+            self.set_camera_info(all_data["camera"])
+            if ver < 2:
+                self.reset_camera()
         else:
             self.set_view()
 
@@ -1807,7 +1826,6 @@ class PyVistaWidget(QtInteractor):
             self._status["grid"] = False
         else:
             self.add_data(data)
-        self.reset_camera()
         self._block_remove_isosurface = False
 
     # ==================================================
@@ -2221,6 +2239,39 @@ class PyVistaWidget(QtInteractor):
         # set view and viewup of camera.
         self.view_vector(view, viewup)
 
+        self._set_default_zoom()
+        self._camera_view_changed()
+
+    # ==================================================
+    def view_yz(self):
+        super().view_yz()
+        self._camera_view_changed(inverse=True)
+
+    # ==================================================
+    def view_zx(self):
+        super().view_zx()
+        self._camera_view_changed(inverse=True)
+
+    # ==================================================
+    def view_xy(self):
+        super().view_xy()
+        self._camera_view_changed(inverse=True)
+
+    # ==================================================
+    def view_zy(self):
+        super().view_zy()
+        self._camera_view_changed(inverse=True)
+
+    # ==================================================
+    def view_xz(self):
+        super().view_xz()
+        self._camera_view_changed(inverse=True)
+
+    # ==================================================
+    def view_yx(self):
+        super().view_yx()
+        self._camera_view_changed(inverse=True)
+
     # ==================================================
     def set_parallel_projection(self, mode=None):
         """
@@ -2540,22 +2591,13 @@ class PyVistaWidget(QtInteractor):
         :meta private:
         """
         camera = self.camera
-        position = np.array(camera.position).round(DIGIT).tolist()
-        viewup = np.array(camera.up).round(DIGIT).tolist()
-        focal_point = np.array(camera.focal_point).round(DIGIT).tolist()
-        angle = np.array(camera.view_angle).round(DIGIT).tolist()
-        scale = np.array(camera.parallel_scale).round(DIGIT).tolist()
-        clipping_range = np.array(camera.clipping_range).round(DIGIT).tolist()
-        distance = np.array(camera.distance).round(DIGIT).tolist()
-
         dic = {
-            "position": position,
-            "viewup": viewup,
-            "focal_point": focal_point,
-            "angle": angle,
-            "clipping_range": clipping_range,
-            "distance": distance,
-            "scale": scale,
+            "position": list(camera.position),
+            "focal_point": list(camera.focal_point),
+            "viewup": list(camera.up),
+            "angle": camera.view_angle,
+            "scale": camera.parallel_scale,
+            "clipping_range": list(camera.clipping_range),
         }
 
         return dic
@@ -2570,14 +2612,22 @@ class PyVistaWidget(QtInteractor):
 
         :meta private:
         """
+        self.set_parallel_projection()
         self.camera.position = info["position"]
-        self.camera.up = info["viewup"]
         self.camera.focal_point = info["focal_point"]
-        self.camera.view_angle = info["angle"]
+        self.camera.up = info["viewup"]
+        if self._status["parallel_projection"]:
+            self.camera.parallel_scale = info["scale"]
+        else:
+            self.camera.view_angle = info["angle"]
         self.camera.clipping_range = info["clipping_range"]
-        self.camera.distance = info["distance"]
-        self.camera.parallel_scale = 1.0
-        self.camera.zoom(1.0 / info["scale"])
+
+    # ==================================================
+    def _set_default_zoom(self):
+        view_vec = self.camera.direction
+        self.view_vector(view_vec)
+        self.reset_camera()
+        self.render()
 
     # ==================================================
     # internal use (access data).
