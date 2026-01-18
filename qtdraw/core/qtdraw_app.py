@@ -47,6 +47,7 @@ class QtDraw(Window):
         warnings.showwarning = lambda message, category, filename, lineno, file=None, line=None: logging.warning(str(message))
         warnings.filterwarnings("default", category=DeprecationWarning)
 
+        self._is_view_updating = False
         self.pref_dialog = None  # preference dialog.
         self.multipie_dialog = None  # MultiPie dialog.
         if self.debug:
@@ -649,9 +650,15 @@ class QtDraw(Window):
         self.view_edit_lower.setText(str(self.pyvista_widget._status["lower"]))
         self.view_edit_upper.setText(str(self.pyvista_widget._status["upper"]))
 
+        self.view_combo_a.blockSignals(True)
+        self.view_combo_b.blockSignals(True)
+        self.view_combo_c.blockSignals(True)
         self.view_combo_a.setCurrentText(str(self.pyvista_widget._status["view"][0]))
         self.view_combo_b.setCurrentText(str(self.pyvista_widget._status["view"][1]))
         self.view_combo_c.setCurrentText(str(self.pyvista_widget._status["view"][2]))
+        self.view_combo_a.blockSignals(False)
+        self.view_combo_b.blockSignals(False)
+        self.view_combo_c.blockSignals(False)
 
         self.view_button_bar.setChecked(self.pyvista_widget._status["bar"])
         self.view_button_parallel.setChecked(self.pyvista_widget._status["parallel_projection"])
@@ -852,8 +859,11 @@ class QtDraw(Window):
 
         :meta private:
         """
+        if self._is_view_updating:
+            return
+
         self.pyvista_widget.set_view()
-        self._update_view()
+        # self._update_view()
 
     # ==================================================
     def _set_view(self, v, d):
@@ -862,6 +872,9 @@ class QtDraw(Window):
 
         :meta private:
         """
+        if self._is_view_updating:
+            return
+
         view = [
             int(self.view_combo_a.currentText()),
             int(self.view_combo_b.currentText()),
@@ -869,8 +882,6 @@ class QtDraw(Window):
         ]
         view[d] = int(v)
         self.pyvista_widget.set_view(view)
-
-        self._update_view()
 
     # ==================================================
     def _set_parallel(self, mode=None):
@@ -965,12 +976,12 @@ class QtDraw(Window):
         self.view_edit_upper.returnPressed.connect(self._set_upper)
         self.view_button_bar.toggled.connect(self._set_bar)
         self.view_button_default.clicked.connect(self._set_view_default)
-        self.view_button_x.clicked.connect(self.pyvista_widget.view_yz)
-        self.view_button_y.clicked.connect(self.pyvista_widget.view_zx)
-        self.view_button_z.clicked.connect(self.pyvista_widget.view_xy)
-        self.view_button_xm.clicked.connect(self.pyvista_widget.view_zy)
-        self.view_button_ym.clicked.connect(self.pyvista_widget.view_xz)
-        self.view_button_zm.clicked.connect(self.pyvista_widget.view_yx)
+        self.view_button_x.clicked.connect(lambda: self.pyvista_widget.set_view([1, 0, 0]))
+        self.view_button_y.clicked.connect(lambda: self.pyvista_widget.set_view([0, 1, 0]))
+        self.view_button_z.clicked.connect(lambda: self.pyvista_widget.set_view([0, 0, 1]))
+        self.view_button_xm.clicked.connect(lambda: self.pyvista_widget.set_view([-1, 0, 0]))
+        self.view_button_ym.clicked.connect(lambda: self.pyvista_widget.set_view([0, -1, 0]))
+        self.view_button_zm.clicked.connect(lambda: self.pyvista_widget.set_view([0, 0, -1]))
         self.view_combo_a.currentTextChanged.connect(lambda x: self._set_view(x, 0))
         self.view_combo_b.currentTextChanged.connect(lambda x: self._set_view(x, 1))
         self.view_combo_c.currentTextChanged.connect(lambda x: self._set_view(x, 2))
@@ -1002,8 +1013,32 @@ class QtDraw(Window):
             self.debug_button_status.released.connect(self._show_status_data)
             self.debug_button_preference.released.connect(self._show_preference_data)
 
-        # info message.
+        # pyvista.
         self.pyvista_widget.message.connect(self.write_info)
+        self.pyvista_widget.camera_view.connect(self.set_view_index)
+
+    # ==================================================
+    def set_view_index(self, index):
+        if index is None or self._is_view_updating:
+            return
+
+        new_vals = [str(x) for x in index]
+        if [self.view_combo_a.currentText(), self.view_combo_b.currentText(), self.view_combo_c.currentText()] == new_vals:
+            return
+
+        self._is_view_updating = True
+        self.view_combo_a.blockSignals(True)
+        self.view_combo_b.blockSignals(True)
+        self.view_combo_c.blockSignals(True)
+        try:
+            self.view_combo_a.setCurrentText(new_vals[0])
+            self.view_combo_b.setCurrentText(new_vals[1])
+            self.view_combo_c.setCurrentText(new_vals[2])
+        finally:
+            self.view_combo_a.blockSignals(False)
+            self.view_combo_b.blockSignals(False)
+            self.view_combo_c.blockSignals(False)
+            self._is_view_updating = False
 
     # ==================================================
     def _nonrepeat(self):
@@ -2359,9 +2394,7 @@ class QtDraw(Window):
 
         if type(view) == str:
             view = view.strip("[]").split(",")
-        self.view_combo_a.setCurrentText(str(view[0]))
-        self.view_combo_b.setCurrentText(str(view[1]))
-        self.view_combo_c.setCurrentText(str(view[2]))
+        self.pyvista_widget.set_view(view)
 
     # ==================================================
     def set_parallel_projection(self, mode=None):
