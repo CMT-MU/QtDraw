@@ -2231,11 +2231,14 @@ class PyVistaWidget(QtInteractor):
             return
 
         # set view and viewup in cartesian coordinate.
-        pos, focal, up = get_camera_params(view, self.A_matrix, self.camera)
+        bounds = self.renderer.ComputeVisiblePropBounds()
+        pos, focal, up = get_camera_params(view, self.A_matrix, self.camera, bounds)
 
         self.camera.position = pos
         self.camera.focal_point = focal
         self.camera.up = up
+
+        self.reset_camera()
 
     # ==================================================
     def set_parallel_projection(self, mode=None):

@@ -19,6 +19,8 @@ for i in range(32):
     z = i * 0.05
     widget.add_site(position=f"[{x},{y},{z}]", size=0.1)
 
+widget.set_view()
+
 # save and quit.
 widget.save(filename)
 app.quit()
