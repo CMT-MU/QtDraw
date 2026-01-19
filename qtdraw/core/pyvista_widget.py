@@ -292,6 +292,10 @@ class PyVistaWidget(QtInteractor):
         )
         assert not self._closed
 
+        if off_screen:
+            if self.ren_win:
+                self.ren_win.SetOffScreenRendering(1)  # rendering window off.
+
         # set mathjax converter.
         self._mathjax = MathJaxSVG()
 
@@ -343,7 +347,7 @@ class PyVistaWidget(QtInteractor):
         self.refresh()
         self.set_view()
 
-        # if self.iren is not None:
+        # if self.iren is not None: # for automatic update for a,b,c indices.
         #    self.iren.add_observer("EndInteractionEvent", self._camera_view_changed)
 
     # ==================================================
@@ -2342,20 +2346,17 @@ class PyVistaWidget(QtInteractor):
             self.renderer.hide_axes()
             return
 
-        if not self._off_screen:
-            self.screen_off()
-            create_axes_widget(
-                self,
-                self.A_matrix_norm,
-                label=label,
-                label_size=label_size,
-                label_bold=label_bold,
-                label_italic=label_italic,
-                label_color=label_color,
-                viewport=viewport,
-                full=(axis_type == "full"),
-            )
-            self.screen_on()
+        create_axes_widget(
+            self,
+            self.A_matrix_norm,
+            label=label,
+            label_size=label_size,
+            label_bold=label_bold,
+            label_italic=label_italic,
+            label_color=label_color,
+            viewport=viewport,
+            full=(axis_type == "full"),
+        )
 
     # ==================================================
     def set_cell(self, mode=None):
@@ -2438,7 +2439,6 @@ class PyVistaWidget(QtInteractor):
             dimensions = self._status["plus"]["dims"]
         cell = create_unit_cell(self.A_matrix, origin, lower, dimensions)
 
-        self.screen_off()
         self.add_mesh(
             cell,
             line_width=self._preference["cell"]["line_width"],
@@ -2448,7 +2448,6 @@ class PyVistaWidget(QtInteractor):
             name="unit_cell",
             pickable=False,
         )
-        self.screen_on()
 
     # ==================================================
     def set_light(self, light_type=None, color=None, intensity=None):
@@ -2523,14 +2522,16 @@ class PyVistaWidget(QtInteractor):
         """
         Screen off.
         """
-        self.ren_win.SetOffScreenRendering(1)
+        if not self._off_screen:
+            self.ren_win.SetOffScreenRendering(1)
 
     # ==================================================
     def screen_on(self):
         """
         Screen on.
         """
-        self.ren_win.SetOffScreenRendering(0)
+        if not self._off_screen:
+            self.ren_win.SetOffScreenRendering(0)
 
     # ==================================================
     def clear_data(self):
@@ -2605,10 +2606,8 @@ class PyVistaWidget(QtInteractor):
         if sum(len(i) for i in data.values()) == 0:
             return
 
-        self.screen_off()
         for object_type, model in data.items():
             self._data[object_type].set_data(model)
-        self.screen_on()
 
     # ==================================================
     def repeat_data(self):
