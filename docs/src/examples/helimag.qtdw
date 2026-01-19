@@ -3,7 +3,7 @@ QtDraw data file in Python dict format.
 """
 
 {
-    "version": "3.0.0",
+    "version": "3.0.3",
     "data": {
         "site": [
             ["a", True, "", "S", False, "", "3", "[0.0, 0.0, 0.0]", "[0,0,0]", "0.10500000000000001", "darkgrey", "1.0"],
@@ -109,7 +109,7 @@ QtDraw data file in Python dict format.
         "repeat": False,
         "lower": [0.0, 0.0, 0.0],
         "upper": [29.0, 0.0, 0.0],
-        "view": [0, 5, 2],
+        "view": [6, 5, 1],
         "parallel_projection": True,
         "grid": False,
         "bar": False,
@@ -124,5 +124,12 @@ QtDraw data file in Python dict format.
         "cell": {"line_width": 1.0, "color": "black", "opacity": 1.0},
         "axis": {"size": 18, "bold": True, "italic": False, "label": "[a,b,c]"},
     },
-    "camera": {"position": [4.35, 16.294151, 6.51766], "viewup": [-0.0, -0.371391, 0.928477], "focal_point": [4.35, 0.0, 0.0], "angle": 30.0, "clipping_range": [15.899405, 19.668594], "distance": 17.549338, "scale": 4.542103},
+    "camera": {
+        "position": [7.340486350026877, 13.203778334639727, 11.166757670057388],
+        "focal_point": [4.349999848753214, 0.0, 0.0],
+        "viewup": [-0.4749927645494231, -0.5030536775362573, 0.7220241485871115],
+        "angle": 30.0,
+        "scale": 3.753804132231404,
+        "clipping_range": [14.282857292173802, 21.703493277231253],
+    },
 }

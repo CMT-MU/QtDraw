@@ -16,6 +16,8 @@ def draw(widget):
         z = i * 0.05
         widget.add_site(position=f"[{x},{y},{z}]", size=0.1)
 
+    widget.set_view()
+
 
 # draw and write file.
 create_qtdraw_file(filename="output.qtdw", callback=draw)

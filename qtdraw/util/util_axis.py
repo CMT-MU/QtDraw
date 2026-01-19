@@ -558,7 +558,7 @@ def get_hkl_from_camera(camera, A):
 
 
 # ==================================================
-def get_camera_params(hkl, A, camera=None):
+def get_camera_params(hkl, A, camera=None, bounds=None):
     """
     Get camera parameters.
 
@@ -566,6 +566,7 @@ def get_camera_params(hkl, A, camera=None):
         hkl (list): index.
         A (ndarray): A = [a1, a2, a3].
         camera (Camera, optional): current camera.
+        bounds (ndarray, optional): render bounds.
 
     Returns:
         - (ndarray) -- position.
@@ -591,8 +592,10 @@ def get_camera_params(hkl, A, camera=None):
         vy = -view[2] * view[1] / vz
         viewup = np.array([vx, vy, vz], dtype=np.float64)
 
-    cell_center = np.sum(A, axis=1) / 2.0
-    focal = cell_center
+    if bounds is None:
+        focal = np.sum(A, axis=1) / 2.0
+    else:
+        focal = np.array([(bounds[0] + bounds[1]) / 2, (bounds[2] + bounds[3]) / 2, (bounds[4] + bounds[5]) / 2])
 
     if camera is not None:
         distance = np.linalg.norm(np.array(camera.position) - np.array(camera.focal_point))
