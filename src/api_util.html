@@ -1310,7 +1310,7 @@ The following objects are available.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="qtdraw.util.util_axis.get_camera_params">
-<span class="sig-name descname"><span class="pre">get_camera_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hkl</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">A</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">camera</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/util_axis.html#get_camera_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.util_axis.get_camera_params" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">get_camera_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hkl</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">A</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">camera</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bounds</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/util_axis.html#get_camera_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.util_axis.get_camera_params" title="Link to this definition">#</a></dt>
 <dd><p>Get camera parameters.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -1318,6 +1318,7 @@ The following objects are available.</p>
 <li><p><strong>hkl</strong> (<em>list</em>) -- index.</p></li>
 <li><p><strong>A</strong> (<em>ndarray</em>) -- A = [a1, a2, a3].</p></li>
 <li><p><strong>camera</strong> (<em>Camera</em><em>, </em><em>optional</em>) -- current camera.</p></li>
+<li><p><strong>bounds</strong> (<em>ndarray</em><em>, </em><em>optional</em>) -- render bounds.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>

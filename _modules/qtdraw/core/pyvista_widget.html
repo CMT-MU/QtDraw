@@ -2678,11 +2678,14 @@
             <span class="k">return</span>
 
         <span class="c1"># set view and viewup in cartesian coordinate.</span>
-        <span class="n">pos</span><span class="p">,</span> <span class="n">focal</span><span class="p">,</span> <span class="n">up</span> <span class="o">=</span> <span class="n">get_camera_params</span><span class="p">(</span><span class="n">view</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">A_matrix</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">camera</span><span class="p">)</span>
+        <span class="n">bounds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">renderer</span><span class="o">.</span><span class="n">ComputeVisiblePropBounds</span><span class="p">()</span>
+        <span class="n">pos</span><span class="p">,</span> <span class="n">focal</span><span class="p">,</span> <span class="n">up</span> <span class="o">=</span> <span class="n">get_camera_params</span><span class="p">(</span><span class="n">view</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">A_matrix</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">camera</span><span class="p">,</span> <span class="n">bounds</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">camera</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="n">pos</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">camera</span><span class="o">.</span><span class="n">focal_point</span> <span class="o">=</span> <span class="n">focal</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">camera</span><span class="o">.</span><span class="n">up</span> <span class="o">=</span> <span class="n">up</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">camera</span><span class="o">.</span><span class="n">up</span> <span class="o">=</span> <span class="n">up</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">reset_camera</span><span class="p">()</span></div>
 
 
     <span class="c1"># ==================================================</span>
