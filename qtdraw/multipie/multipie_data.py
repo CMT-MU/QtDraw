@@ -310,7 +310,7 @@ class MultiPieData:
             self,
             self._sites,
             samb,
-            wp=self._site_wp,
+            wp=tag + " # " + self._site_wp,
             label=mp,
             color=z_color,
             color_neg=n_color,
@@ -350,7 +350,7 @@ class MultiPieData:
             self,
             self._bonds,
             samb,
-            wp=self._bond_wp,
+            wp=tag + " # " + self._bond_wp,
             label=mp,
             sym=sym,
             color=z_color,
@@ -416,7 +416,9 @@ class MultiPieData:
 
         obj = np.array(ex.subs(lc_obj))
 
-        plot_vector_cluster(self, site, obj, X, wp=wp, label=mp, length=length, width=width, color=color, opacity=opacity)
+        plot_vector_cluster(
+            self, site, obj, X, wp=lc + " # " + wp, label=mp, length=length, width=width, color=color, opacity=opacity
+        )
 
     # ==================================================
     def add_vector_samb_modulation(self, modulation_range, length=None, width=None, color=None, opacity=None):
@@ -446,7 +448,16 @@ class MultiPieData:
         self.pvw.set_repeat(False)
 
         plot_vector_cluster(
-            self, full_site, obj, X, wp=wp, label=site_idx, length=length, width=width, color=color, opacity=opacity
+            self,
+            full_site,
+            obj,
+            X,
+            wp=modulation_range + " # " + wp,
+            label=site_idx,
+            length=length,
+            width=width,
+            color=color,
+            opacity=opacity,
         )
 
     # ==================================================
@@ -505,7 +516,7 @@ class MultiPieData:
 
         obj = np.array(ex.subs(lc_obj)).reshape(-1)
 
-        plot_orbital_cluster(self, site, obj, X, wp=wp, label=mp, size=size, color=color, opacity=opacity)
+        plot_orbital_cluster(self, site, obj, X, wp=lc + " # " + wp, label=mp, size=size, color=color, opacity=opacity)
 
     # ==================================================
     def add_orbital_samb_modulation(self, modulation_range, size=None, color=None, opacity=None):
@@ -533,7 +544,9 @@ class MultiPieData:
         self.pvw.set_nonrepeat()
         self.pvw.set_repeat(False)
 
-        plot_orbital_cluster(self, full_site, obj, X, wp=wp, label=site_idx, size=size, color=color, opacity=opacity)
+        plot_orbital_cluster(
+            self, full_site, obj, X, wp=modulation_range + " # " + wp, label=site_idx, size=size, color=color, opacity=opacity
+        )
 
     # ==================================================
     @staticmethod
