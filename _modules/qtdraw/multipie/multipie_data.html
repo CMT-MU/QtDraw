@@ -682,7 +682,7 @@
             <span class="bp">self</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_sites</span><span class="p">,</span>
             <span class="n">samb</span><span class="p">,</span>
-            <span class="n">wp</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_site_wp</span><span class="p">,</span>
+            <span class="n">wp</span><span class="o">=</span><span class="n">tag</span> <span class="o">+</span> <span class="s2">&quot; # &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_site_wp</span><span class="p">,</span>
             <span class="n">label</span><span class="o">=</span><span class="n">mp</span><span class="p">,</span>
             <span class="n">color</span><span class="o">=</span><span class="n">z_color</span><span class="p">,</span>
             <span class="n">color_neg</span><span class="o">=</span><span class="n">n_color</span><span class="p">,</span>
@@ -728,7 +728,7 @@
             <span class="bp">self</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_bonds</span><span class="p">,</span>
             <span class="n">samb</span><span class="p">,</span>
-            <span class="n">wp</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_bond_wp</span><span class="p">,</span>
+            <span class="n">wp</span><span class="o">=</span><span class="n">tag</span> <span class="o">+</span> <span class="s2">&quot; # &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bond_wp</span><span class="p">,</span>
             <span class="n">label</span><span class="o">=</span><span class="n">mp</span><span class="p">,</span>
             <span class="n">sym</span><span class="o">=</span><span class="n">sym</span><span class="p">,</span>
             <span class="n">color</span><span class="o">=</span><span class="n">z_color</span><span class="p">,</span>
@@ -800,7 +800,9 @@
 
         <span class="n">obj</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">ex</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">lc_obj</span><span class="p">))</span>
 
-        <span class="n">plot_vector_cluster</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">site</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">wp</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">mp</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="n">length</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="n">width</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">opacity</span><span class="o">=</span><span class="n">opacity</span><span class="p">)</span></div>
+        <span class="n">plot_vector_cluster</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span> <span class="n">site</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">wp</span><span class="o">=</span><span class="n">lc</span> <span class="o">+</span> <span class="s2">&quot; # &quot;</span> <span class="o">+</span> <span class="n">wp</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">mp</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="n">length</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="n">width</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">opacity</span><span class="o">=</span><span class="n">opacity</span>
+        <span class="p">)</span></div>
 
 
     <span class="c1"># ==================================================</span>
@@ -833,7 +835,16 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">pvw</span><span class="o">.</span><span class="n">set_repeat</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
 
         <span class="n">plot_vector_cluster</span><span class="p">(</span>
-            <span class="bp">self</span><span class="p">,</span> <span class="n">full_site</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">wp</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">site_idx</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="n">length</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="n">width</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">opacity</span><span class="o">=</span><span class="n">opacity</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">full_site</span><span class="p">,</span>
+            <span class="n">obj</span><span class="p">,</span>
+            <span class="n">X</span><span class="p">,</span>
+            <span class="n">wp</span><span class="o">=</span><span class="n">modulation_range</span> <span class="o">+</span> <span class="s2">&quot; # &quot;</span> <span class="o">+</span> <span class="n">wp</span><span class="p">,</span>
+            <span class="n">label</span><span class="o">=</span><span class="n">site_idx</span><span class="p">,</span>
+            <span class="n">length</span><span class="o">=</span><span class="n">length</span><span class="p">,</span>
+            <span class="n">width</span><span class="o">=</span><span class="n">width</span><span class="p">,</span>
+            <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span>
+            <span class="n">opacity</span><span class="o">=</span><span class="n">opacity</span><span class="p">,</span>
         <span class="p">)</span></div>
 
 
@@ -898,7 +909,7 @@
 
         <span class="n">obj</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">ex</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">lc_obj</span><span class="p">))</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
 
-        <span class="n">plot_orbital_cluster</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">site</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">wp</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">mp</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">size</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">opacity</span><span class="o">=</span><span class="n">opacity</span><span class="p">)</span></div>
+        <span class="n">plot_orbital_cluster</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">site</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">wp</span><span class="o">=</span><span class="n">lc</span> <span class="o">+</span> <span class="s2">&quot; # &quot;</span> <span class="o">+</span> <span class="n">wp</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">mp</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">size</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">opacity</span><span class="o">=</span><span class="n">opacity</span><span class="p">)</span></div>
 
 
     <span class="c1"># ==================================================</span>
@@ -929,7 +940,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">pvw</span><span class="o">.</span><span class="n">set_nonrepeat</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pvw</span><span class="o">.</span><span class="n">set_repeat</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
 
-        <span class="n">plot_orbital_cluster</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">full_site</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">wp</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">site_idx</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">size</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">opacity</span><span class="o">=</span><span class="n">opacity</span><span class="p">)</span></div>
+        <span class="n">plot_orbital_cluster</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span> <span class="n">full_site</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">wp</span><span class="o">=</span><span class="n">modulation_range</span> <span class="o">+</span> <span class="s2">&quot; # &quot;</span> <span class="o">+</span> <span class="n">wp</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">site_idx</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">size</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">opacity</span><span class="o">=</span><span class="n">opacity</span>
+        <span class="p">)</span></div>
 
 
     <span class="c1"># ==================================================</span>
