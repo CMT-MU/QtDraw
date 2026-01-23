@@ -9,6 +9,12 @@ from PySide6.QtCore import Qt
 
 from qtdraw.widget.custom_widget import Label, Layout, Button, Combo, VSpacer, HBar, LineEdit
 from qtdraw.multipie.multipie_modulation_dialog import ModulationDialog
+from qtdraw.multipie.multipie_info_dialog import (
+    show_site_samb_panel,
+    show_bond_samb_panel,
+    show_vector_samb_panel,
+    show_orbital_samb_panel,
+)
 
 
 # ==================================================
@@ -50,14 +56,16 @@ class TabBasis(QWidget):
         label_site_to = Label(parent, text="\u21d2 basis")
         self.combo_site_samb = Combo(parent)
         self.button_site_draw = Button(parent, text="draw")
+        self.button_site_info = Button(parent, text="info")
 
         panel2 = QWidget(parent)
         layout2 = Layout(panel2)
         layout2.addWidget(label_site, 0, 0, 1, 10)
         layout2.addWidget(self.edit_site, 1, 0, 1, 10)
         layout2.addWidget(label_site_to, 2, 0, 1, 1, Qt.AlignRight)
-        layout2.addWidget(self.combo_site_samb, 2, 1, 1, 8)
-        layout2.addWidget(self.button_site_draw, 2, 9, 1, 1)
+        layout2.addWidget(self.combo_site_samb, 2, 1, 1, 7)
+        layout2.addWidget(self.button_site_draw, 2, 8, 1, 1)
+        layout2.addWidget(self.button_site_info, 2, 9, 1, 1)
 
         # bond samb.
         label_bond = Label(
@@ -68,14 +76,16 @@ class TabBasis(QWidget):
         label_bond_to = Label(parent, text="\u21d2 basis")
         self.combo_bond_samb = Combo(parent)
         self.button_bond_draw = Button(parent, text="draw")
+        self.button_bond_info = Button(parent, text="info")
 
         panel3 = QWidget(parent)
         layout3 = Layout(panel3)
         layout3.addWidget(label_bond, 0, 0, 1, 10)
         layout3.addWidget(self.edit_bond, 1, 0, 1, 10)
         layout3.addWidget(label_bond_to, 2, 0, 1, 1, Qt.AlignRight)
-        layout3.addWidget(self.combo_bond_samb, 2, 1, 1, 8)
-        layout3.addWidget(self.button_bond_draw, 2, 9, 1, 1)
+        layout3.addWidget(self.combo_bond_samb, 2, 1, 1, 7)
+        layout3.addWidget(self.button_bond_draw, 2, 8, 1, 1)
+        layout3.addWidget(self.button_bond_info, 2, 9, 1, 1)
 
         # vector samb.
         label_vector = Label(
@@ -88,7 +98,7 @@ class TabBasis(QWidget):
         self.combo_vector_samb_type = Combo(parent, ["Q", "G", "T", "M"])
         self.combo_vector_samb = Combo(parent)
         self.button_vector_draw = Button(parent, text="draw")
-
+        self.button_vector_info = Button(parent, text="info")
         label_vector_lc = Label(parent, text="linear combination")
         self.edit_vector_lc = LineEdit(parent, text="")
         self.button_vector_modulation = Button(parent, text="modulation (SG)")
@@ -101,8 +111,9 @@ class TabBasis(QWidget):
         layout4.addWidget(self.edit_vector, 1, 1, 1, 9)
         layout4.addWidget(label_vector_to, 2, 0, 1, 1, Qt.AlignRight)
         layout4.addWidget(self.combo_vector_samb_type, 2, 1, 1, 1)
-        layout4.addWidget(self.combo_vector_samb, 2, 2, 1, 7)
-        layout4.addWidget(self.button_vector_draw, 2, 9, 1, 1)
+        layout4.addWidget(self.combo_vector_samb, 2, 2, 1, 6)
+        layout4.addWidget(self.button_vector_draw, 2, 8, 1, 1)
+        layout4.addWidget(self.button_vector_info, 2, 9, 1, 1)
         layout4.addWidget(label_vector_lc, 3, 0, 1, 1, Qt.AlignRight)
         layout4.addWidget(self.edit_vector_lc, 3, 1, 1, 9)
         layout4.addWidget(self.button_vector_modulation, 4, 0, 1, 1)
@@ -120,6 +131,7 @@ class TabBasis(QWidget):
         self.combo_orbital_samb_type = Combo(parent, ["Q", "G", "T", "M"])
         self.combo_orbital_samb = Combo(parent)
         self.button_orbital_draw = Button(parent, text="draw")
+        self.button_orbital_info = Button(parent, text="info")
 
         label_orbital_lc = Label(parent, text="linear combination")
         self.edit_orbital_lc = LineEdit(parent, text="")
@@ -134,8 +146,9 @@ class TabBasis(QWidget):
         layout5.addWidget(self.edit_orbital, 1, 2, 1, 8)
         layout5.addWidget(label_orbital_to, 2, 0, 1, 1, Qt.AlignRight)
         layout5.addWidget(self.combo_orbital_samb_type, 2, 1, 1, 1)
-        layout5.addWidget(self.combo_orbital_samb, 2, 2, 1, 7)
-        layout5.addWidget(self.button_orbital_draw, 2, 9, 1, 1)
+        layout5.addWidget(self.combo_orbital_samb, 2, 2, 1, 6)
+        layout5.addWidget(self.button_orbital_draw, 2, 8, 1, 1)
+        layout5.addWidget(self.button_orbital_info, 2, 9, 1, 1)
         layout5.addWidget(label_orbital_lc, 3, 0, 1, 1, Qt.AlignRight)
         layout5.addWidget(self.edit_orbital_lc, 3, 1, 1, 9)
         layout5.addWidget(self.button_orbital_modulation, 4, 0, 1, 1)
@@ -160,11 +173,15 @@ class TabBasis(QWidget):
         self.edit_vector.returnPressed.connect(self.set_vector)
         self.edit_orbital.returnPressed.connect(self.set_orbital)
         self.button_site_draw.clicked.connect(self.show_site)
+        self.button_site_info.clicked.connect(self.show_site_info)
         self.button_bond_draw.clicked.connect(self.show_bond)
+        self.button_bond_info.clicked.connect(self.show_bond_info)
         self.combo_vector_samb_type.currentTextChanged.connect(self.set_vector_list)
         self.combo_orbital_samb_type.currentTextChanged.connect(self.set_orbital_list)
         self.button_vector_draw.clicked.connect(self.show_vector)
+        self.button_vector_info.clicked.connect(self.show_vector_info)
         self.button_orbital_draw.clicked.connect(self.show_orbital)
+        self.button_orbital_info.clicked.connect(self.show_orbital_info)
         self.edit_vector_lc.returnPressed.connect(self.show_vector_lc)
         self.edit_orbital_lc.returnPressed.connect(self.show_orbital_lc)
         self.button_vector_modulation.released.connect(self.create_vector_modulation)
@@ -178,6 +195,18 @@ class TabBasis(QWidget):
         self.combo_site_samb.setCurrentIndex(0)
 
     # ==================================================
+    def show_site_info(self):
+        if len(self.data._site_list) == 0:
+            return
+
+        if self._site_samb_dialog is not None:
+            self._site_samb_dialog.close()
+
+        self._site_samb_dialog = show_site_samb_panel(
+            self.data.ps_group, self.data._site_list, self.data._site_wp, self.data._site_samb_list, self.data._site_samb, self
+        )
+
+    # ==================================================
     def set_bond(self):
         bond = self.edit_bond.raw_text()
         lst = self.data.bond_samb_list(bond)
@@ -185,11 +214,42 @@ class TabBasis(QWidget):
         self.combo_bond_samb.setCurrentIndex(0)
 
     # ==================================================
+    def show_bond_info(self):
+        if len(self.data._bond_list) == 0:
+            return
+
+        if self._bond_samb_dialog is not None:
+            self._bond_samb_dialog.close()
+
+        self._bond_samb_dialog = show_bond_samb_panel(
+            self.data.ps_group, self.data._bond_list, self.data._bond_wp, self.data._bond_samb_list, self.data._bond_samb, self
+        )
+
+    # ==================================================
     def set_vector(self):
         site_bond = self.edit_vector.raw_text()
         vector_type = self.combo_vector_type.currentText()
         self.data.vector_samb_list(site_bond, vector_type)
         self.set_vector_list()
+
+    # ==================================================
+    def show_vector_info(self):
+        vector_type = self.combo_vector_samb_type.currentText()
+        if len(self.data._vector_list[vector_type]) == 0:
+            return
+
+        if self._vector_samb_dialog is not None:
+            self._vector_samb_dialog.close()
+
+        self._vector_samb_dialog = show_vector_samb_panel(
+            self.data.ps_group,
+            self.data._vector_list[vector_type],
+            self.data._vector_wp,
+            self.combo_vector_type.currentText(),
+            self.data._vector_samb_list[vector_type],
+            self.data._vector_samb[vector_type],
+            self,
+        )
 
     # ==================================================
     def set_vector_list(self):
@@ -204,6 +264,25 @@ class TabBasis(QWidget):
         orbital_rank = self.combo_orbital_rank.currentText()
         self.data.orbital_samb_list(site_bond, orbital_type, orbital_rank)
         self.set_orbital_list()
+
+    # ==================================================
+    def show_orbital_info(self):
+        orbital_type = self.combo_orbital_samb_type.currentText()
+        if len(self.data._orbital_list[orbital_type]) == 0:
+            return
+
+        if self._orbital_samb_dialog is not None:
+            self._orbital_samb_dialog.close()
+
+        self._orbital_samb_dialog = show_orbital_samb_panel(
+            self.data.ps_group,
+            self.data._orbital_list[orbital_type],
+            self.data._orbital_wp,
+            self.combo_orbital_type.currentText(),
+            self.data._orbital_samb_list[orbital_type],
+            self.data._orbital_samb[orbital_type],
+            self,
+        )
 
     # ==================================================
     def set_orbital_list(self):
@@ -296,6 +375,10 @@ class TabBasis(QWidget):
 
         self._vector_modulation_dialog = None
         self._orbital_modulation_dialog = None
+        self._site_samb_dialog = None
+        self._bond_samb_dialog = None
+        self._vector_samb_dialog = None
+        self._orbital_samb_dialog = None
 
         self.combo_site_samb.set_item([])
         self.combo_bond_samb.set_item([])
@@ -308,9 +391,21 @@ class TabBasis(QWidget):
             self._vector_modulation_dialog.close()
         if self._orbital_modulation_dialog is not None:
             self._orbital_modulation_dialog.close()
+        if self._site_samb_dialog is not None:
+            self._site_samb_dialog.close()
+        if self._bone_samb_dialog is not None:
+            self._bond_samb_dialog.close()
+        if self._vector_samb_dialog is not None:
+            self._vector_samb_dialog.close()
+        if self._orbital_samb_dialog is not None:
+            self._orbital_samb_dialog.close()
 
         self._vector_modulation_dialog = None
         self._orbital_modulation_dialog = None
+        self._site_samb_dialog = None
+        self._bond_samb_dialog = None
+        self._vector_samb_dialog = None
+        self._orbital_samb_dialog = None
 
         self.combo_site_samb.set_item([])
         self.combo_bond_samb.set_item([])

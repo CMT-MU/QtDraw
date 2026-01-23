@@ -11,7 +11,7 @@ from PySide6.QtCore import Qt
 
 from qtdraw.util.util import distance, to_latex
 from qtdraw.widget.custom_widget import Label, Layout, Button, Combo, VSpacer, HSpacer, HBar, LineEdit, Check
-from qtdraw.multipie.multipie_info_dialog import show_harmonics_decomp, show_atomic_multipole, show_response
+from qtdraw.multipie.multipie_info_dialog import show_harmonics_decomp, show_harmonics_info, show_atomic_multipole, show_response
 from qtdraw.multipie.multipie_plot import plot_cell_site, plot_cell_bond
 
 
@@ -86,6 +86,7 @@ class TabGroup(QWidget):
         label_harmonics_ex = Label(parent, text="expression")
         self.edit_harmonics1_ex = LineEdit(parent)
         self.check_harmonics1_latex = Check(parent, text="LaTeX")
+        self.button_harmonics_info = Button(parent, text="info")
 
         panel5 = QWidget(parent)
         layout5 = Layout(panel5)
@@ -95,9 +96,10 @@ class TabGroup(QWidget):
         layout6.addWidget(self.combo_harmonics1_type, 0, 0, 1, 1)
         layout6.addWidget(self.combo_harmonics1_rank, 0, 1, 1, 1)
         layout6.addWidget(self.combo_harmonics1, 0, 2, 1, 1)
-        layout6.addWidget(self.check_harmonics1_latex, 0, 3, 1, 1, Qt.AlignRight)
+        layout6.addWidget(self.button_harmonics_info, 0, 3, 1, 1)
+        layout6.addWidget(self.check_harmonics1_latex, 0, 4, 1, 1, Qt.AlignRight)
         layout6.addWidget(label_harmonics_ex, 1, 0, 1, 1)
-        layout6.addWidget(self.edit_harmonics1_ex, 1, 1, 1, 3)
+        layout6.addWidget(self.edit_harmonics1_ex, 1, 1, 1, 4)
 
         # find Wyckoff.
         label_fwyckoff = Label(parent, text="Find Wyckoff Site(PG/SG/MPG/MSG)/Bond(PG/SG)", bold=True)
@@ -232,6 +234,7 @@ class TabGroup(QWidget):
         self.combo_harmonics1_rank.currentTextChanged.connect(self.set_harm_list)
         self.combo_harmonics1.currentIndexChanged.connect(self.show_harmonics)
         self.check_harmonics1_latex.checkStateChanged.connect(self.show_harmonics)
+        self.button_harmonics_info.released.connect(self.show_harmonics_info)
 
         self.edit_find_wyckoff.returnPressed.connect(self.find_wyckoff_set)
 
@@ -317,6 +320,16 @@ class TabGroup(QWidget):
             harm = str(harm)
 
         self.edit_harmonics1_ex.setText(harm)
+
+    # ==================================================
+    def show_harmonics_info(self):
+        group = self.data.p_group
+        head = self.combo_harmonics1_type.currentText()
+        rank = int(self.combo_harmonics1_rank.currentText())
+
+        if self._harmonics_info_dialog is not None:
+            self._harmonics_info_dialog.close()
+        self._harmonics_info_dialog = show_harmonics_info(group, head, rank, self)
 
     # ==================================================
     def show_wyckoff_site(self):
@@ -407,6 +420,7 @@ class TabGroup(QWidget):
         self.edit_find_wyckoff.setText(find_wyckoff)
 
         self._harmonics_decomp_dialog = None
+        self._harmonics_info_dialog = None
         self._atomic_dialog = None
         self._response_dialog = None
 
@@ -414,11 +428,14 @@ class TabGroup(QWidget):
     def clear_data(self):
         if self._harmonics_decomp_dialog is not None:
             self._harmonics_decomp_dialog.close()
+        if self._harmonics_info_dialog is not None:
+            self._harmonics_info_dialog.close()
         if self._atomic_dialog is not None:
             self._atomic_dialog.close()
         if self._response_dialog is not None:
             self._response_dialog.close()
 
         self._harmonics_decomp_dialog = None
+        self._harmonics_info_dialog = None
         self._atomic_dialog = None
         self._response_dialog = None

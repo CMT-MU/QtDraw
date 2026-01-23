@@ -12,6 +12,7 @@ from multipie.util.util_harmonics import harmonics_decomposition
 from qtdraw.widget.custom_widget import Layout
 from qtdraw.widget.table_view import TableView
 from qtdraw.util.util import to_latex
+from qtdraw.multipie.multipie_util import convert_vector_object
 
 
 # ==================================================
@@ -280,6 +281,34 @@ def show_harmonics_decomp(group, basis, rank, head, parent):
 
 
 # ==================================================
+def show_harmonics_info(group, head, rank, parent):
+    """
+    Show harmonics decomposition panel.
+
+    Args:
+        group (Group): PG expressed by basis PG.
+        basis (str): basis PG.
+        rank (int): rank.
+        head (str): type, Q/G.
+        parent (QWidget): parent.
+
+    Returns:
+        - (InfoPanel) -- harmonics decomposition panel.
+    """
+    harmonics = group.harmonics.select(X=head, l=rank)
+
+    name = f"Harmonics ({head}, {rank})"
+    header = ["symbol", "expression"]
+
+    data = []
+    for idx, (ex, u, lc) in harmonics.items():
+        for comp, e in enumerate(ex):
+            data.append([group.tag_multipole(idx, comp, True), to_latex(e)])
+
+    return show_group_info(group, name, header, data, True, parent)
+
+
+# ==================================================
 def show_atomic_multipole(group, bra, ket, head, basis_type, parent):
     """
     Show atomic multipole panel.
@@ -378,3 +407,125 @@ def show_response(group, rank, r_type, parent):
     name = r_type + " Response Tensor"
 
     return show_group_info(group, name, None, data, False, parent)
+
+
+# ==================================================
+def show_site_samb_panel(group, lst, wp, samb_list, samb, parent):
+    """
+    Show site SAMB panel.
+
+    Args:
+        group (Group): point/space group.
+        lst (list): combo list.
+        wp (str): wyckoff.
+        samb_list (list): SAMB (index, comp) list.
+        samb (dict): SAMB dict.
+        parent (QWidget): parent.
+
+    Returns:
+        - (InfoPanel) -- site SAMB panel.
+    """
+    name = f"Site SAMB - {wp}"
+    header = ["tag", "symbol", "symmetry"]
+
+    data = []
+    for tag, (s, comp) in zip(lst, samb_list):
+        t = r"\texttt{" + tag + "}"
+        tl = group.tag_multipole(s, comp, latex=True)
+        ex = to_latex(samb[s][1][comp])
+        data.append([t, tl, ex])
+
+    return show_group_info(group, name, header, data, False, parent)
+
+
+# ==================================================
+def show_bond_samb_panel(group, lst, wp, samb_list, samb, parent):
+    """
+    Show bond SAMB panel.
+
+    Args:
+        group (Group): point/space group.
+        lst (list): combo list.
+        wp (str): wyckoff.
+        samb_list (list): SAMB (index, comp) list.
+        samb (dict): SAMB dict.
+        parent (QWidget): parent.
+
+    Returns:
+        - (InfoPanel) -- bond SAMB panel.
+    """
+    name = f"Bond SAMB - {wp}"
+    header = ["tag", "symbol", "symmetry"]
+
+    data = []
+    for tag, (s, comp) in zip(lst, samb_list):
+        t = r"\texttt{" + tag + "}"
+        tl = group.tag_multipole(s, comp, latex=True)
+        ex = to_latex(samb[s][1][comp])
+        data.append([t, tl, ex])
+
+    return show_group_info(group, name, header, data, False, parent)
+
+
+# ==================================================
+def show_vector_samb_panel(group, lst, wp, tp, samb_list, samb, parent):
+    """
+    Show vector SAMB panel.
+
+    Args:
+        group (Group): point/space group.
+        lst (list): combo list.
+        wp (str): wyckoff.
+        tp (str): atomic type.
+        samb_list (list): SAMB (index, comp) list.
+        samb (dict): SAMB dict.
+        parent (QWidget): parent.
+
+    Returns:
+        - (InfoPanel) -- vector SAMB panel.
+    """
+    name = f"Vector SAMB - {wp}"
+    header = ["tag", "symbol", "symmetry", "1st cluster (f.c.)"]
+
+    data = []
+    for tag, (s, comp) in zip(lst, samb_list):
+        t = r"\texttt{" + tag + "}"
+        tl = group.tag_multipole(s, comp, latex=True)
+        ts = samb[s][0][comp]
+        ts = to_latex(convert_vector_object([group.combined_object(wp, tp, ts)[0]])[0], "vector")
+        ex = to_latex(samb[s][1][comp])
+        data.append([t, tl, ex, ts])
+
+    return show_group_info(group, name, header, data, False, parent)
+
+
+# ==================================================
+def show_orbital_samb_panel(group, lst, wp, tp, samb_list, samb, parent):
+    """
+    Show orbital SAMB panel.
+
+    Args:
+        group (Group): point/space group.
+        lst (list): combo list.
+        wp (str): wyckoff.
+        tp (str): atomic type.
+        samb_list (list): SAMB (index, comp) list.
+        samb (dict): SAMB dict.
+        parent (QWidget): parent.
+
+    Returns:
+        - (InfoPanel) -- orbital SAMB panel.
+    """
+    name = f"Orbital SAMB - {wp}"
+    header = ["tag", "symbol", "symmetry", "1st cluster (c.c.)"]
+
+    data = []
+    for tag, (s, comp) in zip(lst, samb_list):
+        t = r"\texttt{" + tag + "}"
+        tl = group.tag_multipole(s, comp, latex=True)
+        ts = samb[s][0][comp]
+        ts = to_latex(group.combined_object(wp, tp, ts)[0])
+        ex = to_latex(samb[s][1][comp])  # symmetry
+        data.append([t, tl, ex, ts])
+
+    return show_group_info(group, name, header, data, False, parent)
