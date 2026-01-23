@@ -54,7 +54,7 @@ class TabObject(QWidget):
         )
         self.combo_vector_type = Combo(parent, ["Q", "G", "T", "M"])
         self.edit_vector = LineEdit(parent, text="", validator=("vector_site_bond", {"use_var": False}))
-        self.check_vector_av = Check(parent, text="av.")
+        self.check_vector_av = Check(parent, text="average")
         self.check_vector_cart = Check(parent, text="cartesian")
 
         panel3 = QWidget(parent)
@@ -72,7 +72,7 @@ class TabObject(QWidget):
         )
         self.combo_orbital_type = Combo(parent, ["Q", "G", "T", "M"])
         self.edit_orbital = LineEdit(parent, text="", validator=("orbital_site_bond", {"use_var": False}))
-        self.check_orbital_av = Check(parent, text="av.")
+        self.check_orbital_av = Check(parent, text="average")
 
         panel4 = QWidget(parent)
         layout4 = Layout(panel4)
