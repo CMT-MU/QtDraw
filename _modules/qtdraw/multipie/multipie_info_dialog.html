@@ -341,6 +341,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw.widget.custom_widget</span><span class="w"> </span><span class="kn">import</span> <span class="n">Layout</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw.widget.table_view</span><span class="w"> </span><span class="kn">import</span> <span class="n">TableView</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw.util.util</span><span class="w"> </span><span class="kn">import</span> <span class="n">to_latex</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw.multipie.multipie_util</span><span class="w"> </span><span class="kn">import</span> <span class="n">convert_vector_object</span>
 
 
 <span class="c1"># ==================================================</span>
@@ -633,6 +634,37 @@
 
 
 <span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="show_harmonics_info">
+<a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.multipie_info_dialog.show_harmonics_info">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">show_harmonics_info</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">head</span><span class="p">,</span> <span class="n">rank</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Show harmonics decomposition panel.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        group (Group): PG expressed by basis PG.</span>
+<span class="sd">        basis (str): basis PG.</span>
+<span class="sd">        rank (int): rank.</span>
+<span class="sd">        head (str): type, Q/G.</span>
+<span class="sd">        parent (QWidget): parent.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        - (InfoPanel) -- harmonics decomposition panel.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">harmonics</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">harmonics</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">head</span><span class="p">,</span> <span class="n">l</span><span class="o">=</span><span class="n">rank</span><span class="p">)</span>
+
+    <span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Harmonics (</span><span class="si">{</span><span class="n">head</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">rank</span><span class="si">}</span><span class="s2">)&quot;</span>
+    <span class="n">header</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;symbol&quot;</span><span class="p">,</span> <span class="s2">&quot;expression&quot;</span><span class="p">]</span>
+
+    <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="p">(</span><span class="n">ex</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="n">lc</span><span class="p">)</span> <span class="ow">in</span> <span class="n">harmonics</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">comp</span><span class="p">,</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">ex</span><span class="p">):</span>
+            <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">group</span><span class="o">.</span><span class="n">tag_multipole</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">comp</span><span class="p">,</span> <span class="kc">True</span><span class="p">),</span> <span class="n">to_latex</span><span class="p">(</span><span class="n">e</span><span class="p">)])</span>
+
+    <span class="k">return</span> <span class="n">show_group_info</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">header</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span></div>
+
+
+
+<span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="show_atomic_multipole">
 <a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.multipie_info_dialog.show_atomic_multipole">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">show_atomic_multipole</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">bra</span><span class="p">,</span> <span class="n">ket</span><span class="p">,</span> <span class="n">head</span><span class="p">,</span> <span class="n">basis_type</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
@@ -736,6 +768,140 @@
     <span class="n">name</span> <span class="o">=</span> <span class="n">r_type</span> <span class="o">+</span> <span class="s2">&quot; Response Tensor&quot;</span>
 
     <span class="k">return</span> <span class="n">show_group_info</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span></div>
+
+
+
+<span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="show_site_samb_panel">
+<a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.multipie_info_dialog.show_site_samb_panel">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">show_site_samb_panel</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">lst</span><span class="p">,</span> <span class="n">wp</span><span class="p">,</span> <span class="n">samb_list</span><span class="p">,</span> <span class="n">samb</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Show site SAMB panel.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        group (Group): point/space group.</span>
+<span class="sd">        lst (list): combo list.</span>
+<span class="sd">        wp (str): wyckoff.</span>
+<span class="sd">        samb_list (list): SAMB (index, comp) list.</span>
+<span class="sd">        samb (dict): SAMB dict.</span>
+<span class="sd">        parent (QWidget): parent.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        - (InfoPanel) -- site SAMB panel.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Site SAMB - </span><span class="si">{</span><span class="n">wp</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">header</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;tag&quot;</span><span class="p">,</span> <span class="s2">&quot;symbol&quot;</span><span class="p">,</span> <span class="s2">&quot;symmetry&quot;</span><span class="p">]</span>
+
+    <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">tag</span><span class="p">,</span> <span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">comp</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">lst</span><span class="p">,</span> <span class="n">samb_list</span><span class="p">):</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;\texttt{&quot;</span> <span class="o">+</span> <span class="n">tag</span> <span class="o">+</span> <span class="s2">&quot;}&quot;</span>
+        <span class="n">tl</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">tag_multipole</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">comp</span><span class="p">,</span> <span class="n">latex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">ex</span> <span class="o">=</span> <span class="n">to_latex</span><span class="p">(</span><span class="n">samb</span><span class="p">[</span><span class="n">s</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="n">comp</span><span class="p">])</span>
+        <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">t</span><span class="p">,</span> <span class="n">tl</span><span class="p">,</span> <span class="n">ex</span><span class="p">])</span>
+
+    <span class="k">return</span> <span class="n">show_group_info</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">header</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span></div>
+
+
+
+<span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="show_bond_samb_panel">
+<a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.multipie_info_dialog.show_bond_samb_panel">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">show_bond_samb_panel</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">lst</span><span class="p">,</span> <span class="n">wp</span><span class="p">,</span> <span class="n">samb_list</span><span class="p">,</span> <span class="n">samb</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Show bond SAMB panel.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        group (Group): point/space group.</span>
+<span class="sd">        lst (list): combo list.</span>
+<span class="sd">        wp (str): wyckoff.</span>
+<span class="sd">        samb_list (list): SAMB (index, comp) list.</span>
+<span class="sd">        samb (dict): SAMB dict.</span>
+<span class="sd">        parent (QWidget): parent.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        - (InfoPanel) -- bond SAMB panel.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Bond SAMB - </span><span class="si">{</span><span class="n">wp</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">header</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;tag&quot;</span><span class="p">,</span> <span class="s2">&quot;symbol&quot;</span><span class="p">,</span> <span class="s2">&quot;symmetry&quot;</span><span class="p">]</span>
+
+    <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">tag</span><span class="p">,</span> <span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">comp</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">lst</span><span class="p">,</span> <span class="n">samb_list</span><span class="p">):</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;\texttt{&quot;</span> <span class="o">+</span> <span class="n">tag</span> <span class="o">+</span> <span class="s2">&quot;}&quot;</span>
+        <span class="n">tl</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">tag_multipole</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">comp</span><span class="p">,</span> <span class="n">latex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">ex</span> <span class="o">=</span> <span class="n">to_latex</span><span class="p">(</span><span class="n">samb</span><span class="p">[</span><span class="n">s</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="n">comp</span><span class="p">])</span>
+        <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">t</span><span class="p">,</span> <span class="n">tl</span><span class="p">,</span> <span class="n">ex</span><span class="p">])</span>
+
+    <span class="k">return</span> <span class="n">show_group_info</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">header</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span></div>
+
+
+
+<span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="show_vector_samb_panel">
+<a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.multipie_info_dialog.show_vector_samb_panel">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">show_vector_samb_panel</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">lst</span><span class="p">,</span> <span class="n">wp</span><span class="p">,</span> <span class="n">tp</span><span class="p">,</span> <span class="n">samb_list</span><span class="p">,</span> <span class="n">samb</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Show vector SAMB panel.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        group (Group): point/space group.</span>
+<span class="sd">        lst (list): combo list.</span>
+<span class="sd">        wp (str): wyckoff.</span>
+<span class="sd">        tp (str): atomic type.</span>
+<span class="sd">        samb_list (list): SAMB (index, comp) list.</span>
+<span class="sd">        samb (dict): SAMB dict.</span>
+<span class="sd">        parent (QWidget): parent.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        - (InfoPanel) -- vector SAMB panel.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Vector SAMB - </span><span class="si">{</span><span class="n">wp</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">header</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;tag&quot;</span><span class="p">,</span> <span class="s2">&quot;symbol&quot;</span><span class="p">,</span> <span class="s2">&quot;symmetry&quot;</span><span class="p">,</span> <span class="s2">&quot;1st cluster (f.c.)&quot;</span><span class="p">]</span>
+
+    <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">tag</span><span class="p">,</span> <span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">comp</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">lst</span><span class="p">,</span> <span class="n">samb_list</span><span class="p">):</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;\texttt{&quot;</span> <span class="o">+</span> <span class="n">tag</span> <span class="o">+</span> <span class="s2">&quot;}&quot;</span>
+        <span class="n">tl</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">tag_multipole</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">comp</span><span class="p">,</span> <span class="n">latex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">ts</span> <span class="o">=</span> <span class="n">samb</span><span class="p">[</span><span class="n">s</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="n">comp</span><span class="p">]</span>
+        <span class="n">ts</span> <span class="o">=</span> <span class="n">to_latex</span><span class="p">(</span><span class="n">convert_vector_object</span><span class="p">([</span><span class="n">group</span><span class="o">.</span><span class="n">combined_object</span><span class="p">(</span><span class="n">wp</span><span class="p">,</span> <span class="n">tp</span><span class="p">,</span> <span class="n">ts</span><span class="p">)[</span><span class="mi">0</span><span class="p">]])[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;vector&quot;</span><span class="p">)</span>
+        <span class="n">ex</span> <span class="o">=</span> <span class="n">to_latex</span><span class="p">(</span><span class="n">samb</span><span class="p">[</span><span class="n">s</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="n">comp</span><span class="p">])</span>
+        <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">t</span><span class="p">,</span> <span class="n">tl</span><span class="p">,</span> <span class="n">ex</span><span class="p">,</span> <span class="n">ts</span><span class="p">])</span>
+
+    <span class="k">return</span> <span class="n">show_group_info</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">header</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span></div>
+
+
+
+<span class="c1"># ==================================================</span>
+<div class="viewcode-block" id="show_orbital_samb_panel">
+<a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.multipie_info_dialog.show_orbital_samb_panel">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">show_orbital_samb_panel</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">lst</span><span class="p">,</span> <span class="n">wp</span><span class="p">,</span> <span class="n">tp</span><span class="p">,</span> <span class="n">samb_list</span><span class="p">,</span> <span class="n">samb</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Show orbital SAMB panel.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        group (Group): point/space group.</span>
+<span class="sd">        lst (list): combo list.</span>
+<span class="sd">        wp (str): wyckoff.</span>
+<span class="sd">        tp (str): atomic type.</span>
+<span class="sd">        samb_list (list): SAMB (index, comp) list.</span>
+<span class="sd">        samb (dict): SAMB dict.</span>
+<span class="sd">        parent (QWidget): parent.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        - (InfoPanel) -- orbital SAMB panel.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Orbital SAMB - </span><span class="si">{</span><span class="n">wp</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">header</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;tag&quot;</span><span class="p">,</span> <span class="s2">&quot;symbol&quot;</span><span class="p">,</span> <span class="s2">&quot;symmetry&quot;</span><span class="p">,</span> <span class="s2">&quot;1st cluster (c.c.)&quot;</span><span class="p">]</span>
+
+    <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">tag</span><span class="p">,</span> <span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">comp</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">lst</span><span class="p">,</span> <span class="n">samb_list</span><span class="p">):</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;\texttt{&quot;</span> <span class="o">+</span> <span class="n">tag</span> <span class="o">+</span> <span class="s2">&quot;}&quot;</span>
+        <span class="n">tl</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">tag_multipole</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">comp</span><span class="p">,</span> <span class="n">latex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">ts</span> <span class="o">=</span> <span class="n">samb</span><span class="p">[</span><span class="n">s</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="n">comp</span><span class="p">]</span>
+        <span class="n">ts</span> <span class="o">=</span> <span class="n">to_latex</span><span class="p">(</span><span class="n">group</span><span class="o">.</span><span class="n">combined_object</span><span class="p">(</span><span class="n">wp</span><span class="p">,</span> <span class="n">tp</span><span class="p">,</span> <span class="n">ts</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">ex</span> <span class="o">=</span> <span class="n">to_latex</span><span class="p">(</span><span class="n">samb</span><span class="p">[</span><span class="n">s</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="n">comp</span><span class="p">])</span>  <span class="c1"># symmetry</span>
+        <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">t</span><span class="p">,</span> <span class="n">tl</span><span class="p">,</span> <span class="n">ex</span><span class="p">,</span> <span class="n">ts</span><span class="p">])</span>
+
+    <span class="k">return</span> <span class="n">show_group_info</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">header</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span></div>
 
 </pre></div>
 
