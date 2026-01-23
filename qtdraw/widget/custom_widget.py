@@ -283,6 +283,9 @@ class Button(QPushButton):
         font.setBold(bold)
         self.setFont(font)
 
+        total_height = size * 1.6
+        self.setFixedHeight(total_height)
+
 
 # ==================================================
 class Combo(QComboBox):
@@ -316,7 +319,7 @@ class Combo(QComboBox):
         if init is not None:
             self.setCurrentText(init)
 
-        total_height = self.font().pointSize() * 1.6
+        total_height = size * 1.6
         self.setFixedHeight(total_height)
 
     # ==================================================
@@ -432,6 +435,9 @@ class Check(QCheckBox):
         font.setPointSize(size)
         font.setBold(bold)
         self.setFont(font)
+
+        total_height = size * 1.6
+        self.setFixedHeight(total_height)
 
     # ==================================================
     def is_checked(self):
