@@ -883,10 +883,14 @@
 |--------|----------|
 | TabBasis |  |
 | set_site |  |
+| show_site_info |  |
 | set_bond |  |
+| show_bond_info |  |
 | set_vector |  |
+| show_vector_info |  |
 | set_vector_list |  |
 | set_orbital |  |
+| show_orbital_info |  |
 | set_orbital_list |  |
 | show_bond_definition |  |
 | show_site |  |
@@ -1011,6 +1015,7 @@
 | set_irrep_decomp |  |
 | show_harmonics_decomp |  |
 | show_harmonics |  |
+| show_harmonics_info |  |
 | show_wyckoff_site |  |
 | show_wyckoff_bond |  |
 | find_wyckoff_set |  |
@@ -1069,8 +1074,13 @@
 | show_wyckoff_bond | Show Wyckoff position panel. |
 | show_product_table | Show product table panel. |
 | show_harmonics_decomp | Show harmonics decomposition panel. |
+| show_harmonics_info | Show harmonics decomposition panel. |
 | show_atomic_multipole | Show atomic multipole panel. |
 | show_response | Show response tensor panel. |
+| show_site_samb_panel | Show site SAMB panel. |
+| show_bond_samb_panel | Show bond SAMB panel. |
+| show_vector_samb_panel | Show vector SAMB panel. |
+| show_orbital_samb_panel | Show orbital SAMB panel. |
 
 
 ### <div class='my-heading' style='color: royalblue;'>InfoPanel
