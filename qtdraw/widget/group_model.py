@@ -24,6 +24,7 @@ from qtdraw.core.pyvista_widget_setting import CUSTOM_WIDGET, COLUMN_NAME_ACTOR,
 class GroupModel(QStandardItemModel):
     updateData = Signal(str, list, int, QModelIndex)  # name, row_data, role, index.
     updateWidget = Signal(QModelIndex)  # index.
+    selectionClear = Signal()
 
     # data/check state changed signal for user.
     dataRemoved = Signal(str, list, QModelIndex)  # object_type, row_data, index.
@@ -415,6 +416,7 @@ class GroupModel(QStandardItemModel):
             index (QModelIndex): index.
             value (QVariant): value.
         """
+        self.selectionClear.emit()
         # notify the view that the model layout is about to change drastically.
         self.beginResetModel()
 
