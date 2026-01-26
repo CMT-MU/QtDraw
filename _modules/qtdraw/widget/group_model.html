@@ -355,6 +355,7 @@
 <span class="k">class</span><span class="w"> </span><span class="nc">GroupModel</span><span class="p">(</span><span class="n">QStandardItemModel</span><span class="p">):</span>
     <span class="n">updateData</span> <span class="o">=</span> <span class="n">Signal</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="n">QModelIndex</span><span class="p">)</span>  <span class="c1"># name, row_data, role, index.</span>
     <span class="n">updateWidget</span> <span class="o">=</span> <span class="n">Signal</span><span class="p">(</span><span class="n">QModelIndex</span><span class="p">)</span>  <span class="c1"># index.</span>
+    <span class="n">selectionClear</span> <span class="o">=</span> <span class="n">Signal</span><span class="p">()</span>
 
     <span class="c1"># data/check state changed signal for user.</span>
     <span class="n">dataRemoved</span> <span class="o">=</span> <span class="n">Signal</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">,</span> <span class="n">QModelIndex</span><span class="p">)</span>  <span class="c1"># object_type, row_data, index.</span>
@@ -787,6 +788,7 @@
 <span class="sd">            index (QModelIndex): index.</span>
 <span class="sd">            value (QVariant): value.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">selectionClear</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span>
         <span class="c1"># notify the view that the model layout is about to change drastically.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">beginResetModel</span><span class="p">()</span>
 
