@@ -108,6 +108,7 @@ class GroupView(QTreeView):
             self.header().setSectionResizeMode(column, QHeaderView.ResizeToContents)
 
         self.selectionModel().selectionChanged.connect(self.selection_changed)
+        self.model().selectionClear.connect(self.clear_selection)
 
         self.clear_selection()
 
