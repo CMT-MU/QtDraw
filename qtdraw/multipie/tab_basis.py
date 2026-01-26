@@ -393,7 +393,7 @@ class TabBasis(QWidget):
             self._orbital_modulation_dialog.close()
         if self._site_samb_dialog is not None:
             self._site_samb_dialog.close()
-        if self._bone_samb_dialog is not None:
+        if self._bond_samb_dialog is not None:
             self._bond_samb_dialog.close()
         if self._vector_samb_dialog is not None:
             self._vector_samb_dialog.close()
