@@ -9,7 +9,7 @@ Drawings are associated with crystallographic symmetry operations provided by [M
   In order to use MathJax rendering for LaTeX, install playwright browser such as chromium.
     ```bash
     pip install qtdraw
-    playwright install chromium
+    playwright install chromium  # for Linux use `playwright install-deps chromium` instead.
     ```
 
 - **Shell commands**:

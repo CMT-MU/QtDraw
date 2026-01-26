@@ -53,7 +53,7 @@
 
     ```bash
     pip install qtdraw
-    playwright install chromium
+    playwright install chromium  # for Linux use `playwright install-deps chromium` instead.
     ```
 
 3. Install MultiPie
