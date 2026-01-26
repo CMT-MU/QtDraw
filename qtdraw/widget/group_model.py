@@ -415,29 +415,53 @@ class GroupModel(QStandardItemModel):
             index (QModelIndex): index.
             value (QVariant): value.
         """
-        cols = range(self.columnCount())
-        if index.parent() == QModelIndex():  # parent.
-            item = self.itemFromIndex(index)
-            if item.hasChildren():
+        # notify the view that the model layout is about to change drastically.
+        self.beginResetModel()
+
+        try:
+            cols = range(self.columnCount())
+            if index.parent() == QModelIndex():  # parent.
+                item = self.itemFromIndex(index)
                 to_move = []
-                for row in range(item.rowCount()):
-                    row_data = [item.child(row, c).data(Qt.EditRole) for c in cols]
+                if item.hasChildren():
+                    # parent with multiple children.
+                    for row in range(item.rowCount()):
+                        row_data = [item.child(row, c).data(Qt.EditRole) for c in cols]
+                        row_data[0] = value
+                        to_move.append(row_data)
+                else:
+                    # single parent row (no children).
+                    row_data = [self.item(index.row(), c).data(Qt.EditRole) for c in cols]
                     row_data[0] = value
                     to_move.append(row_data)
-                self.remove_row(index, GroupModel.MoveRow)
-                for row_data in to_move:
-                    self.append_row(row_data=row_data, role=GroupModel.MoveRow)
-            else:
-                to_move = [self.invisibleRootItem().child(index.row(), c).data(Qt.EditRole) for c in cols]
-                to_move[0] = value
-                self.remove_row(index, GroupModel.MoveRow)
-                self.append_row(row_data=to_move, role=GroupModel.MoveRow)
-        else:  # child.
-            item = self.itemFromIndex(index.parent())
-            to_move = [item.child(index.row(), c).data(Qt.EditRole) for c in cols]
-            to_move[0] = value
+            else:  # child.
+                p_item = self.itemFromIndex(index.parent())
+                row_data = [p_item.child(index.row(), c).data(Qt.EditRole) for c in cols]
+                row_data[0] = value
+                to_move = [row_data]
+
+            # remove.
             self.remove_row(index, GroupModel.MoveRow)
-            self.append_row(row_data=to_move, role=GroupModel.MoveRow)
+
+            # re-add with new group name.
+            for row_data in to_move:
+                self.append_row(row_data=row_data, role=GroupModel.MoveRow)
+
+        finally:
+            # finalize the model reset.
+            self.endResetModel()
+
+        # refresh all widgets.
+        root_item = self.invisibleRootItem()
+        for i in range(root_item.rowCount()):
+            parent_item = root_item.child(i)
+            # notify for parent row
+            self.updateWidget.emit(parent_item.index())
+            # if it has children (expanded group), notify for each child.
+            if parent_item.hasChildren():
+                for j in range(parent_item.rowCount()):
+                    child_idx = parent_item.child(j, 0).index()
+                    self.updateWidget.emit(child_idx)
 
     # ==================================================
     # action.
