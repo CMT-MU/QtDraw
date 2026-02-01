@@ -245,6 +245,8 @@ class TabGroup(QWidget):
 
         self.button_response.released.connect(self.show_response)
 
+        self.combo_atomic_basis_type.currentTextChanged.connect(self.set_atomic_bra_ket)
+
     # ==================================================
     def set_irrep_list(self):
         group = self.data.p_group
@@ -390,6 +392,42 @@ class TabGroup(QWidget):
 
         self.edit_find_wyckoff_position.setText(wp)
         self.edit_find_wyckoff_symmetry.setText(sym)
+
+    # ==================================================
+    def set_atomic_bra_ket(self):
+        basis_type = self.combo_atomic_basis_type.currentText()
+        if basis_type == "jml":
+            self.combo_atomic_bra_basis.set_item(
+                [
+                    "s : 1/2",
+                    "p : 1/2, 3/2",
+                    "p : 1/2",
+                    "p : 3/2",
+                    "d : 3/2, 5/2",
+                    "d : 3/2",
+                    "d : 5/2",
+                    "f : 5/2, 7/2",
+                    "f : 5/2",
+                    "f : 7/2",
+                ]
+            )
+            self.combo_atomic_ket_basis.set_item(
+                [
+                    "s : 1/2",
+                    "p : 1/2, 3/2",
+                    "p : 1/2",
+                    "p : 3/2",
+                    "d : 3/2, 5/2",
+                    "d : 3/2",
+                    "d : 5/2",
+                    "f : 5/2, 7/2",
+                    "f : 5/2",
+                    "f : 7/2",
+                ]
+            )
+        else:
+            self.combo_atomic_bra_basis.set_item(["s", "P", "d", "f"])
+            self.combo_atomic_ket_basis.set_item(["s", "P", "d", "f"])
 
     # ==================================================
     def show_atomic(self):

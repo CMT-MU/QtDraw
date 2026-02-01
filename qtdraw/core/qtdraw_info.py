@@ -1,4 +1,4 @@
-__version__ = "3.1.1"
+__version__ = "3.1.2"
 __date__ = "2021 -"
 __author__ = "Hiroaki Kusunose"
 

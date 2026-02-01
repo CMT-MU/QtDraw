@@ -325,29 +325,51 @@ def show_atomic_multipole(group, bra, ket, head, basis_type, parent):
         - (InfoPanel) -- symmetry operation panel.
     """
     rank_dict = {"s": 0, "p": 1, "d": 2, "f": 3}
+    mask_idx = {
+        "s : 1/2": [0, 1],
+        "p : 1/2, 3/2": [0, 1, 2, 3, 4, 5],
+        "p : 1/2": [0, 1],
+        "p : 3/2": [2, 3, 4, 5],
+        "d : 3/2, 5/2": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+        "d : 3/2": [0, 1, 2, 3],
+        "d : 5/2": [4, 5, 6, 7, 8, 9],
+        "f : 5/2, 7/2": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13],
+        "f : 5/2": [0, 1, 2, 3, 4, 5],
+        "f : 7/2": [6, 7, 8, 9, 10, 11, 12, 13],
+    }
+    if basis_type == "jml":
+        bra_m = mask_idx[bra]
+        bra = bra.split(":")[0].replace(" ", "")
+        ket_m = mask_idx[ket]
+        ket = ket.split(":")[0].replace(" ", "")
+        mask = (bra_m, ket_m)
+    else:
+        mask = None
+
     bra = rank_dict[bra]
     ket = rank_dict[ket]
 
     name = "Atomic Multipole"
     header = ["No", "multipole", "matrix"]
 
-    if bra > ket:
-        samb = group.atomic_samb(basis_type, (ket, bra))
-    else:
-        samb = group.atomic_samb(basis_type, (bra, ket))
+    samb = group.atomic_samb(basis_type, (bra, ket), mask)
     if head != "":
         samb = samb.select(X=head)
-    basis = group.atomic_basis(basis_type)
 
-    bras = ", ".join([group.tag_atomic_basis(i, bra, latex=True, ket=False) for i in basis[bra]])
-    kets = ", ".join([group.tag_atomic_basis(i, ket, latex=True, ket=True) for i in basis[ket]])
+    if basis_type == "jml":
+        bras = group.tag_atomic_basis_proj(basis_type, bra, bra_m, ket=False)
+        kets = group.tag_atomic_basis_proj(basis_type, ket, ket_m)
+        bras = ", ".join(to_latex(bras))
+        kets = ", ".join(to_latex(kets))
+    else:
+        basis = group.atomic_basis(basis_type)
+        bras = ", ".join([group.tag_atomic_basis(i, bra, latex=True, ket=False) for i in basis[bra]])
+        kets = ", ".join([group.tag_atomic_basis(i, ket, latex=True, ket=True) for i in basis[ket]])
 
     data = [["", r"{\rm bra}", bras], ["", r"{\rm ket}", kets], ["", "", ""]]
     no = 1
     for idx, (mat, ex) in samb.items():
         for comp, m in enumerate(mat):
-            if bra > ket:
-                m = m.conjugate().T
             data.append([str(no), group.tag_multipole(idx, comp, True, "a"), to_latex(m, "matrix")])
             no += 1
 
