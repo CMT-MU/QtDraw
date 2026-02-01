@@ -1019,6 +1019,7 @@
 | show_wyckoff_site |  |
 | show_wyckoff_bond |  |
 | find_wyckoff_set |  |
+| set_atomic_bra_ket |  |
 | show_atomic |  |
 | show_response |  |
 | closeEvent |  |
