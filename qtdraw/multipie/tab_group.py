@@ -159,7 +159,6 @@ class TabGroup(QWidget):
         self.combo_atomic_bra_basis = Combo(parent, ["s", "p", "d", "f"])
         self.combo_atomic_ket_basis = Combo(parent, ["s", "p", "d", "f"])
         self.check_tesseral = Check(parent, text="tesseral")
-        self.check_tesseral.setChecked(True)
 
         panel11 = QWidget(parent)
         layout11 = Layout(panel11)

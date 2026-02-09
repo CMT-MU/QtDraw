@@ -375,6 +375,7 @@ def show_atomic_multipole(group, bra, ket, head, basis_type, tesseral, parent):
         bras = ", ".join([group.tag_atomic_basis(i, bra, latex=True, ket=False) for i in basis[bra]])
         kets = ", ".join([group.tag_atomic_basis(i, ket, latex=True, ket=True) for i in basis[ket]])
 
+    samb = samb.sort(("X", ["Q", "G", "T", "M"]), "Gamma", "s", "k", "l", "n", "p")
     data = [["", r"{\rm bra}", bras], ["", r"{\rm ket}", kets], ["", "", ""]]
     no = 1
     for idx, (mat, ex) in samb.items():
