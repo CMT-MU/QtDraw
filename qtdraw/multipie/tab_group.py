@@ -158,6 +158,8 @@ class TabGroup(QWidget):
         label_atomic_braket = Label(parent, text="bra(L)-ket(L)")
         self.combo_atomic_bra_basis = Combo(parent, ["s", "p", "d", "f"])
         self.combo_atomic_ket_basis = Combo(parent, ["s", "p", "d", "f"])
+        self.check_tesseral = Check(parent, text="tesseral")
+        self.check_tesseral.setChecked(True)
 
         panel11 = QWidget(parent)
         layout11 = Layout(panel11)
@@ -165,12 +167,13 @@ class TabGroup(QWidget):
         layout11.addWidget(self.button_atomic, 0, 2, 1, 1, Qt.AlignRight)
         panel12 = QWidget(parent)
         layout12 = Layout(panel12)
-        layout12.addWidget(label_atomic_type, 0, 0, 1, 1, Qt.AlignRight)
-        layout12.addWidget(self.combo_atomic_type, 0, 1, 1, 1)
-        layout12.addWidget(self.combo_atomic_basis_type, 0, 2, 1, 1)
-        layout12.addWidget(label_atomic_braket, 1, 0, 1, 1, Qt.AlignRight)
-        layout12.addWidget(self.combo_atomic_bra_basis, 1, 1, 1, 1)
-        layout12.addWidget(self.combo_atomic_ket_basis, 1, 2, 1, 1)
+        layout12.addWidget(label_atomic_type, 0, 1, 1, 1, Qt.AlignRight)
+        layout12.addWidget(self.combo_atomic_type, 0, 2, 1, 1)
+        layout12.addWidget(self.combo_atomic_basis_type, 0, 3, 1, 1)
+        layout12.addWidget(self.check_tesseral, 1, 0, 1, 1, Qt.AlignRight)
+        layout12.addWidget(label_atomic_braket, 1, 1, 1, 1, Qt.AlignRight)
+        layout12.addWidget(self.combo_atomic_bra_basis, 1, 2, 1, 1)
+        layout12.addWidget(self.combo_atomic_ket_basis, 1, 3, 1, 1)
 
         # response tensor.
         label_response = Label(parent, text="Response Tensor (MPG)", bold=True)
@@ -436,8 +439,9 @@ class TabGroup(QWidget):
         basis_type = self.combo_atomic_basis_type.currentText()
         bra = self.combo_atomic_bra_basis.currentText()
         ket = self.combo_atomic_ket_basis.currentText()
+        tesseral = self.check_tesseral.is_checked()
 
-        self._atomic_dialog = show_atomic_multipole(group, bra, ket, head, basis_type, self)
+        self._atomic_dialog = show_atomic_multipole(group, bra, ket, head, basis_type, tesseral, self)
 
     # ==================================================
     def show_response(self):

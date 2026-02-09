@@ -357,6 +357,15 @@ class PyVistaWidget(QtInteractor):
     #    self.set_view(view)
 
     # ==================================================
+    @property
+    def actors(self):
+        # in order to access directly to renderer.actors.
+        try:
+            return self.renderer.actors
+        except AttributeError:
+            return {}
+
+    # ==================================================
     def paintEvent(self, event):
         # override the function to do nothing for PySide 6.10 or later.
         pass

@@ -309,7 +309,7 @@ def show_harmonics_info(group, head, rank, parent):
 
 
 # ==================================================
-def show_atomic_multipole(group, bra, ket, head, basis_type, parent):
+def show_atomic_multipole(group, bra, ket, head, basis_type, tesseral, parent):
     """
     Show atomic multipole panel.
 
@@ -319,6 +319,7 @@ def show_atomic_multipole(group, bra, ket, head, basis_type, parent):
         ket (str): ket basis list.
         head (str): head.
         basis_type (str): basis type.
+        tesseral (bool): is tesseral basis ?
         parent (QWidget): parent.
 
     Returns:
@@ -362,7 +363,15 @@ def show_atomic_multipole(group, bra, ket, head, basis_type, parent):
         bras = ", ".join(to_latex(bras))
         kets = ", ".join(to_latex(kets))
     else:
-        basis = group.atomic_basis(basis_type)
+        if tesseral:
+            basis = group.atomic_basis(basis_type)
+        else:
+            spinful = basis_type[-1] == "s"
+            samb = group.transform_atomic_samb(samb, ket, bra, spinful=spinful)
+            tp = "hexagonal" if group.is_hexagonal_subgroup else "cubic"
+            sf = "spinful" if spinful else "spinless"
+            basis = group.global_info()["harmonics"]["atomic_basis"][sf][tp]
+
         bras = ", ".join([group.tag_atomic_basis(i, bra, latex=True, ket=False) for i in basis[bra]])
         kets = ", ".join([group.tag_atomic_basis(i, ket, latex=True, ket=True) for i in basis[ket]])
 
