@@ -33,7 +33,7 @@
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=9c3e77be" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=34ddd5e8" />
@@ -667,7 +667,7 @@
 <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="show_atomic_multipole">
 <a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.multipie_info_dialog.show_atomic_multipole">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">show_atomic_multipole</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">bra</span><span class="p">,</span> <span class="n">ket</span><span class="p">,</span> <span class="n">head</span><span class="p">,</span> <span class="n">basis_type</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">show_atomic_multipole</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">bra</span><span class="p">,</span> <span class="n">ket</span><span class="p">,</span> <span class="n">head</span><span class="p">,</span> <span class="n">basis_type</span><span class="p">,</span> <span class="n">tesseral</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Show atomic multipole panel.</span>
 
@@ -677,6 +677,7 @@
 <span class="sd">        ket (str): ket basis list.</span>
 <span class="sd">        head (str): head.</span>
 <span class="sd">        basis_type (str): basis type.</span>
+<span class="sd">        tesseral (bool): is tesseral basis ?</span>
 <span class="sd">        parent (QWidget): parent.</span>
 
 <span class="sd">    Returns:</span>
@@ -720,10 +721,19 @@
         <span class="n">bras</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">to_latex</span><span class="p">(</span><span class="n">bras</span><span class="p">))</span>
         <span class="n">kets</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">to_latex</span><span class="p">(</span><span class="n">kets</span><span class="p">))</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">basis</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">atomic_basis</span><span class="p">(</span><span class="n">basis_type</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">tesseral</span><span class="p">:</span>
+            <span class="n">basis</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">atomic_basis</span><span class="p">(</span><span class="n">basis_type</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">spinful</span> <span class="o">=</span> <span class="n">basis_type</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;s&quot;</span>
+            <span class="n">samb</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">transform_atomic_samb</span><span class="p">(</span><span class="n">samb</span><span class="p">,</span> <span class="n">ket</span><span class="p">,</span> <span class="n">bra</span><span class="p">,</span> <span class="n">spinful</span><span class="o">=</span><span class="n">spinful</span><span class="p">)</span>
+            <span class="n">tp</span> <span class="o">=</span> <span class="s2">&quot;hexagonal&quot;</span> <span class="k">if</span> <span class="n">group</span><span class="o">.</span><span class="n">is_hexagonal_subgroup</span> <span class="k">else</span> <span class="s2">&quot;cubic&quot;</span>
+            <span class="n">sf</span> <span class="o">=</span> <span class="s2">&quot;spinful&quot;</span> <span class="k">if</span> <span class="n">spinful</span> <span class="k">else</span> <span class="s2">&quot;spinless&quot;</span>
+            <span class="n">basis</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">global_info</span><span class="p">()[</span><span class="s2">&quot;harmonics&quot;</span><span class="p">][</span><span class="s2">&quot;atomic_basis&quot;</span><span class="p">][</span><span class="n">sf</span><span class="p">][</span><span class="n">tp</span><span class="p">]</span>
+
         <span class="n">bras</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">group</span><span class="o">.</span><span class="n">tag_atomic_basis</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">bra</span><span class="p">,</span> <span class="n">latex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ket</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">basis</span><span class="p">[</span><span class="n">bra</span><span class="p">]])</span>
         <span class="n">kets</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">group</span><span class="o">.</span><span class="n">tag_atomic_basis</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">ket</span><span class="p">,</span> <span class="n">latex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ket</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">basis</span><span class="p">[</span><span class="n">ket</span><span class="p">]])</span>
 
+    <span class="n">samb</span> <span class="o">=</span> <span class="n">samb</span><span class="o">.</span><span class="n">sort</span><span class="p">((</span><span class="s2">&quot;X&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;Q&quot;</span><span class="p">,</span> <span class="s2">&quot;G&quot;</span><span class="p">,</span> <span class="s2">&quot;T&quot;</span><span class="p">,</span> <span class="s2">&quot;M&quot;</span><span class="p">]),</span> <span class="s2">&quot;Gamma&quot;</span><span class="p">,</span> <span class="s2">&quot;s&quot;</span><span class="p">,</span> <span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="s2">&quot;l&quot;</span><span class="p">,</span> <span class="s2">&quot;n&quot;</span><span class="p">,</span> <span class="s2">&quot;p&quot;</span><span class="p">)</span>
     <span class="n">data</span> <span class="o">=</span> <span class="p">[[</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&quot;{\rm bra}&quot;</span><span class="p">,</span> <span class="n">bras</span><span class="p">],</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&quot;{\rm ket}&quot;</span><span class="p">,</span> <span class="n">kets</span><span class="p">],</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">]]</span>
     <span class="n">no</span> <span class="o">=</span> <span class="mi">1</span>
     <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="p">(</span><span class="n">mat</span><span class="p">,</span> <span class="n">ex</span><span class="p">)</span> <span class="ow">in</span> <span class="n">samb</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>

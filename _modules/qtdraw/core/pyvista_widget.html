@@ -33,7 +33,7 @@
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=9c3e77be" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=34ddd5e8" />
@@ -710,6 +710,15 @@
     <span class="c1">#    view = get_hkl_from_camera(self.camera, self.A_matrix)</span>
     <span class="c1">#    view = [0, 0, 0]</span>
     <span class="c1">#    self.set_view(view)</span>
+
+    <span class="c1"># ==================================================</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">actors</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># in order to access directly to renderer.actors.</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">renderer</span><span class="o">.</span><span class="n">actors</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">{}</span>
 
     <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="PyVistaWidget.paintEvent">

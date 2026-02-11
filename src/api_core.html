@@ -457,6 +457,7 @@
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.a2"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.a2</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.a3"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.a3</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.actor_list"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.actor_list</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.actors"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.actors</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.camera_view"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.camera_view</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.cell_volume"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.cell_volume</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.copyright"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.copyright</span></code></a></li>
@@ -1923,6 +1924,26 @@
 <li><p>(list) -- actor names, [str].</p></li>
 </ul>
 </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="qtdraw.core.pyvista_widget.PyVistaWidget.actors">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">actors</span></span><a class="headerlink" href="#qtdraw.core.pyvista_widget.PyVistaWidget.actors" title="Link to this definition">#</a></dt>
+<dd><p>Return the actors of the active renderer.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This may include 2D actors such as <code class="xref py py-class docutils literal notranslate"><span class="pre">Text</span></code>, 3D actors such
+as <code class="xref py py-class docutils literal notranslate"><span class="pre">Actor</span></code>, and assemblies such as <code class="xref py py-class docutils literal notranslate"><span class="pre">AxesAssembly</span></code>.
+The actors may also be unwrapped VTK objects.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dictionary of active actors.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict</p>
 </dd>
 </dl>
 </dd></dl>
@@ -3604,6 +3625,7 @@
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.a2"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.a2</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.a3"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.a3</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.actor_list"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.actor_list</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.actors"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.actors</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.camera_view"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.camera_view</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.cell_volume"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.cell_volume</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.copyright"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.copyright</span></code></a></li>
