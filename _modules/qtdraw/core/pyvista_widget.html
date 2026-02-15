@@ -2001,8 +2001,8 @@
 
         <span class="c1"># read.</span>
         <span class="n">f</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span><span class="o">.</span><span class="n">as_posix</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clear_data</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">clear_info</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">reload</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">file</span><span class="o">.</span><span class="n">suffix</span> <span class="o">==</span> <span class="n">detail</span><span class="p">[</span><span class="s2">&quot;extension&quot;</span><span class="p">]:</span>
             <span class="n">all_data</span> <span class="o">=</span> <span class="n">read_dict</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
             <span class="n">ver</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">all_data</span><span class="p">[</span><span class="s2">&quot;version&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>  <span class="c1"># major version.</span>
@@ -2248,16 +2248,11 @@
 
 <span class="sd">        :meta private:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_block_remove_isosurface</span> <span class="o">=</span> <span class="kc">True</span>
-        <span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
-            <span class="n">model</span><span class="o">.</span><span class="n">clear_data</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">deselect_actor_all</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_status</span><span class="p">[</span><span class="s2">&quot;repeat&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_status</span><span class="p">[</span><span class="s2">&quot;grid&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">add_data</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_block_remove_isosurface</span> <span class="o">=</span> <span class="kc">False</span>
 
     <span class="c1"># ==================================================</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">refresh</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -2493,7 +2488,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">set_additional_status</span><span class="p">()</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">set_cell</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">set_repeat</span><span class="p">()</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">redraw</span><span class="p">()</span></div>
 
 
     <span class="c1"># ==================================================</span>
@@ -3021,8 +3016,12 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Clear Data.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">deselect_actor_all</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_tab_group_view</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">reload</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_block_remove_isosurface</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="n">model</span><span class="o">.</span><span class="n">clear_data</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_block_remove_isosurface</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">data_removed</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span></div>
 
 
