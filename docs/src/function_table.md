@@ -170,6 +170,7 @@
 | Function | Summary |
 |--------|----------|
 | PyVistaWidget | Widget for 3d plot layer using PyVista. |
+| actors |  |
 | paintEvent |  |
 | clear_info | Clear info. |
 | set_additional_status | Set additional status. |
