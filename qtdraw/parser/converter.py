@@ -9,7 +9,7 @@ import copy
 from qtdraw.core.pyvista_widget_setting import default_status, default_preference
 from qtdraw.core.qtdraw_info import __version__
 
-from qtdraw.multipie.multipie_setting import default_status
+from qtdraw.multipie.multipie_setting import default_status as multipie_status
 
 
 # ==================================================
@@ -330,7 +330,7 @@ def get_multipie(dic):
     old = dic["multipie"]
     if len(old) == 0:
         return {}
-    multipie = copy.deepcopy(default_status)
+    multipie = copy.deepcopy(multipie_status)
 
     if "group" in old.keys():
         multipie["group"]["tag"] = old["group"]["group"]

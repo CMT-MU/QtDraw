@@ -171,7 +171,8 @@ class QtDraw(Window):
         self.view_edit_lower.returnPressed.connect(self._set_lower)
         self.view_edit_upper.returnPressed.connect(self._set_upper)
 
-        if self.pyvista_widget._mp_data is not None:
+        multipie = self.pyvista_widget._status.get("multipie", {})
+        if multipie and self.pyvista_widget._mp_data is not None:
             self._show_multipie()
             if self.multipie_dialog is not None:
                 self.multipie_dialog.set_data()

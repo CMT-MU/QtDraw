@@ -1584,8 +1584,8 @@ class PyVistaWidget(QtInteractor):
 
         # read.
         f = file.resolve().as_posix()
+        self.clear_data()
         self.clear_info()
-        self.reload()
         if file.suffix == detail["extension"]:
             all_data = read_dict(f)
             ver = int(all_data["version"].split(".")[0])  # major version.
@@ -1824,16 +1824,11 @@ class PyVistaWidget(QtInteractor):
 
         :meta private:
         """
-        self._block_remove_isosurface = True
-        for model in self._data.values():
-            model.clear_data()
-        self.deselect_actor_all()
         if data is None:
             self._status["repeat"] = False
             self._status["grid"] = False
         else:
             self.add_data(data)
-        self._block_remove_isosurface = False
 
     # ==================================================
     def refresh(self):
@@ -2058,7 +2053,7 @@ class PyVistaWidget(QtInteractor):
         self.set_additional_status()
 
         self.set_cell()
-        self.set_repeat()
+        self.redraw()
 
     # ==================================================
     def set_clip(self, mode=None):
@@ -2550,8 +2545,12 @@ class PyVistaWidget(QtInteractor):
         """
         Clear Data.
         """
+        self.deselect_actor_all()
         self._tab_group_view.close()
-        self.reload()
+        self._block_remove_isosurface = True
+        for model in self._data.values():
+            model.clear_data()
+        self._block_remove_isosurface = False
         self.data_removed.emit()
 
     # ==================================================
