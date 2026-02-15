@@ -203,7 +203,6 @@
 | set_property | Set status and preference. |
 | update_status | Update status. |
 | update_preference | Update preference. |
-| reload | Reload data and draw object. |
 | refresh | Refresh widget setting. |
 | a1 | Get a1 unit vector. |
 | a2 | Get a2 unit vector. |
