@@ -1612,7 +1612,7 @@ class PyVistaWidget(QtInteractor):
         if file.suffix == detail["extension"]:
             if "distance" in all_data["camera"]:
                 del all_data["camera"]["distance"]
-            self.reload(all_data["data"])
+            self.add_data(all_data["data"])
             self.set_camera_info(all_data["camera"])
             if ver < 2:
                 self.reset_camera()
@@ -1663,7 +1663,7 @@ class PyVistaWidget(QtInteractor):
 
         self.set_property(status, preference)
         self.set_camera_info(camera)
-        self.reload(data)
+        self.add_data(data)
         self.refresh()
 
     # ==================================================
@@ -1813,22 +1813,6 @@ class PyVistaWidget(QtInteractor):
         :meta private:
         """
         self.set_property(preference={category: {key: value}})
-
-    # ==================================================
-    def reload(self, data=None):
-        """
-        Reload data and draw object.
-
-        Args:
-            data (dict, optional): object data.
-
-        :meta private:
-        """
-        if data is None:
-            self._status["repeat"] = False
-            self._status["grid"] = False
-        else:
-            self.add_data(data)
 
     # ==================================================
     def refresh(self):
@@ -2097,7 +2081,9 @@ class PyVistaWidget(QtInteractor):
                     hide = name_actor[idx]
                     for actor_name in hide:
                         if actor_name != "":
-                            self.actors[actor_name].SetVisibility(False)
+                            actor = self.actors[actor_name]
+                            actor.SetVisibility(False)
+                            # self.hide_action(actor)
                     if object_type != "caption":
                         label_actor = value[:, COLUMN_LABEL_ACTOR][idx]
                         for i in label_actor:
@@ -2147,7 +2133,8 @@ class PyVistaWidget(QtInteractor):
                     idx = name_actor_check
                     show = name_actor[idx]
                     for actor_name in show:
-                        self.actors[actor_name].SetVisibility(True)
+                        actor = self.actors[actor_name]
+                        actor.SetVisibility(True)
                     if object_type != "caption":
                         label_actor_check = value[:, COLUMN_LABEL_CHECK].astype(bool)
                         idx = label_actor_check
@@ -2172,7 +2159,6 @@ class PyVistaWidget(QtInteractor):
             self._status["repeat"] = mode
 
         self.repeat_data()
-        self.set_clip()
 
     # ==================================================
     def set_range(self, lower=None, upper=None):
@@ -2638,7 +2624,9 @@ class PyVistaWidget(QtInteractor):
                         model[n * i : n * (i + 1), COLUMN_CELL] = str(g)
                     data[object_type] = model.tolist()
 
-        self.reload(data)
+        self.clear_data()
+        self.add_data(data)
+        self.set_clip()
 
     # ==================================================
     def set_nonrepeat(self):
@@ -2667,7 +2655,9 @@ class PyVistaWidget(QtInteractor):
                 model[:, COLUMN_CELL] = "[0,0,0]"
                 data[object_type] = model.tolist()
 
-        self.reload(data)
+        self.clear_data()
+        self.add_data(data)
+        self.set_clip()
 
     # ==================================================
     def set_actor(self, object_type, index, actor_name, column=COLUMN_NAME_ACTOR):
