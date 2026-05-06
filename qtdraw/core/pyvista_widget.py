@@ -2299,7 +2299,7 @@ class PyVistaWidget(QtInteractor):
                 label_font_size=detail["bar_size"],
                 fmt=detail["bar_format"],
             )
-        elif len(self._scalar_bars) > 0:
+        elif self.scalar_bars:
             self.remove_scalar_bar()
 
     # ==================================================
