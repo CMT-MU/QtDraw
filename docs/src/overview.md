@@ -31,6 +31,8 @@ The additional window for `MultiPie` plug-in is shown, which consists of three p
     draw SAMB object (with modulation over multiple cells)
     ![multipie_basis.jpg](fig/multipie_basis.jpg)
 
+A practical tutorial of MultiPie via QtDraw is given by [Tutorial via QtDraw](tutorial_multipie_qtdraw.pdf)
+
 For the API, please refer to the following:
 
 - [Core module](api_core.md) core modules for end users.
