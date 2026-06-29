@@ -27,27 +27,27 @@
   </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=0790524f97105ba85085" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=0790524f97105ba85085" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css?v=8cd3d715" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=34ddd5e8" />
   
   <!-- So that users can add custom icons -->
-  <script defer src="../_static/scripts/fontawesome.js?digest=0790524f97105ba85085"></script>
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=0790524f97105ba85085" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=0790524f97105ba85085" />
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
     <script src="../_static/documentation_options.js?v=8cf54648"></script>
-    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
-    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=f281be69"></script>
     <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
@@ -59,8 +59,9 @@
     <script src="../_static/design-tabs.js?v=f930bc37"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'src/api_core';</script>
-    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
     <script src="../_static/custom.js?v=9c3a2667"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -69,26 +70,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="jp"/>
   <meta name="docsearch:version" content="" />
-  
-    
-    <script src="../_static/searchtools.js"></script>
-    <script src="../_static/language_data.js"></script>
-    <script src="../searchindex.js"></script>
-  
   </head>
-  <body data-default-mode="">
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
   
   
   <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
-
   
   <div id="pst-scroll-pixel-helper"></div>
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
     <i class="fa-solid fa-arrow-up"></i>Back to top</button>
-  
-  
-  
+
   
   <dialog id="pst-search-dialog">
     
@@ -114,51 +109,7 @@
 </div>
 
   
-    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
-<div class="bd-header__inner bd-page-width">
-  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
-    <span class="fa-solid fa-bars"></span>
-  </button>
-  
-  
-  <div class="col-lg-9 navbar-header-items">
-    
-    
-    <div class="navbar-header-items__end">
-      
-        <div class="navbar-item navbar-persistent--container">
-          
-
-<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
- <i class="fa-solid fa-magnifying-glass"></i>
- <span class="search-button__default-text">Search</span>
- <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-</button>
-        </div>
-      
-      
-    </div>
-    
-  </div>
-  
-  
-    <div class="navbar-persistent--mobile">
-
-<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
- <i class="fa-solid fa-magnifying-glass"></i>
- <span class="search-button__default-text">Search</span>
- <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-</button>
-    </div>
-  
-
-  
-    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
-      <span class="fa-solid fa-outdent"></span>
-    </button>
-  
-</div>
-
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
     </header>
   
 
@@ -408,18 +359,11 @@
 
 
 
-<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
-  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
-    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
-    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
-    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
-  </button>
-  <ul class="dropdown-menu dropdown-menu-end">
-    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
-    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
-    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
-  </ul>
-</div>
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
 
 
 <button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
@@ -447,7 +391,7 @@
                 <h2> Contents </h2>
             </div>
             <nav aria-label="Page">
-                <ul class="pst-show_toc_level nav section-nav flex-column">
+                <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-qtdraw.core.pyvista_widget">PyVista Widget</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.add_bond"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.add_bond()</span></code></a></li>
@@ -644,7 +588,7 @@
 3d objects, and manage data, view, and so on.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="qtdraw.core.pyvista_widget.PyVistaWidget">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">PyVistaWidget</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">off_screen</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/pyvista_widget.html#PyVistaWidget"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.pyvista_widget.PyVistaWidget" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PyVistaWidget</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">off_screen</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/pyvista_widget.html#PyVistaWidget"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.pyvista_widget.PyVistaWidget" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">QtInteractor</span></code></p>
 <p>Widget for 3d plot layer using PyVista.</p>
 <dl class="field-list simple">
@@ -1890,7 +1834,7 @@
 
 <dl class="py property">
 <dt class="sig sig-object py" id="qtdraw.core.pyvista_widget.PyVistaWidget.A_matrix">
-<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">A_matrix</span></span><a class="headerlink" href="#qtdraw.core.pyvista_widget.PyVistaWidget.A_matrix" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">A_matrix</span></span><a class="headerlink" href="#qtdraw.core.pyvista_widget.PyVistaWidget.A_matrix" title="Link to this definition">#</a></dt>
 <dd><p>Get transform matrix.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -1904,7 +1848,7 @@
 
 <dl class="py property">
 <dt class="sig sig-object py" id="qtdraw.core.pyvista_widget.PyVistaWidget.A_matrix_norm">
-<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">A_matrix_norm</span></span><a class="headerlink" href="#qtdraw.core.pyvista_widget.PyVistaWidget.A_matrix_norm" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">A_matrix_norm</span></span><a class="headerlink" href="#qtdraw.core.pyvista_widget.PyVistaWidget.A_matrix_norm" title="Link to this definition">#</a></dt>
 <dd><p>Get transform matrix (normalized).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -1918,7 +1862,7 @@
 
 <dl class="py property">
 <dt class="sig sig-object py" id="qtdraw.core.pyvista_widget.PyVistaWidget.G_matrix">
-<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">G_matrix</span></span><a class="headerlink" href="#qtdraw.core.pyvista_widget.PyVistaWidget.G_matrix" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">G_matrix</span></span><a class="headerlink" href="#qtdraw.core.pyvista_widget.PyVistaWidget.G_matrix" title="Link to this definition">#</a></dt>
 <dd><p>Get metric matrix.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -1932,7 +1876,7 @@
 
 <dl class="py property">
 <dt class="sig sig-object py" id="qtdraw.core.pyvista_widget.PyVistaWidget.a1">
-<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">a1</span></span><a class="headerlink" href="#qtdraw.core.pyvista_widget.PyVistaWidget.a1" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">a1</span></span><a class="headerlink" href="#qtdraw.core.pyvista_widget.PyVistaWidget.a1" title="Link to this definition">#</a></dt>
 <dd><p>Get a1 unit vector.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -1946,7 +1890,7 @@
 
 <dl class="py property">
 <dt class="sig sig-object py" id="qtdraw.core.pyvista_widget.PyVistaWidget.a2">
-<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">a2</span></span><a class="headerlink" href="#qtdraw.core.pyvista_widget.PyVistaWidget.a2" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">a2</span></span><a class="headerlink" href="#qtdraw.core.pyvista_widget.PyVistaWidget.a2" title="Link to this definition">#</a></dt>
 <dd><p>Get a2 unit vector.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -1960,7 +1904,7 @@
 
 <dl class="py property">
 <dt class="sig sig-object py" id="qtdraw.core.pyvista_widget.PyVistaWidget.a3">
-<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">a3</span></span><a class="headerlink" href="#qtdraw.core.pyvista_widget.PyVistaWidget.a3" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">a3</span></span><a class="headerlink" href="#qtdraw.core.pyvista_widget.PyVistaWidget.a3" title="Link to this definition">#</a></dt>
 <dd><p>Get a3 unit vector.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -1974,7 +1918,7 @@
 
 <dl class="py property">
 <dt class="sig sig-object py" id="qtdraw.core.pyvista_widget.PyVistaWidget.actor_list">
-<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">actor_list</span></span><a class="headerlink" href="#qtdraw.core.pyvista_widget.PyVistaWidget.actor_list" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">actor_list</span></span><a class="headerlink" href="#qtdraw.core.pyvista_widget.PyVistaWidget.actor_list" title="Link to this definition">#</a></dt>
 <dd><p>Get list of actor.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -1988,7 +1932,7 @@
 
 <dl class="py property">
 <dt class="sig sig-object py" id="qtdraw.core.pyvista_widget.PyVistaWidget.actors">
-<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">actors</span></span><a class="headerlink" href="#qtdraw.core.pyvista_widget.PyVistaWidget.actors" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">actors</span></span><a class="headerlink" href="#qtdraw.core.pyvista_widget.PyVistaWidget.actors" title="Link to this definition">#</a></dt>
 <dd><p>Return the actors of the active renderer.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -2013,7 +1957,7 @@ The actors may also be unwrapped VTK objects.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="qtdraw.core.pyvista_widget.PyVistaWidget.cell_volume">
-<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">cell_volume</span></span><a class="headerlink" href="#qtdraw.core.pyvista_widget.PyVistaWidget.cell_volume" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">cell_volume</span></span><a class="headerlink" href="#qtdraw.core.pyvista_widget.PyVistaWidget.cell_volume" title="Link to this definition">#</a></dt>
 <dd><p>Get cell volume.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -2027,7 +1971,7 @@ The actors may also be unwrapped VTK objects.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="qtdraw.core.pyvista_widget.PyVistaWidget.copyright">
-<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">copyright</span></span><a class="headerlink" href="#qtdraw.core.pyvista_widget.PyVistaWidget.copyright" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">copyright</span></span><a class="headerlink" href="#qtdraw.core.pyvista_widget.PyVistaWidget.copyright" title="Link to this definition">#</a></dt>
 <dd><p>Copyright string.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -2051,7 +1995,7 @@ The actors may also be unwrapped VTK objects.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="qtdraw.core.pyvista_widget.PyVistaWidget.origin">
-<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">origin</span></span><a class="headerlink" href="#qtdraw.core.pyvista_widget.PyVistaWidget.origin" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">origin</span></span><a class="headerlink" href="#qtdraw.core.pyvista_widget.PyVistaWidget.origin" title="Link to this definition">#</a></dt>
 <dd><p>Get origin.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -2065,12 +2009,12 @@ The actors may also be unwrapped VTK objects.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="qtdraw.core.pyvista_widget.PyVistaWidget.staticMetaObject">
-<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;PyVistaWidget&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;QtInteractor&quot;:</span> <span class="pre">Methods:</span>&#160;&#160; <span class="pre">#35</span> <span class="pre">type=Signal,</span> <span class="pre">signature=message(QString),</span> <span class="pre">parameters=QString</span>&#160;&#160; <span class="pre">#36</span> <span class="pre">type=Signal,</span> <span class="pre">signature=data_removed()</span>&#160;&#160; <span class="pre">#37</span> <span class="pre">type=Signal,</span> <span class="pre">signature=camera_view(QVariantList),</span> <span class="pre">parameters=QVariantList</span> <span class="pre">)</span></span><a class="headerlink" href="#qtdraw.core.pyvista_widget.PyVistaWidget.staticMetaObject" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;PyVistaWidget&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;QtInteractor&quot;:</span> <span class="pre">Methods:</span>&#160;&#160; <span class="pre">#35</span> <span class="pre">type=Signal,</span> <span class="pre">signature=message(QString),</span> <span class="pre">parameters=QString</span>&#160;&#160; <span class="pre">#36</span> <span class="pre">type=Signal,</span> <span class="pre">signature=data_removed()</span>&#160;&#160; <span class="pre">#37</span> <span class="pre">type=Signal,</span> <span class="pre">signature=camera_view(QVariantList),</span> <span class="pre">parameters=QVariantList</span> <span class="pre">)</span></em><a class="headerlink" href="#qtdraw.core.pyvista_widget.PyVistaWidget.staticMetaObject" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="qtdraw.core.pyvista_widget.PyVistaWidget.window_title">
-<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">window_title</span></span><a class="headerlink" href="#qtdraw.core.pyvista_widget.PyVistaWidget.window_title" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">window_title</span></span><a class="headerlink" href="#qtdraw.core.pyvista_widget.PyVistaWidget.window_title" title="Link to this definition">#</a></dt>
 <dd><p>Get window title.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -2086,7 +2030,7 @@ The actors may also be unwrapped VTK objects.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="qtdraw.core.pyvista_widget.Window">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">Window</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">level</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/pyvista_widget.html#Window"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.pyvista_widget.Window" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Window</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">level</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/pyvista_widget.html#Window"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.pyvista_widget.Window" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">QMainWindow</span></code></p>
 <p>Window with logging.</p>
 <dl class="field-list simple">
@@ -2096,7 +2040,7 @@ The actors may also be unwrapped VTK objects.</p>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="qtdraw.core.pyvista_widget.Window.staticMetaObject">
-<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;Window&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;QMainWindow&quot;:</span> <span class="pre">)</span></span><a class="headerlink" href="#qtdraw.core.pyvista_widget.Window.staticMetaObject" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;Window&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;QMainWindow&quot;:</span> <span class="pre">)</span></em><a class="headerlink" href="#qtdraw.core.pyvista_widget.Window.staticMetaObject" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -2218,7 +2162,7 @@ The actors may also be unwrapped VTK objects.</p>
 <p>This module provides application of QtDraw.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="qtdraw.core.qtdraw_app.QtDraw">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">QtDraw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preference</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/qtdraw_app.html#QtDraw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.qtdraw_app.QtDraw" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">QtDraw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preference</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/qtdraw_app.html#QtDraw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.qtdraw_app.QtDraw" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#qtdraw.core.pyvista_widget.Window" title="qtdraw.core.pyvista_widget.Window"><code class="xref py py-class docutils literal notranslate"><span class="pre">Window</span></code></a></p>
 <p>3D drawing tool.</p>
 <dl class="field-list simple">
@@ -3467,7 +3411,7 @@ The actors may also be unwrapped VTK objects.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="qtdraw.core.qtdraw_app.QtDraw.staticMetaObject">
-<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;QtDraw&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;Window&quot;:</span> <span class="pre">)</span></span><a class="headerlink" href="#qtdraw.core.qtdraw_app.QtDraw.staticMetaObject" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;QtDraw&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;Window&quot;:</span> <span class="pre">)</span></em><a class="headerlink" href="#qtdraw.core.qtdraw_app.QtDraw.staticMetaObject" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -3479,7 +3423,7 @@ The actors may also be unwrapped VTK objects.</p>
 <p>This module provides preference dialog for PyVistaWidget.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="qtdraw.core.dialog_preference.PreferenceDialog">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">PreferenceDialog</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">widget</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/dialog_preference.html#PreferenceDialog"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.dialog_preference.PreferenceDialog" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PreferenceDialog</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">widget</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/dialog_preference.html#PreferenceDialog"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.dialog_preference.PreferenceDialog" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">QDialog</span></code></p>
 <p>Preference dialog.</p>
 <dl class="field-list simple">
@@ -3522,7 +3466,7 @@ The actors may also be unwrapped VTK objects.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="qtdraw.core.dialog_preference.PreferenceDialog.staticMetaObject">
-<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;PreferenceDialog&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;QDialog&quot;:</span> <span class="pre">)</span></span><a class="headerlink" href="#qtdraw.core.dialog_preference.PreferenceDialog.staticMetaObject" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;PreferenceDialog&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;QDialog&quot;:</span> <span class="pre">)</span></em><a class="headerlink" href="#qtdraw.core.dialog_preference.PreferenceDialog.staticMetaObject" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -3534,7 +3478,7 @@ The actors may also be unwrapped VTK objects.</p>
 <p>This module provides about dialog for PyVistaWidget.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="qtdraw.core.dialog_about.AboutDialog">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">AboutDialog</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">widget</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/dialog_about.html#AboutDialog"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.dialog_about.AboutDialog" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">AboutDialog</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">widget</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/core/dialog_about.html#AboutDialog"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.core.dialog_about.AboutDialog" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">QDialog</span></code></p>
 <p>About dialog.</p>
 <dl class="field-list simple">
@@ -3553,7 +3497,7 @@ The actors may also be unwrapped VTK objects.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="qtdraw.core.dialog_about.AboutDialog.staticMetaObject">
-<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;AboutDialog&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;QDialog&quot;:</span> <span class="pre">)</span></span><a class="headerlink" href="#qtdraw.core.dialog_about.AboutDialog.staticMetaObject" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;AboutDialog&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;QDialog&quot;:</span> <span class="pre">)</span></em><a class="headerlink" href="#qtdraw.core.dialog_about.AboutDialog.staticMetaObject" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -3616,7 +3560,7 @@ The actors may also be unwrapped VTK objects.</p>
     <i class="fa-solid fa-list"></i> Contents
   </div>
   <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
-    <ul class="pst-show_toc_level nav section-nav flex-column">
+    <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-qtdraw.core.pyvista_widget">PyVista Widget</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.core.pyvista_widget.PyVistaWidget.add_bond"><code class="docutils literal notranslate"><span class="pre">PyVistaWidget.add_bond()</span></code></a></li>
@@ -3841,8 +3785,8 @@ By Hiroaki Kusunose
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="../_static/scripts/bootstrap.js?digest=0790524f97105ba85085"></script>
-<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=0790524f97105ba85085"></script>
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
 
   <footer class="bd-footer">
   </footer>

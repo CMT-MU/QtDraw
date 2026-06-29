@@ -27,27 +27,27 @@
   </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=0790524f97105ba85085" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=0790524f97105ba85085" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css?v=8cd3d715" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=34ddd5e8" />
   
   <!-- So that users can add custom icons -->
-  <script defer src="../_static/scripts/fontawesome.js?digest=0790524f97105ba85085"></script>
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=0790524f97105ba85085" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=0790524f97105ba85085" />
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
     <script src="../_static/documentation_options.js?v=8cf54648"></script>
-    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
-    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=f281be69"></script>
     <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
@@ -59,8 +59,9 @@
     <script src="../_static/design-tabs.js?v=f930bc37"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'src/api_widget';</script>
-    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
     <script src="../_static/custom.js?v=9c3a2667"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -69,26 +70,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="jp"/>
   <meta name="docsearch:version" content="" />
-  
-    
-    <script src="../_static/searchtools.js"></script>
-    <script src="../_static/language_data.js"></script>
-    <script src="../searchindex.js"></script>
-  
   </head>
-  <body data-default-mode="">
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
   
   
   <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
-
   
   <div id="pst-scroll-pixel-helper"></div>
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
     <i class="fa-solid fa-arrow-up"></i>Back to top</button>
-  
-  
-  
+
   
   <dialog id="pst-search-dialog">
     
@@ -114,51 +109,7 @@
 </div>
 
   
-    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
-<div class="bd-header__inner bd-page-width">
-  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
-    <span class="fa-solid fa-bars"></span>
-  </button>
-  
-  
-  <div class="col-lg-9 navbar-header-items">
-    
-    
-    <div class="navbar-header-items__end">
-      
-        <div class="navbar-item navbar-persistent--container">
-          
-
-<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
- <i class="fa-solid fa-magnifying-glass"></i>
- <span class="search-button__default-text">Search</span>
- <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-</button>
-        </div>
-      
-      
-    </div>
-    
-  </div>
-  
-  
-    <div class="navbar-persistent--mobile">
-
-<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
- <i class="fa-solid fa-magnifying-glass"></i>
- <span class="search-button__default-text">Search</span>
- <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-</button>
-    </div>
-  
-
-  
-    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
-      <span class="fa-solid fa-outdent"></span>
-    </button>
-  
-</div>
-
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
     </header>
   
 
@@ -408,18 +359,11 @@
 
 
 
-<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
-  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
-    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
-    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
-    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
-  </button>
-  <ul class="dropdown-menu dropdown-menu-end">
-    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
-    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
-    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
-  </ul>
-</div>
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
 
 
 <button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
@@ -447,7 +391,7 @@
                 <h2> Contents </h2>
             </div>
             <nav aria-label="Page">
-                <ul class="pst-show_toc_level nav section-nav flex-column">
+                <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-qtdraw.widget.custom_widget">Custom Widget, etc.</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.Button"><code class="docutils literal notranslate"><span class="pre">Button</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.Button.staticMetaObject"><code class="docutils literal notranslate"><span class="pre">Button.staticMetaObject</span></code></a></li>
@@ -713,7 +657,7 @@
 <p>This module provides customuized widgets.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="qtdraw.widget.custom_widget.Button">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">Button</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">toggle</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/custom_widget.html#Button"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.custom_widget.Button" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Button</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">toggle</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/custom_widget.html#Button"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.custom_widget.Button" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">QPushButton</span></code></p>
 <p>Button widget.</p>
 <dl class="field-list simple">
@@ -729,14 +673,14 @@
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="qtdraw.widget.custom_widget.Button.staticMetaObject">
-<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;Button&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;QPushButton&quot;:</span> <span class="pre">)</span></span><a class="headerlink" href="#qtdraw.widget.custom_widget.Button.staticMetaObject" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;Button&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;QPushButton&quot;:</span> <span class="pre">)</span></em><a class="headerlink" href="#qtdraw.widget.custom_widget.Button.staticMetaObject" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="qtdraw.widget.custom_widget.Check">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">Check</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/custom_widget.html#Check"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.custom_widget.Check" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Check</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/custom_widget.html#Check"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.custom_widget.Check" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">QCheckBox</span></code></p>
 <p>Check widget.</p>
 <dl class="field-list simple">
@@ -765,14 +709,14 @@
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="qtdraw.widget.custom_widget.Check.staticMetaObject">
-<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;Check&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;QCheckBox&quot;:</span> <span class="pre">)</span></span><a class="headerlink" href="#qtdraw.widget.custom_widget.Check.staticMetaObject" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;Check&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;QCheckBox&quot;:</span> <span class="pre">)</span></em><a class="headerlink" href="#qtdraw.widget.custom_widget.Check.staticMetaObject" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="qtdraw.widget.custom_widget.ColorSelector">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">ColorSelector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">current</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'color'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/custom_widget.html#ColorSelector"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.custom_widget.ColorSelector" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ColorSelector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">current</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'color'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/custom_widget.html#ColorSelector"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.custom_widget.ColorSelector" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">QComboBox</span></code></p>
 <p>Color selector widget.</p>
 <dl class="field-list simple">
@@ -792,14 +736,14 @@
 </ul>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="qtdraw.widget.custom_widget.ColorSelector.staticMetaObject">
-<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;ColorSelector&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;QComboBox&quot;:</span> <span class="pre">)</span></span><a class="headerlink" href="#qtdraw.widget.custom_widget.ColorSelector.staticMetaObject" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;ColorSelector&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;QComboBox&quot;:</span> <span class="pre">)</span></em><a class="headerlink" href="#qtdraw.widget.custom_widget.ColorSelector.staticMetaObject" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="qtdraw.widget.custom_widget.Combo">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">Combo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">item</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">init</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/custom_widget.html#Combo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.custom_widget.Combo" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Combo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">item</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">init</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/custom_widget.html#Combo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.custom_widget.Combo" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">QComboBox</span></code></p>
 <p>Combo widget.</p>
 <dl class="field-list simple">
@@ -857,14 +801,14 @@
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="qtdraw.widget.custom_widget.Combo.staticMetaObject">
-<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;Combo&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;QComboBox&quot;:</span> <span class="pre">)</span></span><a class="headerlink" href="#qtdraw.widget.custom_widget.Combo.staticMetaObject" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;Combo&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;QComboBox&quot;:</span> <span class="pre">)</span></em><a class="headerlink" href="#qtdraw.widget.custom_widget.Combo.staticMetaObject" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="qtdraw.widget.custom_widget.DSpin">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">DSpin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minimum</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maximum</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/custom_widget.html#DSpin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.custom_widget.DSpin" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DSpin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minimum</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maximum</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/custom_widget.html#DSpin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.custom_widget.DSpin" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">QDoubleSpinBox</span></code></p>
 <p>Spin widget.</p>
 <dl class="field-list simple">
@@ -881,14 +825,14 @@
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="qtdraw.widget.custom_widget.DSpin.staticMetaObject">
-<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;DSpin&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;QDoubleSpinBox&quot;:</span> <span class="pre">)</span></span><a class="headerlink" href="#qtdraw.widget.custom_widget.DSpin.staticMetaObject" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;DSpin&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;QDoubleSpinBox&quot;:</span> <span class="pre">)</span></em><a class="headerlink" href="#qtdraw.widget.custom_widget.DSpin.staticMetaObject" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="qtdraw.widget.custom_widget.Editor">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">Editor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">validator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'black'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mathjax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/custom_widget.html#Editor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.custom_widget.Editor" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Editor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">validator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'black'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mathjax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/custom_widget.html#Editor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.custom_widget.Editor" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#qtdraw.widget.custom_widget.Panel" title="qtdraw.widget.custom_widget.Panel"><code class="xref py py-class docutils literal notranslate"><span class="pre">Panel</span></code></a></p>
 <p>Editor widget with math/text display.</p>
 <dl class="field-list simple">
@@ -955,14 +899,14 @@
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="qtdraw.widget.custom_widget.Editor.staticMetaObject">
-<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;Editor&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;Panel&quot;:</span> <span class="pre">Methods:</span>&#160;&#160; <span class="pre">#33</span> <span class="pre">type=Signal,</span> <span class="pre">signature=returnPressed(QString),</span> <span class="pre">parameters=QString</span> <span class="pre">)</span></span><a class="headerlink" href="#qtdraw.widget.custom_widget.Editor.staticMetaObject" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;Editor&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;Panel&quot;:</span> <span class="pre">Methods:</span>&#160;&#160; <span class="pre">#33</span> <span class="pre">type=Signal,</span> <span class="pre">signature=returnPressed(QString),</span> <span class="pre">parameters=QString</span> <span class="pre">)</span></em><a class="headerlink" href="#qtdraw.widget.custom_widget.Editor.staticMetaObject" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="qtdraw.widget.custom_widget.HBar">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">HBar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/custom_widget.html#HBar"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.custom_widget.HBar" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">HBar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/custom_widget.html#HBar"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.custom_widget.HBar" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">QFrame</span></code></p>
 <p>Horizontal bar widget.</p>
 <dl class="field-list simple">
@@ -972,21 +916,21 @@
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="qtdraw.widget.custom_widget.HBar.staticMetaObject">
-<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;HBar&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;QFrame&quot;:</span> <span class="pre">)</span></span><a class="headerlink" href="#qtdraw.widget.custom_widget.HBar.staticMetaObject" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;HBar&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;QFrame&quot;:</span> <span class="pre">)</span></em><a class="headerlink" href="#qtdraw.widget.custom_widget.HBar.staticMetaObject" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="qtdraw.widget.custom_widget.HSpacer">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">HSpacer</span></span><a class="reference internal" href="../_modules/qtdraw/widget/custom_widget.html#HSpacer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.custom_widget.HSpacer" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">HSpacer</span></span><a class="reference internal" href="../_modules/qtdraw/widget/custom_widget.html#HSpacer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.custom_widget.HSpacer" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">QSpacerItem</span></code></p>
 <p>Horizontal spacer.</p>
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="qtdraw.widget.custom_widget.Label">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">Label</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'black'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/custom_widget.html#Label"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.custom_widget.Label" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Label</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'black'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/custom_widget.html#Label"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.custom_widget.Label" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">QLabel</span></code></p>
 <p>Label widget.</p>
 <dl class="field-list simple">
@@ -1012,14 +956,14 @@
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="qtdraw.widget.custom_widget.Label.staticMetaObject">
-<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;Label&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;QLabel&quot;:</span> <span class="pre">)</span></span><a class="headerlink" href="#qtdraw.widget.custom_widget.Label.staticMetaObject" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;Label&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;QLabel&quot;:</span> <span class="pre">)</span></em><a class="headerlink" href="#qtdraw.widget.custom_widget.Label.staticMetaObject" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="qtdraw.widget.custom_widget.Layout">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">Layout</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/custom_widget.html#Layout"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.custom_widget.Layout" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Layout</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/custom_widget.html#Layout"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.custom_widget.Layout" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">QGridLayout</span></code></p>
 <p>Layout widget.</p>
 <dl class="field-list simple">
@@ -1029,14 +973,14 @@
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="qtdraw.widget.custom_widget.Layout.staticMetaObject">
-<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;Layout&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;QGridLayout&quot;:</span> <span class="pre">)</span></span><a class="headerlink" href="#qtdraw.widget.custom_widget.Layout.staticMetaObject" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;Layout&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;QGridLayout&quot;:</span> <span class="pre">)</span></em><a class="headerlink" href="#qtdraw.widget.custom_widget.Layout.staticMetaObject" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="qtdraw.widget.custom_widget.LineEdit">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">LineEdit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">validator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/custom_widget.html#LineEdit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.custom_widget.LineEdit" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">LineEdit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">validator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/custom_widget.html#LineEdit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.custom_widget.LineEdit" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">QLineEdit</span></code></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="qtdraw.widget.custom_widget.LineEdit.focusInEvent">
@@ -1085,14 +1029,14 @@
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="qtdraw.widget.custom_widget.LineEdit.staticMetaObject">
-<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;LineEdit&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;QLineEdit&quot;:</span> <span class="pre">Methods:</span>&#160;&#160; <span class="pre">#49</span> <span class="pre">type=Signal,</span> <span class="pre">signature=focusOut()</span> <span class="pre">)</span></span><a class="headerlink" href="#qtdraw.widget.custom_widget.LineEdit.staticMetaObject" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;LineEdit&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;QLineEdit&quot;:</span> <span class="pre">Methods:</span>&#160;&#160; <span class="pre">#49</span> <span class="pre">type=Signal,</span> <span class="pre">signature=focusOut()</span> <span class="pre">)</span></em><a class="headerlink" href="#qtdraw.widget.custom_widget.LineEdit.staticMetaObject" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="qtdraw.widget.custom_widget.MathWidget">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">MathWidget</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'black'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mathjax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/custom_widget.html#MathWidget"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.custom_widget.MathWidget" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MathWidget</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'black'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mathjax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/custom_widget.html#MathWidget"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.custom_widget.MathWidget" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">QWidget</span></code></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="qtdraw.widget.custom_widget.MathWidget.paintEvent">
@@ -1116,14 +1060,14 @@
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="qtdraw.widget.custom_widget.MathWidget.staticMetaObject">
-<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;MathWidget&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;QWidget&quot;:</span> <span class="pre">)</span></span><a class="headerlink" href="#qtdraw.widget.custom_widget.MathWidget.staticMetaObject" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;MathWidget&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;QWidget&quot;:</span> <span class="pre">)</span></em><a class="headerlink" href="#qtdraw.widget.custom_widget.MathWidget.staticMetaObject" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="qtdraw.widget.custom_widget.Panel">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">Panel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/custom_widget.html#Panel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.custom_widget.Panel" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Panel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/custom_widget.html#Panel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.custom_widget.Panel" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">QWidget</span></code></p>
 <p>Panel widget.</p>
 <dl class="field-list simple">
@@ -1133,14 +1077,14 @@
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="qtdraw.widget.custom_widget.Panel.staticMetaObject">
-<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;Panel&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;QWidget&quot;:</span> <span class="pre">)</span></span><a class="headerlink" href="#qtdraw.widget.custom_widget.Panel.staticMetaObject" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;Panel&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;QWidget&quot;:</span> <span class="pre">)</span></em><a class="headerlink" href="#qtdraw.widget.custom_widget.Panel.staticMetaObject" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="qtdraw.widget.custom_widget.Spin">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">Spin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minimum</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maximum</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/custom_widget.html#Spin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.custom_widget.Spin" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Spin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minimum</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maximum</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/custom_widget.html#Spin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.custom_widget.Spin" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">QSpinBox</span></code></p>
 <p>Spin widget.</p>
 <dl class="field-list simple">
@@ -1156,14 +1100,14 @@
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="qtdraw.widget.custom_widget.Spin.staticMetaObject">
-<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;Spin&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;QSpinBox&quot;:</span> <span class="pre">)</span></span><a class="headerlink" href="#qtdraw.widget.custom_widget.Spin.staticMetaObject" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;Spin&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;QSpinBox&quot;:</span> <span class="pre">)</span></em><a class="headerlink" href="#qtdraw.widget.custom_widget.Spin.staticMetaObject" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="qtdraw.widget.custom_widget.VSpacer">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">VSpacer</span></span><a class="reference internal" href="../_modules/qtdraw/widget/custom_widget.html#VSpacer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.custom_widget.VSpacer" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">VSpacer</span></span><a class="reference internal" href="../_modules/qtdraw/widget/custom_widget.html#VSpacer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.custom_widget.VSpacer" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">QSpacerItem</span></code></p>
 <p>Vertical spacer.</p>
 </dd></dl>
@@ -1462,7 +1406,7 @@ e.g., (), (n,), (n,m), ..., [&quot;x&quot;, &quot;y&quot;, ...].</p></li>
 <p>This module provides message box dialog.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="qtdraw.widget.message_box.MessageBox">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">MessageBox</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Message</span> <span class="pre">Box'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/message_box.html#MessageBox"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.message_box.MessageBox" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MessageBox</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Message</span> <span class="pre">Box'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/message_box.html#MessageBox"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.message_box.MessageBox" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">QDialog</span></code></p>
 <p>Message box.</p>
 <dl class="field-list simple">
@@ -1475,7 +1419,7 @@ e.g., (), (n,), (n,m), ..., [&quot;x&quot;, &quot;y&quot;, ...].</p></li>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="qtdraw.widget.message_box.MessageBox.staticMetaObject">
-<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;MessageBox&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;QDialog&quot;:</span> <span class="pre">)</span></span><a class="headerlink" href="#qtdraw.widget.message_box.MessageBox.staticMetaObject" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;MessageBox&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;QDialog&quot;:</span> <span class="pre">)</span></em><a class="headerlink" href="#qtdraw.widget.message_box.MessageBox.staticMetaObject" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -1484,7 +1428,7 @@ e.g., (), (n,), (n,m), ..., [&quot;x&quot;, &quot;y&quot;, ...].</p></li>
 <p>This module provides table view widget.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="qtdraw.widget.table_view.TableView">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">TableView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">header</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertical</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'black'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">12</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mathjax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/table_view.html#TableView"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.table_view.TableView" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">TableView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">header</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertical</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'black'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">12</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mathjax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/table_view.html#TableView"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.table_view.TableView" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">QTableWidget</span></code></p>
 <p>Table view (math).</p>
 <dl class="field-list simple">
@@ -1501,7 +1445,7 @@ e.g., (), (n,), (n,m), ..., [&quot;x&quot;, &quot;y&quot;, ...].</p></li>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="qtdraw.widget.table_view.TableView.staticMetaObject">
-<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;TableView&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;QTableWidget&quot;:</span> <span class="pre">)</span></span><a class="headerlink" href="#qtdraw.widget.table_view.TableView.staticMetaObject" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;TableView&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;QTableWidget&quot;:</span> <span class="pre">)</span></em><a class="headerlink" href="#qtdraw.widget.table_view.TableView.staticMetaObject" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -1510,7 +1454,7 @@ e.g., (), (n,), (n,m), ..., [&quot;x&quot;, &quot;y&quot;, ...].</p></li>
 <p>This module provides mathjax to SVG converter.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="qtdraw.widget.mathjax.MathJaxSVG">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">MathJaxSVG</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cache_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clear_cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/mathjax.html#MathJaxSVG"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.mathjax.MathJaxSVG" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MathJaxSVG</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cache_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clear_cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/mathjax.html#MathJaxSVG"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.mathjax.MathJaxSVG" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>MathJax converter.</p>
 <dl class="field-list simple">
@@ -1557,7 +1501,7 @@ e.g., (), (n,), (n,m), ..., [&quot;x&quot;, &quot;y&quot;, ...].</p></li>
 <p>This module provides a set of group view classes in tab format.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="qtdraw.widget.tab_group_view.TabGroupView">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">TabGroupView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">models</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Data'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mathjax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/tab_group_view.html#TabGroupView"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.tab_group_view.TabGroupView" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">TabGroupView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">models</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Data'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mathjax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/tab_group_view.html#TabGroupView"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.tab_group_view.TabGroupView" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">QDialog</span></code></p>
 <p>Data view group.</p>
 <dl class="field-list simple">
@@ -1592,7 +1536,7 @@ e.g., (), (n,), (n,m), ..., [&quot;x&quot;, &quot;y&quot;, ...].</p></li>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="qtdraw.widget.tab_group_view.TabGroupView.staticMetaObject">
-<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;TabGroupView&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;QDialog&quot;:</span> <span class="pre">)</span></span><a class="headerlink" href="#qtdraw.widget.tab_group_view.TabGroupView.staticMetaObject" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;TabGroupView&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;QDialog&quot;:</span> <span class="pre">)</span></em><a class="headerlink" href="#qtdraw.widget.tab_group_view.TabGroupView.staticMetaObject" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -1602,7 +1546,7 @@ e.g., (), (n,), (n,m), ..., [&quot;x&quot;, &quot;y&quot;, ...].</p></li>
 By clicking right button of mouse, the context menu appears.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="qtdraw.widget.group_view.GroupView">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">GroupView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_delegate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mathjax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/group_view.html#GroupView"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.group_view.GroupView" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">GroupView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_delegate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mathjax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/group_view.html#GroupView"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.group_view.GroupView" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">QTreeView</span></code></p>
 <p>Group view.</p>
 <dl class="field-list simple">
@@ -1734,7 +1678,7 @@ By clicking right button of mouse, the context menu appears.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="qtdraw.widget.group_view.GroupView.staticMetaObject">
-<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;GroupView&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;QTreeView&quot;:</span> <span class="pre">Methods:</span>&#160;&#160; <span class="pre">#88</span> <span class="pre">type=Signal,</span> <span class="pre">signature=selectionChanged(QString,QVariantList,QVariantList),</span> <span class="pre">parameters=QString,</span> <span class="pre">QVariantList,</span> <span class="pre">QVariantList</span> <span class="pre">)</span></span><a class="headerlink" href="#qtdraw.widget.group_view.GroupView.staticMetaObject" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;GroupView&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;QTreeView&quot;:</span> <span class="pre">Methods:</span>&#160;&#160; <span class="pre">#88</span> <span class="pre">type=Signal,</span> <span class="pre">signature=selectionChanged(QString,QVariantList,QVariantList),</span> <span class="pre">parameters=QString,</span> <span class="pre">QVariantList,</span> <span class="pre">QVariantList</span> <span class="pre">)</span></em><a class="headerlink" href="#qtdraw.widget.group_view.GroupView.staticMetaObject" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -1743,7 +1687,7 @@ By clicking right button of mouse, the context menu appears.</p>
 <p>This module provides delegate for color selector, combo, and editor.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="qtdraw.widget.delegate.ColorDelegate">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">ColorDelegate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">option</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/delegate.html#ColorDelegate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.delegate.ColorDelegate" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ColorDelegate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">option</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/delegate.html#ColorDelegate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.delegate.ColorDelegate" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#qtdraw.widget.delegate.Delegate" title="qtdraw.widget.delegate.Delegate"><code class="xref py py-class docutils literal notranslate"><span class="pre">Delegate</span></code></a></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="qtdraw.widget.delegate.ColorDelegate.createEditor">
@@ -1762,14 +1706,14 @@ By clicking right button of mouse, the context menu appears.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="qtdraw.widget.delegate.ColorDelegate.staticMetaObject">
-<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;ColorDelegate&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;Delegate&quot;:</span> <span class="pre">)</span></span><a class="headerlink" href="#qtdraw.widget.delegate.ColorDelegate.staticMetaObject" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;ColorDelegate&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;Delegate&quot;:</span> <span class="pre">)</span></em><a class="headerlink" href="#qtdraw.widget.delegate.ColorDelegate.staticMetaObject" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="qtdraw.widget.delegate.ComboDelegate">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">ComboDelegate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">option</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/delegate.html#ComboDelegate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.delegate.ComboDelegate" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ComboDelegate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">option</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/delegate.html#ComboDelegate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.delegate.ComboDelegate" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#qtdraw.widget.delegate.Delegate" title="qtdraw.widget.delegate.Delegate"><code class="xref py py-class docutils literal notranslate"><span class="pre">Delegate</span></code></a></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="qtdraw.widget.delegate.ComboDelegate.createEditor">
@@ -1788,14 +1732,14 @@ By clicking right button of mouse, the context menu appears.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="qtdraw.widget.delegate.ComboDelegate.staticMetaObject">
-<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;ComboDelegate&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;Delegate&quot;:</span> <span class="pre">)</span></span><a class="headerlink" href="#qtdraw.widget.delegate.ComboDelegate.staticMetaObject" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;ComboDelegate&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;Delegate&quot;:</span> <span class="pre">)</span></em><a class="headerlink" href="#qtdraw.widget.delegate.ComboDelegate.staticMetaObject" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="qtdraw.widget.delegate.Delegate">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">Delegate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/delegate.html#Delegate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.delegate.Delegate" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Delegate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/delegate.html#Delegate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.delegate.Delegate" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">QStyledItemDelegate</span></code></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="qtdraw.widget.delegate.Delegate.paint">
@@ -1814,14 +1758,14 @@ By clicking right button of mouse, the context menu appears.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="qtdraw.widget.delegate.Delegate.staticMetaObject">
-<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;Delegate&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;QStyledItemDelegate&quot;:</span> <span class="pre">)</span></span><a class="headerlink" href="#qtdraw.widget.delegate.Delegate.staticMetaObject" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;Delegate&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;QStyledItemDelegate&quot;:</span> <span class="pre">)</span></em><a class="headerlink" href="#qtdraw.widget.delegate.Delegate.staticMetaObject" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="qtdraw.widget.delegate.EditorDelegate">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">EditorDelegate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">option</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mathjax</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/delegate.html#EditorDelegate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.delegate.EditorDelegate" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">EditorDelegate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">option</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mathjax</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/delegate.html#EditorDelegate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.delegate.EditorDelegate" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#qtdraw.widget.delegate.Delegate" title="qtdraw.widget.delegate.Delegate"><code class="xref py py-class docutils literal notranslate"><span class="pre">Delegate</span></code></a></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="qtdraw.widget.delegate.EditorDelegate.createEditor">
@@ -1840,7 +1784,7 @@ By clicking right button of mouse, the context menu appears.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="qtdraw.widget.delegate.EditorDelegate.staticMetaObject">
-<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;EditorDelegate&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;Delegate&quot;:</span> <span class="pre">)</span></span><a class="headerlink" href="#qtdraw.widget.delegate.EditorDelegate.staticMetaObject" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;EditorDelegate&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;Delegate&quot;:</span> <span class="pre">)</span></em><a class="headerlink" href="#qtdraw.widget.delegate.EditorDelegate.staticMetaObject" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -1857,7 +1801,7 @@ is just to keep the relation between parent and child,
 which is necessary to use other Qt functionalities.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="qtdraw.widget.group_model.GroupModel">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">GroupModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'model'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">column_info</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/group_model.html#GroupModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.group_model.GroupModel" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">GroupModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'model'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">column_info</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/group_model.html#GroupModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.group_model.GroupModel" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">QStandardItemModel</span></code></p>
 <p>Group data model (2 layer parent-child tree model).</p>
 <dl class="field-list simple">
@@ -1910,7 +1854,7 @@ which is necessary to use other Qt functionalities.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="qtdraw.widget.group_model.GroupModel.append_row">
-<span class="sig-name descname"><span class="pre">append_row</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">row_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">role</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;PySide6.QtCore.QModelIndex(-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">0x0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">QObject(0x0))&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">copy_row</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/group_model.html#GroupModel.append_row"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.group_model.GroupModel.append_row" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">append_row</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">row_data=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">role=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index=&lt;PySide6.QtCore.QModelIndex(-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">0x0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">QObject(0x0))&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">copy_row=False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/group_model.html#GroupModel.append_row"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.group_model.GroupModel.append_row" title="Link to this definition">#</a></dt>
 <dd><p>Append row.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -2250,17 +2194,17 @@ which is necessary to use other Qt functionalities.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="qtdraw.widget.group_model.GroupModel.AppendRow">
-<span class="sig-name descname"><span class="pre">AppendRow</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">267</span></span><a class="headerlink" href="#qtdraw.widget.group_model.GroupModel.AppendRow" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">AppendRow</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">267</span></em><a class="headerlink" href="#qtdraw.widget.group_model.GroupModel.AppendRow" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="qtdraw.widget.group_model.GroupModel.MoveRow">
-<span class="sig-name descname"><span class="pre">MoveRow</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">269</span></span><a class="headerlink" href="#qtdraw.widget.group_model.GroupModel.MoveRow" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">MoveRow</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">269</span></em><a class="headerlink" href="#qtdraw.widget.group_model.GroupModel.MoveRow" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="qtdraw.widget.group_model.GroupModel.RemoveRow">
-<span class="sig-name descname"><span class="pre">RemoveRow</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">268</span></span><a class="headerlink" href="#qtdraw.widget.group_model.GroupModel.RemoveRow" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">RemoveRow</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">268</span></em><a class="headerlink" href="#qtdraw.widget.group_model.GroupModel.RemoveRow" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -2280,7 +2224,7 @@ which is necessary to use other Qt functionalities.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="qtdraw.widget.group_model.GroupModel.group_name">
-<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">group_name</span></span><a class="headerlink" href="#qtdraw.widget.group_model.GroupModel.group_name" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">group_name</span></span><a class="headerlink" href="#qtdraw.widget.group_model.GroupModel.group_name" title="Link to this definition">#</a></dt>
 <dd><p>Group name.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -2294,7 +2238,7 @@ which is necessary to use other Qt functionalities.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="qtdraw.widget.group_model.GroupModel.header">
-<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">header</span></span><a class="headerlink" href="#qtdraw.widget.group_model.GroupModel.header" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">header</span></span><a class="headerlink" href="#qtdraw.widget.group_model.GroupModel.header" title="Link to this definition">#</a></dt>
 <dd><p>Header label.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -2313,7 +2257,7 @@ which is necessary to use other Qt functionalities.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="qtdraw.widget.group_model.GroupModel.staticMetaObject">
-<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;GroupModel&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;QStandardItemModel&quot;:</span> <span class="pre">Methods:</span>&#160;&#160; <span class="pre">#78</span> <span class="pre">type=Signal,</span> <span class="pre">signature=updateData(QString,QVariantList,int,QModelIndex),</span> <span class="pre">parameters=QString,</span> <span class="pre">QVariantList,</span> <span class="pre">int,</span> <span class="pre">QModelIndex</span>&#160;&#160; <span class="pre">#79</span> <span class="pre">type=Signal,</span> <span class="pre">signature=updateWidget(QModelIndex),</span> <span class="pre">parameters=QModelIndex</span>&#160;&#160; <span class="pre">#80</span> <span class="pre">type=Signal,</span> <span class="pre">signature=selectionClear()</span>&#160;&#160; <span class="pre">#81</span> <span class="pre">type=Signal,</span> <span class="pre">signature=dataRemoved(QString,QVariantList,QModelIndex),</span> <span class="pre">parameters=QString,</span> <span class="pre">QVariantList,</span> <span class="pre">QModelIndex</span>&#160;&#160; <span class="pre">#82</span> <span class="pre">type=Signal,</span> <span class="pre">signature=dataModified(QString,QVariantList,QModelIndex),</span> <span class="pre">parameters=QString,</span> <span class="pre">QVariantList,</span> <span class="pre">QModelIndex</span>&#160;&#160; <span class="pre">#83</span> <span class="pre">type=Signal,</span> <span class="pre">signature=checkChanged(QString,QVariantList,QModelIndex),</span> <span class="pre">parameters=QString,</span> <span class="pre">QVariantList,</span> <span class="pre">QModelIndex</span> <span class="pre">)</span></span><a class="headerlink" href="#qtdraw.widget.group_model.GroupModel.staticMetaObject" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;GroupModel&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;QStandardItemModel&quot;:</span> <span class="pre">Methods:</span>&#160;&#160; <span class="pre">#78</span> <span class="pre">type=Signal,</span> <span class="pre">signature=updateData(QString,QVariantList,int,QModelIndex),</span> <span class="pre">parameters=QString,</span> <span class="pre">QVariantList,</span> <span class="pre">int,</span> <span class="pre">QModelIndex</span>&#160;&#160; <span class="pre">#79</span> <span class="pre">type=Signal,</span> <span class="pre">signature=updateWidget(QModelIndex),</span> <span class="pre">parameters=QModelIndex</span>&#160;&#160; <span class="pre">#80</span> <span class="pre">type=Signal,</span> <span class="pre">signature=selectionClear()</span>&#160;&#160; <span class="pre">#81</span> <span class="pre">type=Signal,</span> <span class="pre">signature=dataRemoved(QString,QVariantList,QModelIndex),</span> <span class="pre">parameters=QString,</span> <span class="pre">QVariantList,</span> <span class="pre">QModelIndex</span>&#160;&#160; <span class="pre">#82</span> <span class="pre">type=Signal,</span> <span class="pre">signature=dataModified(QString,QVariantList,QModelIndex),</span> <span class="pre">parameters=QString,</span> <span class="pre">QVariantList,</span> <span class="pre">QModelIndex</span>&#160;&#160; <span class="pre">#83</span> <span class="pre">type=Signal,</span> <span class="pre">signature=checkChanged(QString,QVariantList,QModelIndex),</span> <span class="pre">parameters=QString,</span> <span class="pre">QVariantList,</span> <span class="pre">QModelIndex</span> <span class="pre">)</span></em><a class="headerlink" href="#qtdraw.widget.group_model.GroupModel.staticMetaObject" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -2335,7 +2279,7 @@ which is necessary to use other Qt functionalities.</p>
 <p>This module provides functions to control Qt event loop.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="qtdraw.widget.qt_event_util.ExceptionHook">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">ExceptionHook</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/qt_event_util.html#ExceptionHook"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.qt_event_util.ExceptionHook" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ExceptionHook</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/qt_event_util.html#ExceptionHook"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.qt_event_util.ExceptionHook" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">QObject</span></code></p>
 <p>Exception hook.</p>
 <dl class="field-list simple">
@@ -2384,7 +2328,7 @@ which is necessary to use other Qt functionalities.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="qtdraw.widget.qt_event_util.ExceptionHook.staticMetaObject">
-<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;ExceptionHook&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;QObject&quot;:</span> <span class="pre">Methods:</span>&#160;&#160; <span class="pre">#4</span> <span class="pre">type=Signal,</span> <span class="pre">signature=msg_signal(QString),</span> <span class="pre">parameters=QString</span> <span class="pre">)</span></span><a class="headerlink" href="#qtdraw.widget.qt_event_util.ExceptionHook.staticMetaObject" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;ExceptionHook&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;QObject&quot;:</span> <span class="pre">Methods:</span>&#160;&#160; <span class="pre">#4</span> <span class="pre">type=Signal,</span> <span class="pre">signature=msg_signal(QString),</span> <span class="pre">parameters=QString</span> <span class="pre">)</span></em><a class="headerlink" href="#qtdraw.widget.qt_event_util.ExceptionHook.staticMetaObject" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -2426,7 +2370,7 @@ which is necessary to use other Qt functionalities.</p>
 <p>This module provides utilities for logging.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="qtdraw.widget.logging_util.LogHandler">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">LogHandler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text_widget</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/logging_util.html#LogHandler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.logging_util.LogHandler" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">LogHandler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text_widget</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/logging_util.html#LogHandler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.logging_util.LogHandler" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Handler</span></code></p>
 <p>Log handler.</p>
 <dl class="field-list simple">
@@ -2459,7 +2403,7 @@ which is necessary to use other Qt functionalities.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="qtdraw.widget.logging_util.LogWidget">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">LogWidget</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'log</span> <span class="pre">message'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hook</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/logging_util.html#LogWidget"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.logging_util.LogWidget" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">LogWidget</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'log</span> <span class="pre">message'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hook</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/logging_util.html#LogWidget"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.logging_util.LogWidget" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">QWidget</span></code></p>
 <p>Log widget.</p>
 <dl class="field-list simple">
@@ -2516,7 +2460,7 @@ which is necessary to use other Qt functionalities.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="qtdraw.widget.logging_util.LogWidget.staticMetaObject">
-<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;LogWidget&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;QWidget&quot;:</span> <span class="pre">)</span></span><a class="headerlink" href="#qtdraw.widget.logging_util.LogWidget.staticMetaObject" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;LogWidget&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;QWidget&quot;:</span> <span class="pre">)</span></em><a class="headerlink" href="#qtdraw.widget.logging_util.LogWidget.staticMetaObject" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -2552,7 +2496,7 @@ It can load PDF file, and save the same file to
 different directory (just by copying it).</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="qtdraw.widget.pdf_viewer.PDFViewer">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">PDFViewer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/pdf_viewer.html#PDFViewer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.pdf_viewer.PDFViewer" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PDFViewer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/widget/pdf_viewer.html#PDFViewer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.widget.pdf_viewer.PDFViewer" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">QWidget</span></code></p>
 <p>Simple PDF viewer.</p>
 <dl class="field-list simple">
@@ -2585,7 +2529,7 @@ different directory (just by copying it).</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="qtdraw.widget.pdf_viewer.PDFViewer.staticMetaObject">
-<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;PDFViewer&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;QWidget&quot;:</span> <span class="pre">)</span></span><a class="headerlink" href="#qtdraw.widget.pdf_viewer.PDFViewer.staticMetaObject" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">staticMetaObject</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QMetaObject(&quot;PDFViewer&quot;</span> <span class="pre">inherits</span> <span class="pre">&quot;QWidget&quot;:</span> <span class="pre">)</span></em><a class="headerlink" href="#qtdraw.widget.pdf_viewer.PDFViewer.staticMetaObject" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -2676,7 +2620,7 @@ different directory (just by copying it).</p>
     <i class="fa-solid fa-list"></i> Contents
   </div>
   <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
-    <ul class="pst-show_toc_level nav section-nav flex-column">
+    <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-qtdraw.widget.custom_widget">Custom Widget, etc.</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.Button"><code class="docutils literal notranslate"><span class="pre">Button</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.widget.custom_widget.Button.staticMetaObject"><code class="docutils literal notranslate"><span class="pre">Button.staticMetaObject</span></code></a></li>
@@ -2971,8 +2915,8 @@ By Hiroaki Kusunose
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="../_static/scripts/bootstrap.js?digest=0790524f97105ba85085"></script>
-<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=0790524f97105ba85085"></script>
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
 
   <footer class="bd-footer">
   </footer>
