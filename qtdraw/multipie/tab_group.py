@@ -428,8 +428,8 @@ class TabGroup(QWidget):
                 ]
             )
         else:
-            self.combo_atomic_bra_basis.set_item(["s", "P", "d", "f"])
-            self.combo_atomic_ket_basis.set_item(["s", "P", "d", "f"])
+            self.combo_atomic_bra_basis.set_item(["s", "p", "d", "f"])
+            self.combo_atomic_ket_basis.set_item(["s", "p", "d", "f"])
 
     # ==================================================
     def show_atomic(self):
