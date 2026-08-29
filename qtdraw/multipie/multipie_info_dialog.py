@@ -9,6 +9,7 @@ import sympy as sp
 from PySide6.QtWidgets import QDialog
 
 from multipie.util.util_harmonics import harmonics_decomposition
+from multipie.util.util_response_tensor import convert_mp_alias
 from qtdraw.widget.custom_widget import Layout
 from qtdraw.widget.table_view import TableView
 from qtdraw.util.util import to_latex
@@ -407,7 +408,7 @@ def show_response(group, rank, r_type, parent):
     for i in lst0:
         for r in range(rank + 1):
             if rank_dict[r] in i:
-                lst[i[0]] = lst.get(i[0], []) + [i[1:]]
+                lst[i[0]] = lst.get(i[0], []) + ["$" + convert_mp_alias(i, latex=True) + "$"]
 
     data = []
     data.append([r"\text{active multipole}"])
