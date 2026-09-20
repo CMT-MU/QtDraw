@@ -33,7 +33,7 @@ from vtk import vtkParametricSpline
 from vtkmodules.vtkCommonDataModel import vtkImageData
 from vtkmodules.vtkRenderingCore import vtkActor2D, vtkImageMapper
 from vtkmodules.util import numpy_support
-from pyvista.core.utilities import surface_from_para, geometric_sources
+from pyvista.core.utilities import surface_from_para
 from PySide6.QtSvg import QSvgRenderer
 from PySide6.QtGui import QImage, QPainter
 from PySide6.QtCore import QByteArray
@@ -174,6 +174,40 @@ def _create_image(np_img, x=0, y=0, size=None):
     actor.SetPosition(x, y)
 
     return actor
+
+
+# ================================================== copied from pyvista.core.utilities.geometric_sources
+def _translate_and_orient(
+    surf,
+    center=(0.0, 0.0, 0.0),
+    direction=(1.0, 0.0, 0.0),
+):
+    """Translate and orient a mesh to a new center and direction."""
+    normx = np.array(direction) / np.linalg.norm(direction)
+    normy_temp = [0.0, 1.0, 0.0]
+
+    # Avoid zero cross-product for collinear vectors
+    if np.allclose(normx, [0, 1, 0]):
+        normy_temp = [-1.0, 0.0, 0.0]
+    elif np.allclose(normx, [0, -1, 0]):
+        normy_temp = [1.0, 0.0, 0.0]
+
+    normz = np.cross(normx, normy_temp)
+    normz /= np.linalg.norm(normz)
+    normy = np.cross(normz, normx)
+
+    trans = np.zeros((4, 4))
+    trans[:3, 0] = normx
+    trans[:3, 1] = normy
+    trans[:3, 2] = normz
+    trans[3, 3] = 1.0
+
+    # Skip transformation when already aligned with x-axis
+    if not np.array_equal(trans[:3, :3], np.eye(3)):
+        surf.transform(trans, inplace=True)
+
+    if not np.allclose(center, [0.0, 0.0, 0.0]):
+        surf.points += np.array(center, dtype=surf.points.dtype)
 
 
 # ==================================================
@@ -520,7 +554,7 @@ def create_circle(normal, size=0.5):
     obj = pv.Circle(radius=size, resolution=resolution)
 
     obj.rotate_y(90, inplace=True)
-    geometric_sources.translate(obj, (0, 0, 0), normal)
+    _translate_and_orient(obj, (0, 0, 0), normal)
 
     return obj
 
@@ -541,7 +575,7 @@ def create_torus(normal, size=0.5, width=0.15):
     obj = pv.ParametricTorus(ringradius=size, crosssectionradius=width)
 
     obj.rotate_y(90, inplace=True)
-    geometric_sources.translate(obj, (0, 0, 0), normal)
+    _translate_and_orient(obj, (0, 0, 0), normal)
 
     return obj
 
@@ -563,7 +597,7 @@ def create_ellipsoid(normal, x_size=0.5, y_size=0.4, z_size=0.3):
     obj = pv.ParametricEllipsoid(xradius=x_size, yradius=y_size, zradius=z_size)
 
     obj.rotate_y(90, inplace=True)
-    geometric_sources.translate(obj, (0, 0, 0), normal)
+    _translate_and_orient(obj, (0, 0, 0), normal)
 
     return obj
 
@@ -591,7 +625,7 @@ def create_toroid(normal, size=0.5, width=0.15, x_scale=1.0, y_scale=1.0, z_scal
     )
 
     obj.rotate_y(90, inplace=True)
-    geometric_sources.translate(obj, (0, 0, 0), normal)
+    _translate_and_orient(obj, (0, 0, 0), normal)
 
     return obj
 
