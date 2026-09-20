@@ -327,11 +327,11 @@
                 <article class="bd-article">
                   
   <h1>Source code for qtdraw.widget.color_selector_util</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span></span><span class="sd">"""</span>
 <span class="sd">Color selector widget.</span>
 
 <span class="sd">This module provides color selector widget.</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">cm</span>
@@ -343,7 +343,7 @@
 
 <span class="c1"># ==================================================</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">_colormap2pixmap</span><span class="p">(</span><span class="n">colormap</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">50</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Convert colormap to pixmap.</span>
 
 <span class="sd">    Args:</span>
@@ -352,11 +352,11 @@
 
 <span class="sd">    Returns:</span>
 <span class="sd">        - (QPixmap) -- color pixmap.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">if</span> <span class="n">colormap</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">all_colormaps</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;unknown colormap, </span><span class="si">{</span><span class="n">colormap</span><span class="si">}</span><span class="s2"> is given.&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"unknown colormap, </span><span class="si">{</span><span class="n">colormap</span><span class="si">}</span><span class="s2"> is given."</span><span class="p">)</span>
 
-    <span class="n">sm</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">ScalarMappable</span><span class="p">(</span><span class="n">cmap</span><span class="o">=</span><span class="n">colormap</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s2">&quot;*&quot;</span><span class="p">))</span>
+    <span class="n">sm</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">ScalarMappable</span><span class="p">(</span><span class="n">cmap</span><span class="o">=</span><span class="n">colormap</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s2">"*"</span><span class="p">))</span>
     <span class="n">sm</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">vmin</span> <span class="o">=</span> <span class="mf">0.0</span>
     <span class="n">sm</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">vmax</span> <span class="o">=</span> <span class="mf">1.0</span>
     <span class="n">inds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">step</span><span class="p">)</span>
@@ -373,21 +373,21 @@
 
 <span class="c1"># ==================================================</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">_color2pixmap</span><span class="p">(</span><span class="n">color</span><span class="p">,</span> <span class="n">color_type</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">aspect_ratio</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">50</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Convert color/colormap to pixmap.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        color (str): color or colormap.</span>
-<span class="sd">        color_type (str): color type, &quot;color/colormap/color_both&quot;.</span>
+<span class="sd">        color_type (str): color type, "color/colormap/color_both".</span>
 <span class="sd">        size (int): vertical size (pixel).</span>
 <span class="sd">        aspect_ratio (int, optional): aspect ratio of pximap (width/height).</span>
 <span class="sd">        step (int, optional): division of colorbar gradation.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        - (QPixmap) -- color pixmap.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">if</span> <span class="n">check_color</span><span class="p">(</span><span class="n">color</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">color_type</span> <span class="o">==</span> <span class="s2">&quot;color&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">color_type</span> <span class="o">==</span> <span class="s2">"color"</span><span class="p">:</span>
             <span class="n">colorbox</span> <span class="o">=</span> <span class="n">QPixmap</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">colorbox</span> <span class="o">=</span> <span class="n">QPixmap</span><span class="p">(</span><span class="n">aspect_ratio</span> <span class="o">*</span> <span class="n">size</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span>
@@ -402,11 +402,11 @@
 <div class="viewcode-block" id="color2pixmap">
 <a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.color_selector_util.color2pixmap">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">color2pixmap</span><span class="p">(</span><span class="n">color_type</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">aspect_ratio</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">50</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Convert color/colormap to QPixmap.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        color_type (str): color type, &quot;color/colormap/color_both&quot;.</span>
+<span class="sd">        color_type (str): color type, "color/colormap/color_both".</span>
 <span class="sd">        size (int): size of pixmap.</span>
 <span class="sd">        aspect_ratio (int, optional): aspect ratio of pximap (width/height).</span>
 <span class="sd">        steps (int, optional): division of colorbar gradation.</span>
@@ -414,7 +414,7 @@
 <span class="sd">    Retruns:</span>
 <span class="sd">        - (dict) -- pixmap dict {name: pixmap}.</span>
 <span class="sd">        - (list) -- separator position.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">names</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="n">name_sep</span><span class="p">(</span><span class="n">color_type</span><span class="p">)</span>
 
     <span class="n">pixmap</span> <span class="o">=</span> <span class="p">[</span><span class="n">_color2pixmap</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">color_type</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">aspect_ratio</span><span class="p">,</span> <span class="n">step</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">names</span><span class="p">]</span>
@@ -428,7 +428,7 @@
 <div class="viewcode-block" id="color_palette">
 <a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.color_selector_util.color_palette">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">color_palette</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Color pallete.</span>
 
 <span class="sd">    Args:</span>
@@ -436,7 +436,7 @@
 
 <span class="sd">    Returns:</span>
 <span class="sd">        - (QPalette) -- color palette.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">palette</span> <span class="o">=</span> <span class="n">QPalette</span><span class="p">()</span>
     <span class="n">palette</span><span class="o">.</span><span class="n">setColor</span><span class="p">(</span><span class="n">QPalette</span><span class="o">.</span><span class="n">WindowText</span><span class="p">,</span> <span class="n">QColor</span><span class="p">(</span><span class="n">all_colors</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="mi">0</span><span class="p">]))</span>
     <span class="k">return</span> <span class="n">palette</span></div>

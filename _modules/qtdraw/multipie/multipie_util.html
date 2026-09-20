@@ -327,11 +327,11 @@
                 <article class="bd-article">
                   
   <h1>Source code for qtdraw.multipie.multipie_util</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span></span><span class="sd">"""</span>
 <span class="sd">MultiPie utility.</span>
 
 <span class="sd">This module provides utilities for MultiPie dialog.</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">sympy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sp</span>
@@ -343,7 +343,7 @@
 <div class="viewcode-block" id="phase_factor">
 <a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.multipie_util.phase_factor">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">phase_factor</span><span class="p">(</span><span class="n">modulation</span><span class="p">,</span> <span class="n">repeat</span><span class="p">,</span> <span class="n">pset</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Create phase factor.</span>
 
 <span class="sd">    Args:</span>
@@ -354,7 +354,7 @@
 <span class="sd">    Returns:</span>
 <span class="sd">        - (dict) -- {(k(str),n(int),plus_set no(int)): [phase at each grid(float)]}.</span>
 <span class="sd">        - (list) -- cell grid.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">grid</span> <span class="o">=</span> <span class="n">igrid</span><span class="p">(</span><span class="n">repeat</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">pset</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">pset</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>
@@ -366,7 +366,7 @@
             <span class="n">lst</span> <span class="o">=</span> <span class="p">[]</span>
             <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">grid</span><span class="p">:</span>
                 <span class="n">kr</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">kvec</span> <span class="o">@</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="n">p</span><span class="p">)</span>
-                <span class="n">phase</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">kr</span><span class="p">)</span> <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="s2">&quot;cos&quot;</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">kr</span><span class="p">)</span>
+                <span class="n">phase</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">kr</span><span class="p">)</span> <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="s2">"cos"</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">kr</span><span class="p">)</span>
                 <span class="n">lst</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">phase</span><span class="p">)</span>
             <span class="n">phase_dict</span><span class="p">[(</span><span class="n">k</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">p_no</span><span class="p">)]</span> <span class="o">=</span> <span class="n">lst</span>
     <span class="n">grid</span> <span class="o">=</span> <span class="n">grid</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
@@ -406,7 +406,7 @@
     <span class="n">p_no</span> <span class="o">=</span> <span class="n">fs_no</span> <span class="o">//</span> <span class="n">n_prim</span>
     <span class="n">s_no</span> <span class="o">=</span> <span class="n">fs_no</span> <span class="o">%</span> <span class="n">n_prim</span>
     <span class="n">site_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">((</span><span class="n">p_no</span><span class="p">,</span> <span class="n">s_no</span><span class="p">))</span>
-    <span class="n">site_idx</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;(p</span><span class="si">{</span><span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">,s</span><span class="si">{</span><span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">)&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">site_idx</span><span class="p">]</span>
+    <span class="n">site_idx</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">"(p</span><span class="si">{</span><span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">,s</span><span class="si">{</span><span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">)"</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">site_idx</span><span class="p">]</span>
     <span class="n">full_site</span> <span class="o">=</span> <span class="p">(</span><span class="n">igrid</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">+</span> <span class="n">site</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">site</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 
     <span class="k">return</span> <span class="n">obj</span><span class="p">,</span> <span class="n">site_idx</span><span class="p">,</span> <span class="n">full_site</span></div>
@@ -417,7 +417,7 @@
 <div class="viewcode-block" id="convert_vector_object">
 <a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.multipie_util.convert_vector_object">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">convert_vector_object</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
-    <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">symbols</span><span class="p">(</span><span class="s2">&quot;x y z&quot;</span><span class="p">,</span> <span class="n">real</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">symbols</span><span class="p">(</span><span class="s2">"x y z"</span><span class="p">,</span> <span class="n">real</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">ex</span> <span class="o">=</span> <span class="p">{</span><span class="n">x</span><span class="p">:</span> <span class="n">sp</span><span class="o">.</span><span class="n">Matrix</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]),</span> <span class="n">y</span><span class="p">:</span> <span class="n">sp</span><span class="o">.</span><span class="n">Matrix</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]),</span> <span class="n">z</span><span class="p">:</span> <span class="n">sp</span><span class="o">.</span><span class="n">Matrix</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])}</span>
     <span class="n">obj</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">sp</span><span class="o">.</span><span class="n">Matrix</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span> <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">i</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">ex</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">obj</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
 
@@ -429,8 +429,8 @@
 <div class="viewcode-block" id="check_linear_combination">
 <a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.multipie_util.check_linear_combination">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">check_linear_combination</span><span class="p">(</span><span class="n">ex</span><span class="p">,</span> <span class="n">basis_var</span><span class="p">):</span>
-    <span class="n">var_e</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">basis_var</span><span class="p">[</span><span class="s2">&quot;Q&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">basis_var</span><span class="p">[</span><span class="s2">&quot;G&quot;</span><span class="p">])</span>
-    <span class="n">var_m</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">basis_var</span><span class="p">[</span><span class="s2">&quot;T&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">basis_var</span><span class="p">[</span><span class="s2">&quot;M&quot;</span><span class="p">])</span>
+    <span class="n">var_e</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">basis_var</span><span class="p">[</span><span class="s2">"Q"</span><span class="p">]</span> <span class="o">+</span> <span class="n">basis_var</span><span class="p">[</span><span class="s2">"G"</span><span class="p">])</span>
+    <span class="n">var_m</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">basis_var</span><span class="p">[</span><span class="s2">"T"</span><span class="p">]</span> <span class="o">+</span> <span class="n">basis_var</span><span class="p">[</span><span class="s2">"M"</span><span class="p">])</span>
 
     <span class="n">ex</span> <span class="o">=</span> <span class="n">str_to_sympy</span><span class="p">(</span><span class="n">ex</span><span class="o">.</span><span class="n">upper</span><span class="p">())</span>
     <span class="n">ex_var</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">ex</span><span class="o">.</span><span class="n">free_symbols</span><span class="p">))</span>

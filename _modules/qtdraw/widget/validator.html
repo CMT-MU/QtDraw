@@ -327,7 +327,7 @@
                 <article class="bd-article">
                   
   <h1>Source code for qtdraw.widget.validator</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span></span><span class="sd">"""</span>
 <span class="sd">Validator type.</span>
 
 <span class="sd">- type: option.</span>
@@ -341,7 +341,7 @@
 <span class="sd">    - site_bond: (use var?)</span>
 <span class="sd">    - vector_site_bond: (use var?)</span>
 <span class="sd">    - orbital_site_bond: (use var?)</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
@@ -354,7 +354,7 @@
 <div class="viewcode-block" id="check_symbol">
 <a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.validator.check_symbol">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">check_symbol</span><span class="p">(</span><span class="n">expr</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Check symbol.</span>
 
 <span class="sd">    Args:</span>
@@ -362,7 +362,7 @@
 
 <span class="sd">    Returns:</span>
 <span class="sd">        - (bool) -- if expr contains symbol, return True otherwise False.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">expr</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">any</span><span class="p">(</span><span class="n">check_symbol</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">expr</span><span class="o">.</span><span class="n">flat</span><span class="p">)</span>
 
@@ -374,7 +374,7 @@
 <div class="viewcode-block" id="convert_to_bond">
 <a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.validator.convert_to_bond">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">convert_to_bond</span><span class="p">(</span><span class="n">bond</span><span class="p">,</span> <span class="n">use_var</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Convert to bond from str.</span>
 
 <span class="sd">    Args:</span>
@@ -386,27 +386,27 @@
 <span class="sd">        - (ndarray) -- bond center.</span>
 
 <span class="sd">    Note:</span>
-<span class="sd">        - bond string is &quot;[tail];[head]/[vector]@[center]/[start]:[vector]&quot;.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">var</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="s2">&quot;z&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="n">use_var</span> <span class="k">else</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">]</span>
+<span class="sd">        - bond string is "[tail];[head]/[vector]@[center]/[start]:[vector]".</span>
+<span class="sd">    """</span>
+    <span class="n">var</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"x"</span><span class="p">,</span> <span class="s2">"y"</span><span class="p">,</span> <span class="s2">"z"</span><span class="p">]</span> <span class="k">if</span> <span class="n">use_var</span> <span class="k">else</span> <span class="p">[</span><span class="s2">""</span><span class="p">]</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="k">if</span> <span class="s2">&quot;;&quot;</span> <span class="ow">in</span> <span class="n">bond</span><span class="p">:</span>
-            <span class="n">t</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="n">bond</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;;&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s2">";"</span> <span class="ow">in</span> <span class="n">bond</span><span class="p">:</span>
+            <span class="n">t</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="n">bond</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">";"</span><span class="p">)</span>
             <span class="n">t</span> <span class="o">=</span> <span class="n">str_to_sympy</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">check_var</span><span class="o">=</span><span class="n">var</span><span class="p">,</span> <span class="n">check_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,))</span>
             <span class="n">h</span> <span class="o">=</span> <span class="n">str_to_sympy</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">check_var</span><span class="o">=</span><span class="n">var</span><span class="p">,</span> <span class="n">check_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,))</span>
             <span class="n">v</span> <span class="o">=</span> <span class="n">h</span> <span class="o">-</span> <span class="n">t</span>
             <span class="n">c</span> <span class="o">=</span> <span class="p">(</span><span class="n">t</span> <span class="o">+</span> <span class="n">h</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
-        <span class="k">elif</span> <span class="s2">&quot;@&quot;</span> <span class="ow">in</span> <span class="n">bond</span><span class="p">:</span>
-            <span class="n">v</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="n">bond</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;@&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="s2">"@"</span> <span class="ow">in</span> <span class="n">bond</span><span class="p">:</span>
+            <span class="n">v</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="n">bond</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"@"</span><span class="p">)</span>
             <span class="n">v</span> <span class="o">=</span> <span class="n">str_to_sympy</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">check_var</span><span class="o">=</span><span class="n">var</span><span class="p">,</span> <span class="n">check_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,))</span>
             <span class="n">c</span> <span class="o">=</span> <span class="n">str_to_sympy</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">check_var</span><span class="o">=</span><span class="n">var</span><span class="p">,</span> <span class="n">check_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,))</span>
-        <span class="k">elif</span> <span class="s2">&quot;:&quot;</span> <span class="ow">in</span> <span class="n">bond</span><span class="p">:</span>
-            <span class="n">s</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="n">bond</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="s2">":"</span> <span class="ow">in</span> <span class="n">bond</span><span class="p">:</span>
+            <span class="n">s</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="n">bond</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">":"</span><span class="p">)</span>
             <span class="n">s</span> <span class="o">=</span> <span class="n">str_to_sympy</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">check_var</span><span class="o">=</span><span class="n">var</span><span class="p">,</span> <span class="n">check_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,))</span>
             <span class="n">v</span> <span class="o">=</span> <span class="n">str_to_sympy</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">check_var</span><span class="o">=</span><span class="n">var</span><span class="p">,</span> <span class="n">check_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,))</span>
             <span class="n">c</span> <span class="o">=</span> <span class="n">s</span> <span class="o">+</span> <span class="n">v</span> <span class="o">/</span> <span class="mi">2</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;invalid separator in </span><span class="si">{</span><span class="n">bond</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">"invalid separator in </span><span class="si">{</span><span class="n">bond</span><span class="si">}</span><span class="s2">."</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">v</span><span class="p">,</span> <span class="n">c</span>
     <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span></div>
@@ -417,25 +417,25 @@
 <div class="viewcode-block" id="validator_int">
 <a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.validator.validator_int">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">validator_int</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="o">**</span><span class="n">opt</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Validator for int.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        text (str): int string.</span>
-<span class="sd">        opt (dict, optional): option, &quot;min/max&quot;. (default: &quot;*&quot;,&quot;*&quot;)</span>
+<span class="sd">        opt (dict, optional): option, "min/max". (default: "*","*")</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        - (str) -- formatted string if it is valid, otherwise None.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">s</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">None</span>
 
-    <span class="n">r_min</span> <span class="o">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;min&quot;</span><span class="p">,</span> <span class="s2">&quot;*&quot;</span><span class="p">)</span>
-    <span class="n">r_max</span> <span class="o">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;max&quot;</span><span class="p">,</span> <span class="s2">&quot;*&quot;</span><span class="p">)</span>
+    <span class="n">r_min</span> <span class="o">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"min"</span><span class="p">,</span> <span class="s2">"*"</span><span class="p">)</span>
+    <span class="n">r_max</span> <span class="o">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"max"</span><span class="p">,</span> <span class="s2">"*"</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="p">(</span><span class="n">r_min</span> <span class="o">!=</span> <span class="s2">&quot;*&quot;</span> <span class="ow">and</span> <span class="n">s</span> <span class="o">&lt;</span> <span class="nb">int</span><span class="p">(</span><span class="n">r_min</span><span class="p">))</span> <span class="ow">or</span> <span class="p">(</span><span class="n">r_max</span> <span class="o">!=</span> <span class="s2">&quot;*&quot;</span> <span class="ow">and</span> <span class="n">s</span> <span class="o">&gt;</span> <span class="nb">int</span><span class="p">(</span><span class="n">r_max</span><span class="p">)):</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">r_min</span> <span class="o">!=</span> <span class="s2">"*"</span> <span class="ow">and</span> <span class="n">s</span> <span class="o">&lt;</span> <span class="nb">int</span><span class="p">(</span><span class="n">r_min</span><span class="p">))</span> <span class="ow">or</span> <span class="p">(</span><span class="n">r_max</span> <span class="o">!=</span> <span class="s2">"*"</span> <span class="ow">and</span> <span class="n">s</span> <span class="o">&gt;</span> <span class="nb">int</span><span class="p">(</span><span class="n">r_max</span><span class="p">)):</span>
         <span class="k">return</span> <span class="kc">None</span>
 
     <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">s</span><span class="p">)</span></div>
@@ -446,29 +446,29 @@
 <div class="viewcode-block" id="validator_float">
 <a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.validator.validator_float">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">validator_float</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="o">**</span><span class="n">opt</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Validator for float.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        text (str): float string.</span>
-<span class="sd">        opt (dict, optional): option, &quot;min/max/digit&quot;. (default: &quot;*&quot;,&quot;*&quot;,5)</span>
+<span class="sd">        opt (dict, optional): option, "min/max/digit". (default: "*","*",5)</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        - (str) -- formatted string if it is valid, otherwise None.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">s</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">None</span>
 
-    <span class="n">r_min</span> <span class="o">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;min&quot;</span><span class="p">,</span> <span class="s2">&quot;*&quot;</span><span class="p">)</span>
-    <span class="n">r_max</span> <span class="o">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;max&quot;</span><span class="p">,</span> <span class="s2">&quot;*&quot;</span><span class="p">)</span>
-    <span class="n">digit</span> <span class="o">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;digit&quot;</span><span class="p">,</span> <span class="n">DISPLAY_DIGIT</span><span class="p">)</span>
+    <span class="n">r_min</span> <span class="o">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"min"</span><span class="p">,</span> <span class="s2">"*"</span><span class="p">)</span>
+    <span class="n">r_max</span> <span class="o">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"max"</span><span class="p">,</span> <span class="s2">"*"</span><span class="p">)</span>
+    <span class="n">digit</span> <span class="o">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"digit"</span><span class="p">,</span> <span class="n">DISPLAY_DIGIT</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="p">(</span><span class="n">r_min</span> <span class="o">!=</span> <span class="s2">&quot;*&quot;</span> <span class="ow">and</span> <span class="n">s</span> <span class="o">&lt;</span> <span class="nb">float</span><span class="p">(</span><span class="n">r_min</span><span class="p">))</span> <span class="ow">or</span> <span class="p">(</span><span class="n">r_max</span> <span class="o">!=</span> <span class="s2">&quot;*&quot;</span> <span class="ow">and</span> <span class="n">s</span> <span class="o">&gt;</span> <span class="nb">float</span><span class="p">(</span><span class="n">r_max</span><span class="p">)):</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">r_min</span> <span class="o">!=</span> <span class="s2">"*"</span> <span class="ow">and</span> <span class="n">s</span> <span class="o">&lt;</span> <span class="nb">float</span><span class="p">(</span><span class="n">r_min</span><span class="p">))</span> <span class="ow">or</span> <span class="p">(</span><span class="n">r_max</span> <span class="o">!=</span> <span class="s2">"*"</span> <span class="ow">and</span> <span class="n">s</span> <span class="o">&gt;</span> <span class="nb">float</span><span class="p">(</span><span class="n">r_max</span><span class="p">)):</span>
         <span class="k">return</span> <span class="kc">None</span>
 
-    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">digit</span><span class="p">)</span><span class="si">:</span><span class="s2">.</span><span class="si">{</span><span class="n">digit</span><span class="si">}</span><span class="s2">f</span><span class="si">}</span><span class="s2">&quot;</span></div>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">digit</span><span class="p">)</span><span class="si">:</span><span class="s2">.</span><span class="si">{</span><span class="n">digit</span><span class="si">}</span><span class="s2">f</span><span class="si">}</span><span class="s2">"</span></div>
 
 
 
@@ -476,20 +476,20 @@
 <div class="viewcode-block" id="validator_list_float">
 <a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.validator.validator_list_float">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">validator_list_float</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="o">**</span><span class="n">opt</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Validator for list float.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        text (str): string with list.</span>
-<span class="sd">        opt (dict, optional): option, &quot;digit/shape/var&quot;. (default: 5,None,[&quot;&quot;])</span>
-<span class="sd">            e.g., 15, (), (n,), (n,m), ..., [&quot;x&quot;, &quot;y&quot;, ...].</span>
+<span class="sd">        opt (dict, optional): option, "digit/shape/var". (default: 5,None,[""])</span>
+<span class="sd">            e.g., 15, (), (n,), (n,m), ..., ["x", "y", ...].</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        - (str) -- formatted string if it is valid, otherwise None.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">digit</span> <span class="o">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;digit&quot;</span><span class="p">,</span> <span class="n">DISPLAY_DIGIT</span><span class="p">)</span>
-    <span class="n">shape</span> <span class="o">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;shape&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-    <span class="n">var</span> <span class="o">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;var&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">])</span>
+<span class="sd">    """</span>
+    <span class="n">digit</span> <span class="o">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"digit"</span><span class="p">,</span> <span class="n">DISPLAY_DIGIT</span><span class="p">)</span>
+    <span class="n">shape</span> <span class="o">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"shape"</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="n">var</span> <span class="o">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"var"</span><span class="p">,</span> <span class="p">[</span><span class="s2">""</span><span class="p">])</span>
 
     <span class="k">try</span><span class="p">:</span>
         <span class="n">s</span> <span class="o">=</span> <span class="n">str_to_sympy</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">check_var</span><span class="o">=</span><span class="n">var</span><span class="p">,</span> <span class="n">check_shape</span><span class="o">=</span><span class="n">shape</span><span class="p">)</span>
@@ -498,13 +498,13 @@
 
     <span class="k">if</span> <span class="n">digit</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">check_symbol</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
-            <span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vectorize</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="si">:</span><span class="s2">.</span><span class="si">{</span><span class="n">digit</span><span class="si">}</span><span class="s2">f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)(</span><span class="n">s</span><span class="p">)</span>
-            <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;&#39;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vectorize</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="si">:</span><span class="s2">.</span><span class="si">{</span><span class="n">digit</span><span class="si">}</span><span class="s2">f</span><span class="si">}</span><span class="s2">"</span><span class="p">)(</span><span class="n">s</span><span class="p">)</span>
+            <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"'"</span><span class="p">,</span> <span class="s2">""</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">" "</span><span class="p">,</span> <span class="s2">""</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">float</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="si">:</span><span class="s2">.</span><span class="si">{</span><span class="n">digit</span><span class="si">}</span><span class="s2">f</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="nb">float</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="si">:</span><span class="s2">.</span><span class="si">{</span><span class="n">digit</span><span class="si">}</span><span class="s2">f</span><span class="si">}</span><span class="s2">"</span>
 
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
-        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">" "</span><span class="p">,</span> <span class="s2">""</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">s</span><span class="p">)</span></div>
 
@@ -514,19 +514,19 @@
 <div class="viewcode-block" id="validator_list_int">
 <a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.validator.validator_list_int">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">validator_list_int</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="o">**</span><span class="n">opt</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Validator for list int.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        text (str): string with list.</span>
-<span class="sd">        opt (dict, optional): option, &quot;shape/var&quot;. (default: None,[&quot;&quot;])</span>
-<span class="sd">            e.g., (), (n,), (n,m), ..., [&quot;x&quot;, &quot;y&quot;, ...].</span>
+<span class="sd">        opt (dict, optional): option, "shape/var". (default: None,[""])</span>
+<span class="sd">            e.g., (), (n,), (n,m), ..., ["x", "y", ...].</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        - (str) -- formatted string if it is valid, otherwise None.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">shape</span> <span class="o">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;shape&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-    <span class="n">var</span> <span class="o">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;var&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">])</span>
+<span class="sd">    """</span>
+    <span class="n">shape</span> <span class="o">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"shape"</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="n">var</span> <span class="o">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"var"</span><span class="p">,</span> <span class="p">[</span><span class="s2">""</span><span class="p">])</span>
 
     <span class="k">try</span><span class="p">:</span>
         <span class="n">s</span> <span class="o">=</span> <span class="n">str_to_sympy</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">check_var</span><span class="o">=</span><span class="n">var</span><span class="p">,</span> <span class="n">check_shape</span><span class="o">=</span><span class="n">shape</span><span class="p">)</span>
@@ -536,15 +536,15 @@
     <span class="k">if</span> <span class="ow">not</span> <span class="n">check_symbol</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
-                <span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vectorize</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)(</span><span class="n">s</span><span class="p">)</span>
-                <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;&#39;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+                <span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vectorize</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)(</span><span class="n">s</span><span class="p">)</span>
+                <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"'"</span><span class="p">,</span> <span class="s2">""</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">" "</span><span class="p">,</span> <span class="s2">""</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="k">return</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span>
         <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>
 
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
-        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">" "</span><span class="p">,</span> <span class="s2">""</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">s</span><span class="p">)</span></div>
 
@@ -554,18 +554,18 @@
 <div class="viewcode-block" id="validator_math">
 <a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.validator.validator_math">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">validator_math</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="o">**</span><span class="n">opt</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Validator for math to LaTeX.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        text (str): sympy string.</span>
-<span class="sd">        opt (dict, optional): option, &quot;shape/var&quot;. (default: None,None)</span>
+<span class="sd">        opt (dict, optional): option, "shape/var". (default: None,None)</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        - (str) -- LaTeX string if it is valid, otherwise None.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">shape</span> <span class="o">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;shape&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-    <span class="n">var</span> <span class="o">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;var&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+<span class="sd">    """</span>
+    <span class="n">shape</span> <span class="o">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"shape"</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="n">var</span> <span class="o">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"var"</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
 
     <span class="k">try</span><span class="p">:</span>
         <span class="n">s</span> <span class="o">=</span> <span class="n">str_to_sympy</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">check_var</span><span class="o">=</span><span class="n">var</span><span class="p">,</span> <span class="n">check_shape</span><span class="o">=</span><span class="n">shape</span><span class="p">)</span>
@@ -573,7 +573,7 @@
         <span class="k">return</span> <span class="kc">None</span>
 
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
-        <span class="n">s</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">to_latex</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;&#39;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\\\</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\\</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">to_latex</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"'"</span><span class="p">,</span> <span class="s2">""</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"</span><span class="se">\\\\</span><span class="s2">"</span><span class="p">,</span> <span class="s2">"</span><span class="se">\\</span><span class="s2">"</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">s</span> <span class="o">=</span> <span class="n">to_latex</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
 
@@ -585,7 +585,7 @@
 <div class="viewcode-block" id="validator_site">
 <a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.validator.validator_site">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">validator_site</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">use_var</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Validator for site.</span>
 
 <span class="sd">    Args:</span>
@@ -594,8 +594,8 @@
 
 <span class="sd">    Returns:</span>
 <span class="sd">        - (str) -- input s if it is valid, otherwise None.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">var</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="s2">&quot;z&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="n">use_var</span> <span class="k">else</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">]</span>
+<span class="sd">    """</span>
+    <span class="n">var</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"x"</span><span class="p">,</span> <span class="s2">"y"</span><span class="p">,</span> <span class="s2">"z"</span><span class="p">]</span> <span class="k">if</span> <span class="n">use_var</span> <span class="k">else</span> <span class="p">[</span><span class="s2">""</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">validator_list_float</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,),</span> <span class="n">var</span><span class="o">=</span><span class="n">var</span><span class="p">)</span></div>
 
 
@@ -604,7 +604,7 @@
 <div class="viewcode-block" id="validator_bond">
 <a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.validator.validator_bond">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">validator_bond</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">use_var</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Validator for bond.</span>
 
 <span class="sd">    Args:</span>
@@ -616,13 +616,13 @@
 
 <span class="sd">    Note:</span>
 <span class="sd">        - bond sytles, start:vector, tail;head, vector@center, are accepted.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">fmt</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
-        <span class="k">return</span> <span class="nb">str</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">i</span><span class="si">:</span><span class="s2">.</span><span class="si">{</span><span class="n">DISPLAY_DIGIT</span><span class="si">}</span><span class="s2">f</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">a</span><span class="p">])</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;&#39;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">([</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">i</span><span class="si">:</span><span class="s2">.</span><span class="si">{</span><span class="n">DISPLAY_DIGIT</span><span class="si">}</span><span class="s2">f</span><span class="si">}</span><span class="s2">"</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">a</span><span class="p">])</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"'"</span><span class="p">,</span> <span class="s2">""</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">" "</span><span class="p">,</span> <span class="s2">""</span><span class="p">)</span>
 
     <span class="n">v</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="n">convert_to_bond</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">use_var</span><span class="p">)</span>
-    <span class="k">return</span> <span class="kc">None</span> <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">fmt</span><span class="p">(</span><span class="n">v</span><span class="p">)</span><span class="si">}</span><span class="s2">@</span><span class="si">{</span><span class="n">fmt</span><span class="p">(</span><span class="n">c</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span></div>
+    <span class="k">return</span> <span class="kc">None</span> <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">fmt</span><span class="p">(</span><span class="n">v</span><span class="p">)</span><span class="si">}</span><span class="s2">@</span><span class="si">{</span><span class="n">fmt</span><span class="p">(</span><span class="n">c</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span></div>
 
 
 
@@ -630,7 +630,7 @@
 <div class="viewcode-block" id="validator_site_bond">
 <a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.validator.validator_site_bond">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">validator_site_bond</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">use_var</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Validator for site or bond.</span>
 
 <span class="sd">    Args:</span>
@@ -642,8 +642,8 @@
 
 <span class="sd">    Note:</span>
 <span class="sd">        - bond sytles, start:vector, tail;head, vector@center, are accepted.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="p">(</span><span class="s2">&quot;:&quot;</span> <span class="ow">in</span> <span class="n">s</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="s2">&quot;;&quot;</span> <span class="ow">in</span> <span class="n">s</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="s2">&quot;@&quot;</span> <span class="ow">in</span> <span class="n">s</span><span class="p">):</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="p">(</span><span class="s2">":"</span> <span class="ow">in</span> <span class="n">s</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="s2">";"</span> <span class="ow">in</span> <span class="n">s</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="s2">"@"</span> <span class="ow">in</span> <span class="n">s</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">validator_bond</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">use_var</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">validator_site</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">use_var</span><span class="p">)</span></div>
@@ -654,7 +654,7 @@
 <div class="viewcode-block" id="validator_vector_site_bond">
 <a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.validator.validator_vector_site_bond">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">validator_vector_site_bond</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">use_var</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Validator for vector on site or bond.</span>
 
 <span class="sd">    Args:</span>
@@ -666,15 +666,15 @@
 
 <span class="sd">    Note:</span>
 <span class="sd">        - bond sytles, start:vector, tail;head, vector@center, are accepted.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="s2">&quot;#&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">s</span><span class="p">:</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="s2">"#"</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">s</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">None</span>
 
-    <span class="n">v</span><span class="p">,</span> <span class="n">sb</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;#&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">v</span><span class="p">,</span> <span class="n">sb</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"#"</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
     <span class="n">v</span> <span class="o">=</span> <span class="n">validator_site</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">use_var</span><span class="p">)</span>
     <span class="n">sb</span> <span class="o">=</span> <span class="n">validator_site_bond</span><span class="p">(</span><span class="n">sb</span><span class="p">,</span> <span class="n">use_var</span><span class="p">)</span>
 
-    <span class="k">return</span> <span class="kc">None</span> <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">sb</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">v</span> <span class="o">+</span> <span class="s2">&quot;#&quot;</span> <span class="o">+</span> <span class="n">sb</span></div>
+    <span class="k">return</span> <span class="kc">None</span> <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">sb</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">v</span> <span class="o">+</span> <span class="s2">"#"</span> <span class="o">+</span> <span class="n">sb</span></div>
 
 
 
@@ -682,7 +682,7 @@
 <div class="viewcode-block" id="validator_orbital_site_bond">
 <a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.validator.validator_orbital_site_bond">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">validator_orbital_site_bond</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">use_var</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Validator for orbital on site or bond.</span>
 
 <span class="sd">    Args:</span>
@@ -695,15 +695,15 @@
 <span class="sd">    Note:</span>
 <span class="sd">        - orbital can contain x, y, z, r.</span>
 <span class="sd">        - bond sytles, start:vector, tail;head, vector@center, are accepted.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="s2">&quot;#&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">s</span><span class="p">:</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="s2">"#"</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">s</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">None</span>
 
-    <span class="n">v</span><span class="p">,</span> <span class="n">sb</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;#&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-    <span class="n">v</span> <span class="o">=</span> <span class="n">validator_list_float</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">var</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="s2">&quot;z&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">],</span> <span class="n">shape</span><span class="o">=</span><span class="p">())</span>
+    <span class="n">v</span><span class="p">,</span> <span class="n">sb</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"#"</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">v</span> <span class="o">=</span> <span class="n">validator_list_float</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">var</span><span class="o">=</span><span class="p">[</span><span class="s2">"x"</span><span class="p">,</span> <span class="s2">"y"</span><span class="p">,</span> <span class="s2">"z"</span><span class="p">,</span> <span class="s2">"r"</span><span class="p">],</span> <span class="n">shape</span><span class="o">=</span><span class="p">())</span>
     <span class="n">sb</span> <span class="o">=</span> <span class="n">validator_site_bond</span><span class="p">(</span><span class="n">sb</span><span class="p">,</span> <span class="n">use_var</span><span class="p">)</span>
 
-    <span class="k">return</span> <span class="kc">None</span> <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">sb</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">v</span> <span class="o">+</span> <span class="s2">&quot;#&quot;</span> <span class="o">+</span> <span class="n">sb</span></div>
+    <span class="k">return</span> <span class="kc">None</span> <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">sb</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">v</span> <span class="o">+</span> <span class="s2">"#"</span> <span class="o">+</span> <span class="n">sb</span></div>
 
 </pre></div>
 

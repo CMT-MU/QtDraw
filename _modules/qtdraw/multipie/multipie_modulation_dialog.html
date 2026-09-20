@@ -327,11 +327,11 @@
                 <article class="bd-article">
                   
   <h1>Source code for qtdraw.multipie.multipie_modulation_dialog</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span></span><span class="sd">"""</span>
 <span class="sd">MultiPie modulation dialog.</span>
 
 <span class="sd">This module provides a dialog for modulation editor.</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">copy</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">PySide6.QtWidgets</span><span class="w"> </span><span class="kn">import</span> <span class="n">QDialog</span>
@@ -343,11 +343,11 @@
 
 <span class="c1"># ==================================================</span>
 <span class="n">modulation_panel</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;hide&quot;</span><span class="p">,</span> <span class="p">{},</span> <span class="s2">&quot;0&quot;</span><span class="p">),</span>
-    <span class="s2">&quot;basis&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;combo&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;Q01&quot;</span><span class="p">],</span> <span class="s2">&quot;Q01&quot;</span><span class="p">),</span>
-    <span class="s2">&quot;coeff&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;math&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;var&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">]},</span> <span class="s2">&quot;1&quot;</span><span class="p">),</span>
-    <span class="s2">&quot;k_vector&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;math&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;shape&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">3</span><span class="p">,),</span> <span class="s2">&quot;var&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">]},</span> <span class="s2">&quot;[1,0,0]&quot;</span><span class="p">),</span>
-    <span class="s2">&quot;phase&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;combo&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;cos&quot;</span><span class="p">,</span> <span class="s2">&quot;sin&quot;</span><span class="p">],</span> <span class="s2">&quot;cos&quot;</span><span class="p">),</span>
+    <span class="s2">"id"</span><span class="p">:</span> <span class="p">(</span><span class="s2">"hide"</span><span class="p">,</span> <span class="p">{},</span> <span class="s2">"0"</span><span class="p">),</span>
+    <span class="s2">"basis"</span><span class="p">:</span> <span class="p">(</span><span class="s2">"combo"</span><span class="p">,</span> <span class="p">[</span><span class="s2">"Q01"</span><span class="p">],</span> <span class="s2">"Q01"</span><span class="p">),</span>
+    <span class="s2">"coeff"</span><span class="p">:</span> <span class="p">(</span><span class="s2">"math"</span><span class="p">,</span> <span class="p">{</span><span class="s2">"var"</span><span class="p">:</span> <span class="p">[</span><span class="s2">""</span><span class="p">]},</span> <span class="s2">"1"</span><span class="p">),</span>
+    <span class="s2">"k_vector"</span><span class="p">:</span> <span class="p">(</span><span class="s2">"math"</span><span class="p">,</span> <span class="p">{</span><span class="s2">"shape"</span><span class="p">:</span> <span class="p">(</span><span class="mi">3</span><span class="p">,),</span> <span class="s2">"var"</span><span class="p">:</span> <span class="p">[</span><span class="s2">""</span><span class="p">]},</span> <span class="s2">"[1,0,0]"</span><span class="p">),</span>
+    <span class="s2">"phase"</span><span class="p">:</span> <span class="p">(</span><span class="s2">"combo"</span><span class="p">,</span> <span class="p">[</span><span class="s2">"cos"</span><span class="p">,</span> <span class="s2">"sin"</span><span class="p">],</span> <span class="s2">"cos"</span><span class="p">),</span>
 <span class="p">}</span>
 
 
@@ -361,28 +361,28 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">parent</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">_pvw</span><span class="o">.</span><span class="n">save_current</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_vec</span> <span class="o">=</span> <span class="n">vec</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_var</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Q&quot;</span><span class="p">:</span> <span class="n">var</span><span class="p">[</span><span class="s2">&quot;Q&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">var</span><span class="p">[</span><span class="s2">&quot;G&quot;</span><span class="p">],</span> <span class="s2">&quot;T&quot;</span><span class="p">:</span> <span class="n">var</span><span class="p">[</span><span class="s2">&quot;T&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">var</span><span class="p">[</span><span class="s2">&quot;M&quot;</span><span class="p">]}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_var</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"Q"</span><span class="p">:</span> <span class="n">var</span><span class="p">[</span><span class="s2">"Q"</span><span class="p">]</span> <span class="o">+</span> <span class="n">var</span><span class="p">[</span><span class="s2">"G"</span><span class="p">],</span> <span class="s2">"T"</span><span class="p">:</span> <span class="n">var</span><span class="p">[</span><span class="s2">"T"</span><span class="p">]</span> <span class="o">+</span> <span class="n">var</span><span class="p">[</span><span class="s2">"M"</span><span class="p">]}</span>
 
-        <span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;Modulation - vector&quot;</span> <span class="k">if</span> <span class="n">vec</span> <span class="k">else</span> <span class="s2">&quot;Modulation - orbital&quot;</span>
+        <span class="n">title</span> <span class="o">=</span> <span class="s2">"Modulation - vector"</span> <span class="k">if</span> <span class="n">vec</span> <span class="k">else</span> <span class="s2">"Modulation - orbital"</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">600</span><span class="p">,</span> <span class="mi">300</span><span class="p">)</span>
 
         <span class="c1"># widget.</span>
-        <span class="n">button_add</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Add&quot;</span><span class="p">)</span>
-        <span class="n">button_remove</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Remove&quot;</span><span class="p">)</span>
-        <span class="n">button_reset</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Reset&quot;</span><span class="p">)</span>
-        <span class="n">button_cancel</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Cancel&quot;</span><span class="p">)</span>
-        <span class="n">button_ok</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;OK&quot;</span><span class="p">)</span>
-        <span class="n">label_repeat</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;repeat&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">edit_range</span> <span class="o">=</span> <span class="n">LineEdit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;[1,1,1]&quot;</span><span class="p">,</span> <span class="n">validator</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;list_int&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;shape&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">3</span><span class="p">,)}))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">check_magnetic</span> <span class="o">=</span> <span class="n">Check</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;magnetic&quot;</span><span class="p">)</span>
+        <span class="n">button_add</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">"Add"</span><span class="p">)</span>
+        <span class="n">button_remove</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">"Remove"</span><span class="p">)</span>
+        <span class="n">button_reset</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">"Reset"</span><span class="p">)</span>
+        <span class="n">button_cancel</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">"Cancel"</span><span class="p">)</span>
+        <span class="n">button_ok</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">"OK"</span><span class="p">)</span>
+        <span class="n">label_repeat</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">"repeat"</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">edit_range</span> <span class="o">=</span> <span class="n">LineEdit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">"[1,1,1]"</span><span class="p">,</span> <span class="n">validator</span><span class="o">=</span><span class="p">(</span><span class="s2">"list_int"</span><span class="p">,</span> <span class="p">{</span><span class="s2">"shape"</span><span class="p">:</span> <span class="p">(</span><span class="mi">3</span><span class="p">,)}))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">check_magnetic</span> <span class="o">=</span> <span class="n">Check</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">"magnetic"</span><span class="p">)</span>
 
         <span class="c1"># modulation data.</span>
-        <span class="k">if</span> <span class="n">modulation_range</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">):</span>
-            <span class="n">modulation</span><span class="p">,</span> <span class="n">rng</span> <span class="o">=</span> <span class="n">modulation_range</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">modulation_range</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s2">":"</span><span class="p">):</span>
+            <span class="n">modulation</span><span class="p">,</span> <span class="n">rng</span> <span class="o">=</span> <span class="n">modulation_range</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">":"</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">modulation</span> <span class="o">=</span> <span class="n">modulation_range</span>
-            <span class="n">rng</span> <span class="o">=</span> <span class="s2">&quot;[1,1,1]&quot;</span>
+            <span class="n">rng</span> <span class="o">=</span> <span class="s2">"[1,1,1]"</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">edit_range</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">rng</span><span class="p">)</span>
 
@@ -423,17 +423,17 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">create_panel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">magnetic</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_magnetic</span><span class="o">.</span><span class="n">is_checked</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">magnetic</span><span class="p">:</span>
-            <span class="n">var</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_var</span><span class="p">[</span><span class="s2">&quot;T&quot;</span><span class="p">]</span>
+            <span class="n">var</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_var</span><span class="p">[</span><span class="s2">"T"</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">var</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_var</span><span class="p">[</span><span class="s2">&quot;Q&quot;</span><span class="p">]</span>
+            <span class="n">var</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_var</span><span class="p">[</span><span class="s2">"Q"</span><span class="p">]</span>
 
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">var</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>
 
         <span class="n">mod_panel</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">modulation_panel</span><span class="p">)</span>
-        <span class="n">mod_panel</span><span class="p">[</span><span class="s2">&quot;basis&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;combo&quot;</span><span class="p">,</span> <span class="n">var</span><span class="p">,</span> <span class="n">var</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">mod_panel</span><span class="p">[</span><span class="s2">"basis"</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s2">"combo"</span><span class="p">,</span> <span class="n">var</span><span class="p">,</span> <span class="n">var</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 
-        <span class="n">model</span> <span class="o">=</span> <span class="n">GroupModel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;modulation&quot;</span><span class="p">,</span> <span class="n">mod_panel</span><span class="p">)</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">GroupModel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">"modulation"</span><span class="p">,</span> <span class="n">mod_panel</span><span class="p">)</span>
         <span class="n">model</span><span class="o">.</span><span class="n">set_data</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mod_list</span><span class="p">)</span>
         <span class="n">view</span> <span class="o">=</span> <span class="n">GroupView</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span>
         <span class="n">view</span><span class="o">.</span><span class="n">customContextMenuRequested</span><span class="o">.</span><span class="n">disconnect</span><span class="p">()</span>
@@ -462,9 +462,9 @@
         <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="n">model</span><span class="p">()</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
         <span class="n">rng</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">edit_range</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="k">return</span> <span class="s2">&quot;&quot;</span>
+            <span class="k">return</span> <span class="s2">""</span>
         <span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">data</span><span class="p">]</span>
-        <span class="n">s</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;&#39;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; : &quot;</span> <span class="o">+</span> <span class="n">rng</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"'"</span><span class="p">,</span> <span class="s2">""</span><span class="p">)</span> <span class="o">+</span> <span class="s2">" : "</span> <span class="o">+</span> <span class="n">rng</span>
         <span class="k">return</span> <span class="n">s</span></div>
 
 
@@ -473,7 +473,7 @@
 <a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.multipie_modulation_dialog.ModulationDialog.create_modulation">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">create_modulation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">mr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">modulation_range</span><span class="p">()</span>
-        <span class="k">if</span> <span class="n">mr</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">mr</span> <span class="o">==</span> <span class="s2">""</span><span class="p">:</span>
             <span class="k">return</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>

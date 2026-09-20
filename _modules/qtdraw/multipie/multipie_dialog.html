@@ -327,11 +327,11 @@
                 <article class="bd-article">
                   
   <h1>Source code for qtdraw.multipie.multipie_dialog</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span></span><span class="sd">"""</span>
 <span class="sd">Multipie dialog.</span>
 
 <span class="sd">This module provides a dialog for drawing objects with the help of MultiPie.</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">PySide6.QtWidgets</span><span class="w"> </span><span class="kn">import</span> <span class="n">QDialog</span><span class="p">,</span> <span class="n">QTabWidget</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">PySide6.QtCore</span><span class="w"> </span><span class="kn">import</span> <span class="n">Signal</span>
@@ -351,12 +351,12 @@
 
     <span class="c1"># ==================================================</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        MultiPie dialog.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            parent (MultiPiePlugin): parent.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_pvw</span> <span class="o">=</span> <span class="n">parent</span><span class="o">.</span><span class="n">pyvista_widget</span>  <span class="c1"># PyVistaWidget.</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pvw</span><span class="o">.</span><span class="n">_mp_data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -374,9 +374,9 @@
 
         <span class="c1"># tab content.</span>
         <span class="n">tab</span> <span class="o">=</span> <span class="n">QTabWidget</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-        <span class="n">tab</span><span class="o">.</span><span class="n">addTab</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_group_panel</span><span class="p">,</span> <span class="s2">&quot;Group Info.&quot;</span><span class="p">)</span>
-        <span class="n">tab</span><span class="o">.</span><span class="n">addTab</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_object_panel</span><span class="p">,</span> <span class="s2">&quot;Object Drawing&quot;</span><span class="p">)</span>
-        <span class="n">tab</span><span class="o">.</span><span class="n">addTab</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_basis_panel</span><span class="p">,</span> <span class="s2">&quot;Basis Drawing&quot;</span><span class="p">)</span>
+        <span class="n">tab</span><span class="o">.</span><span class="n">addTab</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_group_panel</span><span class="p">,</span> <span class="s2">"Group Info."</span><span class="p">)</span>
+        <span class="n">tab</span><span class="o">.</span><span class="n">addTab</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_object_panel</span><span class="p">,</span> <span class="s2">"Object Drawing"</span><span class="p">)</span>
+        <span class="n">tab</span><span class="o">.</span><span class="n">addTab</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_basis_panel</span><span class="p">,</span> <span class="s2">"Basis Drawing"</span><span class="p">)</span>
 
         <span class="c1"># main layout.</span>
         <span class="n">layout</span> <span class="o">=</span> <span class="n">Layout</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
@@ -398,7 +398,7 @@
 <div class="viewcode-block" id="MultiPieDialog.set_title">
 <a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.multipie_dialog.MultiPieDialog.set_title">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">set_title</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">title</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pvw</span><span class="o">.</span><span class="n">window_title</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;QtDraw&quot;</span><span class="p">,</span> <span class="s2">&quot;MultiPie Plugin&quot;</span><span class="p">)</span>
+        <span class="n">title</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pvw</span><span class="o">.</span><span class="n">window_title</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"QtDraw"</span><span class="p">,</span> <span class="s2">"MultiPie Plugin"</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="n">title</span><span class="p">)</span></div>
 
 

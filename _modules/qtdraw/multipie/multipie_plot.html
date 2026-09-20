@@ -327,11 +327,11 @@
                 <article class="bd-article">
                   
   <h1>Source code for qtdraw.multipie.multipie_plot</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span></span><span class="sd">"""</span>
 <span class="sd">MultiPie plot.</span>
 
 <span class="sd">This module provides plot functions for MultiPie dialog.</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
@@ -344,7 +344,7 @@
 <div class="viewcode-block" id="plot_cell_site">
 <a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.multipie_plot.plot_cell_site">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">plot_cell_site</span><span class="p">(</span><span class="n">mp_data</span><span class="p">,</span> <span class="n">sites</span><span class="p">,</span> <span class="n">wp</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">opacity</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Plot cell site.</span>
 
 <span class="sd">    Args:</span>
@@ -356,31 +356,31 @@
 <span class="sd">            color (str, optional): color [default: silver].</span>
 <span class="sd">            opacity (float, optional): opacity [default: 1.0].</span>
 <span class="sd">            name (str, optional): plot name.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">pvw</span> <span class="o">=</span> <span class="n">mp_data</span><span class="o">.</span><span class="n">pvw</span>
 
     <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">wp</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">cnt</span> <span class="o">=</span> <span class="n">mp_data</span><span class="o">.</span><span class="n">_set_counter</span><span class="p">(</span><span class="s2">&quot;site&quot;</span><span class="p">)</span>
-            <span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;site</span><span class="si">{</span><span class="n">cnt</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="n">cnt</span> <span class="o">=</span> <span class="n">mp_data</span><span class="o">.</span><span class="n">_set_counter</span><span class="p">(</span><span class="s2">"site"</span><span class="p">)</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"site</span><span class="si">{</span><span class="n">cnt</span><span class="si">}</span><span class="s2">"</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">cnt</span> <span class="o">=</span> <span class="n">mp_data</span><span class="o">.</span><span class="n">_set_counter</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span>
-            <span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">wp</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="n">cnt</span><span class="si">}</span><span class="s2">)&quot;</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">wp</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="n">cnt</span><span class="si">}</span><span class="s2">)"</span>
 
     <span class="k">if</span> <span class="n">label</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">label</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">sites</span><span class="p">)</span>
+        <span class="n">label</span> <span class="o">=</span> <span class="p">[</span><span class="s2">""</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">sites</span><span class="p">)</span>
 
-    <span class="n">default</span> <span class="o">=</span> <span class="n">detail</span><span class="p">[</span><span class="s2">&quot;site&quot;</span><span class="p">]</span>
+    <span class="n">default</span> <span class="o">=</span> <span class="n">detail</span><span class="p">[</span><span class="s2">"site"</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">size</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">size</span> <span class="o">=</span> <span class="n">default</span><span class="p">[</span><span class="s2">&quot;size&quot;</span><span class="p">]</span>
+        <span class="n">size</span> <span class="o">=</span> <span class="n">default</span><span class="p">[</span><span class="s2">"size"</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">color</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">color</span> <span class="o">=</span> <span class="n">default</span><span class="p">[</span><span class="s2">&quot;color&quot;</span><span class="p">]</span>
+        <span class="n">color</span> <span class="o">=</span> <span class="n">default</span><span class="p">[</span><span class="s2">"color"</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">opacity</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">opacity</span> <span class="o">=</span> <span class="n">default</span><span class="p">[</span><span class="s2">&quot;opacity&quot;</span><span class="p">]</span>
+        <span class="n">opacity</span> <span class="o">=</span> <span class="n">default</span><span class="p">[</span><span class="s2">"opacity"</span><span class="p">]</span>
 
     <span class="n">pvw</span><span class="o">.</span><span class="n">screen_off</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">no</span><span class="p">,</span> <span class="p">(</span><span class="n">pt</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">sites</span><span class="p">,</span> <span class="n">label</span><span class="p">)):</span>
-        <span class="n">lbl</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;S</span><span class="si">{</span><span class="n">no</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">m</span><span class="si">}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="n">lbl</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"S</span><span class="si">{</span><span class="n">no</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">m</span><span class="si">}</span><span class="s2">"</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">" "</span><span class="p">,</span> <span class="s2">""</span><span class="p">)</span>
         <span class="n">pvw</span><span class="o">.</span><span class="n">add_site</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="n">pt</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">lbl</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">size</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">opacity</span><span class="o">=</span><span class="n">opacity</span><span class="p">)</span>
     <span class="n">pvw</span><span class="o">.</span><span class="n">screen_on</span><span class="p">()</span></div>
 
@@ -390,7 +390,7 @@
 <div class="viewcode-block" id="plot_cell_bond">
 <a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.multipie_plot.plot_cell_bond">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">plot_cell_bond</span><span class="p">(</span><span class="n">mp_data</span><span class="p">,</span> <span class="n">bonds</span><span class="p">,</span> <span class="n">wp</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">color2</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">opacity</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Plot cell bond.</span>
 
 <span class="sd">    Args:</span>
@@ -403,32 +403,32 @@
 <span class="sd">            color2 (str, optional): color for directional bond [default: iron].</span>
 <span class="sd">            opacity (float, optional): opacity [default: 1.0].</span>
 <span class="sd">            name (str, optional): plot name.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">pvw</span> <span class="o">=</span> <span class="n">mp_data</span><span class="o">.</span><span class="n">pvw</span>
 
     <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">wp</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">cnt</span> <span class="o">=</span> <span class="n">mp_data</span><span class="o">.</span><span class="n">_set_counter</span><span class="p">(</span><span class="s2">&quot;bond&quot;</span><span class="p">)</span>
-            <span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;bond</span><span class="si">{</span><span class="n">cnt</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="n">cnt</span> <span class="o">=</span> <span class="n">mp_data</span><span class="o">.</span><span class="n">_set_counter</span><span class="p">(</span><span class="s2">"bond"</span><span class="p">)</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"bond</span><span class="si">{</span><span class="n">cnt</span><span class="si">}</span><span class="s2">"</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">cnt</span> <span class="o">=</span> <span class="n">mp_data</span><span class="o">.</span><span class="n">_set_counter</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span>
-            <span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">wp</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="n">cnt</span><span class="si">}</span><span class="s2">)&quot;</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">wp</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="n">cnt</span><span class="si">}</span><span class="s2">)"</span>
 
     <span class="k">if</span> <span class="n">label</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">label</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">bonds</span><span class="p">)</span>
+        <span class="n">label</span> <span class="o">=</span> <span class="p">[</span><span class="s2">""</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">bonds</span><span class="p">)</span>
         <span class="n">directional</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">directional</span> <span class="o">=</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">(</span><span class="n">x</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">sum</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="p">[]))</span>
 
-    <span class="n">default</span> <span class="o">=</span> <span class="n">detail</span><span class="p">[</span><span class="s2">&quot;bond&quot;</span><span class="p">]</span>
+    <span class="n">default</span> <span class="o">=</span> <span class="n">detail</span><span class="p">[</span><span class="s2">"bond"</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">width</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">width</span> <span class="o">=</span> <span class="n">default</span><span class="p">[</span><span class="s2">&quot;width&quot;</span><span class="p">]</span>
+        <span class="n">width</span> <span class="o">=</span> <span class="n">default</span><span class="p">[</span><span class="s2">"width"</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">color</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">color</span> <span class="o">=</span> <span class="n">default</span><span class="p">[</span><span class="s2">&quot;color1&quot;</span><span class="p">]</span>
+        <span class="n">color</span> <span class="o">=</span> <span class="n">default</span><span class="p">[</span><span class="s2">"color1"</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">color2</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">color2</span> <span class="o">=</span> <span class="n">default</span><span class="p">[</span><span class="s2">&quot;color2&quot;</span><span class="p">]</span>
+        <span class="n">color2</span> <span class="o">=</span> <span class="n">default</span><span class="p">[</span><span class="s2">"color2"</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">opacity</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">opacity</span> <span class="o">=</span> <span class="n">default</span><span class="p">[</span><span class="s2">&quot;opacity&quot;</span><span class="p">]</span>
+        <span class="n">opacity</span> <span class="o">=</span> <span class="n">default</span><span class="p">[</span><span class="s2">"opacity"</span><span class="p">]</span>
 
     <span class="k">if</span> <span class="ow">not</span> <span class="n">directional</span><span class="p">:</span>
         <span class="n">color2</span> <span class="o">=</span> <span class="n">color</span>
@@ -436,7 +436,7 @@
     <span class="n">pvw</span><span class="o">.</span><span class="n">screen_off</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">no</span><span class="p">,</span> <span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">bonds</span><span class="p">,</span> <span class="n">label</span><span class="p">)):</span>
         <span class="n">v</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">],</span> <span class="n">b</span><span class="p">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">6</span><span class="p">]</span>
-        <span class="n">lbl</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;B</span><span class="si">{</span><span class="n">no</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">m</span><span class="si">}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="n">lbl</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"B</span><span class="si">{</span><span class="n">no</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">m</span><span class="si">}</span><span class="s2">"</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">" "</span><span class="p">,</span> <span class="s2">""</span><span class="p">)</span>
         <span class="n">pvw</span><span class="o">.</span><span class="n">add_bond</span><span class="p">(</span><span class="n">direction</span><span class="o">=</span><span class="n">v</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="n">c</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="n">width</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">color2</span><span class="o">=</span><span class="n">color2</span><span class="p">,</span> <span class="n">opacity</span><span class="o">=</span><span class="n">opacity</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">lbl</span><span class="p">)</span>
     <span class="n">pvw</span><span class="o">.</span><span class="n">screen_on</span><span class="p">()</span></div>
 
@@ -449,7 +449,7 @@
     <span class="n">mp_data</span><span class="p">,</span>
     <span class="n">vectors</span><span class="p">,</span>
     <span class="n">sites</span><span class="p">,</span>
-    <span class="n">X</span><span class="o">=</span><span class="s2">&quot;Q&quot;</span><span class="p">,</span>
+    <span class="n">X</span><span class="o">=</span><span class="s2">"Q"</span><span class="p">,</span>
     <span class="n">wp</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">label</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">length</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -460,14 +460,14 @@
     <span class="n">cartesian</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
     <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
 <span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Plot cell vector.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        mp_data (MultiPieData): multipie data.</span>
 <span class="sd">            vectors (ndarray): vectors (fractional/cartesian).</span>
 <span class="sd">            sites (ndarray): site/bond (fractional, conventional).</span>
-<span class="sd">            X (str, optional): type, &quot;Q/G/T/M&quot;.</span>
+<span class="sd">            X (str, optional): type, "Q/G/T/M".</span>
 <span class="sd">            wp (str, optional): Wyckoff site/bond.</span>
 <span class="sd">            label (list, optional): label.</span>
 <span class="sd">            length (float, optional): length [default: 0.3].</span>
@@ -477,29 +477,29 @@
 <span class="sd">            average (bool, optional): average at each site ?</span>
 <span class="sd">            cartesian (bool, optional): vector in cartesian coordinate ?</span>
 <span class="sd">            name (str, optional): plot name.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">pvw</span> <span class="o">=</span> <span class="n">mp_data</span><span class="o">.</span><span class="n">pvw</span>
 
     <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">wp</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">cnt</span> <span class="o">=</span> <span class="n">mp_data</span><span class="o">.</span><span class="n">_set_counter</span><span class="p">(</span><span class="s2">&quot;vector&quot;</span><span class="p">)</span>
-            <span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;vector</span><span class="si">{</span><span class="n">cnt</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="n">cnt</span> <span class="o">=</span> <span class="n">mp_data</span><span class="o">.</span><span class="n">_set_counter</span><span class="p">(</span><span class="s2">"vector"</span><span class="p">)</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"vector</span><span class="si">{</span><span class="n">cnt</span><span class="si">}</span><span class="s2">"</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">cnt</span> <span class="o">=</span> <span class="n">mp_data</span><span class="o">.</span><span class="n">_set_counter</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span>
-            <span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">wp</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="n">cnt</span><span class="si">}</span><span class="s2">)&quot;</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">wp</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="n">cnt</span><span class="si">}</span><span class="s2">)"</span>
 
     <span class="k">if</span> <span class="n">label</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">label</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">sites</span><span class="p">)</span>
+        <span class="n">label</span> <span class="o">=</span> <span class="p">[</span><span class="s2">""</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">sites</span><span class="p">)</span>
 
-    <span class="n">default</span> <span class="o">=</span> <span class="n">detail</span><span class="p">[</span><span class="s2">&quot;vector&quot;</span><span class="p">]</span>
+    <span class="n">default</span> <span class="o">=</span> <span class="n">detail</span><span class="p">[</span><span class="s2">"vector"</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">length</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">length</span> <span class="o">=</span> <span class="n">default</span><span class="p">[</span><span class="s2">&quot;length&quot;</span><span class="p">]</span>
+        <span class="n">length</span> <span class="o">=</span> <span class="n">default</span><span class="p">[</span><span class="s2">"length"</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">width</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">width</span> <span class="o">=</span> <span class="n">default</span><span class="p">[</span><span class="s2">&quot;width&quot;</span><span class="p">]</span>
+        <span class="n">width</span> <span class="o">=</span> <span class="n">default</span><span class="p">[</span><span class="s2">"width"</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">color</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">color</span> <span class="o">=</span> <span class="n">default</span><span class="p">[</span><span class="s2">&quot;color&quot;</span><span class="p">][</span><span class="n">X</span><span class="p">]</span>
+        <span class="n">color</span> <span class="o">=</span> <span class="n">default</span><span class="p">[</span><span class="s2">"color"</span><span class="p">][</span><span class="n">X</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">opacity</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">opacity</span> <span class="o">=</span> <span class="n">default</span><span class="p">[</span><span class="s2">&quot;opacity&quot;</span><span class="p">]</span>
+        <span class="n">opacity</span> <span class="o">=</span> <span class="n">default</span><span class="p">[</span><span class="s2">"opacity"</span><span class="p">]</span>
 
     <span class="n">vectors</span> <span class="o">=</span> <span class="n">vectors</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
 
@@ -508,7 +508,7 @@
         <span class="k">for</span> <span class="n">no</span><span class="p">,</span> <span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">vectors</span><span class="p">,</span> <span class="n">sites</span><span class="p">,</span> <span class="n">label</span><span class="p">)):</span>
             <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">CHOP</span><span class="p">:</span>
                 <span class="k">continue</span>
-            <span class="n">lbl</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;V</span><span class="si">{</span><span class="n">no</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">m</span><span class="si">}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+            <span class="n">lbl</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"V</span><span class="si">{</span><span class="n">no</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">m</span><span class="si">}</span><span class="s2">"</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">" "</span><span class="p">,</span> <span class="s2">""</span><span class="p">)</span>
             <span class="n">pvw</span><span class="o">.</span><span class="n">add_vector</span><span class="p">(</span>
                 <span class="n">direction</span><span class="o">=</span><span class="n">v</span><span class="p">,</span>
                 <span class="n">length</span><span class="o">=-</span><span class="n">length</span><span class="p">,</span>
@@ -527,7 +527,7 @@
                 <span class="n">no</span> <span class="o">+=</span> <span class="mi">1</span>
                 <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">CHOP</span><span class="p">:</span>
                     <span class="k">continue</span>
-                <span class="n">lbl</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;V</span><span class="si">{</span><span class="n">no</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">:[</span><span class="si">{</span><span class="n">m</span><span class="si">}</span><span class="s2">]&quot;</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+                <span class="n">lbl</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"V</span><span class="si">{</span><span class="n">no</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">:[</span><span class="si">{</span><span class="n">m</span><span class="si">}</span><span class="s2">]"</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">" "</span><span class="p">,</span> <span class="s2">""</span><span class="p">)</span>
                 <span class="n">pvw</span><span class="o">.</span><span class="n">add_vector</span><span class="p">(</span>
                     <span class="n">direction</span><span class="o">=</span><span class="n">v</span><span class="p">,</span>
                     <span class="n">length</span><span class="o">=-</span><span class="n">length</span><span class="p">,</span>
@@ -547,16 +547,16 @@
 <div class="viewcode-block" id="plot_cell_multipole">
 <a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.multipie_plot.plot_cell_multipole">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">plot_cell_multipole</span><span class="p">(</span>
-    <span class="n">mp_data</span><span class="p">,</span> <span class="n">multipoles</span><span class="p">,</span> <span class="n">sites</span><span class="p">,</span> <span class="n">X</span><span class="o">=</span><span class="s2">&quot;Q&quot;</span><span class="p">,</span> <span class="n">wp</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">opacity</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">average</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span>
+    <span class="n">mp_data</span><span class="p">,</span> <span class="n">multipoles</span><span class="p">,</span> <span class="n">sites</span><span class="p">,</span> <span class="n">X</span><span class="o">=</span><span class="s2">"Q"</span><span class="p">,</span> <span class="n">wp</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">opacity</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">average</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span>
 <span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Plot cell multipole.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        mp_data (MultiPieData): multipie data.</span>
 <span class="sd">            multipoles (ndarray): multipoles (cartesian).</span>
 <span class="sd">            sites (ndarray): site/bond (fractional, conventional).</span>
-<span class="sd">            X (str, optional): type, &quot;Q/G/T/M&quot;.</span>
+<span class="sd">            X (str, optional): type, "Q/G/T/M".</span>
 <span class="sd">            wp (str, optional): Wyckoff site/bond.</span>
 <span class="sd">            label (list, optional): label.</span>
 <span class="sd">            size (float, optional): size [default: 0.2].</span>
@@ -564,34 +564,34 @@
 <span class="sd">            opacity (float, optional): opacity [default: 1.0].</span>
 <span class="sd">            average (bool, optional): average at each site ?</span>
 <span class="sd">            name (str, optional): plot name.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">pvw</span> <span class="o">=</span> <span class="n">mp_data</span><span class="o">.</span><span class="n">pvw</span>
 
     <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">wp</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">cnt</span> <span class="o">=</span> <span class="n">mp_data</span><span class="o">.</span><span class="n">_set_counter</span><span class="p">(</span><span class="s2">&quot;orbital&quot;</span><span class="p">)</span>
-            <span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;orbital</span><span class="si">{</span><span class="n">cnt</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="n">cnt</span> <span class="o">=</span> <span class="n">mp_data</span><span class="o">.</span><span class="n">_set_counter</span><span class="p">(</span><span class="s2">"orbital"</span><span class="p">)</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"orbital</span><span class="si">{</span><span class="n">cnt</span><span class="si">}</span><span class="s2">"</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">cnt</span> <span class="o">=</span> <span class="n">mp_data</span><span class="o">.</span><span class="n">_set_counter</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span>
-            <span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">wp</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="n">cnt</span><span class="si">}</span><span class="s2">)&quot;</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">wp</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="n">cnt</span><span class="si">}</span><span class="s2">)"</span>
 
     <span class="k">if</span> <span class="n">label</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">label</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">sites</span><span class="p">)</span>
+        <span class="n">label</span> <span class="o">=</span> <span class="p">[</span><span class="s2">""</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">sites</span><span class="p">)</span>
 
-    <span class="n">default</span> <span class="o">=</span> <span class="n">detail</span><span class="p">[</span><span class="s2">&quot;orbital&quot;</span><span class="p">]</span>
+    <span class="n">default</span> <span class="o">=</span> <span class="n">detail</span><span class="p">[</span><span class="s2">"orbital"</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">size</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">size</span> <span class="o">=</span> <span class="n">default</span><span class="p">[</span><span class="s2">&quot;size&quot;</span><span class="p">]</span>
+        <span class="n">size</span> <span class="o">=</span> <span class="n">default</span><span class="p">[</span><span class="s2">"size"</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">color</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">color</span> <span class="o">=</span> <span class="n">default</span><span class="p">[</span><span class="s2">&quot;color&quot;</span><span class="p">][</span><span class="n">X</span><span class="p">]</span>
+        <span class="n">color</span> <span class="o">=</span> <span class="n">default</span><span class="p">[</span><span class="s2">"color"</span><span class="p">][</span><span class="n">X</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">opacity</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">opacity</span> <span class="o">=</span> <span class="n">default</span><span class="p">[</span><span class="s2">&quot;opacity&quot;</span><span class="p">]</span>
+        <span class="n">opacity</span> <span class="o">=</span> <span class="n">default</span><span class="p">[</span><span class="s2">"opacity"</span><span class="p">]</span>
 
     <span class="n">pvw</span><span class="o">.</span><span class="n">screen_off</span><span class="p">()</span>
     <span class="k">if</span> <span class="n">average</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">no</span><span class="p">,</span> <span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">multipoles</span><span class="p">,</span> <span class="n">sites</span><span class="p">,</span> <span class="n">label</span><span class="p">)):</span>
             <span class="k">if</span> <span class="n">v</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="k">continue</span>
-            <span class="n">lbl</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;O</span><span class="si">{</span><span class="n">no</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">m</span><span class="si">}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+            <span class="n">lbl</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"O</span><span class="si">{</span><span class="n">no</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">m</span><span class="si">}</span><span class="s2">"</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">" "</span><span class="p">,</span> <span class="s2">""</span><span class="p">)</span>
             <span class="n">pvw</span><span class="o">.</span><span class="n">add_orbital</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="n">v</span><span class="p">,</span> <span class="n">surface</span><span class="o">=</span><span class="n">v</span><span class="p">,</span> <span class="n">size</span><span class="o">=-</span><span class="n">size</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">opacity</span><span class="o">=</span><span class="n">opacity</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="n">s</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">lbl</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">no</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
@@ -600,7 +600,7 @@
                 <span class="n">no</span> <span class="o">+=</span> <span class="mi">1</span>
                 <span class="k">if</span> <span class="n">v</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                     <span class="k">continue</span>
-                <span class="n">lbl</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;O</span><span class="si">{</span><span class="n">no</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">:[</span><span class="si">{</span><span class="n">m</span><span class="si">}</span><span class="s2">]&quot;</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+                <span class="n">lbl</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"O</span><span class="si">{</span><span class="n">no</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">:[</span><span class="si">{</span><span class="n">m</span><span class="si">}</span><span class="s2">]"</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">" "</span><span class="p">,</span> <span class="s2">""</span><span class="p">)</span>
                 <span class="n">pvw</span><span class="o">.</span><span class="n">add_orbital</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="n">v</span><span class="p">,</span> <span class="n">surface</span><span class="o">=</span><span class="n">v</span><span class="p">,</span> <span class="n">size</span><span class="o">=-</span><span class="n">size</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">opacity</span><span class="o">=</span><span class="n">opacity</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="n">s</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">lbl</span><span class="p">)</span>
     <span class="n">pvw</span><span class="o">.</span><span class="n">screen_on</span><span class="p">()</span></div>
 
@@ -625,34 +625,34 @@
 <span class="p">):</span>
     <span class="n">pvw</span> <span class="o">=</span> <span class="n">mp_data</span><span class="o">.</span><span class="n">pvw</span>
 
-    <span class="n">default</span> <span class="o">=</span> <span class="n">detail</span><span class="p">[</span><span class="s2">&quot;bond_samb&quot;</span><span class="p">]</span>
+    <span class="n">default</span> <span class="o">=</span> <span class="n">detail</span><span class="p">[</span><span class="s2">"bond_samb"</span><span class="p">]</span>
 
     <span class="k">if</span> <span class="n">length</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">length</span> <span class="o">=</span> <span class="n">default</span><span class="p">[</span><span class="s2">&quot;length&quot;</span><span class="p">]</span>
+        <span class="n">length</span> <span class="o">=</span> <span class="n">default</span><span class="p">[</span><span class="s2">"length"</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">width</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">width</span> <span class="o">=</span> <span class="n">default</span><span class="p">[</span><span class="s2">&quot;width&quot;</span><span class="p">]</span>
+        <span class="n">width</span> <span class="o">=</span> <span class="n">default</span><span class="p">[</span><span class="s2">"width"</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">opacity</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">opacity</span> <span class="o">=</span> <span class="n">default</span><span class="p">[</span><span class="s2">&quot;opacity&quot;</span><span class="p">]</span>
+        <span class="n">opacity</span> <span class="o">=</span> <span class="n">default</span><span class="p">[</span><span class="s2">"opacity"</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">color</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">color</span> <span class="o">=</span> <span class="n">default</span><span class="p">[</span><span class="s2">&quot;color&quot;</span><span class="p">]</span>
+        <span class="n">color</span> <span class="o">=</span> <span class="n">default</span><span class="p">[</span><span class="s2">"color"</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">arrow_color</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">arrow_color</span> <span class="o">=</span> <span class="n">default</span><span class="p">[</span><span class="s2">&quot;arrow_color&quot;</span><span class="p">]</span>
+        <span class="n">arrow_color</span> <span class="o">=</span> <span class="n">default</span><span class="p">[</span><span class="s2">"arrow_color"</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">arrow_color_rep</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">arrow_color_rep</span> <span class="o">=</span> <span class="n">default</span><span class="p">[</span><span class="s2">&quot;arrow_color_rep&quot;</span><span class="p">]</span>
+        <span class="n">arrow_color_rep</span> <span class="o">=</span> <span class="n">default</span><span class="p">[</span><span class="s2">"arrow_color_rep"</span><span class="p">]</span>
 
     <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">cnt</span> <span class="o">=</span> <span class="n">mp_data</span><span class="o">.</span><span class="n">_set_counter</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span>
-        <span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">wp</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="n">cnt</span><span class="si">}</span><span class="s2">)&quot;</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">wp</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="n">cnt</span><span class="si">}</span><span class="s2">)"</span>
 
     <span class="k">if</span> <span class="n">label</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">label</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">bonds</span><span class="p">)</span>
+        <span class="n">label</span> <span class="o">=</span> <span class="p">[</span><span class="s2">""</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">bonds</span><span class="p">)</span>
 
     <span class="n">opt</span> <span class="o">=</span> <span class="n">opacity</span>
 
     <span class="n">pvw</span><span class="o">.</span><span class="n">screen_off</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">no</span><span class="p">,</span> <span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">bonds</span><span class="p">,</span> <span class="n">label</span><span class="p">)):</span>
         <span class="n">v</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">],</span> <span class="n">b</span><span class="p">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">6</span><span class="p">]</span>
-        <span class="n">lbl</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;B</span><span class="si">{</span><span class="n">no</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">m</span><span class="si">}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="n">lbl</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"B</span><span class="si">{</span><span class="n">no</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">m</span><span class="si">}</span><span class="s2">"</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">" "</span><span class="p">,</span> <span class="s2">""</span><span class="p">)</span>
         <span class="n">pvw</span><span class="o">.</span><span class="n">add_bond</span><span class="p">(</span>
             <span class="n">position</span><span class="o">=</span><span class="n">c</span><span class="p">,</span>
             <span class="n">direction</span><span class="o">=</span><span class="n">v</span><span class="p">,</span>
@@ -681,27 +681,27 @@
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">samb</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
         <span class="n">samb</span> <span class="o">=</span> <span class="n">samb</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
 
-    <span class="n">default</span> <span class="o">=</span> <span class="n">detail</span><span class="p">[</span><span class="s2">&quot;site_samb&quot;</span><span class="p">]</span>
+    <span class="n">default</span> <span class="o">=</span> <span class="n">detail</span><span class="p">[</span><span class="s2">"site_samb"</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">color</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">color</span> <span class="o">=</span> <span class="n">default</span><span class="p">[</span><span class="s2">&quot;color&quot;</span><span class="p">]</span>
+        <span class="n">color</span> <span class="o">=</span> <span class="n">default</span><span class="p">[</span><span class="s2">"color"</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">color_neg</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">color_neg</span> <span class="o">=</span> <span class="n">default</span><span class="p">[</span><span class="s2">&quot;color_neg&quot;</span><span class="p">]</span>
+        <span class="n">color_neg</span> <span class="o">=</span> <span class="n">default</span><span class="p">[</span><span class="s2">"color_neg"</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">color_pos</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">color_pos</span> <span class="o">=</span> <span class="n">default</span><span class="p">[</span><span class="s2">&quot;color_pos&quot;</span><span class="p">]</span>
+        <span class="n">color_pos</span> <span class="o">=</span> <span class="n">default</span><span class="p">[</span><span class="s2">"color_pos"</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">zero_size</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">zero_size</span> <span class="o">=</span> <span class="n">default</span><span class="p">[</span><span class="s2">&quot;zero_size&quot;</span><span class="p">]</span>
+        <span class="n">zero_size</span> <span class="o">=</span> <span class="n">default</span><span class="p">[</span><span class="s2">"zero_size"</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">size_ratio</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">size_ratio</span> <span class="o">=</span> <span class="n">default</span><span class="p">[</span><span class="s2">&quot;size_ratio&quot;</span><span class="p">]</span>
+        <span class="n">size_ratio</span> <span class="o">=</span> <span class="n">default</span><span class="p">[</span><span class="s2">"size_ratio"</span><span class="p">]</span>
 
     <span class="n">cnt</span> <span class="o">=</span> <span class="n">mp_data</span><span class="o">.</span><span class="n">_set_counter</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span>
-    <span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">wp</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="n">cnt</span><span class="si">}</span><span class="s2">)&quot;</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">wp</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="n">cnt</span><span class="si">}</span><span class="s2">)"</span>
 
     <span class="k">if</span> <span class="n">label</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">label</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">site</span><span class="p">)</span>
+        <span class="n">label</span> <span class="o">=</span> <span class="p">[</span><span class="s2">""</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">site</span><span class="p">)</span>
 
     <span class="n">pvw</span><span class="o">.</span><span class="n">screen_off</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">no</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">site</span><span class="p">,</span> <span class="n">samb</span><span class="p">)):</span>
-        <span class="n">lbl</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;S</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">no</span><span class="si">}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="n">lbl</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"S</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">no</span><span class="si">}</span><span class="s2">"</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">" "</span><span class="p">,</span> <span class="s2">""</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">v</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">c</span> <span class="o">=</span> <span class="n">color_pos</span>
         <span class="k">elif</span> <span class="n">v</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
@@ -739,31 +739,31 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="n">samb</span> <span class="o">=</span> <span class="n">samb</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">complex</span><span class="p">)</span><span class="o">.</span><span class="n">imag</span>
 
-    <span class="n">default</span> <span class="o">=</span> <span class="n">detail</span><span class="p">[</span><span class="s2">&quot;bond_samb&quot;</span><span class="p">]</span>
+    <span class="n">default</span> <span class="o">=</span> <span class="n">detail</span><span class="p">[</span><span class="s2">"bond_samb"</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">color</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">color</span> <span class="o">=</span> <span class="n">default</span><span class="p">[</span><span class="s2">&quot;color&quot;</span><span class="p">]</span>
+        <span class="n">color</span> <span class="o">=</span> <span class="n">default</span><span class="p">[</span><span class="s2">"color"</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">color_neg</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">color_neg</span> <span class="o">=</span> <span class="n">default</span><span class="p">[</span><span class="s2">&quot;color_neg&quot;</span><span class="p">]</span>
+        <span class="n">color_neg</span> <span class="o">=</span> <span class="n">default</span><span class="p">[</span><span class="s2">"color_neg"</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">color_pos</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">color_pos</span> <span class="o">=</span> <span class="n">default</span><span class="p">[</span><span class="s2">&quot;color_pos&quot;</span><span class="p">]</span>
+        <span class="n">color_pos</span> <span class="o">=</span> <span class="n">default</span><span class="p">[</span><span class="s2">"color_pos"</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">width</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">width</span> <span class="o">=</span> <span class="n">default</span><span class="p">[</span><span class="s2">&quot;width&quot;</span><span class="p">]</span>
+        <span class="n">width</span> <span class="o">=</span> <span class="n">default</span><span class="p">[</span><span class="s2">"width"</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">arrow_ratio</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">arrow_ratio</span> <span class="o">=</span> <span class="n">default</span><span class="p">[</span><span class="s2">&quot;arrow_ratio&quot;</span><span class="p">]</span>
+        <span class="n">arrow_ratio</span> <span class="o">=</span> <span class="n">default</span><span class="p">[</span><span class="s2">"arrow_ratio"</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">width_ratio</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">width_ratio</span> <span class="o">=</span> <span class="n">default</span><span class="p">[</span><span class="s2">&quot;width_ratio&quot;</span><span class="p">]</span>
+        <span class="n">width_ratio</span> <span class="o">=</span> <span class="n">default</span><span class="p">[</span><span class="s2">"width_ratio"</span><span class="p">]</span>
 
     <span class="n">cnt</span> <span class="o">=</span> <span class="n">mp_data</span><span class="o">.</span><span class="n">_set_counter</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span>
-    <span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">wp</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="n">cnt</span><span class="si">}</span><span class="s2">)&quot;</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">wp</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="n">cnt</span><span class="si">}</span><span class="s2">)"</span>
 
     <span class="k">if</span> <span class="n">label</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">label</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">bond</span><span class="p">)</span>
+        <span class="n">label</span> <span class="o">=</span> <span class="p">[</span><span class="s2">""</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">bond</span><span class="p">)</span>
 
     <span class="n">pvw</span><span class="o">.</span><span class="n">screen_off</span><span class="p">()</span>
     <span class="k">if</span> <span class="n">sym</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">no</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">bond</span><span class="p">,</span> <span class="n">samb</span><span class="p">)):</span>
             <span class="n">v</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">],</span> <span class="n">b</span><span class="p">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">6</span><span class="p">]</span>
-            <span class="n">lbl</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;B</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">no</span><span class="si">}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+            <span class="n">lbl</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"B</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">no</span><span class="si">}</span><span class="s2">"</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">" "</span><span class="p">,</span> <span class="s2">""</span><span class="p">)</span>
             <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">h</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">CHOP</span><span class="p">:</span>
                 <span class="n">pvw</span><span class="o">.</span><span class="n">add_bond</span><span class="p">(</span>
                     <span class="n">position</span><span class="o">=</span><span class="n">c</span><span class="p">,</span> <span class="n">direction</span><span class="o">=</span><span class="n">v</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">color2</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="n">width</span><span class="p">,</span> <span class="n">cartesian</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">lbl</span>
@@ -775,7 +775,7 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">no</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">bond</span><span class="p">,</span> <span class="n">samb</span><span class="p">)):</span>
             <span class="n">v</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">],</span> <span class="n">b</span><span class="p">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">6</span><span class="p">]</span>
-            <span class="n">lbl</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;B</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">no</span><span class="si">}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+            <span class="n">lbl</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"B</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">no</span><span class="si">}</span><span class="s2">"</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">" "</span><span class="p">,</span> <span class="s2">""</span><span class="p">)</span>
             <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">h</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">CHOP</span><span class="p">:</span>
                 <span class="n">pvw</span><span class="o">.</span><span class="n">add_bond</span><span class="p">(</span>
                     <span class="n">position</span><span class="o">=</span><span class="n">c</span><span class="p">,</span>
@@ -803,39 +803,39 @@
 <div class="viewcode-block" id="plot_vector_cluster">
 <a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.multipie_plot.plot_vector_cluster">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">plot_vector_cluster</span><span class="p">(</span>
-    <span class="n">mp_data</span><span class="p">,</span> <span class="n">site</span><span class="p">,</span> <span class="n">samb</span><span class="p">,</span> <span class="n">X</span><span class="o">=</span><span class="s2">&quot;Q&quot;</span><span class="p">,</span> <span class="n">wp</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cartesian</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">opacity</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span>
+    <span class="n">mp_data</span><span class="p">,</span> <span class="n">site</span><span class="p">,</span> <span class="n">samb</span><span class="p">,</span> <span class="n">X</span><span class="o">=</span><span class="s2">"Q"</span><span class="p">,</span> <span class="n">wp</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cartesian</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">opacity</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span>
 <span class="p">):</span>
     <span class="n">pvw</span> <span class="o">=</span> <span class="n">mp_data</span><span class="o">.</span><span class="n">pvw</span>
 
     <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">wp</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">cnt</span> <span class="o">=</span> <span class="n">mp_data</span><span class="o">.</span><span class="n">_set_counter</span><span class="p">(</span><span class="s2">&quot;vector&quot;</span><span class="p">)</span>
-            <span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;vector</span><span class="si">{</span><span class="n">cnt</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="n">cnt</span> <span class="o">=</span> <span class="n">mp_data</span><span class="o">.</span><span class="n">_set_counter</span><span class="p">(</span><span class="s2">"vector"</span><span class="p">)</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"vector</span><span class="si">{</span><span class="n">cnt</span><span class="si">}</span><span class="s2">"</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">cnt</span> <span class="o">=</span> <span class="n">mp_data</span><span class="o">.</span><span class="n">_set_counter</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span>
-            <span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">wp</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="n">cnt</span><span class="si">}</span><span class="s2">)&quot;</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">wp</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="n">cnt</span><span class="si">}</span><span class="s2">)"</span>
 
-    <span class="n">default</span> <span class="o">=</span> <span class="n">detail</span><span class="p">[</span><span class="s2">&quot;vector&quot;</span><span class="p">]</span>
+    <span class="n">default</span> <span class="o">=</span> <span class="n">detail</span><span class="p">[</span><span class="s2">"vector"</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">length</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">length</span> <span class="o">=</span> <span class="n">default</span><span class="p">[</span><span class="s2">&quot;length&quot;</span><span class="p">]</span>
+        <span class="n">length</span> <span class="o">=</span> <span class="n">default</span><span class="p">[</span><span class="s2">"length"</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">width</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">width</span> <span class="o">=</span> <span class="n">default</span><span class="p">[</span><span class="s2">&quot;width&quot;</span><span class="p">]</span>
+        <span class="n">width</span> <span class="o">=</span> <span class="n">default</span><span class="p">[</span><span class="s2">"width"</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">color</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">color</span> <span class="o">=</span> <span class="n">default</span><span class="p">[</span><span class="s2">&quot;color&quot;</span><span class="p">][</span><span class="n">X</span><span class="p">]</span>
+        <span class="n">color</span> <span class="o">=</span> <span class="n">default</span><span class="p">[</span><span class="s2">"color"</span><span class="p">][</span><span class="n">X</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">opacity</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">opacity</span> <span class="o">=</span> <span class="n">default</span><span class="p">[</span><span class="s2">&quot;opacity&quot;</span><span class="p">]</span>
+        <span class="n">opacity</span> <span class="o">=</span> <span class="n">default</span><span class="p">[</span><span class="s2">"opacity"</span><span class="p">]</span>
 
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">samb</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
         <span class="n">samb</span> <span class="o">=</span> <span class="n">samb</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">label</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">label</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">site</span><span class="p">)</span>
+        <span class="n">label</span> <span class="o">=</span> <span class="p">[</span><span class="s2">""</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">site</span><span class="p">)</span>
 
     <span class="n">pvw</span><span class="o">.</span><span class="n">screen_off</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">no</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">samb</span><span class="p">,</span> <span class="n">site</span><span class="p">)):</span>
         <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">CHOP</span><span class="p">:</span>
             <span class="k">continue</span>
-        <span class="n">lbl</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;V</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">no</span><span class="si">}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="n">lbl</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"V</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">no</span><span class="si">}</span><span class="s2">"</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">" "</span><span class="p">,</span> <span class="s2">""</span><span class="p">)</span>
         <span class="n">pvw</span><span class="o">.</span><span class="n">add_vector</span><span class="p">(</span>
             <span class="n">direction</span><span class="o">=</span><span class="n">v</span><span class="p">,</span>
             <span class="n">length</span><span class="o">=-</span><span class="n">length</span><span class="p">,</span>
@@ -854,33 +854,33 @@
 <span class="c1"># ==================================================</span>
 <div class="viewcode-block" id="plot_orbital_cluster">
 <a class="viewcode-back" href="../../../src/api_multipie.html#qtdraw.multipie.multipie_plot.plot_orbital_cluster">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">plot_orbital_cluster</span><span class="p">(</span><span class="n">mp_data</span><span class="p">,</span> <span class="n">site</span><span class="p">,</span> <span class="n">samb</span><span class="p">,</span> <span class="n">X</span><span class="o">=</span><span class="s2">&quot;Q&quot;</span><span class="p">,</span> <span class="n">wp</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">opacity</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">plot_orbital_cluster</span><span class="p">(</span><span class="n">mp_data</span><span class="p">,</span> <span class="n">site</span><span class="p">,</span> <span class="n">samb</span><span class="p">,</span> <span class="n">X</span><span class="o">=</span><span class="s2">"Q"</span><span class="p">,</span> <span class="n">wp</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">opacity</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="n">pvw</span> <span class="o">=</span> <span class="n">mp_data</span><span class="o">.</span><span class="n">pvw</span>
 
     <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">wp</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">cnt</span> <span class="o">=</span> <span class="n">mp_data</span><span class="o">.</span><span class="n">_set_counter</span><span class="p">(</span><span class="s2">&quot;orbital&quot;</span><span class="p">)</span>
-            <span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;orbital</span><span class="si">{</span><span class="n">cnt</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="n">cnt</span> <span class="o">=</span> <span class="n">mp_data</span><span class="o">.</span><span class="n">_set_counter</span><span class="p">(</span><span class="s2">"orbital"</span><span class="p">)</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"orbital</span><span class="si">{</span><span class="n">cnt</span><span class="si">}</span><span class="s2">"</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">cnt</span> <span class="o">=</span> <span class="n">mp_data</span><span class="o">.</span><span class="n">_set_counter</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span>
-            <span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">wp</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="n">cnt</span><span class="si">}</span><span class="s2">)&quot;</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">wp</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="n">cnt</span><span class="si">}</span><span class="s2">)"</span>
 
-    <span class="n">default</span> <span class="o">=</span> <span class="n">detail</span><span class="p">[</span><span class="s2">&quot;orbital&quot;</span><span class="p">]</span>
+    <span class="n">default</span> <span class="o">=</span> <span class="n">detail</span><span class="p">[</span><span class="s2">"orbital"</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">size</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">size</span> <span class="o">=</span> <span class="n">default</span><span class="p">[</span><span class="s2">&quot;size&quot;</span><span class="p">]</span>
+        <span class="n">size</span> <span class="o">=</span> <span class="n">default</span><span class="p">[</span><span class="s2">"size"</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">color</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">color</span> <span class="o">=</span> <span class="n">default</span><span class="p">[</span><span class="s2">&quot;color&quot;</span><span class="p">][</span><span class="n">X</span><span class="p">]</span>
+        <span class="n">color</span> <span class="o">=</span> <span class="n">default</span><span class="p">[</span><span class="s2">"color"</span><span class="p">][</span><span class="n">X</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">opacity</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">opacity</span> <span class="o">=</span> <span class="n">default</span><span class="p">[</span><span class="s2">&quot;opacity&quot;</span><span class="p">]</span>
+        <span class="n">opacity</span> <span class="o">=</span> <span class="n">default</span><span class="p">[</span><span class="s2">"opacity"</span><span class="p">]</span>
 
     <span class="k">if</span> <span class="n">label</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">label</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">site</span><span class="p">)</span>
+        <span class="n">label</span> <span class="o">=</span> <span class="p">[</span><span class="s2">""</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">site</span><span class="p">)</span>
 
     <span class="n">pvw</span><span class="o">.</span><span class="n">screen_off</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">no</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">samb</span><span class="p">,</span> <span class="n">site</span><span class="p">)):</span>
         <span class="k">if</span> <span class="n">v</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">continue</span>
-        <span class="n">lbl</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;O</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">no</span><span class="si">}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="n">lbl</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"O</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">no</span><span class="si">}</span><span class="s2">"</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">" "</span><span class="p">,</span> <span class="s2">""</span><span class="p">)</span>
         <span class="n">pvw</span><span class="o">.</span><span class="n">add_orbital</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="n">v</span><span class="p">,</span> <span class="n">surface</span><span class="o">=</span><span class="n">v</span><span class="p">,</span> <span class="n">size</span><span class="o">=-</span><span class="n">size</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">opacity</span><span class="o">=</span><span class="n">opacity</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="n">s</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">lbl</span><span class="p">)</span>
     <span class="n">pvw</span><span class="o">.</span><span class="n">screen_on</span><span class="p">()</span></div>
 

@@ -327,11 +327,11 @@
                 <article class="bd-article">
                   
   <h1>Source code for qtdraw.widget.custom_widget</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span></span><span class="sd">"""</span>
 <span class="sd">Custom widget.</span>
 
 <span class="sd">This module provides customuized widgets.</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">PySide6.QtWidgets</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">QWidget</span><span class="p">,</span>
@@ -375,12 +375,12 @@
 <span class="k">class</span><span class="w"> </span><span class="nc">Layout</span><span class="p">(</span><span class="n">QGridLayout</span><span class="p">):</span>
     <span class="c1"># ==================================================</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Layout widget.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            parent (QWidget, optional): parent.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setContentsMargins</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setHorizontalSpacing</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
@@ -394,12 +394,12 @@
 <span class="k">class</span><span class="w"> </span><span class="nc">Panel</span><span class="p">(</span><span class="n">QWidget</span><span class="p">):</span>
     <span class="c1"># ==================================================</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Panel widget.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            parent (QWidget, optional): parent.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">layout</span> <span class="o">=</span> <span class="n">Layout</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
 
@@ -410,8 +410,8 @@
 <a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.custom_widget.Label">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">Label</span><span class="p">(</span><span class="n">QLabel</span><span class="p">):</span>
     <span class="c1"># ==================================================</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bold</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">""</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"black"</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bold</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Label widget.</span>
 
 <span class="sd">        Args:</span>
@@ -420,7 +420,7 @@
 <span class="sd">            color (str, optional): font color.</span>
 <span class="sd">            size (int, optional): font size (pt).</span>
 <span class="sd">            bold (bool, optional): bold font ?</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">size</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -440,15 +440,15 @@
 <a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.custom_widget.Label.set_background">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">set_background</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">flag</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">flag</span><span class="p">:</span>
-            <span class="n">base_style</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+            <span class="n">base_style</span> <span class="o">=</span> <span class="s2">"""</span>
 <span class="s2">                padding-left: 3px;</span>
 <span class="s2">                padding-right: 3px;</span>
 <span class="s2">                background: white;</span>
 <span class="s2">                border: 1px solid grey;</span>
-<span class="s2">            &quot;&quot;&quot;</span>
+<span class="s2">            """</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="n">base_style</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">""</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">style</span><span class="p">()</span><span class="o">.</span><span class="n">unpolish</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">style</span><span class="p">()</span><span class="o">.</span><span class="n">polish</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">()</span></div>
@@ -470,7 +470,7 @@
 <a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.custom_widget.MathWidget">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">MathWidget</span><span class="p">(</span><span class="n">QWidget</span><span class="p">):</span>
     <span class="c1"># ==================================================</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mathjax</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">""</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"black"</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mathjax</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">size</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -478,7 +478,7 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_size</span> <span class="o">=</span> <span class="n">size</span> <span class="o">+</span> <span class="mi">5</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_color</span> <span class="o">=</span> <span class="n">color</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_text</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_text</span> <span class="o">=</span> <span class="s2">""</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_renderer</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_wsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 
@@ -494,13 +494,13 @@
 <a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.custom_widget.MathWidget.setText">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">setText</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_text</span> <span class="o">=</span> <span class="n">text</span>
-        <span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;$$&quot;</span> <span class="o">+</span> <span class="n">text</span> <span class="o">+</span> <span class="s2">&quot;$$&quot;</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="s2">"$$"</span> <span class="o">+</span> <span class="n">text</span> <span class="o">+</span> <span class="s2">"$$"</span>
 
         <span class="n">svg</span><span class="p">,</span> <span class="n">wh</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mathjax</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_color</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_size</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_wsize</span> <span class="o">=</span> <span class="n">wh</span>
 
         <span class="n">root</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="n">svg</span><span class="p">)</span>
-        <span class="n">svg_bytes</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">tostring</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+        <span class="n">svg_bytes</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">tostring</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_renderer</span> <span class="o">=</span> <span class="n">QSvgRenderer</span><span class="p">(</span><span class="n">svg_bytes</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setFixedSize</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">_wsize</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">()</span></div>
@@ -536,12 +536,12 @@
 <span class="k">class</span><span class="w"> </span><span class="nc">HBar</span><span class="p">(</span><span class="n">QFrame</span><span class="p">):</span>
     <span class="c1"># ==================================================</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Horizontal bar widget.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            parent (QWidget, optional): parent.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setMinimumSize</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setFrameShape</span><span class="p">(</span><span class="n">QFrame</span><span class="o">.</span><span class="n">HLine</span><span class="p">)</span>
@@ -555,9 +555,9 @@
 <span class="k">class</span><span class="w"> </span><span class="nc">VSpacer</span><span class="p">(</span><span class="n">QSpacerItem</span><span class="p">):</span>
     <span class="c1"># ==================================================</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Vertical spacer.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Minimum</span><span class="p">,</span> <span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Expanding</span><span class="p">)</span></div>
 
 
@@ -568,9 +568,9 @@
 <span class="k">class</span><span class="w"> </span><span class="nc">HSpacer</span><span class="p">(</span><span class="n">QSpacerItem</span><span class="p">):</span>
     <span class="c1"># ==================================================</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Horizontal spacer.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Expanding</span><span class="p">,</span> <span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Minimum</span><span class="p">)</span></div>
 
 
@@ -580,8 +580,8 @@
 <a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.custom_widget.ColorSelector">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">ColorSelector</span><span class="p">(</span><span class="n">QComboBox</span><span class="p">):</span>
     <span class="c1"># ==================================================</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">current</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">color_type</span><span class="o">=</span><span class="s2">&quot;color&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bold</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">current</span><span class="o">=</span><span class="s2">""</span><span class="p">,</span> <span class="n">color_type</span><span class="o">=</span><span class="s2">"color"</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bold</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Color selector widget.</span>
 
 <span class="sd">        Args:</span>
@@ -593,7 +593,7 @@
 
 <span class="sd">        Notes:</span>
 <span class="sd">            - connect currentTextChanged.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">size</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -606,7 +606,7 @@
         <span class="n">color_pixmap</span><span class="p">,</span> <span class="n">separator</span> <span class="o">=</span> <span class="n">color2pixmap</span><span class="p">(</span><span class="n">color_type</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">font</span><span class="p">()</span><span class="o">.</span><span class="n">pointSize</span><span class="p">())</span>
         <span class="n">names</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">color_pixmap</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
 
-        <span class="k">if</span> <span class="n">current</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">current</span> <span class="o">==</span> <span class="s2">""</span><span class="p">:</span>
             <span class="n">current_index</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
@@ -635,8 +635,8 @@
 <a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.custom_widget.Button">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">Button</span><span class="p">(</span><span class="n">QPushButton</span><span class="p">):</span>
     <span class="c1"># ==================================================</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">toggle</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bold</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">""</span><span class="p">,</span> <span class="n">toggle</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bold</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Button widget.</span>
 
 <span class="sd">        Args:</span>
@@ -645,7 +645,7 @@
 <span class="sd">            toggle (bool, optional): toggle button ?</span>
 <span class="sd">            size (int, optional): font size.</span>
 <span class="sd">            bold (bool, optional): bold face ?</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setCheckable</span><span class="p">(</span><span class="n">toggle</span><span class="p">)</span>
 
@@ -667,7 +667,7 @@
 <span class="k">class</span><span class="w"> </span><span class="nc">Combo</span><span class="p">(</span><span class="n">QComboBox</span><span class="p">):</span>
     <span class="c1"># ==================================================</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">item</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">init</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bold</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Combo widget.</span>
 
 <span class="sd">        Args:</span>
@@ -676,7 +676,7 @@
 <span class="sd">            init (str, optional): initial value.</span>
 <span class="sd">            size (int, optional): font size.</span>
 <span class="sd">            bold (bool, optional): bold face ?</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setSizePolicy</span><span class="p">(</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Minimum</span><span class="p">,</span> <span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Fixed</span><span class="p">)</span>
 
@@ -702,12 +702,12 @@
 <div class="viewcode-block" id="Combo.get_item">
 <a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.custom_widget.Combo.get_item">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_item</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Get item.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            - (list) -- item list.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">lst</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">itemText</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">count</span><span class="p">())]</span>
         <span class="k">return</span> <span class="n">lst</span></div>
 
@@ -716,12 +716,12 @@
 <div class="viewcode-block" id="Combo.set_item">
 <a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.custom_widget.Combo.set_item">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">set_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Set item.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            item (list): item list.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">blockSignals</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">addItems</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
@@ -732,7 +732,7 @@
 <div class="viewcode-block" id="Combo.find_index">
 <a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.custom_widget.Combo.find_index">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">find_index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Find index (including match).</span>
 
 <span class="sd">        Args:</span>
@@ -740,7 +740,7 @@
 
 <span class="sd">        Returns:</span>
 <span class="sd">            - (int) -- index.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_item</span><span class="p">()</span>
         <span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="n">idx</span> <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">s</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">index</span></div>
@@ -754,7 +754,7 @@
 <span class="k">class</span><span class="w"> </span><span class="nc">Spin</span><span class="p">(</span><span class="n">QSpinBox</span><span class="p">):</span>
     <span class="c1"># ==================================================</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">minimum</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">maximum</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bold</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Spin widget.</span>
 
 <span class="sd">        Args:</span>
@@ -763,7 +763,7 @@
 <span class="sd">            maximum (int, optional): maximum value.</span>
 <span class="sd">            size (int, optional): font size.</span>
 <span class="sd">            bold (bool, optional): bold face ?</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setMinimum</span><span class="p">(</span><span class="n">minimum</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setMaximum</span><span class="p">(</span><span class="n">maximum</span><span class="p">)</span>
@@ -782,7 +782,7 @@
 <span class="k">class</span><span class="w"> </span><span class="nc">DSpin</span><span class="p">(</span><span class="n">QDoubleSpinBox</span><span class="p">):</span>
     <span class="c1"># ==================================================</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">minimum</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">maximum</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bold</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Spin widget.</span>
 
 <span class="sd">        Args:</span>
@@ -792,7 +792,7 @@
 <span class="sd">            step (float, optional): step value.</span>
 <span class="sd">            size (int, optional): font size.</span>
 <span class="sd">            bold (bool, optional): bold face ?</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setMinimum</span><span class="p">(</span><span class="n">minimum</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setMaximum</span><span class="p">(</span><span class="n">maximum</span><span class="p">)</span>
@@ -811,8 +811,8 @@
 <a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.custom_widget.Check">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">Check</span><span class="p">(</span><span class="n">QCheckBox</span><span class="p">):</span>
     <span class="c1"># ==================================================</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bold</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">""</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bold</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Check widget.</span>
 
 <span class="sd">        Args:</span>
@@ -820,7 +820,7 @@
 <span class="sd">            text (str, optional): text.</span>
 <span class="sd">            size (int, optional): font size.</span>
 <span class="sd">            bold (bool, optional): bold face ?</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">size</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -837,12 +837,12 @@
 <div class="viewcode-block" id="Check.is_checked">
 <a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.custom_widget.Check.is_checked">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">is_checked</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Is checked ?</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            - (bool) -- checked ?</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">checkState</span><span class="p">()</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Checked</span></div>
 </div>
 
@@ -854,8 +854,8 @@
 <span class="k">class</span><span class="w"> </span><span class="nc">LineEdit</span><span class="p">(</span><span class="n">QLineEdit</span><span class="p">):</span>
     <span class="n">focusOut</span> <span class="o">=</span> <span class="n">Signal</span><span class="p">()</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">validator</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bold</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">""</span><span class="p">,</span> <span class="n">validator</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bold</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s2">""</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">size</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">font</span><span class="p">()</span><span class="o">.</span><span class="n">pointSize</span><span class="p">()</span>
@@ -868,8 +868,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_read_only</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_valid</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_in_edit</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_raw</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_validated</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_raw</span> <span class="o">=</span> <span class="s2">""</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_validated</span> <span class="o">=</span> <span class="s2">""</span>
 
         <span class="k">if</span> <span class="n">validator</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">set_validator</span><span class="p">(</span><span class="n">validator</span><span class="p">)</span>
@@ -882,16 +882,16 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">set_validator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">validator</span><span class="p">):</span>
         <span class="n">vtype</span><span class="p">,</span> <span class="n">option</span> <span class="o">=</span> <span class="n">validator</span>
         <span class="n">VALIDATORS</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s2">&quot;int&quot;</span><span class="p">:</span> <span class="n">validator_int</span><span class="p">,</span>
-            <span class="s2">&quot;float&quot;</span><span class="p">:</span> <span class="n">validator_float</span><span class="p">,</span>
-            <span class="s2">&quot;list_float&quot;</span><span class="p">:</span> <span class="n">validator_list_float</span><span class="p">,</span>
-            <span class="s2">&quot;list_int&quot;</span><span class="p">:</span> <span class="n">validator_list_int</span><span class="p">,</span>
-            <span class="s2">&quot;math&quot;</span><span class="p">:</span> <span class="n">validator_math</span><span class="p">,</span>
-            <span class="s2">&quot;site&quot;</span><span class="p">:</span> <span class="n">validator_site</span><span class="p">,</span>
-            <span class="s2">&quot;bond&quot;</span><span class="p">:</span> <span class="n">validator_bond</span><span class="p">,</span>
-            <span class="s2">&quot;site_bond&quot;</span><span class="p">:</span> <span class="n">validator_site_bond</span><span class="p">,</span>
-            <span class="s2">&quot;vector_site_bond&quot;</span><span class="p">:</span> <span class="n">validator_vector_site_bond</span><span class="p">,</span>
-            <span class="s2">&quot;orbital_site_bond&quot;</span><span class="p">:</span> <span class="n">validator_orbital_site_bond</span><span class="p">,</span>
+            <span class="s2">"int"</span><span class="p">:</span> <span class="n">validator_int</span><span class="p">,</span>
+            <span class="s2">"float"</span><span class="p">:</span> <span class="n">validator_float</span><span class="p">,</span>
+            <span class="s2">"list_float"</span><span class="p">:</span> <span class="n">validator_list_float</span><span class="p">,</span>
+            <span class="s2">"list_int"</span><span class="p">:</span> <span class="n">validator_list_int</span><span class="p">,</span>
+            <span class="s2">"math"</span><span class="p">:</span> <span class="n">validator_math</span><span class="p">,</span>
+            <span class="s2">"site"</span><span class="p">:</span> <span class="n">validator_site</span><span class="p">,</span>
+            <span class="s2">"bond"</span><span class="p">:</span> <span class="n">validator_bond</span><span class="p">,</span>
+            <span class="s2">"site_bond"</span><span class="p">:</span> <span class="n">validator_site_bond</span><span class="p">,</span>
+            <span class="s2">"vector_site_bond"</span><span class="p">:</span> <span class="n">validator_vector_site_bond</span><span class="p">,</span>
+            <span class="s2">"orbital_site_bond"</span><span class="p">:</span> <span class="n">validator_orbital_site_bond</span><span class="p">,</span>
         <span class="p">}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_validator_func</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="n">VALIDATORS</span><span class="p">[</span><span class="n">vtype</span><span class="p">](</span><span class="n">t</span><span class="p">,</span> <span class="o">**</span><span class="n">option</span><span class="p">)</span></div>
 
@@ -920,22 +920,22 @@
 
     <span class="c1"># ==================================================</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">_update_style</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">base_style</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+        <span class="n">base_style</span> <span class="o">=</span> <span class="s2">"""</span>
 <span class="s2">            QLineEdit {{</span>
 <span class="s2">                padding-left: 3px;</span>
 <span class="s2">                padding-right: 3px;</span>
 <span class="s2">                background: </span><span class="si">{bg_color}</span><span class="s2">;</span>
 <span class="s2">            }}</span>
 <span class="s2">            QLineEdit:focus {{</span>
-<span class="s2">                border: 2px solid &quot;#90B8EF&quot;;</span>
+<span class="s2">                border: 2px solid "#90B8EF";</span>
 <span class="s2">            }}</span>
-<span class="s2">        &quot;&quot;&quot;</span>
+<span class="s2">        """</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_read_only</span><span class="p">:</span>
-            <span class="n">bg_color</span> <span class="o">=</span> <span class="s2">&quot;lightgray&quot;</span>
+            <span class="n">bg_color</span> <span class="o">=</span> <span class="s2">"lightgray"</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_valid</span><span class="p">:</span>
-            <span class="n">bg_color</span> <span class="o">=</span> <span class="s2">&quot;white&quot;</span>
+            <span class="n">bg_color</span> <span class="o">=</span> <span class="s2">"white"</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">bg_color</span> <span class="o">=</span> <span class="s2">&quot;pink&quot;</span>
+            <span class="n">bg_color</span> <span class="o">=</span> <span class="s2">"pink"</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="n">base_style</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">bg_color</span><span class="o">=</span><span class="n">bg_color</span><span class="p">))</span>
 
@@ -1026,8 +1026,8 @@
     <span class="n">returnPressed</span> <span class="o">=</span> <span class="n">Signal</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
 
     <span class="c1"># ==================================================</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">validator</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bold</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">mathjax</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">""</span><span class="p">,</span> <span class="n">validator</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"black"</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bold</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">mathjax</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Editor widget with math/text display.</span>
 
 <span class="sd">        Args:</span>
@@ -1038,7 +1038,7 @@
 <span class="sd">            size (int, optional): font size.</span>
 <span class="sd">            bold (bool, optional): bold face ?</span>
 <span class="sd">            mathjax (MathJaxSVG, optional): mathjax converter.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">size</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -1048,7 +1048,7 @@
         <span class="n">font</span><span class="o">.</span><span class="n">setBold</span><span class="p">(</span><span class="n">bold</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setFont</span><span class="p">(</span><span class="n">font</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_math_mode</span> <span class="o">=</span> <span class="n">validator</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">validator</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;math&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_math_mode</span> <span class="o">=</span> <span class="n">validator</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">validator</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"math"</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_editor</span> <span class="o">=</span> <span class="n">LineEdit</span><span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">text</span><span class="p">,</span> <span class="n">validator</span><span class="o">=</span><span class="n">validator</span><span class="p">,</span> <span class="n">bold</span><span class="o">=</span><span class="n">bold</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">size</span><span class="p">)</span>
 
@@ -1072,18 +1072,18 @@
 
     <span class="c1"># ==================================================</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">_on_return</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Called when Enter is pressed in editor.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">clearFocus</span><span class="p">()</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_editor</span><span class="o">.</span><span class="n">_valid</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">returnPressed</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_editor</span><span class="o">.</span><span class="n">raw_text</span><span class="p">())</span>
 
     <span class="c1"># ==================================================</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">_on_focus_out</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Handle focus-out safely.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_in_edit</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">clearFocus</span><span class="p">()</span>
 
@@ -1091,9 +1091,9 @@
 <div class="viewcode-block" id="Editor.clearFocus">
 <a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.custom_widget.Editor.clearFocus">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">clearFocus</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Exit edit mode, safely restoring display.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_in_edit</span><span class="p">:</span>
             <span class="k">return</span>
 
@@ -1116,9 +1116,9 @@
 <div class="viewcode-block" id="Editor.mouseDoubleClickEvent">
 <a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.custom_widget.Editor.mouseDoubleClickEvent">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">mouseDoubleClickEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Switch to edit mode on double click.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_in_edit</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_editor</span><span class="o">.</span><span class="n">_read_only</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_in_edit</span> <span class="o">=</span> <span class="kc">True</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_display</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
@@ -1130,9 +1130,9 @@
 <div class="viewcode-block" id="Editor.mousePressEvent">
 <a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.custom_widget.Editor.mousePressEvent">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">mousePressEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Handle focus changes safely.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">focused</span> <span class="o">=</span> <span class="n">QApplication</span><span class="o">.</span><span class="n">focusWidget</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">focused</span> <span class="ow">and</span> <span class="n">focused</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_editor</span><span class="p">):</span>
             <span class="n">focused</span><span class="o">.</span><span class="n">clearFocus</span><span class="p">()</span>
@@ -1143,12 +1143,12 @@
 <div class="viewcode-block" id="Editor.text">
 <a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.custom_widget.Editor.text">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">text</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Return current text.</span>
 
 <span class="sd">        - During editing: return raw_text() from LineEdit.</span>
 <span class="sd">        - Otherwise: return display text.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_in_edit</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_editor</span><span class="o">.</span><span class="n">raw_text</span><span class="p">()</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_display</span><span class="o">.</span><span class="n">text</span><span class="p">()</span></div>
@@ -1158,9 +1158,9 @@
 <div class="viewcode-block" id="Editor.setText">
 <a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.custom_widget.Editor.setText">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">setText</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Set editor and display text.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_editor</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_editor</span><span class="o">.</span><span class="n">_valid</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_display</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_editor</span><span class="o">.</span><span class="n">text</span><span class="p">())</span></div>

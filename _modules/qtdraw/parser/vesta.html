@@ -327,80 +327,80 @@
                 <article class="bd-article">
                   
   <h1>Source code for qtdraw.parser.vesta</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span></span><span class="sd">"""</span>
 <span class="sd">Simple parser for VESTA.</span>
 
 <span class="sd">This module contains the parser for VESTA.</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">pymatgen.core</span><span class="w"> </span><span class="kn">import</span> <span class="n">Structure</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pymatgen.core</span><span class="w"> </span><span class="kn">import</span> <span class="n">Lattice</span>
 
 <span class="c1"># ==================================================</span>
 <span class="n">vesta_key</span> <span class="o">=</span> <span class="p">[</span>  <span class="c1"># VESTA Keywords.</span>
-    <span class="s2">&quot;#VESTA_FORMAT_VERSION&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;ATOMM&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;ATOMP&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;ATOMS&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;ATOMT&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;BKGRC&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;BONDM&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;BONDP&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;BONDS&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;CELLP&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;COMPS&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;CONTR&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;CRYSTAL&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;DISPF&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;DLATM&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;DLBND&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;DLPLY&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;DPTHQ&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;FORMM&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;FORMP&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;FORMS&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;GROUP&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;HBOND&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;HKLPM&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;HKLPP&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;ISURF&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;LABEL&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;LBLAT&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;LBLSP&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;LIGHT0&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;LIGHT1&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;LIGHT2&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;LIGHT3&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;LMATRIX&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;LORIENT&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;LTRANSL&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;MODEL&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;PLN2D&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;POLYM&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;POLYP&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;POLYS&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;PROJT&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;SBOND&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;SCENE&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;SECCL&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;SECTP&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;SECTS&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;SHAPE&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;SITET&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;SPLAN&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;STRUC&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;STYLE&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;SURFM&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;SURFS&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;SYMOP&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;TEX3P&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;TEXCL&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;THERI&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;TITLE&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;UCOLP&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;VECTR&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;VECTS&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;VECTT&quot;</span><span class="p">,</span>
+    <span class="s2">"#VESTA_FORMAT_VERSION"</span><span class="p">,</span>
+    <span class="s2">"ATOMM"</span><span class="p">,</span>
+    <span class="s2">"ATOMP"</span><span class="p">,</span>
+    <span class="s2">"ATOMS"</span><span class="p">,</span>
+    <span class="s2">"ATOMT"</span><span class="p">,</span>
+    <span class="s2">"BKGRC"</span><span class="p">,</span>
+    <span class="s2">"BONDM"</span><span class="p">,</span>
+    <span class="s2">"BONDP"</span><span class="p">,</span>
+    <span class="s2">"BONDS"</span><span class="p">,</span>
+    <span class="s2">"CELLP"</span><span class="p">,</span>
+    <span class="s2">"COMPS"</span><span class="p">,</span>
+    <span class="s2">"CONTR"</span><span class="p">,</span>
+    <span class="s2">"CRYSTAL"</span><span class="p">,</span>
+    <span class="s2">"DISPF"</span><span class="p">,</span>
+    <span class="s2">"DLATM"</span><span class="p">,</span>
+    <span class="s2">"DLBND"</span><span class="p">,</span>
+    <span class="s2">"DLPLY"</span><span class="p">,</span>
+    <span class="s2">"DPTHQ"</span><span class="p">,</span>
+    <span class="s2">"FORMM"</span><span class="p">,</span>
+    <span class="s2">"FORMP"</span><span class="p">,</span>
+    <span class="s2">"FORMS"</span><span class="p">,</span>
+    <span class="s2">"GROUP"</span><span class="p">,</span>
+    <span class="s2">"HBOND"</span><span class="p">,</span>
+    <span class="s2">"HKLPM"</span><span class="p">,</span>
+    <span class="s2">"HKLPP"</span><span class="p">,</span>
+    <span class="s2">"ISURF"</span><span class="p">,</span>
+    <span class="s2">"LABEL"</span><span class="p">,</span>
+    <span class="s2">"LBLAT"</span><span class="p">,</span>
+    <span class="s2">"LBLSP"</span><span class="p">,</span>
+    <span class="s2">"LIGHT0"</span><span class="p">,</span>
+    <span class="s2">"LIGHT1"</span><span class="p">,</span>
+    <span class="s2">"LIGHT2"</span><span class="p">,</span>
+    <span class="s2">"LIGHT3"</span><span class="p">,</span>
+    <span class="s2">"LMATRIX"</span><span class="p">,</span>
+    <span class="s2">"LORIENT"</span><span class="p">,</span>
+    <span class="s2">"LTRANSL"</span><span class="p">,</span>
+    <span class="s2">"MODEL"</span><span class="p">,</span>
+    <span class="s2">"PLN2D"</span><span class="p">,</span>
+    <span class="s2">"POLYM"</span><span class="p">,</span>
+    <span class="s2">"POLYP"</span><span class="p">,</span>
+    <span class="s2">"POLYS"</span><span class="p">,</span>
+    <span class="s2">"PROJT"</span><span class="p">,</span>
+    <span class="s2">"SBOND"</span><span class="p">,</span>
+    <span class="s2">"SCENE"</span><span class="p">,</span>
+    <span class="s2">"SECCL"</span><span class="p">,</span>
+    <span class="s2">"SECTP"</span><span class="p">,</span>
+    <span class="s2">"SECTS"</span><span class="p">,</span>
+    <span class="s2">"SHAPE"</span><span class="p">,</span>
+    <span class="s2">"SITET"</span><span class="p">,</span>
+    <span class="s2">"SPLAN"</span><span class="p">,</span>
+    <span class="s2">"STRUC"</span><span class="p">,</span>
+    <span class="s2">"STYLE"</span><span class="p">,</span>
+    <span class="s2">"SURFM"</span><span class="p">,</span>
+    <span class="s2">"SURFS"</span><span class="p">,</span>
+    <span class="s2">"SYMOP"</span><span class="p">,</span>
+    <span class="s2">"TEX3P"</span><span class="p">,</span>
+    <span class="s2">"TEXCL"</span><span class="p">,</span>
+    <span class="s2">"THERI"</span><span class="p">,</span>
+    <span class="s2">"TITLE"</span><span class="p">,</span>
+    <span class="s2">"UCOLP"</span><span class="p">,</span>
+    <span class="s2">"VECTR"</span><span class="p">,</span>
+    <span class="s2">"VECTS"</span><span class="p">,</span>
+    <span class="s2">"VECTT"</span><span class="p">,</span>
 <span class="p">]</span>
 
 
@@ -408,7 +408,7 @@
 <div class="viewcode-block" id="parse_vesta">
 <a class="viewcode-back" href="../../../src/api_parser.html#qtdraw.parser.vesta.parse_vesta">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">parse_vesta</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    parse VESTA file.</span>
 
 <span class="sd">    Args:</span>
@@ -416,14 +416,14 @@
 
 <span class="sd">    Returns:</span>
 <span class="sd">        - (dict) -- VESTA keyword - content dict.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
-            <span class="n">d</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
-            <span class="n">d</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">d</span> <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">]</span>
+            <span class="n">d</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">" "</span><span class="p">)</span>
+            <span class="n">d</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="s2">""</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">d</span> <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="s2">""</span><span class="p">)</span> <span class="o">!=</span> <span class="s2">""</span><span class="p">]</span>
             <span class="k">if</span> <span class="n">d</span><span class="p">:</span>
-                <span class="n">data</span> <span class="o">+=</span> <span class="p">[</span><span class="n">d</span> <span class="o">+</span> <span class="p">[</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">]]</span>
+                <span class="n">data</span> <span class="o">+=</span> <span class="p">[</span><span class="n">d</span> <span class="o">+</span> <span class="p">[</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">]]</span>
     <span class="n">data</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="p">[])</span>
     <span class="n">pos</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">([(</span><span class="n">data</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="n">i</span><span class="p">)</span> <span class="k">if</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">data</span> <span class="k">else</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">vesta_key</span><span class="p">],</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 
@@ -431,9 +431,9 @@
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">pos</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">pos</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">pos</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">pos</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
-                <span class="n">dic</span><span class="p">[</span><span class="n">pos</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">pos</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">:</span> <span class="n">pos</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]]))</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+                <span class="n">dic</span><span class="p">[</span><span class="n">pos</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="p">(</span><span class="s2">" "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">pos</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">:</span> <span class="n">pos</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]]))</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">dic</span><span class="p">[</span><span class="n">pos</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+                <span class="n">dic</span><span class="p">[</span><span class="n">pos</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="s2">""</span>
 
     <span class="k">return</span> <span class="n">dic</span></div>
 
@@ -443,7 +443,7 @@
 <div class="viewcode-block" id="create_structure_vesta">
 <a class="viewcode-back" href="../../../src/api_parser.html#qtdraw.parser.vesta.create_structure_vesta">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">create_structure_vesta</span><span class="p">(</span><span class="n">vesta_dict</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    create Structure from vesta dict.</span>
 
 <span class="sd">    Args:</span>
@@ -451,10 +451,10 @@
 
 <span class="sd">    Returns:</span>
 <span class="sd">        - (Structure) -- structure.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">space_group</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">vesta_dict</span><span class="p">[</span><span class="s2">&quot;GROUP&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
-    <span class="n">lattice</span> <span class="o">=</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">vesta_dict</span><span class="p">[</span><span class="s2">&quot;CELLP&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span> <span class="k">if</span> <span class="n">i</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">]</span>
-    <span class="n">sites</span> <span class="o">=</span> <span class="p">[[</span><span class="n">j</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">i</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span> <span class="k">if</span> <span class="n">j</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">vesta_dict</span><span class="p">[</span><span class="s2">&quot;STRUC&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)[:</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span><span class="mi">2</span><span class="p">]]</span>
+<span class="sd">    """</span>
+    <span class="n">space_group</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">vesta_dict</span><span class="p">[</span><span class="s2">"GROUP"</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">" "</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">lattice</span> <span class="o">=</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">vesta_dict</span><span class="p">[</span><span class="s2">"CELLP"</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">" "</span><span class="p">)</span> <span class="k">if</span> <span class="n">i</span> <span class="o">!=</span> <span class="s2">""</span><span class="p">]</span>
+    <span class="n">sites</span> <span class="o">=</span> <span class="p">[[</span><span class="n">j</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">i</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">" "</span><span class="p">)</span> <span class="k">if</span> <span class="n">j</span> <span class="o">!=</span> <span class="s2">""</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">vesta_dict</span><span class="p">[</span><span class="s2">"STRUC"</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">)[:</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span><span class="mi">2</span><span class="p">]]</span>
     <span class="n">species</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">sites</span><span class="p">]</span>
     <span class="n">coords</span> <span class="o">=</span> <span class="p">[[</span><span class="nb">float</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="mi">4</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="mi">5</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="mi">6</span><span class="p">])]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">sites</span><span class="p">]</span>
 

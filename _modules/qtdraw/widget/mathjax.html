@@ -327,11 +327,11 @@
                 <article class="bd-article">
                   
   <h1>Source code for qtdraw.widget.mathjax</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span></span><span class="sd">"""</span>
 <span class="sd">MathJaxSVG converter.</span>
 
 <span class="sd">This module provides mathjax to SVG converter.</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">hashlib</span>
@@ -346,16 +346,16 @@
 
 <span class="c1"># ===============================</span>
 <span class="c1"># Global constants.</span>
-<span class="n">_MATHJAX_PATH</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">__top_dir__</span><span class="p">)</span> <span class="o">/</span> <span class="s2">&quot;qtdraw&quot;</span> <span class="o">/</span> <span class="s2">&quot;mathjax&quot;</span> <span class="o">/</span> <span class="s2">&quot;es5&quot;</span> <span class="o">/</span> <span class="s2">&quot;tex-svg-full.js&quot;</span><span class="p">)</span>
-<span class="n">_HTML_TEMPLATE</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="n">_MATHJAX_PATH</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">__top_dir__</span><span class="p">)</span> <span class="o">/</span> <span class="s2">"qtdraw"</span> <span class="o">/</span> <span class="s2">"mathjax"</span> <span class="o">/</span> <span class="s2">"es5"</span> <span class="o">/</span> <span class="s2">"tex-svg-full.js"</span><span class="p">)</span>
+<span class="n">_HTML_TEMPLATE</span> <span class="o">=</span> <span class="s2">"""</span>
 <span class="s2">&lt;!DOCTYPE html&gt;</span>
 <span class="s2">&lt;html&gt;</span>
 <span class="s2">&lt;head&gt;</span>
-<span class="s2">    &lt;meta charset=&quot;utf-8&quot;&gt;</span>
+<span class="s2">    &lt;meta charset="utf-8"&gt;</span>
 <span class="s2">    &lt;script&gt;</span>
 <span class="s2">        window.MathJax={{</span>
-<span class="s2">            tex: {{ inlineMath: [[&#39;$&#39;,&#39;$&#39;],[&#39;</span><span class="se">\\\\</span><span class="s2">(&#39;,&#39;</span><span class="se">\\\\</span><span class="s2">)&#39;]] }},</span>
-<span class="s2">            svg: {{ fontCache: &#39;none&#39; }}</span>
+<span class="s2">            tex: {{ inlineMath: [['$','$'],['</span><span class="se">\\\\</span><span class="s2">(','</span><span class="se">\\\\</span><span class="s2">)']] }},</span>
+<span class="s2">            svg: {{ fontCache: 'none' }}</span>
 <span class="s2">        }};</span>
 <span class="s2">    &lt;/script&gt;</span>
 <span class="s2">    &lt;style&gt;</span>
@@ -369,42 +369,42 @@
 <span class="s2">    &lt;/style&gt;</span>
 <span class="s2">&lt;/head&gt;</span>
 <span class="s2">&lt;body&gt;</span>
-<span class="s2">    &lt;div id=&quot;math&quot;&gt;</span><span class="si">{latex}</span><span class="s2">&lt;/div&gt;</span>
+<span class="s2">    &lt;div id="math"&gt;</span><span class="si">{latex}</span><span class="s2">&lt;/div&gt;</span>
 <span class="s2">&lt;/body&gt;</span>
 <span class="s2">&lt;/html&gt;</span>
-<span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">"""</span>
 
 
 <span class="c1"># ===============================</span>
 <div class="viewcode-block" id="MathJaxSVG">
 <a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.mathjax.MathJaxSVG">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">MathJaxSVG</span><span class="p">:</span>
-    <span class="n">_SVG_NS</span> <span class="o">=</span> <span class="s2">&quot;http://www.w3.org/2000/svg&quot;</span>
+    <span class="n">_SVG_NS</span> <span class="o">=</span> <span class="s2">"http://www.w3.org/2000/svg"</span>
 
     <span class="c1"># ===============================</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">clear_cache</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        MathJax converter.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            cache_dir (str, optional): cache directory.</span>
 <span class="sd">            clear_cache (bool, optional): clear disk cache ?</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_svg_cache</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># memory cache.</span>
 
         <span class="c1"># disk cache.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_cache_dir</span> <span class="o">=</span> <span class="n">cache_dir</span> <span class="ow">or</span> <span class="p">(</span><span class="n">Path</span><span class="o">.</span><span class="n">home</span><span class="p">()</span> <span class="o">/</span> <span class="s2">&quot;.qtdraw&quot;</span> <span class="o">/</span> <span class="s2">&quot;svg_cache&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cache_dir</span> <span class="o">=</span> <span class="n">cache_dir</span> <span class="ow">or</span> <span class="p">(</span><span class="n">Path</span><span class="o">.</span><span class="n">home</span><span class="p">()</span> <span class="o">/</span> <span class="s2">".qtdraw"</span> <span class="o">/</span> <span class="s2">"svg_cache"</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_cache_dir</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
         <span class="c1"># clear disk cache.</span>
         <span class="k">if</span> <span class="n">clear_cache</span><span class="p">:</span>
-            <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cache_dir</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;*.svg&quot;</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cache_dir</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">"*.svg"</span><span class="p">):</span>
                 <span class="k">try</span><span class="p">:</span>
                     <span class="n">f</span><span class="o">.</span><span class="n">unlink</span><span class="p">()</span>
                 <span class="k">except</span><span class="p">:</span>
                     <span class="k">pass</span>
 
-        <span class="n">ET</span><span class="o">.</span><span class="n">register_namespace</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_SVG_NS</span><span class="p">)</span>
+        <span class="n">ET</span><span class="o">.</span><span class="n">register_namespace</span><span class="p">(</span><span class="s2">""</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_SVG_NS</span><span class="p">)</span>
 
         <span class="c1"># run event loop in independent thread.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_thread_main</span><span class="p">,</span> <span class="n">daemon</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -430,8 +430,8 @@
     <span class="c1"># ===============================</span>
 <div class="viewcode-block" id="MathJaxSVG.convert">
 <a class="viewcode-back" href="../../../src/api_widget.html#qtdraw.widget.mathjax.MathJaxSVG.convert">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">convert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">latex</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">convert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">latex</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"black"</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Convert latex to SVG string.</span>
 
 <span class="sd">        Args:</span>
@@ -442,7 +442,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            - (str) -- SVG string.</span>
 <span class="sd">            - (tuple) -- width and height.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">return</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">run_coroutine_threadsafe</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_convert_async</span><span class="p">(</span><span class="n">latex</span><span class="p">,</span> <span class="n">color</span><span class="p">,</span> <span class="n">size</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_loop</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span></div>
 
 
@@ -462,24 +462,24 @@
                 <span class="k">await</span> <span class="n">page</span><span class="o">.</span><span class="n">add_script_tag</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="n">_MATHJAX_PATH</span><span class="p">)</span>
                 <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.05</span><span class="p">)</span>
 
-                <span class="n">svg_elem</span> <span class="o">=</span> <span class="k">await</span> <span class="n">page</span><span class="o">.</span><span class="n">query_selector</span><span class="p">(</span><span class="s2">&quot;mjx-container svg&quot;</span><span class="p">)</span>
+                <span class="n">svg_elem</span> <span class="o">=</span> <span class="k">await</span> <span class="n">page</span><span class="o">.</span><span class="n">query_selector</span><span class="p">(</span><span class="s2">"mjx-container svg"</span><span class="p">)</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="n">svg_elem</span><span class="p">:</span>
                     <span class="k">await</span> <span class="n">page</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-                    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Failed to get SVG element.&quot;</span><span class="p">)</span>
+                    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">"Failed to get SVG element."</span><span class="p">)</span>
 
-                <span class="n">svg_str</span> <span class="o">=</span> <span class="k">await</span> <span class="n">svg_elem</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="s2">&quot;el =&gt; el.outerHTML&quot;</span><span class="p">)</span>
+                <span class="n">svg_str</span> <span class="o">=</span> <span class="k">await</span> <span class="n">svg_elem</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="s2">"el =&gt; el.outerHTML"</span><span class="p">)</span>
                 <span class="k">await</span> <span class="n">page</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
                 <span class="n">svg_str</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_flatten_svg_string</span><span class="p">(</span><span class="n">svg_str</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_svg_cache</span><span class="p">[</span><span class="n">latex</span><span class="p">]</span> <span class="o">=</span> <span class="n">svg_str</span>
 
         <span class="c1"># get scaled size.</span>
-        <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_attribute</span><span class="p">(</span><span class="n">svg_str</span><span class="p">,</span> <span class="s2">&quot;viewBox&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_attribute</span><span class="p">(</span><span class="n">svg_str</span><span class="p">,</span> <span class="s2">"viewBox"</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
         <span class="n">scale</span> <span class="o">=</span> <span class="n">size</span> <span class="o">/</span> <span class="mf">1000.0</span>
         <span class="n">wh</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">w</span> <span class="o">*</span> <span class="n">scale</span> <span class="o">+</span> <span class="mf">0.99999</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">h</span> <span class="o">*</span> <span class="n">scale</span> <span class="o">+</span> <span class="mf">0.99999</span><span class="p">)</span>
 
         <span class="c1"># set color.</span>
-        <span class="n">svg_str</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_replace_attribute</span><span class="p">(</span><span class="n">svg_str</span><span class="p">,</span> <span class="s2">&quot;fill&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">all_colors</span><span class="p">[</span><span class="n">color</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">svg_str</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_replace_attribute</span><span class="p">(</span><span class="n">svg_str</span><span class="p">,</span> <span class="s2">"fill"</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">all_colors</span><span class="p">[</span><span class="n">color</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">svg_str</span><span class="p">,</span> <span class="n">wh</span>
 
@@ -505,13 +505,13 @@
 
     <span class="c1"># ===============================</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">_get_cache_path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">latex</span><span class="p">):</span>
-        <span class="n">hash_key</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">latex</span><span class="si">}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cache_dir</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">hash_key</span><span class="si">}</span><span class="s2">.svg&quot;</span>
+        <span class="n">hash_key</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">latex</span><span class="si">}</span><span class="s2">"</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">"utf-8"</span><span class="p">))</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cache_dir</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">hash_key</span><span class="si">}</span><span class="s2">.svg"</span>
 
     <span class="c1"># ===============================</span>
     <span class="nd">@staticmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">_get_attribute</span><span class="p">(</span><span class="n">svg_str</span><span class="p">,</span> <span class="n">keyword</span><span class="p">):</span>
-        <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">rf</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">re</span><span class="o">.</span><span class="n">escape</span><span class="p">(</span><span class="n">keyword</span><span class="p">)</span><span class="si">}</span><span class="s1">=&quot;([^&quot;]+)&quot;&#39;</span><span class="p">,</span> <span class="n">svg_str</span><span class="p">)</span>
+        <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">rf</span><span class="s1">'</span><span class="si">{</span><span class="n">re</span><span class="o">.</span><span class="n">escape</span><span class="p">(</span><span class="n">keyword</span><span class="p">)</span><span class="si">}</span><span class="s1">="([^"]+)"'</span><span class="p">,</span> <span class="n">svg_str</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">match</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">None</span>
@@ -519,8 +519,8 @@
     <span class="c1"># ===============================</span>
     <span class="nd">@staticmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">_replace_attribute</span><span class="p">(</span><span class="n">svg_str</span><span class="p">,</span> <span class="n">keyword</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">rf</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">re</span><span class="o">.</span><span class="n">escape</span><span class="p">(</span><span class="n">keyword</span><span class="p">)</span><span class="si">}</span><span class="s1">=&quot;[^&quot;]+&quot;&#39;</span><span class="p">,</span> <span class="n">svg_str</span><span class="p">):</span>
-            <span class="k">return</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">rf</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">re</span><span class="o">.</span><span class="n">escape</span><span class="p">(</span><span class="n">keyword</span><span class="p">)</span><span class="si">}</span><span class="s1">=&quot;[^&quot;]+&quot;&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">keyword</span><span class="si">}</span><span class="s1">=&quot;</span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s1">&quot;&#39;</span><span class="p">,</span> <span class="n">svg_str</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">rf</span><span class="s1">'</span><span class="si">{</span><span class="n">re</span><span class="o">.</span><span class="n">escape</span><span class="p">(</span><span class="n">keyword</span><span class="p">)</span><span class="si">}</span><span class="s1">="[^"]+"'</span><span class="p">,</span> <span class="n">svg_str</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">rf</span><span class="s1">'</span><span class="si">{</span><span class="n">re</span><span class="o">.</span><span class="n">escape</span><span class="p">(</span><span class="n">keyword</span><span class="p">)</span><span class="si">}</span><span class="s1">="[^"]+"'</span><span class="p">,</span> <span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">keyword</span><span class="si">}</span><span class="s1">="</span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s1">"'</span><span class="p">,</span> <span class="n">svg_str</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">svg_str</span>
 
@@ -528,13 +528,13 @@
     <span class="nd">@staticmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">_flatten_svg_string</span><span class="p">(</span><span class="n">svg</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">svg</span><span class="p">:</span>
-            <span class="k">return</span> <span class="s2">&quot;&quot;</span>
+            <span class="k">return</span> <span class="s2">""</span>
 
         <span class="n">root</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="n">svg</span><span class="p">)</span>
 
         <span class="k">def</span><span class="w"> </span><span class="nf">unwrap_inner_svg</span><span class="p">(</span><span class="n">elem</span><span class="p">):</span>
             <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">elem</span><span class="p">):</span>
-                <span class="k">if</span> <span class="n">child</span><span class="o">.</span><span class="n">tag</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;svg&quot;</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">child</span><span class="o">.</span><span class="n">tag</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">"svg"</span><span class="p">):</span>
                     <span class="k">for</span> <span class="n">grand</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">child</span><span class="p">):</span>
                         <span class="n">elem</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">grand</span><span class="p">)</span>
                     <span class="n">elem</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
@@ -543,12 +543,12 @@
 
         <span class="n">unwrap_inner_svg</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
 
-        <span class="c1"># unify all &quot;fill&quot; to currentColor.</span>
+        <span class="c1"># unify all "fill" to currentColor.</span>
         <span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="n">root</span><span class="o">.</span><span class="n">iter</span><span class="p">():</span>
-            <span class="k">if</span> <span class="s2">&quot;fill&quot;</span> <span class="ow">in</span> <span class="n">elem</span><span class="o">.</span><span class="n">attrib</span> <span class="ow">and</span> <span class="n">elem</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;fill&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;none&quot;</span><span class="p">:</span>
-                <span class="n">elem</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;fill&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;currentColor&quot;</span>
+            <span class="k">if</span> <span class="s2">"fill"</span> <span class="ow">in</span> <span class="n">elem</span><span class="o">.</span><span class="n">attrib</span> <span class="ow">and</span> <span class="n">elem</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">"fill"</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">"none"</span><span class="p">:</span>
+                <span class="n">elem</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">"fill"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"currentColor"</span>
 
-        <span class="k">return</span> <span class="n">ET</span><span class="o">.</span><span class="n">tostring</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;unicode&quot;</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">ET</span><span class="o">.</span><span class="n">tostring</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">"unicode"</span><span class="p">)</span></div>
 
 </pre></div>
 

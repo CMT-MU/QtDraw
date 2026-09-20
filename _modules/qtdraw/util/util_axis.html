@@ -327,11 +327,11 @@
                 <article class="bd-article">
                   
   <h1>Source code for qtdraw.util.util_axis</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span></span><span class="sd">"""</span>
 <span class="sd">Utility for axis actor and label, unit cell, and view vector.</span>
 
 <span class="sd">This module contains utility for axis, etc.</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">vtk</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pyvista</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pv</span>
@@ -346,7 +346,7 @@
 
 <span class="c1"># ==================================================</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">_create_label_axes_actor</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">bold</span><span class="p">,</span> <span class="n">italic</span><span class="p">,</span> <span class="n">color</span><span class="p">,</span> <span class="n">scale</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Create label only orientation axes actor.</span>
 
 <span class="sd">    Args:</span>
@@ -360,8 +360,8 @@
 
 <span class="sd">    Returns:</span>
 <span class="sd">        - (pyvista.AxesActor) -- axes actor.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">label</span> <span class="o">=</span> <span class="n">text_to_list</span><span class="p">(</span><span class="n">label</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">))</span>
+<span class="sd">    """</span>
+    <span class="n">label</span> <span class="o">=</span> <span class="n">text_to_list</span><span class="p">(</span><span class="n">label</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">" "</span><span class="p">,</span> <span class="s2">""</span><span class="p">))</span>
 
     <span class="c1"># font size is zoomed manually.</span>
     <span class="n">size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">size</span> <span class="o">*</span> <span class="n">scale</span><span class="p">)</span>
@@ -421,7 +421,7 @@
     <span class="n">sphere_radius</span><span class="p">,</span>
     <span class="n">theta_phi_resolution</span><span class="p">,</span>
 <span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Create custom axes actor.</span>
 
 <span class="sd">    Args:</span>
@@ -443,7 +443,7 @@
 
 <span class="sd">    Returns:</span>
 <span class="sd">        - (vtk.vtkPropAssembly) -- custom axes actor.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="c1"># convert from color name to RGB float.</span>
     <span class="n">shaft_color</span> <span class="o">=</span> <span class="p">[(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">all_colors</span><span class="p">[</span><span class="n">c</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="mi">255</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">shaft_color</span><span class="p">]</span>
     <span class="n">sphere_color</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">all_colors</span><span class="p">[</span><span class="n">sphere_color</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="mi">255</span>
@@ -505,7 +505,7 @@
     <span class="n">tip_length</span><span class="p">,</span>
     <span class="n">tip_resolution</span><span class="p">,</span>
 <span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Create custom axes actor (crossed axes).</span>
 
 <span class="sd">    Args:</span>
@@ -518,7 +518,7 @@
 <span class="sd">        tip_radius (float): axes tip radius.</span>
 <span class="sd">        tip_length (float): axes tip length.</span>
 <span class="sd">        tip_resolution (int): axes tip resolution.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">shaft_color</span> <span class="o">=</span> <span class="p">[(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">all_colors</span><span class="p">[</span><span class="n">c</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="mi">255</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">shaft_color</span><span class="p">]</span>
     <span class="n">label_color</span> <span class="o">=</span> <span class="p">[</span><span class="n">all_colors</span><span class="p">[</span><span class="n">c</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">label_color</span><span class="p">]</span>
 
@@ -540,7 +540,7 @@
             <span class="n">tip_resolution</span><span class="o">=</span><span class="n">tip_resolution</span><span class="p">,</span>
         <span class="p">)</span>
 
-        <span class="n">pv_widget</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="n">mesh</span><span class="o">=</span><span class="n">obj</span><span class="p">,</span> <span class="n">smooth_shading</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">c</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;axes_arrow_</span><span class="si">{</span><span class="n">no</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">pv_widget</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="n">mesh</span><span class="o">=</span><span class="n">obj</span><span class="p">,</span> <span class="n">smooth_shading</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">c</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sa">f</span><span class="s2">"axes_arrow_</span><span class="si">{</span><span class="n">no</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="kc">None</span>
 
@@ -551,15 +551,15 @@
 <span class="k">def</span><span class="w"> </span><span class="nf">create_axes_widget</span><span class="p">(</span>
     <span class="n">pv_widget</span><span class="p">,</span>
     <span class="n">A</span><span class="p">,</span>
-    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;[x,y,z]&quot;</span><span class="p">,</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">"[x,y,z]"</span><span class="p">,</span>
     <span class="n">label_size</span><span class="o">=</span><span class="mi">28</span><span class="p">,</span>
     <span class="n">label_bold</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="n">label_italic</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-    <span class="n">label_color</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="s2">&quot;black&quot;</span><span class="p">],</span>
+    <span class="n">label_color</span><span class="o">=</span><span class="p">[</span><span class="s2">"black"</span><span class="p">,</span> <span class="s2">"black"</span><span class="p">,</span> <span class="s2">"black"</span><span class="p">],</span>
     <span class="n">viewport</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="n">full</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
 <span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Create axes widget.</span>
 
 <span class="sd">    Args:</span>
@@ -575,21 +575,21 @@
 
 <span class="sd">    Note:</span>
 <span class="sd">        - if label is None, no label is used.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">scale</span> <span class="o">=</span> <span class="n">detail</span><span class="p">[</span><span class="s2">&quot;scale&quot;</span><span class="p">]</span>
-    <span class="n">pickable</span> <span class="o">=</span> <span class="n">detail</span><span class="p">[</span><span class="s2">&quot;pickable&quot;</span><span class="p">]</span>
-    <span class="n">shaft_color</span> <span class="o">=</span> <span class="n">detail</span><span class="p">[</span><span class="s2">&quot;shaft_color&quot;</span><span class="p">]</span>
-    <span class="n">sphere_color</span> <span class="o">=</span> <span class="n">detail</span><span class="p">[</span><span class="s2">&quot;sphere_color&quot;</span><span class="p">]</span>
-    <span class="n">shaft_radius</span> <span class="o">=</span> <span class="n">detail</span><span class="p">[</span><span class="s2">&quot;shaft_radius&quot;</span><span class="p">]</span>
-    <span class="n">shaft_resolution</span> <span class="o">=</span> <span class="n">detail</span><span class="p">[</span><span class="s2">&quot;shaft_resolution&quot;</span><span class="p">]</span>
-    <span class="n">tip_radius</span> <span class="o">=</span> <span class="n">detail</span><span class="p">[</span><span class="s2">&quot;tip_radius&quot;</span><span class="p">]</span>
-    <span class="n">tip_length</span> <span class="o">=</span> <span class="n">detail</span><span class="p">[</span><span class="s2">&quot;tip_length&quot;</span><span class="p">]</span>
-    <span class="n">tip_resolution</span> <span class="o">=</span> <span class="n">detail</span><span class="p">[</span><span class="s2">&quot;tip_resolution&quot;</span><span class="p">]</span>
-    <span class="n">sphere_radius</span> <span class="o">=</span> <span class="n">detail</span><span class="p">[</span><span class="s2">&quot;sphere_radius&quot;</span><span class="p">]</span>
-    <span class="n">theta_phi_resolution</span> <span class="o">=</span> <span class="n">detail</span><span class="p">[</span><span class="s2">&quot;theta_phi_resolution&quot;</span><span class="p">]</span>
+<span class="sd">    """</span>
+    <span class="n">scale</span> <span class="o">=</span> <span class="n">detail</span><span class="p">[</span><span class="s2">"scale"</span><span class="p">]</span>
+    <span class="n">pickable</span> <span class="o">=</span> <span class="n">detail</span><span class="p">[</span><span class="s2">"pickable"</span><span class="p">]</span>
+    <span class="n">shaft_color</span> <span class="o">=</span> <span class="n">detail</span><span class="p">[</span><span class="s2">"shaft_color"</span><span class="p">]</span>
+    <span class="n">sphere_color</span> <span class="o">=</span> <span class="n">detail</span><span class="p">[</span><span class="s2">"sphere_color"</span><span class="p">]</span>
+    <span class="n">shaft_radius</span> <span class="o">=</span> <span class="n">detail</span><span class="p">[</span><span class="s2">"shaft_radius"</span><span class="p">]</span>
+    <span class="n">shaft_resolution</span> <span class="o">=</span> <span class="n">detail</span><span class="p">[</span><span class="s2">"shaft_resolution"</span><span class="p">]</span>
+    <span class="n">tip_radius</span> <span class="o">=</span> <span class="n">detail</span><span class="p">[</span><span class="s2">"tip_radius"</span><span class="p">]</span>
+    <span class="n">tip_length</span> <span class="o">=</span> <span class="n">detail</span><span class="p">[</span><span class="s2">"tip_length"</span><span class="p">]</span>
+    <span class="n">tip_resolution</span> <span class="o">=</span> <span class="n">detail</span><span class="p">[</span><span class="s2">"tip_resolution"</span><span class="p">]</span>
+    <span class="n">sphere_radius</span> <span class="o">=</span> <span class="n">detail</span><span class="p">[</span><span class="s2">"sphere_radius"</span><span class="p">]</span>
+    <span class="n">theta_phi_resolution</span> <span class="o">=</span> <span class="n">detail</span><span class="p">[</span><span class="s2">"theta_phi_resolution"</span><span class="p">]</span>
 
     <span class="k">if</span> <span class="n">viewport</span><span class="p">:</span>
-        <span class="n">viewport</span> <span class="o">=</span> <span class="n">detail</span><span class="p">[</span><span class="s2">&quot;viewport&quot;</span><span class="p">]</span>
+        <span class="n">viewport</span> <span class="o">=</span> <span class="n">detail</span><span class="p">[</span><span class="s2">"viewport"</span><span class="p">]</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">viewport</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]</span>
         <span class="n">pickable</span> <span class="o">=</span> <span class="kc">False</span>
@@ -636,7 +636,7 @@
 <div class="viewcode-block" id="create_unit_cell">
 <a class="viewcode-back" href="../../../src/api_util.html#qtdraw.util.util_axis.create_unit_cell">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">create_unit_cell</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">origin</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dimensions</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Create unit cell mesh.</span>
 
 <span class="sd">    Args:</span>
@@ -647,7 +647,7 @@
 
 <span class="sd">    Returns:</span>
 <span class="sd">        - (pyvista.PolyData) -- unit cel mesh.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">if</span> <span class="n">lower</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">lower</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">dimensions</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -686,7 +686,7 @@
 <div class="viewcode-block" id="create_cell_grid">
 <a class="viewcode-back" href="../../../src/api_util.html#qtdraw.util.util_axis.create_cell_grid">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">create_cell_grid</span><span class="p">(</span><span class="n">ilower</span><span class="p">,</span> <span class="n">dims</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Create grid point.</span>
 
 <span class="sd">    Parameters:</span>
@@ -696,19 +696,19 @@
 
 <span class="sd">    Returns:</span>
 <span class="sd">        - (list) -- grid point, [str].</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="c1"># range.</span>
     <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">ilower</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ilower</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">dims</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
     <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">ilower</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">ilower</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">dims</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
     <span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">ilower</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">ilower</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="n">dims</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
 
     <span class="c1"># mesh grid.</span>
-    <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">indexing</span><span class="o">=</span><span class="s2">&quot;ij&quot;</span><span class="p">)</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">indexing</span><span class="o">=</span><span class="s2">"ij"</span><span class="p">)</span>
 
     <span class="c1"># transform grid to point.</span>
     <span class="n">grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">X</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">Y</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">Z</span><span class="o">.</span><span class="n">ravel</span><span class="p">()])</span><span class="o">.</span><span class="n">T</span>
 
-    <span class="n">grid</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">grid</span><span class="o">.</span><span class="n">tolist</span><span class="p">()]</span>
+    <span class="n">grid</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">" "</span><span class="p">,</span> <span class="s2">""</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">grid</span><span class="o">.</span><span class="n">tolist</span><span class="p">()]</span>
 
     <span class="k">return</span> <span class="n">grid</span></div>
 
@@ -718,7 +718,7 @@
 <div class="viewcode-block" id="get_lattice_vector">
 <a class="viewcode-back" href="../../../src/api_util.html#qtdraw.util.util_axis.get_lattice_vector">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">get_lattice_vector</span><span class="p">(</span><span class="n">crystal</span><span class="p">,</span> <span class="n">cell</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Get lattice vector.</span>
 
 <span class="sd">    Args:</span>
@@ -728,32 +728,32 @@
 <span class="sd">    Returns:</span>
 <span class="sd">        - dict: cell.</span>
 <span class="sd">        - list: A.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">a</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">cell</span><span class="p">[</span><span class="s2">&quot;a&quot;</span><span class="p">])</span>
-    <span class="n">b</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">cell</span><span class="p">[</span><span class="s2">&quot;b&quot;</span><span class="p">])</span>
-    <span class="n">c</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">cell</span><span class="p">[</span><span class="s2">&quot;c&quot;</span><span class="p">])</span>
-    <span class="n">alpha</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">cell</span><span class="p">[</span><span class="s2">&quot;alpha&quot;</span><span class="p">])</span>
-    <span class="n">beta</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">cell</span><span class="p">[</span><span class="s2">&quot;beta&quot;</span><span class="p">])</span>
-    <span class="n">gamma</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">cell</span><span class="p">[</span><span class="s2">&quot;gamma&quot;</span><span class="p">])</span>
+<span class="sd">    """</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">cell</span><span class="p">[</span><span class="s2">"a"</span><span class="p">])</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">cell</span><span class="p">[</span><span class="s2">"b"</span><span class="p">])</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">cell</span><span class="p">[</span><span class="s2">"c"</span><span class="p">])</span>
+    <span class="n">alpha</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">cell</span><span class="p">[</span><span class="s2">"alpha"</span><span class="p">])</span>
+    <span class="n">beta</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">cell</span><span class="p">[</span><span class="s2">"beta"</span><span class="p">])</span>
+    <span class="n">gamma</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">cell</span><span class="p">[</span><span class="s2">"gamma"</span><span class="p">])</span>
 
-    <span class="k">if</span> <span class="n">crystal</span> <span class="o">==</span> <span class="s2">&quot;monoclinic&quot;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">crystal</span> <span class="o">==</span> <span class="s2">"monoclinic"</span><span class="p">:</span>
         <span class="n">alpha</span> <span class="o">=</span> <span class="mf">90.0</span>
         <span class="n">gamma</span> <span class="o">=</span> <span class="mf">90.0</span>
-    <span class="k">elif</span> <span class="n">crystal</span> <span class="o">==</span> <span class="s2">&quot;orthorhombic&quot;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">crystal</span> <span class="o">==</span> <span class="s2">"orthorhombic"</span><span class="p">:</span>
         <span class="n">alpha</span> <span class="o">=</span> <span class="mf">90.0</span>
         <span class="n">beta</span> <span class="o">=</span> <span class="mf">90.0</span>
         <span class="n">gamma</span> <span class="o">=</span> <span class="mf">90.0</span>
-    <span class="k">elif</span> <span class="n">crystal</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;trigonal&quot;</span><span class="p">,</span> <span class="s2">&quot;hexagonal&quot;</span><span class="p">]:</span>
+    <span class="k">elif</span> <span class="n">crystal</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">"trigonal"</span><span class="p">,</span> <span class="s2">"hexagonal"</span><span class="p">]:</span>
         <span class="n">alpha</span> <span class="o">=</span> <span class="mf">90.0</span>
         <span class="n">beta</span> <span class="o">=</span> <span class="mf">90.0</span>
         <span class="n">gamma</span> <span class="o">=</span> <span class="mf">120.0</span>
         <span class="n">b</span> <span class="o">=</span> <span class="n">a</span>
-    <span class="k">elif</span> <span class="n">crystal</span> <span class="o">==</span> <span class="s2">&quot;tetragonal&quot;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">crystal</span> <span class="o">==</span> <span class="s2">"tetragonal"</span><span class="p">:</span>
         <span class="n">alpha</span> <span class="o">=</span> <span class="mf">90.0</span>
         <span class="n">beta</span> <span class="o">=</span> <span class="mf">90.0</span>
         <span class="n">gamma</span> <span class="o">=</span> <span class="mf">90.0</span>
         <span class="n">b</span> <span class="o">=</span> <span class="n">a</span>
-    <span class="k">elif</span> <span class="n">crystal</span> <span class="o">==</span> <span class="s2">&quot;cubic&quot;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">crystal</span> <span class="o">==</span> <span class="s2">"cubic"</span><span class="p">:</span>
         <span class="n">alpha</span> <span class="o">=</span> <span class="mf">90.0</span>
         <span class="n">beta</span> <span class="o">=</span> <span class="mf">90.0</span>
         <span class="n">gamma</span> <span class="o">=</span> <span class="mf">90.0</span>
@@ -777,7 +777,7 @@
     <span class="n">A</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">a3</span>
 
     <span class="n">A</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">DIGIT</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
-    <span class="n">cell</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;a&quot;</span><span class="p">:</span> <span class="n">a</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">:</span> <span class="n">b</span><span class="p">,</span> <span class="s2">&quot;c&quot;</span><span class="p">:</span> <span class="n">c</span><span class="p">,</span> <span class="s2">&quot;alpha&quot;</span><span class="p">:</span> <span class="n">alpha</span><span class="p">,</span> <span class="s2">&quot;beta&quot;</span><span class="p">:</span> <span class="n">beta</span><span class="p">,</span> <span class="s2">&quot;gamma&quot;</span><span class="p">:</span> <span class="n">gamma</span><span class="p">}</span>
+    <span class="n">cell</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"a"</span><span class="p">:</span> <span class="n">a</span><span class="p">,</span> <span class="s2">"b"</span><span class="p">:</span> <span class="n">b</span><span class="p">,</span> <span class="s2">"c"</span><span class="p">:</span> <span class="n">c</span><span class="p">,</span> <span class="s2">"alpha"</span><span class="p">:</span> <span class="n">alpha</span><span class="p">,</span> <span class="s2">"beta"</span><span class="p">:</span> <span class="n">beta</span><span class="p">,</span> <span class="s2">"gamma"</span><span class="p">:</span> <span class="n">gamma</span><span class="p">}</span>
 
     <span class="k">return</span> <span class="n">cell</span><span class="p">,</span> <span class="n">A</span></div>
 
@@ -787,7 +787,7 @@
 <div class="viewcode-block" id="get_repeat_range">
 <a class="viewcode-back" href="../../../src/api_util.html#qtdraw.util.util_axis.get_repeat_range">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">get_repeat_range</span><span class="p">(</span><span class="n">lower</span><span class="p">,</span> <span class="n">upper</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Get repeart range.</span>
 
 <span class="sd">    Args:</span>
@@ -797,7 +797,7 @@
 <span class="sd">    Returns:</span>
 <span class="sd">        - list: lower cell.</span>
 <span class="sd">        - list: size of repeat.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">i1</span> <span class="o">=</span> <span class="p">[</span><span class="n">floor</span><span class="p">(</span><span class="n">lower</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">floor</span><span class="p">(</span><span class="n">lower</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="n">floor</span><span class="p">(</span><span class="n">lower</span><span class="p">[</span><span class="mi">2</span><span class="p">])]</span>
     <span class="n">i2</span> <span class="o">=</span> <span class="p">[</span><span class="n">ceil</span><span class="p">(</span><span class="n">upper</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">CHOP</span><span class="p">),</span> <span class="n">ceil</span><span class="p">(</span><span class="n">upper</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">CHOP</span><span class="p">),</span> <span class="n">ceil</span><span class="p">(</span><span class="n">upper</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="n">CHOP</span><span class="p">)]</span>
     <span class="n">dims</span> <span class="o">=</span> <span class="p">[</span><span class="n">i2</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">i1</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">i2</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">i1</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">i2</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">i1</span><span class="p">[</span><span class="mi">2</span><span class="p">]]</span>
@@ -812,7 +812,7 @@
 <div class="viewcode-block" id="get_outside_box">
 <a class="viewcode-back" href="../../../src/api_util.html#qtdraw.util.util_axis.get_outside_box">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">get_outside_box</span><span class="p">(</span><span class="n">point</span><span class="p">,</span> <span class="n">lower</span><span class="p">,</span> <span class="n">upper</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Get indices outside range.</span>
 
 <span class="sd">    Args:</span>
@@ -822,7 +822,7 @@
 
 <span class="sd">    Returns:</span>
 <span class="sd">        - (numpy.ndarray) -- list of indices.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">xmin</span><span class="p">,</span> <span class="n">ymin</span><span class="p">,</span> <span class="n">zmin</span> <span class="o">=</span> <span class="n">lower</span>
     <span class="n">xmax</span><span class="p">,</span> <span class="n">ymax</span><span class="p">,</span> <span class="n">zmax</span> <span class="o">=</span> <span class="n">upper</span>
 
@@ -841,7 +841,7 @@
 <div class="viewcode-block" id="get_hkl_from_camera">
 <a class="viewcode-back" href="../../../src/api_util.html#qtdraw.util.util_axis.get_hkl_from_camera">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">get_hkl_from_camera</span><span class="p">(</span><span class="n">camera</span><span class="p">,</span> <span class="n">A</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Get index from camera.</span>
 
 <span class="sd">    Args:</span>
@@ -850,7 +850,7 @@
 
 <span class="sd">    Returns:</span>
 <span class="sd">        - (list) -- index (cannot determine hkl, return [0,0,0]).</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">rounding_tol</span> <span class="o">=</span> <span class="mf">0.1</span>
     <span class="n">angle_tol</span> <span class="o">=</span> <span class="mf">1.0</span>
 
@@ -873,7 +873,7 @@
     <span class="n">scaled_base</span> <span class="o">=</span> <span class="n">hkl_raw</span> <span class="o">/</span> <span class="n">max_abs</span>
 
     <span class="n">best_candidate</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
-    <span class="n">min_err</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;inf&quot;</span><span class="p">)</span>
+    <span class="n">min_err</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s2">"inf"</span><span class="p">)</span>
 
     <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">):</span>
         <span class="n">target</span> <span class="o">=</span> <span class="n">scaled_base</span> <span class="o">*</span> <span class="n">s</span>
@@ -911,7 +911,7 @@
 <div class="viewcode-block" id="get_camera_params">
 <a class="viewcode-back" href="../../../src/api_util.html#qtdraw.util.util_axis.get_camera_params">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">get_camera_params</span><span class="p">(</span><span class="n">hkl</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">camera</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bounds</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Get camera parameters.</span>
 
 <span class="sd">    Args:</span>
@@ -924,7 +924,7 @@
 <span class="sd">        - (ndarray) -- position.</span>
 <span class="sd">        - (ndarray) -- focal point.</span>
 <span class="sd">        - (ndarray) -- view up.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">])</span>
     <span class="n">n</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">hkl</span><span class="p">)</span>
 

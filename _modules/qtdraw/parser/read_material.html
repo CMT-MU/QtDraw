@@ -327,11 +327,11 @@
                 <article class="bd-article">
                   
   <h1>Source code for qtdraw.parser.read_material</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span></span><span class="sd">"""</span>
 <span class="sd">Simple parser for CIF, XSF, and VESTA.</span>
 
 <span class="sd">This module contains the parser.</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
@@ -343,7 +343,7 @@
 <div class="viewcode-block" id="read_draw">
 <a class="viewcode-back" href="../../../src/api_parser.html#qtdraw.parser.read_material.read_draw">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">read_draw</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">widget</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Read and draw CIF, XSF, VESTA file.</span>
 
 <span class="sd">    Args:</span>
@@ -352,22 +352,22 @@
 
 <span class="sd">    Returns:</span>
 <span class="sd">        - (dict) -- all data.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">all_data</span><span class="p">,</span> <span class="n">site_info</span><span class="p">,</span> <span class="n">bond_info</span><span class="p">,</span> <span class="n">symmetrized</span> <span class="o">=</span> <span class="n">parse_material</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
-    <span class="n">widget</span><span class="o">.</span><span class="n">write_info</span><span class="p">(</span><span class="s2">&quot;* &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">symmetrized</span><span class="p">))</span>
+    <span class="n">widget</span><span class="o">.</span><span class="n">write_info</span><span class="p">(</span><span class="s2">"* "</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">symmetrized</span><span class="p">))</span>
 
-    <span class="n">name</span> <span class="o">=</span> <span class="n">all_data</span><span class="p">[</span><span class="s2">&quot;status&quot;</span><span class="p">][</span><span class="s2">&quot;model&quot;</span><span class="p">]</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">all_data</span><span class="p">[</span><span class="s2">"status"</span><span class="p">][</span><span class="s2">"model"</span><span class="p">]</span>
     <span class="n">draw_site_bond</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">site_info</span><span class="p">,</span> <span class="n">bond_info</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">filename</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.xsf&quot;</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">filename</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">".xsf"</span><span class="p">):</span>
         <span class="c1"># determine color_range and value.</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">extract_data_xsf</span><span class="p">(</span><span class="n">filename</span><span class="p">)[</span><span class="s2">&quot;data&quot;</span><span class="p">])</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">extract_data_xsf</span><span class="p">(</span><span class="n">filename</span><span class="p">)[</span><span class="s2">"data"</span><span class="p">])</span>
         <span class="n">d_max</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
         <span class="n">d_min</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">min</span><span class="p">())</span>
         <span class="n">d_max</span> <span class="o">=</span> <span class="mf">1.1</span> <span class="o">*</span> <span class="n">d_max</span> <span class="k">if</span> <span class="n">d_max</span> <span class="o">&gt;</span> <span class="mf">0.0</span> <span class="k">else</span> <span class="mf">0.9</span> <span class="o">*</span> <span class="n">d_max</span>
         <span class="n">d_min</span> <span class="o">=</span> <span class="mf">0.9</span> <span class="o">*</span> <span class="n">d_min</span> <span class="k">if</span> <span class="n">d_min</span> <span class="o">&gt;</span> <span class="mf">0.0</span> <span class="k">else</span> <span class="mf">1.1</span> <span class="o">*</span> <span class="n">d_min</span>
         <span class="n">val</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">d_max</span> <span class="o">+</span> <span class="n">d_min</span><span class="p">)</span>
-        <span class="n">widget</span><span class="o">.</span><span class="n">add_isosurface</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">filename</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;Pastel1&quot;</span><span class="p">,</span> <span class="n">surface</span><span class="o">=</span><span class="s2">&quot;phase&quot;</span><span class="p">,</span> <span class="n">color_range</span><span class="o">=</span><span class="p">[</span><span class="n">d_min</span><span class="p">,</span> <span class="n">d_max</span><span class="p">],</span> <span class="n">value</span><span class="o">=</span><span class="p">[</span><span class="n">val</span><span class="p">])</span>
+        <span class="n">widget</span><span class="o">.</span><span class="n">add_isosurface</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">filename</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"Pastel1"</span><span class="p">,</span> <span class="n">surface</span><span class="o">=</span><span class="s2">"phase"</span><span class="p">,</span> <span class="n">color_range</span><span class="o">=</span><span class="p">[</span><span class="n">d_min</span><span class="p">,</span> <span class="n">d_max</span><span class="p">],</span> <span class="n">value</span><span class="o">=</span><span class="p">[</span><span class="n">val</span><span class="p">])</span>
 
     <span class="k">return</span> <span class="n">all_data</span></div>
 
