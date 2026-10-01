@@ -366,11 +366,6 @@ class PyVistaWidget(QtInteractor):
             return {}
 
     # ==================================================
-    def paintEvent(self, event):
-        # override the function to do nothing for PySide 6.10 or later.
-        pass
-
-    # ==================================================
     def clear_info(self):
         """
         Clear info.
