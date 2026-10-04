@@ -606,9 +606,12 @@
 <a class="viewcode-back" href="../../../src/from_python.html#qtdraw.core.pyvista_widget.PyVistaWidget">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">PyVistaWidget</span><span class="p">(</span><span class="n">QtInteractor</span><span class="p">):</span>
     <span class="c1"># signal for write info.</span>
-    <span class="n">message</span> <span class="o">=</span> <span class="n">Signal</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>  <span class="c1"># messsage.</span>
-    <span class="n">data_removed</span> <span class="o">=</span> <span class="n">Signal</span><span class="p">()</span>
-    <span class="n">camera_view</span> <span class="o">=</span> <span class="n">Signal</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>  <span class="c1"># view index.</span>
+    <span class="c1"># message.</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="n">Signal</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>  <span class="c1">#: :meta private:</span>
+    <span class="c1"># none.</span>
+    <span class="n">data_removed</span> <span class="o">=</span> <span class="n">Signal</span><span class="p">()</span>  <span class="c1">#: :meta private:</span>
+    <span class="c1"># view index.</span>
+    <span class="n">camera_view</span> <span class="o">=</span> <span class="n">Signal</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>  <span class="c1">#: :meta private:</span>
 
     <span class="c1"># ==================================================</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">off_screen</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
@@ -702,18 +705,14 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">set_view</span><span class="p">()</span>
 
-        <span class="c1"># if self.iren is not None: # for automatic update for a,b,c indices.</span>
-        <span class="c1">#    self.iren.add_observer("EndInteractionEvent", self._camera_view_changed)</span>
-
-    <span class="c1"># ==================================================</span>
-    <span class="c1"># def _camera_view_changed(self, observer=None, event=None):</span>
-    <span class="c1">#    view = get_hkl_from_camera(self.camera, self.A_matrix)</span>
-    <span class="c1">#    view = [0, 0, 0]</span>
-    <span class="c1">#    self.set_view(view)</span>
-
     <span class="c1"># ==================================================</span>
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">actors</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Access to renderer.actors.</span>
+
+<span class="sd">        :meta private:</span>
+<span class="sd">        """</span>
         <span class="c1"># in order to access directly to renderer.actors.</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">renderer</span><span class="o">.</span><span class="n">actors</span>
@@ -2356,6 +2355,8 @@
 
 <span class="sd">        Returns:</span>
 <span class="sd">            - (list) -- actor names, [str].</span>
+
+<span class="sd">        :meta private:</span>
 <span class="sd">        """</span>
         <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">actors</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
 
@@ -3047,6 +3048,11 @@
 
     <span class="c1"># ==================================================</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">_set_default_zoom</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Set default zoom.</span>
+
+<span class="sd">        :meta private:</span>
+<span class="sd">        """</span>
         <span class="n">view_vec</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">camera</span><span class="o">.</span><span class="n">direction</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">view_vector</span><span class="p">(</span><span class="n">view_vec</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">reset_camera</span><span class="p">()</span>
