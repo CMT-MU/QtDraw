@@ -22,7 +22,7 @@ The examples for **QtDraw**.
 
 ## background plot
 
-```{literalinclude} examples/background.py
+```{literalinclude} examples/background_s.py
 ```
 
 ![sample.jpg](fig/background.jpg)

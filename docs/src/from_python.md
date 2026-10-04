@@ -6,7 +6,9 @@ The following API is avalilable to draw objects.
 ## API in QtDraw
 
 ```{eval-rst}
-.. automodule:: qtdraw.core.qtdraw_app
+.. autoclass:: qtdraw.core.qtdraw_app.QtDraw
+   :members:
+   :exclude-members: staticMetaObject
 ```
 
 ## API in PyVistaWidget
@@ -14,5 +16,5 @@ The following API is avalilable to draw objects.
 ```{eval-rst}
 .. autoclass:: qtdraw.core.pyvista_widget.PyVistaWidget
    :members:
-   :show-inheritance:
+   :exclude-members: staticMetaObject
 ```

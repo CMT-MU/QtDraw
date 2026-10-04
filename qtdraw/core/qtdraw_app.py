@@ -2598,6 +2598,8 @@ class QtDraw(Window):
 
         Returns:
             - (bool) -- True if actor is removed.
+
+        :meta private:
         """
         return self.pyvista_widget.remove_actor(actor, reset_camera, render)
 

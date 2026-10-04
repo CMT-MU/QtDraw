@@ -251,9 +251,12 @@ class PlotSignal(QObject):
 # ==================================================
 class PyVistaWidget(QtInteractor):
     # signal for write info.
-    message = Signal(str)  # messsage.
-    data_removed = Signal()
-    camera_view = Signal(list)  # view index.
+    # message.
+    message = Signal(str)  #: :meta private:
+    # none.
+    data_removed = Signal()  #: :meta private:
+    # view index.
+    camera_view = Signal(list)  #: :meta private:
 
     # ==================================================
     def __init__(self, parent=None, off_screen=False):
@@ -347,18 +350,14 @@ class PyVistaWidget(QtInteractor):
         self.refresh()
         self.set_view()
 
-        # if self.iren is not None: # for automatic update for a,b,c indices.
-        #    self.iren.add_observer("EndInteractionEvent", self._camera_view_changed)
-
-    # ==================================================
-    # def _camera_view_changed(self, observer=None, event=None):
-    #    view = get_hkl_from_camera(self.camera, self.A_matrix)
-    #    view = [0, 0, 0]
-    #    self.set_view(view)
-
     # ==================================================
     @property
     def actors(self):
+        """
+        Access to renderer.actors.
+
+        :meta private:
+        """
         # in order to access directly to renderer.actors.
         try:
             return self.renderer.actors
@@ -1935,6 +1934,8 @@ class PyVistaWidget(QtInteractor):
 
         Returns:
             - (list) -- actor names, [str].
+
+        :meta private:
         """
         return list(self.actors.keys())
 
@@ -2578,6 +2579,11 @@ class PyVistaWidget(QtInteractor):
 
     # ==================================================
     def _set_default_zoom(self):
+        """
+        Set default zoom.
+
+        :meta private:
+        """
         view_vec = self.camera.direction
         self.view_vector(view_vec)
         self.reset_camera()
