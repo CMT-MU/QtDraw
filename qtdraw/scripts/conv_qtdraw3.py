@@ -4,7 +4,7 @@ Convert QtDraw to version 3.
 
 import click
 from qtdraw.core.pyvista_widget import convert_qtdraw_v3
-from qtdraw.scripts.qtdraw import resolve_file
+from qtdraw.scripts.cli_util import resolve_file
 
 
 # ================================================== execute converter
