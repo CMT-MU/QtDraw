@@ -1,0 +1,47 @@
+name: test
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 3 * * 1"  # weekly, to catch breakage by new releases of dependencies.
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+        # Python 3.11 is not tested: MultiPie 2.3.4 uses f-string syntax that needs Python 3.12.
+        python-version: ["3.12", "3.13"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+
+      - name: Set up headless display
+        uses: pyvista/setup-headless-display-action@v4
+        with:
+          qt: true
+
+      - name: Install QtDraw
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e . pytest pytest-qt
+          python -m playwright install --with-deps chromium
+
+      - name: Import check
+        run: python -c "import qtdraw.core.qtdraw_app, qtdraw.scripts.qtdraw, qtdraw.scripts.conv_qtdraw3"
+
+      - name: Run tests
+        env:
+          QT_QPA_PLATFORM: offscreen
+        run: python -m pytest -v
