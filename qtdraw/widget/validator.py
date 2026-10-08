@@ -374,9 +374,12 @@ def validator_hint(vtype, option=None):
         if len(shape) == 0:
             return kind
         if len(shape) == 1:
+            if shape[0] == 0:  # 0 means any length.
+                return f"list of {kind}s of any length, e.g. [1] or [1,2]"
             example = "[" + ",".join(["0"] * shape[0]) + "]"
             return f"list of {shape[0]} {kind}s, e.g. {example}"
-        return f"nested list of {kind}s with shape {tuple(shape)}"
+        dims = ", ".join("n" if n == 0 else str(n) for n in shape)
+        return f"nested list of {kind}s with shape ({dims})" + (", n is any length" if 0 in shape else "")
 
     def variables(var):
         var = [v for v in (var or []) if v != ""]

@@ -193,3 +193,46 @@ def test_preference_lists_installed_fonts(app):
     assert set(QFontDatabase.families()) <= items
     assert app.pyvista_widget._preference["general"]["font"] in items
     dialog.close()
+
+
+# ==================================================
+@pytest.mark.parametrize(
+    "shape, words, absent",
+    [
+        ((0,), ["any length", "[1]"], ["0 integers", "[]"]),
+        ((3, 0), ["(3, n)", "any length"], []),
+        ((2, 3), ["(2, 3)"], ["any length"]),
+    ],
+)
+def test_validator_hint_variable_length(shape, words, absent):
+    from qtdraw.widget.validator import validator_hint
+
+    hint = validator_hint("list_int", {"shape": shape})
+    for w in words:
+        assert w in hint, hint
+    for w in absent:
+        assert w not in hint, hint
+
+
+# ==================================================
+@pytest.mark.parametrize("button, saved_expected", [(QMessageBox.Cancel, []), (QMessageBox.Ok, ["a.jpg.png"])])
+def test_screenshot_asks_before_replacing_renamed_file(app, monkeypatch, tmp_path, button, saved_expected):
+    (tmp_path / "a.jpg.png").write_text("existing")
+    saved = []
+    monkeypatch.setattr(app.pyvista_widget, "save_screenshot", saved.append)
+    monkeypatch.setattr(QFileDialog, "getSaveFileName", lambda *a, **k: (str(tmp_path / "a.jpg"), "Image Files (*.png)"))
+    asked = answer(monkeypatch, button)
+    app._save_screenshot()
+    assert len(asked) == 1
+    assert [Path(p).name for p in saved] == saved_expected
+
+
+# ==================================================
+def test_screenshot_does_not_ask_when_renamed_file_is_new(app, monkeypatch, tmp_path):
+    saved = []
+    monkeypatch.setattr(app.pyvista_widget, "save_screenshot", saved.append)
+    monkeypatch.setattr(QFileDialog, "getSaveFileName", lambda *a, **k: (str(tmp_path / "b"), "Image Files (*.png)"))
+    asked = answer(monkeypatch, QMessageBox.Cancel)
+    app._save_screenshot()
+    assert asked == []
+    assert [Path(p).name for p in saved] == ["b.png"]

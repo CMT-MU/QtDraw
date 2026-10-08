@@ -223,6 +223,13 @@ class QtDraw(Window):
         if filename.suffix not in detail["image_file"] + detail["vector_file"]:
             ext = detail["vector_file"][0] if selected.startswith("Graphic") else detail["image_file"][0]
             filename = filename.with_name(filename.name + ext)
+            # the dialog asked about the original name only.
+            if filename.exists():
+                ret = QMessageBox.question(
+                    self, "Save Screenshot", f"{filename.name} already exists.\nReplace it?", QMessageBox.Ok | QMessageBox.Cancel
+                )
+                if ret != QMessageBox.Ok:
+                    return
 
         self.pyvista_widget.save_screenshot(str(filename))
 
