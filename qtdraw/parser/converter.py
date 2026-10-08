@@ -607,7 +607,7 @@ def convert_version3(dic, ver, widget):
     Args:
         dic (dict): ver.1/2 dict.
         ver (int): major version.
-        widget (PyVistaWidget): PyVistaWidget.
+        widget (PyVistaWidget): PyVistaWidget, used only for ver. 1.
 
     Returns:
         - (dict) -- all data dict in ver. 3.
