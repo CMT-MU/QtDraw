@@ -13,6 +13,7 @@ import shutil
 import tempfile
 import numpy as np
 import copy
+from functools import lru_cache
 from PySide6.QtWidgets import QMainWindow, QMenu, QSizePolicy
 from PySide6.QtGui import QCursor, QMouseEvent
 from PySide6.QtCore import QEvent, Qt, QCoreApplication, Signal, QSize, QObject, QModelIndex
@@ -242,6 +243,23 @@ class Window(QMainWindow):
         self.app = get_qt_application()
         self.logger = LogWidget(level=level)
         super().__init__()
+
+
+# ==================================================
+@lru_cache(maxsize=32)
+def _site_sphere(radius):
+    """
+    Sphere for site, shared by sites of the same size.
+
+    Args:
+        radius (float): radius.
+
+    Returns:
+        - (vtk.PolyData) -- sphere object, do not modify it.
+
+    :meta private:
+    """
+    return create_sphere(radius=radius)
 
 
 # ==================================================
@@ -2197,6 +2215,7 @@ class PyVistaWidget(QtInteractor):
         """
         lower = self._status["lower"]
         upper = self._status["upper"]
+        actors = self.actors  # dict of all actors is created for each access.
         for object_type, model in self._data.items():
             if object_type != "text2d":
                 value = np.array(model.tolist(), dtype=object)
@@ -2209,14 +2228,14 @@ class PyVistaWidget(QtInteractor):
                     hide = name_actor[idx]
                     for actor_name in hide:
                         if actor_name != "":
-                            actor = self.actors[actor_name]
+                            actor = actors[actor_name]
                             actor.SetVisibility(False)
                             # self.hide_action(actor)
                     if object_type != "caption":
                         label_actor = value[:, COLUMN_LABEL_ACTOR][idx]
                         for i in label_actor:
                             if i != "":
-                                self.actors[i].SetVisibility(False)
+                                actors[i].SetVisibility(False)
 
     # ==================================================
     def clip_actor(self, position, cell, name_actor, label_actor):
@@ -2252,6 +2271,7 @@ class PyVistaWidget(QtInteractor):
 
         :meta private:
         """
+        actors = self.actors  # dict of all actors is created for each access.
         for object_type, model in self._data.items():
             if object_type != "text2d":
                 value = np.array(model.tolist(), dtype=object)
@@ -2261,7 +2281,7 @@ class PyVistaWidget(QtInteractor):
                     idx = name_actor_check
                     show = name_actor[idx]
                     for actor_name in show:
-                        actor = self.actors[actor_name]
+                        actor = actors[actor_name]
                         actor.SetVisibility(True)
                     if object_type != "caption":
                         label_actor_check = value[:, COLUMN_LABEL_CHECK].astype(bool)
@@ -2269,7 +2289,7 @@ class PyVistaWidget(QtInteractor):
                         label_actor = value[:, COLUMN_LABEL_ACTOR][idx]
                         for i in label_actor:
                             if i != "":
-                                self.actors[i].SetVisibility(True)
+                                actors[i].SetVisibility(True)
 
     # ==================================================
     def set_repeat(self, mode=None):
@@ -3074,9 +3094,10 @@ class PyVistaWidget(QtInteractor):
 
         :meta private:
         """
+        actors = self.actors  # dict of all actors is created for each access.
         for actor_name, prop in self._selected_actor.items():
-            if actor_name in self.actors.keys():
-                actor = self.actors[actor_name]
+            if actor_name in actors:
+                actor = actors[actor_name]
                 actor.prop.show_edges = prop[0]
                 actor.prop.edge_color = prop[1]
         self._selected_actor = {}
@@ -3334,7 +3355,7 @@ class PyVistaWidget(QtInteractor):
         color = all_colors[data["color"]][0]  # hex
         opacity = float(data["opacity"])
 
-        obj = create_sphere(radius=size)
+        obj = _site_sphere(size)  # copied in common_option.
         option_add = {"color": color, "opacity": opacity}
 
         option = self.common_option(actor=actor, positionT=positionT, obj=obj)
