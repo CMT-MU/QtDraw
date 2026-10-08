@@ -136,7 +136,7 @@ def test_deselect_all_reads_actors_once(widget, count_actors, n):
 
 
 # ==================================================
-def test_site_sphere_is_created_once_per_size(widget, monkeypatch):
+def test_site_sphere_is_created_once_per_size(widget, monkeypatch, request):
     import numpy as np
     from qtdraw.core.pyvista_widget_setting import COLUMN_NAME_ACTOR
     from qtdraw.util.basic_object import create_sphere
@@ -149,6 +149,7 @@ def test_site_sphere_is_created_once_per_size(widget, monkeypatch):
 
     monkeypatch.setattr(pw, "create_sphere", spy)
     pw._site_sphere.cache_clear()
+    request.addfinalizer(pw._site_sphere.cache_clear)  # the cache is shared by all widgets.
     widget.set_crystal("hexagonal")
     widget.set_unit_cell({"a": 2.0, "c": 3.0})
     assert not np.allclose(widget.A_matrix, np.eye(4))  # positions are transformed.
