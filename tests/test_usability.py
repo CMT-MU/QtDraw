@@ -166,3 +166,30 @@ def test_multipie_info_dialogs_show_wait_cursor():
     functions = [f for name, f in inspect.getmembers(m, inspect.isfunction) if name.startswith("show_")]
     assert len(functions) == 14
     assert all(hasattr(f, "__wrapped__") for f in functions)
+
+
+# ==================================================
+def test_font_family_falls_back_to_system_font(qapp):
+    from PySide6.QtGui import QFontDatabase
+    from qtdraw.widget.qt_event_util import font_family, font_style_sheet
+
+    installed = QFontDatabase.families()[0]
+    system = QFontDatabase.systemFont(QFontDatabase.GeneralFont).family()
+    assert font_family(installed) == installed
+    assert font_family("No Such Font 123") == system
+    assert font_style_sheet("No Such Font 123", 13) == 'QWidget { font-family: "' + system + '"; font-size: 13pt; }'
+
+
+# ==================================================
+def test_preference_lists_installed_fonts(app):
+    from PySide6.QtGui import QFontDatabase
+    from PySide6.QtWidgets import QComboBox
+    from qtdraw.core.dialog_preference import PreferenceDialog
+
+    dialog = PreferenceDialog(app.pyvista_widget, app)
+    items = set()
+    for combo in dialog.findChildren(QComboBox):
+        items |= {combo.itemText(i) for i in range(combo.count())}
+    assert set(QFontDatabase.families()) <= items
+    assert app.pyvista_widget._preference["general"]["font"] in items
+    dialog.close()

@@ -10,7 +10,7 @@ import sys
 import logging
 from IPython.core import ultratb
 from PySide6.QtCore import QObject, Signal, Qt
-from PySide6.QtGui import QFont, QPalette, QColor
+from PySide6.QtGui import QFont, QFontDatabase, QPalette, QColor
 from PySide6.QtWidgets import QApplication
 
 from qtdraw.core.pyvista_widget_setting import default_preference
@@ -60,7 +60,7 @@ def get_qt_application():
     font = default_preference["general"]["font"]
     size = default_preference["general"]["size"]
     app.setStyle(style)
-    app.setFont(QFont(font, size))
+    app.setFont(QFont(font_family(font), size))
 
     # use light-mode palette.
     palette = QPalette()
@@ -80,6 +80,37 @@ def get_qt_application():
     app.setPalette(palette)
 
     return app
+
+
+# ==================================================
+def font_family(name):
+    """
+    Font family available on this system.
+
+    Args:
+        name (str): font family name.
+
+    Returns:
+        - (str) -- name if it is installed, otherwise system default font family.
+    """
+    if name in QFontDatabase.families():
+        return name
+    return QFontDatabase.systemFont(QFontDatabase.GeneralFont).family()
+
+
+# ==================================================
+def font_style_sheet(name, size):
+    """
+    Style sheet for application font.
+
+    Args:
+        name (str): font family name.
+        size (int): font size in point.
+
+    Returns:
+        - (str) -- style sheet.
+    """
+    return 'QWidget { font-family: "' + font_family(name) + '"; font-size: ' + f"{size}pt; }}"
 
 
 # ==================================================

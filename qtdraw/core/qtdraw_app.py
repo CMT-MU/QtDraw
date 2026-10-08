@@ -18,7 +18,7 @@ from qtdraw.core.dialog_about import AboutDialog
 from qtdraw.core.dialog_about import get_version_info
 from qtdraw.widget.custom_widget import Label, Layout, LineEdit, HBar, Button, Combo, VSpacer
 from qtdraw.widget.logging_util import LogWidget
-from qtdraw.widget.qt_event_util import busy_cursor
+from qtdraw.widget.qt_event_util import busy_cursor, font_style_sheet
 from qtdraw.util.util import check_multipie
 
 
@@ -588,7 +588,7 @@ class QtDraw(Window):
         self.app.setStyle(self.pyvista_widget._preference["general"]["style"])
         font_type = self.pyvista_widget._preference["general"]["font"]
         size = self.pyvista_widget._preference["general"]["size"]
-        self.app.setStyleSheet("QWidget { font-family: " + f"{font_type}" + "; font-size: " + f"{size}" + "pt; }")
+        self.app.setStyleSheet(font_style_sheet(font_type, size))
 
     # ==================================================
     def _update_title(self):
