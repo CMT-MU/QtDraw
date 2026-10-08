@@ -470,9 +470,11 @@ class LineEdit(QLineEdit):
         self._read_only = False
         self._valid = True
         self._in_edit = False
+        self._edited = False  # text is changed by user (not only cursor moves).
         self._show_hint = False
         self._raw = ""
         self._validated = ""
+        self.textEdited.connect(self._set_edited)
 
         if validator:
             self.set_validator(validator)
@@ -561,14 +563,15 @@ class LineEdit(QLineEdit):
             self._valid = True
             self._update_style()
             self._in_edit = False
+            self._edited = False  # edit is cancelled.
             return
 
         if k in (Qt.Key_Return, Qt.Key_Enter):
             self.setText(self.text())
             if self._valid:
+                self._in_edit = False  # before clearFocus, not to apply it again in focusOutEvent.
                 self.clearFocus()
                 self.returnPressed.emit()
-                self._in_edit = False
             else:  # keep focus to correct it, and show accepted input after key release.
                 self._show_hint = bool(self.toolTip())
             return
@@ -586,17 +589,42 @@ class LineEdit(QLineEdit):
             QTimer.singleShot(0, lambda: QToolTip.showText(self.mapToGlobal(self.rect().bottomLeft()), self.toolTip(), self))
 
     # ==================================================
-    def focusOutEvent(self, event):
-        if not self._in_edit:
+    def _set_edited(self, text):
+        self._edited = True
+
+    # ==================================================
+    def commit_pending(self):
+        """
+        Apply text changed by user but not confirmed by Enter if valid, otherwise discard it.
+        """
+        if not (self._in_edit and self._edited) or self._read_only:
+            return
+        self._in_edit = False
+        self._edited = False
+        self._show_hint = False
+        self.setText(self.text())
+        if self._valid:
+            self.returnPressed.emit()
+        else:
             super().setText(self._validated)
             self._valid = True
             self._update_style()
+
+    # ==================================================
+    def focusOutEvent(self, event):
+        self.commit_pending()
+        self._in_edit = False
+        self._edited = False
+        super().setText(self._validated)
+        self._valid = True
+        self._update_style()
         super().focusOutEvent(event)
         self.focusOut.emit()
 
     # ==================================================
     def focusInEvent(self, event):
         if not self._in_edit:
+            self._edited = False
             super().setText(self._raw)
             self._update_style()
         super().focusInEvent(event)

@@ -5,11 +5,12 @@ This module provides application of QtDraw.
 """
 
 import os
+import copy
 import warnings
 from pathlib import Path
 import logging
-from PySide6.QtWidgets import QWidget, QMessageBox, QFileDialog, QDialog
-from PySide6.QtCore import Qt
+from PySide6.QtWidgets import QWidget, QMessageBox, QFileDialog, QDialog, QApplication, QAbstractButton, QComboBox
+from PySide6.QtCore import Qt, QTimer
 
 from qtdraw.core.pyvista_widget import PyVistaWidget, Window
 from qtdraw.core.pyvista_widget_setting import widget_detail as detail
@@ -77,8 +78,10 @@ class QtDraw(Window):
 
         self.create_gui()
         self.pyvista_widget.set_property(status, preference)
+        self._saved_state = self._document_state()
         self._update_panel()
         self.create_connection()
+        self._create_modified_check()
 
         # event loop.
         self.show()
@@ -128,6 +131,10 @@ class QtDraw(Window):
 
         :meta private:
         """
+        self._commit_pending_input()
+        if not self._confirm_unsaved("opening another file"):
+            return
+
         ext = detail["extension"]
         mat = "*" + " *".join(detail["ext_material"])
         cwd = os.getcwd()
@@ -196,6 +203,8 @@ class QtDraw(Window):
             if self.multipie_dialog is not None:
                 self.multipie_dialog.set_data()
 
+        self._mark_saved()
+
     # ==================================================
     def save_file(self):
         """
@@ -211,7 +220,7 @@ class QtDraw(Window):
         if filename:
             filename = add_extension(Path(filename), ext)
             self.pyvista_widget.save(str(filename))
-            self._update_title()
+            self._mark_saved()
 
     # ==================================================
     def _save_screenshot(self):
@@ -587,6 +596,106 @@ class QtDraw(Window):
         return panel
 
     # ==================================================
+    def _document_state(self):
+        """
+        Current document state to detect unsaved changes.
+
+        Returns:
+            - (dict) -- objects, status saved in file, and MultiPie status.
+
+        :meta private:
+        """
+        # status saved in file and changed by editing (view settings are not counted as modification).
+        keys = ["origin", "cell", "crystal", "clip", "repeat", "lower", "upper"]
+        widget = self.pyvista_widget
+        status = {key: widget._status.get(key) for key in keys}
+        multipie = widget._mp_data.status if widget._mp_data is not None else {}
+        return copy.deepcopy({"data": widget.get_data_dict(), "status": status, "multipie": multipie})
+
+    # ==================================================
+    def is_modified(self):
+        """
+        Is document modified after it was opened or saved ?
+
+        Returns:
+            - (bool) -- modified ?
+        """
+        return self._document_state() != self._saved_state
+
+    # ==================================================
+    def _mark_saved(self):
+        """
+        Mark current document as saved.
+
+        :meta private:
+        """
+        self._saved_state = self._document_state()
+        self._update_title()
+
+    # ==================================================
+    def _create_modified_check(self):
+        """
+        Update "*" in window title shortly after objects are changed.
+
+        :meta private:
+        """
+        self._modified_timer = QTimer(self)
+        self._modified_timer.setSingleShot(True)
+        self._modified_timer.setInterval(300)
+        self._modified_timer.timeout.connect(self._update_title)
+        for model in self.pyvista_widget._data.values():
+            model.dataModified.connect(lambda *args: self._modified_timer.start())
+            model.dataRemoved.connect(lambda *args: self._modified_timer.start())
+            model.checkChanged.connect(lambda *args: self._modified_timer.start())
+        # status changed from panel (e.g. clip), which may not change objects.
+        for button in self.findChildren(QAbstractButton):
+            button.clicked.connect(lambda *args: self._modified_timer.start())
+        for combo in self.findChildren(QComboBox):
+            combo.currentIndexChanged.connect(lambda *args: self._modified_timer.start())
+        for edit in self.findChildren(LineEdit):
+            edit.returnPressed.connect(lambda *args: self._modified_timer.start())
+
+    # ==================================================
+    def _commit_pending_input(self):
+        """
+        Apply value typed in focused field but not confirmed by Enter.
+
+        :meta private:
+        """
+        widget = QApplication.focusWidget()
+        if isinstance(widget, LineEdit):
+            widget.commit_pending()
+
+    # ==================================================
+    def _confirm_unsaved(self, action):
+        """
+        Ask to save unsaved changes.
+
+        Args:
+            action (str): action to be done, e.g. "closing".
+
+        Returns:
+            - (bool) -- go on with the action ?
+
+        :meta private:
+        """
+        if not self.is_modified():
+            return True
+
+        model = self.pyvista_widget._status["model"]
+        ret = QMessageBox.question(
+            self,
+            "",
+            f"Save changes to '{model}' before {action}?",
+            QMessageBox.Save | QMessageBox.Discard | QMessageBox.Cancel,
+            QMessageBox.Save,
+        )
+        if ret == QMessageBox.Save:
+            self.save_file()
+            return not self.is_modified()  # not saved if save dialog was cancelled.
+        return ret == QMessageBox.Discard
+
+    # ==================================================
     def _update_panel(self):
         """
         Update widget in panel.
@@ -618,6 +727,8 @@ class QtDraw(Window):
         :meta private:
         """
         title = self.pyvista_widget.window_title
+        if self.is_modified():
+            title += " *"
         data_title = title.replace("QtDraw", "Dataset")
         self.setWindowTitle(title)
         self.pyvista_widget._tab_group_view.setWindowTitle(data_title)
@@ -1249,6 +1360,11 @@ class QtDraw(Window):
 
         :meta private:
         """
+        self._commit_pending_input()
+        if self.is_modified():
+            if self._confirm_unsaved("clearing"):
+                self.clear_data()
+            return
         ret = QMessageBox.question(self, "", "Are you sure ?", QMessageBox.Cancel, QMessageBox.Ok)
         if ret == QMessageBox.Ok:
             self.clear_data()
@@ -1282,8 +1398,12 @@ class QtDraw(Window):
 
         :meta private:
         """
-        ret = QMessageBox.question(self, "", "Quit QtDraw ?", QMessageBox.Cancel, QMessageBox.Ok)
-        if ret != QMessageBox.Ok:
+        self._commit_pending_input()
+        if self.is_modified():
+            ok = self._confirm_unsaved("closing")
+        else:
+            ok = QMessageBox.question(self, "", "Quit QtDraw ?", QMessageBox.Cancel, QMessageBox.Ok) == QMessageBox.Ok
+        if not ok:
             event.ignore()
         else:
             if self.debug:
@@ -2655,6 +2775,7 @@ class QtDraw(Window):
             filename (str): full file name.
         """
         self.pyvista_widget.load(filename)
+        self._mark_saved()
 
     # ==================================================
     def save(self, filename):
@@ -2665,6 +2786,7 @@ class QtDraw(Window):
             filename (str): full file name.
         """
         self.pyvista_widget.save(filename)
+        self._mark_saved()
 
     # ==================================================
     # MultiPie interface
