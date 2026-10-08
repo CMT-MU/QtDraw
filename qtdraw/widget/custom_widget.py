@@ -18,6 +18,7 @@ from PySide6.QtWidgets import (
     QCheckBox,
     QSpacerItem,
     QApplication,
+    QToolTip,
 )
 from PySide6.QtGui import QPainter, QFont, QIcon
 from PySide6.QtCore import Signal, QSize, Qt
@@ -26,6 +27,7 @@ from xml.etree import ElementTree as ET
 
 from qtdraw.widget.color_selector_util import color2pixmap, color_palette
 from qtdraw.widget.validator import (
+    validator_hint,
     validator_int,
     validator_float,
     validator_list_int,
@@ -492,6 +494,7 @@ class LineEdit(QLineEdit):
             "orbital_site_bond": validator_orbital_site_bond,
         }
         self._validator_func = lambda t: VALIDATORS[vtype](t, **option)
+        self.setToolTip(validator_hint(vtype, option))
 
     # ==================================================
     def setText(self, text):
@@ -565,6 +568,8 @@ class LineEdit(QLineEdit):
             if self._valid:
                 self.returnPressed.emit()
                 self._in_edit = False
+            elif self.toolTip():  # show accepted input.
+                QToolTip.showText(self.mapToGlobal(self.rect().bottomLeft()), self.toolTip(), self)
             return
 
         self._in_edit = True
@@ -624,6 +629,7 @@ class Editor(Panel):
         self._math_mode = validator is not None and validator[0] == "math"
 
         self._editor = LineEdit(parent=parent, text=text, validator=validator, bold=bold, size=size)
+        self.setToolTip(self._editor.toolTip())
 
         validated = self._editor._validated or text
 

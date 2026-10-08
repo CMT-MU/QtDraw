@@ -77,3 +77,44 @@ def test_nonrepeat_asks_confirmation(app, monkeypatch, button, called):
     assert len(asked) == 1
     assert bool(done) == called
     assert app.view_button_nonrepeat.toolTip() != ""
+
+
+# ==================================================
+@pytest.mark.parametrize(
+    "vtype, option, words",
+    [
+        ("int", {"min": 0, "max": "*"}, ["Integer", "≥ 0"]),
+        ("float", {"min": 0.0, "max": 1.0}, ["Number", "0.0 to 1.0"]),
+        ("list_float", {"shape": (3,), "var": [""]}, ["3 numbers", "[0,0,0]", "1/2"]),
+        ("list_int", {"shape": (3,)}, ["3 integers"]),
+        ("math", {"shape": (), "var": ["x", "y"]}, ["Math expression", "x, y"]),
+        ("site", {"use_var": True}, ["[x,y,z]", "x, y, z can be used"]),
+        ("bond", {}, ["[tail];[head]", "@", ":"]),
+        ("site_bond", {}, ["Site", "bond"]),
+        ("vector_site_bond", {}, ["#"]),
+        ("orbital_site_bond", {}, ["#", "x, y, z, r"]),
+    ],
+)
+def test_validator_hint(vtype, option, words):
+    from qtdraw.widget.validator import validator_hint
+
+    hint = validator_hint(vtype, option)
+    for w in words:
+        assert w in hint, hint
+
+
+# ==================================================
+def test_line_edit_has_hint_tooltip(qapp):
+    from qtdraw.widget.custom_widget import LineEdit, Editor
+
+    edit = LineEdit(None, "[0,0,0]", validator=("list_float", {"shape": (3,), "var": [""]}))
+    assert "3 numbers" in edit.toolTip()
+    editor = Editor(None, "[0,0,0]", validator=("site", {}))
+    assert "[x,y,z]" in editor.toolTip()
+    assert LineEdit(None, "abc").toolTip() == ""  # no validator, no hint.
+
+
+# ==================================================
+def test_main_panel_fields_have_hints(app):
+    for edit in [app.uc_edit_origin, app.uc_edit_a, app.view_edit_lower, app.view_edit_upper]:
+        assert edit.toolTip() != ""
