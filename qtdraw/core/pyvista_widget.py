@@ -1631,8 +1631,10 @@ class PyVistaWidget(QtInteractor):
             ver = int(all_data["version"].split(".")[0])  # major version.
             if ver < 3:
                 widget = PyVistaWidget(off_screen=True)
-                all_data = convert_version3(all_data, ver, widget)  # for old version.
-                widget.close()
+                try:
+                    all_data = convert_version3(all_data, ver, widget)  # for old version.
+                finally:
+                    widget.close()
             required = ["status", "preference", "camera", "data"]
         elif file.suffix in detail["ext_material"]:
             all_data, material = parse_draw(f)

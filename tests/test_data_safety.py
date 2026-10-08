@@ -231,3 +231,26 @@ def test_failed_load_does_not_emit_data_removed(widget, tmp_path):
         widget.load(str(broken))
     assert removed == []
     assert n_rows(widget, "site") == 1
+
+
+# ==================================================
+def test_failed_conversion_closes_temporary_widget(widget, tmp_path, monkeypatch):
+    from qtdraw.core import pyvista_widget
+
+    closed = []
+    original_close = pyvista_widget.PyVistaWidget.close
+
+    def spy_close(self):
+        closed.append(self)
+        return original_close(self)
+
+    monkeypatch.setattr(pyvista_widget.PyVistaWidget, "close", spy_close)
+    widget.add_site(position="[0,0,0]")
+
+    old = tmp_path / "old.qtdw"
+    old.write_text("{'version': '2.0.0'}")
+    with pytest.raises(Exception):
+        widget.load(str(old))
+
+    assert len(closed) == 1 and closed[0] is not widget  # temporary widget for conversion is closed.
+    assert n_rows(widget, "site") == 1
