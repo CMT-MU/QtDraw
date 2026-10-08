@@ -9,7 +9,7 @@ import copy
 import warnings
 from pathlib import Path
 import logging
-from PySide6.QtWidgets import QWidget, QMessageBox, QFileDialog, QDialog
+from PySide6.QtWidgets import QWidget, QMessageBox, QFileDialog, QDialog, QApplication, QAbstractButton, QComboBox
 from PySide6.QtCore import Qt, QTimer
 
 from qtdraw.core.pyvista_widget import PyVistaWidget, Window
@@ -114,6 +114,7 @@ class QtDraw(Window):
 
         :meta private:
         """
+        self._commit_pending_input()
         if not self._confirm_unsaved("opening another file"):
             return
 
@@ -633,6 +634,24 @@ class QtDraw(Window):
             model.dataModified.connect(lambda *args: self._modified_timer.start())
             model.dataRemoved.connect(lambda *args: self._modified_timer.start())
             model.checkChanged.connect(lambda *args: self._modified_timer.start())
+        # status changed from panel (e.g. clip), which may not change objects.
+        for button in self.findChildren(QAbstractButton):
+            button.clicked.connect(lambda *args: self._modified_timer.start())
+        for combo in self.findChildren(QComboBox):
+            combo.currentIndexChanged.connect(lambda *args: self._modified_timer.start())
+        for edit in self.findChildren(LineEdit):
+            edit.returnPressed.connect(lambda *args: self._modified_timer.start())
+
+    # ==================================================
+    def _commit_pending_input(self):
+        """
+        Apply value typed in focused field but not confirmed by Enter.
+
+        :meta private:
+        """
+        widget = QApplication.focusWidget()
+        if isinstance(widget, LineEdit):
+            widget.commit_pending()
 
     # ==================================================
     def _confirm_unsaved(self, action):
@@ -1328,6 +1347,7 @@ class QtDraw(Window):
 
         :meta private:
         """
+        self._commit_pending_input()
         if self.is_modified():
             if self._confirm_unsaved("clearing"):
                 self.clear_data()
@@ -1365,6 +1385,7 @@ class QtDraw(Window):
 
         :meta private:
         """
+        self._commit_pending_input()
         if self.is_modified():
             ok = self._confirm_unsaved("closing")
         else:
@@ -2741,6 +2762,7 @@ class QtDraw(Window):
             filename (str): full file name.
         """
         self.pyvista_widget.load(filename)
+        self._mark_saved()
 
     # ==================================================
     def save(self, filename):
@@ -2751,6 +2773,7 @@ class QtDraw(Window):
             filename (str): full file name.
         """
         self.pyvista_widget.save(filename)
+        self._mark_saved()
 
     # ==================================================
     # MultiPie interface

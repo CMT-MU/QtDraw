@@ -157,3 +157,71 @@ def test_table_editor_commits_on_focus_out(qapp):
     focus_away(editor._editor)
     assert committed == ["[1/2,0,0]"]
     host.close()
+
+
+# ==================================================
+def test_pending_input_is_committed_before_close_check(app, monkeypatch):
+    app.activateWindow()
+    type_into(app.uc_edit_a, "2.5")  # not confirmed by Enter, field keeps focus.
+    asked = answer(monkeypatch, QMessageBox.Cancel)
+    app.close()
+    assert "Save changes" in asked[0][2]  # not "Quit QtDraw ?".
+    assert app.pyvista_widget._status["cell"]["a"] == pytest.approx(2.5)
+
+
+# ==================================================
+def test_cursor_moves_do_not_commit(qapp):
+    from qtdraw.widget.custom_widget import LineEdit
+
+    host = QWidget()
+    edit = LineEdit(host, "[0,0,0]", validator=("site", {}))
+    fired = []
+    edit.returnPressed.connect(lambda: fired.append(True))
+    host.show()
+    QTest.qWaitForWindowExposed(host)
+    edit.setFocus()
+    QTest.qWait(50)
+    for key in [Qt.Key_Left, Qt.Key_Right, Qt.Key_Home, Qt.Key_End]:
+        QTest.keyClick(edit, key)
+    QTest.keyClick(edit, Qt.Key_C, Qt.ControlModifier)
+    focus_away(edit)
+    assert fired == []
+    host.close()
+
+
+# ==================================================
+def test_read_only_field_does_not_commit(qapp):
+    from qtdraw.widget.custom_widget import LineEdit
+
+    host = QWidget()
+    edit = LineEdit(host, "[0,0,0]", validator=("site", {}))
+    edit.set_read_only(True)
+    fired = []
+    edit.returnPressed.connect(lambda: fired.append(True))
+    host.show()
+    QTest.qWaitForWindowExposed(host)
+    edit._in_edit = edit._edited = True  # even if flags were set somehow.
+    edit.commit_pending()
+    assert fired == []
+    host.close()
+
+
+# ==================================================
+def test_public_load_and_save_update_baseline(app, tmp_path):
+    app.pyvista_widget.add_site(position="[0,0,0]")
+    file = tmp_path / "api.qtdw"
+    app.save(str(file))
+    assert not app.is_modified()
+
+    app.clear_data()
+    app.load(str(file))
+    assert not app.is_modified()
+    app.clear_data()
+    assert app.is_modified()  # deleting loaded objects is a change.
+
+
+# ==================================================
+def test_status_change_updates_title(app):
+    QTest.mouseClick(app.view_button_clip, Qt.LeftButton)
+    QTest.qWait(500)
+    assert app.is_modified() and app.windowTitle().endswith(" *")
