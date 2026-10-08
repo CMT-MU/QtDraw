@@ -2,6 +2,13 @@
 
 ## <div class='my-heading' style='color: darkgreen;'>qtdraw_app.py
 
+### <div class='my-heading' style='color: royalblue;'>Global function
+
+| Function | Summary |
+|--------|----------|
+| add_extension | Add extension to file name if it does not have it. |
+
+
 ### <div class='my-heading' style='color: royalblue;'>QtDraw
 
 | Function | Summary |
@@ -146,6 +153,8 @@
 | convert_str_vector | Convert 3-component vector(s) to A.(position+cell). |
 | split_filename | Split file name. |
 | cat_filename | Cat filename. |
+| format_text | Format Python text by black command if available. |
+| write_text_atomic | Write text to file atomically (the old file is kept if writing fails). |
 | create_qtdraw_file | Create QtDraw file as background. |
 | convert_qtdraw_v3 | Convert qtdraw file to version 3. |
 | set_light_prop |  |
@@ -193,6 +202,9 @@
 | add_caption | Add caption. |
 | add_text2d | Add text 2d. |
 | load | Load all info. |
+| _set_loaded_data | Set loaded data. |
+| _get_current_state | Get current state to restore it when loading fails. |
+| _set_current_state | Set state obtained by _get_current_state. |
 | get_data_dict | Get data dict. |
 | restore | Restore data and status from backup. |
 | save_current | Save current data and stutus into self._backup. |
@@ -238,6 +250,7 @@
 | screen_off | Screen off. |
 | screen_on | Screen on. |
 | clear_data | Clear Data. |
+| _clear_rows | Clear all rows (isosurface data is kept). |
 | get_camera_info | Get camera info. |
 | set_camera_info | Get camera info. |
 | _set_default_zoom |  |
@@ -806,6 +819,8 @@
 
 | Function | Summary |
 |--------|----------|
+| parse_draw | Parse CIF, XSF, VESTA file without drawing. |
+| draw | Draw parsed CIF, XSF, VESTA data. |
 | read_draw | Read and draw CIF, XSF, VESTA file. |
 
 

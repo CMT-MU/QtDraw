@@ -10,6 +10,8 @@ import sys
 from pathlib import Path
 import ast
 import subprocess
+import shutil
+import tempfile
 import numpy as np
 import copy
 from PySide6.QtWidgets import QMainWindow, QMenu, QSizePolicy
@@ -39,7 +41,7 @@ from qtdraw.widget.tab_group_view import TabGroupView
 from qtdraw.widget.qt_event_util import get_qt_application
 from qtdraw.widget.logging_util import LogWidget
 from qtdraw.widget.color_palette import all_colors, custom_colormap, check_color
-from qtdraw.parser.read_material import read_draw
+from qtdraw.parser.read_material import parse_draw, draw
 from qtdraw.parser.xsf import extract_data_xsf
 from qtdraw.parser.converter import convert_version3
 from qtdraw.util.util import text_to_list, apply, read_dict, str_to_sympy, check_multipie
@@ -173,6 +175,57 @@ def cat_filename(base, ext=None):
     path = str(Path.cwd() / Path(base))
 
     return path
+
+
+# ==================================================
+def format_text(text):
+    """
+    Format Python text by black command if available.
+
+    Args:
+        text (str): text to format.
+
+    Returns:
+        - (str) -- formatted text (original text if black is not available).
+    """
+    cmd = shutil.which("black")
+    if cmd is None:
+        return text
+    try:
+        ret = subprocess.run([cmd, "-q", "--line-length=300", "-"], input=text, capture_output=True, text=True, check=True)
+    except (OSError, subprocess.SubprocessError):
+        return text
+
+    return ret.stdout
+
+
+# ==================================================
+def write_text_atomic(filename, text):
+    """
+    Write text to file atomically (the old file is kept if writing fails).
+
+    Args:
+        filename (str): file name.
+        text (str): text to write.
+    """
+    file = Path(filename)
+    fd, tmp = tempfile.mkstemp(dir=file.parent, prefix="." + file.name + ".", suffix=".tmp")
+    try:
+        with os.fdopen(fd, mode="w", encoding="utf-8") as f:
+            f.write(text)
+        # keep permission of existing file, or use default one (mkstemp creates it as 0600).
+        if file.exists():
+            mode = file.stat().st_mode & 0o777
+        else:
+            umask = os.umask(0)
+            os.umask(umask)
+            mode = 0o666 & ~umask
+        os.chmod(tmp, mode)
+        os.replace(tmp, file)
+    except BaseException:
+        if os.path.exists(tmp):
+            os.remove(tmp)
+        raise
 
 
 # ==================================================
@@ -1567,19 +1620,12 @@ class PyVistaWidget(QtInteractor):
         Args:
             filename (str): full file name.
         """
-        # rename.
-        file = Path(filename)
-        folder = file.parent.as_posix()
+        file = Path(filename).resolve()
+        f = file.as_posix()
 
-        # set current directory.
-        self.set_model(file.stem)
-        if folder != "":
-            os.chdir(folder)
-
-        # read.
-        f = file.resolve().as_posix()
-        self.clear_data()
-        self.clear_info()
+        # read (current data is kept if this fails).
+        ver = None
+        material = None
         if file.suffix == detail["extension"]:
             all_data = read_dict(f)
             ver = int(all_data["version"].split(".")[0])  # major version.
@@ -1587,10 +1633,60 @@ class PyVistaWidget(QtInteractor):
                 widget = PyVistaWidget(off_screen=True)
                 all_data = convert_version3(all_data, ver, widget)  # for old version.
                 widget.close()
+            required = ["status", "preference", "camera", "data"]
         elif file.suffix in detail["ext_material"]:
-            all_data = read_draw(f, self)
+            all_data, material = parse_draw(f)
+            required = ["status", "preference"]
         else:
             raise Exception(f"cannot read {file.suffix} file.")
+
+        missing = [key for key in required if not isinstance(all_data.get(key), dict)]
+        if missing:
+            raise Exception(f"cannot read {f}, missing {missing}.")
+        if material is None:
+            for object_type, rows in all_data["data"].items():
+                if object_type not in self._data.keys():
+                    raise Exception(f"cannot read {f}, unknown object type '{object_type}'.")
+                n = self._data[object_type].columnCount()
+                if not isinstance(rows, list) or any(not isinstance(row, list) or len(row) != n for row in rows):
+                    raise Exception(f"cannot read {f}, invalid data for '{object_type}'.")
+
+        # set data (current data is restored if this fails).
+        current = self._get_current_state()
+        try:
+            self._set_loaded_data(file, all_data, ver, material)
+        except BaseException:
+            try:
+                self._set_current_state(current)
+            except Exception as e:  # keep original exception.
+                self.write_info(f"* failed to restore current data: {e}")
+            raise
+        self.data_removed.emit()  # notify only after success, to keep data such as MultiPie panel on failure.
+
+    # ==================================================
+    def _set_loaded_data(self, file, all_data, ver, material):
+        """
+        Set loaded data.
+
+        Args:
+            file (Path): file name with absolute path.
+            all_data (dict): all data.
+            ver (int): major version for QtDraw file, None for material file.
+            material (dict): material info. to draw, None for QtDraw file.
+
+        :meta private:
+        """
+        f = file.as_posix()
+
+        # set current directory.
+        self.set_model(file.stem)
+        os.chdir(file.parent)
+
+        self._tab_group_view.close()
+        self._clear_rows()
+        self.clear_info()
+        if material is not None:
+            draw(self, f, all_data, material)
         self.write_info(f"* read from {f}.")
 
         # set data.
@@ -1603,7 +1699,7 @@ class PyVistaWidget(QtInteractor):
         if multipie:
             self.mp_set_group(status=multipie)
 
-        if file.suffix == detail["extension"]:
+        if material is None:
             if "distance" in all_data["camera"]:
                 del all_data["camera"]["distance"]
             self.add_data(all_data["data"])
@@ -1612,6 +1708,45 @@ class PyVistaWidget(QtInteractor):
                 self.reset_camera()
         else:
             self.set_view()
+
+    # ==================================================
+    def _get_current_state(self):
+        """
+        Get current state to restore it when loading fails.
+
+        Returns:
+            - (dict) -- current state.
+
+        :meta private:
+        """
+        return {
+            "cwd": os.getcwd(),
+            "data": self.get_data_dict(),
+            "status": copy.deepcopy(self._status),
+            "preference": copy.deepcopy(self._preference),
+            "camera": self.get_camera_info(),
+            "isosurface": dict(self._isosurface_data),
+            "multipie": self._mp_data,
+        }
+
+    # ==================================================
+    def _set_current_state(self, state):
+        """
+        Set state obtained by _get_current_state.
+
+        Args:
+            state (dict): state.
+
+        :meta private:
+        """
+        os.chdir(state["cwd"])
+        self._clear_rows()
+        self.clear_info()
+        self._isosurface_data = state["isosurface"]
+        self._mp_data = state["multipie"]
+        self.set_property(state["status"], state["preference"])
+        self.add_data(state["data"])
+        self.set_camera_info(state["camera"])
 
     # ==================================================
     def get_data_dict(self, home_cell=False):
@@ -1655,6 +1790,7 @@ class PyVistaWidget(QtInteractor):
         camera = self._backup["camera"]
         data = self._backup["data"]
 
+        self._clear_rows()
         self.set_property(status, preference)
         self.set_camera_info(camera)
         self.add_data(data)
@@ -1701,10 +1837,11 @@ class PyVistaWidget(QtInteractor):
 
         isosurface = self._backup["data"].get("isosurface")
         if isosurface and len(isosurface) > 0:
-            for iso in isosurface:
-                name = iso[COLUMN_ISOSURFACE_FILE]
-                with open(name, mode="w", encoding="utf-8") as f:
-                    print(self._isosurface_data[name], file=f)
+            for name in {iso[COLUMN_ISOSURFACE_FILE] for iso in isosurface}:
+                # imported .xsf is a source file, and is read again when loaded.
+                if name == "" or Path(name).suffix == ".xsf" or name not in self._isosurface_data:
+                    continue
+                write_text_atomic(name, str(self._isosurface_data[name]) + "\n")
 
         if self._mp_data is not None:
             self._backup["status"]["multipie"] = self._mp_data.status
@@ -1712,16 +1849,8 @@ class PyVistaWidget(QtInteractor):
         # write.
         file = file.resolve().as_posix()
         header = "\nQtDraw data file in Python dict format.\n"
-        with open(file, mode="w", encoding="utf-8") as f:
-            print('"""' + header + '"""', file=f)
-            print(self._backup, file=f)
-
-        # formatter.
-        try:
-            cmd = f"black --line-length=300 {filename}"
-            subprocess.run(cmd, capture_output=True, check=True, shell=True)
-        except:
-            pass
+        text = format_text('"""' + header + '"""\n' + str(self._backup) + "\n")
+        write_text_atomic(file, text)
 
         self.write_info(f"* write to {file}.")
 
@@ -2527,13 +2656,22 @@ class PyVistaWidget(QtInteractor):
         """
         Clear Data.
         """
-        self.deselect_actor_all()
         self._tab_group_view.close()
+        self._clear_rows()
+        self.data_removed.emit()
+
+    # ==================================================
+    def _clear_rows(self):
+        """
+        Clear all rows (isosurface data is kept).
+
+        :meta private:
+        """
+        self.deselect_actor_all()
         self._block_remove_isosurface = True
         for model in self._data.values():
             model.clear_data()
         self._block_remove_isosurface = False
-        self.data_removed.emit()
 
     # ==================================================
     def get_camera_info(self):
@@ -2798,7 +2936,9 @@ class PyVistaWidget(QtInteractor):
 
         if object_type == "isosurface" and not self._block_remove_isosurface:
             filename = row_data[COLUMN_ISOSURFACE_FILE]
-            if filename in self._isosurface_data.keys():
+            # the removed row is still in the model here.
+            n_used = sum(row[COLUMN_ISOSURFACE_FILE] == filename for row in self._data["isosurface"].tolist())
+            if filename in self._isosurface_data.keys() and n_used <= 1:
                 del self._isosurface_data[filename]
 
     # ==================================================
