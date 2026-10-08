@@ -149,6 +149,9 @@ def test_site_sphere_is_created_once_per_size(widget, monkeypatch):
 
     monkeypatch.setattr(pw, "create_sphere", spy)
     pw._site_sphere.cache_clear()
+    widget.set_crystal("hexagonal")
+    widget.set_unit_cell({"a": 2.0, "c": 3.0})
+    assert not np.allclose(widget.A_matrix, np.eye(4))  # positions are transformed.
 
     sites = [("[0,0,0]", 0.1), ("[1/2,0,0]", 0.1), ("[0,1/2,1/4]", 0.2)]
     for position, size in sites:
