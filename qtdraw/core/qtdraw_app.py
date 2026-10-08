@@ -212,9 +212,17 @@ class QtDraw(Window):
         file = Path.cwd() / (self.pyvista_widget._status["model"] + ext)
 
         ext_set = f"Image Files ({ifile});;Graphic Files ({gfile})"
-        filename, _ = QFileDialog.getSaveFileName(self, "Save Screenshot", str(file.name), ext_set)
+        filename, selected = QFileDialog.getSaveFileName(self, "Save Screenshot", str(file.name), ext_set)
+        if not filename:  # cancelled.
+            return
 
-        self.pyvista_widget.save_screenshot(filename)
+        # add extension of selected filter if not given.
+        filename = Path(filename)
+        if filename.suffix not in detail["image_file"] + detail["vector_file"]:
+            ext = detail["vector_file"][0] if selected.startswith("Graphic") else detail["image_file"][0]
+            filename = filename.with_name(filename.name + ext)
+
+        self.pyvista_widget.save_screenshot(str(filename))
 
     # ==================================================
     def create_panel(self, parent):
@@ -359,6 +367,9 @@ class QtDraw(Window):
         self.view_button_clip = Button(parent, text="clip", toggle=True)
         self.view_button_repeat = Button(parent, text="repeat", toggle=True)
         self.view_button_nonrepeat = Button(parent, text="non-repeat")
+        self.view_button_nonrepeat.setToolTip(
+            "Convert repeated copies into independent objects in the home cell (cannot be undone)."
+        )
 
         label_lower = Label(parent, text="lower")
         self.view_edit_lower = LineEdit(parent, "", validator=("list_float", {"shape": (3,), "var": [""], "digit": 2}))
@@ -1048,6 +1059,15 @@ class QtDraw(Window):
 
         :meta private:
         """
+        ret = QMessageBox.question(
+            self,
+            "non-repeat",
+            "Convert repeated copies into independent objects?\nThis cannot be undone.",
+            QMessageBox.Ok | QMessageBox.Cancel,
+            QMessageBox.Cancel,
+        )
+        if ret != QMessageBox.Ok:
+            return
         self.pyvista_widget.nonrepeat_data()
 
     # ==================================================
