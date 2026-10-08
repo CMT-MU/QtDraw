@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools", "Cython"]
+requires = ["setuptools>=61"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -9,7 +9,7 @@ dependencies = [
     "matplotlib",
     "PySide6",
     "pyvista",
-    "pyvistaqt",
+    "pyvistaqt>=0.13",
     "click",
     "pymatgen",
     "multipie>=2",
