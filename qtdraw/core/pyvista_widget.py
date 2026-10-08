@@ -3301,16 +3301,17 @@ class PyVistaWidget(QtInteractor):
         else:
             label_check = True
 
-        if not label_check:
-            label = row_data["label_actor"]
-            if label in self.actors.keys():
-                actor = self.actors[label]
-                actor.SetVisibility(False)
-        if not name_check:
-            name = row_data["name_actor"]
-            if name in self.actors.keys():
-                actor = self.actors[name]
-                actor.SetVisibility(False)
+        # hide existing actors (new rows have no actor yet).
+        hide = []
+        if not label_check and row_data["label_actor"]:
+            hide.append(row_data["label_actor"])
+        if not name_check and row_data["name_actor"]:
+            hide.append(row_data["name_actor"])
+        if hide:
+            actors = self.actors  # dict of all actors is created for each access.
+            for name in hide:
+                if name in actors:
+                    actors[name].SetVisibility(False)
 
         return name_check, label_check
 
