@@ -50,6 +50,8 @@ dev = [
     "ipython",
     "jupyter-book<2",
     "ghp-import",
+    "pytest",
+    "pytest-qt",
 ]
 
 [tool.setuptools.dynamic]
@@ -63,6 +65,11 @@ exclude = ["build", "tests"]
 
 [tool.black]
 line-length = 130
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+# PyVistaWidget redirects stderr at the file-descriptor level, which conflicts with pytest's output capture.
+addopts = "-s"
 
 [tool.build_sphinx]
 source-dir = 'docs'

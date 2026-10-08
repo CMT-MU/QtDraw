@@ -3,22 +3,17 @@ Convert QtDraw to version 3.
 """
 
 import click
-from pathlib import Path
 from qtdraw.core.pyvista_widget import convert_qtdraw_v3
+from qtdraw.scripts.qtdraw import resolve_file
 
 
 # ================================================== execute converter
 @click.command()
-@click.argument("filename", nargs=-1)
+@click.argument("filename")
 def cmd(filename):
     """
-    Convert QtDraw to version 2.
+    Convert QtDraw file of old version to version 3.
 
-        filename : `.qtdw` file.
+        FILENAME : `.qtdw` file, ".qtdw" can be omitted.
     """
-    n = len(filename)
-    if n != 1:
-        exit()
-
-    filename = Path(filename[0]).resolve()
-    convert_qtdraw_v3(filename)
+    convert_qtdraw_v3(resolve_file(filename))
