@@ -3,6 +3,8 @@ Regression tests for process-wide state changed by PyVistaWidget (stderr, tempor
 """
 
 import os
+import subprocess
+import sys
 from pathlib import Path
 
 import pytest
@@ -73,6 +75,45 @@ def test_stderr_is_restored_when_init_fails(qapp, monkeypatch):
 
 
 # ==================================================
+@pytest.mark.parametrize("inheritable", [False, True])
+def test_suppress_stderr_restores_descriptor(inheritable):
+    from qtdraw.core.pyvista_widget import _suppress_stderr
+
+    original = os.get_inheritable(2)
+    os.set_inheritable(2, inheritable)
+    try:
+        before = stderr_id()
+        with pytest.raises(ValueError):
+            with _suppress_stderr():
+                assert stderr_id() != before
+                with _suppress_stderr():  # nested.
+                    pass
+                assert stderr_id() != before
+                raise ValueError
+        assert stderr_id() == before
+        assert os.get_inheritable(2) == inheritable
+    finally:
+        os.set_inheritable(2, original)
+
+
+# ==================================================
+def test_suppress_stderr_without_stderr():
+    code = """
+import os
+os.close(2)
+from qtdraw.core.pyvista_widget import _suppress_stderr
+with _suppress_stderr():
+    pass
+try:
+    os.fstat(2)
+except OSError:
+    print("OK")
+"""
+    ret = subprocess.run([sys.executable, "-c", code], capture_output=True, text=True, timeout=120)
+    assert ret.returncode == 0 and "OK" in ret.stdout, ret.stdout + ret.stderr
+
+
+# ==================================================
 def test_widgets_created_in_any_order_keep_stderr(qapp):
     from qtdraw.core.pyvista_widget import PyVistaWidget
 
@@ -86,9 +127,10 @@ def test_widgets_created_in_any_order_keep_stderr(qapp):
 
 
 # ==================================================
-def test_create_qtdraw_file_closes_widget(qapp, tmp_path, spy_widgets):
+def test_create_qtdraw_file_closes_widget(qapp, tmp_path, monkeypatch, spy_widgets):
     from qtdraw.core.pyvista_widget import create_qtdraw_file
 
+    monkeypatch.chdir(tmp_path)  # save() changes directory.
     f = tmp_path / "a.qtdw"
     create_qtdraw_file(str(f), lambda w: w.add_site(position="[0,0,0]"))
 
@@ -148,3 +190,20 @@ def test_save_relative_path_in_subdirectory(widget, tmp_path):
 
     assert (tmp_path / "sub" / "a.qtdw").exists()
     assert not (tmp_path / "sub" / "sub").exists()
+
+
+# ==================================================
+def test_save_through_symlink_keeps_link_name(widget, tmp_path):
+    real = tmp_path / "real"
+    real.mkdir()
+    (real / "target.qtdw").write_text("")
+    link = tmp_path / "alias.qtdw"
+    link.symlink_to(real / "target.qtdw")
+    widget.add_site(position="[0,0,0]")
+
+    widget.save(str(link))
+
+    assert widget._status["model"] == "alias"
+    assert Path.cwd() == tmp_path
+    assert link.is_symlink()  # the file is written to the link target.
+    assert "site" in read_dict(str(real / "target.qtdw"))["data"]

@@ -254,6 +254,7 @@ def _suppress_stderr():
     """
     try:
         saved = os.dup(2)
+        inheritable = os.get_inheritable(2)
     except OSError:  # no stderr.
         yield
         return
@@ -265,7 +266,7 @@ def _suppress_stderr():
             os.close(dev)
         yield
     finally:
-        os.dup2(saved, 2)
+        os.dup2(saved, 2, inheritable=inheritable)
         os.close(saved)
 
 
@@ -1849,7 +1850,7 @@ class PyVistaWidget(QtInteractor):
             filename (str): full file name.
         """
         # rename.
-        file = Path(filename).resolve()  # resolve before changing directory.
+        file = Path(filename).absolute()  # make absolute before changing directory.
         self.set_model(file.stem)
         os.chdir(file.parent)
 
@@ -1871,7 +1872,7 @@ class PyVistaWidget(QtInteractor):
             self._backup["status"]["multipie"] = self._mp_data.status
 
         # write.
-        file = file.as_posix()
+        file = file.resolve().as_posix()
         header = "\nQtDraw data file in Python dict format.\n"
         text = format_text('"""' + header + '"""\n' + str(self._backup) + "\n")
         write_text_atomic(file, text)
