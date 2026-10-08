@@ -36,16 +36,33 @@ def test_check_hide_does_not_read_actors_for_new_rows(widget, count_actors):
 
 
 # ==================================================
-def test_check_hide_reads_actors_once(widget, count_actors):
-    widget.add_site(position="[0,0,0]", label="A")
-    name = next(iter(widget.actors))
+def test_check_hide_hides_existing_name_and_label(widget, count_actors):
+    from qtdraw.core.pyvista_widget_setting import COLUMN_NAME_ACTOR, COLUMN_LABEL_ACTOR
+
+    widget.add_site(position="[0,0,0]", name="A", label="a")
+    model = widget._data["site"]
+    model.setData(model.index(0, 0).siblingAtColumn(model.header.index("label_check")), "True")
+    stored = model.tolist()[0]
+    name, label = stored[COLUMN_NAME_ACTOR], stored[COLUMN_LABEL_ACTOR]
+    assert name and label and name != label
+    assert widget.actors[name].GetVisibility() and widget.actors[label].GetVisibility()
+
     count_actors["n"] = 0
-    name_check, label_check = widget.check_hide(
-        row(widget, name_check=False, label_check=False, name_actor=name, label_actor=name)
-    )
-    assert (name_check, label_check) == (False, False)
-    assert count_actors["n"] == 1
+    result = widget.check_hide(row(widget, name_check=False, label_check=True, name_actor=name, label_actor=label))
+    assert result == (False, False) and count_actors["n"] == 1
     assert not widget.actors[name].GetVisibility()
+    assert not widget.actors[label].GetVisibility()
+
+
+# ==================================================
+def test_check_hide_without_label_and_removed_actor(widget, count_actors):
+    # caption/text2d have no label: only the name actor is checked.
+    count_actors["n"] = 0
+    assert widget.check_hide(row(widget, name_check=True, name_actor="", label_actor="x"), no_label=True) == (True, True)
+    assert count_actors["n"] == 0
+    # an actor name that is no longer in the renderer is ignored.
+    assert widget.check_hide(row(widget, name_check=False, name_actor="removed-actor", label_actor="")) == (False, False)
+    assert count_actors["n"] == 1
 
 
 # ==================================================
