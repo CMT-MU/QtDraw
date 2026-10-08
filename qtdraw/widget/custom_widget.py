@@ -563,6 +563,7 @@ class LineEdit(QLineEdit):
             self._valid = True
             self._update_style()
             self._in_edit = False
+            self._edited = False  # edit is cancelled.
             return
 
         if k in (Qt.Key_Return, Qt.Key_Enter):

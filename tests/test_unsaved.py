@@ -225,3 +225,24 @@ def test_status_change_updates_title(app):
     QTest.mouseClick(app.view_button_clip, Qt.LeftButton)
     QTest.qWait(500)
     assert app.is_modified() and app.windowTitle().endswith(" *")
+
+
+# ==================================================
+def test_escape_cancels_edit_even_after_cursor_moves(qapp):
+    from qtdraw.widget.custom_widget import LineEdit
+
+    host = QWidget()
+    edit = LineEdit(host, "1.23456789", validator=("float", {"digit": 4}))
+    fired = []
+    edit.returnPressed.connect(lambda: fired.append(True))
+    host.show()
+    QTest.qWaitForWindowExposed(host)
+    type_into(edit, "2")
+    QTest.keyClick(edit, Qt.Key_Escape)
+    for key in [Qt.Key_Left, Qt.Key_Home, Qt.Key_End]:
+        QTest.keyClick(edit, key)
+    edit.commit_pending()
+    focus_away(edit)
+    assert fired == []
+    assert edit.raw_text() == "1.23456789"
+    host.close()
