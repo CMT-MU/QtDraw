@@ -578,7 +578,7 @@ class MultiPieData:
                         token = ""
                     depth -= 1
                     if depth < 0:
-                        return []
+                        return [], False
                     continue
 
                 if c == "," and depth == 2:
@@ -590,10 +590,10 @@ class MultiPieData:
                     token += c
 
             except Exception as e:
-                return []
+                return [], False
 
-        if depth != 0:
-            return []
+        if depth != 0 or any(len(r) != 4 for r in rows):
+            return [], False
 
         rows = [[r[0], r[1], "[" + r[2] + "]", r[3]] for r in rows]
 

@@ -8,7 +8,7 @@ import functools
 from contextlib import contextmanager
 import sys
 import logging
-from IPython.core import ultratb
+import traceback as tb
 from PySide6.QtCore import QObject, Signal, Qt
 from PySide6.QtGui import QFont, QFontDatabase, QPalette, QColor
 from PySide6.QtWidgets import QApplication
@@ -179,10 +179,17 @@ class ExceptionHook(QObject):
             sys.__excepthook__(type, value, traceback)  # ignore keyboard interrupt for console applications.
         else:
             bar = "---------------------------------------------------------------------------"
-            handler = ultratb.VerboseTB(color_scheme="NoColor", long_header=False)
-            log_msg = handler.text(type, value, traceback)
+            try:
+                from IPython.core import ultratb
+
+                handler = ultratb.VerboseTB(color_scheme="NoColor", long_header=False)
+                log_msg = handler.text(type, value, traceback)
+                simple = ultratb.SyntaxTB(theme_name="NoColor").text(type, value, traceback)
+            except ImportError:  # IPython is optional.
+                log_msg = "".join(tb.format_exception(type, value, traceback))
+                simple = "".join(tb.format_exception_only(type, value))
             log_msg += "\n" + bar
-            simple = "\n" + bar + "\n" + ultratb.SyntaxTB(theme_name="NoColor").text(type, value, traceback) + bar
+            simple = "\n" + bar + "\n" + simple + bar
             self.msg_signal.emit(log_msg)
             logging.critical(simple)
 

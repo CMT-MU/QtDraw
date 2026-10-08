@@ -5,7 +5,7 @@
 ## Requirements
 
 - Python ≥ 3.11
-- [Optional] A [MultiPie](https://github.com/CMT-MU/MultiPie) is recommended for using crystallographic symmetry operations.
+- [MultiPie](https://github.com/CMT-MU/MultiPie) provides crystallographic symmetry operations. It is installed automatically together with QtDraw.
 
 ## Installation
 
@@ -56,12 +56,12 @@
     playwright install chromium  # for Linux use `playwright install-deps chromium` instead.
     ```
 
-3. Install MultiPie
+3. Update MultiPie (optional)
 
-    Install the symmetry operation tool MultiPie:
+    The symmetry operation tool MultiPie is installed together with QtDraw. To update it to the latest version:
 
     ```bash
-    pip install multipie
+    pip install -U multipie
     ```
 
 - **Linux** (Ubuntu 22.04.4 LTS on WSL2)
@@ -94,6 +94,7 @@
         nohup qtdraw &> /dev/null &
     else
         nohup qtdraw "$1" &> /dev/null &
+    fi
     ```
 
     ![automator.jpg](fig/automator.jpg)

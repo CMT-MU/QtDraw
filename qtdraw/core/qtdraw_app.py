@@ -24,6 +24,23 @@ from qtdraw.util.util import check_multipie
 
 
 # ==================================================
+def add_extension(filename, ext):
+    """
+    Add extension to file name if it does not have it.
+
+    Args:
+        filename (Path): file name.
+        ext (str): extension with ".".
+
+    Returns:
+        - (Path) -- file name with extension.
+    """
+    if filename.suffix == ext:
+        return filename
+    return filename.with_name(filename.name + ext)
+
+
+# ==================================================
 class QtDraw(Window):
     # ==================================================
     def __init__(self, filename=None, status=None, preference=None):
@@ -201,13 +218,9 @@ class QtDraw(Window):
         filename, _ = QFileDialog.getSaveFileName(self, "Save File", str(file.name), ext_set, options=QFileDialog.Options())
 
         if filename:
-            filename = Path(filename)
-            cur_ext = filename.suffix
-            if cur_ext == "":
-                filename = filename / ext
-            if cur_ext == ext:
-                self.pyvista_widget.save(str(filename))
-                self._mark_saved()
+            filename = add_extension(Path(filename), ext)
+            self.pyvista_widget.save(str(filename))
+            self._mark_saved()
 
     # ==================================================
     def _save_screenshot(self):
