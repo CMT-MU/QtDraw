@@ -21,7 +21,7 @@ from PySide6.QtWidgets import (
     QToolTip,
 )
 from PySide6.QtGui import QPainter, QFont, QIcon
-from PySide6.QtCore import Signal, QSize, Qt
+from PySide6.QtCore import Signal, QSize, Qt, QTimer
 from PySide6.QtSvg import QSvgRenderer
 from xml.etree import ElementTree as ET
 
@@ -470,6 +470,7 @@ class LineEdit(QLineEdit):
         self._read_only = False
         self._valid = True
         self._in_edit = False
+        self._show_hint = False
         self._raw = ""
         self._validated = ""
 
@@ -564,17 +565,25 @@ class LineEdit(QLineEdit):
 
         if k in (Qt.Key_Return, Qt.Key_Enter):
             self.setText(self.text())
-            self.clearFocus()
             if self._valid:
+                self.clearFocus()
                 self.returnPressed.emit()
                 self._in_edit = False
-            elif self.toolTip():  # show accepted input.
-                QToolTip.showText(self.mapToGlobal(self.rect().bottomLeft()), self.toolTip(), self)
+            else:  # keep focus to correct it, and show accepted input after key release.
+                self._show_hint = bool(self.toolTip())
             return
 
         self._in_edit = True
 
         super().keyPressEvent(event)
+
+    # ==================================================
+    def keyReleaseEvent(self, event):
+        super().keyReleaseEvent(event)
+        if self._show_hint and event.key() in (Qt.Key_Return, Qt.Key_Enter):
+            self._show_hint = False
+            # show after the key event is fully processed, since key events hide tooltip.
+            QTimer.singleShot(0, lambda: QToolTip.showText(self.mapToGlobal(self.rect().bottomLeft()), self.toolTip(), self))
 
     # ==================================================
     def focusOutEvent(self, event):

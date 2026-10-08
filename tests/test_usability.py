@@ -236,3 +236,34 @@ def test_screenshot_does_not_ask_when_renamed_file_is_new(app, monkeypatch, tmp_
     app._save_screenshot()
     assert asked == []
     assert [Path(p).name for p in saved] == ["b.png"]
+
+
+# ==================================================
+def test_invalid_enter_shows_hint_and_keeps_focus(qapp):
+    from PySide6.QtCore import Qt
+    from PySide6.QtTest import QTest
+    from PySide6.QtWidgets import QToolTip, QWidget
+    from qtdraw.widget.custom_widget import LineEdit
+
+    host = QWidget()
+    edit = LineEdit(host, "[0,0,0]", validator=("list_float", {"shape": (3,), "var": [""]}))
+    host.show()
+    QTest.qWaitForWindowExposed(host)
+    returned = []
+    edit.returnPressed.connect(lambda: returned.append(True))
+
+    edit.setFocus()
+    edit.selectAll()
+    QTest.keyClicks(edit, "[1,2]")
+    QTest.keyClick(edit, Qt.Key_Return)
+    QTest.qWait(300)
+    assert QToolTip.isVisible() and "3 numbers" in QToolTip.text()  # still shown after key release.
+    assert edit.hasFocus() and returned == []  # can be corrected right away.
+
+    QToolTip.hideText()
+    edit.selectAll()
+    QTest.keyClicks(edit, "[1,2,3]")
+    QTest.keyClick(edit, Qt.Key_Return)
+    QTest.qWait(100)
+    assert returned == [True] and not edit.hasFocus()
+    host.close()
