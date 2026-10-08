@@ -17,7 +17,7 @@ Drawings are associated with crystallographic symmetry operations provided by [M
   - `conv_qtdraw3 [ver1_file.qtdw]` : Convert Version 1 `.qtdw` file into this version (Version 3).
 
 - **Requirements**:
-  - [Optional] Symmetry operation supports are provided by [MultiPie](https://github.com/CMT-MU/MultiPie).
+  - Symmetry operation supports are provided by [MultiPie](https://github.com/CMT-MU/MultiPie), which is installed together with QtDraw.
   - This project includes [MathJax](https://www.mathjax.org/), which is licensed under the Apache License 2.0.
 
 - **Citing QtDraw and MultiPie**: If you are using QtDraw and/or MultiPie in your scientific research, please help our scientific visibility by citing our work:
