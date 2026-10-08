@@ -566,9 +566,9 @@ class LineEdit(QLineEdit):
         if k in (Qt.Key_Return, Qt.Key_Enter):
             self.setText(self.text())
             if self._valid:
+                self._in_edit = False  # before clearFocus, not to apply it again in focusOutEvent.
                 self.clearFocus()
                 self.returnPressed.emit()
-                self._in_edit = False
             else:  # keep focus to correct it, and show accepted input after key release.
                 self._show_hint = bool(self.toolTip())
             return
@@ -587,11 +587,19 @@ class LineEdit(QLineEdit):
 
     # ==================================================
     def focusOutEvent(self, event):
-        if not self._in_edit:
+        commit = False
+        if self._in_edit:  # typed text not confirmed by Enter: apply it if valid, otherwise discard it.
+            self._in_edit = False
+            self._show_hint = False
+            self.setText(self.text())
+            commit = self._valid
+        if not commit:
             super().setText(self._validated)
             self._valid = True
             self._update_style()
         super().focusOutEvent(event)
+        if commit:
+            self.returnPressed.emit()
         self.focusOut.emit()
 
     # ==================================================

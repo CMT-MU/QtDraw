@@ -7,28 +7,7 @@ from pathlib import Path
 import pytest
 from PySide6.QtWidgets import QFileDialog, QMessageBox
 
-
-# ==================================================
-@pytest.fixture
-def app(qapp, tmp_path, monkeypatch):
-    from qtdraw.core.qtdraw_app import QtDraw
-
-    monkeypatch.chdir(tmp_path)
-    window = QtDraw()
-    yield window
-    monkeypatch.setattr(QMessageBox, "question", lambda *a, **k: QMessageBox.Ok)  # "Quit QtDraw ?".
-    window.close()
-
-
-def answer(monkeypatch, button):
-    asked = []
-
-    def question(*args, **kwargs):
-        asked.append(args)
-        return button
-
-    monkeypatch.setattr(QMessageBox, "question", question)
-    return asked
+from gui_helpers import app, answer  # noqa: F401  (fixture and helper)
 
 
 # ==================================================
