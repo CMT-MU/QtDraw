@@ -35,8 +35,8 @@ default_status = {
 default_preference = {
     "general": {
         "style": "fusion",  # "fusion/macos/windows"
-        "font": "Osaka",  # "Monaco/Osaka/Arial/Times New Roman/Helvetica Neue"
-        "size": 12,  # pixel
+        "font": "Osaka",  # font family, system default font is used if it is not installed.
+        "size": 12,  # point
         "color_scheme": "Jmol",  # "VESTA/Jmol"
     },
     "light": {

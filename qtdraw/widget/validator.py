@@ -340,3 +340,74 @@ def validator_orbital_site_bond(s, use_var=False):
     sb = validator_site_bond(sb, use_var)
 
     return None if v is None or sb is None else v + "#" + sb
+
+
+# ==================================================
+def validator_hint(vtype, option=None):
+    """
+    Explanation of accepted input for validator (used as tooltip).
+
+    Args:
+        vtype (str): validator type.
+        option (dict, optional): validator option.
+
+    Returns:
+        - (str) -- explanation.
+    """
+    if option is None:
+        option = {}
+
+    def value_range():
+        r_min, r_max = option.get("min", "*"), option.get("max", "*")
+        if r_min == "*" and r_max == "*":
+            return ""
+        if r_max == "*":
+            return f" (≥ {r_min})"
+        if r_min == "*":
+            return f" (≤ {r_max})"
+        return f" ({r_min} to {r_max})"
+
+    def shape_text(kind):
+        shape = option.get("shape", None)
+        if shape is None:
+            return f"{kind} or list of {kind}s"
+        if len(shape) == 0:
+            return kind
+        if len(shape) == 1:
+            if shape[0] == 0:  # 0 means any length.
+                return f"list of {kind}s of any length, e.g. [1] or [1,2]"
+            example = "[" + ",".join(["0"] * shape[0]) + "]"
+            return f"list of {shape[0]} {kind}s, e.g. {example}"
+        dims = ", ".join("n" if n == 0 else str(n) for n in shape)
+        return f"nested list of {kind}s with shape ({dims})" + (", n is any length" if 0 in shape else "")
+
+    def variables(var):
+        var = [v for v in (var or []) if v != ""]
+        return f" Variables: {', '.join(var)}." if var else ""
+
+    expression = " Expressions such as 1/2 or sqrt(3)/2 are accepted."
+    site = "[x,y,z], e.g. [1/2,0,0]"
+    bond = "[tail];[head], [vector]@[center] or [start]:[vector]"
+    xyz = " x, y, z can be used." if option.get("use_var", False) else ""
+
+    if vtype == "int":
+        return f"Integer{value_range()}."
+    if vtype == "float":
+        return f"Number{value_range()}."
+    if vtype == "list_float":
+        return f"Number: {shape_text('number')}.{expression}{variables(option.get('var'))}"
+    if vtype == "list_int":
+        return f"Integer: {shape_text('integer')}.{variables(option.get('var'))}"
+    if vtype == "math":
+        return f"Math expression: {shape_text('expression')}.{variables(option.get('var'))}"
+    if vtype == "site":
+        return f"Site {site}.{expression}{xyz}"
+    if vtype == "bond":
+        return f"Bond {bond}.{expression}{xyz}"
+    if vtype == "site_bond":
+        return f"Site {site}, or bond {bond}.{xyz}"
+    if vtype == "vector_site_bond":
+        return f"[vector]#[site or bond], e.g. [0,0,1]#[0,0,0]. Bond is {bond}.{xyz}"
+    if vtype == "orbital_site_bond":
+        return f"[orbital]#[site or bond], e.g. x*y#[0,0,0]. Orbital uses x, y, z, r. Bond is {bond}.{xyz}"
+    return ""

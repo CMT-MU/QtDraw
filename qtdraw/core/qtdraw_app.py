@@ -18,6 +18,7 @@ from qtdraw.core.dialog_about import AboutDialog
 from qtdraw.core.dialog_about import get_version_info
 from qtdraw.widget.custom_widget import Label, Layout, LineEdit, HBar, Button, Combo, VSpacer
 from qtdraw.widget.logging_util import LogWidget
+from qtdraw.widget.qt_event_util import busy_cursor, font_style_sheet
 from qtdraw.util.util import check_multipie
 
 
@@ -151,7 +152,8 @@ class QtDraw(Window):
 
         :meta private:
         """
-        self.pyvista_widget.load(filename)
+        with busy_cursor():
+            self.pyvista_widget.load(filename)
 
         # to avoid redraw object twice.
         # disconnect unit cell.
@@ -225,9 +227,24 @@ class QtDraw(Window):
         file = Path.cwd() / (self.pyvista_widget._status["model"] + ext)
 
         ext_set = f"Image Files ({ifile});;Graphic Files ({gfile})"
-        filename, _ = QFileDialog.getSaveFileName(self, "Save Screenshot", str(file.name), ext_set)
+        filename, selected = QFileDialog.getSaveFileName(self, "Save Screenshot", str(file.name), ext_set)
+        if not filename:  # cancelled.
+            return
 
-        self.pyvista_widget.save_screenshot(filename)
+        # add extension of selected filter if not given.
+        filename = Path(filename)
+        if filename.suffix not in detail["image_file"] + detail["vector_file"]:
+            ext = detail["vector_file"][0] if selected.startswith("Graphic") else detail["image_file"][0]
+            filename = filename.with_name(filename.name + ext)
+            # the dialog asked about the original name only.
+            if filename.exists():
+                ret = QMessageBox.question(
+                    self, "Save Screenshot", f"{filename.name} already exists.\nReplace it?", QMessageBox.Ok | QMessageBox.Cancel
+                )
+                if ret != QMessageBox.Ok:
+                    return
+
+        self.pyvista_widget.save_screenshot(str(filename))
 
     # ==================================================
     def create_panel(self, parent):
@@ -372,6 +389,9 @@ class QtDraw(Window):
         self.view_button_clip = Button(parent, text="clip", toggle=True)
         self.view_button_repeat = Button(parent, text="repeat", toggle=True)
         self.view_button_nonrepeat = Button(parent, text="non-repeat")
+        self.view_button_nonrepeat.setToolTip(
+            "Convert repeated copies into independent objects in the home cell (cannot be undone)."
+        )
 
         label_lower = Label(parent, text="lower")
         self.view_edit_lower = LineEdit(parent, "", validator=("list_float", {"shape": (3,), "var": [""], "digit": 2}))
@@ -588,7 +608,7 @@ class QtDraw(Window):
         self.app.setStyle(self.pyvista_widget._preference["general"]["style"])
         font_type = self.pyvista_widget._preference["general"]["font"]
         size = self.pyvista_widget._preference["general"]["size"]
-        self.app.setStyleSheet("QWidget { font-family: " + f"{font_type}" + "; font-size: " + f"{size}" + "pt; }")
+        self.app.setStyleSheet(font_style_sheet(font_type, size))
 
     # ==================================================
     def _update_title(self):
@@ -1061,7 +1081,17 @@ class QtDraw(Window):
 
         :meta private:
         """
-        self.pyvista_widget.nonrepeat_data()
+        ret = QMessageBox.question(
+            self,
+            "non-repeat",
+            "Convert repeated copies into independent objects?\nThis cannot be undone.",
+            QMessageBox.Ok | QMessageBox.Cancel,
+            QMessageBox.Cancel,
+        )
+        if ret != QMessageBox.Ok:
+            return
+        with busy_cursor():
+            self.pyvista_widget.nonrepeat_data()
 
     # ==================================================
     def _show_preference(self):

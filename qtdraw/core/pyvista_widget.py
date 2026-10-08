@@ -1861,7 +1861,7 @@ class PyVistaWidget(QtInteractor):
         Save screenshot to file.
 
         Args:
-            full_path (str): fullpath file name.
+            filename (str): file name, extension is one of image or vector file types.
         """
         file = Path(filename)
         f = file.resolve().as_posix()
@@ -1870,6 +1870,8 @@ class PyVistaWidget(QtInteractor):
             self.screenshot(f, transparent_background=True)
         elif file.suffix in detail["vector_file"]:
             self.save_graphic(f, "")
+        else:
+            raise ValueError(f"unsupported file type '{file.suffix}' for screenshot.")
 
         self.write_info(f"* write screenshot to {f}.")
 

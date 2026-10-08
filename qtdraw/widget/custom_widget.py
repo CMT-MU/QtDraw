@@ -18,14 +18,16 @@ from PySide6.QtWidgets import (
     QCheckBox,
     QSpacerItem,
     QApplication,
+    QToolTip,
 )
 from PySide6.QtGui import QPainter, QFont, QIcon
-from PySide6.QtCore import Signal, QSize, Qt
+from PySide6.QtCore import Signal, QSize, Qt, QTimer
 from PySide6.QtSvg import QSvgRenderer
 from xml.etree import ElementTree as ET
 
 from qtdraw.widget.color_selector_util import color2pixmap, color_palette
 from qtdraw.widget.validator import (
+    validator_hint,
     validator_int,
     validator_float,
     validator_list_int,
@@ -468,6 +470,7 @@ class LineEdit(QLineEdit):
         self._read_only = False
         self._valid = True
         self._in_edit = False
+        self._show_hint = False
         self._raw = ""
         self._validated = ""
 
@@ -492,6 +495,7 @@ class LineEdit(QLineEdit):
             "orbital_site_bond": validator_orbital_site_bond,
         }
         self._validator_func = lambda t: VALIDATORS[vtype](t, **option)
+        self.setToolTip(validator_hint(vtype, option))
 
     # ==================================================
     def setText(self, text):
@@ -561,15 +565,25 @@ class LineEdit(QLineEdit):
 
         if k in (Qt.Key_Return, Qt.Key_Enter):
             self.setText(self.text())
-            self.clearFocus()
             if self._valid:
+                self.clearFocus()
                 self.returnPressed.emit()
                 self._in_edit = False
+            else:  # keep focus to correct it, and show accepted input after key release.
+                self._show_hint = bool(self.toolTip())
             return
 
         self._in_edit = True
 
         super().keyPressEvent(event)
+
+    # ==================================================
+    def keyReleaseEvent(self, event):
+        super().keyReleaseEvent(event)
+        if self._show_hint and event.key() in (Qt.Key_Return, Qt.Key_Enter):
+            self._show_hint = False
+            # show after the key event is fully processed, since key events hide tooltip.
+            QTimer.singleShot(0, lambda: QToolTip.showText(self.mapToGlobal(self.rect().bottomLeft()), self.toolTip(), self))
 
     # ==================================================
     def focusOutEvent(self, event):
@@ -624,6 +638,7 @@ class Editor(Panel):
         self._math_mode = validator is not None and validator[0] == "math"
 
         self._editor = LineEdit(parent=parent, text=text, validator=validator, bold=bold, size=size)
+        self.setToolTip(self._editor.toolTip())
 
         validated = self._editor._validated or text
 

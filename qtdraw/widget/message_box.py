@@ -5,7 +5,7 @@ This module provides message box dialog.
 """
 
 from PySide6.QtWidgets import QDialog, QDialogButtonBox, QGridLayout, QPlainTextEdit
-from PySide6.QtGui import QFont
+from PySide6.QtGui import QFontDatabase
 
 
 # ==================================================
@@ -23,8 +23,8 @@ class MessageBox(QDialog):
         self.setWindowTitle(title)
         self.resize(800, 400)
 
-        font = QFont("Monaco", 11)
-        font.setStyleHint(QFont.TypeWriter)
+        font = QFontDatabase.systemFont(QFontDatabase.FixedFont)
+        font.setPointSize(11)
 
         text = QPlainTextEdit(msg, self)
         text.setFont(font)
