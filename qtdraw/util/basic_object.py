@@ -916,15 +916,11 @@ def create_isosurface(grid_data, value, surface_name):
     if surface is not None:
         surface = np.array(surface)
 
-    # convert data in column major.
+    # convert data in column major (x index runs fastest).
     if row_major:
-        data = data.reshape(n[0], n[1], n[2])
-        data = data[:, [2, 1, 0]]
-        data = data.reshape(n[0] * n[1] * n[2])
+        data = data.reshape(n[0], n[1], n[2]).ravel(order="F")
         if surface is not None:
-            surface = surface.reshape(n[0], n[1], n[2])
-            surface = surface[:, [2, 1, 0]]
-            surface = surface.reshape(n[0] * n[1] * n[2])
+            surface = surface.reshape(n[0], n[1], n[2]).ravel(order="F")
 
     r = origin + np.array([1.0, 1.0, 1.0])
     grid = create_grid(n, origin, r, A, endpoint)

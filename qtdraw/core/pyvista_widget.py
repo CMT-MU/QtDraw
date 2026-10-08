@@ -8,7 +8,6 @@ This module provides a class to draw various
 import os
 import sys
 from pathlib import Path
-import ast
 import subprocess
 import shutil
 import tempfile
@@ -2788,8 +2787,8 @@ class PyVistaWidget(QtInteractor):
             n = len(model)
             if object_type not in ["text2d", "caption"] and n > 0:
                 model = np.array(model, dtype=object)
-                pos = np.array(list(map(ast.literal_eval, model[:, COLUMN_POSITION])))
-                cell = np.array(list(map(ast.literal_eval, model[:, COLUMN_CELL])))
+                pos = np.array([str_to_sympy(i, rational=False).astype(float) for i in model[:, COLUMN_POSITION]])
+                cell = np.array([str_to_sympy(i).astype(int) for i in model[:, COLUMN_CELL]])
                 pos += cell
                 pos = np.array(list(map(str, pos.tolist())), dtype=object)
                 model[:, COLUMN_POSITION] = pos
@@ -3948,7 +3947,7 @@ class PyVistaWidget(QtInteractor):
             return
 
         grid_data = self._isosurface_data[data_name]
-        if surface not in grid_data["surface"].keys():
+        if surface not in (grid_data["surface"] or {}).keys():
             surface = ""
 
         obj = create_isosurface(grid_data, value, surface)
