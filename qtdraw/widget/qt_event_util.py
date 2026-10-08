@@ -4,6 +4,8 @@ Control Qt event loop.
 This module provides functions to control Qt event loop.
 """
 
+import functools
+from contextlib import contextmanager
 import sys
 import logging
 from IPython.core import ultratb
@@ -78,6 +80,33 @@ def get_qt_application():
     app.setPalette(palette)
 
     return app
+
+
+# ==================================================
+@contextmanager
+def busy_cursor():
+    """
+    Show wait cursor during long operation.
+    """
+    QApplication.setOverrideCursor(Qt.WaitCursor)
+    try:
+        yield
+    finally:
+        QApplication.restoreOverrideCursor()
+
+
+# ==================================================
+def with_busy_cursor(func):
+    """
+    Decorator to show wait cursor while func is running.
+    """
+
+    @functools.wraps(func)
+    def wrapper(*args, **kwargs):
+        with busy_cursor():
+            return func(*args, **kwargs)
+
+    return wrapper
 
 
 # ==================================================

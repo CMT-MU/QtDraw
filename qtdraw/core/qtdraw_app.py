@@ -18,6 +18,7 @@ from qtdraw.core.dialog_about import AboutDialog
 from qtdraw.core.dialog_about import get_version_info
 from qtdraw.widget.custom_widget import Label, Layout, LineEdit, HBar, Button, Combo, VSpacer
 from qtdraw.widget.logging_util import LogWidget
+from qtdraw.widget.qt_event_util import busy_cursor
 from qtdraw.util.util import check_multipie
 
 
@@ -134,7 +135,8 @@ class QtDraw(Window):
 
         :meta private:
         """
-        self.pyvista_widget.load(filename)
+        with busy_cursor():
+            self.pyvista_widget.load(filename)
 
         # to avoid redraw object twice.
         # disconnect unit cell.
@@ -1068,7 +1070,8 @@ class QtDraw(Window):
         )
         if ret != QMessageBox.Ok:
             return
-        self.pyvista_widget.nonrepeat_data()
+        with busy_cursor():
+            self.pyvista_widget.nonrepeat_data()
 
     # ==================================================
     def _show_preference(self):

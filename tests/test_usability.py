@@ -118,3 +118,51 @@ def test_line_edit_has_hint_tooltip(qapp):
 def test_main_panel_fields_have_hints(app):
     for edit in [app.uc_edit_origin, app.uc_edit_a, app.view_edit_lower, app.view_edit_upper]:
         assert edit.toolTip() != ""
+
+
+# ==================================================
+def test_busy_cursor_is_restored(qapp):
+    from PySide6.QtCore import Qt
+    from PySide6.QtWidgets import QApplication
+    from qtdraw.widget.qt_event_util import busy_cursor, with_busy_cursor
+
+    @with_busy_cursor
+    def work():
+        return QApplication.overrideCursor().shape()
+
+    assert work() == Qt.WaitCursor
+    assert work.__name__ == "work"
+    assert QApplication.overrideCursor() is None
+
+    with pytest.raises(RuntimeError):
+        with busy_cursor():
+            raise RuntimeError("failed")
+    assert QApplication.overrideCursor() is None  # restored even on error.
+
+
+# ==================================================
+def test_long_operations_show_wait_cursor(app, monkeypatch):
+    from PySide6.QtCore import Qt
+    from PySide6.QtWidgets import QApplication
+
+    shapes = []
+    record = lambda *a, **k: shapes.append(QApplication.overrideCursor() and QApplication.overrideCursor().shape())
+    monkeypatch.setattr(app.pyvista_widget, "load", record)
+    monkeypatch.setattr(app.pyvista_widget, "nonrepeat_data", record)
+    monkeypatch.setattr(app, "_update_panel", lambda: None)
+    answer(monkeypatch, QMessageBox.Ok)
+
+    app.load_file("dummy.qtdw")
+    app._nonrepeat()
+    assert shapes == [Qt.WaitCursor, Qt.WaitCursor]
+    assert QApplication.overrideCursor() is None
+
+
+# ==================================================
+def test_multipie_info_dialogs_show_wait_cursor():
+    import inspect
+    from qtdraw.multipie import multipie_info_dialog as m
+
+    functions = [f for name, f in inspect.getmembers(m, inspect.isfunction) if name.startswith("show_")]
+    assert len(functions) == 14
+    assert all(hasattr(f, "__wrapped__") for f in functions)
