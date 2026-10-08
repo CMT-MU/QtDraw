@@ -5,7 +5,9 @@ This module provides mathjax to SVG converter.
 """
 
 import re
+import html
 import hashlib
+import logging
 from pathlib import Path
 import asyncio
 import threading
@@ -51,13 +53,17 @@ class MathJaxSVG:
     _SVG_NS = "http://www.w3.org/2000/svg"
 
     # ===============================
-    def __init__(self, cache_dir=None, clear_cache=False):
+    def __init__(self, cache_dir=None, clear_cache=False, timeout=60):
         """
         MathJax converter.
 
         Args:
             cache_dir (str, optional): cache directory.
             clear_cache (bool, optional): clear disk cache ?
+            timeout (float, optional): timeout [s] to start browser.
+
+        Note:
+            - if browser is not available, LaTeX code is shown as plain text.
         """
         self._svg_cache = {}  # memory cache.
 
@@ -76,25 +82,56 @@ class MathJaxSVG:
         ET.register_namespace("", self._SVG_NS)
 
         # run event loop in independent thread.
+        self._playwright = None
+        self._browser = None
+        self._error = None
+        self._ready = threading.Event()
+        self._init_task = None
+        self._shutdown_task = None
+        self._closed = False
+        self._close_lock = threading.Lock()
+        self._loop = asyncio.new_event_loop()
         self._thread = threading.Thread(target=self._thread_main, daemon=True)
         self._thread.start()
+        self._init_future = asyncio.run_coroutine_threadsafe(self._async_init(), self._loop)
 
         # wait for execution of playwright.
-        self._ready = threading.Event()
-        self._ready.wait()
+        if not self._ready.wait(timeout):
+            self._error = TimeoutError(f"browser did not start in {timeout} s.")
+        if self._error is not None:
+            asyncio.run_coroutine_threadsafe(self._async_shutdown(), self._loop)  # release resources in background.
+            logging.warning(
+                f"MathJax is not available ({self._error}), LaTeX is shown as plain text. "
+                "Install browser by 'playwright install chromium'."
+            )
+
+    # ===============================
+    @property
+    def available(self):
+        """
+        Is MathJax available ?
+
+        Returns:
+            - (bool) -- available ?
+        """
+        return self._error is None and self._browser is not None
 
     # =============================== event loop in thread.
     def _thread_main(self):
-        self._loop = asyncio.new_event_loop()
         asyncio.set_event_loop(self._loop)
-        self._loop.create_task(self._async_init())
         self._loop.run_forever()
+        self._loop.close()
 
     # ===============================
     async def _async_init(self):
-        self._playwright = await async_playwright().start()
-        self._browser = await self._playwright.chromium.launch(headless=True)
-        self._ready.set()  # complete execution.
+        self._init_task = asyncio.current_task()
+        try:
+            self._playwright = await async_playwright().start()
+            self._browser = await self._playwright.chromium.launch(headless=True)
+        except Exception as e:  # resources are released by _async_shutdown.
+            self._error = e
+        finally:
+            self._ready.set()  # complete execution.
 
     # ===============================
     def convert(self, latex, color="black", size=10):
@@ -110,7 +147,41 @@ class MathJaxSVG:
             - (str) -- SVG string.
             - (tuple) -- width and height.
         """
+        if not self.available:
+            return self._convert_plain(latex, color, size)
         return asyncio.run_coroutine_threadsafe(self._convert_async(latex, color, size), self._loop).result()
+
+    # ===============================
+    def _convert_plain(self, latex, color, size):
+        """
+        Convert latex to SVG string as plain text (when MathJax is not available).
+
+        Args:
+            latex (str): LaTeX code w/o $.
+            color (str): color name.
+            size (int): point.
+
+        Returns:
+            - (str) -- SVG string.
+            - (tuple) -- width and height.
+        """
+        text = latex.strip()
+        for d in ["$$", "$"]:
+            if len(text) >= 2 * len(d) and text.startswith(d) and text.endswith(d):
+                text = text[len(d) : -len(d)]
+                break
+        w = 600 * max(len(text), 1)
+        svg_str = (
+            f'<svg xmlns="{self._SVG_NS}" viewBox="0 0 {w} 1200">'
+            f'<text x="0" y="950" font-size="1000" fill="currentColor">{html.escape(text)}</text>'
+            "</svg>"
+        )
+
+        scale = size / 1000.0
+        wh = int(w * scale + 0.99999), int(1200 * scale + 0.99999)
+        svg_str = self._replace_attribute(svg_str, "fill", f"{all_colors[color][0]}")
+
+        return svg_str, wh
 
     # =============================== implementaion for convert with async for Jupyter.
     async def _convert_async(self, latex, color, size):
@@ -157,14 +228,43 @@ class MathJaxSVG:
             if not cache_path.exists():
                 cache_path.write_text(svg_str)
 
-        # close browser and playwright.
-        asyncio.run_coroutine_threadsafe(self._async_close(), self._loop).result()
-        self._loop.call_soon_threadsafe(self._loop.stop)
+        # close browser and playwright, and stop event loop (only once, other callers wait for it).
+        with self._close_lock:
+            if self._closed:
+                return
+            self._closed = True
+            asyncio.run_coroutine_threadsafe(self._async_shutdown(), self._loop).result()
+            self._loop.call_soon_threadsafe(self._loop.stop)
+            self._thread.join()
 
     # ===============================
-    async def _async_close(self):
-        await self._browser.close()
-        await self._playwright.stop()
+    async def _async_shutdown(self):
+        # release resources only once, every caller waits for its completion.
+        if self._shutdown_task is None:
+            self._shutdown_task = asyncio.ensure_future(self._async_release())
+        await asyncio.shield(self._shutdown_task)
+
+    # ===============================
+    async def _async_release(self):
+        # cancel and wait for unfinished initialization.
+        self._init_future.cancel()
+        task = self._init_task
+        if task is not None and not task.done():
+            task.cancel()
+            try:
+                await task
+            except asyncio.CancelledError:
+                pass
+
+        # close browser and playwright.
+        try:
+            if self._browser is not None:
+                await self._browser.close()
+        finally:
+            if self._playwright is not None:
+                await self._playwright.stop()
+            self._browser = None
+            self._playwright = None
 
     # ===============================
     def _get_cache_path(self, latex):
