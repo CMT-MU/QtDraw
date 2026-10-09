@@ -134,23 +134,25 @@ def convert_str_vector(vector, cell="[0,0,0]", transform=True, A=None):
 
 
 # ==================================================
-def split_filename(filename):
+def split_filename(filename, base=None):
     """
     Split file name.
 
     Args:
         filename (str): filename.
+        base (Path, optional): directory a relative filename is relative to, default is the current directory.
 
     Returns:
         - (str) -- filename with absolute path.
-        - (str) -- filename with relative path.
+        - (str) -- filename with path relative to base.
         - (str) -- base filename.
         - (str) -- extension.
         - (str) -- directory.
     """
+    base = Path.cwd() if base is None else Path(base)
     path = Path(filename)
-    path_abs = path if path.is_absolute() else (Path.cwd() / path).resolve()
-    path_rel = relative_path(path_abs, Path.cwd())
+    path_abs = path if path.is_absolute() else (base / path).resolve()
+    path_rel = relative_path(path_abs, base)
     base = str(path_rel.stem)
     ext = str(path_rel.suffix)
     folder = str(path_abs.parent)
@@ -367,11 +369,12 @@ def create_qtdraw_file(filename, callback):
         filename (str): full filename.
         callback (function): callback to draw objects, f(widget).
     """
+    filename = Path(filename).absolute()  # before the callback, which may change the current directory.
     app = get_qt_application()
     widget = PyVistaWidget(off_screen=True)
     try:
         callback(widget)
-        widget.save(filename)
+        widget.save(str(filename))
     finally:
         widget.close()
     app.quit()
@@ -385,13 +388,12 @@ def convert_qtdraw_v3(filename):
     Args:
         filename (str): filename.
     """
+    src = Path(filename).absolute().resolve()  # a symbolic link is followed, as load() does.
     app = get_qt_application()
     widget = PyVistaWidget(off_screen=True)
     try:
-        widget.load(filename)
-        path_abs, path_rel, base, ext, folder = split_filename(filename)
-        filename2 = cat_filename(base + "_v3", ext)
-        widget.save(filename2)
+        widget.load(str(src))
+        widget.save(str(src.with_name(src.stem + "_v3" + src.suffix)))  # next to the source.
     finally:
         widget.close()
     app.quit()
@@ -447,6 +449,7 @@ class PyVistaWidget(QtInteractor):
 
         # set default.
         self._off_screen = off_screen
+        self._document_dir = None  # directory of the drawing file, data file names are relative to it.
         self.clear_info()
 
         # set interactor (suppress messages of VTK and Qt during initialization only).
@@ -1736,7 +1739,10 @@ class PyVistaWidget(QtInteractor):
         Load all info.
 
         Args:
-            filename (str): full file name.
+            filename (str): file name, relative to the current directory.
+
+        Note:
+            - data file names of isosurfaces in the file are relative to its directory; the current directory is not changed.
         """
         file = Path(filename).resolve()
         f = file.as_posix()
@@ -1805,9 +1811,9 @@ class PyVistaWidget(QtInteractor):
         """
         f = file.as_posix()
 
-        # set current directory.
+        # data file names of the drawing are relative to its directory.
         self.set_model(file.stem)
-        os.chdir(file.parent)
+        self._document_dir = file.parent
 
         self._tab_group_view.close()
         self._clear_rows()
@@ -1924,7 +1930,7 @@ class PyVistaWidget(QtInteractor):
         :meta private:
         """
         return {
-            "cwd": os.getcwd(),
+            "document_dir": self._document_dir,
             "data": self.get_data_dict(),
             "status": copy.deepcopy(self._status),
             "preference": copy.deepcopy(self._preference),
@@ -1944,7 +1950,7 @@ class PyVistaWidget(QtInteractor):
 
         :meta private:
         """
-        os.chdir(state["cwd"])
+        self._document_dir = state["document_dir"]
         self._clear_rows()
         self.clear_info()
         self._isosurface_data = state["isosurface"]
@@ -2025,14 +2031,20 @@ class PyVistaWidget(QtInteractor):
         save all info.
 
         Args:
-            filename (str): full file name.
+            filename (str): file name, relative to the current directory.
+
+        Note:
+            - data file names of isosurfaces are made relative to the directory of the file, and data given
+              without a file is written there. These files and the drawing are written one by one (each atomically):
+              if writing fails, data files written before stay, and an existing data file may already be replaced.
         """
-        # rename.
-        file = Path(filename).absolute()  # make absolute before changing directory.
-        self.set_model(file.stem)
-        cwd = Path.cwd()
-        os.chdir(file.parent)
-        self._rebase_isosurface_data(cwd, file.parent)
+        given = Path(filename).absolute()  # the name (also of a symbolic link) gives the model name.
+        file = given.resolve()  # written to the target of a symbolic link; data are relative to its directory.
+        if not file.parent.is_dir():
+            raise FileNotFoundError(f"no directory {file.parent}.")
+        self.set_model(given.stem)
+        self._rebase_isosurface_data(self.document_dir(), file.parent)
+        self._document_dir = file.parent
 
         # set self._backup.
         self.save_current()
@@ -2047,15 +2059,15 @@ class PyVistaWidget(QtInteractor):
                 if name == "" or Path(name).suffix == ".xsf" or name not in self._isosurface_data:
                     continue
                 # data read from a file is not written again: the file is the source, wherever it is.
-                if name not in self._isosurface_in_memory and Path(name).exists():
+                if name not in self._isosurface_in_memory and (file.parent / name).exists():
                     continue
-                write_text_atomic(name, str(self._isosurface_data[name]) + "\n")
+                write_text_atomic(file.parent / name, str(self._isosurface_data[name]) + "\n")
 
         if self._mp_data is not None:
             self._backup["status"]["multipie"] = self._mp_data.status
 
         # write.
-        file = file.resolve().as_posix()
+        file = file.as_posix()
         header = "\nQtDraw data file in Python dict format.\n"
         text = format_text('"""' + header + '"""\n' + str(self._backup) + "\n")
         write_text_atomic(file, text)
@@ -4482,6 +4494,16 @@ class PyVistaWidget(QtInteractor):
         self.set_actor(object_type, index, actor + "-labels", COLUMN_LABEL_ACTOR)
 
     # ==================================================
+    def document_dir(self):
+        """
+        Directory that data file names of the drawing are relative to.
+
+        Returns:
+            - (Path) -- directory of the drawing file, or the current directory if it was never loaded or saved.
+        """
+        return self._document_dir if self._document_dir is not None else Path.cwd()
+
+    # ==================================================
     def set_isosurface_data(self, filename):
         """
         Set isosurface data.
@@ -4494,7 +4516,7 @@ class PyVistaWidget(QtInteractor):
 
         :meta private:
         """
-        path_abs, path_rel, base, ext, folder = split_filename(filename)
+        path_abs, path_rel, base, ext, folder = split_filename(filename, self.document_dir())
         if os.path.exists(path_abs):
             if type(filename) != tuple:
                 if ext == ".xsf":

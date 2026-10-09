@@ -18,6 +18,11 @@ A change is recorded when the event loop runs after it, so the calls in one Jupy
 If the calls run the event loop themselves (e.g. a dialog or `processEvents()`), they may be split into several steps.
 `PyVistaWidget` used alone has no history.
 
+## Files and directories
+
+`load()` and `save()` do not change the current directory. A file name given to them is relative to the current directory.
+Data files of isosurfaces (e.g. `add_isosurface(data="grid.dat")`) are relative to the directory of the drawing file once it is loaded or saved, and to the current directory before that.
+
 ## API in QtDraw
 
 ```{eval-rst}
