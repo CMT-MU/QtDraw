@@ -15,7 +15,7 @@ which is necessary to use other Qt functionalities.
 
 import copy
 from PySide6.QtGui import QStandardItemModel, QStandardItem
-from PySide6.QtCore import Signal, Qt, QModelIndex, QTimer
+from PySide6.QtCore import Signal, Qt, QModelIndex, QPersistentModelIndex, QTimer
 
 from qtdraw.core.pyvista_widget_setting import CUSTOM_WIDGET, COLUMN_NAME_ACTOR, COLUMN_LABEL_ACTOR
 
@@ -51,6 +51,7 @@ class GroupModel(QStandardItemModel):
             column_info = []
 
         self._name = name
+        self._pending_renames = []
 
         self.setHorizontalHeaderLabels(column_info.keys())
         self.column_type = []
@@ -408,6 +409,28 @@ class GroupModel(QStandardItemModel):
             self.removeRow(index.row(), index.parent())
 
     # ==================================================
+    def _run_rename(self, rename):
+        """
+        Run a deferred rename once.
+
+        :meta private:
+        """
+        if rename not in self._pending_renames:
+            return
+        self._pending_renames.remove(rename)
+        index, value = rename
+        if index.isValid():
+            self.move_row(QModelIndex(index), value)
+
+    # ==================================================
+    def run_pending_renames(self):
+        """
+        Run deferred group renames now.
+        """
+        for rename in list(self._pending_renames):
+            self._run_rename(rename)
+
+    # ==================================================
     def move_row(self, index, value):
         """
         Move row.
@@ -548,8 +571,10 @@ class GroupModel(QStandardItemModel):
 
         # move (special case).
         if role == Qt.EditRole and index.column() == 0:
-            # in order to close the editor, timer is used.
-            QTimer.singleShot(0, lambda: self.move_row(index, value))
+            # in order to close the editor, timer is used; run_pending_renames() can run it earlier.
+            rename = [QPersistentModelIndex(index), value]
+            self._pending_renames.append(rename)
+            QTimer.singleShot(0, lambda: self._run_rename(rename))
             return True
 
         # update all children.

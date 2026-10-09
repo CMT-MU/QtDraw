@@ -339,6 +339,7 @@ class PyVistaWidget(QtInteractor):
     message = Signal(str)  #: :meta private:
     # none.
     data_removed = Signal()  #: :meta private:
+    document_changed = Signal()  #: :meta private:
     # view index.
     camera_view = Signal(list)  #: :meta private:
 
@@ -1535,7 +1536,7 @@ class PyVistaWidget(QtInteractor):
             if type(data) == tuple:
                 name, dic = data
                 row_data["data"] = name
-                self._isosurface_data[name] = dic
+                self._isosurface_data[name] = copy.deepcopy(dic)  # owned by QtDraw, so history can keep it.
             else:
                 row_data["data"] = self.set_isosurface_data(data)
 
@@ -2157,6 +2158,7 @@ class PyVistaWidget(QtInteractor):
             self._status["crystal"] = crystal
 
         self.set_unit_cell()
+        self.document_changed.emit()
 
     # ==================================================
     def set_origin(self, origin=None):
@@ -2176,6 +2178,7 @@ class PyVistaWidget(QtInteractor):
             self._status["origin"] = origin
 
         self.set_cell()
+        self.document_changed.emit()
 
     # ==================================================
     def set_unit_cell(self, cell=None):
@@ -2196,6 +2199,7 @@ class PyVistaWidget(QtInteractor):
 
         self.set_cell()
         self.redraw()
+        self.document_changed.emit()
 
     # ==================================================
     def set_clip(self, mode=None):
@@ -2217,6 +2221,7 @@ class PyVistaWidget(QtInteractor):
             self.hide_outside_actor()
         else:
             self.show_outside_actor()
+        self.document_changed.emit()
 
     # ==================================================
     def hide_outside_actor(self):
@@ -2317,6 +2322,7 @@ class PyVistaWidget(QtInteractor):
             self._status["repeat"] = mode
 
         self.repeat_data()
+        self.document_changed.emit()
 
     # ==================================================
     def set_range(self, lower=None, upper=None):
@@ -2354,6 +2360,7 @@ class PyVistaWidget(QtInteractor):
 
         self.set_cell()
         self.set_repeat()
+        self.document_changed.emit()
 
     # ==================================================
     def set_view(self, view=None):
@@ -2806,6 +2813,7 @@ class PyVistaWidget(QtInteractor):
         Transform data to non-repeat data.
         """
         self.nonrepeat_data()
+        self.document_changed.emit()
 
     # ==================================================
     def nonrepeat_data(self):
@@ -4408,6 +4416,7 @@ class PyVistaWidget(QtInteractor):
 
         self._mp_data = MultiPieData(self)
         self._mp_data.set_status(status, group)
+        self.document_changed.emit()
 
     # ==================================================
     def mp_add_site(self, site, size=None, color=None, opacity=None):
