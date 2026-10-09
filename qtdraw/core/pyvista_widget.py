@@ -176,6 +176,21 @@ def relative_path(path, start):
 
 
 # ==================================================
+def is_outside(name):
+    """
+    Is a relative file name outside the current directory ?
+
+    Args:
+        name (str): file name.
+
+    Returns:
+        - (bool) -- outside ? True also for absolute names and names with a drive.
+    """
+    path = Path(os.path.normpath(name))
+    return path.is_absolute() or path.drive != "" or (len(path.parts) > 0 and path.parts[0] == "..")
+
+
+# ==================================================
 def cat_filename(base, ext=None):
     """
     Cat filename.
@@ -1891,7 +1906,7 @@ class PyVistaWidget(QtInteractor):
                 if name == "" or Path(name).suffix == ".xsf" or name not in self._isosurface_data:
                     continue
                 # a data file outside the saved directory is a source file, and is not overwritten.
-                if Path(name).is_absolute() or ".." in Path(name).parts:
+                if name not in self._isosurface_in_memory and is_outside(name):
                     continue
                 write_text_atomic(name, str(self._isosurface_data[name]) + "\n")
 
@@ -1921,28 +1936,40 @@ class PyVistaWidget(QtInteractor):
 
         :meta private:
         """
-        if Path(old_dir).resolve() == Path(new_dir).resolve():
+        old_dir = Path(old_dir).resolve()
+        new_dir = Path(new_dir).resolve()  # compare and relate real paths, also through symbolic links.
+        if old_dir == new_dir:
             return
 
+        # all rows, also those grouped under a parent row.
         model = self._data["isosurface"]
-        rename = {}
-        for row in range(model.rowCount()):
-            index = model.index(row, 0)
-            name = model.get_row_data(index)[COLUMN_ISOSURFACE_FILE]
-            if name == "":
-                continue
-            if name not in rename:
-                source = Path(old_dir) / name
-                if name in self._isosurface_in_memory or not source.exists():
-                    rename[name] = name
-                else:
-                    rename[name] = relative_path(source.resolve(), new_dir).as_posix()
-            if rename[name] != name:
-                model.set_row_data(index, COLUMN_ISOSURFACE_FILE, rename[name])
+        root = model.invisibleRootItem()
+        indexes = []
+        for parent_row in range(root.rowCount()):
+            item = root.child(parent_row)
+            if item.hasChildren():
+                indexes += [item.child(row).index() for row in range(item.rowCount())]
+            else:
+                indexes.append(item.index())
 
-        for name, new_name in rename.items():
-            if new_name != name and name in self._isosurface_data:
-                self._isosurface_data[new_name] = self._isosurface_data.pop(name)
+        names = {model.get_row_data(index)[COLUMN_ISOSURFACE_FILE] for index in indexes} - {""}
+        rename = {}
+        for name in names:
+            source = old_dir / name
+            if name not in self._isosurface_in_memory and source.exists():
+                new_name = relative_path(source.resolve(), new_dir).as_posix()
+                if new_name != name:
+                    rename[name] = new_name
+        # do not rename onto a name that stays in use for other data.
+        rename = {name: new_name for name, new_name in rename.items() if new_name not in names - rename.keys()}
+        if not rename:
+            return
+
+        for index in indexes:
+            name = model.get_row_data(index)[COLUMN_ISOSURFACE_FILE]
+            if name in rename:
+                model.set_row_data(index, COLUMN_ISOSURFACE_FILE, rename[name])
+        self._isosurface_data = {rename.get(name, name): data for name, data in self._isosurface_data.items()}
 
     # ==================================================
     def save_screenshot(self, filename):

@@ -129,3 +129,58 @@ def test_data_given_in_memory_is_not_replaced_by_a_file_of_the_same_name(widget,
     assert saved_names(tmp_path / "other" / "a.qtdw") == ["grid.dat"]  # not "../work/grid.dat".
     assert read_dict(str(tmp_path / "other" / "grid.dat")) == grid
     assert (tmp_path / "work" / "grid.dat").read_text() == "{'stale': 'file'}"
+
+
+# ==================================================
+def test_grouped_rows_are_rebased(widget, tmp_path):
+    make_dirs(tmp_path)
+    (tmp_path / "other" / "deep").mkdir()
+    shutil.copy(tmp_path / "data" / "Si.xsf", tmp_path / "data" / "Si2.xsf")
+    widget.add_isosurface(data="../data/Si.xsf", value=[0.01], name="A")
+    widget.add_isosurface(data="../data/Si2.xsf", value=[0.02], name="A")  # grouped under "A".
+
+    widget.save(str(tmp_path / "other" / "deep" / "a.qtdw"))
+
+    assert sorted(saved_names(tmp_path / "other" / "deep" / "a.qtdw")) == ["../../data/Si.xsf", "../../data/Si2.xsf"]
+    widget.clear_data()
+    widget.load(str(tmp_path / "other" / "deep" / "a.qtdw"))
+    assert len(isosurface_rows(widget)) == 2 and is_drawn(widget)
+
+
+# ==================================================
+def test_rebase_does_not_mix_up_data(widget, tmp_path):
+    # saving from work into work/sub: "a.dat" -> "../a.dat" and "../a.dat" -> "../../a.dat".
+    make_dirs(tmp_path)
+    (tmp_path / "work" / "sub").mkdir()
+    grid = extract_data_xsf(str(tmp_path / "data" / "Si.xsf"))
+    inner, outer = dict(grid, origin=[0.0, 0.0, 0.0]), dict(grid, origin=[0.5, 0.0, 0.0])
+    (tmp_path / "work" / "a.dat").write_text(str(inner))
+    (tmp_path / "a.dat").write_text(str(outer))
+    widget.add_isosurface(data="a.dat", value=[0.01], name="inner")
+    widget.add_isosurface(data="../a.dat", value=[0.01], name="outer")
+
+    widget.save(str(tmp_path / "work" / "sub" / "m.qtdw"))
+
+    names = {r[COLUMN_ISOSURFACE_FILE]: r for r in isosurface_rows(widget)}
+    assert set(names) == {"../a.dat", "../../a.dat"}
+    assert widget._isosurface_data["../a.dat"]["origin"] == inner["origin"]
+    assert widget._isosurface_data["../../a.dat"]["origin"] == outer["origin"]
+    assert read_dict(str(tmp_path / "work" / "a.dat")) == inner  # source files are not overwritten.
+    assert read_dict(str(tmp_path / "a.dat")) == outer
+
+
+# ==================================================
+def test_save_through_symbolic_link_to_other_depth(widget, tmp_path):
+    make_dirs(tmp_path)
+    (tmp_path / "deep" / "real").mkdir(parents=True)
+    link = tmp_path / "link"
+    link.symlink_to(tmp_path / "deep" / "real")
+    widget.add_isosurface(data="../data/Si.xsf", value=[0.01])
+
+    widget.save(str(link / "a.qtdw"))
+
+    assert saved_names(link / "a.qtdw") == ["../../data/Si.xsf"]  # relative to the real directory.
+    widget.clear_data()
+    os.chdir(tmp_path)
+    widget.load(str(link / "a.qtdw"))
+    assert is_drawn(widget)
