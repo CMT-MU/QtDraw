@@ -432,7 +432,7 @@ class GroupModel(QStandardItemModel):
     # ==================================================
     def _find_row(self, key):
         """
-        Find the row with the given data, except its name (column 0).
+        Find the row with the given data.
 
         Args:
             key (tuple): (row data, group ?), group is a parent row with children.
@@ -453,7 +453,7 @@ class GroupModel(QStandardItemModel):
             else:
                 rows = [item.child(row).index() for row in range(item.rowCount())] if item.hasChildren() else [item.index()]
             for index in rows:
-                if self.get_row_data(index)[1:] == row_data[1:]:  # without name, which an earlier rename may change.
+                if self.get_row_data(index) == row_data:
                     return index
         return None
 
