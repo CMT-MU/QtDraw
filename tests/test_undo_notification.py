@@ -66,3 +66,14 @@ def test_pending_rename_of_a_group_moves_all_its_rows(widget):
     model.setData(model.index(0, 0), "B")  # the group "A".
     model.run_pending_renames()
     assert sorted(r[0] for r in widget.get_data_dict()["site"]) == ["B", "B", "D"]
+
+
+def test_pending_rename_of_a_child_after_its_group(widget):
+    widget.add_site(name="A", position="[0,0,0]")
+    widget.add_site(name="A", position="[0.5,0,0]")  # grouped under "A".
+    model = widget._data["site"]
+    parent = model.index(0, 0)
+    model.setData(parent, "B")  # the group, deferred.
+    model.setData(model.index(1, 0, parent), "C")  # one of its rows, deferred.
+    model.run_pending_renames()
+    assert sorted(r[0] for r in widget.get_data_dict()["site"]) == ["B", "C"]
