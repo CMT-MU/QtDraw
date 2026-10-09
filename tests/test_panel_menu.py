@@ -80,3 +80,30 @@ def test_close_without_changes_save_writes_file(app, monkeypatch, tmp_path):
     monkeypatch.setattr(QFileDialog, "getSaveFileName", lambda *a, **k: (str(file), ""))
     app.close()
     assert file.exists() and not app.isVisible()
+
+
+# ==================================================
+def test_window_opens_with_default_size(app):
+    from qtdraw.core.pyvista_widget_setting import widget_detail
+
+    width, height = widget_detail["window_size"]
+    assert (width, height) == (1000, 626)  # the height before the panel had fewer buttons.
+    app.show()
+    assert app.width() >= width and app.height() >= height
+
+
+# ==================================================
+def test_window_size_setting_is_used(qapp, tmp_path, monkeypatch):
+    import shiboken6
+    from qtdraw.core.pyvista_widget_setting import widget_detail
+    from qtdraw.core.qtdraw_app import QtDraw
+
+    monkeypatch.chdir(tmp_path)
+    monkeypatch.setitem(widget_detail, "window_size", [1100, 700])
+    window = QtDraw()
+    try:
+        assert (window.width(), window.height()) == (1100, 700)
+    finally:
+        monkeypatch.setattr(QMessageBox, "question", lambda *a, **k: QMessageBox.Discard)
+        if shiboken6.isValid(window):
+            window.close()

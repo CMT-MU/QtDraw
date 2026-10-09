@@ -131,7 +131,7 @@ class QtDraw(Window):
 
         :meta private:
         """
-        self.resize(1000, 500)
+        self.resize(*detail["window_size"])
 
         # central grid.
         central_widget = QWidget(self)
