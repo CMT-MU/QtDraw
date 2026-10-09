@@ -248,3 +248,70 @@ def test_convert_writes_next_to_link_target(qapp, tmp_path, no_chdir):
     (tmp_path / "link.qtdw").symlink_to(real / "old.qtdw")
     convert_qtdraw_v3(str(tmp_path / "link.qtdw"))
     assert (real / "old_v3.qtdw").exists()
+
+
+def test_failed_load_keeps_current_document(widget, tmp_path, monkeypatch):
+    sub, grid = drawing_with_data(tmp_path, [0.5, 0.0, 0.0])
+    widget.add_isosurface(data=str(sub / "grid.dat"), value=[0.01])
+    widget.save(str(sub / "a.qtdw"))
+    rows = widget.get_data_dict()
+    (tmp_path / "other").mkdir()
+    shutil.copy(EXAMPLES / "sample.qtdw", tmp_path / "other" / "b.qtdw")
+    original = widget.add_data
+    calls = []
+
+    def fail_once(data):  # only the incoming drawing fails; the rollback draws the current one.
+        calls.append(1)
+        if len(calls) == 1:
+            raise RuntimeError("broken")
+        return original(data)
+
+    with monkeypatch.context() as m, pytest.raises(RuntimeError):
+        m.setattr(widget, "add_data", fail_once)
+        widget.load(str(tmp_path / "other" / "b.qtdw"))
+
+    assert len(calls) == 2  # the rollback ran.
+    assert widget.document_dir() == sub.resolve()
+    assert widget.get_data_dict() == rows and drawn(widget)
+    assert widget._isosurface_data["grid.dat"]["origin"] == [0.5, 0.0, 0.0]
+
+
+def test_failed_save_after_one_data_file_was_written(app, tmp_path, monkeypatch):
+    import qtdraw.core.pyvista_widget as pw
+
+    (tmp_path / "work").mkdir()
+    (tmp_path / "out").mkdir()
+    grid = extract_data_xsf(str(EXAMPLES / "Si.xsf"))
+    monkeypatch.chdir(tmp_path / "work")
+    pvw = app.pyvista_widget
+    pvw.add_isosurface(data=("m1.dat", grid), value=[0.01], name="one")
+    pvw.add_isosurface(data=("m2.dat", grid), value=[0.01], name="two")
+    app.save(str(tmp_path / "work" / "a.qtdw"))
+    assert not app.is_modified()  # clean before the failing save.
+    saved_state = app._saved_state
+    existing = tmp_path / "out" / "a.qtdw"
+    existing.write_text("old drawing")
+    original = pw.write_text_atomic
+    writes = []
+
+    def fail_second(filename, text):
+        writes.append(filename)
+        if len(writes) == 2:
+            raise OSError("disk full")
+        return original(filename, text)
+
+    maps = []
+    history_map = app._history.map
+    monkeypatch.setattr(app._history, "map", lambda f: (maps.append(1), history_map(f))[1])
+    with monkeypatch.context() as m, pytest.raises(OSError):
+        m.setattr(pw, "write_text_atomic", fail_second)
+        app.save(str(existing))
+
+    assert existing.read_text() == "old drawing"  # the drawing was not replaced.
+    assert len(maps) == 1  # history rebased once.
+    assert sorted(names(pvw)) == ["m1.dat", "m2.dat"] and pvw.document_dir() == (tmp_path / "out").resolve()
+    assert app._saved_state is saved_state  # a failed save does not mark the document saved.
+    app.save(str(existing))  # retry.
+    assert not app.is_modified()
+    assert (tmp_path / "out" / "m1.dat").exists() and (tmp_path / "out" / "m2.dat").exists()
+    assert "m1.dat" in existing.read_text()

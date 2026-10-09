@@ -265,7 +265,7 @@ class QtDraw(Window):
         Load file.
 
         Args:
-            filename (str): full file name.
+            filename (str): file name, relative to the current directory (which is not changed).
 
         :meta private:
         """
@@ -3033,7 +3033,7 @@ class QtDraw(Window):
         Load all info.
 
         Args:
-            filename (str): full file name.
+            filename (str): file name, relative to the current directory (which is not changed).
         """
         self._flush()
         self.pyvista_widget.load(filename)
@@ -3046,7 +3046,7 @@ class QtDraw(Window):
         save all info.
 
         Args:
-            filename (str): full file name.
+            filename (str): file name, relative to the current directory (which is not changed).
         """
         self._save(filename)
         self._mark_saved()
@@ -3057,7 +3057,7 @@ class QtDraw(Window):
         Save the document, and keep the history valid in the new directory.
 
         Args:
-            filename (str): full file name.
+            filename (str): file name, relative to the current directory (which is not changed).
 
         Note:
             - saving makes the data file names of isosurfaces relative to the directory of the file.
