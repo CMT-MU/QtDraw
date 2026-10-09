@@ -216,3 +216,28 @@ def test_source_file_through_symbolic_link_is_not_overwritten(widget, tmp_path):
     widget.save(str(tmp_path / "work" / "a.qtdw"))
 
     assert (tmp_path / "data" / "grid.dat").read_text().startswith("# original")
+
+
+# ==================================================
+def test_data_file_in_saved_directory_is_not_rewritten(widget, tmp_path):
+    make_dirs(tmp_path)
+    grid = extract_data_xsf(str(tmp_path / "data" / "Si.xsf"))
+    (tmp_path / "work" / "grid.dat").write_text("# original\n" + str(grid))
+    widget.add_isosurface(data="grid.dat", value=[0.01])
+
+    widget.save(str(tmp_path / "work" / "a.qtdw"))
+
+    assert (tmp_path / "work" / "grid.dat").read_text().startswith("# original")
+
+
+# ==================================================
+def test_missing_data_file_is_written_again(widget, tmp_path):
+    make_dirs(tmp_path)
+    grid = extract_data_xsf(str(tmp_path / "data" / "Si.xsf"))
+    (tmp_path / "work" / "grid.dat").write_text(str(grid))
+    widget.add_isosurface(data="grid.dat", value=[0.01])
+    (tmp_path / "work" / "grid.dat").unlink()  # removed after it was read.
+
+    widget.save(str(tmp_path / "work" / "a.qtdw"))
+
+    assert read_dict(str(tmp_path / "work" / "grid.dat")) == grid

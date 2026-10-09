@@ -176,26 +176,6 @@ def relative_path(path, start):
 
 
 # ==================================================
-def is_outside(name, directory):
-    """
-    Is a file outside a directory ?
-
-    Args:
-        name (str): file name, relative to directory or absolute.
-        directory (Path): directory.
-
-    Returns:
-        - (bool) -- outside ? real paths are compared, also through symbolic links and across drives.
-    """
-    directory = Path(directory).resolve()
-    try:
-        (directory / name).resolve().relative_to(directory)
-    except ValueError:
-        return True
-    return False
-
-
-# ==================================================
 def cat_filename(base, ext=None):
     """
     Cat filename.
@@ -1910,8 +1890,8 @@ class PyVistaWidget(QtInteractor):
                 # imported .xsf is a source file, and is read again when loaded.
                 if name == "" or Path(name).suffix == ".xsf" or name not in self._isosurface_data:
                     continue
-                # a data file outside the saved directory is a source file, and is not overwritten.
-                if name not in self._isosurface_in_memory and is_outside(name, file.parent):
+                # data read from a file is not written again: the file is the source, wherever it is.
+                if name not in self._isosurface_in_memory and Path(name).exists():
                     continue
                 write_text_atomic(name, str(self._isosurface_data[name]) + "\n")
 
