@@ -145,3 +145,106 @@ def test_save_into_missing_directory_changes_nothing(widget, tmp_path):
         widget.save(str(tmp_path / "missing" / "a.qtdw"))
     assert names(widget) == ["Si.xsf"] and widget._document_dir is None
     assert widget._status["model"] == model
+
+
+from gui_helpers import app, answer  # noqa: F401,E402  (fixture and helper)
+
+
+def settle(app):
+    app._modified_timer.stop()
+    app._settle()
+
+
+def test_undo_and_save_after_caller_changes_directory(app, tmp_path, monkeypatch):
+    sub, grid = drawing_with_data(tmp_path, [0.5, 0.0, 0.0])
+    pvw = app.pyvista_widget
+    pvw.add_isosurface(data=str(sub / "grid.dat"), value=[0.01])
+    app.save(str(sub / "a.qtdw"))
+    pvw.add_site(name="A")
+    settle(app)
+    monkeypatch.chdir(tmp_path)  # the caller moves.
+
+    app.undo()
+    app.redo()
+    app.undo()
+    assert names(pvw) == ["grid.dat"] and pvw._isosurface_data["grid.dat"]["origin"] == [0.5, 0.0, 0.0]
+    app.save(str(sub / "b.qtdw"))
+    assert read_dict(str(sub / "b.qtdw"))["data"]["isosurface"][0][COLUMN_ISOSURFACE_FILE] == "grid.dat"
+
+
+def test_failed_save_keeps_destination_and_history(app, tmp_path, monkeypatch):
+    import qtdraw.core.pyvista_widget as pw
+
+    (tmp_path / "work").mkdir()
+    (tmp_path / "out").mkdir()
+    shutil.copy(EXAMPLES / "Si.xsf", tmp_path / "work" / "Si.xsf")
+    monkeypatch.chdir(tmp_path / "work")
+    pvw = app.pyvista_widget
+    pvw.add_isosurface(data="Si.xsf", value=[0.01])
+    app.save(str(tmp_path / "work" / "a.qtdw"))  # clean document.
+    pvw.add_site(name="A")
+    settle(app)
+    app.undo()  # history: [iso] <- [iso + A] as redo.
+    existing = tmp_path / "out" / "a.qtdw"
+    existing.write_text("old drawing")
+
+    def fail(*args):
+        raise OSError("disk full")
+
+    with monkeypatch.context() as m, pytest.raises(OSError):
+        m.setattr(pw, "write_text_atomic", fail)
+        app.save(str(existing))
+
+    assert existing.read_text() == "old drawing"
+    assert names(pvw) == ["../work/Si.xsf"] and pvw.document_dir() == (tmp_path / "out").resolve()
+    assert app.can_redo()
+    app.redo()
+    app._modified_timer.stop()
+    assert names(pvw) == ["../work/Si.xsf"] and not app.can_redo()
+    app.save(str(existing))  # retry.
+    assert "Si.xsf" in existing.read_text()
+
+
+def test_dialogs_start_in_document_directory(app, tmp_path, monkeypatch):
+    from PySide6.QtWidgets import QFileDialog
+
+    (tmp_path / "doc").mkdir()
+    app.save(str(tmp_path / "doc" / "a.qtdw"))
+    monkeypatch.chdir(tmp_path)
+    seen = []
+    monkeypatch.setattr(QFileDialog, "getSaveFileName", lambda *a, **k: (seen.append(a[2]), ("", ""))[1])
+    monkeypatch.setattr(QFileDialog, "getOpenFileName", lambda *a, **k: (seen.append(a[2]), ("", ""))[1])
+    answer(monkeypatch, 0)  # no unsaved question expected; any answer.
+    app.save_file()
+    app._save_screenshot()
+    app.open_file()
+    doc = str((tmp_path / "doc").resolve())
+    assert all(s.startswith(doc) for s in seen) and len(seen) == 3
+
+
+def test_create_qtdraw_file_resolves_name_before_callback(qapp, tmp_path, monkeypatch):
+    from qtdraw.core.pyvista_widget import create_qtdraw_file
+
+    monkeypatch.chdir(tmp_path)  # restored after the test.
+    (tmp_path / "sub").mkdir()
+    elsewhere = tmp_path / "elsewhere"
+    elsewhere.mkdir()
+
+    def callback(w):
+        w.add_site(position="[0,0,0]")
+        os.chdir(elsewhere)  # the callback moves the caller.
+
+    create_qtdraw_file("sub/x.qtdw", callback)
+    assert (tmp_path / "sub" / "x.qtdw").exists()
+    assert not (elsewhere / "sub").exists()
+
+
+def test_convert_writes_next_to_link_target(qapp, tmp_path, no_chdir):
+    from qtdraw.core.pyvista_widget import convert_qtdraw_v3
+
+    real = tmp_path / "real"
+    real.mkdir()
+    shutil.copy(EXAMPLES / "sample.qtdw", real / "old.qtdw")
+    (tmp_path / "link.qtdw").symlink_to(real / "old.qtdw")
+    convert_qtdraw_v3(str(tmp_path / "link.qtdw"))
+    assert (real / "old_v3.qtdw").exists()

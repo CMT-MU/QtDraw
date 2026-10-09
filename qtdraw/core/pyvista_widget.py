@@ -369,11 +369,12 @@ def create_qtdraw_file(filename, callback):
         filename (str): full filename.
         callback (function): callback to draw objects, f(widget).
     """
+    filename = Path(filename).absolute()  # before the callback, which may change the current directory.
     app = get_qt_application()
     widget = PyVistaWidget(off_screen=True)
     try:
         callback(widget)
-        widget.save(filename)
+        widget.save(str(filename))
     finally:
         widget.close()
     app.quit()
@@ -387,13 +388,12 @@ def convert_qtdraw_v3(filename):
     Args:
         filename (str): filename.
     """
+    src = Path(filename).absolute().resolve()  # a symbolic link is followed, as load() does.
     app = get_qt_application()
     widget = PyVistaWidget(off_screen=True)
     try:
-        widget.load(filename)
-        path_abs, path_rel, base, ext, folder = split_filename(filename)
-        filename2 = cat_filename(base + "_v3", ext)
-        widget.save(filename2)
+        widget.load(str(src))
+        widget.save(str(src.with_name(src.stem + "_v3" + src.suffix)))  # next to the source.
     finally:
         widget.close()
     app.quit()

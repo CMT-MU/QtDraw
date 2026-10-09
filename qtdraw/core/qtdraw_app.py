@@ -251,9 +251,9 @@ class QtDraw(Window):
 
         ext = detail["extension"]
         mat = "*" + " *".join(detail["ext_material"])
-        cwd = os.getcwd()
+        directory = str(self.pyvista_widget.document_dir())
         ext_set = f"QtDraw, CIF, VESTA, XSF Files (*{ext} {mat})"
-        filename, _ = QFileDialog.getOpenFileName(self, "Open File", cwd, ext_set, options=QFileDialog.Options())
+        filename, _ = QFileDialog.getOpenFileName(self, "Open File", directory, ext_set, options=QFileDialog.Options())
 
         if filename:
             filename = Path(filename)
@@ -338,9 +338,9 @@ class QtDraw(Window):
         :meta private:
         """
         ext = detail["extension"]
-        file = Path.cwd() / (self.pyvista_widget._status["model"] + ext)
+        file = self.pyvista_widget.document_dir() / (self.pyvista_widget._status["model"] + ext)
         ext_set = f"QtDraw Files (*{ext})"
-        filename, _ = QFileDialog.getSaveFileName(self, "Save File", str(file.name), ext_set, options=QFileDialog.Options())
+        filename, _ = QFileDialog.getSaveFileName(self, "Save File", str(file), ext_set, options=QFileDialog.Options())
 
         if filename:
             filename = add_extension(Path(filename), ext)
@@ -358,10 +358,10 @@ class QtDraw(Window):
         gfile = " ".join(detail["vector_file"]).replace(".", "*.")
         ext = detail["image_file"][0]
 
-        file = Path.cwd() / (self.pyvista_widget._status["model"] + ext)
+        file = self.pyvista_widget.document_dir() / (self.pyvista_widget._status["model"] + ext)
 
         ext_set = f"Image Files ({ifile});;Graphic Files ({gfile})"
-        filename, selected = QFileDialog.getSaveFileName(self, "Save Screenshot", str(file.name), ext_set)
+        filename, selected = QFileDialog.getSaveFileName(self, "Save Screenshot", str(file), ext_set)
         if not filename:  # cancelled.
             return
 
@@ -3111,18 +3111,19 @@ class QtDraw(Window):
             filename (str): full file name.
 
         Note:
-            - saving changes the current directory to that of the file, and makes the data file names of isosurfaces relative to it.
+            - saving makes the data file names of isosurfaces relative to the directory of the file.
 
         :meta private:
         """
         self._flush()
-        old_dir = Path.cwd()
+        pvw = self.pyvista_widget
+        old_dir = pvw.document_dir().resolve()
         try:
-            self.pyvista_widget.save(filename)
-        finally:  # also when writing fails after the directory was changed.
-            new_dir = Path.cwd()
+            pvw.save(filename)
+        finally:  # also when writing fails after the names were made relative to the new directory.
+            new_dir = pvw.document_dir().resolve()
             if old_dir != new_dir:
-                self._history.map(lambda s: self.pyvista_widget.rebase_snapshot(s, old_dir, new_dir))
+                self._history.map(lambda s: pvw.rebase_snapshot(s, old_dir, new_dir))
 
     # ==================================================
     # MultiPie interface
