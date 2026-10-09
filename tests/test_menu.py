@@ -14,7 +14,7 @@ def test_menu_has_standard_shortcuts(app):
     assert app.action_save.shortcut() == QKeySequence(QKeySequence.Save)
     assert app.action_quit.shortcut() == QKeySequence(QKeySequence.Quit)
     titles = [a.text() for a in app.menuBar().actions()]
-    assert titles == ["&File", "&Edit", "&Help"]
+    assert titles == ["&File", "&Edit", "&Window", "&Help"]
 
 
 # ==================================================
@@ -54,14 +54,8 @@ def test_help_explains_mouse_and_keys(app, monkeypatch):
 def test_buttons_have_tool_tips(app):
     buttons = [
         app.ds_button_edit,
-        app.ds_button_clear,
-        app.ds_button_load,
-        app.ds_button_save,
-        app.ds_button_screenshot,
-        app.misc_button_info,
         app.misc_button_pref,
         app.misc_button_about,
-        app.misc_button_log,
         app.view_button_default,
         app.view_button_clip,
         app.view_button_repeat,

@@ -22,8 +22,7 @@
 | create_panel | create right panel. |
 | create_gui_unit_cell | Create unit cell panel. |
 | create_gui_view | Create view panel. |
-| create_gui_dataset | Create dataset panel. |
-| create_gui_misc | Create misc. panel. |
+| create_gui_buttons | Create button panel (other commands are in the menu bar). |
 | create_gui_debug | Create debug panel. |
 | _update_panel | Update widget in panel. |
 | _update_application | Update application sytle. |
