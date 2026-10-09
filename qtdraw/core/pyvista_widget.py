@@ -247,6 +247,27 @@ def convert_str_vector(vector, cell="[0,0,0]", transform=True, A=None):
 
 
 # ==================================================
+def _caption_labels(caption, position):
+    """
+    Labels of a caption, one for each position.
+
+    Args:
+        caption (str): caption list, e.g. "[A,B,C]".
+        position (numpy.ndarray): position(s), [float] or [[float]].
+
+    Returns:
+        - (list) -- labels, None if their number does not match the positions.
+
+    :meta private:
+    """
+    labels = text_to_list(caption)
+    n = 1 if np.ndim(position) == 1 else len(position)
+    if not isinstance(labels, list) or len(labels) != n:
+        return None
+    return labels
+
+
+# ==================================================
 def split_filename(filename, base=None):
     """
     Split file name.
@@ -1789,6 +1810,9 @@ class PyVistaWidget(QtInteractor):
             name (str, optional): name of group. (default: untitled)
             margin (int, optional): label margin. (default: 3)
 
+        Raises:
+            ValueError: the number of captions differs from the number of positions.
+
         Note:
             - if keyword is None, default value is used.
         """
@@ -1796,6 +1820,8 @@ class PyVistaWidget(QtInteractor):
 
         if caption is not None:
             row_data["caption"] = caption
+        if _caption_labels(row_data["caption"], _parse_vector(row_data["position"])) is None:
+            raise ValueError(f"one caption for each position is needed, e.g. [A,B,C] for 3 positions: {row_data['caption']}.")
         if size is not None:
             row_data["size"] = convert_to_str(size)
         if bold is not None:
@@ -2643,8 +2669,9 @@ class PyVistaWidget(QtInteractor):
                     idx = name_actor_check
                     show = name_actor[idx]
                     for actor_name in show:
-                        actor = actors[actor_name]
-                        actor.SetVisibility(True)
+                        if actor_name != "":  # a row that could not be drawn has no actor.
+                            actor = actors[actor_name]
+                            actor.SetVisibility(True)
                     if object_type != "caption":
                         label_actor_check = value[:, COLUMN_LABEL_CHECK].astype(bool)
                         idx = label_actor_check
@@ -4510,7 +4537,10 @@ class PyVistaWidget(QtInteractor):
         """
         actor = data["name_actor"]
         margin = int(data["margin"])
-        caption = text_to_list(data["caption"])
+        caption = _caption_labels(data["caption"], positionT)
+        if caption is None:  # e.g. from a file or a table edit.
+            self.write_info(f"* caption '{data['name']}' is not drawn: one caption for each position is needed.")
+            return
         size = int(data["size"])
         bold = data["bold_check"]
         color = all_colors[data["color"]][0]  # hex
