@@ -6,6 +6,8 @@ import shutil
 from pathlib import Path
 
 import pytest
+import shiboken6
+from PySide6.QtCore import QCoreApplication, QEvent
 from PySide6.QtWidgets import QMessageBox
 
 from gui_helpers import app, answer  # noqa: F401  (fixture and helper)
@@ -141,9 +143,13 @@ def test_undo_to_state_without_multipie_closes_dialog(app):
     app.pyvista_widget.mp_set_group("Ci")
     app._show_multipie()
     settle(app)
+    dialog = app.multipie_dialog
     app.undo()
     assert app.pyvista_widget._mp_data is None and app.multipie_dialog is None
     assert "MultiPie" in app.status.text()
+    # deleted by Qt at a safe point, not later by the garbage collector.
+    QCoreApplication.sendPostedEvents(None, QEvent.DeferredDelete)
+    assert not shiboken6.isValid(dialog)
 
 
 def test_undo_keeps_camera(app):

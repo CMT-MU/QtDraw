@@ -68,4 +68,4 @@ def test_buttons_have_tool_tips(app):
         app.view_button_nonrepeat,
     ]
     assert all(b.toolTip() for b in buttons)
-    assert "cannot be undone" in app.view_button_nonrepeat.toolTip()  # an existing tool tip is kept.
+    assert "can be undone with Undo" in app.view_button_nonrepeat.toolTip()  # an existing tool tip is kept.

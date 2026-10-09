@@ -911,6 +911,7 @@ class QtDraw(Window):
         if self.multipie_dialog is not None:
             if self.pyvista_widget._mp_data is None:
                 self.multipie_dialog.close()
+                self.multipie_dialog.deleteLater()  # by Qt at a safe point, not by the garbage collector later.
                 self.multipie_dialog = None
                 self.status.setText("MultiPie dialog closed: the restored document has no MultiPie group.")
             else:
