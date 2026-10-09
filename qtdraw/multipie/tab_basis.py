@@ -23,7 +23,6 @@ class TabBasis(QWidget):
     def __init__(self, parent):
         super().__init__(parent)
         self.parent = parent
-        self.data = parent._data
 
         layout = Layout(self)
         layout.setContentsMargins(10, 10, 10, 10)
@@ -186,6 +185,16 @@ class TabBasis(QWidget):
         self.edit_orbital_lc.returnPressed.connect(self.show_orbital_lc)
         self.button_vector_modulation.released.connect(self.create_vector_modulation)
         self.button_orbital_modulation.released.connect(self.create_orbital_modulation)
+
+    # ==================================================
+    @property
+    def data(self):
+        """
+        MultiPie data, read from the dialog each time (opening a file replaces it).
+
+        :meta private:
+        """
+        return self.parent._data
 
     # ==================================================
     def set_site(self):

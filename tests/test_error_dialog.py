@@ -1,0 +1,185 @@
+"""
+Regression tests for the error dialog (#182): a short message, with the traceback behind "Show Details...".
+"""
+
+import sys
+
+from PySide6.QtWidgets import QMessageBox
+
+
+def broken_function():
+    return 1 / 0
+
+
+# ==================================================
+def test_show_error_puts_traceback_in_details(qapp, monkeypatch):
+    from qtdraw.widget import message_box
+
+    shown = []
+    monkeypatch.setattr(QMessageBox, "exec", lambda self: shown.append(self))
+    message_box.show_error("ValueError: bad", "Traceback ...\nValueError: bad", "Exception Message")
+
+    box = shown[0]
+    assert box.text() == "ValueError: bad"
+    assert box.detailedText() == "Traceback ...\nValueError: bad"
+    if sys.platform != "darwin":  # macOS shows no title for message boxes.
+        assert box.windowTitle() == "Exception Message"
+    assert box.icon() == QMessageBox.Critical
+
+
+# ==================================================
+def test_exception_hook_shows_short_message(qapp, monkeypatch):
+    from qtdraw.widget import qt_event_util
+
+    shown = []
+    monkeypatch.setattr(qt_event_util, "show_error", lambda *args: shown.append(args))
+    hook = qt_event_util.ExceptionHook()
+    monkeypatch.setattr(sys, "excepthook", sys.__excepthook__)  # restore after the test.
+    try:
+        broken_function()
+    except ZeroDivisionError:
+        hook.hook(*sys.exc_info())
+
+    summary, details, title = shown[0]
+    assert summary == "ZeroDivisionError: division by zero"  # one line, without the traceback.
+    assert "broken_function" in details and "ZeroDivisionError" in details
+    assert title == "Exception Message"
+
+
+# ==================================================
+def summary_of(error):
+    from qtdraw.widget.qt_event_util import error_summary
+
+    try:
+        raise error
+    except BaseException as e:
+        return error_summary(type(e), e)
+
+
+def test_error_summary_is_short():
+    assert summary_of(ValueError("bad value")) == "ValueError: bad value"
+    assert summary_of(ValueError("first line\nsecond\nthird")) == "ValueError: first line ..."
+    assert summary_of(KeyError("missing")) == "KeyError: 'missing'"
+    assert summary_of(RuntimeError()) == "RuntimeError"
+    long = summary_of(ValueError("x" * 1000))
+    assert long.startswith("ValueError: xxx") and long.endswith("...") and len(long) < 320
+    try:
+        compile("1 +", "<input>", "exec")
+    except SyntaxError as e:
+        from qtdraw.widget.qt_event_util import error_summary
+
+        assert error_summary(SyntaxError, e) == f"SyntaxError: {e.msg}"
+
+
+# ==================================================
+def test_message_signal_still_sends_full_message(qapp, monkeypatch):
+    from qtdraw.widget import qt_event_util
+
+    monkeypatch.setattr(qt_event_util, "show_error", lambda *args: None)
+    hook = qt_event_util.ExceptionHook()
+    monkeypatch.setattr(sys, "excepthook", sys.__excepthook__)
+    messages = []
+    hook.msg_signal.connect(messages.append)  # one-argument listeners keep working.
+    try:
+        broken_function()
+    except ZeroDivisionError:
+        hook.hook(*sys.exc_info())
+
+    assert "Traceback" in messages[0] and "broken_function" in messages[0]
+
+
+# ==================================================
+def test_each_dialog_gets_its_own_summary(qapp, monkeypatch):
+    from qtdraw.widget import qt_event_util
+
+    shown = []
+    monkeypatch.setattr(qt_event_util, "show_error", lambda *args: shown.append(args))
+    hook = qt_event_util.ExceptionHook()
+    monkeypatch.setattr(sys, "excepthook", sys.__excepthook__)
+
+    # another exception while the first one is being reported, e.g. in a listener (only once).
+    raised = []
+
+    def nested(details):
+        if not raised:
+            raised.append(True)
+            try:
+                raise KeyError("inner")
+            except KeyError:
+                hook.hook(*sys.exc_info())
+
+    hook.msg_signal.disconnect(hook._show_error)
+    hook.msg_signal.connect(nested)  # runs before the dialog of the first exception.
+    hook.msg_signal.connect(hook._show_error)
+    try:
+        broken_function()
+    except ZeroDivisionError:
+        hook.hook(*sys.exc_info())
+
+    pairs = {summary.split(":")[0]: details for summary, details, _ in shown}
+    assert set(pairs) == {"KeyError", "ZeroDivisionError"}
+    assert "KeyError" in pairs["KeyError"] and "ZeroDivisionError" in pairs["ZeroDivisionError"]
+
+
+# ==================================================
+def test_identical_errors_keep_their_summaries(qapp, monkeypatch):
+    from qtdraw.widget import qt_event_util
+
+    shown = []
+    monkeypatch.setattr(qt_event_util, "show_error", lambda *args: shown.append(args))
+    hook = qt_event_util.ExceptionHook()
+    monkeypatch.setattr(sys, "excepthook", sys.__excepthook__)
+    hook.msg_signal.disconnect(hook._show_error)
+    try:
+        broken_function()
+    except ZeroDivisionError:
+        info = sys.exc_info()
+    hook.hook(*info)
+    hook.hook(*info)  # the same message twice, before either is shown.
+
+    details = next(iter(hook._summary))
+    hook._show_error(details)
+    hook._show_error(details)
+
+    assert [s for s, _, _ in shown] == ["ZeroDivisionError: division by zero"] * 2
+    assert len(hook._summary) == 1
+
+
+# ==================================================
+def test_summaries_are_bounded_without_dialog(qapp, monkeypatch):
+    from qtdraw.widget import qt_event_util
+
+    hook = qt_event_util.ExceptionHook()
+    monkeypatch.setattr(sys, "excepthook", sys.__excepthook__)
+    hook.msg_signal.disconnect(hook._show_error)
+    for i in range(150):
+        try:
+            raise ValueError(f"error {i}")
+        except ValueError:
+            hook.hook(*sys.exc_info())
+
+    assert len(hook._summary) == 100
+
+    try:
+        broken_function()
+    except ZeroDivisionError:
+        info = sys.exc_info()
+    for _ in range(150):  # the same error again and again.
+        hook.hook(*info)
+    assert len(hook._summary) == 100
+    assert sum(len(v) for v in hook._summary.values()) < 100 * 300  # one short summary each.
+
+
+# ==================================================
+def test_summary_falls_back_to_last_line(qapp, monkeypatch):
+    from qtdraw.widget import qt_event_util
+
+    shown = []
+    monkeypatch.setattr(qt_event_util, "show_error", lambda *args: shown.append(args))
+    hook = qt_event_util.ExceptionHook()
+    monkeypatch.setattr(sys, "excepthook", sys.__excepthook__)
+
+    hook._show_error("Traceback (most recent call last):\n  ...\nValueError: lost summary\n" + "-" * 75)
+    hook._show_error("")
+
+    assert [s for s, _, _ in shown] == ["ValueError: lost summary", "Error"]

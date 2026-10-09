@@ -4,7 +4,7 @@ MessageBox dialog.
 This module provides message box dialog.
 """
 
-from PySide6.QtWidgets import QDialog, QDialogButtonBox, QGridLayout, QPlainTextEdit
+from PySide6.QtWidgets import QDialog, QDialogButtonBox, QGridLayout, QMessageBox, QPlainTextEdit
 from PySide6.QtGui import QFontDatabase
 
 
@@ -41,3 +41,19 @@ class MessageBox(QDialog):
         layout.addWidget(button, 1, 0, 1, 1)
 
         self.exec()
+
+
+# ==================================================
+def show_error(summary, details, title="Error"):
+    """
+    Show an error with a short message, and the full details behind "Show Details...".
+
+    Args:
+        summary (str): short message, e.g. "ValueError: invalid value".
+        details (str): details, e.g. traceback.
+        title (str, optional): window title.
+    """
+    box = QMessageBox(QMessageBox.Critical, title, summary)
+    box.setInformativeText("See the details for the traceback. The error is also written to the log.")
+    box.setDetailedText(details)
+    box.exec()

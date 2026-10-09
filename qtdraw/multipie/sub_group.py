@@ -22,7 +22,6 @@ class SubGroup(QWidget):
     def __init__(self, parent):
         super().__init__(parent)
         self.parent = parent
-        self.data = parent._data
 
         self.setMinimumWidth(270)
         layout = Layout(self)
@@ -81,6 +80,16 @@ class SubGroup(QWidget):
         self.button_wyckoff_site.released.connect(self.show_wyckoff_site)
         self.button_wyckoff_bond.released.connect(self.show_wyckoff_bond)
         self.button_product_table.released.connect(self.show_product_table)
+
+    # ==================================================
+    @property
+    def data(self):
+        """
+        MultiPie data, read from the dialog each time (opening a file replaces it).
+
+        :meta private:
+        """
+        return self.parent._data
 
     # ==================================================
     def set_crystal_type(self, crystal):

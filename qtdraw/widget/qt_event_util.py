@@ -15,7 +15,7 @@ from PySide6.QtWidgets import QApplication
 
 from qtdraw.core.pyvista_widget_setting import default_preference
 
-from qtdraw.widget.message_box import MessageBox
+from qtdraw.widget.message_box import show_error
 
 
 # ==================================================
@@ -141,8 +141,31 @@ def with_busy_cursor(func):
 
 
 # ==================================================
+def error_summary(type, value, max_length=300):
+    """
+    Short message of an exception: its type and the first line of its message.
+
+    Args:
+        type (type): type of exception.
+        value (BaseException): exception.
+        max_length (int, optional): maximum length of the message.
+
+    Returns:
+        - (str) -- e.g. "ValueError: invalid value".
+    """
+    message = value.msg if isinstance(value, SyntaxError) and value.msg else str(value)
+    lines = message.strip().splitlines()
+    first = lines[0] if lines else ""
+    if len(first) > max_length:
+        first = first[: max_length - 3] + "..."
+    elif len(lines) > 1:
+        first += " ..."
+    return f"{type.__name__}: {first}" if first else type.__name__
+
+
+# ==================================================
 class ExceptionHook(QObject):
-    msg_signal = Signal(str)
+    msg_signal = Signal(str)  # full message.
 
     # ==================================================
     def __init__(self, parent=None):
@@ -163,7 +186,24 @@ class ExceptionHook(QObject):
         sys.excepthook = self.hook
 
         # connection.
-        self.msg_signal.connect(lambda x: MessageBox(x, "Exception Message"))
+        self._summary = {}  # short message for each full message (the same message has the same summary).
+        self.msg_signal.connect(self._show_error)
+
+    # ==================================================
+    def _show_error(self, details):
+        """
+        Show the error dialog for a full message.
+
+        Args:
+            details (str): full message.
+
+        :meta private:
+        """
+        summary = self._summary.get(details)
+        if summary is None:  # no longer kept: use the last line of the message, e.g. "ValueError: ...".
+            lines = [line.strip() for line in details.splitlines() if line.strip().strip("-")]
+            summary = lines[-1][:300] if lines else "Error"
+        show_error(summary, details, "Exception Message")
 
     # ==================================================
     def hook(self, type, value, traceback):
@@ -190,6 +230,10 @@ class ExceptionHook(QObject):
                 simple = "".join(tb.format_exception_only(type, value))
             log_msg += "\n" + bar
             simple = "\n" + bar + "\n" + simple + bar
+            self._summary.pop(log_msg, None)  # keep the latest messages at the end.
+            self._summary[log_msg] = error_summary(type, value)
+            while len(self._summary) > 100:  # keep only the latest ones.
+                del self._summary[next(iter(self._summary))]
             self.msg_signal.emit(log_msg)
             logging.critical(simple)
 
