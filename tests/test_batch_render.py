@@ -8,7 +8,7 @@ import pytest
 import pyvista as pv
 from vtkmodules.vtkRenderingCore import vtkTextActor
 from pyvistaqt import QtInteractor
-from PySide6.QtCore import QCoreApplication
+from PySide6.QtCore import QCoreApplication, Qt
 
 import qtdraw.core.pyvista_widget as pvw_module
 from qtdraw.core.pyvista_widget_setting import COLUMN_NAME, COLUMN_NAME_ACTOR, COLUMN_NAME_CHECK
@@ -379,9 +379,12 @@ def test_wyckoff_display_submits_once(app, submissions):
     pvw = app.pyvista_widget
     panel = app.multipie_dialog._group_panel
     panel.edit_ws_neighbor.setText("[1,2]")  # sites and neighbor bonds.
+    n_bonds = lambda: len(pvw.get_data_dict().get("bond", []))
     assert count(submissions, pvw, panel.show_wyckoff_site) == 1
-    assert len(pvw.get_data_dict()["site"]) > 1
+    assert len(pvw.get_data_dict()["site"]) > 1 and n_bonds() > 1  # sites and their neighbor bonds.
+    before = n_bonds()
     assert count(submissions, pvw, panel.show_wyckoff_bond) == 1
+    assert n_bonds() - before > 1
 
 
 @needs_multipie
@@ -522,3 +525,32 @@ def test_load_version1_converts_in_one_batch(widget, submissions, tmp_path, monk
     assert temporary and temporary[0] is not widget
     assert sum(1 for w in submissions if w is temporary[0]) - before[0] == 1
     assert sum(1 for w in submissions if w is widget) == 1
+
+
+# ==================================================
+def group(widget, n=5):
+    for i in range(n):
+        widget.add_site(name="G", position=f"[{i / 10},0,0]")
+    model = widget._data["site"]
+    return model, model.index(0, 0)
+
+
+def test_group_edit_submits_once(widget, submissions):
+    model, parent = group(widget)
+    color = parent.siblingAtColumn(model.header.index("color"))
+    assert count(submissions, widget, lambda: model.setData(color, "red")) == 1
+    check = parent.siblingAtColumn(model.header.index("name_check"))
+    model.setData(check, Qt.Unchecked, Qt.CheckStateRole)
+    assert count(submissions, widget, lambda: model.setData(check, Qt.Checked, Qt.CheckStateRole)) == 1
+    assert all(row[COLUMN_NAME_ACTOR] in widget.actors for row in model.tolist())
+
+
+def test_group_removal_submits_once(widget, submissions):
+    model, parent = group(widget)
+    assert count(submissions, widget, lambda: model.remove_row(parent)) == 1
+    assert widget.get_data_dict().get("site", []) == []
+
+    model, parent = group(widget)
+    indexes = [parent.siblingAtColumn(c) for c in range(model.columnCount())]  # a selected row, as the table passes it.
+    assert count(submissions, widget, lambda: model.action_remove_row(indexes)) == 1
+    assert widget.get_data_dict().get("site", []) == []

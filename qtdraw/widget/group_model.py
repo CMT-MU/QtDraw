@@ -15,6 +15,7 @@ which is necessary to use other Qt functionalities.
 
 import copy
 import logging
+from contextlib import nullcontext
 from PySide6.QtGui import QStandardItemModel, QStandardItem
 from PySide6.QtCore import Signal, Qt, QModelIndex, QPersistentModelIndex, QTimer
 
@@ -50,6 +51,7 @@ class GroupModel(QStandardItemModel):
         super().__init__(parent)
         if column_info is None:
             column_info = []
+        self.batch = nullcontext  # context for changes of many rows, e.g. to render once (set by the owner).
 
         self._name = name
         self._pending_renames = []
@@ -375,6 +377,16 @@ class GroupModel(QStandardItemModel):
             index (QModelIndex): index.
             role (int, optional): role.
         """
+        with self.batch():  # a group removes all its children.
+            self._remove_row(index, role)
+
+    # ==================================================
+    def _remove_row(self, index, role):
+        """
+        Remove row.
+
+        :meta private:
+        """
         if not index.isValid():
             return
         if role is None:
@@ -547,8 +559,9 @@ class GroupModel(QStandardItemModel):
 
         indexes = [index for index in indexes if index.column() == 0]
 
-        for index in indexes:
-            self.remove_row(index)
+        with self.batch():
+            for index in indexes:
+                self.remove_row(index)
 
     # ==================================================
     # override.
@@ -583,16 +596,17 @@ class GroupModel(QStandardItemModel):
         # update all children.
         item = self.itemFromIndex(index.siblingAtColumn(0))
         if item.hasChildren():
-            # update children.
-            for row in range(item.rowCount()):
-                citem = item.child(row, index.column())
-                if citem:
-                    # update each child.
-                    super().setData(self.indexFromItem(citem), value, role)
-                    cindex = self.indexFromItem(citem)
-                    self.updateData.emit(self.group_name, self.get_row_data(cindex), role, cindex)
-            # update parent.
-            status = super().setData(index, value, role)
+            with self.batch():
+                # update children.
+                for row in range(item.rowCount()):
+                    citem = item.child(row, index.column())
+                    if citem:
+                        # update each child.
+                        super().setData(self.indexFromItem(citem), value, role)
+                        cindex = self.indexFromItem(citem)
+                        self.updateData.emit(self.group_name, self.get_row_data(cindex), role, cindex)
+                # update parent.
+                status = super().setData(index, value, role)
         else:
             # update as usual (parent w/o children or one child).
             status = super().setData(index, value, role)

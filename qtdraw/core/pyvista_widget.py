@@ -2972,6 +2972,7 @@ class PyVistaWidget(QtInteractor):
         self._data = {}
         for object_type, value in object_default.items():
             self._data[object_type] = GroupModel(self, object_type, value)
+            self._data[object_type].batch = self._batch_render  # a change of a group renders once.
 
     # ==================================================
     def set_theme(self, theme=None):
