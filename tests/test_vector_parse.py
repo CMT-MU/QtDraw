@@ -81,7 +81,7 @@ def test_nonrepeat_does_not_use_sympy_for_plain_numbers(widget, monkeypatch):
         return original(*args, **kwargs)
 
     monkeypatch.setattr(pw, "str_to_sympy", spy)
-    pw._parse_cached.cache_clear()
+    pw._parse_cached_clear()
     widget.nonrepeat_data()
 
     rows = widget.get_data_dict()["site"]
@@ -93,7 +93,22 @@ def test_nonrepeat_does_not_use_sympy_for_plain_numbers(widget, monkeypatch):
 
 # ==================================================
 def test_long_strings_are_not_cached():
-    pw._parse_cached.cache_clear()
+    pw._parse_cached_clear()
     points = "[" + ",".join(f"[{i},0,0]" for i in range(1000)) + "]"  # e.g. a polygon.
     assert pw.convert_str_vector(points, transform=False).shape == (1000, 3)
-    assert pw._parse_cached.cache_info().currsize == 1  # only the short cell string.
+    assert pw._parse_cache_size() == 1  # only the short cell string.
+
+
+# ==================================================
+def test_large_results_are_not_cached():
+    pw._parse_cached_clear()
+    v = pw._parse_vector("[[0,0,0]]*1000")  # short string, large result.
+    assert v.shape == (1000, 3)
+    assert pw._parse_cache_size() == 0
+
+
+# ==================================================
+def test_huge_number_gives_the_same_result_as_before():
+    s = "[" + "9" * 400 + ",0,0]"
+    expected = str_to_sympy(s, rational=False).astype(float)
+    np.testing.assert_array_equal(pw.convert_str_vector(s, transform=False), expected)

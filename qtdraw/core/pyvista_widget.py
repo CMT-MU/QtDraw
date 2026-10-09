@@ -8,6 +8,8 @@ This module provides a class to draw various
 import os
 import re
 import ast
+import threading
+from collections import OrderedDict
 from pathlib import Path
 import subprocess
 import shutil
@@ -114,6 +116,10 @@ def get_data_range(data):
 _PLAIN_NUMBERS = re.compile(r"[\s\[\],0-9.eE+-]*")  # numbers in (nested) lists only.
 _PLAIN_INTEGERS = re.compile(r"[\s\[\],0-9+-]*")  # integers in (nested) lists only.
 _MAX_CACHED = 256  # longer strings (e.g. points of a polygon) are not cached.
+_MAX_CACHED_SIZE = 300  # nor larger results.
+_MAX_ENTRIES = 4096
+_cache = OrderedDict()  # (string, as_int) -> read-only array, least recently used first.
+_cache_lock = threading.Lock()  # objects are also plotted from a thread.
 
 
 # ==================================================
@@ -141,7 +147,10 @@ def _parse_float(s):
     """
     value = _literal_list(s, _PLAIN_NUMBERS)
     if value is not None:
-        return np.array(value, dtype=float)
+        try:
+            return np.array(value, dtype=float)
+        except (OverflowError, ValueError):  # e.g. a huge integer or a ragged list, left to sympy.
+            pass
     return str_to_sympy(s, rational=False).astype(float)
 
 
@@ -154,21 +163,33 @@ def _parse_int(s):
     """
     value = _literal_list(s, _PLAIN_INTEGERS)
     if value is not None:
-        return np.array(value, dtype=int)
+        try:
+            return np.array(value, dtype=int)
+        except (OverflowError, ValueError):  # e.g. beyond int64 or a ragged list, left to sympy.
+            pass
     return str_to_sympy(s).astype(int)
 
 
 # ==================================================
-@lru_cache(maxsize=4096)
-def _parse_cached(s, as_int):
+def _parse_cached_clear():
     """
-    Parse a short string, shared by callers through the cache (read-only).
+    Clear the cache of parsed strings.
 
     :meta private:
     """
-    value = _parse_int(s) if as_int else _parse_float(s)
-    value.setflags(write=False)
-    return value
+    with _cache_lock:
+        _cache.clear()
+
+
+# ==================================================
+def _parse_cache_size():
+    """
+    Number of cached strings.
+
+    :meta private:
+    """
+    with _cache_lock:
+        return len(_cache)
 
 
 # ==================================================
@@ -185,9 +206,19 @@ def _parse_vector(s, as_int=False):
 
     :meta private:
     """
-    if len(s) > _MAX_CACHED:
-        return _parse_int(s) if as_int else _parse_float(s)
-    return _parse_cached(s, as_int).copy()
+    key = (s, as_int)
+    with _cache_lock:
+        value = _cache.get(key)
+        if value is not None:
+            _cache.move_to_end(key)
+            return value.copy()
+    value = _parse_int(s) if as_int else _parse_float(s)
+    if len(s) <= _MAX_CACHED and value.size <= _MAX_CACHED_SIZE:
+        with _cache_lock:
+            _cache[key] = value.copy()
+            if len(_cache) > _MAX_ENTRIES:
+                _cache.popitem(last=False)
+    return value
 
 
 # ==================================================
