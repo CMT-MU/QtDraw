@@ -354,6 +354,7 @@ class PyVistaWidget(QtInteractor):
         os.environ["PYVISTA_QT_BACKEND"] = "PySide6"
         # avoid recursion of the close() until the PyVistaWidget.__init__() is called, see pyvistaqt/plotting.py.
         self._closed = True
+        self._close_done = False  # closeEvent can be called again when the widget is deleted.
 
         # set default.
         self._off_screen = off_screen
@@ -2931,10 +2932,23 @@ class PyVistaWidget(QtInteractor):
 
         :meta private:
         """
-        self._mathjax.close()
-        self._tab_group_view.close()
+        if self._close_done:
+            return
+        self._close_done = True
 
-        super().close()
+        # delete the data table, otherwise it remains and slows down new windows.
+        # scheduled first, so that a failing step below cannot skip it.
+        # the VTK widget itself is not deleted: deleting it occasionally corrupts memory with Mesa on Linux.
+        self._tab_group_view.deleteLater()
+
+        # finish closing even if a step fails; the error is raised afterwards.
+        try:
+            try:
+                self._mathjax.close()
+            finally:
+                self._tab_group_view.close()
+        finally:
+            super().close()
 
     # ==================================================
     def remove_data(self, object_type, row_data, index):
