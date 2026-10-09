@@ -79,13 +79,14 @@ def test_cancelled_close_keeps_qtdraw(qapp, tmp_path, monkeypatch):
 
     monkeypatch.chdir(tmp_path)
     window = QtDraw()
+    window.pyvista_widget.add_site()  # an unsaved change.
     opened = n_widgets()
 
     monkeypatch.setattr(QMessageBox, "question", lambda *args, **kwargs: QMessageBox.Cancel)
     window.close()
     assert n_widgets() == opened
     window.pyvista_widget.add_site()  # still usable.
-    assert len(window.pyvista_widget._data["site"].tolist()) == 1
+    assert len(window.pyvista_widget._data["site"].tolist()) == 2
 
     monkeypatch.setattr(QMessageBox, "question", lambda *args, **kwargs: QMessageBox.Discard)
     window.close()

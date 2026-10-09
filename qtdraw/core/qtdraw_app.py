@@ -241,7 +241,7 @@ class QtDraw(Window):
 
         :meta private:
         """
-        self._commit_pending_input()
+        self._flush()  # typed values and renames not yet applied are changes.
         if not self._confirm_unsaved("opening another file"):
             return
 
@@ -772,7 +772,7 @@ class QtDraw(Window):
     # ==================================================
     def _flush(self):
         """
-        Record a pending change now (before undo, redo, load and save).
+        Record a pending change now (before undo, redo, load, save and checking for unsaved changes).
 
         :meta private:
         """
@@ -933,25 +933,23 @@ class QtDraw(Window):
             widget.commit_pending()
 
     # ==================================================
-    def _confirm_unsaved(self, action, always=False):
+    def _confirm_unsaved(self, action):
         """
         Ask to save unsaved changes.
 
         Args:
             action (str): action to be done, e.g. "closing".
-            always (bool, optional): ask also without unsaved changes ?
 
         Returns:
             - (bool) -- go on with the action ?
 
         :meta private:
         """
-        modified = self.is_modified()
-        if not modified and not always:
+        if not self.is_modified():
             return True
 
         model = self.pyvista_widget._status["model"]
-        text = f"Save changes to '{model}' before {action}?" if modified else f"Save '{model}' before {action}?"
+        text = f"Save changes to '{model}' before {action}?"
         ret = QMessageBox.question(
             self,
             "",
@@ -1621,7 +1619,7 @@ class QtDraw(Window):
 
         :meta private:
         """
-        self._commit_pending_input()
+        self._flush()
         if self.is_modified():
             if self._confirm_unsaved("clearing"):
                 self.clear_data()
@@ -1652,15 +1650,15 @@ class QtDraw(Window):
     # ==================================================
     def closeEvent(self, event):
         """
-        Close with dialog.
+        Close, asking to save unsaved changes.
 
         Args:
             event (Event): event.
 
         :meta private:
         """
-        self._commit_pending_input()
-        ok = self._confirm_unsaved("closing", always=True)
+        self._flush()
+        ok = self._confirm_unsaved("closing")
         if not ok:
             event.ignore()
         else:

@@ -31,6 +31,7 @@ def test_open_and_save_actions_show_file_dialogs(app, monkeypatch):
 
 # ==================================================
 def test_quit_action_asks_before_closing(app, monkeypatch):
+    app.pyvista_widget.add_site()  # an unsaved change.
     asked = answer(monkeypatch, QMessageBox.Cancel)
     app.show()
 

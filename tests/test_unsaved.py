@@ -80,11 +80,21 @@ def test_close_save_writes_file(app, monkeypatch, tmp_path):
 
 
 # ==================================================
-def test_unmodified_close_asks_without_changes_text(app, monkeypatch):
+def test_unmodified_close_does_not_ask(app, monkeypatch):
     asked = answer(monkeypatch, QMessageBox.Cancel)
     app.close()
-    assert len(asked) == 1 and "Save changes" not in asked[0][2]
-    assert app.isVisible()
+    assert asked == [] and not app.isVisible()
+
+
+# ==================================================
+def test_close_after_save_does_not_ask(app, monkeypatch, tmp_path):
+    app.pyvista_widget.add_site(position="[0,0,0]")
+    file = tmp_path / "saved.qtdw"
+    monkeypatch.setattr(QFileDialog, "getSaveFileName", lambda *a, **k: (str(file), ""))
+    assert app.save_file()
+    asked = answer(monkeypatch, QMessageBox.Cancel)
+    app.close()
+    assert asked == [] and not app.isVisible()
 
 
 # ==================================================
@@ -246,3 +256,45 @@ def test_escape_cancels_edit_even_after_cursor_moves(qapp):
     assert fired == []
     assert edit.raw_text() == "1.23456789"
     host.close()
+
+
+# ==================================================
+def saved_with_pending_rename(app, monkeypatch, tmp_path):
+    app.pyvista_widget.add_site(name="A")
+    file = tmp_path / "saved.qtdw"
+    monkeypatch.setattr(QFileDialog, "getSaveFileName", lambda *a, **k: (str(file), ""))
+    assert app.save_file() and not app.is_modified()
+    model = app.pyvista_widget._data["site"]
+    model.setData(model.index(0, 0), "B")  # deferred rename, not run yet.
+
+
+def test_close_with_pending_rename_asks(app, monkeypatch, tmp_path):
+    saved_with_pending_rename(app, monkeypatch, tmp_path)
+    asked = answer(monkeypatch, QMessageBox.Cancel)
+    app.close()
+    assert len(asked) == 1 and "Save changes" in asked[0][2]
+    assert app.isVisible()
+    site_names = lambda: [row[0] for row in app.pyvista_widget.get_data_dict()["site"]]
+    assert site_names() == ["B"]  # the rename is kept, as one step of the history.
+    app.undo()
+    assert site_names() == ["A"]
+    app.redo()
+    assert site_names() == ["B"]
+
+
+def test_open_with_pending_rename_asks(app, monkeypatch, tmp_path):
+    saved_with_pending_rename(app, monkeypatch, tmp_path)
+    asked = answer(monkeypatch, QMessageBox.Cancel)
+    shown = []
+    monkeypatch.setattr(QFileDialog, "getOpenFileName", lambda *a, **k: shown.append(1) or ("", ""))
+    app.open_file()
+    assert len(asked) == 1 and "Save changes" in asked[0][2]
+    assert shown == []  # cancelled before choosing a file.
+
+
+def test_clear_with_pending_rename_asks_to_save(app, monkeypatch, tmp_path):
+    saved_with_pending_rename(app, monkeypatch, tmp_path)
+    asked = answer(monkeypatch, QMessageBox.Cancel)
+    app._clear_data()
+    assert len(asked) == 1 and "Save changes" in asked[0][2]
+    assert n_sites(app) == 1

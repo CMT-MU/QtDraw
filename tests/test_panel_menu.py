@@ -56,30 +56,10 @@ def test_style_is_fusion_and_not_a_preference(app, monkeypatch):
 
 
 # ==================================================
-def test_close_without_changes_asks_to_save(app, monkeypatch):
+def test_close_without_changes_quits_without_asking(app, monkeypatch):
     asked = answer(monkeypatch, QMessageBox.Cancel)
     app.close()
-    assert len(asked) == 1 and "Quit QtDraw" not in asked[0][2]
-    buttons = asked[0][3]
-    assert buttons & QMessageBox.Save and buttons & QMessageBox.Discard and buttons & QMessageBox.Cancel
-    assert app.isVisible()
-
-
-# ==================================================
-def test_close_without_changes_save_cancelled_keeps_window(app, monkeypatch):
-    answer(monkeypatch, QMessageBox.Save)
-    monkeypatch.setattr(QFileDialog, "getSaveFileName", lambda *a, **k: ("", ""))  # cancelled.
-    app.close()
-    assert app.isVisible()
-
-
-# ==================================================
-def test_close_without_changes_save_writes_file(app, monkeypatch, tmp_path):
-    file = tmp_path / "kept.qtdw"
-    answer(monkeypatch, QMessageBox.Save)
-    monkeypatch.setattr(QFileDialog, "getSaveFileName", lambda *a, **k: (str(file), ""))
-    app.close()
-    assert file.exists() and not app.isVisible()
+    assert asked == [] and not app.isVisible()
 
 
 # ==================================================

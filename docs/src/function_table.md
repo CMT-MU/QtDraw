@@ -62,7 +62,7 @@
 | _clear_data | Clear data (actor and data). |
 | clear_data | Clear data (actor and data). |
 | exec | Execute QtDraw. |
-| closeEvent | Close with dialog. |
+| closeEvent | Close, asking to save unsaved changes. |
 | update_status | Update status. |
 | update_preference | Update preference. |
 | write_info | Write text message into Info dialog. |
