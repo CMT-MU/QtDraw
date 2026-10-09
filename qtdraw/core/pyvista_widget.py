@@ -666,9 +666,12 @@ class PyVistaWidget(QtInteractor):
 
     # ==================================================
     @contextmanager
-    def _batch_render(self):
+    def _batch_render(self, log_render_error=False):
         """
         Make a batch of changes, rendering once at its end instead of once for each object.
+
+        Args:
+            log_render_error (bool, optional): only log a failing render also after a successful batch ?
 
         Note:
             - at most one render is submitted when the outermost batch ends (none if nothing requested it).
@@ -687,7 +690,7 @@ class PyVistaWidget(QtInteractor):
             if self._batch_depth == 0 and self._batch_dirty:
                 self._batch_dirty = False
                 if not self._closed:
-                    if failed:
+                    if failed or log_render_error:
                         try:
                             self.render()
                         except Exception as e:  # keep original exception.
@@ -1930,7 +1933,8 @@ class PyVistaWidget(QtInteractor):
             if ver < 2:  # a temporary widget is needed to convert version 1.
                 widget = PyVistaWidget(off_screen=True)
                 try:
-                    all_data = convert_version3(all_data, ver, widget)
+                    with widget._batch_render():  # the converter adds objects one by one.
+                        all_data = convert_version3(all_data, ver, widget)
                 finally:
                     widget.close()
             elif ver < 3:
@@ -1955,7 +1959,8 @@ class PyVistaWidget(QtInteractor):
 
         # set data (current data is restored if this fails).
         current = self._get_current_state()
-        with self._batch_render():  # rendered once, also after restoring the current data.
+        # rendered once, also after restoring the current data; a loaded drawing is kept if only its render fails.
+        with self._batch_render(log_render_error=True):
             try:
                 self._set_loaded_data(file, all_data, ver, material)
             except BaseException:

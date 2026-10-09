@@ -398,9 +398,22 @@ def rendered(monkeypatch):
     return calls
 
 
+def quiet(rendered, period=0.5, timeout=10.0):
+    """
+    Process events until no render is delivered for a period (threaded renders on macOS arrive later).
+    """
+    end = time.monotonic() + timeout
+    while time.monotonic() < end:
+        n = len(rendered)
+        wait_for(lambda: len(rendered) > n, timeout=period)
+        if len(rendered) == n:
+            return
+    raise AssertionError("renders did not stop")
+
+
 def drain(widget, rendered):
     widget.render_timer.stop()
-    wait_for(lambda: False, timeout=0.3)
+    quiet(rendered)
     rendered.clear()
 
 
@@ -411,7 +424,7 @@ def test_batch_renders_once(widget, rendered):
         for i in range(5):
             widget.add_site(name=f"S{i}")
     assert wait_for(lambda: widget in rendered)
-    wait_for(lambda: False, timeout=0.3)
+    quiet(rendered)
     assert rendered.count(widget) == 1
 
     rendered.clear()
@@ -425,7 +438,7 @@ def test_close_inside_batch_does_not_render(qapp, rendered):
     with widget._batch_render():
         widget.add_site(name="A")
         widget.close()
-    wait_for(lambda: False, timeout=0.3)
+    quiet(rendered)
     assert widget not in rendered
 
 
@@ -435,10 +448,57 @@ def test_close_right_after_submission(qapp, rendered):
     with widget._batch_render():
         widget.add_site(name="A")
     widget.close()
-    wait_for(lambda: False, timeout=0.3)  # no crash.
+    quiet(rendered)  # no crash.
 
 
 def test_timer_still_renders(widget, rendered):
     drain(widget, rendered)
     widget.render_timer.start(20)
     assert wait_for(lambda: widget in rendered)
+
+
+# ==================================================
+def test_load_render_failure_keeps_loaded_document(widget, tmp_path, monkeypatch):
+    add_mixed(widget)
+    widget.save(str(tmp_path / "a.qtdw"))
+    widget.clear_data()
+    widget.add_site(name="X")
+    removed = []
+    widget.data_removed.connect(lambda: removed.append(1))
+    messages = []
+    widget.message.connect(messages.append)
+
+    def fail(self, *args, **kwargs):
+        raise RuntimeError("submit")
+
+    with monkeypatch.context() as m:  # not when events are processed after the test.
+        m.setattr(QtInteractor, "render", fail)
+        widget.load(str(tmp_path / "a.qtdw"))  # the drawing is loaded, only its render failed.
+    assert names(widget) == ["S", "H"]
+    assert removed == [1]  # listeners are notified of the loaded document.
+    assert any("failed to render" in text for text in messages)
+    assert widget._batch_depth == 0 and not widget._batch_dirty
+
+
+def test_load_version1_converts_in_one_batch(widget, submissions, tmp_path, monkeypatch):
+    add_mixed(widget)
+    widget.save(str(tmp_path / "a.qtdw"))
+    loaded = pvw_module.read_dict(str(tmp_path / "a.qtdw"))
+    temporary = []
+    before = []
+
+    def convert(all_data, ver, converter_widget):
+        temporary.append(converter_widget)
+        before.append(sum(1 for w in submissions if w is converter_widget))  # renders of its initialization.
+        for i in range(5):
+            converter_widget.add_site(name=f"T{i}")  # the converter adds objects one by one.
+        return loaded
+
+    monkeypatch.setattr(pvw_module, "convert_version3", convert)
+    old = tmp_path / "old.qtdw"
+    old.write_text("{'version': '1.0.0'}")
+    submissions.clear()
+    widget.load(str(old))
+    assert temporary and temporary[0] is not widget
+    assert sum(1 for w in submissions if w is temporary[0]) - before[0] == 1
+    assert sum(1 for w in submissions if w is widget) == 1
