@@ -131,7 +131,7 @@ class QtDraw(Window):
 
         :meta private:
         """
-        self.resize(1000, 500)
+        self.resize(1000, 626)  # as tall as with the former, longer panel.
 
         # central grid.
         central_widget = QWidget(self)

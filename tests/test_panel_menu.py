@@ -80,3 +80,9 @@ def test_close_without_changes_save_writes_file(app, monkeypatch, tmp_path):
     monkeypatch.setattr(QFileDialog, "getSaveFileName", lambda *a, **k: (str(file), ""))
     app.close()
     assert file.exists() and not app.isVisible()
+
+
+# ==================================================
+def test_window_keeps_its_height_with_fewer_buttons(app):
+    app.show()
+    assert app.height() >= 626  # the height before the panel had fewer buttons.
