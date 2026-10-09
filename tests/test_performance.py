@@ -177,3 +177,103 @@ def test_site_sphere_is_created_once_per_size(widget, monkeypatch, request):
     assert np.array_equal(mesh(1).points, other)
     widget.add_site(position="[0,0,1/2]", size=0.1)
     assert np.allclose(mesh(3).points, create_sphere(radius=0.1).points + pw.convert_str_vector("[0,0,1/2]", A=widget.A_matrix))
+
+
+# ==================================================
+@pytest.fixture
+def count_renderer_actors(monkeypatch):
+    import pyvista
+
+    counter = {"n": 0}
+    original = pyvista.Renderer.actors
+
+    def actors(self):
+        counter["n"] += 1
+        return original.fget(self)
+
+    monkeypatch.setattr(pyvista.Renderer, "actors", property(actors))
+    return counter
+
+
+# ==================================================
+@pytest.mark.parametrize("n", [4, 16])
+def test_clear_reads_actors_independent_of_rows(widget, count_renderer_actors, n):
+    widget.add_bond()
+    add_sites(widget, n)
+    count_renderer_actors["n"] = 0
+    widget.clear_data()
+    assert count_renderer_actors["n"] <= 8  # not once or more per object.
+
+
+# ==================================================
+def test_clear_removes_object_and_label_actors_only(widget):
+    others = set(widget.renderer.actors)  # axes, cell, etc.
+    add_sites(widget, 4)
+    widget.add_caption()
+    widget.add_text2d()
+    widget.add_bond()
+    assert set(widget.renderer.actors) - others  # objects and labels are drawn.
+
+    widget.clear_data()
+
+    assert set(widget.renderer.actors) == others
+    assert widget._actor_object_type == {}
+
+
+# ==================================================
+def test_clear_removes_suffixed_actors_but_not_similar_names(widget):
+    import pyvista
+
+    from qtdraw.core.pyvista_widget_setting import COLUMN_NAME_ACTOR
+
+    widget.add_site(name="A")
+    name = widget._data["site"].tolist()[0][COLUMN_NAME_ACTOR]
+    child = widget.add_mesh(pyvista.Sphere(), name=f"{name}-extra")  # removed with name, as remove_actor(name).
+    similar = widget.add_mesh(pyvista.Sphere(), name=f"{name}ish")  # another actor.
+
+    widget.clear_data()
+
+    actors = widget.renderer.actors
+    assert f"{name}-extra" not in actors and child not in actors.values()
+    assert actors[f"{name}ish"] is similar
+    assert all(model.tolist() == [] for model in widget._data.values())
+
+
+# ==================================================
+def test_clear_failure_resets_flags(widget, monkeypatch):
+    add_sites(widget, 2)
+    model = widget._data["site"]
+
+    def fail():
+        raise RuntimeError("broken")
+
+    with monkeypatch.context() as m, pytest.raises(RuntimeError):
+        m.setattr(model, "clear_data", fail)
+        widget.clear_data()
+    assert not widget._block_remove_actor and not widget._block_remove_isosurface
+
+    widget.clear_data()  # works again.
+    widget.add_site(name="B")
+    others = set(widget.renderer.actors)
+    widget.add_site(name="C")
+    model.remove_row(model.index(1, 0))  # removal of one row removes its actor again.
+    assert set(widget.renderer.actors) == others
+
+
+# ==================================================
+def test_clear_does_not_remove_actors_by_name(widget, monkeypatch):
+    import pyvista
+
+    add_sites(widget, 4)
+    widget.add_bond()
+    by_name = []
+    original = pyvista.Renderer.remove_actor
+
+    def remove_actor(self, actor, *args, **kwargs):
+        if isinstance(actor, str):  # reads all actors for each call (in any pyvista version).
+            by_name.append(actor)
+        return original(self, actor, *args, **kwargs)
+
+    monkeypatch.setattr(pyvista.Renderer, "remove_actor", remove_actor)
+    widget.clear_data()
+    assert by_name == []

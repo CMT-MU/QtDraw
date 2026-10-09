@@ -497,6 +497,7 @@ class PyVistaWidget(QtInteractor):
         self._isosurface_in_memory = set()  # names of data given without a file.
         self._backup = None
         self._block_remove_isosurface = False
+        self._block_remove_actor = False  # actors are removed at once (clear).
 
     # ==================================================
     def set_additional_status(self):
@@ -2802,10 +2803,41 @@ class PyVistaWidget(QtInteractor):
         :meta private:
         """
         self.deselect_actor_all()
+        self._remove_object_actors()
         self._block_remove_isosurface = True
+        self._block_remove_actor = True  # already removed.
+        try:
+            for model in self._data.values():
+                model.clear_data()
+        finally:
+            self._block_remove_isosurface = False
+            self._block_remove_actor = False
+
+    # ==================================================
+    def _remove_object_actors(self):
+        """
+        Remove actors of all objects and their labels at once.
+
+        Note:
+            - removing actors one by one by name reads the dict of all actors each time.
+            - as remove_actor(name), actors named "name-..." are also removed.
+
+        :meta private:
+        """
+        names = set()
         for model in self._data.values():
-            model.clear_data()
-        self._block_remove_isosurface = False
+            for row in model.tolist():
+                names.update({row[COLUMN_NAME_ACTOR], row[COLUMN_LABEL_ACTOR]} - {""})
+        if not names:
+            return
+
+        def is_object(key):
+            return key in names or any(key[:i] in names for i, c in enumerate(key) if c == "-")
+
+        actors = [actor for key, actor in self.renderer.actors.items() if is_object(key)]
+        self.renderer.remove_actor(actors, reset_camera=False, render=False)
+        for name in names:
+            self._actor_object_type.pop(name, None)
 
     # ==================================================
     def get_camera_info(self):
@@ -3068,12 +3100,13 @@ class PyVistaWidget(QtInteractor):
 
         :meta private:
         """
-        actor_name = row_data[COLUMN_NAME_ACTOR]
-        self.delete_actor(actor_name)
-
-        if object_type not in ["caption", "text2d"]:
-            actor_name = row_data[COLUMN_LABEL_ACTOR]
+        if not self._block_remove_actor:
+            actor_name = row_data[COLUMN_NAME_ACTOR]
             self.delete_actor(actor_name)
+
+            if object_type not in ["caption", "text2d"]:
+                actor_name = row_data[COLUMN_LABEL_ACTOR]
+                self.delete_actor(actor_name)
 
         if object_type == "isosurface" and not self._block_remove_isosurface:
             filename = row_data[COLUMN_ISOSURFACE_FILE]
