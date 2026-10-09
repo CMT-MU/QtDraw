@@ -134,23 +134,25 @@ def convert_str_vector(vector, cell="[0,0,0]", transform=True, A=None):
 
 
 # ==================================================
-def split_filename(filename):
+def split_filename(filename, base=None):
     """
     Split file name.
 
     Args:
         filename (str): filename.
+        base (Path, optional): directory a relative filename is relative to, default is the current directory.
 
     Returns:
         - (str) -- filename with absolute path.
-        - (str) -- filename with relative path.
+        - (str) -- filename with path relative to base.
         - (str) -- base filename.
         - (str) -- extension.
         - (str) -- directory.
     """
+    base = Path.cwd() if base is None else Path(base)
     path = Path(filename)
-    path_abs = path if path.is_absolute() else (Path.cwd() / path).resolve()
-    path_rel = relative_path(path_abs, Path.cwd())
+    path_abs = path if path.is_absolute() else (base / path).resolve()
+    path_rel = relative_path(path_abs, base)
     base = str(path_rel.stem)
     ext = str(path_rel.suffix)
     folder = str(path_abs.parent)
@@ -447,6 +449,7 @@ class PyVistaWidget(QtInteractor):
 
         # set default.
         self._off_screen = off_screen
+        self._document_dir = None  # directory of the drawing file, data file names are relative to it.
         self.clear_info()
 
         # set interactor (suppress messages of VTK and Qt during initialization only).
@@ -1805,9 +1808,9 @@ class PyVistaWidget(QtInteractor):
         """
         f = file.as_posix()
 
-        # set current directory.
+        # data file names of the drawing are relative to its directory.
         self.set_model(file.stem)
-        os.chdir(file.parent)
+        self._document_dir = file.parent
 
         self._tab_group_view.close()
         self._clear_rows()
@@ -1924,7 +1927,7 @@ class PyVistaWidget(QtInteractor):
         :meta private:
         """
         return {
-            "cwd": os.getcwd(),
+            "document_dir": self._document_dir,
             "data": self.get_data_dict(),
             "status": copy.deepcopy(self._status),
             "preference": copy.deepcopy(self._preference),
@@ -1944,7 +1947,7 @@ class PyVistaWidget(QtInteractor):
 
         :meta private:
         """
-        os.chdir(state["cwd"])
+        self._document_dir = state["document_dir"]
         self._clear_rows()
         self.clear_info()
         self._isosurface_data = state["isosurface"]
@@ -4480,6 +4483,16 @@ class PyVistaWidget(QtInteractor):
         self.set_actor(object_type, index, actor + "-labels", COLUMN_LABEL_ACTOR)
 
     # ==================================================
+    def document_dir(self):
+        """
+        Directory that data file names of the drawing are relative to.
+
+        Returns:
+            - (Path) -- directory of the drawing file, or the current directory if it was never loaded or saved.
+        """
+        return self._document_dir if self._document_dir is not None else Path.cwd()
+
+    # ==================================================
     def set_isosurface_data(self, filename):
         """
         Set isosurface data.
@@ -4492,7 +4505,7 @@ class PyVistaWidget(QtInteractor):
 
         :meta private:
         """
-        path_abs, path_rel, base, ext, folder = split_filename(filename)
+        path_abs, path_rel, base, ext, folder = split_filename(filename, self.document_dir())
         if os.path.exists(path_abs):
             if type(filename) != tuple:
                 if ext == ".xsf":
