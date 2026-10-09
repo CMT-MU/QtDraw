@@ -151,10 +151,11 @@ app = get_qt_application()
 from qtdraw.core.pyvista_widget import PyVistaWidget
 from qtdraw.core.pyvista_widget_setting import COLUMN_NAME_ACTOR
 w = PyVistaWidget(off_screen=True)
-w.add_caption(caption="$x^2$")
+w.add_caption(caption="[$x^2$,B,C]")  # one caption for each of the 3 default positions.
 w.add_text2d(caption="$\\\\alpha$")
 assert len(w._data["caption"].tolist()) == 1 and len(w._data["text2d"].tolist()) == 1
-assert all(row[COLUMN_NAME_ACTOR] != "" for row in w._data["text2d"].tolist())  # actor is created.
+rows = w._data["caption"].tolist() + w._data["text2d"].tolist()
+assert all(row[COLUMN_NAME_ACTOR] != "" for row in rows)  # actors are created.
 w.close()
 print("OK")
 """)
