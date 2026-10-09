@@ -64,3 +64,6 @@ def test_dropped_pending_rename_is_reported(widget, caplog):
     with caplog.at_level("WARNING"):
         model.run_pending_renames()
     assert "X" in caplog.text
+    assert model._pending_renames == []
+    QCoreApplication.processEvents()  # the queued callbacks do nothing now.
+    assert sorted(r[0] for r in widget.get_data_dict()["site"]) == ["A", "Y"]
