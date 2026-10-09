@@ -269,7 +269,7 @@ class MathJaxSVG:
         """
         for latex, svg_str in self._svg_cache.items():
             cache_path = self._get_cache_path(latex)
-            if cache_path.exists():
+            if self._read_cache_file(cache_path) is not None:  # a valid file is kept; an invalid one is replaced.
                 continue
             try:
                 self._write_cache_file(cache_path, svg_str)
@@ -292,7 +292,13 @@ class MathJaxSVG:
             text = path.read_text(encoding="utf-8")
         except (OSError, UnicodeDecodeError):  # missing, or written in another encoding by an older version.
             return None
-        return text if 'viewBox="' in text else None  # cut off (older versions wrote it in place).
+        # a complete SVG with a usable viewBox (older versions wrote the file in place, so it may be cut off).
+        view_box = MathJaxSVG._get_attribute(text, "viewBox")
+        try:
+            complete = view_box is not None and len([float(v) for v in view_box.split()]) == 4
+        except ValueError:
+            complete = False
+        return text if complete and text.rstrip().endswith("</svg>") else None
 
     # ===============================
     @staticmethod
