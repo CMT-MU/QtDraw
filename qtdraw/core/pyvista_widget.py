@@ -6,6 +6,8 @@ This module provides a class to draw various
 """
 
 import os
+import re
+import ast
 from pathlib import Path
 import subprocess
 import shutil
@@ -109,6 +111,42 @@ def get_data_range(data):
 
 
 # ==================================================
+_PLAIN_NUMBERS = re.compile(r"[\s\[\],0-9.eE+-]*")  # numbers in (nested) lists only.
+
+
+# ==================================================
+@lru_cache(maxsize=4096)
+def _parse_vector_cached(s):
+    """
+    Parse a string of (a list of) numbers or expressions to floats.
+
+    Plain numbers are read without sympy, which is much slower; expressions such as "1/2" use sympy.
+
+    :meta private:
+    """
+    if _PLAIN_NUMBERS.fullmatch(s):
+        try:
+            value = np.array(ast.literal_eval(s), dtype=float)
+            value.setflags(write=False)  # shared by callers through the cache.
+            return value
+        except (ValueError, SyntaxError, TypeError):  # e.g. "01", left to sympy (which also rejects it).
+            pass
+    value = str_to_sympy(s, rational=False).astype(float)
+    value.setflags(write=False)
+    return value
+
+
+# ==================================================
+def _parse_vector(s):
+    """
+    Parse a string of (a list of) numbers or expressions to a new float array.
+
+    :meta private:
+    """
+    return _parse_vector_cached(s).copy()
+
+
+# ==================================================
 def convert_str_vector(vector, cell="[0,0,0]", transform=True, A=None):
     """
     Convert 3-component vector(s) to A.(position+cell).
@@ -122,8 +160,8 @@ def convert_str_vector(vector, cell="[0,0,0]", transform=True, A=None):
     Returns:
         - (numpy.ndarray) -- transformed position.
     """
-    cell = str_to_sympy(cell).astype(int)
-    vector = str_to_sympy(vector, rational=False).astype(float)
+    cell = _parse_vector(cell).astype(int)
+    vector = _parse_vector(vector)
 
     vectorT = vector + cell
     if transform:
