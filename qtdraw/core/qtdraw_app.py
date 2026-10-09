@@ -11,6 +11,7 @@ from pathlib import Path
 import logging
 from PySide6.QtWidgets import QWidget, QMessageBox, QFileDialog, QDialog, QApplication, QAbstractButton, QComboBox
 from PySide6.QtCore import Qt, QTimer
+from PySide6.QtGui import QAction, QKeySequence
 
 from qtdraw.core.pyvista_widget import PyVistaWidget, Window
 from qtdraw.core.pyvista_widget_setting import widget_detail as detail
@@ -38,6 +39,30 @@ def add_extension(filename, ext):
     if filename.suffix == ext:
         return filename
     return filename.with_name(filename.name + ext)
+
+
+# ==================================================
+def help_text():
+    """
+    Mouse and key operations.
+
+    Returns:
+        - (str) -- help text.
+    """
+    open_key = QKeySequence(QKeySequence.Open).toString(QKeySequence.NativeText)
+    save_key = QKeySequence(QKeySequence.Save).toString(QKeySequence.NativeText)
+    quit_key = QKeySequence(QKeySequence.Quit).toString(QKeySequence.NativeText)
+    return (
+        "In the view:\n"
+        "- Drag: rotate. Shift + drag: move. Wheel: zoom.\n"
+        "- Right click on an object: menu to open it in the data table, hide or remove it.\n"
+        f"- {detail['data_edit_key']}: open the data table of all objects.\n"
+        "\n"
+        "In the data table:\n"
+        "- Esc: clear the selection. Up, Down: move the selection.\n"
+        "\n"
+        f"{open_key}: open a file. {save_key}: save. {quit_key}: quit."
+    )
 
 
 # ==================================================
@@ -123,6 +148,81 @@ class QtDraw(Window):
         layout.addWidget(self.pyvista_widget, 0, 0, 1, 1)
         layout.addWidget(self.panel, 0, 1, 1, 1)
         layout.addWidget(self.status, 1, 0, 1, 2)
+
+        self._create_menu()
+        self._set_tool_tips()
+
+    # ==================================================
+    def _create_menu(self):
+        """
+        Create menu bar with standard shortcuts.
+
+        :meta private:
+        """
+
+        def action(menu, text, slot, shortcut=None):
+            act = QAction(text, self)
+            if shortcut is not None:
+                act.setShortcut(shortcut)
+            act.triggered.connect(slot)
+            menu.addAction(act)
+            return act
+
+        menu = self.menuBar().addMenu("&File")
+        self.action_open = action(menu, "&Open...", self.open_file, QKeySequence.Open)
+        self.action_save = action(menu, "&Save...", self.save_file, QKeySequence.Save)
+        self.action_screenshot = action(menu, "Screens&hot...", self._save_screenshot)
+        menu.addSeparator()
+        self.action_clear = action(menu, "&Clear", self._clear_data)
+        menu.addSeparator()
+        self.action_quit = action(menu, "&Quit", self.close, QKeySequence.Quit)
+        self.action_quit.setMenuRole(QAction.QuitRole)
+
+        menu = self.menuBar().addMenu("&Help")
+        self.action_help = action(menu, "&Mouse and Keys", self._show_help)
+        self.action_about = action(menu, "&About QtDraw", self._show_about)
+        self.action_about.setMenuRole(QAction.AboutRole)
+
+    # ==================================================
+    def _set_tool_tips(self):
+        """
+        Set tool tips of buttons.
+
+        :meta private:
+        """
+        open_key = QKeySequence(QKeySequence.Open).toString(QKeySequence.NativeText)
+        save_key = QKeySequence(QKeySequence.Save).toString(QKeySequence.NativeText)
+        tips = {
+            self.ds_button_edit: f"Open the data table of all objects (key: {detail['data_edit_key']}).",
+            self.ds_button_clear: "Remove all objects.",
+            self.ds_button_load: f"Open a QtDraw file or a material file ({open_key}).",
+            self.ds_button_save: f"Save to a QtDraw file ({save_key}).",
+            self.ds_button_screenshot: "Save the view as an image or a vector graphic.",
+            self.misc_button_info: "Show messages of QtDraw.",
+            self.misc_button_pref: "Change preferences such as colors, fonts and lights.",
+            self.misc_button_about: "Show the version and the authors.",
+            self.misc_button_log: "Show the log.",
+            self.view_button_default: "Reset the view to the default direction.",
+            self.view_button_clip: "Hide objects outside the range lower-upper.",
+            self.view_button_repeat: "Repeat the objects of the home cell in the range lower-upper.",
+            self.view_button_bar: "Show the color bar.",
+            self.view_button_parallel: "Use parallel projection.",
+            self.view_button_grid: "Show the grid.",
+        }
+        if hasattr(self, "misc_button_multipie"):
+            tips[self.misc_button_multipie] = "Open the MultiPie dialog for symmetry-adapted drawing."
+        for button, tip in tips.items():
+            if not button.toolTip():  # keep tool tips set elsewhere.
+                button.setToolTip(tip)
+
+    # ==================================================
+    def _show_help(self):
+        """
+        Show mouse and key operations.
+
+        :meta private:
+        """
+        QMessageBox.information(self, "Mouse and Keys", help_text())
 
     # ==================================================
     def open_file(self):
