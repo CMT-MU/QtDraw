@@ -141,8 +141,31 @@ def with_busy_cursor(func):
 
 
 # ==================================================
+def error_summary(type, value, max_length=300):
+    """
+    Short message of an exception: its type and the first line of its message.
+
+    Args:
+        type (type): type of exception.
+        value (BaseException): exception.
+        max_length (int, optional): maximum length of the message.
+
+    Returns:
+        - (str) -- e.g. "ValueError: invalid value".
+    """
+    message = value.msg if isinstance(value, SyntaxError) and value.msg else str(value)
+    lines = message.strip().splitlines()
+    first = lines[0] if lines else ""
+    if len(first) > max_length:
+        first = first[: max_length - 3] + "..."
+    elif len(lines) > 1:
+        first += " ..."
+    return f"{type.__name__}: {first}" if first else type.__name__
+
+
+# ==================================================
 class ExceptionHook(QObject):
-    msg_signal = Signal(str, str)  # short message, details.
+    msg_signal = Signal(str)  # full message.
 
     # ==================================================
     def __init__(self, parent=None):
@@ -163,7 +186,8 @@ class ExceptionHook(QObject):
         sys.excepthook = self.hook
 
         # connection.
-        self.msg_signal.connect(lambda summary, details: show_error(summary, details, "Exception Message"))
+        self._summary = ""  # short message of the last exception.
+        self.msg_signal.connect(lambda details: show_error(self._summary, details, "Exception Message"))
 
     # ==================================================
     def hook(self, type, value, traceback):
@@ -189,9 +213,9 @@ class ExceptionHook(QObject):
                 log_msg = "".join(tb.format_exception(type, value, traceback))
                 simple = "".join(tb.format_exception_only(type, value))
             log_msg += "\n" + bar
-            summary = "".join(tb.format_exception_only(type, value)).strip()
             simple = "\n" + bar + "\n" + simple + bar
-            self.msg_signal.emit(summary, log_msg)
+            self._summary = error_summary(type, value)
+            self.msg_signal.emit(log_msg)
             logging.critical(simple)
 
     # ==================================================

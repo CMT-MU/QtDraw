@@ -54,8 +54,8 @@ def help_text():
     quit_key = QKeySequence(QKeySequence.Quit).toString(QKeySequence.NativeText)
     return (
         "In the view:\n"
-        "- Drag: rotate. Shift + drag: move. Wheel: zoom.\n"
-        "- Right click on an object: menu to open it in the data table, hide or remove it.\n"
+        "- Left drag: rotate. Shift + left drag: move. Wheel or right drag: zoom.\n"
+        "- Right click (without dragging) on an object: menu to open it in the data table, hide or remove it.\n"
         f"- {detail['data_edit_key']}: open the data table of all objects.\n"
         "\n"
         "In the data table:\n"

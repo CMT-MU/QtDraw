@@ -28,8 +28,9 @@ class MultiPieDialog(QDialog):
         """
         super().__init__()
         self._pvw = parent.pyvista_widget  # PyVistaWidget.
+        if self._pvw._mp_data is None:
+            self._pvw.mp_set_group()
         self._qtdraw = parent  # QtDraw.
-        self._shown_data = None  # data shown in the panels.
 
         self.set_title()
         self.resize(600, 500)
@@ -71,8 +72,6 @@ class MultiPieDialog(QDialog):
 
         :meta private:
         """
-        if self._pvw._mp_data is None:
-            self._pvw.mp_set_group()
         return self._pvw._mp_data
 
     # ==================================================
@@ -82,7 +81,6 @@ class MultiPieDialog(QDialog):
 
     # ==================================================
     def set_data(self):
-        self._shown_data = self._data
         self._sub_panel.set_data()
         self._group_panel.set_data()
         self._object_panel.set_data()
@@ -94,8 +92,8 @@ class MultiPieDialog(QDialog):
         self._group_panel.clear_data()
         self._object_panel.clear_data()
         self._basis_panel.clear_data()
-        # data replaced by opening a file is kept; only the data shown so far is cleared.
-        if self._pvw._mp_data is not None and self._pvw._mp_data is self._shown_data:
+        # the data of a file that has just been opened is kept.
+        if self._pvw._mp_data is not None and not self._pvw._loading:
             self._pvw._mp_data.clear_data()
 
     # ==================================================

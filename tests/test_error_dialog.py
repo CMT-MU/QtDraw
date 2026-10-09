@@ -44,3 +44,45 @@ def test_exception_hook_shows_short_message(qapp, monkeypatch):
     assert summary == "ZeroDivisionError: division by zero"  # one line, without the traceback.
     assert "broken_function" in details and "ZeroDivisionError" in details
     assert title == "Exception Message"
+
+
+# ==================================================
+def summary_of(error):
+    from qtdraw.widget.qt_event_util import error_summary
+
+    try:
+        raise error
+    except BaseException as e:
+        return error_summary(type(e), e)
+
+
+def test_error_summary_is_short():
+    assert summary_of(ValueError("bad value")) == "ValueError: bad value"
+    assert summary_of(ValueError("first line\nsecond\nthird")) == "ValueError: first line ..."
+    assert summary_of(KeyError("missing")) == "KeyError: 'missing'"
+    assert summary_of(RuntimeError()) == "RuntimeError"
+    long = summary_of(ValueError("x" * 1000))
+    assert long.startswith("ValueError: xxx") and long.endswith("...") and len(long) < 320
+    try:
+        compile("1 +", "<input>", "exec")
+    except SyntaxError as e:
+        from qtdraw.widget.qt_event_util import error_summary
+
+        assert error_summary(SyntaxError, e) == f"SyntaxError: {e.msg}"
+
+
+# ==================================================
+def test_message_signal_still_sends_full_message(qapp, monkeypatch):
+    from qtdraw.widget import qt_event_util
+
+    monkeypatch.setattr(qt_event_util, "show_error", lambda *args: None)
+    hook = qt_event_util.ExceptionHook()
+    monkeypatch.setattr(sys, "excepthook", sys.__excepthook__)
+    messages = []
+    hook.msg_signal.connect(messages.append)  # one-argument listeners keep working.
+    try:
+        broken_function()
+    except ZeroDivisionError:
+        hook.hook(*sys.exc_info())
+
+    assert "Traceback" in messages[0] and "broken_function" in messages[0]

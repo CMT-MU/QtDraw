@@ -422,6 +422,7 @@ class PyVistaWidget(QtInteractor):
             self._plot_signal[object_type] = PlotSignal(self, f)
 
         self._mp_data = None
+        self._loading = False  # True while data_removed is emitted after loading a file.
 
         # refresh.
         self.refresh()
@@ -1689,7 +1690,12 @@ class PyVistaWidget(QtInteractor):
             except Exception as e:  # keep original exception.
                 self.write_info(f"* failed to restore current data: {e}")
             raise
-        self.data_removed.emit()  # notify only after success, to keep data such as MultiPie panel on failure.
+        # notify only after success, to keep data such as MultiPie panel on failure.
+        self._loading = True  # the MultiPie data now belongs to the loaded file, and is kept.
+        try:
+            self.data_removed.emit()
+        finally:
+            self._loading = False
 
     # ==================================================
     def _set_loaded_data(self, file, all_data, ver, material):

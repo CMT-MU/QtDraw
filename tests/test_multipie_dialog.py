@@ -57,3 +57,27 @@ def test_clear_clears_multipie_data(app):
     app.clear_data()
 
     assert pvw._mp_data.status["counter"] == {}
+
+
+# ==================================================
+def test_clear_after_group_replaced_directly(app):
+    pvw = app.pyvista_widget
+    app._show_multipie()
+    pvw.mp_set_group("Ci")  # replaced without opening a file.
+    pvw._mp_data.status["counter"] = {"site": 3}
+
+    app.clear_data()
+
+    assert pvw._mp_data.status["counter"] == {}
+
+
+# ==================================================
+def test_widget_clear_data_clears_multipie_data(app):
+    pvw = app.pyvista_widget
+    app._show_multipie()
+    pvw.mp_set_group("Ci")
+    pvw._mp_data.status["counter"] = {"site": 3}
+
+    pvw.clear_data()  # as from a script.
+
+    assert pvw._mp_data.status["counter"] == {}

@@ -186,13 +186,12 @@ def broken_function():
 hook = ExceptionHook()
 messages = []
 hook.msg_signal.disconnect()
-hook.msg_signal.connect(lambda summary, details: messages.append((summary, details)))
+hook.msg_signal.connect(messages.append)
 try:
     broken_function()
 except ZeroDivisionError:
     hook.hook(*sys.exc_info())
-summary, msg = messages[0]
-assert summary == "ZeroDivisionError: division by zero", summary
+msg = messages[0]
 assert "Traceback" in msg and "broken_function" in msg and "ZeroDivisionError: division by zero" in msg, msg
 print("OK")
 """)
