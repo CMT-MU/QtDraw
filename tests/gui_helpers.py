@@ -45,7 +45,7 @@ def app(qapp, tmp_path, monkeypatch):
 
 
 def close_answer(parent, title, text, buttons, *args):
-    # discard unsaved changes, or confirm "Quit QtDraw ?".
+    # close without saving.
     return QMessageBox.Discard if buttons & QMessageBox.Discard else QMessageBox.Ok
 
 

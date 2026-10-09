@@ -80,10 +80,10 @@ def test_close_save_writes_file(app, monkeypatch, tmp_path):
 
 
 # ==================================================
-def test_unmodified_close_keeps_simple_question(app, monkeypatch):
+def test_unmodified_close_asks_without_changes_text(app, monkeypatch):
     asked = answer(monkeypatch, QMessageBox.Cancel)
     app.close()
-    assert len(asked) == 1 and "Quit QtDraw" in asked[0][2]
+    assert len(asked) == 1 and "Save changes" not in asked[0][2]
     assert app.isVisible()
 
 
@@ -165,7 +165,7 @@ def test_pending_input_is_committed_before_close_check(app, monkeypatch):
     type_into(app.uc_edit_a, "2.5")  # not confirmed by Enter, field keeps focus.
     asked = answer(monkeypatch, QMessageBox.Cancel)
     app.close()
-    assert "Save changes" in asked[0][2]  # not "Quit QtDraw ?".
+    assert "Save changes" in asked[0][2]  # the typed value is a change.
     assert app.pyvista_widget._status["cell"]["a"] == pytest.approx(2.5)
 
 

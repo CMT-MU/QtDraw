@@ -131,7 +131,7 @@ class QtDraw(Window):
 
         :meta private:
         """
-        self.resize(1000, 500)
+        self.resize(*detail["window_size"])
 
         # central grid.
         central_widget = QWidget(self)
@@ -192,6 +192,10 @@ class QtDraw(Window):
         self.action_undo = action(menu, "&Undo", self.undo, QKeySequence.Undo)
         self.action_redo = action(menu, "&Redo", self.redo, QKeySequence.Redo)
 
+        menu = self.menuBar().addMenu("&Window")
+        self.action_info = action(menu, "&Info", lambda: self.info_dialog.show())
+        self.action_log = action(menu, "&Log", lambda: self.logger.show())
+
         menu = self.menuBar().addMenu("&Help")
         self.action_help = action(menu, "&Mouse and Keys", self._show_help)
         self.action_about = action(menu, "&About QtDraw", self._show_about)
@@ -204,18 +208,10 @@ class QtDraw(Window):
 
         :meta private:
         """
-        open_key = QKeySequence(QKeySequence.Open).toString(QKeySequence.NativeText)
-        save_key = QKeySequence(QKeySequence.Save).toString(QKeySequence.NativeText)
         tips = {
             self.ds_button_edit: f"Open the data table of all objects (key: {detail['data_edit_key']}).",
-            self.ds_button_clear: "Remove all objects.",
-            self.ds_button_load: f"Open a QtDraw file or a material file ({open_key}).",
-            self.ds_button_save: f"Save to a QtDraw file ({save_key}).",
-            self.ds_button_screenshot: "Save the view as an image or a vector graphic.",
-            self.misc_button_info: "Show messages of QtDraw.",
             self.misc_button_pref: "Change preferences such as colors, fonts and lights.",
             self.misc_button_about: "Show the version and the authors.",
-            self.misc_button_log: "Show the log.",
             self.view_button_default: "Reset the view to the default direction.",
             self.view_button_clip: "Hide objects outside the range lower-upper.",
             self.view_button_repeat: "Repeat the objects of the home cell in the range lower-upper.",
@@ -335,6 +331,9 @@ class QtDraw(Window):
         """
         Save file dialog.
 
+        Returns:
+            - (bool) -- saved ? (False if the dialog was cancelled)
+
         :meta private:
         """
         ext = detail["extension"]
@@ -342,10 +341,12 @@ class QtDraw(Window):
         ext_set = f"QtDraw Files (*{ext})"
         filename, _ = QFileDialog.getSaveFileName(self, "Save File", str(file), ext_set, options=QFileDialog.Options())
 
-        if filename:
-            filename = add_extension(Path(filename), ext)
-            self._save(str(filename))
-            self._mark_saved()
+        if not filename:  # cancelled.
+            return False
+        filename = add_extension(Path(filename), ext)
+        self._save(str(filename))
+        self._mark_saved()
+        return True
 
     # ==================================================
     def _save_screenshot(self):
@@ -401,8 +402,7 @@ class QtDraw(Window):
 
         uc = self.create_gui_unit_cell(panel)
         view = self.create_gui_view(panel)
-        dataset = self.create_gui_dataset(panel)
-        misc = self.create_gui_misc(panel)
+        buttons = self.create_gui_buttons(panel)
         if self.debug:
             debug = self.create_gui_debug(panel)
 
@@ -410,15 +410,13 @@ class QtDraw(Window):
         layout.addWidget(HBar(), 1, 0, 1, 1)
         layout.addWidget(view, 2, 0, 1, 1)
         layout.addWidget(HBar(), 3, 0, 1, 1)
-        layout.addWidget(dataset, 4, 0, 1, 1)
-        layout.addWidget(HBar(), 5, 0, 1, 1)
-        layout.addWidget(misc, 6, 0, 1, 1)
+        layout.addWidget(buttons, 4, 0, 1, 1)
         if self.debug:
-            layout.addWidget(HBar(), 7, 0, 1, 1)
-            layout.addWidget(debug, 8, 0, 1, 1)
-            layout.addItem(VSpacer(), 9, 0, 1, 1)
-        else:
+            layout.addWidget(HBar(), 5, 0, 1, 1)
+            layout.addWidget(debug, 6, 0, 1, 1)
             layout.addItem(VSpacer(), 7, 0, 1, 1)
+        else:
+            layout.addItem(VSpacer(), 5, 0, 1, 1)
 
         return panel
 
@@ -611,74 +609,34 @@ class QtDraw(Window):
         return panel
 
     # ==================================================
-    def create_gui_dataset(self, parent):
+    def create_gui_buttons(self, parent):
         """
-        Create dataset panel.
+        Create button panel (other commands are in the menu bar).
 
         Args:
             parent (QWidget): parent.
 
         Returns:
-            - (QWidget) -- dataset panel.
+            - (QWidget) -- button panel.
 
         :meta private:
         """
         panel = QWidget(parent)
         layout = Layout(panel)
 
-        label_dataset = Label(parent, text="DataSet", bold=True)
         self.ds_button_edit = Button(parent, text="edit")
-        self.ds_button_clear = Button(parent, text="clear")
-        self.ds_button_load = Button(parent, text="load")
-        self.ds_button_save = Button(parent, text="save")
-        self.ds_button_screenshot = Button(parent, text="screenshot")
-
-        panel1 = QWidget(parent)
-        layout1 = Layout(panel1)
-        layout1.addWidget(label_dataset, 0, 0, 1, 1)
-        layout1.addWidget(self.ds_button_clear, 0, 1, 1, 1)
-        layout1.addWidget(self.ds_button_edit, 1, 0, 1, 1)
-        layout1.addWidget(self.ds_button_screenshot, 1, 1, 1, 1)
-        layout1.addWidget(self.ds_button_load, 2, 0, 1, 1)
-        layout1.addWidget(self.ds_button_save, 2, 1, 1, 1)
-
-        layout.addWidget(panel1, 0, 0, 1, 1)
-
-        return panel
-
-    # ==================================================
-    def create_gui_misc(self, parent):
-        """
-        Create misc. panel.
-
-        Args:
-            parent (QWidget): parent.
-
-        Returns:
-            - (QWidget) -- misc. panel.
-
-        :meta private:
-        """
-        panel = QWidget(parent)
-        layout = Layout(panel)
-
-        label_misc = Label(parent, text="Misc", bold=True)
-        self.misc_button_info = Button(parent, text="info")
         self.misc_button_pref = Button(parent, text="preference")
         self.misc_button_about = Button(parent, text="about")
-        self.misc_button_log = Button(parent, text="log")
         if check_multipie():
             self.misc_button_multipie = Button(parent, text="MultiPie")
 
         panel1 = QWidget(parent)
         layout1 = Layout(panel1)
-        layout1.addWidget(label_misc, 0, 0, 1, 1)
+        layout1.addWidget(self.ds_button_edit, 0, 0, 1, 1)
         layout1.addWidget(self.misc_button_pref, 0, 1, 1, 1)
-        layout1.addWidget(self.misc_button_info, 1, 0, 1, 1)
-        layout1.addWidget(self.misc_button_about, 1, 1, 1, 1)
-        layout1.addWidget(self.misc_button_log, 2, 0, 1, 1)
+        layout1.addWidget(self.misc_button_about, 1, 0, 1, 1)
         if check_multipie():
-            layout1.addWidget(self.misc_button_multipie, 2, 1, 1, 1)
+            layout1.addWidget(self.misc_button_multipie, 1, 1, 1, 1)
 
         layout.addWidget(panel1, 0, 0, 1, 1)
 
@@ -975,32 +933,34 @@ class QtDraw(Window):
             widget.commit_pending()
 
     # ==================================================
-    def _confirm_unsaved(self, action):
+    def _confirm_unsaved(self, action, always=False):
         """
         Ask to save unsaved changes.
 
         Args:
             action (str): action to be done, e.g. "closing".
+            always (bool, optional): ask also without unsaved changes ?
 
         Returns:
             - (bool) -- go on with the action ?
 
         :meta private:
         """
-        if not self.is_modified():
+        modified = self.is_modified()
+        if not modified and not always:
             return True
 
         model = self.pyvista_widget._status["model"]
+        text = f"Save changes to '{model}' before {action}?" if modified else f"Save '{model}' before {action}?"
         ret = QMessageBox.question(
             self,
             "",
-            f"Save changes to '{model}' before {action}?",
+            text,
             QMessageBox.Save | QMessageBox.Discard | QMessageBox.Cancel,
             QMessageBox.Save,
         )
         if ret == QMessageBox.Save:
-            self.save_file()
-            return not self.is_modified()  # not saved if save dialog was cancelled.
+            return self.save_file()  # not saved if save dialog was cancelled.
         return ret == QMessageBox.Discard
 
     # ==================================================
@@ -1022,7 +982,7 @@ class QtDraw(Window):
 
         :meta private:
         """
-        self.app.setStyle(self.pyvista_widget._preference["general"]["style"])
+        self.app.setStyle("fusion")  # fixed, the same look on all platforms.
         font_type = self.pyvista_widget._preference["general"]["font"]
         size = self.pyvista_widget._preference["general"]["size"]
         self.app.setStyleSheet(font_style_sheet(font_type, size))
@@ -1443,18 +1403,10 @@ class QtDraw(Window):
         self.view_combo_axis.currentTextChanged.connect(self._set_axis_type)
         self.view_combo_cell.currentTextChanged.connect(self._set_cell_mode)
 
-        # dataset panel.
+        # button panel.
         self.ds_button_edit.released.connect(self.pyvista_widget.open_tab_group_view)
-        self.ds_button_clear.released.connect(self._clear_data)
-        self.ds_button_load.released.connect(self.open_file)
-        self.ds_button_save.released.connect(self.save_file)
-        self.ds_button_screenshot.released.connect(self._save_screenshot)
-
-        # misc panel.
-        self.misc_button_info.released.connect(lambda: self.info_dialog.show())
         self.misc_button_pref.released.connect(self._show_preference)
         self.misc_button_about.released.connect(self._show_about)
-        self.misc_button_log.released.connect(self.logger.show)
         if check_multipie():
             self.misc_button_multipie.released.connect(self._show_multipie)
 
@@ -1708,10 +1660,7 @@ class QtDraw(Window):
         :meta private:
         """
         self._commit_pending_input()
-        if self.is_modified():
-            ok = self._confirm_unsaved("closing")
-        else:
-            ok = QMessageBox.question(self, "", "Quit QtDraw ?", QMessageBox.Cancel, QMessageBox.Ok) == QMessageBox.Ok
+        ok = self._confirm_unsaved("closing", always=True)
         if not ok:
             event.ignore()
         else:

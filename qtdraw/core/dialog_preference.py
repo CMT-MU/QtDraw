@@ -270,8 +270,6 @@ class PreferenceDialog(QDialog):
         preference = self.preference["general"]
 
         # widgets.
-        label_style = Label(parent, text="style")
-        combo_style = Combo(parent, ["fusion", "macos", "windows"])
         label_font = Label(parent, text="font")
         # fonts installed on this system (and current one).
         combo_font = Combo(parent, sorted(set(QFontDatabase.families()) | {preference["font"]}, key=str.lower))
@@ -281,25 +279,21 @@ class PreferenceDialog(QDialog):
         spin_size = Spin(parent, 9, 14)
 
         # set layout.
-        layout.addWidget(label_style, 0, 0, 1, 1, Qt.AlignRight)
-        layout.addWidget(combo_style, 0, 1, 1, 1)
-        layout.addWidget(label_font, 1, 0, 1, 1, Qt.AlignRight)
-        layout.addWidget(combo_font, 1, 1, 1, 1)
-        layout.addWidget(label_size, 1, 2, 1, 1, Qt.AlignRight)
-        layout.addWidget(spin_size, 1, 3, 1, 1)
-        layout.addWidget(label_color, 2, 0, 1, 1, Qt.AlignRight)
-        layout.addWidget(combo_color, 2, 1, 1, 1)
-        layout.addItem(HSpacer(), 1, 4, 1, 1)
-        layout.addItem(VSpacer(), 3, 0, 1, 1)
+        layout.addWidget(label_font, 0, 0, 1, 1, Qt.AlignRight)
+        layout.addWidget(combo_font, 0, 1, 1, 1)
+        layout.addWidget(label_size, 0, 2, 1, 1, Qt.AlignRight)
+        layout.addWidget(spin_size, 0, 3, 1, 1)
+        layout.addWidget(label_color, 1, 0, 1, 1, Qt.AlignRight)
+        layout.addWidget(combo_color, 1, 1, 1, 1)
+        layout.addItem(HSpacer(), 0, 4, 1, 1)
+        layout.addItem(VSpacer(), 2, 0, 1, 1)
 
         # initial values.
-        combo_style.setCurrentText(preference["style"])
         combo_font.setCurrentText(preference["font"])
         combo_color.setCurrentText(preference["color_scheme"])
         spin_size.setProperty("value", preference["size"])
 
         # connections.
-        combo_style.currentTextChanged.connect(lambda v: preference.update({"style": v}))
         combo_font.currentTextChanged.connect(lambda v: preference.update({"font": v}))
         combo_color.currentTextChanged.connect(lambda v: preference.update({"color_scheme": v}))
         spin_size.valueChanged.connect(lambda v: preference.update({"size": v}))

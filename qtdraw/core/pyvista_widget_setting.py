@@ -34,7 +34,6 @@ default_status = {
 # ==================================================
 default_preference = {
     "general": {
-        "style": "fusion",  # "fusion/macos/windows"
         "font": "Osaka",  # font family, system default font is used if it is not installed.
         "size": 12,  # point
         "color_scheme": "Jmol",  # "VESTA/Jmol"
@@ -83,6 +82,7 @@ widget_detail = {
     "auto_update": 5.0,
     "anti_aliasing": True,  # if some problem, use False.
     "minimum_window_size": [200, 100],  # [width,height].
+    "window_size": [1000, 626],  # [width,height] of QtDraw window when it opens.
     "data_edit_key": "e",
     "prevent_key": ["b", "C", "f", "i", "p", "q", "r", "v", "s", "w"],
     "smooth_shading": True,

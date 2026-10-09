@@ -56,10 +56,9 @@ def get_qt_application():
     app.setAttribute(Qt.AA_UseHighDpiPixmaps)
 
     # set general appearance.
-    style = default_preference["general"]["style"]
     font = default_preference["general"]["font"]
     size = default_preference["general"]["size"]
-    app.setStyle(style)
+    app.setStyle("fusion")  # the same look on all platforms.
     app.setFont(QFont(font_family(font), size))
 
     # use light-mode palette.
