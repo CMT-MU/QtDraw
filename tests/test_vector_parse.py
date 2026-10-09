@@ -18,6 +18,8 @@ CASES = [
     ("[1/2,0,0]", "[0,0,0]"),  # expressions still go through sympy.
     ("[sqrt(3)/2,1/3,0]", "[0,0,0]"),
     ("[0.5,0,0]", "[0.5,0,0]"),  # a fractional cell is truncated, as before.
+    ("[0,0,0]", "[0.99999999999999999,0,0]"),  # exactly below 1: cell 0, as before.
+    ("[0,0,0]", "[-0.99999999999999999,0,0]"),
 ]
 
 
@@ -59,7 +61,7 @@ def test_result_is_not_shared(monkeypatch):
 
 
 # ==================================================
-@pytest.mark.parametrize("vector", ["[0,0", "[01,0,0]", "[a,0,0]"])
+@pytest.mark.parametrize("vector", ["[0,0", "[a,0,0]", "1"])
 def test_invalid_string_raises_as_before(vector):
     with pytest.raises(Exception) as expected:
         str_to_sympy(vector, rational=False).astype(float)
@@ -79,7 +81,7 @@ def test_nonrepeat_does_not_use_sympy_for_plain_numbers(widget, monkeypatch):
         return original(*args, **kwargs)
 
     monkeypatch.setattr(pw, "str_to_sympy", spy)
-    pw._parse_vector_cached.cache_clear()
+    pw._parse_cached.cache_clear()
     widget.nonrepeat_data()
 
     rows = widget.get_data_dict()["site"]
@@ -87,3 +89,11 @@ def test_nonrepeat_does_not_use_sympy_for_plain_numbers(widget, monkeypatch):
     np.testing.assert_allclose(positions, sorted([[1.25, 0.5, 0.0], [1 / 3, 1.0, 0.0]]))
     assert all(r[8] == "[0,0,0]" for r in rows)  # cell column.
     assert calls == ["[1/3,0,0]"]  # only the expression.
+
+
+# ==================================================
+def test_long_strings_are_not_cached():
+    pw._parse_cached.cache_clear()
+    points = "[" + ",".join(f"[{i},0,0]" for i in range(1000)) + "]"  # e.g. a polygon.
+    assert pw.convert_str_vector(points, transform=False).shape == (1000, 3)
+    assert pw._parse_cached.cache_info().currsize == 1  # only the short cell string.

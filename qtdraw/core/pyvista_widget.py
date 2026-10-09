@@ -112,38 +112,82 @@ def get_data_range(data):
 
 # ==================================================
 _PLAIN_NUMBERS = re.compile(r"[\s\[\],0-9.eE+-]*")  # numbers in (nested) lists only.
+_PLAIN_INTEGERS = re.compile(r"[\s\[\],0-9+-]*")  # integers in (nested) lists only.
+_MAX_CACHED = 256  # longer strings (e.g. points of a polygon) are not cached.
+
+
+# ==================================================
+def _literal_list(s, pattern):
+    """
+    A list of plain numbers read without sympy, None if it is not one.
+
+    :meta private:
+    """
+    if not pattern.fullmatch(s):
+        return None
+    try:
+        value = ast.literal_eval(s)
+    except (ValueError, SyntaxError, TypeError, MemoryError, RecursionError):  # left to sympy.
+        return None
+    return value if isinstance(value, (list, tuple)) else None  # a single number is left to sympy (an error).
+
+
+# ==================================================
+def _parse_float(s):
+    """
+    Parse a string of a list of numbers or expressions to floats (plain numbers without sympy, which is slow).
+
+    :meta private:
+    """
+    value = _literal_list(s, _PLAIN_NUMBERS)
+    if value is not None:
+        return np.array(value, dtype=float)
+    return str_to_sympy(s, rational=False).astype(float)
+
+
+# ==================================================
+def _parse_int(s):
+    """
+    Parse a string of a list of integers or expressions to integers (truncated exactly, as sympy does).
+
+    :meta private:
+    """
+    value = _literal_list(s, _PLAIN_INTEGERS)
+    if value is not None:
+        return np.array(value, dtype=int)
+    return str_to_sympy(s).astype(int)
 
 
 # ==================================================
 @lru_cache(maxsize=4096)
-def _parse_vector_cached(s):
+def _parse_cached(s, as_int):
     """
-    Parse a string of (a list of) numbers or expressions to floats.
-
-    Plain numbers are read without sympy, which is much slower; expressions such as "1/2" use sympy.
+    Parse a short string, shared by callers through the cache (read-only).
 
     :meta private:
     """
-    if _PLAIN_NUMBERS.fullmatch(s):
-        try:
-            value = np.array(ast.literal_eval(s), dtype=float)
-            value.setflags(write=False)  # shared by callers through the cache.
-            return value
-        except (ValueError, SyntaxError, TypeError):  # e.g. "01", left to sympy (which also rejects it).
-            pass
-    value = str_to_sympy(s, rational=False).astype(float)
+    value = _parse_int(s) if as_int else _parse_float(s)
     value.setflags(write=False)
     return value
 
 
 # ==================================================
-def _parse_vector(s):
+def _parse_vector(s, as_int=False):
     """
-    Parse a string of (a list of) numbers or expressions to a new float array.
+    Parse a string of a list of numbers or expressions to a new array.
+
+    Args:
+        s (str): string, e.g. "[0.1,0.2,0.3]" or "[1/2,0,0]".
+        as_int (bool, optional): integers (e.g. a cell) ?
+
+    Returns:
+        - (numpy.ndarray) -- new array of floats or integers.
 
     :meta private:
     """
-    return _parse_vector_cached(s).copy()
+    if len(s) > _MAX_CACHED:
+        return _parse_int(s) if as_int else _parse_float(s)
+    return _parse_cached(s, as_int).copy()
 
 
 # ==================================================
@@ -160,7 +204,7 @@ def convert_str_vector(vector, cell="[0,0,0]", transform=True, A=None):
     Returns:
         - (numpy.ndarray) -- transformed position.
     """
-    cell = _parse_vector(cell).astype(int)
+    cell = _parse_vector(cell, as_int=True)
     vector = _parse_vector(vector)
 
     vectorT = vector + cell
@@ -3119,7 +3163,7 @@ class PyVistaWidget(QtInteractor):
             if object_type not in ["text2d", "caption"] and n > 0:
                 model = np.array(model, dtype=object)
                 pos = np.array([_parse_vector(i) for i in model[:, COLUMN_POSITION]])
-                cell = np.array([_parse_vector(i).astype(int) for i in model[:, COLUMN_CELL]])
+                cell = np.array([_parse_vector(i, as_int=True) for i in model[:, COLUMN_CELL]])
                 pos += cell
                 pos = np.array(list(map(str, pos.tolist())), dtype=object)
                 model[:, COLUMN_POSITION] = pos
