@@ -47,7 +47,7 @@ def test_help_explains_mouse_and_keys(app, monkeypatch):
     app.action_help.trigger()
 
     text = shown[0][2]
-    assert "Right click" in text and "data table" in text and "Esc" in text
+    assert "Right click" in text and "data table" in text and "Esc" in text and "create or copy" in text
 
 
 # ==================================================

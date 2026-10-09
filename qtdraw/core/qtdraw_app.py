@@ -59,6 +59,7 @@ def help_text():
         f"- {detail['data_edit_key']}: open the data table of all objects.\n"
         "\n"
         "In the data table:\n"
+        "- Right click: menu to create or copy an object.\n"
         "- Esc: clear the selection. Up, Down: move the selection.\n"
         "\n"
         f"{open_key}: open a file. {save_key}: save. {quit_key}: quit."

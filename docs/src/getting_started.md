@@ -16,6 +16,23 @@ In the `Dataset` window, you can choose the object in the tab, and in each tab, 
 
 By right-clicking at the object in the main panel, the context menu shows up, and you can remove, hide, or open the corresponding object.
 
+## Mouse and Keys
+
+The same summary is shown by `Help` > `Mouse and Keys` in the menu bar.
+
+In the main panel:
+- Left drag: rotate. Shift + left drag: move. Wheel or right drag: zoom.
+- Right click (without dragging) on an object: context menu to open it in the `Dataset` window, hide or remove it.
+- `e`: open the `Dataset` window.
+
+In the `Dataset` window:
+- Right click: context menu to create or copy an object.
+- `Esc`: clear the selection. `Up`, `Down`: move the selection.
+
+The `File` menu opens (Ctrl+O, Cmd+O on macOS), saves (Ctrl+S, Cmd+S) and quits (Ctrl+Q, Cmd+Q).
+
+If an error occurs, a short message is shown; the traceback is behind `Show Details...` and also in the log. Please include it when you report a problem.
+
 
 ## Preference
 
