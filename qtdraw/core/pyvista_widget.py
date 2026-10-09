@@ -16,7 +16,7 @@ import shutil
 import tempfile
 import numpy as np
 import copy
-from functools import lru_cache
+from functools import lru_cache, wraps
 from contextlib import contextmanager
 from PySide6.QtWidgets import QMainWindow, QMenu, QSizePolicy
 from PySide6.QtGui import QCursor, QMouseEvent
@@ -422,6 +422,22 @@ def _suppress_stderr():
 
 
 # ==================================================
+def _batched(method):
+    """
+    Decorator: run a method in a batch, rendering once at its end (see PyVistaWidget._batch_render).
+
+    :meta private:
+    """
+
+    @wraps(method)
+    def wrapper(self, *args, **kwargs):
+        with self._batch_render():
+            return method(self, *args, **kwargs)
+
+    return wrapper
+
+
+# ==================================================
 def isosurface_rename(names, in_memory, old_dir, new_dir):
     """
     New names of isosurface data files, relative to a new directory.
@@ -563,6 +579,8 @@ class PyVistaWidget(QtInteractor):
         # set default.
         self._off_screen = off_screen
         self._document_dir = None  # directory of the drawing file, data file names are relative to it.
+        self._batch_depth = 0  # nesting depth of _batch_render().
+        self._batch_dirty = False  # render requested during the current batch ?
         self.clear_info()
 
         # set interactor (suppress messages of VTK and Qt during initialization only).
@@ -633,6 +651,52 @@ class PyVistaWidget(QtInteractor):
         # refresh.
         self.refresh()
         self.set_view()
+
+    # ==================================================
+    def render(self):
+        """
+        Render, or only note the request while a batch of changes is made (see _batch_render).
+
+        :meta private:
+        """
+        if self._batch_depth > 0:
+            self._batch_dirty = True
+            return None
+        return super().render()
+
+    # ==================================================
+    @contextmanager
+    def _batch_render(self, log_render_error=False):
+        """
+        Make a batch of changes, rendering once at its end instead of once for each object.
+
+        Args:
+            log_render_error (bool, optional): only log a failing render also after a successful batch ?
+
+        Note:
+            - at most one render is submitted when the outermost batch ends (none if nothing requested it).
+            - if the batch fails, its exception is kept, and a failing render is only logged.
+            - batches are used in the GUI thread only, without processing events inside them.
+
+        :meta private:
+        """
+        self._batch_depth += 1
+        failed = True
+        try:
+            yield
+            failed = False
+        finally:
+            self._batch_depth -= 1
+            if self._batch_depth == 0 and self._batch_dirty:
+                self._batch_dirty = False
+                if not self._closed:
+                    if failed or log_render_error:
+                        try:
+                            self.render()
+                        except Exception as e:  # keep original exception.
+                            self.write_info(f"* failed to render: {e}")
+                    else:
+                        self.render()
 
     # ==================================================
     @property
@@ -1869,7 +1933,8 @@ class PyVistaWidget(QtInteractor):
             if ver < 2:  # a temporary widget is needed to convert version 1.
                 widget = PyVistaWidget(off_screen=True)
                 try:
-                    all_data = convert_version3(all_data, ver, widget)
+                    with widget._batch_render():  # the converter adds objects one by one.
+                        all_data = convert_version3(all_data, ver, widget)
                 finally:
                     widget.close()
             elif ver < 3:
@@ -1894,14 +1959,16 @@ class PyVistaWidget(QtInteractor):
 
         # set data (current data is restored if this fails).
         current = self._get_current_state()
-        try:
-            self._set_loaded_data(file, all_data, ver, material)
-        except BaseException:
+        # rendered once, also after restoring the current data; a loaded drawing is kept if only its render fails.
+        with self._batch_render(log_render_error=True):
             try:
-                self._set_current_state(current)
-            except Exception as e:  # keep original exception.
-                self.write_info(f"* failed to restore current data: {e}")
-            raise
+                self._set_loaded_data(file, all_data, ver, material)
+            except BaseException:
+                try:
+                    self._set_current_state(current)
+                except Exception as e:  # keep original exception.
+                    self.write_info(f"* failed to restore current data: {e}")
+                raise
         # notify only after success, to keep data such as MultiPie panel on failure.
         loading, self._loading = self._loading, True  # the MultiPie data now belongs to the loaded file, and is kept.
         try:
@@ -1910,6 +1977,7 @@ class PyVistaWidget(QtInteractor):
             self._loading = loading  # restore, also for a load started by a listener.
 
     # ==================================================
+    @_batched
     def _set_loaded_data(self, file, all_data, ver, material):
         """
         Set loaded data.
@@ -2001,6 +2069,7 @@ class PyVistaWidget(QtInteractor):
         return {"doc": doc, "grids": grids, "in_memory": set(snapshot["in_memory"])}
 
     # ==================================================
+    @_batched
     def restore_document(self, snapshot):
         """
         Restore a document snapshot (camera, view settings and preferences are kept).
@@ -2054,6 +2123,7 @@ class PyVistaWidget(QtInteractor):
         }
 
     # ==================================================
+    @_batched
     def _set_current_state(self, state):
         """
         Set state obtained by _get_current_state.
@@ -2902,6 +2972,7 @@ class PyVistaWidget(QtInteractor):
         self._data = {}
         for object_type, value in object_default.items():
             self._data[object_type] = GroupModel(self, object_type, value)
+            self._data[object_type].batch = self._batch_render  # a change of a group renders once.
 
     # ==================================================
     def set_theme(self, theme=None):
@@ -3148,6 +3219,7 @@ class PyVistaWidget(QtInteractor):
     # ==================================================
     # internal use (access data).
     # ==================================================
+    @_batched
     def add_data(self, data):
         """
         Add data.
@@ -3164,6 +3236,7 @@ class PyVistaWidget(QtInteractor):
             self._data[object_type].set_data(model)
 
     # ==================================================
+    @_batched
     def repeat_data(self):
         """
         Repeat data.
@@ -3194,6 +3267,7 @@ class PyVistaWidget(QtInteractor):
         self.document_changed.emit()
 
     # ==================================================
+    @_batched
     def nonrepeat_data(self):
         """
         Transform data to non-repeat data.
@@ -3631,6 +3705,7 @@ class PyVistaWidget(QtInteractor):
             self.plot_label(object_type, index, row_info, positionT)
 
     # ==================================================
+    @_batched
     def redraw(self):
         """
         Redraw all object.
@@ -4910,7 +4985,7 @@ class PyVistaWidget(QtInteractor):
         if self._mp_data is None:
             return
 
-        self._mpdata.add_bond_definition(bond, length, width, color, opacity)
+        self._mp_data.add_bond_definition(bond, length, width, color, opacity)
 
     # ==================================================
     def mp_site_samb_list(self, site):
