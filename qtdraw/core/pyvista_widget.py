@@ -4910,7 +4910,7 @@ class PyVistaWidget(QtInteractor):
         if self._mp_data is None:
             return
 
-        self._mpdata.add_bond_definition(bond, length, width, color, opacity)
+        self._mp_data.add_bond_definition(bond, length, width, color, opacity)
 
     # ==================================================
     def mp_site_samb_list(self, site):
