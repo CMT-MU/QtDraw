@@ -19,8 +19,18 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest]
-        # Python 3.11 is not tested: MultiPie 2.3.4 uses f-string syntax that needs Python 3.12.
+        # Python 3.11 is not tested: MultiPie 2.3.4 uses f-string syntax that needs Python 3.12
+        # (fixed in MultiPie's develop branch, not released yet).
         python-version: ["3.12", "3.13"]
+        dependencies: [latest]
+        include:
+          - os: macos-latest
+            python-version: "3.13"
+            dependencies: latest
+          # the lowest versions allowed in pyproject.toml.
+          - os: ubuntu-latest
+            python-version: "3.12"
+            dependencies: minimum
 
     steps:
       - uses: actions/checkout@v4
@@ -38,7 +48,13 @@ jobs:
       - name: Install QtDraw
         run: |
           python -m pip install --upgrade pip
-          python -m pip install -e . pytest pytest-qt
+          pins=""
+          if [ "${{ matrix.dependencies }}" = "minimum" ]; then
+            pins="PySide6==6.9.0 pyvista==0.46.0 pyvistaqt==0.13.0"
+          fi
+          python -m pip install -e . pytest pytest-qt $pins
+          python -m pip check
+          python -m pip list | grep -iE "^(pyside6|pyvista|pyvistaqt|vtk) "
           python -m playwright install --with-deps chromium
 
       - name: Import check
