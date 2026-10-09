@@ -83,6 +83,10 @@ def test_close_without_changes_save_writes_file(app, monkeypatch, tmp_path):
 
 
 # ==================================================
-def test_window_keeps_its_height_with_fewer_buttons(app):
+def test_window_opens_with_default_size(app):
+    from qtdraw.core.pyvista_widget_setting import widget_detail
+
+    width, height = widget_detail["window_size"]
+    assert (width, height) == (1000, 626)  # the height before the panel had fewer buttons.
     app.show()
-    assert app.height() >= 626  # the height before the panel had fewer buttons.
+    assert app.width() >= width and app.height() >= height
