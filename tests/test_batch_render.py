@@ -539,10 +539,12 @@ def test_group_edit_submits_once(widget, submissions):
     model, parent = group(widget)
     color = parent.siblingAtColumn(model.header.index("color"))
     assert count(submissions, widget, lambda: model.setData(color, "red")) == 1
-    check = parent.siblingAtColumn(model.header.index("name_check"))
-    model.setData(check, Qt.Unchecked, Qt.CheckStateRole)
-    assert count(submissions, widget, lambda: model.setData(check, Qt.Checked, Qt.CheckStateRole)) == 1
-    assert all(row[COLUMN_NAME_ACTOR] in widget.actors for row in model.tolist())
+    visible = lambda: [widget.actors[row[COLUMN_NAME_ACTOR]].GetVisibility() for row in model.tolist()]
+    model.setData(parent, Qt.Unchecked, Qt.CheckStateRole)  # the check box of the group name.
+    assert not any(visible())
+    assert count(submissions, widget, lambda: model.setData(parent, Qt.Checked, Qt.CheckStateRole)) == 1
+    assert all(visible())
+    assert all(row[COLUMN_NAME_CHECK] for row in widget.get_data_dict()["site"])
 
 
 def test_group_removal_submits_once(widget, submissions):
