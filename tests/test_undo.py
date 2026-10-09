@@ -8,7 +8,7 @@ from pathlib import Path
 import pytest
 import shiboken6
 from PySide6.QtCore import QCoreApplication, QEvent
-from PySide6.QtWidgets import QMessageBox
+from PySide6.QtWidgets import QApplication, QMessageBox
 
 from gui_helpers import app, answer  # noqa: F401  (fixture and helper)
 from qtdraw.util.util import check_multipie
@@ -354,3 +354,34 @@ def test_failed_save_elsewhere_keeps_redo(app, tmp_path, monkeypatch):
     assert app.can_redo()
     app.redo()
     assert names(app) == ["A"] and iso_names(app) == ["../work/Si.xsf"]
+
+
+def test_undo_key_works_in_data_table_window(app):
+    from PySide6.QtGui import QKeySequence
+    from PySide6.QtTest import QTest
+
+    pvw = app.pyvista_widget
+    pvw.add_site(name="A")
+    settle(app)
+    view = pvw._tab_group_view
+    view.show()
+    view.activateWindow()
+    QApplication.setActiveWindow(view)
+    QTest.keySequence(view, QKeySequence(QKeySequence.Undo))
+    assert names(app) == []
+
+
+@pytest.mark.skipif(not check_multipie(), reason="MultiPie is not installed.")
+def test_undo_key_works_in_multipie_dialog(app):
+    from PySide6.QtGui import QKeySequence
+    from PySide6.QtTest import QTest
+
+    app._show_multipie()
+    settle(app)
+    app.pyvista_widget.add_site(name="A")
+    settle(app)
+    dialog = app.multipie_dialog
+    dialog.activateWindow()
+    QApplication.setActiveWindow(dialog)
+    QTest.keySequence(dialog, QKeySequence(QKeySequence.Undo))
+    assert names(app) == []

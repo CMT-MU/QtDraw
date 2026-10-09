@@ -116,6 +116,7 @@ class QtDraw(Window):
         self._create_modified_check()
         self._history.reset(self.pyvista_widget.document_snapshot())
         self._update_undo_actions()
+        self.pyvista_widget._tab_group_view.addActions([self.action_undo, self.action_redo])  # shortcuts in data table.
 
         # event loop.
         self.show()
@@ -1555,6 +1556,7 @@ class QtDraw(Window):
 
             if self.multipie_dialog is None:
                 self.multipie_dialog = MultiPieDialog(self)
+                self.multipie_dialog.addActions([self.action_undo, self.action_redo])  # shortcuts in the dialog.
             else:
                 self.multipie_dialog.show()
 
