@@ -374,6 +374,17 @@ def test_multipie_dialog_route_submits_once(widget, submissions):
 
 
 @needs_multipie
+def test_wyckoff_display_submits_once(app, submissions):
+    app.mp_set_group("D3^4")  # opens the MultiPie dialog.
+    pvw = app.pyvista_widget
+    panel = app.multipie_dialog._group_panel
+    panel.edit_ws_neighbor.setText("[1,2]")  # sites and neighbor bonds.
+    assert count(submissions, pvw, panel.show_wyckoff_site) == 1
+    assert len(pvw.get_data_dict()["site"]) > 1
+    assert count(submissions, pvw, panel.show_wyckoff_bond) == 1
+
+
+@needs_multipie
 def test_qtdraw_mp_wrapper_submits_once(app, submissions):
     app.mp_set_group("D3^4")
     pvw = app.pyvista_widget

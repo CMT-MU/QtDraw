@@ -346,45 +346,47 @@ class TabGroup(QWidget):
 
     # ==================================================
     def show_wyckoff_site(self):
-        group = self.data.group
-        wp = self.combo_wyckoff_site.currentText()
+        with self.data.pvw._batch_render():  # rendered once for all objects.
+            group = self.data.group
+            wp = self.combo_wyckoff_site.currentText()
 
-        # plot sites.
-        sites = group.wyckoff["site"][wp]["reference"].astype(float)
-        mp = group.wyckoff["site"][wp]["mapping"]
-        if len(sites) != len(mp):
-            mp = mp * (len(sites) // len(mp))
-        plot_cell_site(self.data, sites, wp=wp, label=mp)
+            # plot sites.
+            sites = group.wyckoff["site"][wp]["reference"].astype(float)
+            mp = group.wyckoff["site"][wp]["mapping"]
+            if len(sites) != len(mp):
+                mp = mp * (len(sites) // len(mp))
+            plot_cell_site(self.data, sites, wp=wp, label=mp)
 
-        # plot bonds.
-        neighbor = self.edit_ws_neighbor.text()
-        neighbor = list(map(int, neighbor.strip("[]").split(",")))
-        G = self.parent._pvw.G_matrix[0:3, 0:3]
-        d = distance(sites, sites, G)
-        dkey = list(d.keys())
+            # plot bonds.
+            neighbor = self.edit_ws_neighbor.text()
+            neighbor = list(map(int, neighbor.strip("[]").split(",")))
+            G = self.parent._pvw.G_matrix[0:3, 0:3]
+            d = distance(sites, sites, G)
+            dkey = list(d.keys())
 
-        for i in neighbor:
-            if i < len(d):
-                name = f"{wp}_N{i}"
-                bonds = []
-                for idxs in d[dkey[i]]:
-                    t, h = sites[idxs[0]], sites[idxs[1]]
-                    c = (t + h) / 2
-                    v = h - t
-                    bonds.append(np.concatenate([v, c]).tolist())
-                plot_cell_bond(self.data, bonds, name=name)
+            for i in neighbor:
+                if i < len(d):
+                    name = f"{wp}_N{i}"
+                    bonds = []
+                    for idxs in d[dkey[i]]:
+                        t, h = sites[idxs[0]], sites[idxs[1]]
+                        c = (t + h) / 2
+                        v = h - t
+                        bonds.append(np.concatenate([v, c]).tolist())
+                    plot_cell_bond(self.data, bonds, name=name)
 
     # ==================================================
     def show_wyckoff_bond(self):
-        group = self.data.ps_group
-        wp = self.combo_wyckoff_bond.currentText()
+        with self.data.pvw._batch_render():  # rendered once for all objects.
+            group = self.data.ps_group
+            wp = self.combo_wyckoff_bond.currentText()
 
-        # plot bonds.
-        bonds = group.wyckoff["bond"][wp]["reference"].astype(float)
-        mp = group.wyckoff["bond"][wp]["mapping"]
-        if len(bonds) != len(mp):
-            mp = mp * (len(bonds) // len(mp))
-        plot_cell_bond(self.data, bonds, wp=wp, label=mp)
+            # plot bonds.
+            bonds = group.wyckoff["bond"][wp]["reference"].astype(float)
+            mp = group.wyckoff["bond"][wp]["mapping"]
+            if len(bonds) != len(mp):
+                mp = mp * (len(bonds) // len(mp))
+            plot_cell_bond(self.data, bonds, wp=wp, label=mp)
 
     # ==================================================
     def find_wyckoff_set(self):
