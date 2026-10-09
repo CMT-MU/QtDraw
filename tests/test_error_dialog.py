@@ -119,7 +119,6 @@ def test_each_dialog_gets_its_own_summary(qapp, monkeypatch):
     pairs = {summary.split(":")[0]: details for summary, details, _ in shown}
     assert set(pairs) == {"KeyError", "ZeroDivisionError"}
     assert "KeyError" in pairs["KeyError"] and "ZeroDivisionError" in pairs["ZeroDivisionError"]
-    assert hook._summary == {}  # nothing is left behind.
 
 
 # ==================================================
@@ -143,7 +142,7 @@ def test_identical_errors_keep_their_summaries(qapp, monkeypatch):
     hook._show_error(details)
 
     assert [s for s, _, _ in shown] == ["ZeroDivisionError: division by zero"] * 2
-    assert hook._summary == {}
+    assert len(hook._summary) == 1
 
 
 # ==================================================
@@ -160,3 +159,12 @@ def test_summaries_are_bounded_without_dialog(qapp, monkeypatch):
             hook.hook(*sys.exc_info())
 
     assert len(hook._summary) == 100
+
+    try:
+        broken_function()
+    except ZeroDivisionError:
+        info = sys.exc_info()
+    for _ in range(150):  # the same error again and again.
+        hook.hook(*info)
+    assert len(hook._summary) == 100
+    assert sum(len(v) for v in hook._summary.values()) < 100 * 300  # one short summary each.
