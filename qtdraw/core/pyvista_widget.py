@@ -6,6 +6,10 @@ This module provides a class to draw various
 """
 
 import os
+import re
+import ast
+import threading
+from collections import OrderedDict
 from pathlib import Path
 import subprocess
 import shutil
@@ -109,6 +113,115 @@ def get_data_range(data):
 
 
 # ==================================================
+_PLAIN_NUMBERS = re.compile(r"[\s\[\],0-9.eE+-]*")  # numbers in (nested) lists only.
+_PLAIN_INTEGERS = re.compile(r"[\s\[\],0-9+-]*")  # integers in (nested) lists only.
+_MAX_CACHED = 256  # longer strings (e.g. points of a polygon) are not cached.
+_MAX_CACHED_SIZE = 300  # nor larger results.
+_MAX_ENTRIES = 4096
+_cache = OrderedDict()  # (string, as_int) -> read-only array, least recently used first.
+_cache_lock = threading.Lock()  # objects are also plotted from a thread.
+
+
+# ==================================================
+def _literal_list(s, pattern):
+    """
+    A list of plain numbers read without sympy, None if it is not one.
+
+    :meta private:
+    """
+    if not pattern.fullmatch(s):
+        return None
+    try:
+        value = ast.literal_eval(s)
+    except (ValueError, SyntaxError, TypeError, MemoryError, RecursionError):  # left to sympy.
+        return None
+    return value if isinstance(value, (list, tuple)) else None  # a single number is left to sympy (an error).
+
+
+# ==================================================
+def _parse_float(s):
+    """
+    Parse a string of a list of numbers or expressions to floats (plain numbers without sympy, which is slow).
+
+    :meta private:
+    """
+    value = _literal_list(s, _PLAIN_NUMBERS)
+    if value is not None:
+        try:
+            return np.array(value, dtype=float)
+        except (OverflowError, ValueError):  # e.g. a huge integer or a ragged list, left to sympy.
+            pass
+    return str_to_sympy(s, rational=False).astype(float)
+
+
+# ==================================================
+def _parse_int(s):
+    """
+    Parse a string of a list of integers or expressions to integers (truncated exactly, as sympy does).
+
+    :meta private:
+    """
+    value = _literal_list(s, _PLAIN_INTEGERS)
+    if value is not None:
+        try:
+            return np.array(value, dtype=int)
+        except (OverflowError, ValueError):  # e.g. beyond int64 or a ragged list, left to sympy.
+            pass
+    return str_to_sympy(s).astype(int)
+
+
+# ==================================================
+def _parse_cached_clear():
+    """
+    Clear the cache of parsed strings.
+
+    :meta private:
+    """
+    with _cache_lock:
+        _cache.clear()
+
+
+# ==================================================
+def _parse_cache_size():
+    """
+    Number of cached strings.
+
+    :meta private:
+    """
+    with _cache_lock:
+        return len(_cache)
+
+
+# ==================================================
+def _parse_vector(s, as_int=False):
+    """
+    Parse a string of a list of numbers or expressions to a new array.
+
+    Args:
+        s (str): string, e.g. "[0.1,0.2,0.3]" or "[1/2,0,0]".
+        as_int (bool, optional): integers (e.g. a cell) ?
+
+    Returns:
+        - (numpy.ndarray) -- new array of floats or integers.
+
+    :meta private:
+    """
+    key = (s, as_int)
+    with _cache_lock:
+        value = _cache.get(key)
+        if value is not None:
+            _cache.move_to_end(key)
+            return value.copy()
+    value = _parse_int(s) if as_int else _parse_float(s)
+    if len(s) <= _MAX_CACHED and value.size <= _MAX_CACHED_SIZE:
+        with _cache_lock:
+            _cache[key] = value.copy()
+            if len(_cache) > _MAX_ENTRIES:
+                _cache.popitem(last=False)
+    return value
+
+
+# ==================================================
 def convert_str_vector(vector, cell="[0,0,0]", transform=True, A=None):
     """
     Convert 3-component vector(s) to A.(position+cell).
@@ -122,8 +235,8 @@ def convert_str_vector(vector, cell="[0,0,0]", transform=True, A=None):
     Returns:
         - (numpy.ndarray) -- transformed position.
     """
-    cell = str_to_sympy(cell).astype(int)
-    vector = str_to_sympy(vector, rational=False).astype(float)
+    cell = _parse_vector(cell, as_int=True)
+    vector = _parse_vector(vector)
 
     vectorT = vector + cell
     if transform:
@@ -3092,8 +3205,8 @@ class PyVistaWidget(QtInteractor):
             n = len(model)
             if object_type not in ["text2d", "caption"] and n > 0:
                 model = np.array(model, dtype=object)
-                pos = np.array([str_to_sympy(i, rational=False).astype(float) for i in model[:, COLUMN_POSITION]])
-                cell = np.array([str_to_sympy(i).astype(int) for i in model[:, COLUMN_CELL]])
+                pos = np.array([_parse_vector(i) for i in model[:, COLUMN_POSITION]])
+                cell = np.array([_parse_vector(i, as_int=True) for i in model[:, COLUMN_CELL]])
                 pos += cell
                 pos = np.array(list(map(str, pos.tolist())), dtype=object)
                 model[:, COLUMN_POSITION] = pos
