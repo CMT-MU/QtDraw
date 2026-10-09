@@ -7,6 +7,7 @@ from pathlib import Path
 
 from qtdraw.core.pyvista_widget import same_snapshot
 from qtdraw.util.util import check_multipie
+from grid_helpers import small_grid, write_small_xsf  # noqa: F401
 
 EXAMPLES = Path(__file__).resolve().parents[1] / "docs" / "src" / "examples"
 
@@ -52,7 +53,7 @@ def test_restore_keeps_camera_and_preferences(widget):
 
 
 def test_restore_isosurface_grid(widget, tmp_path):
-    shutil.copy(EXAMPLES / "Si.xsf", tmp_path / "Si.xsf")
+    write_small_xsf(tmp_path / "Si.xsf")
     widget.add_isosurface(data="Si.xsf", value=[0.01])
     snap = widget.document_snapshot()
     grid = widget._isosurface_data["Si.xsf"]
@@ -82,10 +83,10 @@ def test_restore_multipie_status(widget):
     assert widget._mp_data is None
 
 
-def test_restore_keeps_data_given_from_python_in_memory(widget):
+def test_restore_keeps_data_given_from_python_in_memory(widget, tmp_path):
     from qtdraw.parser.xsf import extract_data_xsf
 
-    widget.add_isosurface(data=("grid", extract_data_xsf(str(EXAMPLES / "Si.xsf"))), value=[0.01])
+    widget.add_isosurface(data=("grid", small_grid(tmp_path)), value=[0.01])
     snap = widget.document_snapshot()
     model = widget._data["isosurface"]
     model.remove_row(model.index(0, 0))

@@ -12,6 +12,7 @@ from PySide6.QtWidgets import QApplication, QMessageBox
 
 from gui_helpers import app, answer  # noqa: F401  (fixture and helper)
 from qtdraw.util.util import check_multipie
+from grid_helpers import small_grid, write_small_xsf  # noqa: F401
 
 EXAMPLES = Path(__file__).resolve().parents[1] / "docs" / "src" / "examples"
 
@@ -125,7 +126,7 @@ def test_clear_is_undone(app, monkeypatch):
 
 def test_undo_isosurface_removal(app, tmp_path, monkeypatch):
     monkeypatch.chdir(tmp_path)
-    shutil.copy(EXAMPLES / "Si.xsf", tmp_path / "Si.xsf")
+    write_small_xsf(tmp_path / "Si.xsf")
     pvw = app.pyvista_widget
     pvw.add_isosurface(data="Si.xsf", value=[0.01])
     settle(app)
@@ -249,7 +250,7 @@ def test_save_elsewhere_keeps_undo_and_redo(app, tmp_path, monkeypatch):
     work.mkdir()
     out.mkdir()
     monkeypatch.chdir(work)
-    shutil.copy(EXAMPLES / "Si.xsf", work / "Si.xsf")
+    write_small_xsf(work / "Si.xsf")
     pvw = app.pyvista_widget
     pvw.add_isosurface(data="Si.xsf", value=[0.01])
     settle(app)
@@ -336,7 +337,7 @@ def test_failed_save_elsewhere_keeps_redo(app, tmp_path, monkeypatch):
     work.mkdir()
     out.mkdir()
     monkeypatch.chdir(work)
-    shutil.copy(EXAMPLES / "Si.xsf", work / "Si.xsf")
+    write_small_xsf(work / "Si.xsf")
     pvw = app.pyvista_widget
     pvw.add_isosurface(data="Si.xsf", value=[0.01])
     settle(app)

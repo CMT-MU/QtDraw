@@ -8,6 +8,7 @@ from pathlib import Path
 import pytest
 
 from qtdraw.parser.xsf import extract_data_xsf
+from grid_helpers import small_grid, write_small_xsf  # noqa: F401
 
 EXAMPLES = Path(__file__).resolve().parents[1] / "docs" / "src" / "examples"
 
@@ -19,7 +20,7 @@ def n_rows(widget, object_type):
 # ==================================================
 def test_save_does_not_overwrite_imported_xsf(widget, tmp_path):
     xsf = tmp_path / "Si.xsf"
-    shutil.copy(EXAMPLES / "Si.xsf", xsf)
+    write_small_xsf(xsf)
     original = xsf.read_text()
 
     widget.load(str(xsf))
@@ -85,7 +86,7 @@ def test_load_relative_path_in_subdirectory(widget, tmp_path):
 
 # ==================================================
 def test_removing_one_isosurface_keeps_shared_data(widget, tmp_path):
-    shutil.copy(EXAMPLES / "Si.xsf", tmp_path / "Si.xsf")
+    write_small_xsf(tmp_path / "Si.xsf")
     widget.add_isosurface(data="Si.xsf", value=[0.01], name="A")
     widget.add_isosurface(data="Si.xsf", value=[0.02], name="B")
 
@@ -99,7 +100,7 @@ def test_removing_one_isosurface_keeps_shared_data(widget, tmp_path):
 def test_save_skips_missing_isosurface_data(widget, tmp_path):
     data_file = tmp_path / "grid.dat"
     data_file.write_text("keep me")
-    grid = extract_data_xsf(str(EXAMPLES / "Si.xsf"))
+    grid = small_grid(tmp_path)
     widget.add_isosurface(data=("grid.dat", grid), value=[0.01])
     widget._isosurface_data.clear()
 

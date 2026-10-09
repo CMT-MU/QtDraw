@@ -8,6 +8,7 @@ from pathlib import Path
 from PySide6.QtCore import QCoreApplication
 
 from qtdraw.parser.xsf import extract_data_xsf
+from grid_helpers import small_grid, write_small_xsf  # noqa: F401
 
 EXAMPLES = Path(__file__).resolve().parents[1] / "docs" / "src" / "examples"
 
@@ -36,8 +37,8 @@ def test_status_setters_notify(widget):
     assert len(count) >= 6
 
 
-def test_given_grid_is_copied(widget):
-    grid = extract_data_xsf(str(EXAMPLES / "Si.xsf"))
+def test_given_grid_is_copied(widget, tmp_path):
+    grid = small_grid(tmp_path)
     widget.add_isosurface(data=("grid", grid), value=[0.01])
     stored = widget._isosurface_data["grid"]
     assert stored is not grid
