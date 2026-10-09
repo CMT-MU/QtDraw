@@ -53,6 +53,8 @@ def help_text():
     open_key = QKeySequence(QKeySequence.Open).toString(QKeySequence.NativeText)
     save_key = QKeySequence(QKeySequence.Save).toString(QKeySequence.NativeText)
     quit_key = QKeySequence(QKeySequence.Quit).toString(QKeySequence.NativeText)
+    undo_key = QKeySequence(QKeySequence.Undo).toString(QKeySequence.NativeText)
+    redo_key = QKeySequence(QKeySequence.Redo).toString(QKeySequence.NativeText)
     return (
         "In the view:\n"
         "- Left drag: rotate. Shift + left drag: move. Wheel or right drag: zoom.\n"
@@ -63,7 +65,8 @@ def help_text():
         "- Right click: menu to create or copy an object.\n"
         "- Esc: clear the selection. Up, Down: move the selection.\n"
         "\n"
-        f"{open_key}: open a file. {save_key}: save. {quit_key}: quit."
+        f"{open_key}: open a file. {save_key}: save. {quit_key}: quit.\n"
+        f"{undo_key}: undo. {redo_key}: redo (objects, unit cell, range and MultiPie group; not the camera)."
     )
 
 
