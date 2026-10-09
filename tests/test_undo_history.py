@@ -63,3 +63,12 @@ def test_clear():
     assert h.current() is None and not h.can_undo() and not h.can_redo()
     assert h.record("c")  # recording after clear starts a new history.
     assert h.current() == "c" and not h.can_undo()
+
+
+def test_map_keeps_position():
+    h = UndoHistory()
+    h.reset("a")
+    h.record("b")
+    h.commit_undo()
+    h.map(str.upper)
+    assert h.current() == "A" and h.peek_redo() == "B"

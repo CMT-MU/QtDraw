@@ -307,6 +307,35 @@ def _suppress_stderr():
 
 
 # ==================================================
+def isosurface_rename(names, in_memory, old_dir, new_dir):
+    """
+    New names of isosurface data files, relative to a new directory.
+
+    Args:
+        names (set): data names used by rows, relative to old_dir.
+        in_memory (set): names of data given without a file (kept).
+        old_dir (Path): directory the names are relative to (resolved).
+        new_dir (Path): new directory (resolved).
+
+    Returns:
+        - (dict) -- {name: new name} for names that change.
+    """
+    rename = {}
+    for name in names:
+        source = old_dir / name
+        if name not in in_memory and source.exists():
+            new_name = relative_path(source.resolve(), new_dir).as_posix()
+            if new_name != name:
+                rename[name] = new_name
+    # a name that stays in use for other data is not available: refer to the file by its absolute path.
+    kept = names - rename.keys()
+    for name, new_name in rename.items():
+        if new_name in kept:
+            rename[name] = (old_dir / name).resolve().as_posix()
+    return rename
+
+
+# ==================================================
 DOCUMENT_STATUS = ["origin", "cell", "crystal", "clip", "repeat", "lower", "upper"]  # status saved and undone.
 
 
@@ -1826,6 +1855,32 @@ class PyVistaWidget(QtInteractor):
         return {"doc": doc, "grids": grids, "in_memory": in_memory}
 
     # ==================================================
+    def rebase_snapshot(self, snapshot, old_dir, new_dir):
+        """
+        Snapshot whose isosurface data file names are relative to a new directory, as save() does.
+
+        Args:
+            snapshot (dict): snapshot from document_snapshot().
+            old_dir (Path): directory the names are relative to.
+            new_dir (Path): new directory.
+
+        Returns:
+            - (dict) -- snapshot (the same object if nothing changes; grids are shared).
+
+        :meta private:
+        """
+        rows = snapshot["doc"]["data"].get("isosurface", [])
+        names = {row[COLUMN_ISOSURFACE_FILE] for row in rows} - {""}
+        rename = isosurface_rename(names, snapshot["in_memory"], Path(old_dir).resolve(), Path(new_dir).resolve())
+        if not rename:
+            return snapshot
+        doc = copy.deepcopy(snapshot["doc"])
+        for row in doc["data"]["isosurface"]:
+            row[COLUMN_ISOSURFACE_FILE] = rename.get(row[COLUMN_ISOSURFACE_FILE], row[COLUMN_ISOSURFACE_FILE])
+        grids = {rename.get(name, name): grid for name, grid in snapshot["grids"].items()}
+        return {"doc": doc, "grids": grids, "in_memory": set(snapshot["in_memory"])}
+
+    # ==================================================
     def restore_document(self, snapshot):
         """
         Restore a document snapshot (camera, view settings and preferences are kept).
@@ -1839,6 +1894,7 @@ class PyVistaWidget(QtInteractor):
         camera = self.get_camera_info()
         view = {key: copy.deepcopy(self._status[key]) for key in self._status if key not in DOCUMENT_STATUS}
 
+        table_visible = self._tab_group_view.isVisible()
         self._tab_group_view.close()
         self._clear_rows()
         self._isosurface_data = dict(snapshot["grids"])
@@ -1853,6 +1909,8 @@ class PyVistaWidget(QtInteractor):
         self.refresh()
         self.add_data(doc["data"])
         self.set_camera_info(camera)
+        if table_visible:
+            self._tab_group_view.show()
 
     # ==================================================
     def _get_current_state(self):
@@ -2035,18 +2093,7 @@ class PyVistaWidget(QtInteractor):
                 indexes.append(item.index())
 
         names = {model.get_row_data(index)[COLUMN_ISOSURFACE_FILE] for index in indexes} - {""}
-        rename = {}
-        for name in names:
-            source = old_dir / name
-            if name not in self._isosurface_in_memory and source.exists():
-                new_name = relative_path(source.resolve(), new_dir).as_posix()
-                if new_name != name:
-                    rename[name] = new_name
-        # a name that stays in use for other data is not available: refer to the file by its absolute path.
-        kept = names - rename.keys()
-        for name, new_name in rename.items():
-            if new_name in kept:
-                rename[name] = (old_dir / name).resolve().as_posix()
+        rename = isosurface_rename(names, self._isosurface_in_memory, old_dir, new_dir)
         if not rename:
             return
 

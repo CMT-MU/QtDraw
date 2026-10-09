@@ -80,8 +80,14 @@ class MultiPieDialog(QDialog):
         self.setWindowTitle(title)
 
     # ==================================================
-    def set_data(self):
-        self._sub_panel.set_data()
+    def set_data(self, quiet=False):
+        """
+        Show the MultiPie data.
+
+        Args:
+            quiet (bool, optional): only show the data, without applying the crystal and group again ?
+        """
+        self._sub_panel.set_data(quiet)
         self._group_panel.set_data()
         self._object_panel.set_data()
         self._basis_panel.set_data()

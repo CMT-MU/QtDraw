@@ -74,6 +74,16 @@ class UndoHistory:
         return True
 
     # ==================================================
+    def map(self, func):
+        """
+        Replace every snapshot by func(snapshot), keeping the position.
+
+        Args:
+            func (function): func(snapshot) -> snapshot.
+        """
+        self._snapshots = [func(snapshot) for snapshot in self._snapshots]
+
+    # ==================================================
     def can_undo(self):
         """
         Undo possible ?

@@ -343,10 +343,10 @@ class Combo(QComboBox):
         Args:
             item (list): item list.
         """
-        self.blockSignals(True)
+        blocked = self.blockSignals(True)
         self.clear()
         self.addItems(item)
-        self.blockSignals(False)
+        self.blockSignals(blocked)  # keep signals blocked if the caller blocked them.
 
     # ==================================================
     def find_index(self, key):

@@ -343,8 +343,7 @@ class QtDraw(Window):
 
         if filename:
             filename = add_extension(Path(filename), ext)
-            self._flush()
-            self.pyvista_widget.save(str(filename))
+            self._save(str(filename))
             self._mark_saved()
 
     # ==================================================
@@ -899,9 +898,11 @@ class QtDraw(Window):
                         pass  # history stays empty until the next successful snapshot.
                 raise
         finally:
-            self._restoring = False
-            self._modified_timer.stop()  # changes made by the restore are not recorded.
-            self._after_restore()
+            try:
+                self._after_restore()
+            finally:
+                self._restoring = False
+                self._modified_timer.stop()  # changes made by the restore are not recorded.
 
     # ==================================================
     def _after_restore(self):
@@ -918,7 +919,7 @@ class QtDraw(Window):
                 self.multipie_dialog = None
                 self.status.setText("MultiPie dialog closed: the restored document has no MultiPie group.")
             else:
-                self.multipie_dialog.set_data()
+                self.multipie_dialog.set_data(quiet=True)  # show the restored group, without changing it.
 
     # ==================================================
     def undo(self):
@@ -3096,9 +3097,28 @@ class QtDraw(Window):
         Args:
             filename (str): full file name.
         """
-        self._flush()
-        self.pyvista_widget.save(filename)
+        self._save(filename)
         self._mark_saved()
+
+    # ==================================================
+    def _save(self, filename):
+        """
+        Save the document, and keep the history valid in the new directory.
+
+        Args:
+            filename (str): full file name.
+
+        Note:
+            - saving changes the current directory to that of the file, and makes the data file names of isosurfaces relative to it.
+
+        :meta private:
+        """
+        self._flush()
+        old_dir = Path.cwd()
+        self.pyvista_widget.save(filename)
+        new_dir = Path.cwd()
+        if old_dir != new_dir:
+            self._history.map(lambda s: self.pyvista_widget.rebase_snapshot(s, old_dir, new_dir))
 
     # ==================================================
     # MultiPie interface

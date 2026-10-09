@@ -237,3 +237,92 @@ def test_edit_menu_and_api(app):
     assert app.action_undo.isEnabled() and app.can_undo()
     app.action_undo.trigger()
     assert names(app) == [] and app.action_redo.isEnabled()
+
+
+def iso_names(app):
+    return [r[9] for r in app.pyvista_widget._data["isosurface"].tolist()]
+
+
+def test_save_elsewhere_keeps_undo_and_redo(app, tmp_path, monkeypatch):
+    work = tmp_path / "work"
+    out = tmp_path / "out"
+    work.mkdir()
+    out.mkdir()
+    monkeypatch.chdir(work)
+    shutil.copy(EXAMPLES / "Si.xsf", work / "Si.xsf")
+    pvw = app.pyvista_widget
+    pvw.add_isosurface(data="Si.xsf", value=[0.01])
+    settle(app)
+    pvw.add_site(name="A")
+    settle(app)
+    app.undo()
+
+    app.save(str(out / "a.qtdw"))  # the data name becomes relative to the new directory.
+    assert iso_names(app) == ["../work/Si.xsf"]
+    assert app.can_redo()
+
+    app.redo()
+    assert names(app) == ["A"] and iso_names(app) == ["../work/Si.xsf"]
+    app.undo()
+    app.undo()
+    assert iso_names(app) == []
+    app.redo()
+    assert iso_names(app) == ["../work/Si.xsf"] and "../work/Si.xsf" in pvw._isosurface_data
+
+
+@pytest.mark.skipif(not check_multipie(), reason="MultiPie is not installed.")
+def test_undo_with_multipie_dialog_keeps_restored_crystal(app):
+    pvw = app.pyvista_widget
+    pvw.mp_set_group("Ci")
+    app._show_multipie()
+    settle(app)
+    pvw.set_crystal("hexagonal")  # not the crystal system of Ci.
+    settle(app)
+    pvw.add_site(name="A")
+    settle(app)
+
+    app.undo()
+
+    assert pvw._status["crystal"] == "hexagonal"
+    assert not app._modified_timer.isActive() and app.can_redo()
+
+
+@pytest.mark.skipif(not check_multipie(), reason="MultiPie is not installed.")
+def test_group_change_in_multipie_dialog_is_a_change(app):
+    pvw = app.pyvista_widget
+    app._show_multipie()
+    settle(app)
+    combo = app.multipie_dialog._sub_panel.combo_group
+    combo.setCurrentIndex((combo.currentIndex() + 1) % combo.count())
+    assert app._modified_timer.isActive() and app.can_undo()
+
+
+def test_undo_keeps_data_table_open(app):
+    pvw = app.pyvista_widget
+    pvw.add_site(name="A")
+    settle(app)
+    pvw._tab_group_view.show()
+    pvw.add_site(name="B")
+    settle(app)
+
+    app.undo()
+
+    assert names(app) == ["A"] and pvw._tab_group_view.isVisible()
+
+
+@pytest.mark.skipif(not check_multipie(), reason="MultiPie is not installed.")
+def test_undo_with_multipie_dialog_keeps_camera_and_view(app):
+    pvw = app.pyvista_widget
+    app.mp_set_group("Oh")  # opens the dialog.
+    settle(app)
+    pvw.set_axis("on")
+    pvw.set_cell("all")
+    pvw.set_view([1, 1, 0])
+    camera = pvw.get_camera_info()
+    pvw.add_site(name="A")
+    settle(app)
+
+    app.undo()
+
+    assert pvw.get_camera_info() == camera
+    assert pvw._status["axis_type"] == "on" and pvw._status["cell_mode"] == "all"
