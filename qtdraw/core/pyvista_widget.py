@@ -1739,7 +1739,10 @@ class PyVistaWidget(QtInteractor):
         Load all info.
 
         Args:
-            filename (str): full file name.
+            filename (str): file name, relative to the current directory.
+
+        Note:
+            - data file names of isosurfaces in the file are relative to its directory; the current directory is not changed.
         """
         file = Path(filename).resolve()
         f = file.as_posix()
