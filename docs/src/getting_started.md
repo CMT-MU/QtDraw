@@ -31,6 +31,8 @@ In the `Dataset` window:
 
 The `File` menu opens (Ctrl+O, Cmd+O on macOS), saves (Ctrl+S, Cmd+S) and quits (Ctrl+Q, Cmd+Q).
 
+The `Edit` menu undoes (Ctrl+Z, Cmd+Z on macOS) and redoes (Ctrl+Y or Ctrl+Shift+Z depending on the platform, Cmd+Shift+Z on macOS) changes of objects, unit cell, range and MultiPie group. The camera, view settings and preferences are not changed by undo or redo. Opening a file starts a new history; saving keeps it.
+
 If an error occurs, a short message is shown; the traceback is behind `Show Details...` and also in the log. Please include it when you report a problem.
 
 

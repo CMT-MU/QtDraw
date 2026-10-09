@@ -14,7 +14,7 @@ def test_menu_has_standard_shortcuts(app):
     assert app.action_save.shortcut() == QKeySequence(QKeySequence.Save)
     assert app.action_quit.shortcut() == QKeySequence(QKeySequence.Quit)
     titles = [a.text() for a in app.menuBar().actions()]
-    assert titles == ["&File", "&Help"]
+    assert titles == ["&File", "&Edit", "&Help"]
 
 
 # ==================================================
@@ -68,4 +68,4 @@ def test_buttons_have_tool_tips(app):
         app.view_button_nonrepeat,
     ]
     assert all(b.toolTip() for b in buttons)
-    assert "cannot be undone" in app.view_button_nonrepeat.toolTip()  # an existing tool tip is kept.
+    assert "can be undone with Undo" in app.view_button_nonrepeat.toolTip()  # an existing tool tip is kept.

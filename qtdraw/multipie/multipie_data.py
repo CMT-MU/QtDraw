@@ -144,6 +144,7 @@ class MultiPieData:
         self._mp_group = None
 
         self.set_axis()
+        self.pvw.document_changed.emit()
 
     # ==================================================
     def set_status(self, status=None, group=None):

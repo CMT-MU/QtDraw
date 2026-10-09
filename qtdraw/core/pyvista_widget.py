@@ -307,6 +307,58 @@ def _suppress_stderr():
 
 
 # ==================================================
+def isosurface_rename(names, in_memory, old_dir, new_dir):
+    """
+    New names of isosurface data files, relative to a new directory.
+
+    Args:
+        names (set): data names used by rows, relative to old_dir.
+        in_memory (set): names of data given without a file (kept).
+        old_dir (Path): directory the names are relative to (resolved).
+        new_dir (Path): new directory (resolved).
+
+    Returns:
+        - (dict) -- {name: new name} for names that change.
+    """
+    rename = {}
+    for name in names:
+        source = old_dir / name
+        if name not in in_memory and source.exists():
+            new_name = relative_path(source.resolve(), new_dir).as_posix()
+            if new_name != name:
+                rename[name] = new_name
+    # a name that stays in use for other data is not available: refer to the file by its absolute path.
+    kept = names - rename.keys()
+    for name, new_name in rename.items():
+        if new_name in kept:
+            rename[name] = (old_dir / name).resolve().as_posix()
+    return rename
+
+
+# ==================================================
+DOCUMENT_STATUS = ["origin", "cell", "crystal", "clip", "repeat", "lower", "upper"]  # status saved and undone.
+
+
+# ==================================================
+def same_snapshot(a, b):
+    """
+    Are two document snapshots the same ?
+
+    Args:
+        a (dict): snapshot, see PyVistaWidget.document_snapshot().
+        b (dict): snapshot.
+
+    Returns:
+        - (bool) -- same rows, status and MultiPie status, and the same grid objects.
+    """
+    if a is None or b is None:
+        return a is b
+    if a["doc"] != b["doc"] or a["grids"].keys() != b["grids"].keys() or a["in_memory"] != b["in_memory"]:
+        return False
+    return all(a["grids"][k] is b["grids"][k] for k in a["grids"])
+
+
+# ==================================================
 def create_qtdraw_file(filename, callback):
     """
     Create QtDraw file as background.
@@ -375,6 +427,7 @@ class PyVistaWidget(QtInteractor):
     message = Signal(str)  #: :meta private:
     # none.
     data_removed = Signal()  #: :meta private:
+    document_changed = Signal()  #: :meta private:
     # view index.
     camera_view = Signal(list)  #: :meta private:
 
@@ -1574,7 +1627,7 @@ class PyVistaWidget(QtInteractor):
             if type(data) == tuple:
                 name, dic = data
                 row_data["data"] = name
-                self._isosurface_data[name] = dic
+                self._isosurface_data[name] = copy.deepcopy(dic)  # owned by QtDraw, so history can keep it.
                 self._isosurface_in_memory.add(name)
             else:
                 row_data["data"] = self.set_isosurface_data(data)
@@ -1784,6 +1837,83 @@ class PyVistaWidget(QtInteractor):
             self.set_view()
 
     # ==================================================
+    def document_snapshot(self):
+        """
+        Snapshot of the document for undo.
+
+        Returns:
+            - (dict) -- {"doc": rows, status and MultiPie status (copy), "grids": isosurface data used by rows,
+              "in_memory": names of those data given without a file}.
+
+        :meta private:
+        """
+        status = {key: self._status.get(key) for key in DOCUMENT_STATUS}
+        multipie = self._mp_data.status if self._mp_data is not None else {}
+        doc = copy.deepcopy({"data": self.get_data_dict(), "status": status, "multipie": multipie})
+        names = {row[COLUMN_ISOSURFACE_FILE] for row in doc["data"].get("isosurface", [])}
+        grids = {name: self._isosurface_data[name] for name in names if name in self._isosurface_data}
+        in_memory = self._isosurface_in_memory & grids.keys()
+        return {"doc": doc, "grids": grids, "in_memory": in_memory}
+
+    # ==================================================
+    def rebase_snapshot(self, snapshot, old_dir, new_dir):
+        """
+        Snapshot whose isosurface data file names are relative to a new directory, as save() does.
+
+        Args:
+            snapshot (dict): snapshot from document_snapshot().
+            old_dir (Path): directory the names are relative to.
+            new_dir (Path): new directory.
+
+        Returns:
+            - (dict) -- snapshot (the same object if nothing changes; grids are shared).
+
+        :meta private:
+        """
+        rows = snapshot["doc"]["data"].get("isosurface", [])
+        names = {row[COLUMN_ISOSURFACE_FILE] for row in rows} - {""}
+        rename = isosurface_rename(names, snapshot["in_memory"], Path(old_dir).resolve(), Path(new_dir).resolve())
+        if not rename:
+            return snapshot
+        doc = copy.deepcopy(snapshot["doc"])
+        for row in doc["data"]["isosurface"]:
+            row[COLUMN_ISOSURFACE_FILE] = rename.get(row[COLUMN_ISOSURFACE_FILE], row[COLUMN_ISOSURFACE_FILE])
+        grids = {rename.get(name, name): grid for name, grid in snapshot["grids"].items()}
+        return {"doc": doc, "grids": grids, "in_memory": set(snapshot["in_memory"])}
+
+    # ==================================================
+    def restore_document(self, snapshot):
+        """
+        Restore a document snapshot (camera, view settings and preferences are kept).
+
+        Args:
+            snapshot (dict): snapshot from document_snapshot().
+
+        :meta private:
+        """
+        doc = copy.deepcopy(snapshot["doc"])
+        camera = self.get_camera_info()
+        view = {key: copy.deepcopy(self._status[key]) for key in self._status if key not in DOCUMENT_STATUS}
+
+        table_visible = self._tab_group_view.isVisible()
+        self._tab_group_view.close()
+        self._clear_rows()
+        self._isosurface_data = dict(snapshot["grids"])
+        self._isosurface_in_memory = set(snapshot["in_memory"])
+        if doc["multipie"]:
+            self.mp_set_group(status=doc["multipie"])  # also sets axis and cell view, restored below.
+        else:
+            self._mp_data = None
+        self._status.update(view)
+        self._status.update(doc["status"])
+        self.set_additional_status()
+        self.refresh()
+        self.add_data(doc["data"])
+        self.set_camera_info(camera)
+        if table_visible:
+            self._tab_group_view.show()
+
+    # ==================================================
     def _get_current_state(self):
         """
         Get current state to restore it when loading fails.
@@ -1964,18 +2094,7 @@ class PyVistaWidget(QtInteractor):
                 indexes.append(item.index())
 
         names = {model.get_row_data(index)[COLUMN_ISOSURFACE_FILE] for index in indexes} - {""}
-        rename = {}
-        for name in names:
-            source = old_dir / name
-            if name not in self._isosurface_in_memory and source.exists():
-                new_name = relative_path(source.resolve(), new_dir).as_posix()
-                if new_name != name:
-                    rename[name] = new_name
-        # a name that stays in use for other data is not available: refer to the file by its absolute path.
-        kept = names - rename.keys()
-        for name, new_name in rename.items():
-            if new_name in kept:
-                rename[name] = (old_dir / name).resolve().as_posix()
+        rename = isosurface_rename(names, self._isosurface_in_memory, old_dir, new_dir)
         if not rename:
             return
 
@@ -2257,6 +2376,7 @@ class PyVistaWidget(QtInteractor):
             self._status["crystal"] = crystal
 
         self.set_unit_cell()
+        self.document_changed.emit()
 
     # ==================================================
     def set_origin(self, origin=None):
@@ -2276,6 +2396,7 @@ class PyVistaWidget(QtInteractor):
             self._status["origin"] = origin
 
         self.set_cell()
+        self.document_changed.emit()
 
     # ==================================================
     def set_unit_cell(self, cell=None):
@@ -2296,6 +2417,7 @@ class PyVistaWidget(QtInteractor):
 
         self.set_cell()
         self.redraw()
+        self.document_changed.emit()
 
     # ==================================================
     def set_clip(self, mode=None):
@@ -2317,6 +2439,7 @@ class PyVistaWidget(QtInteractor):
             self.hide_outside_actor()
         else:
             self.show_outside_actor()
+        self.document_changed.emit()
 
     # ==================================================
     def hide_outside_actor(self):
@@ -2419,6 +2542,7 @@ class PyVistaWidget(QtInteractor):
             self._status["repeat"] = mode
 
         self.repeat_data()
+        self.document_changed.emit()
 
     # ==================================================
     def set_range(self, lower=None, upper=None):
@@ -2456,6 +2580,7 @@ class PyVistaWidget(QtInteractor):
 
         self.set_cell()
         self.set_repeat()
+        self.document_changed.emit()
 
     # ==================================================
     def set_view(self, view=None):
@@ -2939,6 +3064,7 @@ class PyVistaWidget(QtInteractor):
         Transform data to non-repeat data.
         """
         self.nonrepeat_data()
+        self.document_changed.emit()
 
     # ==================================================
     def nonrepeat_data(self):
@@ -4557,6 +4683,7 @@ class PyVistaWidget(QtInteractor):
 
         self._mp_data = MultiPieData(self)
         self._mp_data.set_status(status, group)
+        self.document_changed.emit()
 
     # ==================================================
     def mp_add_site(self, site, size=None, color=None, opacity=None):

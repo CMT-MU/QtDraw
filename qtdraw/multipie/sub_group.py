@@ -158,18 +158,27 @@ class SubGroup(QWidget):
         super().closeEvent(event)
 
     # ==================================================
-    def set_data(self):
+    def set_data(self, quiet=False):
         d = {"PG": 0, "SG": 1, "MPG": 2, "MSG": 3}
         crystal = self.data._crystal
         tp = self.data._type
         idx = self.data._idx
 
-        group_list = self.data._get_group_list()
-        self.combo_crystal_type.setCurrentText(crystal)
-        self.combo_group_type.setCurrentIndex(d[tp])
-        self.combo_group.set_item(group_list)
-        self.combo_group.setCurrentIndex(idx)
-        self.parent._qtdraw._set_crystal(crystal)
+        combos = [self.combo_crystal_type, self.combo_group_type, self.combo_group]
+        if quiet:  # show only: the combos do not set the group (and the axis) again.
+            for combo in combos:
+                combo.blockSignals(True)
+        try:
+            group_list = self.data._get_group_list()
+            self.combo_crystal_type.setCurrentText(crystal)
+            self.combo_group_type.setCurrentIndex(d[tp])
+            self.combo_group.set_item(group_list)
+            self.combo_group.setCurrentIndex(idx)
+        finally:
+            for combo in combos:
+                combo.blockSignals(False)
+        if not quiet:
+            self.parent._qtdraw._set_crystal(crystal)
         self.parent.group_changed.emit()
 
         self._symmetry_operation_dialog = None
