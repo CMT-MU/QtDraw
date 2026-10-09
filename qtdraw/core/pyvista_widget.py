@@ -2028,14 +2028,20 @@ class PyVistaWidget(QtInteractor):
         save all info.
 
         Args:
-            filename (str): full file name.
+            filename (str): file name, relative to the current directory.
+
+        Note:
+            - data file names of isosurfaces are made relative to the directory of the file, and data given
+              without a file is written there. These files and the drawing are written one by one (each atomically):
+              if writing fails, data files written before stay, and an existing data file may already be replaced.
         """
-        # rename.
-        file = Path(filename).absolute()  # make absolute before changing directory.
-        self.set_model(file.stem)
-        cwd = Path.cwd()
-        os.chdir(file.parent)
-        self._rebase_isosurface_data(cwd, file.parent)
+        given = Path(filename).absolute()  # the name (also of a symbolic link) gives the model name.
+        file = given.resolve()  # written to the target of a symbolic link; data are relative to its directory.
+        if not file.parent.is_dir():
+            raise FileNotFoundError(f"no directory {file.parent}.")
+        self.set_model(given.stem)
+        self._rebase_isosurface_data(self.document_dir(), file.parent)
+        self._document_dir = file.parent
 
         # set self._backup.
         self.save_current()
@@ -2050,15 +2056,15 @@ class PyVistaWidget(QtInteractor):
                 if name == "" or Path(name).suffix == ".xsf" or name not in self._isosurface_data:
                     continue
                 # data read from a file is not written again: the file is the source, wherever it is.
-                if name not in self._isosurface_in_memory and Path(name).exists():
+                if name not in self._isosurface_in_memory and (file.parent / name).exists():
                     continue
-                write_text_atomic(name, str(self._isosurface_data[name]) + "\n")
+                write_text_atomic(file.parent / name, str(self._isosurface_data[name]) + "\n")
 
         if self._mp_data is not None:
             self._backup["status"]["multipie"] = self._mp_data.status
 
         # write.
-        file = file.resolve().as_posix()
+        file = file.as_posix()
         header = "\nQtDraw data file in Python dict format.\n"
         text = format_text('"""' + header + '"""\n' + str(self._backup) + "\n")
         write_text_atomic(file, text)

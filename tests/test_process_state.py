@@ -130,7 +130,7 @@ def test_widgets_created_in_any_order_keep_stderr(qapp):
 def test_create_qtdraw_file_closes_widget(qapp, tmp_path, monkeypatch, spy_widgets):
     from qtdraw.core.pyvista_widget import create_qtdraw_file
 
-    monkeypatch.chdir(tmp_path)  # save() changes directory.
+    monkeypatch.chdir(tmp_path)
     f = tmp_path / "a.qtdw"
     create_qtdraw_file(str(f), lambda w: w.add_site(position="[0,0,0]"))
 
@@ -204,6 +204,7 @@ def test_save_through_symlink_keeps_link_name(widget, tmp_path):
     widget.save(str(link))
 
     assert widget._status["model"] == "alias"
-    assert Path.cwd() == tmp_path
+    assert Path.cwd() == tmp_path  # the current directory is not changed.
+    assert widget.document_dir() == real.resolve()  # data are relative to the written file.
     assert link.is_symlink()  # the file is written to the link target.
     assert "site" in read_dict(str(real / "target.qtdw"))["data"]
