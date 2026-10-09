@@ -274,14 +274,22 @@ def test_close_with_pending_rename_asks(app, monkeypatch, tmp_path):
     app.close()
     assert len(asked) == 1 and "Save changes" in asked[0][2]
     assert app.isVisible()
+    site_names = lambda: [row[0] for row in app.pyvista_widget.get_data_dict()["site"]]
+    assert site_names() == ["B"]  # the rename is kept, as one step of the history.
+    app.undo()
+    assert site_names() == ["A"]
+    app.redo()
+    assert site_names() == ["B"]
 
 
 def test_open_with_pending_rename_asks(app, monkeypatch, tmp_path):
     saved_with_pending_rename(app, monkeypatch, tmp_path)
     asked = answer(monkeypatch, QMessageBox.Cancel)
-    monkeypatch.setattr(QFileDialog, "getOpenFileName", lambda *a, **k: ("", ""))  # not shown if asked.
+    shown = []
+    monkeypatch.setattr(QFileDialog, "getOpenFileName", lambda *a, **k: shown.append(1) or ("", ""))
     app.open_file()
     assert len(asked) == 1 and "Save changes" in asked[0][2]
+    assert shown == []  # cancelled before choosing a file.
 
 
 def test_clear_with_pending_rename_asks_to_save(app, monkeypatch, tmp_path):
