@@ -80,3 +80,17 @@ def test_restore_multipie_status(widget):
     widget.mp_set_group("Ci")
     widget.restore_document(empty)
     assert widget._mp_data is None
+
+
+def test_restore_keeps_data_given_from_python_in_memory(widget):
+    from qtdraw.parser.xsf import extract_data_xsf
+
+    widget.add_isosurface(data=("grid", extract_data_xsf(str(EXAMPLES / "Si.xsf"))), value=[0.01])
+    snap = widget.document_snapshot()
+    model = widget._data["isosurface"]
+    model.remove_row(model.index(0, 0))
+    assert "grid" not in widget._isosurface_in_memory
+
+    widget.restore_document(snap)
+
+    assert "grid" in widget._isosurface_in_memory  # written when saved, as before the removal.

@@ -324,7 +324,7 @@ def same_snapshot(a, b):
     """
     if a is None or b is None:
         return a is b
-    if a["doc"] != b["doc"] or a["grids"].keys() != b["grids"].keys():
+    if a["doc"] != b["doc"] or a["grids"].keys() != b["grids"].keys() or a["in_memory"] != b["in_memory"]:
         return False
     return all(a["grids"][k] is b["grids"][k] for k in a["grids"])
 
@@ -1812,7 +1812,8 @@ class PyVistaWidget(QtInteractor):
         Snapshot of the document for undo.
 
         Returns:
-            - (dict) -- {"doc": rows, status and MultiPie status (copy), "grids": isosurface data used by rows}.
+            - (dict) -- {"doc": rows, status and MultiPie status (copy), "grids": isosurface data used by rows,
+              "in_memory": names of those data given without a file}.
 
         :meta private:
         """
@@ -1821,7 +1822,8 @@ class PyVistaWidget(QtInteractor):
         doc = copy.deepcopy({"data": self.get_data_dict(), "status": status, "multipie": multipie})
         names = {row[COLUMN_ISOSURFACE_FILE] for row in doc["data"].get("isosurface", [])}
         grids = {name: self._isosurface_data[name] for name in names if name in self._isosurface_data}
-        return {"doc": doc, "grids": grids}
+        in_memory = self._isosurface_in_memory & grids.keys()
+        return {"doc": doc, "grids": grids, "in_memory": in_memory}
 
     # ==================================================
     def restore_document(self, snapshot):
@@ -1840,6 +1842,7 @@ class PyVistaWidget(QtInteractor):
         self._tab_group_view.close()
         self._clear_rows()
         self._isosurface_data = dict(snapshot["grids"])
+        self._isosurface_in_memory = set(snapshot["in_memory"])
         if doc["multipie"]:
             self.mp_set_group(status=doc["multipie"])  # also sets axis and cell view, restored below.
         else:
