@@ -187,21 +187,32 @@ def test_save_through_symbolic_link_to_other_depth(widget, tmp_path):
 
 
 # ==================================================
-def test_rebase_keeps_names_in_use(widget, tmp_path):
-    # in-memory "../a.dat" keeps its name, so the file "a.dat" must not be renamed onto it.
+def test_rebase_does_not_take_a_name_in_use(widget, tmp_path):
+    # file "../a.dat" would become "../../a.dat", which is the name of in-memory data.
     make_dirs(tmp_path)
     (tmp_path / "work" / "sub").mkdir()
     grid = extract_data_xsf(str(tmp_path / "data" / "Si.xsf"))
     on_disk, in_memory = dict(grid, origin=[0.0, 0.0, 0.0]), dict(grid, origin=[0.5, 0.0, 0.0])
-    (tmp_path / "work" / "a.dat").write_text(str(on_disk))
-    widget.add_isosurface(data="a.dat", value=[0.01], name="disk")
-    widget.add_isosurface(data=("../a.dat", in_memory), value=[0.01], name="memory")
+    (tmp_path / "a.dat").write_text(str(on_disk))
+    widget.add_isosurface(data="../a.dat", value=[0.01], name="disk")
+    widget.add_isosurface(data=("../../a.dat", in_memory), value=[0.01], name="memory")
 
-    messages = []
-    widget.write_info = messages.append
     widget._rebase_isosurface_data(tmp_path / "work", tmp_path / "work" / "sub")
 
-    assert len(messages) == 1 and "already used" in messages[0]  # reported, not silent.
-    assert sorted(r[COLUMN_ISOSURFACE_FILE] for r in isosurface_rows(widget)) == ["../a.dat", "a.dat"]
-    assert widget._isosurface_data["a.dat"]["origin"] == on_disk["origin"]
-    assert widget._isosurface_data["../a.dat"]["origin"] == in_memory["origin"]
+    absolute = (tmp_path / "a.dat").resolve().as_posix()  # still refers to the file.
+    assert sorted(r[COLUMN_ISOSURFACE_FILE] for r in isosurface_rows(widget)) == sorted([absolute, "../../a.dat"])
+    assert widget._isosurface_data[absolute]["origin"] == on_disk["origin"]
+    assert widget._isosurface_data["../../a.dat"]["origin"] == in_memory["origin"]
+
+
+# ==================================================
+def test_source_file_through_symbolic_link_is_not_overwritten(widget, tmp_path):
+    make_dirs(tmp_path)
+    grid = extract_data_xsf(str(tmp_path / "data" / "Si.xsf"))
+    (tmp_path / "data" / "grid.dat").write_text("# original\n" + str(grid))
+    (tmp_path / "work" / "linked").symlink_to(tmp_path / "data")  # inside by name, outside in fact.
+    widget.add_isosurface(data="linked/grid.dat", value=[0.01])
+
+    widget.save(str(tmp_path / "work" / "a.qtdw"))
+
+    assert (tmp_path / "data" / "grid.dat").read_text().startswith("# original")

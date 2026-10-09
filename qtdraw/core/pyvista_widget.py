@@ -176,18 +176,23 @@ def relative_path(path, start):
 
 
 # ==================================================
-def is_outside(name):
+def is_outside(name, directory):
     """
-    Is a relative file name outside the current directory ?
+    Is a file outside a directory ?
 
     Args:
-        name (str): file name.
+        name (str): file name, relative to directory or absolute.
+        directory (Path): directory.
 
     Returns:
-        - (bool) -- outside ? True also for absolute names and names with a drive.
+        - (bool) -- outside ? real paths are compared, also through symbolic links and across drives.
     """
-    path = Path(os.path.normpath(name))
-    return path.is_absolute() or path.drive != "" or (len(path.parts) > 0 and path.parts[0] == "..")
+    directory = Path(directory).resolve()
+    try:
+        (directory / name).resolve().relative_to(directory)
+    except ValueError:
+        return True
+    return False
 
 
 # ==================================================
@@ -1906,7 +1911,7 @@ class PyVistaWidget(QtInteractor):
                 if name == "" or Path(name).suffix == ".xsf" or name not in self._isosurface_data:
                     continue
                 # a data file outside the saved directory is a source file, and is not overwritten.
-                if name not in self._isosurface_in_memory and is_outside(name):
+                if name not in self._isosurface_in_memory and is_outside(name, file.parent):
                     continue
                 write_text_atomic(name, str(self._isosurface_data[name]) + "\n")
 
@@ -1960,15 +1965,11 @@ class PyVistaWidget(QtInteractor):
                 new_name = relative_path(source.resolve(), new_dir).as_posix()
                 if new_name != name:
                     rename[name] = new_name
-        # do not rename onto a name that stays in use for other data (repeat, as kept names can add more).
-        while True:
-            kept = names - rename.keys()
-            clash = {name for name, new_name in rename.items() if new_name in kept}
-            if not clash:
-                break
-            for name in clash:
-                self.write_info(f"* cannot refer to data file {old_dir / name} as {rename[name]}, already used.")
-            rename = {name: new_name for name, new_name in rename.items() if name not in clash}
+        # a name that stays in use for other data is not available: refer to the file by its absolute path.
+        kept = names - rename.keys()
+        for name, new_name in rename.items():
+            if new_name in kept:
+                rename[name] = (old_dir / name).resolve().as_posix()
         if not rename:
             return
 
