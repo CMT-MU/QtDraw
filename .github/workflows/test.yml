@@ -48,10 +48,12 @@ jobs:
       - name: Install QtDraw
         run: |
           python -m pip install --upgrade pip
-          python -m pip install -e . pytest pytest-qt
+          pins=""
           if [ "${{ matrix.dependencies }}" = "minimum" ]; then
-            python -m pip install "PySide6==6.9.0" "pyvista==0.46.0" "pyvistaqt==0.13.0"
+            pins="PySide6==6.9.0 pyvista==0.46.0 pyvistaqt==0.13.0"
           fi
+          python -m pip install -e . pytest pytest-qt $pins
+          python -m pip check
           python -m pip list | grep -iE "^(pyside6|pyvista|pyvistaqt|vtk) "
           python -m playwright install --with-deps chromium
 
