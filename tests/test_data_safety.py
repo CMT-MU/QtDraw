@@ -248,7 +248,7 @@ def test_failed_conversion_closes_temporary_widget(widget, tmp_path, monkeypatch
     widget.add_site(position="[0,0,0]")
 
     old = tmp_path / "old.qtdw"
-    old.write_text("{'version': '2.0.0'}")
+    old.write_text("{'version': '1.0.0'}")  # version 1 needs a temporary widget.
     with pytest.raises(Exception):
         widget.load(str(old))
 
