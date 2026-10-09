@@ -13,7 +13,8 @@ from PySide6.QtWidgets import QWidget, QMessageBox, QFileDialog, QDialog, QAppli
 from PySide6.QtCore import Qt, QTimer
 from PySide6.QtGui import QAction, QKeySequence
 
-from qtdraw.core.pyvista_widget import PyVistaWidget, Window
+from qtdraw.core.pyvista_widget import PyVistaWidget, Window, same_snapshot
+from qtdraw.core.undo_history import UndoHistory
 from qtdraw.core.pyvista_widget_setting import widget_detail as detail
 from qtdraw.core.dialog_preference import PreferenceDialog
 from qtdraw.core.dialog_about import AboutDialog
@@ -95,6 +96,8 @@ class QtDraw(Window):
         self._is_view_updating = False
         self.pref_dialog = None  # preference dialog.
         self.multipie_dialog = None  # MultiPie dialog.
+        self._history = UndoHistory(limit=50)  # document snapshots for undo.
+        self._restoring = False  # restoring a snapshot ?
         if self.debug:
             self.actor_dialog = None  #  actor list dialog.
             self.data_dialog = None  # raw data dialog.
@@ -108,6 +111,8 @@ class QtDraw(Window):
         self._update_panel()
         self.create_connection()
         self._create_modified_check()
+        self._history.reset(self.pyvista_widget.document_snapshot())
+        self._update_undo_actions()
 
         # event loop.
         self.show()
@@ -178,6 +183,10 @@ class QtDraw(Window):
         menu.addSeparator()
         self.action_quit = action(menu, "&Quit", self.close, QKeySequence.Quit)
         self.action_quit.setMenuRole(QAction.QuitRole)
+
+        menu = self.menuBar().addMenu("&Edit")
+        self.action_undo = action(menu, "&Undo", self.undo, QKeySequence.Undo)
+        self.action_redo = action(menu, "&Redo", self.redo, QKeySequence.Redo)
 
         menu = self.menuBar().addMenu("&Help")
         self.action_help = action(menu, "&Mouse and Keys", self._show_help)
@@ -260,9 +269,28 @@ class QtDraw(Window):
 
         :meta private:
         """
+        self._flush()
         with busy_cursor():
             self.pyvista_widget.load(filename)
 
+        self._update_panel_quietly()
+
+        multipie = self.pyvista_widget._status.get("multipie", {})
+        if multipie and self.pyvista_widget._mp_data is not None:
+            self._show_multipie()
+            if self.multipie_dialog is not None:
+                self.multipie_dialog.set_data()
+
+        self._mark_saved()
+        self._reset_history()
+
+    # ==================================================
+    def _update_panel_quietly(self):
+        """
+        Update panel without applying its values to the document again.
+
+        :meta private:
+        """
         # to avoid redraw object twice.
         # disconnect unit cell.
         self.uc_combo_crystal.currentTextChanged.disconnect(self._set_crystal)
@@ -298,14 +326,6 @@ class QtDraw(Window):
         self.view_edit_lower.returnPressed.connect(self._set_lower)
         self.view_edit_upper.returnPressed.connect(self._set_upper)
 
-        multipie = self.pyvista_widget._status.get("multipie", {})
-        if multipie and self.pyvista_widget._mp_data is not None:
-            self._show_multipie()
-            if self.multipie_dialog is not None:
-                self.multipie_dialog.set_data()
-
-        self._mark_saved()
-
     # ==================================================
     def save_file(self):
         """
@@ -320,6 +340,7 @@ class QtDraw(Window):
 
         if filename:
             filename = add_extension(Path(filename), ext)
+            self._flush()
             self.pyvista_widget.save(str(filename))
             self._mark_saved()
 
@@ -500,7 +521,7 @@ class QtDraw(Window):
         self.view_button_repeat = Button(parent, text="repeat", toggle=True)
         self.view_button_nonrepeat = Button(parent, text="non-repeat")
         self.view_button_nonrepeat.setToolTip(
-            "Convert repeated copies into independent objects in the home cell (cannot be undone)."
+            "Convert repeated copies into independent objects in the home cell (can be undone with Undo)."
         )
 
         label_lower = Label(parent, text="lower")
@@ -743,18 +764,198 @@ class QtDraw(Window):
         self._modified_timer = QTimer(self)
         self._modified_timer.setSingleShot(True)
         self._modified_timer.setInterval(300)
-        self._modified_timer.timeout.connect(self._update_title)
+        self._modified_timer.timeout.connect(self._settle)
         for model in self.pyvista_widget._data.values():
-            model.dataModified.connect(lambda *args: self._modified_timer.start())
-            model.dataRemoved.connect(lambda *args: self._modified_timer.start())
-            model.checkChanged.connect(lambda *args: self._modified_timer.start())
+            model.dataModified.connect(self._document_changed)
+            model.dataRemoved.connect(self._document_changed)
+            model.checkChanged.connect(self._document_changed)
+            model.modelReset.connect(self._document_changed)  # deferred group rename.
+        self.pyvista_widget.document_changed.connect(self._document_changed)
         # status changed from panel (e.g. clip), which may not change objects.
         for button in self.findChildren(QAbstractButton):
-            button.clicked.connect(lambda *args: self._modified_timer.start())
+            button.clicked.connect(self._document_changed)
         for combo in self.findChildren(QComboBox):
-            combo.currentIndexChanged.connect(lambda *args: self._modified_timer.start())
+            combo.currentIndexChanged.connect(self._document_changed)
         for edit in self.findChildren(LineEdit):
-            edit.returnPressed.connect(lambda *args: self._modified_timer.start())
+            edit.returnPressed.connect(self._document_changed)
+
+    # ==================================================
+    def _document_changed(self, *args):
+        """
+        Start the timer to record the document after a change.
+
+        :meta private:
+        """
+        if self._restoring:
+            return
+        self._modified_timer.start()
+        self._update_undo_actions()
+
+    # ==================================================
+    def _settle(self):
+        """
+        Record the settled document for undo, and update the title.
+
+        :meta private:
+        """
+        if self._restoring:
+            return
+        snapshot = self.pyvista_widget.document_snapshot()
+        if self._history.current() is None:
+            self._history.reset(snapshot)
+        else:
+            self._history.record(snapshot, same=same_snapshot)
+        self._update_title()
+        self._update_undo_actions()
+
+    # ==================================================
+    def _flush(self):
+        """
+        Record a pending change now (before undo, redo, load and save).
+
+        :meta private:
+        """
+        self._commit_pending_input()
+        for model in self.pyvista_widget._data.values():
+            model.run_pending_renames()
+        self._modified_timer.stop()
+        self._settle()
+
+    # ==================================================
+    def _reset_history(self):
+        """
+        Start a new undo history with the current document.
+
+        :meta private:
+        """
+        self._modified_timer.stop()
+        self._history.reset(self.pyvista_widget.document_snapshot())
+        self._update_undo_actions()
+
+    # ==================================================
+    def _update_undo_actions(self):
+        """
+        Enable undo and redo in Edit menu.
+
+        :meta private:
+        """
+        if hasattr(self, "action_undo"):
+            self.action_undo.setEnabled(self.can_undo())
+            self.action_redo.setEnabled(self.can_redo())
+
+    # ==================================================
+    def _move_history(self, step):
+        """
+        Undo (step=-1) or redo (step=1).
+
+        :meta private:
+        """
+        if self._restoring:
+            return
+        self._flush()
+        target = self._history.peek_undo() if step < 0 else self._history.peek_redo()
+        if target is None:
+            return
+        try:
+            if self._restore(target):
+                if step < 0:
+                    self._history.commit_undo()
+                else:
+                    self._history.commit_redo()
+        finally:
+            self._update_title()
+            self._update_undo_actions()
+
+    # ==================================================
+    def _restore(self, snapshot):
+        """
+        Restore a snapshot, or the current document again if it fails.
+
+        Args:
+            snapshot (dict): snapshot.
+
+        Returns:
+            - (bool) -- restored ? (an exception is raised if not)
+
+        :meta private:
+        """
+        before = self.pyvista_widget.document_snapshot()
+        self._restoring = True
+        try:
+            try:
+                self.pyvista_widget.restore_document(snapshot)
+                return True
+            except Exception:
+                try:
+                    self.pyvista_widget.restore_document(before)
+                except Exception:
+                    self._history.clear()
+                    try:
+                        self._history.reset(self.pyvista_widget.document_snapshot())
+                    except Exception:
+                        pass  # history stays empty until the next successful snapshot.
+                raise
+        finally:
+            self._restoring = False
+            self._modified_timer.stop()  # changes made by the restore are not recorded.
+            self._after_restore()
+
+    # ==================================================
+    def _after_restore(self):
+        """
+        Update panel and MultiPie dialog after a restore.
+
+        :meta private:
+        """
+        self._update_panel_quietly()
+        if self.multipie_dialog is not None:
+            if self.pyvista_widget._mp_data is None:
+                self.multipie_dialog.close()
+                self.multipie_dialog = None
+                self.status.setText("MultiPie dialog closed: the restored document has no MultiPie group.")
+            else:
+                self.multipie_dialog.set_data()
+
+    # ==================================================
+    def undo(self):
+        """
+        Undo the last change of the document (objects, unit cell, range and MultiPie).
+
+        Note:
+            - camera, view settings and preferences are not changed.
+            - changes made in a row without running the event loop, e.g. in one Jupyter cell, are one step.
+        """
+        self._move_history(-1)
+
+    # ==================================================
+    def redo(self):
+        """
+        Redo the change undone last.
+
+        Note:
+            - changes made in a row without running the event loop, e.g. in one Jupyter cell, are one step.
+        """
+        self._move_history(1)
+
+    # ==================================================
+    def can_undo(self):
+        """
+        Undo possible ?
+
+        Returns:
+            - (bool) -- there is a change to undo ?
+        """
+        return self._history.can_undo() or self._modified_timer.isActive()
+
+    # ==================================================
+    def can_redo(self):
+        """
+        Redo possible ?
+
+        Returns:
+            - (bool) -- there is an undone change to redo ?
+        """
+        return not self._modified_timer.isActive() and self._history.can_redo()
 
     # ==================================================
     def _commit_pending_input(self):
@@ -1296,7 +1497,7 @@ class QtDraw(Window):
         ret = QMessageBox.question(
             self,
             "non-repeat",
-            "Convert repeated copies into independent objects?\nThis cannot be undone.",
+            "Convert repeated copies into independent objects?\nIt can be undone with Undo.",
             QMessageBox.Ok | QMessageBox.Cancel,
             QMessageBox.Cancel,
         )
@@ -2875,8 +3076,10 @@ class QtDraw(Window):
         Args:
             filename (str): full file name.
         """
+        self._flush()
         self.pyvista_widget.load(filename)
         self._mark_saved()
+        self._reset_history()
 
     # ==================================================
     def save(self, filename):
@@ -2886,6 +3089,7 @@ class QtDraw(Window):
         Args:
             filename (str): full file name.
         """
+        self._flush()
         self.pyvista_widget.save(filename)
         self._mark_saved()
 
