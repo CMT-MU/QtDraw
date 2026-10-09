@@ -168,3 +168,18 @@ def test_summaries_are_bounded_without_dialog(qapp, monkeypatch):
         hook.hook(*info)
     assert len(hook._summary) == 100
     assert sum(len(v) for v in hook._summary.values()) < 100 * 300  # one short summary each.
+
+
+# ==================================================
+def test_summary_falls_back_to_last_line(qapp, monkeypatch):
+    from qtdraw.widget import qt_event_util
+
+    shown = []
+    monkeypatch.setattr(qt_event_util, "show_error", lambda *args: shown.append(args))
+    hook = qt_event_util.ExceptionHook()
+    monkeypatch.setattr(sys, "excepthook", sys.__excepthook__)
+
+    hook._show_error("Traceback (most recent call last):\n  ...\nValueError: lost summary\n" + "-" * 75)
+    hook._show_error("")
+
+    assert [s for s, _, _ in shown] == ["ValueError: lost summary", "Error"]

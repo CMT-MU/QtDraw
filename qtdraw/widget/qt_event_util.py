@@ -199,7 +199,11 @@ class ExceptionHook(QObject):
 
         :meta private:
         """
-        show_error(self._summary.get(details, ""), details, "Exception Message")
+        summary = self._summary.get(details)
+        if summary is None:  # no longer kept: use the last line of the message, e.g. "ValueError: ...".
+            lines = [line.strip() for line in details.splitlines() if line.strip().strip("-")]
+            summary = lines[-1][:300] if lines else "Error"
+        show_error(summary, details, "Exception Message")
 
     # ==================================================
     def hook(self, type, value, traceback):
