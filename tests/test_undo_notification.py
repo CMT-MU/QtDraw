@@ -44,3 +44,23 @@ def test_given_grid_is_copied(widget):
     before = copy.deepcopy(stored["data"])
     grid["data"].clear()  # the caller changes its own data afterwards.
     assert stored["data"] == before
+
+
+def test_pending_rename_targets_its_own_row(widget):
+    widget.add_isosurface(name="A")  # no data: no actor, otherwise the same rows.
+    widget.add_isosurface(name="B")
+    model = widget._data["isosurface"]
+    model.setData(model.index(1, 0), "C")  # deferred.
+    model.run_pending_renames()
+    assert sorted(r[0] for r in widget.get_data_dict()["isosurface"]) == ["A", "C"]
+
+
+def test_dropped_pending_rename_is_reported(widget, caplog):
+    widget.add_site(name="A")
+    widget.add_site(name="B")
+    model = widget._data["site"]
+    model.setData(model.index(1, 0), "Y")
+    model.setData(model.index(0, 0), "X")  # invalid after the first rename resets the model.
+    with caplog.at_level("WARNING"):
+        model.run_pending_renames()
+    assert "X" in caplog.text

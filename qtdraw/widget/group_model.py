@@ -14,6 +14,7 @@ which is necessary to use other Qt functionalities.
 """
 
 import copy
+import logging
 from PySide6.QtGui import QStandardItemModel, QStandardItem
 from PySide6.QtCore import Signal, Qt, QModelIndex, QPersistentModelIndex, QTimer
 
@@ -421,6 +422,8 @@ class GroupModel(QStandardItemModel):
         index, value = rename
         if index.isValid():
             self.move_row(QModelIndex(index), value)
+        else:  # e.g. the row was moved by another rename before this one ran.
+            logging.warning(f"rename to '{value}' is not applied: the row is no longer available.")
 
     # ==================================================
     def run_pending_renames(self):
