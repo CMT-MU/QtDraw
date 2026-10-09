@@ -3115,10 +3115,12 @@ class QtDraw(Window):
         """
         self._flush()
         old_dir = Path.cwd()
-        self.pyvista_widget.save(filename)
-        new_dir = Path.cwd()
-        if old_dir != new_dir:
-            self._history.map(lambda s: self.pyvista_widget.rebase_snapshot(s, old_dir, new_dir))
+        try:
+            self.pyvista_widget.save(filename)
+        finally:  # also when writing fails after the directory was changed.
+            new_dir = Path.cwd()
+            if old_dir != new_dir:
+                self._history.map(lambda s: self.pyvista_widget.rebase_snapshot(s, old_dir, new_dir))
 
     # ==================================================
     # MultiPie interface

@@ -326,3 +326,31 @@ def test_undo_with_multipie_dialog_keeps_camera_and_view(app):
 
     assert pvw.get_camera_info() == camera
     assert pvw._status["axis_type"] == "on" and pvw._status["cell_mode"] == "all"
+
+
+def test_failed_save_elsewhere_keeps_redo(app, tmp_path, monkeypatch):
+    import qtdraw.core.pyvista_widget as pw
+
+    work = tmp_path / "work"
+    out = tmp_path / "out"
+    work.mkdir()
+    out.mkdir()
+    monkeypatch.chdir(work)
+    shutil.copy(EXAMPLES / "Si.xsf", work / "Si.xsf")
+    pvw = app.pyvista_widget
+    pvw.add_isosurface(data="Si.xsf", value=[0.01])
+    settle(app)
+    pvw.add_site(name="A")
+    settle(app)
+    app.undo()
+
+    def fail(*args):
+        raise OSError("disk full")
+
+    with monkeypatch.context() as m, pytest.raises(OSError):
+        m.setattr(pw, "write_text_atomic", fail)
+        app.save(str(out / "a.qtdw"))  # fails after the data names were made relative to "out".
+
+    assert app.can_redo()
+    app.redo()
+    assert names(app) == ["A"] and iso_names(app) == ["../work/Si.xsf"]
