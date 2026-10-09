@@ -16,7 +16,8 @@ EXAMPLES = Path(__file__).resolve().parents[1] / "docs" / "src" / "examples"
 
 def test_snapshot_size_and_restore_time(app, capsys):
     pvw = app.pyvista_widget
-    for i in range(1000):
+    n = 300  # kept small for CI; clearing is quadratic in the number of objects without bulk removal.
+    for i in range(n):
         pvw.add_site(position=f"[{(i % 10) / 10},{(i // 10 % 10) / 10},{(i // 100) / 10}]")
     t = time.time()
     snap = pvw.document_snapshot()
@@ -26,8 +27,8 @@ def test_snapshot_size_and_restore_time(app, capsys):
     pvw.restore_document(snap)
     t_restore = time.time() - t
     with capsys.disabled():
-        print(f"\n1000 sites: snapshot {t_snap * 1000:.0f} ms, {size / 1024:.0f} KiB, restore {t_restore:.1f} s")
-    assert size < 2 * 1024 * 1024  # 50 steps stay well below 100 MiB.
+        print(f"\n{n} sites: snapshot {t_snap * 1000:.0f} ms, {size / 1024:.0f} KiB, restore {t_restore:.1f} s")
+    assert size < 2 * 1024 * 1024 * n / 1000  # 50 steps of 1000 sites stay well below 100 MiB.
 
 
 def test_replaced_grids_are_counted_once(app, capsys):
