@@ -164,7 +164,7 @@ def relative_path(path, start):
 
     Args:
         path (Path): absolute path.
-        start (Path): directory.
+        start (Path): absolute path of a directory.
 
     Returns:
         - (Path) -- relative path, or absolute path if there is no relative path (e.g. another drive).
@@ -1917,7 +1917,7 @@ class PyVistaWidget(QtInteractor):
 
         Note:
             - names of existing files are changed, e.g. "a.xsf" -> "../work/a.xsf".
-            - names of data given without a file are kept, and the data is written to the new directory.
+            - names of data given without a file are kept; save() writes the data to the new directory.
 
         :meta private:
         """
