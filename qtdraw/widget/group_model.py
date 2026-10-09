@@ -417,10 +417,45 @@ class GroupModel(QStandardItemModel):
         """
         if rename not in self._pending_renames:
             return
+        # a rename resets the model, which invalidates the indexes of the other pending renames:
+        # keep their rows by data (each row has its own actor names), and whether it is a group (parent with children).
+        for r in self._pending_renames:
+            if isinstance(r[0], QPersistentModelIndex):
+                index = QModelIndex(r[0])
+                r[0] = (self.get_row_data(index), self.hasChildren(index)) if index.isValid() else None
         self._pending_renames.remove(rename)
-        index, value = rename
-        if index.isValid():
-            self.move_row(QModelIndex(index), value)
+        key, value = rename
+        index = self._find_row(key)
+        if index is not None:
+            self.move_row(index, value)
+
+    # ==================================================
+    def _find_row(self, key):
+        """
+        Find the row with the given data.
+
+        Args:
+            key (tuple): (row data, group ?), group is a parent row with children.
+
+        Returns:
+            - (QModelIndex) -- index of the row, None if not found.
+
+        :meta private:
+        """
+        if key is None:
+            return None
+        row_data, group = key
+        root = self.invisibleRootItem()
+        for parent_row in range(root.rowCount()):
+            item = root.child(parent_row)
+            if group:
+                rows = [item.index()] if item.hasChildren() else []
+            else:
+                rows = [item.child(row).index() for row in range(item.rowCount())] if item.hasChildren() else [item.index()]
+            for index in rows:
+                if self.get_row_data(index) == row_data:
+                    return index
+        return None
 
     # ==================================================
     def run_pending_renames(self):

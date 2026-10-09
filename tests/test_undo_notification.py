@@ -44,3 +44,25 @@ def test_given_grid_is_copied(widget):
     before = copy.deepcopy(stored["data"])
     grid["data"].clear()  # the caller changes its own data afterwards.
     assert stored["data"] == before
+
+
+def test_several_pending_renames_are_all_run(widget):
+    widget.add_site(name="A")
+    widget.add_site(name="B")
+    model = widget._data["site"]
+    model.setData(model.index(1, 0), "Y")  # deferred.
+    model.setData(model.index(0, 0), "X")  # deferred; the first rename resets the model.
+    model.run_pending_renames()
+    QCoreApplication.processEvents()
+    assert sorted(r[0] for r in widget.get_data_dict()["site"]) == ["X", "Y"]
+
+
+def test_pending_rename_of_a_group_moves_all_its_rows(widget):
+    widget.add_site(name="A", position="[0,0,0]")
+    widget.add_site(name="A", position="[0.5,0,0]")  # grouped under "A".
+    widget.add_site(name="C")
+    model = widget._data["site"]
+    model.setData(model.index(1, 0), "D")  # deferred.
+    model.setData(model.index(0, 0), "B")  # the group "A".
+    model.run_pending_renames()
+    assert sorted(r[0] for r in widget.get_data_dict()["site"]) == ["B", "B", "D"]
