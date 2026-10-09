@@ -271,6 +271,29 @@ def _suppress_stderr():
 
 
 # ==================================================
+DOCUMENT_STATUS = ["origin", "cell", "crystal", "clip", "repeat", "lower", "upper"]  # status saved and undone.
+
+
+# ==================================================
+def same_snapshot(a, b):
+    """
+    Are two document snapshots the same ?
+
+    Args:
+        a (dict): snapshot, see PyVistaWidget.document_snapshot().
+        b (dict): snapshot.
+
+    Returns:
+        - (bool) -- same rows, status and MultiPie status, and the same grid objects.
+    """
+    if a is None or b is None:
+        return a is b
+    if a["doc"] != b["doc"] or a["grids"].keys() != b["grids"].keys():
+        return False
+    return all(a["grids"][k] is b["grids"][k] for k in a["grids"])
+
+
+# ==================================================
 def create_qtdraw_file(filename, callback):
     """
     Create QtDraw file as background.
@@ -1743,6 +1766,51 @@ class PyVistaWidget(QtInteractor):
                 self.reset_camera()
         else:
             self.set_view()
+
+    # ==================================================
+    def document_snapshot(self):
+        """
+        Snapshot of the document for undo.
+
+        Returns:
+            - (dict) -- {"doc": rows, status and MultiPie status (copy), "grids": isosurface data used by rows}.
+
+        :meta private:
+        """
+        status = {key: self._status.get(key) for key in DOCUMENT_STATUS}
+        multipie = self._mp_data.status if self._mp_data is not None else {}
+        doc = copy.deepcopy({"data": self.get_data_dict(), "status": status, "multipie": multipie})
+        names = {row[COLUMN_ISOSURFACE_FILE] for row in doc["data"].get("isosurface", [])}
+        grids = {name: self._isosurface_data[name] for name in names if name in self._isosurface_data}
+        return {"doc": doc, "grids": grids}
+
+    # ==================================================
+    def restore_document(self, snapshot):
+        """
+        Restore a document snapshot (camera, view settings and preferences are kept).
+
+        Args:
+            snapshot (dict): snapshot from document_snapshot().
+
+        :meta private:
+        """
+        doc = copy.deepcopy(snapshot["doc"])
+        camera = self.get_camera_info()
+        view = {key: copy.deepcopy(self._status[key]) for key in self._status if key not in DOCUMENT_STATUS}
+
+        self._tab_group_view.close()
+        self._clear_rows()
+        self._isosurface_data = dict(snapshot["grids"])
+        if doc["multipie"]:
+            self.mp_set_group(status=doc["multipie"])  # also sets axis and cell view, restored below.
+        else:
+            self._mp_data = None
+        self._status.update(view)
+        self._status.update(doc["status"])
+        self.set_additional_status()
+        self.refresh()
+        self.add_data(doc["data"])
+        self.set_camera_info(camera)
 
     # ==================================================
     def _get_current_state(self):
