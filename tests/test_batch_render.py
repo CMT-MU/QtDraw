@@ -158,11 +158,11 @@ def test_load_failure_recovers_inside_one_batch(widget, submissions, tmp_path, m
             raise RuntimeError("broken")
         return set_camera_info(*args, **kwargs)
 
-    monkeypatch.setattr(widget, "set_camera_info", broken)
     submissions.clear()
-    with pytest.raises(RuntimeError, match="broken"):
-        widget.load(str(tmp_path / "a.qtdw"))
-    monkeypatch.undo()
+    with monkeypatch.context() as m:
+        m.setattr(widget, "set_camera_info", broken)
+        with pytest.raises(RuntimeError, match="broken"):
+            widget.load(str(tmp_path / "a.qtdw"))
     assert sum(1 for w in submissions if w is widget) == 1
     assert widget._batch_depth == 0
     assert widget.get_data_dict() == before
@@ -362,6 +362,15 @@ def test_mp_add_submit_once(widget, submissions):
     modulation = "[[Q01, 1, [1/2,0,0], cos], [Q02, 1, [0,1/2,0], sin]] : [2,2,1]"
     assert count(submissions, widget, lambda: widget.mp_add_orbital_samb_modulation(modulation)) == 1
     assert count(submissions, widget, lambda: widget.mp_add_bond_definition("[1/4,0,1/3];[0,1/4,2/3]")) == 1
+
+
+@needs_multipie
+def test_multipie_dialog_route_submits_once(widget, submissions):
+    widget.mp_set_group("D3^4")
+    data = widget._mp_data  # the MultiPie dialog calls these directly.
+    assert count(submissions, widget, lambda: data.add_site("[1/4,0,1/3]")) == 1
+    assert count(submissions, widget, lambda: data.add_bond("[1/4,0,1/3];[0,1/4,2/3]")) == 1
+    assert count(submissions, widget, lambda: data.add_bond_definition("[1/4,0,1/3];[0,1/4,2/3]")) == 1
 
 
 @needs_multipie

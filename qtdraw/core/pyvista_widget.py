@@ -4897,7 +4897,6 @@ class PyVistaWidget(QtInteractor):
         self.document_changed.emit()
 
     # ==================================================
-    @_batched
     def mp_add_site(self, site, size=None, color=None, opacity=None):
         """
         MultiPie: Add equivalent sites.
@@ -4914,7 +4913,6 @@ class PyVistaWidget(QtInteractor):
         self._mp_data.add_site(site, size, color, opacity)
 
     # ==================================================
-    @_batched
     def mp_add_bond(self, bond, width=None, color=None, color2=None, opacity=None):
         """
         MultiPie: Add equivalent bonds.
@@ -4932,7 +4930,6 @@ class PyVistaWidget(QtInteractor):
         self._mp_data.add_bond(bond, width, color, color2, opacity)
 
     # ==================================================
-    @_batched
     def mp_add_vector(
         self, vector_sb, type="Q", cartesian=True, average=False, length=None, width=None, color=None, opacity=None
     ):
@@ -4955,7 +4952,6 @@ class PyVistaWidget(QtInteractor):
         self._mp_data.add_vector(vector_sb, type, cartesian, average, length, width, color, opacity)
 
     # ==================================================
-    @_batched
     def mp_add_orbital(self, orbital_sb, type="Q", average=False, size=None, color=None, opacity=None):
         """
         MultiPie: Add transformed orbitals at equivalent sites or bonds.
@@ -4974,7 +4970,6 @@ class PyVistaWidget(QtInteractor):
         self._mp_data.add_orbital(orbital_sb, type, average, size, color, opacity)
 
     # ==================================================
-    @_batched
     def mp_add_bond_definition(self, bond, length=None, width=None, color=None, opacity=None):
         """
         MultiPie: Create bond definition.
@@ -5008,7 +5003,6 @@ class PyVistaWidget(QtInteractor):
         return self._mp_data.site_samb_list(site)
 
     # ==================================================
-    @_batched
     def mp_add_site_samb(self, tag, size=None, p_color=None, n_color=None, z_color=None, z_size=None):
         """
         MultiPie: Add site SAMB.
@@ -5040,7 +5034,6 @@ class PyVistaWidget(QtInteractor):
         return self._mp_data.bond_samb_list(bond)
 
     # ==================================================
-    @_batched
     def mp_add_bond_samb(self, tag, width=None, p_color=None, n_color=None, z_color=None, z_width=None, a_size=None):
         """
         MultiPie: Add bond SAMB.
@@ -5074,7 +5067,6 @@ class PyVistaWidget(QtInteractor):
         return self._mp_data.vector_samb_list(site_bond, type)
 
     # ==================================================
-    @_batched
     def mp_add_vector_samb(self, lc, length=None, width=None, color=None, opacity=None):
         """
         MultiPie: Add vector SAMB.
@@ -5089,7 +5081,6 @@ class PyVistaWidget(QtInteractor):
         self._mp_data.add_vector_samb(lc, length, width, color, opacity)
 
     # ==================================================
-    @_batched
     def mp_add_vector_samb_modulation(self, modulation_range, length=None, width=None, color=None, opacity=None):
         """
         MultiPie: Add vector SAMB with modulation.
@@ -5122,7 +5113,6 @@ class PyVistaWidget(QtInteractor):
         return self._mp_data.orbital_samb_list(site_bond, type, rank)
 
     # ==================================================
-    @_batched
     def mp_add_orbital_samb(self, lc, size=None, color=None, opacity=None):
         """
         MultiPie: Add orbital SAMB.
@@ -5136,7 +5126,6 @@ class PyVistaWidget(QtInteractor):
         self._mp_data.add_orbital_samb(lc, size, color, opacity)
 
     # ==================================================
-    @_batched
     def mp_add_orbital_samb_modulation(self, modulation_range, size=None, color=None, opacity=None):
         """
         MultiPie: Add orbital SAMB with modulation.
