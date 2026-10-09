@@ -9,6 +9,7 @@ from pathlib import Path
 from qtdraw.core.pyvista_widget_setting import COLUMN_ISOSURFACE_FILE, COLUMN_NAME_ACTOR
 from qtdraw.parser.xsf import extract_data_xsf
 from qtdraw.util.util import read_dict
+from grid_helpers import small_grid, write_small_xsf  # noqa: F401
 
 EXAMPLES = Path(__file__).resolve().parents[1] / "docs" / "src" / "examples"
 
@@ -29,7 +30,7 @@ def saved_names(filename):
 def make_dirs(tmp_path):
     for d in ["work", "data", "other"]:
         (tmp_path / d).mkdir()
-    shutil.copy(EXAMPLES / "Si.xsf", tmp_path / "data" / "Si.xsf")
+    write_small_xsf(tmp_path / "data" / "Si.xsf")
     os.chdir(tmp_path / "work")
 
 

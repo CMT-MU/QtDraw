@@ -53,6 +53,7 @@ dev = [
     "ghp-import",
     "pytest",
     "pytest-qt",
+    "pytest-xdist",
 ]
 
 [tool.setuptools.dynamic]

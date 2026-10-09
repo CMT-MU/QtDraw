@@ -52,7 +52,7 @@ jobs:
           if [ "${{ matrix.dependencies }}" = "minimum" ]; then
             pins="PySide6==6.9.0 pyvista==0.46.0 pyvistaqt==0.13.0"
           fi
-          python -m pip install -e . pytest pytest-qt $pins
+          python -m pip install -e . pytest pytest-qt pytest-xdist $pins
           python -m pip check
           python -m pip list | grep -iE "^(pyside6|pyvista|pyvistaqt|vtk) "
           python -m playwright install --with-deps chromium
@@ -63,4 +63,4 @@ jobs:
       - name: Run tests
         env:
           QT_QPA_PLATFORM: offscreen
-        run: python -m pytest -v
+        run: python -m pytest -v -n auto  # tests run in parallel processes.
