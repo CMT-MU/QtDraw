@@ -15,7 +15,7 @@ from PySide6.QtWidgets import QApplication
 
 from qtdraw.core.pyvista_widget_setting import default_preference
 
-from qtdraw.widget.message_box import MessageBox
+from qtdraw.widget.message_box import show_error
 
 
 # ==================================================
@@ -142,7 +142,7 @@ def with_busy_cursor(func):
 
 # ==================================================
 class ExceptionHook(QObject):
-    msg_signal = Signal(str)
+    msg_signal = Signal(str, str)  # short message, details.
 
     # ==================================================
     def __init__(self, parent=None):
@@ -163,7 +163,7 @@ class ExceptionHook(QObject):
         sys.excepthook = self.hook
 
         # connection.
-        self.msg_signal.connect(lambda x: MessageBox(x, "Exception Message"))
+        self.msg_signal.connect(lambda summary, details: show_error(summary, details, "Exception Message"))
 
     # ==================================================
     def hook(self, type, value, traceback):
@@ -189,8 +189,9 @@ class ExceptionHook(QObject):
                 log_msg = "".join(tb.format_exception(type, value, traceback))
                 simple = "".join(tb.format_exception_only(type, value))
             log_msg += "\n" + bar
+            summary = "".join(tb.format_exception_only(type, value)).strip()
             simple = "\n" + bar + "\n" + simple + bar
-            self.msg_signal.emit(log_msg)
+            self.msg_signal.emit(summary, log_msg)
             logging.critical(simple)
 
     # ==================================================
