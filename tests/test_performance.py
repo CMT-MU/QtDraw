@@ -218,3 +218,43 @@ def test_clear_removes_object_and_label_actors_only(widget):
 
     assert set(widget.renderer.actors) == others
     assert widget._actor_object_type == {}
+
+
+# ==================================================
+def test_clear_removes_suffixed_actors_but_not_similar_names(widget):
+    import pyvista
+
+    from qtdraw.core.pyvista_widget_setting import COLUMN_NAME_ACTOR
+
+    widget.add_site(name="A")
+    name = widget._data["site"].tolist()[0][COLUMN_NAME_ACTOR]
+    child = widget.add_mesh(pyvista.Sphere(), name=f"{name}-extra")  # removed with name, as remove_actor(name).
+    similar = widget.add_mesh(pyvista.Sphere(), name=f"{name}ish")  # another actor.
+
+    widget.clear_data()
+
+    actors = widget.renderer.actors
+    assert f"{name}-extra" not in actors and child not in actors.values()
+    assert actors[f"{name}ish"] is similar
+    assert all(model.tolist() == [] for model in widget._data.values())
+
+
+# ==================================================
+def test_clear_failure_resets_flags(widget, monkeypatch):
+    add_sites(widget, 2)
+    model = widget._data["site"]
+
+    def fail():
+        raise RuntimeError("broken")
+
+    with monkeypatch.context() as m, pytest.raises(RuntimeError):
+        m.setattr(model, "clear_data", fail)
+        widget.clear_data()
+    assert not widget._block_remove_actor and not widget._block_remove_isosurface
+
+    widget.clear_data()  # works again.
+    widget.add_site(name="B")
+    others = set(widget.renderer.actors)
+    widget.add_site(name="C")
+    model.remove_row(model.index(1, 0))  # removal of one row removes its actor again.
+    assert set(widget.renderer.actors) == others
