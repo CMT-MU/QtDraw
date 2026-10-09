@@ -258,3 +258,22 @@ def test_clear_failure_resets_flags(widget, monkeypatch):
     widget.add_site(name="C")
     model.remove_row(model.index(1, 0))  # removal of one row removes its actor again.
     assert set(widget.renderer.actors) == others
+
+
+# ==================================================
+def test_clear_does_not_remove_actors_by_name(widget, monkeypatch):
+    import pyvista
+
+    add_sites(widget, 4)
+    widget.add_bond()
+    by_name = []
+    original = pyvista.Renderer.remove_actor
+
+    def remove_actor(self, actor, *args, **kwargs):
+        if isinstance(actor, str):  # reads all actors for each call (in any pyvista version).
+            by_name.append(actor)
+        return original(self, actor, *args, **kwargs)
+
+    monkeypatch.setattr(pyvista.Renderer, "remove_actor", remove_actor)
+    widget.clear_data()
+    assert by_name == []
