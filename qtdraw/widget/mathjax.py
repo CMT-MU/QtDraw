@@ -190,10 +190,8 @@ class MathJaxSVG:
         if latex in self._svg_cache:  # use memory cache.
             svg_str = self._svg_cache[latex]
         else:
-            cache_path = self._get_cache_path(latex)  # use disk cache.
-            if cache_path.exists():
-                svg_str = cache_path.read_text()
-            else:  # create SVG.
+            svg_str = self._read_cache_file(self._get_cache_path(latex))  # use disk cache.
+            if svg_str is None:  # create SVG.
                 page = await self._browser.new_page()
                 html = _HTML_TEMPLATE.format(latex=latex)
 
@@ -224,11 +222,7 @@ class MathJaxSVG:
 
     # ===============================
     def close(self):
-        # write memory cache to disk cache.
-        for latex, svg_str in self._svg_cache.items():
-            cache_path = self._get_cache_path(latex)
-            if not cache_path.exists():
-                self._write_cache_file(cache_path, svg_str)
+        self._save_cache()
 
         # close browser and playwright, and stop event loop (only once, other callers wait for it).
         with self._close_lock:
@@ -267,6 +261,38 @@ class MathJaxSVG:
                 await self._playwright.stop()
             self._browser = None
             self._playwright = None
+
+    # ===============================
+    def _save_cache(self):
+        """
+        Write memory cache to disk cache (a file that cannot be written is skipped).
+        """
+        for latex, svg_str in self._svg_cache.items():
+            cache_path = self._get_cache_path(latex)
+            if cache_path.exists():
+                continue
+            try:
+                self._write_cache_file(cache_path, svg_str)
+            except OSError as e:  # e.g. in use by another process; created again next time.
+                logging.warning(f"cannot write MathJax cache {cache_path}: {e}")
+
+    # ===============================
+    @staticmethod
+    def _read_cache_file(path):
+        """
+        Read a cache file.
+
+        Args:
+            path (Path): cache file.
+
+        Returns:
+            - (str) -- SVG string, None if there is no readable file (it is created again).
+        """
+        try:
+            text = path.read_text(encoding="utf-8")
+        except (OSError, UnicodeDecodeError):  # missing, or written in another encoding by an older version.
+            return None
+        return text if 'viewBox="' in text else None  # cut off (older versions wrote it in place).
 
     # ===============================
     @staticmethod
