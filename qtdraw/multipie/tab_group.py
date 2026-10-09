@@ -21,7 +21,6 @@ class TabGroup(QWidget):
     def __init__(self, parent):
         super().__init__(parent)
         self.parent = parent
-        self.data = parent._data
 
         layout = Layout(self)
         layout.setContentsMargins(10, 10, 10, 10)
@@ -248,6 +247,16 @@ class TabGroup(QWidget):
         self.button_response.released.connect(self.show_response)
 
         self.combo_atomic_basis_type.currentTextChanged.connect(self.set_atomic_bra_ket)
+
+    # ==================================================
+    @property
+    def data(self):
+        """
+        MultiPie data, read from the dialog each time (opening a file replaces it).
+
+        :meta private:
+        """
+        return self.parent._data
 
     # ==================================================
     def set_irrep_list(self):

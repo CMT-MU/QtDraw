@@ -28,10 +28,8 @@ class MultiPieDialog(QDialog):
         """
         super().__init__()
         self._pvw = parent.pyvista_widget  # PyVistaWidget.
-        if self._pvw._mp_data is None:
-            self._pvw.mp_set_group()
-        self._data = parent.pyvista_widget._mp_data
         self._qtdraw = parent  # QtDraw.
+        self._shown_data = None  # data shown in the panels.
 
         self.set_title()
         self.resize(600, 500)
@@ -64,12 +62,27 @@ class MultiPieDialog(QDialog):
         self.show()
 
     # ==================================================
+    @property
+    def _data(self):
+        """
+        MultiPie data of the PyVistaWidget.
+
+        It is read each time, because opening a file replaces it.
+
+        :meta private:
+        """
+        if self._pvw._mp_data is None:
+            self._pvw.mp_set_group()
+        return self._pvw._mp_data
+
+    # ==================================================
     def set_title(self):
         title = self._pvw.window_title.replace("QtDraw", "MultiPie Plugin")
         self.setWindowTitle(title)
 
     # ==================================================
     def set_data(self):
+        self._shown_data = self._data
         self._sub_panel.set_data()
         self._group_panel.set_data()
         self._object_panel.set_data()
@@ -81,7 +94,9 @@ class MultiPieDialog(QDialog):
         self._group_panel.clear_data()
         self._object_panel.clear_data()
         self._basis_panel.clear_data()
-        self._data.clear_data()
+        # data replaced by opening a file is kept; only the data shown so far is cleared.
+        if self._pvw._mp_data is not None and self._pvw._mp_data is self._shown_data:
+            self._pvw._mp_data.clear_data()
 
     # ==================================================
     def closeEvent(self, event):
