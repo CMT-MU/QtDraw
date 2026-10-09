@@ -177,3 +177,44 @@ def test_site_sphere_is_created_once_per_size(widget, monkeypatch, request):
     assert np.array_equal(mesh(1).points, other)
     widget.add_site(position="[0,0,1/2]", size=0.1)
     assert np.allclose(mesh(3).points, create_sphere(radius=0.1).points + pw.convert_str_vector("[0,0,1/2]", A=widget.A_matrix))
+
+
+# ==================================================
+@pytest.fixture
+def count_renderer_actors(monkeypatch):
+    import pyvista
+
+    counter = {"n": 0}
+    original = pyvista.Renderer.actors
+
+    def actors(self):
+        counter["n"] += 1
+        return original.fget(self)
+
+    monkeypatch.setattr(pyvista.Renderer, "actors", property(actors))
+    return counter
+
+
+# ==================================================
+@pytest.mark.parametrize("n", [4, 16])
+def test_clear_reads_actors_independent_of_rows(widget, count_renderer_actors, n):
+    widget.add_bond()
+    add_sites(widget, n)
+    count_renderer_actors["n"] = 0
+    widget.clear_data()
+    assert count_renderer_actors["n"] <= 8  # not once or more per object.
+
+
+# ==================================================
+def test_clear_removes_object_and_label_actors_only(widget):
+    others = set(widget.renderer.actors)  # axes, cell, etc.
+    add_sites(widget, 4)
+    widget.add_caption()
+    widget.add_text2d()
+    widget.add_bond()
+    assert set(widget.renderer.actors) - others  # objects and labels are drawn.
+
+    widget.clear_data()
+
+    assert set(widget.renderer.actors) == others
+    assert widget._actor_object_type == {}
