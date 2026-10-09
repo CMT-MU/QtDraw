@@ -68,8 +68,6 @@ line-length = 130
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-# PyVistaWidget redirects stderr at the file-descriptor level, which conflicts with pytest's output capture.
-addopts = "-s"
 
 [tool.build_sphinx]
 source-dir = 'docs'

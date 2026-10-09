@@ -6,7 +6,6 @@ This module provides a class to draw various
 """
 
 import os
-import sys
 from pathlib import Path
 import subprocess
 import shutil
@@ -14,6 +13,7 @@ import tempfile
 import numpy as np
 import copy
 from functools import lru_cache
+from contextlib import contextmanager
 from PySide6.QtWidgets import QMainWindow, QMenu, QSizePolicy
 from PySide6.QtGui import QCursor, QMouseEvent
 from PySide6.QtCore import QEvent, Qt, QCoreApplication, Signal, QSize, QObject, QModelIndex
@@ -263,6 +263,32 @@ def _site_sphere(radius):
 
 
 # ==================================================
+@contextmanager
+def _suppress_stderr():
+    """
+    Suppress output to stderr (file descriptor 2) of VTK and Qt, and restore it afterwards.
+
+    :meta private:
+    """
+    try:
+        saved = os.dup(2)
+        inheritable = os.get_inheritable(2)
+    except OSError:  # no stderr.
+        yield
+        return
+    try:
+        dev = os.open(os.devnull, os.O_WRONLY)
+        try:
+            os.dup2(dev, 2)
+        finally:
+            os.close(dev)
+        yield
+    finally:
+        os.dup2(saved, 2, inheritable=inheritable)
+        os.close(saved)
+
+
+# ==================================================
 def create_qtdraw_file(filename, callback):
     """
     Create QtDraw file as background.
@@ -273,8 +299,11 @@ def create_qtdraw_file(filename, callback):
     """
     app = get_qt_application()
     widget = PyVistaWidget(off_screen=True)
-    callback(widget)
-    widget.save(filename)
+    try:
+        callback(widget)
+        widget.save(filename)
+    finally:
+        widget.close()
     app.quit()
 
 
@@ -288,10 +317,13 @@ def convert_qtdraw_v3(filename):
     """
     app = get_qt_application()
     widget = PyVistaWidget(off_screen=True)
-    widget.load(filename)
-    path_abs, path_rel, base, ext, folder = split_filename(filename)
-    filename2 = cat_filename(base + "_v3", ext)
-    widget.save(filename2)
+    try:
+        widget.load(filename)
+        path_abs, path_rel, base, ext, folder = split_filename(filename)
+        filename2 = cat_filename(base + "_v3", ext)
+        widget.save(filename2)
+    finally:
+        widget.close()
     app.quit()
 
 
@@ -341,28 +373,21 @@ class PyVistaWidget(QtInteractor):
         # avoid recursion of the close() until the PyVistaWidget.__init__() is called, see pyvistaqt/plotting.py.
         self._closed = True
 
-        # suppress std err.
-        fd = sys.stderr.fileno()
-        se = os.dup(fd)
-        dev = os.open(os.devnull, os.O_WRONLY)
-        self._iosave = {"file_no": fd, "stderr": se, "dev_null": dev}
-        os.dup2(dev, fd)
-        os.close(dev)
-
         # set default.
         self._off_screen = off_screen
         self.clear_info()
 
-        # set interactor.
-        super().__init__(
-            parent=parent,
-            off_screen=self._off_screen,
-            multi_samples=detail["multi_samples"],
-            line_smoothing=detail["line_smoothing"],
-            point_smoothing=detail["point_smoothing"],
-            polygon_smoothing=detail["polygon_smoothing"],
-            auto_update=detail["auto_update"],
-        )
+        # set interactor (suppress messages of VTK and Qt during initialization only).
+        with _suppress_stderr():
+            super().__init__(
+                parent=parent,
+                off_screen=self._off_screen,
+                multi_samples=detail["multi_samples"],
+                line_smoothing=detail["line_smoothing"],
+                point_smoothing=detail["point_smoothing"],
+                polygon_smoothing=detail["polygon_smoothing"],
+                auto_update=detail["auto_update"],
+            )
         assert not self._closed
 
         if off_screen:
@@ -1646,12 +1671,14 @@ class PyVistaWidget(QtInteractor):
         if file.suffix == detail["extension"]:
             all_data = read_dict(f)
             ver = int(all_data["version"].split(".")[0])  # major version.
-            if ver < 3:
+            if ver < 2:  # a temporary widget is needed to convert version 1.
                 widget = PyVistaWidget(off_screen=True)
                 try:
-                    all_data = convert_version3(all_data, ver, widget)  # for old version.
+                    all_data = convert_version3(all_data, ver, widget)
                 finally:
                     widget.close()
+            elif ver < 3:
+                all_data = convert_version3(all_data, ver, None)
             required = ["status", "preference", "camera", "data"]
         elif file.suffix in detail["ext_material"]:
             all_data, material = parse_draw(f)
@@ -1841,12 +1868,9 @@ class PyVistaWidget(QtInteractor):
             filename (str): full file name.
         """
         # rename.
-        file = Path(filename)
-        folder = file.parent.as_posix()
-        base = file.stem
-        self.set_model(base)
-        if folder != "":
-            os.chdir(folder)
+        file = Path(filename).absolute()  # make absolute before changing directory.
+        self.set_model(file.stem)
+        os.chdir(file.parent)
 
         # set self._backup.
         self.save_current()
@@ -2929,12 +2953,6 @@ class PyVistaWidget(QtInteractor):
         """
         self._mathjax.close()
         self._tab_group_view.close()
-
-        # restore std err.
-        if self._iosave["stderr"] is not None:
-            os.dup2(self._iosave["stderr"], self._iosave["file_no"])
-            os.close(self._iosave["stderr"])
-            self._iosave["stderr"] = None
 
         super().close()
 
