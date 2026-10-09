@@ -2608,11 +2608,18 @@ class PyVistaWidget(QtInteractor):
             if object_type != "text2d":
                 value = np.array(model.tolist(), dtype=object)
                 if len(value) > 0:
-                    point = "[" + ",".join(value[:, COLUMN_POSITION]) + "]"
-                    cell = "[" + ",".join(value[:, COLUMN_CELL]) + "]"
                     name_actor = value[:, COLUMN_NAME_ACTOR]
-                    point = convert_str_vector(point, cell, False)
-                    idx = get_outside_box(point, lower, upper)
+                    if object_type == "caption":  # each caption has its own number of positions.
+                        idx = [
+                            i
+                            for i, (p, c) in enumerate(zip(value[:, COLUMN_POSITION], value[:, COLUMN_CELL]))
+                            if self._caption_outside(p, c, lower, upper)
+                        ]
+                    else:
+                        point = "[" + ",".join(value[:, COLUMN_POSITION]) + "]"
+                        cell = "[" + ",".join(value[:, COLUMN_CELL]) + "]"
+                        point = convert_str_vector(point, cell, False)
+                        idx = get_outside_box(point, lower, upper)
                     hide = name_actor[idx]
                     for actor_name in hide:
                         if actor_name != "":
@@ -2624,6 +2631,26 @@ class PyVistaWidget(QtInteractor):
                         for i in label_actor:
                             if i != "":
                                 actors[i].SetVisibility(False)
+
+    # ==================================================
+    @staticmethod
+    def _caption_outside(position, cell, lower, upper):
+        """
+        Are all positions of a caption outside the range ?
+
+        Args:
+            position (str): position(s), str([float]) or str([[float]]).
+            cell (str): cell, str([int]).
+            lower (list): lower bound.
+            upper (list): upper bound.
+
+        Returns:
+            - (bool) -- all outside ?
+
+        :meta private:
+        """
+        point = np.atleast_2d(convert_str_vector(position, cell, False))
+        return len(get_outside_box(point, lower, upper)) == len(point)
 
     # ==================================================
     def clip_actor(self, position, cell, name_actor, label_actor):
@@ -4540,6 +4567,9 @@ class PyVistaWidget(QtInteractor):
         caption = _caption_labels(data["caption"], positionT)
         if caption is None:  # e.g. from a file or a table edit.
             self.write_info(f"* caption '{data['name']}' is not drawn: one caption for each position is needed.")
+            if actor != "":  # remove the caption drawn before the edit.
+                self.delete_actor(actor)
+                self._data["caption"].set_row_data(index, COLUMN_NAME_ACTOR, "")
             return
         size = int(data["size"])
         bold = data["bold_check"]
