@@ -97,9 +97,12 @@ def test_each_dialog_gets_its_own_summary(qapp, monkeypatch):
     hook = qt_event_util.ExceptionHook()
     monkeypatch.setattr(sys, "excepthook", sys.__excepthook__)
 
-    # another exception while the first one is being reported, e.g. in a listener.
+    # another exception while the first one is being reported, e.g. in a listener (only once).
+    raised = []
+
     def nested(details):
-        if "ZeroDivisionError" in details and len(shown) == 0:
+        if not raised:
+            raised.append(True)
             try:
                 raise KeyError("inner")
             except KeyError:
@@ -117,3 +120,43 @@ def test_each_dialog_gets_its_own_summary(qapp, monkeypatch):
     assert set(pairs) == {"KeyError", "ZeroDivisionError"}
     assert "KeyError" in pairs["KeyError"] and "ZeroDivisionError" in pairs["ZeroDivisionError"]
     assert hook._summary == {}  # nothing is left behind.
+
+
+# ==================================================
+def test_identical_errors_keep_their_summaries(qapp, monkeypatch):
+    from qtdraw.widget import qt_event_util
+
+    shown = []
+    monkeypatch.setattr(qt_event_util, "show_error", lambda *args: shown.append(args))
+    hook = qt_event_util.ExceptionHook()
+    monkeypatch.setattr(sys, "excepthook", sys.__excepthook__)
+    hook.msg_signal.disconnect(hook._show_error)
+    try:
+        broken_function()
+    except ZeroDivisionError:
+        info = sys.exc_info()
+    hook.hook(*info)
+    hook.hook(*info)  # the same message twice, before either is shown.
+
+    details = next(iter(hook._summary))
+    hook._show_error(details)
+    hook._show_error(details)
+
+    assert [s for s, _, _ in shown] == ["ZeroDivisionError: division by zero"] * 2
+    assert hook._summary == {}
+
+
+# ==================================================
+def test_summaries_are_bounded_without_dialog(qapp, monkeypatch):
+    from qtdraw.widget import qt_event_util
+
+    hook = qt_event_util.ExceptionHook()
+    monkeypatch.setattr(sys, "excepthook", sys.__excepthook__)
+    hook.msg_signal.disconnect(hook._show_error)
+    for i in range(150):
+        try:
+            raise ValueError(f"error {i}")
+        except ValueError:
+            hook.hook(*sys.exc_info())
+
+    assert len(hook._summary) == 100

@@ -186,7 +186,7 @@ class ExceptionHook(QObject):
         sys.excepthook = self.hook
 
         # connection.
-        self._summary = {}  # short message for each full message, until it is shown.
+        self._summary = {}  # short messages for each full message, until they are shown.
         self.msg_signal.connect(self._show_error)
 
     # ==================================================
@@ -199,7 +199,11 @@ class ExceptionHook(QObject):
 
         :meta private:
         """
-        show_error(self._summary.pop(details, ""), details, "Exception Message")
+        summaries = self._summary.get(details, [])
+        summary = summaries.pop(0) if summaries else ""
+        if not summaries:
+            self._summary.pop(details, None)
+        show_error(summary, details, "Exception Message")
 
     # ==================================================
     def hook(self, type, value, traceback):
@@ -226,7 +230,9 @@ class ExceptionHook(QObject):
                 simple = "".join(tb.format_exception_only(type, value))
             log_msg += "\n" + bar
             simple = "\n" + bar + "\n" + simple + bar
-            self._summary[log_msg] = error_summary(type, value)
+            self._summary.setdefault(log_msg, []).append(error_summary(type, value))
+            while len(self._summary) > 100:  # if the dialog is disconnected, keep only the latest ones.
+                del self._summary[next(iter(self._summary))]
             self.msg_signal.emit(log_msg)
             logging.critical(simple)
 
