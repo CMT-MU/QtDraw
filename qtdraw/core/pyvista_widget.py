@@ -1691,11 +1691,11 @@ class PyVistaWidget(QtInteractor):
                 self.write_info(f"* failed to restore current data: {e}")
             raise
         # notify only after success, to keep data such as MultiPie panel on failure.
-        self._loading = True  # the MultiPie data now belongs to the loaded file, and is kept.
+        loading, self._loading = self._loading, True  # the MultiPie data now belongs to the loaded file, and is kept.
         try:
             self.data_removed.emit()
         finally:
-            self._loading = False
+            self._loading = loading  # restore, also for a load started by a listener.
 
     # ==================================================
     def _set_loaded_data(self, file, all_data, ver, material):

@@ -86,3 +86,34 @@ def test_message_signal_still_sends_full_message(qapp, monkeypatch):
         hook.hook(*sys.exc_info())
 
     assert "Traceback" in messages[0] and "broken_function" in messages[0]
+
+
+# ==================================================
+def test_each_dialog_gets_its_own_summary(qapp, monkeypatch):
+    from qtdraw.widget import qt_event_util
+
+    shown = []
+    monkeypatch.setattr(qt_event_util, "show_error", lambda *args: shown.append(args))
+    hook = qt_event_util.ExceptionHook()
+    monkeypatch.setattr(sys, "excepthook", sys.__excepthook__)
+
+    # another exception while the first one is being reported, e.g. in a listener.
+    def nested(details):
+        if "ZeroDivisionError" in details and len(shown) == 0:
+            try:
+                raise KeyError("inner")
+            except KeyError:
+                hook.hook(*sys.exc_info())
+
+    hook.msg_signal.disconnect(hook._show_error)
+    hook.msg_signal.connect(nested)  # runs before the dialog of the first exception.
+    hook.msg_signal.connect(hook._show_error)
+    try:
+        broken_function()
+    except ZeroDivisionError:
+        hook.hook(*sys.exc_info())
+
+    pairs = {summary.split(":")[0]: details for summary, details, _ in shown}
+    assert set(pairs) == {"KeyError", "ZeroDivisionError"}
+    assert "KeyError" in pairs["KeyError"] and "ZeroDivisionError" in pairs["ZeroDivisionError"]
+    assert hook._summary == {}  # nothing is left behind.

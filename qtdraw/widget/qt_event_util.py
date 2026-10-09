@@ -186,8 +186,20 @@ class ExceptionHook(QObject):
         sys.excepthook = self.hook
 
         # connection.
-        self._summary = ""  # short message of the last exception.
-        self.msg_signal.connect(lambda details: show_error(self._summary, details, "Exception Message"))
+        self._summary = {}  # short message for each full message, until it is shown.
+        self.msg_signal.connect(self._show_error)
+
+    # ==================================================
+    def _show_error(self, details):
+        """
+        Show the error dialog for a full message.
+
+        Args:
+            details (str): full message.
+
+        :meta private:
+        """
+        show_error(self._summary.pop(details, ""), details, "Exception Message")
 
     # ==================================================
     def hook(self, type, value, traceback):
@@ -214,7 +226,7 @@ class ExceptionHook(QObject):
                 simple = "".join(tb.format_exception_only(type, value))
             log_msg += "\n" + bar
             simple = "\n" + bar + "\n" + simple + bar
-            self._summary = error_summary(type, value)
+            self._summary[log_msg] = error_summary(type, value)
             self.msg_signal.emit(log_msg)
             logging.critical(simple)
 
