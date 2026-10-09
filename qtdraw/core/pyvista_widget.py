@@ -16,7 +16,7 @@ import shutil
 import tempfile
 import numpy as np
 import copy
-from functools import lru_cache
+from functools import lru_cache, wraps
 from contextlib import contextmanager
 from PySide6.QtWidgets import QMainWindow, QMenu, QSizePolicy
 from PySide6.QtGui import QCursor, QMouseEvent
@@ -422,6 +422,22 @@ def _suppress_stderr():
 
 
 # ==================================================
+def _batched(method):
+    """
+    Decorator: run a method in a batch, rendering once at its end (see PyVistaWidget._batch_render).
+
+    :meta private:
+    """
+
+    @wraps(method)
+    def wrapper(self, *args, **kwargs):
+        with self._batch_render():
+            return method(self, *args, **kwargs)
+
+    return wrapper
+
+
+# ==================================================
 def isosurface_rename(names, in_memory, old_dir, new_dir):
     """
     New names of isosurface data files, relative to a new directory.
@@ -563,6 +579,8 @@ class PyVistaWidget(QtInteractor):
         # set default.
         self._off_screen = off_screen
         self._document_dir = None  # directory of the drawing file, data file names are relative to it.
+        self._batch_depth = 0  # nesting depth of _batch_render().
+        self._batch_dirty = False  # render requested during the current batch ?
         self.clear_info()
 
         # set interactor (suppress messages of VTK and Qt during initialization only).
@@ -633,6 +651,49 @@ class PyVistaWidget(QtInteractor):
         # refresh.
         self.refresh()
         self.set_view()
+
+    # ==================================================
+    def render(self):
+        """
+        Render, or only note the request while a batch of changes is made (see _batch_render).
+
+        :meta private:
+        """
+        if self._batch_depth > 0:
+            self._batch_dirty = True
+            return None
+        return super().render()
+
+    # ==================================================
+    @contextmanager
+    def _batch_render(self):
+        """
+        Make a batch of changes, rendering once at its end instead of once for each object.
+
+        Note:
+            - at most one render is submitted when the outermost batch ends (none if nothing requested it).
+            - if the batch fails, its exception is kept, and a failing render is only logged.
+            - batches are used in the GUI thread only, without processing events inside them.
+
+        :meta private:
+        """
+        self._batch_depth += 1
+        failed = True
+        try:
+            yield
+            failed = False
+        finally:
+            self._batch_depth -= 1
+            if self._batch_depth == 0 and self._batch_dirty:
+                self._batch_dirty = False
+                if not self._closed:
+                    if failed:
+                        try:
+                            self.render()
+                        except Exception as e:  # keep original exception.
+                            self.write_info(f"* failed to render: {e}")
+                    else:
+                        self.render()
 
     # ==================================================
     @property
@@ -1894,14 +1955,15 @@ class PyVistaWidget(QtInteractor):
 
         # set data (current data is restored if this fails).
         current = self._get_current_state()
-        try:
-            self._set_loaded_data(file, all_data, ver, material)
-        except BaseException:
+        with self._batch_render():  # rendered once, also after restoring the current data.
             try:
-                self._set_current_state(current)
-            except Exception as e:  # keep original exception.
-                self.write_info(f"* failed to restore current data: {e}")
-            raise
+                self._set_loaded_data(file, all_data, ver, material)
+            except BaseException:
+                try:
+                    self._set_current_state(current)
+                except Exception as e:  # keep original exception.
+                    self.write_info(f"* failed to restore current data: {e}")
+                raise
         # notify only after success, to keep data such as MultiPie panel on failure.
         loading, self._loading = self._loading, True  # the MultiPie data now belongs to the loaded file, and is kept.
         try:
@@ -1910,6 +1972,7 @@ class PyVistaWidget(QtInteractor):
             self._loading = loading  # restore, also for a load started by a listener.
 
     # ==================================================
+    @_batched
     def _set_loaded_data(self, file, all_data, ver, material):
         """
         Set loaded data.
@@ -2001,6 +2064,7 @@ class PyVistaWidget(QtInteractor):
         return {"doc": doc, "grids": grids, "in_memory": set(snapshot["in_memory"])}
 
     # ==================================================
+    @_batched
     def restore_document(self, snapshot):
         """
         Restore a document snapshot (camera, view settings and preferences are kept).
@@ -2054,6 +2118,7 @@ class PyVistaWidget(QtInteractor):
         }
 
     # ==================================================
+    @_batched
     def _set_current_state(self, state):
         """
         Set state obtained by _get_current_state.
@@ -3148,6 +3213,7 @@ class PyVistaWidget(QtInteractor):
     # ==================================================
     # internal use (access data).
     # ==================================================
+    @_batched
     def add_data(self, data):
         """
         Add data.
@@ -3164,6 +3230,7 @@ class PyVistaWidget(QtInteractor):
             self._data[object_type].set_data(model)
 
     # ==================================================
+    @_batched
     def repeat_data(self):
         """
         Repeat data.
@@ -3194,6 +3261,7 @@ class PyVistaWidget(QtInteractor):
         self.document_changed.emit()
 
     # ==================================================
+    @_batched
     def nonrepeat_data(self):
         """
         Transform data to non-repeat data.
@@ -3631,6 +3699,7 @@ class PyVistaWidget(QtInteractor):
             self.plot_label(object_type, index, row_info, positionT)
 
     # ==================================================
+    @_batched
     def redraw(self):
         """
         Redraw all object.
@@ -4823,6 +4892,7 @@ class PyVistaWidget(QtInteractor):
         self.document_changed.emit()
 
     # ==================================================
+    @_batched
     def mp_add_site(self, site, size=None, color=None, opacity=None):
         """
         MultiPie: Add equivalent sites.
@@ -4839,6 +4909,7 @@ class PyVistaWidget(QtInteractor):
         self._mp_data.add_site(site, size, color, opacity)
 
     # ==================================================
+    @_batched
     def mp_add_bond(self, bond, width=None, color=None, color2=None, opacity=None):
         """
         MultiPie: Add equivalent bonds.
@@ -4856,6 +4927,7 @@ class PyVistaWidget(QtInteractor):
         self._mp_data.add_bond(bond, width, color, color2, opacity)
 
     # ==================================================
+    @_batched
     def mp_add_vector(
         self, vector_sb, type="Q", cartesian=True, average=False, length=None, width=None, color=None, opacity=None
     ):
@@ -4878,6 +4950,7 @@ class PyVistaWidget(QtInteractor):
         self._mp_data.add_vector(vector_sb, type, cartesian, average, length, width, color, opacity)
 
     # ==================================================
+    @_batched
     def mp_add_orbital(self, orbital_sb, type="Q", average=False, size=None, color=None, opacity=None):
         """
         MultiPie: Add transformed orbitals at equivalent sites or bonds.
@@ -4896,6 +4969,7 @@ class PyVistaWidget(QtInteractor):
         self._mp_data.add_orbital(orbital_sb, type, average, size, color, opacity)
 
     # ==================================================
+    @_batched
     def mp_add_bond_definition(self, bond, length=None, width=None, color=None, opacity=None):
         """
         MultiPie: Create bond definition.
@@ -4929,6 +5003,7 @@ class PyVistaWidget(QtInteractor):
         return self._mp_data.site_samb_list(site)
 
     # ==================================================
+    @_batched
     def mp_add_site_samb(self, tag, size=None, p_color=None, n_color=None, z_color=None, z_size=None):
         """
         MultiPie: Add site SAMB.
@@ -4960,6 +5035,7 @@ class PyVistaWidget(QtInteractor):
         return self._mp_data.bond_samb_list(bond)
 
     # ==================================================
+    @_batched
     def mp_add_bond_samb(self, tag, width=None, p_color=None, n_color=None, z_color=None, z_width=None, a_size=None):
         """
         MultiPie: Add bond SAMB.
@@ -4993,6 +5069,7 @@ class PyVistaWidget(QtInteractor):
         return self._mp_data.vector_samb_list(site_bond, type)
 
     # ==================================================
+    @_batched
     def mp_add_vector_samb(self, lc, length=None, width=None, color=None, opacity=None):
         """
         MultiPie: Add vector SAMB.
@@ -5007,6 +5084,7 @@ class PyVistaWidget(QtInteractor):
         self._mp_data.add_vector_samb(lc, length, width, color, opacity)
 
     # ==================================================
+    @_batched
     def mp_add_vector_samb_modulation(self, modulation_range, length=None, width=None, color=None, opacity=None):
         """
         MultiPie: Add vector SAMB with modulation.
@@ -5039,6 +5117,7 @@ class PyVistaWidget(QtInteractor):
         return self._mp_data.orbital_samb_list(site_bond, type, rank)
 
     # ==================================================
+    @_batched
     def mp_add_orbital_samb(self, lc, size=None, color=None, opacity=None):
         """
         MultiPie: Add orbital SAMB.
@@ -5052,6 +5131,7 @@ class PyVistaWidget(QtInteractor):
         self._mp_data.add_orbital_samb(lc, size, color, opacity)
 
     # ==================================================
+    @_batched
     def mp_add_orbital_samb_modulation(self, modulation_range, size=None, color=None, opacity=None):
         """
         MultiPie: Add orbital SAMB with modulation.

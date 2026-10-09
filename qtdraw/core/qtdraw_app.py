@@ -818,44 +818,44 @@ class QtDraw(Window):
         if target is None:
             return
         try:
-            if self._restore(target):
-                if step < 0:
-                    self._history.commit_undo()
-                else:
-                    self._history.commit_redo()
+            self._restore(target, self._history.commit_undo if step < 0 else self._history.commit_redo)
         finally:
             self._update_title()
             self._update_undo_actions()
 
     # ==================================================
-    def _restore(self, snapshot):
+    def _restore(self, snapshot, commit):
         """
         Restore a snapshot, or the current document again if it fails.
 
         Args:
             snapshot (dict): snapshot.
+            commit (callable): called when the snapshot is restored (before it is rendered).
 
-        Returns:
-            - (bool) -- restored ? (an exception is raised if not)
+        Note:
+            - the document is rendered once, also after restoring the current document.
+            - an exception is raised if the snapshot is not restored.
 
         :meta private:
         """
-        before = self.pyvista_widget.document_snapshot()
+        pvw = self.pyvista_widget
+        before = pvw.document_snapshot()
         self._restoring = True
         try:
-            try:
-                self.pyvista_widget.restore_document(snapshot)
-                return True
-            except Exception:
+            with pvw._batch_render():
                 try:
-                    self.pyvista_widget.restore_document(before)
+                    pvw.restore_document(snapshot)
                 except Exception:
-                    self._history.clear()
                     try:
-                        self._history.reset(self.pyvista_widget.document_snapshot())
+                        pvw.restore_document(before)
                     except Exception:
-                        pass  # history stays empty until the next successful snapshot.
-                raise
+                        self._history.clear()
+                        try:
+                            self._history.reset(pvw.document_snapshot())
+                        except Exception:
+                            pass  # history stays empty until the next successful snapshot.
+                    raise
+                commit()
         finally:
             try:
                 self._after_restore()
