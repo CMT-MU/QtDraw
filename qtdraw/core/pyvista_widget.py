@@ -1960,8 +1960,15 @@ class PyVistaWidget(QtInteractor):
                 new_name = relative_path(source.resolve(), new_dir).as_posix()
                 if new_name != name:
                     rename[name] = new_name
-        # do not rename onto a name that stays in use for other data.
-        rename = {name: new_name for name, new_name in rename.items() if new_name not in names - rename.keys()}
+        # do not rename onto a name that stays in use for other data (repeat, as kept names can add more).
+        while True:
+            kept = names - rename.keys()
+            clash = {name for name, new_name in rename.items() if new_name in kept}
+            if not clash:
+                break
+            for name in clash:
+                self.write_info(f"* cannot refer to data file {old_dir / name} as {rename[name]}, already used.")
+            rename = {name: new_name for name, new_name in rename.items() if name not in clash}
         if not rename:
             return
 

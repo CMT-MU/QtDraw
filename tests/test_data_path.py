@@ -184,3 +184,24 @@ def test_save_through_symbolic_link_to_other_depth(widget, tmp_path):
     os.chdir(tmp_path)
     widget.load(str(link / "a.qtdw"))
     assert is_drawn(widget)
+
+
+# ==================================================
+def test_rebase_keeps_names_in_use(widget, tmp_path):
+    # in-memory "../a.dat" keeps its name, so the file "a.dat" must not be renamed onto it.
+    make_dirs(tmp_path)
+    (tmp_path / "work" / "sub").mkdir()
+    grid = extract_data_xsf(str(tmp_path / "data" / "Si.xsf"))
+    on_disk, in_memory = dict(grid, origin=[0.0, 0.0, 0.0]), dict(grid, origin=[0.5, 0.0, 0.0])
+    (tmp_path / "work" / "a.dat").write_text(str(on_disk))
+    widget.add_isosurface(data="a.dat", value=[0.01], name="disk")
+    widget.add_isosurface(data=("../a.dat", in_memory), value=[0.01], name="memory")
+
+    messages = []
+    widget.write_info = messages.append
+    widget._rebase_isosurface_data(tmp_path / "work", tmp_path / "work" / "sub")
+
+    assert len(messages) == 1 and "already used" in messages[0]  # reported, not silent.
+    assert sorted(r[COLUMN_ISOSURFACE_FILE] for r in isosurface_rows(widget)) == ["../a.dat", "a.dat"]
+    assert widget._isosurface_data["a.dat"]["origin"] == on_disk["origin"]
+    assert widget._isosurface_data["../a.dat"]["origin"] == in_memory["origin"]
