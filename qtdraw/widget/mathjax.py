@@ -4,7 +4,9 @@ MathJaxSVG converter.
 This module provides mathjax to SVG converter.
 """
 
+import os
 import re
+import tempfile
 import html
 import hashlib
 import logging
@@ -226,7 +228,7 @@ class MathJaxSVG:
         for latex, svg_str in self._svg_cache.items():
             cache_path = self._get_cache_path(latex)
             if not cache_path.exists():
-                cache_path.write_text(svg_str)
+                self._write_cache_file(cache_path, svg_str)
 
         # close browser and playwright, and stop event loop (only once, other callers wait for it).
         with self._close_lock:
@@ -265,6 +267,25 @@ class MathJaxSVG:
                 await self._playwright.stop()
             self._browser = None
             self._playwright = None
+
+    # ===============================
+    @staticmethod
+    def _write_cache_file(path, text):
+        """
+        Write a cache file atomically, so that another process never reads a partly written file.
+
+        Args:
+            path (Path): cache file.
+            text (str): SVG string.
+        """
+        fd, tmp = tempfile.mkstemp(dir=path.parent, prefix="." + path.name + ".", suffix=".tmp")
+        try:
+            with os.fdopen(fd, mode="w", encoding="utf-8") as f:
+                f.write(text)
+            os.replace(tmp, path)
+        except BaseException:
+            os.unlink(tmp)
+            raise
 
     # ===============================
     def _get_cache_path(self, latex):
