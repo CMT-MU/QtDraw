@@ -7,8 +7,8 @@ name = "qtdraw"
 dependencies = [
     "numpy",
     "matplotlib",
-    "PySide6",
-    "pyvista",
+    "PySide6>=6.9",
+    "pyvista>=0.46",
     "pyvistaqt>=0.13",
     "click",
     "pymatgen",
