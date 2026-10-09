@@ -149,12 +149,30 @@ def split_filename(filename):
     """
     path = Path(filename)
     path_abs = path if path.is_absolute() else (Path.cwd() / path).resolve()
-    path_rel = path_abs.relative_to(Path.cwd())
+    path_rel = relative_path(path_abs, Path.cwd())
     base = str(path_rel.stem)
     ext = str(path_rel.suffix)
     folder = str(path_abs.parent)
 
     return str(path_abs), str(path_rel), base, ext, folder
+
+
+# ==================================================
+def relative_path(path, start):
+    """
+    Relative path, also to a directory outside start.
+
+    Args:
+        path (Path): absolute path.
+        start (Path): directory.
+
+    Returns:
+        - (Path) -- relative path, or absolute path if there is no relative path (e.g. another drive).
+    """
+    try:
+        return Path(os.path.relpath(path, start))
+    except ValueError:
+        return Path(path)
 
 
 # ==================================================
@@ -456,6 +474,7 @@ class PyVistaWidget(QtInteractor):
         self._preference = copy.deepcopy(default_preference)
         self._label_counter = 0  # id for label actor.
         self._isosurface_data = {}
+        self._isosurface_in_memory = set()  # names of data given without a file.
         self._backup = None
         self._block_remove_isosurface = False
 
@@ -1535,6 +1554,7 @@ class PyVistaWidget(QtInteractor):
                 name, dic = data
                 row_data["data"] = name
                 self._isosurface_data[name] = dic
+                self._isosurface_in_memory.add(name)
             else:
                 row_data["data"] = self.set_isosurface_data(data)
 
@@ -1754,6 +1774,7 @@ class PyVistaWidget(QtInteractor):
             "preference": copy.deepcopy(self._preference),
             "camera": self.get_camera_info(),
             "isosurface": dict(self._isosurface_data),
+            "isosurface_in_memory": set(self._isosurface_in_memory),
             "multipie": self._mp_data,
         }
 
@@ -1771,6 +1792,7 @@ class PyVistaWidget(QtInteractor):
         self._clear_rows()
         self.clear_info()
         self._isosurface_data = state["isosurface"]
+        self._isosurface_in_memory = state["isosurface_in_memory"]
         self._mp_data = state["multipie"]
         self.set_property(state["status"], state["preference"])
         self.add_data(state["data"])
@@ -1852,7 +1874,9 @@ class PyVistaWidget(QtInteractor):
         # rename.
         file = Path(filename).absolute()  # make absolute before changing directory.
         self.set_model(file.stem)
+        cwd = Path.cwd()
         os.chdir(file.parent)
+        self._rebase_isosurface_data(cwd, file.parent)
 
         # set self._backup.
         self.save_current()
@@ -1866,6 +1890,9 @@ class PyVistaWidget(QtInteractor):
                 # imported .xsf is a source file, and is read again when loaded.
                 if name == "" or Path(name).suffix == ".xsf" or name not in self._isosurface_data:
                     continue
+                # a data file outside the saved directory is a source file, and is not overwritten.
+                if Path(name).is_absolute() or ".." in Path(name).parts:
+                    continue
                 write_text_atomic(name, str(self._isosurface_data[name]) + "\n")
 
         if self._mp_data is not None:
@@ -1878,6 +1905,44 @@ class PyVistaWidget(QtInteractor):
         write_text_atomic(file, text)
 
         self.write_info(f"* write to {file}.")
+
+    # ==================================================
+    def _rebase_isosurface_data(self, old_dir, new_dir):
+        """
+        Make isosurface data file names relative to a new directory.
+
+        Args:
+            old_dir (Path): directory the names are relative to.
+            new_dir (Path): new directory.
+
+        Note:
+            - names of existing files are changed, e.g. "a.xsf" -> "../work/a.xsf".
+            - names of data given without a file are kept, and the data is written to the new directory.
+
+        :meta private:
+        """
+        if Path(old_dir).resolve() == Path(new_dir).resolve():
+            return
+
+        model = self._data["isosurface"]
+        rename = {}
+        for row in range(model.rowCount()):
+            index = model.index(row, 0)
+            name = model.get_row_data(index)[COLUMN_ISOSURFACE_FILE]
+            if name == "":
+                continue
+            if name not in rename:
+                source = Path(old_dir) / name
+                if name in self._isosurface_in_memory or not source.exists():
+                    rename[name] = name
+                else:
+                    rename[name] = relative_path(source.resolve(), new_dir).as_posix()
+            if rename[name] != name:
+                model.set_row_data(index, COLUMN_ISOSURFACE_FILE, rename[name])
+
+        for name, new_name in rename.items():
+            if new_name != name and name in self._isosurface_data:
+                self._isosurface_data[new_name] = self._isosurface_data.pop(name)
 
     # ==================================================
     def save_screenshot(self, filename):
@@ -2961,6 +3026,7 @@ class PyVistaWidget(QtInteractor):
             n_used = sum(row[COLUMN_ISOSURFACE_FILE] == filename for row in self._data["isosurface"].tolist())
             if filename in self._isosurface_data.keys() and n_used <= 1:
                 del self._isosurface_data[filename]
+                self._isosurface_in_memory.discard(filename)
 
     # ==================================================
     # internal use (context menu).
@@ -4219,8 +4285,8 @@ class PyVistaWidget(QtInteractor):
                 else:
                     grid_data = read_dict(path_abs)
 
-            fname = path_rel
-            self._isosurface_data[path_rel] = grid_data
+            fname = Path(path_rel).as_posix()  # the same name on all platforms.
+            self._isosurface_data[fname] = grid_data
         else:
             fname = ""
 
