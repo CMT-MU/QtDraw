@@ -80,11 +80,21 @@ def test_close_save_writes_file(app, monkeypatch, tmp_path):
 
 
 # ==================================================
-def test_unmodified_close_asks_without_changes_text(app, monkeypatch):
+def test_unmodified_close_does_not_ask(app, monkeypatch):
     asked = answer(monkeypatch, QMessageBox.Cancel)
     app.close()
-    assert len(asked) == 1 and "Save changes" not in asked[0][2]
-    assert app.isVisible()
+    assert asked == [] and not app.isVisible()
+
+
+# ==================================================
+def test_close_after_save_does_not_ask(app, monkeypatch, tmp_path):
+    app.pyvista_widget.add_site(position="[0,0,0]")
+    file = tmp_path / "saved.qtdw"
+    monkeypatch.setattr(QFileDialog, "getSaveFileName", lambda *a, **k: (str(file), ""))
+    assert app.save_file()
+    asked = answer(monkeypatch, QMessageBox.Cancel)
+    app.close()
+    assert asked == [] and not app.isVisible()
 
 
 # ==================================================

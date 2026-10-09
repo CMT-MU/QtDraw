@@ -29,7 +29,7 @@ In the `Dataset` window:
 - Right click: context menu to create or copy an object.
 - `Esc`: clear the selection. `Up`, `Down`: move the selection.
 
-The `File` menu opens (Ctrl+O, Cmd+O on macOS), saves (Ctrl+S, Cmd+S), saves a screenshot, clears all objects and quits (Ctrl+Q, Cmd+Q). When the window is closed, QtDraw asks whether to save the drawing.
+The `File` menu opens (Ctrl+O, Cmd+O on macOS), saves (Ctrl+S, Cmd+S), saves a screenshot, clears all objects and quits (Ctrl+Q, Cmd+Q). When the window is closed with unsaved changes, QtDraw asks whether to save them; without changes it closes at once.
 
 The `Edit` menu undoes (Ctrl+Z, Cmd+Z on macOS) and redoes (Ctrl+Y or Ctrl+Shift+Z depending on the platform, Cmd+Shift+Z on macOS) changes of objects, unit cell, range and MultiPie group. The camera, view settings and preferences are not changed by undo or redo. Opening a file starts a new history; saving keeps it.
 

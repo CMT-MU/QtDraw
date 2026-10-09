@@ -933,25 +933,23 @@ class QtDraw(Window):
             widget.commit_pending()
 
     # ==================================================
-    def _confirm_unsaved(self, action, always=False):
+    def _confirm_unsaved(self, action):
         """
         Ask to save unsaved changes.
 
         Args:
             action (str): action to be done, e.g. "closing".
-            always (bool, optional): ask also without unsaved changes ?
 
         Returns:
             - (bool) -- go on with the action ?
 
         :meta private:
         """
-        modified = self.is_modified()
-        if not modified and not always:
+        if not self.is_modified():
             return True
 
         model = self.pyvista_widget._status["model"]
-        text = f"Save changes to '{model}' before {action}?" if modified else f"Save '{model}' before {action}?"
+        text = f"Save changes to '{model}' before {action}?"
         ret = QMessageBox.question(
             self,
             "",
@@ -1660,7 +1658,7 @@ class QtDraw(Window):
         :meta private:
         """
         self._commit_pending_input()
-        ok = self._confirm_unsaved("closing", always=True)
+        ok = self._confirm_unsaved("closing")
         if not ok:
             event.ignore()
         else:
