@@ -122,7 +122,7 @@ def test_save_dialog_without_extension_saves(qapp, tmp_path, monkeypatch):
     from qtdraw.core.qtdraw_app import QtDraw
 
     monkeypatch.chdir(tmp_path)
-    monkeypatch.setattr(QMessageBox, "question", lambda *a, **k: QMessageBox.Ok)  # "Quit QtDraw ?".
+    monkeypatch.setattr(QMessageBox, "question", lambda *a, **k: QMessageBox.Discard)  # close without saving.
     app = QtDraw()
     try:
         app.pyvista_widget.add_site(position="[0,0,0]")

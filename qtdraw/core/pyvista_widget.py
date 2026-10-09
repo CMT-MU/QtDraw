@@ -2156,6 +2156,8 @@ class PyVistaWidget(QtInteractor):
         if preference is not None:
             for key, value in preference.items():
                 for k, v in value.items():
+                    if key == "general" and k == "style":  # no longer a preference (always fusion), e.g. in old files.
+                        continue
                     self._preference[key][k] = v
 
         if status is not None or preference is not None:

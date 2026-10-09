@@ -61,7 +61,7 @@ def test_closed_qtdraw_is_deleted(qapp, tmp_path, monkeypatch):
     from qtdraw.core.qtdraw_app import QtDraw
 
     monkeypatch.chdir(tmp_path)
-    monkeypatch.setattr(QMessageBox, "question", lambda *args, **kwargs: QMessageBox.Ok)
+    monkeypatch.setattr(QMessageBox, "question", lambda *args, **kwargs: QMessageBox.Discard)
     before = n_widgets()
 
     for i in range(1, 3):
@@ -87,7 +87,7 @@ def test_cancelled_close_keeps_qtdraw(qapp, tmp_path, monkeypatch):
     window.pyvista_widget.add_site()  # still usable.
     assert len(window.pyvista_widget._data["site"].tolist()) == 1
 
-    monkeypatch.setattr(QMessageBox, "question", lambda *args, **kwargs: QMessageBox.Ok)
+    monkeypatch.setattr(QMessageBox, "question", lambda *args, **kwargs: QMessageBox.Discard)
     window.close()
 
 
@@ -159,7 +159,7 @@ def test_closed_window_stops_logging(qapp, tmp_path, monkeypatch):
     from qtdraw.core.qtdraw_app import QtDraw
 
     monkeypatch.chdir(tmp_path)
-    monkeypatch.setattr(QMessageBox, "question", lambda *args, **kwargs: QMessageBox.Ok)
+    monkeypatch.setattr(QMessageBox, "question", lambda *args, **kwargs: QMessageBox.Discard)
     before = list(logging.getLogger().handlers)
 
     window = QtDraw()
@@ -176,7 +176,7 @@ def test_closing_twice_deletes_once(qapp, tmp_path, monkeypatch):
     from qtdraw.core.qtdraw_app import QtDraw
 
     monkeypatch.chdir(tmp_path)
-    monkeypatch.setattr(QMessageBox, "question", lambda *args, **kwargs: QMessageBox.Ok)
+    monkeypatch.setattr(QMessageBox, "question", lambda *args, **kwargs: QMessageBox.Discard)
     before = n_widgets()
 
     window = QtDraw()
@@ -197,7 +197,7 @@ def test_last_window_closed_in_event_loop():
         from qtdraw.core.qtdraw_app import QtDraw
 
         app = get_qt_application()
-        QMessageBox.question = lambda *args, **kwargs: QMessageBox.Ok
+        QMessageBox.question = lambda *args, **kwargs: QMessageBox.Discard
         window = QtDraw()
         window.show()
         destroyed = []
@@ -226,7 +226,7 @@ def test_failing_close_in_event_loop_is_reported():
         from qtdraw.core.qtdraw_app import QtDraw
 
         app = get_qt_application()
-        QMessageBox.question = lambda *args, **kwargs: QMessageBox.Ok
+        QMessageBox.question = lambda *args, **kwargs: QMessageBox.Discard
         window = QtDraw()
         window.show()
         mathjax = window.pyvista_widget._mathjax
