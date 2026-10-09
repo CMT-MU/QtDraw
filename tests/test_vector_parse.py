@@ -65,3 +65,25 @@ def test_invalid_string_raises_as_before(vector):
         str_to_sympy(vector, rational=False).astype(float)
     with pytest.raises(expected.type):
         pw.convert_str_vector(vector, transform=False)
+
+
+# ==================================================
+def test_nonrepeat_does_not_use_sympy_for_plain_numbers(widget, monkeypatch):
+    widget.add_site(position="[0.25,0.5,0]", cell="[1,0,0]")
+    widget.add_site(position="[1/3,0,0]", cell="[0,1,0]")
+    calls = []
+    original = pw.str_to_sympy
+
+    def spy(*args, **kwargs):
+        calls.append(args[0])
+        return original(*args, **kwargs)
+
+    monkeypatch.setattr(pw, "str_to_sympy", spy)
+    pw._parse_vector_cached.cache_clear()
+    widget.nonrepeat_data()
+
+    rows = widget.get_data_dict()["site"]
+    positions = sorted(np.array(eval(r[7]), dtype=float).tolist() for r in rows)  # position column.
+    np.testing.assert_allclose(positions, sorted([[1.25, 0.5, 0.0], [1 / 3, 1.0, 0.0]]))
+    assert all(r[8] == "[0,0,0]" for r in rows)  # cell column.
+    assert calls == ["[1/3,0,0]"]  # only the expression.

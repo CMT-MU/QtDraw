@@ -3118,8 +3118,8 @@ class PyVistaWidget(QtInteractor):
             n = len(model)
             if object_type not in ["text2d", "caption"] and n > 0:
                 model = np.array(model, dtype=object)
-                pos = np.array([str_to_sympy(i, rational=False).astype(float) for i in model[:, COLUMN_POSITION]])
-                cell = np.array([str_to_sympy(i).astype(int) for i in model[:, COLUMN_CELL]])
+                pos = np.array([_parse_vector(i) for i in model[:, COLUMN_POSITION]])
+                cell = np.array([_parse_vector(i).astype(int) for i in model[:, COLUMN_CELL]])
                 pos += cell
                 pos = np.array(list(map(str, pos.tolist())), dtype=object)
                 model[:, COLUMN_POSITION] = pos
