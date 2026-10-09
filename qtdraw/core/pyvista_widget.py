@@ -12,6 +12,7 @@ import shutil
 import tempfile
 import numpy as np
 import copy
+from functools import lru_cache
 from contextlib import contextmanager
 from PySide6.QtWidgets import QMainWindow, QMenu, QSizePolicy
 from PySide6.QtGui import QCursor, QMouseEvent
@@ -149,12 +150,30 @@ def split_filename(filename):
     """
     path = Path(filename)
     path_abs = path if path.is_absolute() else (Path.cwd() / path).resolve()
-    path_rel = path_abs.relative_to(Path.cwd())
+    path_rel = relative_path(path_abs, Path.cwd())
     base = str(path_rel.stem)
     ext = str(path_rel.suffix)
     folder = str(path_abs.parent)
 
     return str(path_abs), str(path_rel), base, ext, folder
+
+
+# ==================================================
+def relative_path(path, start):
+    """
+    Relative path, also to a directory outside start.
+
+    Args:
+        path (Path): absolute path.
+        start (Path): absolute path of a directory.
+
+    Returns:
+        - (Path) -- relative path, or absolute path if there is no relative path (e.g. another drive).
+    """
+    try:
+        return Path(os.path.relpath(path, start))
+    except ValueError:
+        return Path(path)
 
 
 # ==================================================
@@ -242,6 +261,23 @@ class Window(QMainWindow):
         self.app = get_qt_application()
         self.logger = LogWidget(level=level)
         super().__init__()
+
+
+# ==================================================
+@lru_cache(maxsize=32)
+def _site_sphere(radius):
+    """
+    Sphere for site, shared by sites of the same size.
+
+    Args:
+        radius (float): radius.
+
+    Returns:
+        - (vtk.PolyData) -- sphere object, do not modify it.
+
+    :meta private:
+    """
+    return create_sphere(radius=radius)
 
 
 # ==================================================
@@ -378,6 +414,7 @@ class PyVistaWidget(QtInteractor):
         os.environ["PYVISTA_QT_BACKEND"] = "PySide6"
         # avoid recursion of the close() until the PyVistaWidget.__init__() is called, see pyvistaqt/plotting.py.
         self._closed = True
+        self._close_done = False  # closeEvent can be called again when the widget is deleted.
 
         # set default.
         self._off_screen = off_screen
@@ -481,6 +518,7 @@ class PyVistaWidget(QtInteractor):
         self._preference = copy.deepcopy(default_preference)
         self._label_counter = 0  # id for label actor.
         self._isosurface_data = {}
+        self._isosurface_in_memory = set()  # names of data given without a file.
         self._backup = None
         self._block_remove_isosurface = False
 
@@ -1560,6 +1598,7 @@ class PyVistaWidget(QtInteractor):
                 name, dic = data
                 row_data["data"] = name
                 self._isosurface_data[name] = copy.deepcopy(dic)  # owned by QtDraw, so history can keep it.
+                self._isosurface_in_memory.add(name)
             else:
                 row_data["data"] = self.set_isosurface_data(data)
 
@@ -1829,6 +1868,7 @@ class PyVistaWidget(QtInteractor):
             "preference": copy.deepcopy(self._preference),
             "camera": self.get_camera_info(),
             "isosurface": dict(self._isosurface_data),
+            "isosurface_in_memory": set(self._isosurface_in_memory),
             "multipie": self._mp_data,
         }
 
@@ -1846,6 +1886,7 @@ class PyVistaWidget(QtInteractor):
         self._clear_rows()
         self.clear_info()
         self._isosurface_data = state["isosurface"]
+        self._isosurface_in_memory = state["isosurface_in_memory"]
         self._mp_data = state["multipie"]
         self.set_property(state["status"], state["preference"])
         self.add_data(state["data"])
@@ -1927,7 +1968,9 @@ class PyVistaWidget(QtInteractor):
         # rename.
         file = Path(filename).absolute()  # make absolute before changing directory.
         self.set_model(file.stem)
+        cwd = Path.cwd()
         os.chdir(file.parent)
+        self._rebase_isosurface_data(cwd, file.parent)
 
         # set self._backup.
         self.save_current()
@@ -1941,6 +1984,9 @@ class PyVistaWidget(QtInteractor):
                 # imported .xsf is a source file, and is read again when loaded.
                 if name == "" or Path(name).suffix == ".xsf" or name not in self._isosurface_data:
                     continue
+                # data read from a file is not written again: the file is the source, wherever it is.
+                if name not in self._isosurface_in_memory and Path(name).exists():
+                    continue
                 write_text_atomic(name, str(self._isosurface_data[name]) + "\n")
 
         if self._mp_data is not None:
@@ -1953,6 +1999,59 @@ class PyVistaWidget(QtInteractor):
         write_text_atomic(file, text)
 
         self.write_info(f"* write to {file}.")
+
+    # ==================================================
+    def _rebase_isosurface_data(self, old_dir, new_dir):
+        """
+        Make isosurface data file names relative to a new directory.
+
+        Args:
+            old_dir (Path): directory the names are relative to.
+            new_dir (Path): new directory.
+
+        Note:
+            - names of existing files are changed, e.g. "a.xsf" -> "../work/a.xsf".
+            - names of data given without a file are kept; save() writes the data to the new directory.
+
+        :meta private:
+        """
+        old_dir = Path(old_dir).resolve()
+        new_dir = Path(new_dir).resolve()  # compare and relate real paths, also through symbolic links.
+        if old_dir == new_dir:
+            return
+
+        # all rows, also those grouped under a parent row.
+        model = self._data["isosurface"]
+        root = model.invisibleRootItem()
+        indexes = []
+        for parent_row in range(root.rowCount()):
+            item = root.child(parent_row)
+            if item.hasChildren():
+                indexes += [item.child(row).index() for row in range(item.rowCount())]
+            else:
+                indexes.append(item.index())
+
+        names = {model.get_row_data(index)[COLUMN_ISOSURFACE_FILE] for index in indexes} - {""}
+        rename = {}
+        for name in names:
+            source = old_dir / name
+            if name not in self._isosurface_in_memory and source.exists():
+                new_name = relative_path(source.resolve(), new_dir).as_posix()
+                if new_name != name:
+                    rename[name] = new_name
+        # a name that stays in use for other data is not available: refer to the file by its absolute path.
+        kept = names - rename.keys()
+        for name, new_name in rename.items():
+            if new_name in kept:
+                rename[name] = (old_dir / name).resolve().as_posix()
+        if not rename:
+            return
+
+        for index in indexes:
+            name = model.get_row_data(index)[COLUMN_ISOSURFACE_FILE]
+            if name in rename:
+                model.set_row_data(index, COLUMN_ISOSURFACE_FILE, rename[name])
+        self._isosurface_data = {rename.get(name, name): data for name, data in self._isosurface_data.items()}
 
     # ==================================================
     def save_screenshot(self, filename):
@@ -2300,6 +2399,7 @@ class PyVistaWidget(QtInteractor):
         """
         lower = self._status["lower"]
         upper = self._status["upper"]
+        actors = self.actors  # dict of all actors is created for each access.
         for object_type, model in self._data.items():
             if object_type != "text2d":
                 value = np.array(model.tolist(), dtype=object)
@@ -2312,14 +2412,14 @@ class PyVistaWidget(QtInteractor):
                     hide = name_actor[idx]
                     for actor_name in hide:
                         if actor_name != "":
-                            actor = self.actors[actor_name]
+                            actor = actors[actor_name]
                             actor.SetVisibility(False)
                             # self.hide_action(actor)
                     if object_type != "caption":
                         label_actor = value[:, COLUMN_LABEL_ACTOR][idx]
                         for i in label_actor:
                             if i != "":
-                                self.actors[i].SetVisibility(False)
+                                actors[i].SetVisibility(False)
 
     # ==================================================
     def clip_actor(self, position, cell, name_actor, label_actor):
@@ -2355,6 +2455,7 @@ class PyVistaWidget(QtInteractor):
 
         :meta private:
         """
+        actors = self.actors  # dict of all actors is created for each access.
         for object_type, model in self._data.items():
             if object_type != "text2d":
                 value = np.array(model.tolist(), dtype=object)
@@ -2364,7 +2465,7 @@ class PyVistaWidget(QtInteractor):
                     idx = name_actor_check
                     show = name_actor[idx]
                     for actor_name in show:
-                        actor = self.actors[actor_name]
+                        actor = actors[actor_name]
                         actor.SetVisibility(True)
                     if object_type != "caption":
                         label_actor_check = value[:, COLUMN_LABEL_CHECK].astype(bool)
@@ -2372,7 +2473,7 @@ class PyVistaWidget(QtInteractor):
                         label_actor = value[:, COLUMN_LABEL_ACTOR][idx]
                         for i in label_actor:
                             if i != "":
-                                self.actors[i].SetVisibility(True)
+                                actors[i].SetVisibility(True)
 
     # ==================================================
     def set_repeat(self, mode=None):
@@ -3013,10 +3114,23 @@ class PyVistaWidget(QtInteractor):
 
         :meta private:
         """
-        self._mathjax.close()
-        self._tab_group_view.close()
+        if self._close_done:
+            return
+        self._close_done = True
 
-        super().close()
+        # delete the data table, otherwise it remains and slows down new windows.
+        # scheduled first, so that a failing step below cannot skip it.
+        # the VTK widget itself is not deleted: deleting it occasionally corrupts memory with Mesa on Linux.
+        self._tab_group_view.deleteLater()
+
+        # finish closing even if a step fails; the error is raised afterwards.
+        try:
+            try:
+                self._mathjax.close()
+            finally:
+                self._tab_group_view.close()
+        finally:
+            super().close()
 
     # ==================================================
     def remove_data(self, object_type, row_data, index):
@@ -3043,6 +3157,7 @@ class PyVistaWidget(QtInteractor):
             n_used = sum(row[COLUMN_ISOSURFACE_FILE] == filename for row in self._data["isosurface"].tolist())
             if filename in self._isosurface_data.keys() and n_used <= 1:
                 del self._isosurface_data[filename]
+                self._isosurface_in_memory.discard(filename)
 
     # ==================================================
     # internal use (context menu).
@@ -3174,9 +3289,10 @@ class PyVistaWidget(QtInteractor):
 
         :meta private:
         """
+        actors = self.actors  # dict of all actors is created for each access.
         for actor_name, prop in self._selected_actor.items():
-            if actor_name in self.actors.keys():
-                actor = self.actors[actor_name]
+            if actor_name in actors:
+                actor = actors[actor_name]
                 actor.prop.show_edges = prop[0]
                 actor.prop.edge_color = prop[1]
         self._selected_actor = {}
@@ -3434,7 +3550,7 @@ class PyVistaWidget(QtInteractor):
         color = all_colors[data["color"]][0]  # hex
         opacity = float(data["opacity"])
 
-        obj = create_sphere(radius=size)
+        obj = _site_sphere(size)  # copied in common_option.
         option_add = {"color": color, "opacity": opacity}
 
         option = self.common_option(actor=actor, positionT=positionT, obj=obj)
@@ -4301,8 +4417,8 @@ class PyVistaWidget(QtInteractor):
                 else:
                     grid_data = read_dict(path_abs)
 
-            fname = path_rel
-            self._isosurface_data[path_rel] = grid_data
+            fname = Path(path_rel).as_posix()  # the same name on all platforms.
+            self._isosurface_data[fname] = grid_data
         else:
             fname = ""
 

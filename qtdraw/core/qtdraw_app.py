@@ -1712,23 +1712,26 @@ class QtDraw(Window):
         if not ok:
             event.ignore()
         else:
+            dialogs = [self.multipie_dialog, self.logger, self.info_dialog]
             if self.debug:
-                if self.actor_dialog is not None:
-                    self.actor_dialog.close()
-                if self.data_dialog is not None:
-                    self.data_dialog.close()
-                if self.status_dialog is not None:
-                    self.status_dialog.close()
-                if self.pref_data_dialog is not None:
-                    self.pref_data_dialog.close()
-                if self.camera_dialog is not None:
-                    self.camera_dialog.close()
-            if self.multipie_dialog is not None:
-                self.multipie_dialog.close()
-            self.logger.close()
-            self.info_dialog.close()
-            self.pyvista_widget.close()
-            super().closeEvent(event)
+                dialogs += [self.actor_dialog, self.data_dialog, self.status_dialog, self.pref_data_dialog, self.camera_dialog]
+            dialogs = [dialog for dialog in dialogs if dialog is not None]
+
+            # delete closed windows, otherwise they remain and slow down new windows.
+            # scheduled first, so that a failing step below cannot skip it.
+            for dialog in dialogs:
+                dialog.deleteLater()
+            self.deleteLater()
+            # keep the VTK widget, as a closed standalone PyVistaWidget: deleting it together
+            # with the window occasionally corrupts memory with Mesa on Linux.
+            self.pyvista_widget.setParent(None)
+
+            try:
+                for dialog in dialogs:
+                    dialog.close()
+                self.pyvista_widget.close()
+            finally:
+                super().closeEvent(event)
 
     # ==================================================
     def update_status(self, key, value):
