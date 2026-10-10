@@ -4006,7 +4006,7 @@ class PyVistaWidget(QtInteractor):
         shape = data["shape"]
         surface = data["surface"]
         size = float(data["size"])
-        theta_phi_range = apply(float, text_to_list(data["range"]))
+        theta_phi_range = _parse_vector(data["range"]).tolist()  # also expressions, as the table accepts.
         color = data["color"]
         opacity = float(data["opacity"])
 
@@ -4056,8 +4056,8 @@ class PyVistaWidget(QtInteractor):
         shape = data["shape"]
         vector = data["vector"]
         size = float(data["size"])
-        theta_phi_range = apply(float, text_to_list(data["range"]))
-        division = apply(int, text_to_list(data["division"]))
+        theta_phi_range = _parse_vector(data["range"]).tolist()  # also expressions, as the table accepts.
+        division = _parse_vector(data["division"], as_int=True).tolist()
         length = float(data["length"])
         width = float(data["width"])
         offset = float(data["offset"])
@@ -4420,7 +4420,7 @@ class PyVistaWidget(QtInteractor):
         opacity = float(data["opacity"])
 
         pointT = convert_str_vector(vector=point, transform=transform, A=self.A_matrix)
-        connectivity = apply(int, text_to_list(connectivity))
+        connectivity = [[int(x) for x in face] for face in str_to_sympy(connectivity)]  # faces may differ in size.
 
         obj = create_polygon(point=pointT, connectivity=connectivity)
         if wireframe:
@@ -4501,10 +4501,10 @@ class PyVistaWidget(QtInteractor):
         """
         actor = data["name_actor"]
         data_name = data["data"]
-        value = apply(float, text_to_list(data["value"]))
+        value = _parse_vector(data["value"]).tolist()  # also expressions, as the table accepts.
         surface = data["surface"]
         color = data["color"]
-        color_range = apply(float, text_to_list(data["color_range"]))
+        color_range = _parse_vector(data["color_range"]).tolist()
         opacity = float(data["opacity"])
 
         if data_name == "":

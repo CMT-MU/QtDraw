@@ -14,11 +14,15 @@ Validator type.
     - orbital_site_bond: (use var?)
 """
 
+import cmath
+import math
+
 import numpy as np
 
 from qtdraw.util.util import str_to_sympy, to_latex
 
 DISPLAY_DIGIT = 5
+INT_LIMIT = 2**63  # integers must fit in 64 bits.
 
 
 # ==================================================
@@ -32,10 +36,82 @@ def check_symbol(expr):
     Returns:
         - (bool) -- if expr contains symbol, return True otherwise False.
     """
-    if isinstance(expr, np.ndarray):
-        return any(check_symbol(e) for e in expr.flat)
+    if isinstance(expr, (list, tuple, np.ndarray)):  # also rows of different lengths.
+        return any(check_symbol(e) for e in _flat(expr))
 
     return bool(expr.free_symbols)
+
+
+# ==================================================
+def _flat(s):
+    """
+    Elements of a (nested, possibly ragged) list or array.
+
+    :meta private:
+    """
+    if isinstance(s, (list, tuple, np.ndarray)):
+        for x in s:
+            yield from _flat(x)
+    else:
+        yield s
+
+
+# ==================================================
+def _format(s, fmt):
+    """
+    Text of a (nested, possibly ragged) list or array, with each element formatted by fmt.
+
+    :meta private:
+    """
+    if isinstance(s, (list, tuple, np.ndarray)):
+        return "[" + ",".join(_format(x, fmt) for x in s) + "]"
+    return fmt(s)
+
+
+# ==================================================
+def _finite_floats(s):
+    """
+    Floats of numbers, None if one is not a finite real number (e.g. nan, oo or I).
+
+    :meta private:
+    """
+    try:
+        values = [float(x) for x in _flat(s)]
+    except (TypeError, ValueError, OverflowError):
+        return None
+    return values if all(math.isfinite(x) for x in values) else None
+
+
+# ==================================================
+def _finite_complex(s):
+    """
+    Complex numbers of numbers, None if one is not a finite number (e.g. nan or zoo).
+
+    :meta private:
+    """
+    try:
+        values = [complex(x) for x in _flat(s)]
+    except (TypeError, ValueError, OverflowError):
+        return None
+    return values if all(cmath.isfinite(x) for x in values) else None
+
+
+# ==================================================
+def _integers(s):
+    """
+    Integers of numbers, None if one is not an integer fitting in 64 bits.
+
+    :meta private:
+    """
+    values = []
+    for x in _flat(s):
+        if not getattr(x, "is_integer", False):
+            return None
+        x = int(x)
+        if not -INT_LIMIT <= x < INT_LIMIT:
+            return None
+        values.append(x)
+    return values
 
 
 # ==================================================
@@ -94,6 +170,8 @@ def validator_int(text, **opt):
         s = int(text)
     except ValueError:
         return None
+    if not -INT_LIMIT <= s < INT_LIMIT:
+        return None
 
     r_min = opt.get("min", "*")
     r_max = opt.get("max", "*")
@@ -119,6 +197,8 @@ def validator_float(text, **opt):
     try:
         s = float(text)
     except ValueError:
+        return None
+    if not math.isfinite(s):  # nan, inf or too large.
         return None
 
     r_min = opt.get("min", "*")
@@ -152,13 +232,13 @@ def validator_list_float(text, **opt):
         s = str_to_sympy(text, check_var=var, check_shape=shape)
     except Exception:
         return None
+    if np.size(s) == 0:  # an empty list.
+        return None
+    if not check_symbol(s) and _finite_floats(s) is None:
+        return None
 
     if digit is not None and not check_symbol(s):
-        if isinstance(s, np.ndarray):
-            s = np.vectorize(lambda x: f"{float(x):.{digit}f}")(s)
-            return str(s.tolist()).replace("'", "").replace(" ", "")
-        else:
-            return f"{float(s):.{digit}f}"
+        return _format(s, lambda x: f"{float(x):.{digit}f}")
 
     if isinstance(s, np.ndarray):
         return str(s.tolist()).replace(" ", "")
@@ -186,16 +266,13 @@ def validator_list_int(text, **opt):
         s = str_to_sympy(text, check_var=var, check_shape=shape)
     except Exception:
         return None
+    if np.size(s) == 0:  # an empty list.
+        return None
 
     if not check_symbol(s):
-        try:
-            if isinstance(s, np.ndarray):
-                s = np.vectorize(lambda x: f"{int(x)}")(s)
-                return str(s.tolist()).replace("'", "").replace(" ", "")
-            else:
-                return f"{int(s)}"
-        except Exception:
+        if _integers(s) is None:
             return None
+        return _format(s, lambda x: f"{int(x)}")
 
     if isinstance(s, np.ndarray):
         return str(s.tolist()).replace(" ", "")
@@ -210,7 +287,8 @@ def validator_math(text, **opt):
 
     Args:
         text (str): sympy string.
-        opt (dict, optional): option, "shape/var". (default: None,None)
+        opt (dict, optional): option, "shape/var/real". (default: None,None,False)
+            real: a constant must be a real number (otherwise also complex).
 
     Returns:
         - (str) -- LaTeX string if it is valid, otherwise None.
@@ -222,6 +300,10 @@ def validator_math(text, **opt):
         s = str_to_sympy(text, check_var=var, check_shape=shape)
     except Exception:
         return None
+    if np.size(s) == 0:  # an empty list.
+        return None
+    if not check_symbol(s) and (_finite_floats(s) if opt.get("real", False) else _finite_complex(s)) is None:
+        return None  # a constant must be a finite (real) number.
 
     if isinstance(s, np.ndarray):
         s = str(to_latex(s).tolist()).replace("'", "").replace("\\\\", "\\")
@@ -379,7 +461,10 @@ def validator_hint(vtype, option=None):
             example = "[" + ",".join(["0"] * shape[0]) + "]"
             return f"list of {shape[0]} {kind}s, e.g. {example}"
         dims = ", ".join("n" if n == 0 else str(n) for n in shape)
-        return f"nested list of {kind}s with shape ({dims})" + (", n is any length" if 0 in shape else "")
+        text = f"nested list of {kind}s with shape ({dims})" + (", n is any length" if 0 in shape else "")
+        if len(shape) == 2 and shape[1] == 0:
+            text += ", rows may have different lengths"
+        return text
 
     def variables(var):
         var = [v for v in (var or []) if v != ""]
