@@ -380,3 +380,28 @@ def test_view_shortcut_by_key(app, focus):
     widget.setFocus()
     QTest.keyClick(widget, Qt.Key_2, Qt.ControlModifier)
     assert app.pyvista_widget._status["view"] == [0, 1, 0]
+
+
+def test_failed_python_load_keeps_the_file_written_by_save(app, monkeypatch, tmp_path):
+    a = tmp_path / "a.qtdw"
+    app.pyvista_widget.save(str(a))
+    app.load_file(str(a))
+    (tmp_path / "broken.qtdw").write_text("{")
+    with pytest.raises(Exception):
+        app.load(str(tmp_path / "broken.qtdw"))
+    shown = save_dialog(monkeypatch, tmp_path / "other.qtdw")
+    app.action_save.trigger()
+    assert shown == [] and [x.text() for x in recent_entries(app)][0] == "a.qtdw"
+
+
+def test_failed_save_keeps_the_file_and_the_recent_files(app, monkeypatch, tmp_path):
+    a = tmp_path / "a.qtdw"
+    app.pyvista_widget.save(str(a))
+    app.load_file(str(a))
+    with pytest.raises(Exception):
+        app.save(str(tmp_path / "missing" / "b.qtdw"))  # the directory does not exist.
+    assert [x.text() for x in recent_entries(app)] == ["a.qtdw", "Clear Menu"]
+    shown = save_dialog(monkeypatch, tmp_path / "other.qtdw")
+    app.action_save.trigger()
+    assert shown == []
+    assert a.exists() and not (tmp_path / "other.qtdw").exists()
