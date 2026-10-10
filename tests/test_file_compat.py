@@ -47,7 +47,9 @@ def open_copy(widget, source, tmp_path, qtbot):
     with qtbot.capture_exceptions() as errors:  # errors while drawing are raised in Qt slots.
         widget.load(str(file))
     if source.name == ZERO_VECTOR:
-        if any("finite values" in str(error[1]) for error in errors):
+        known = [error for error in errors if "finite values" in str(error[1])]
+        assert len(known) == len(errors), [error for error in errors if error not in known]  # no other error.
+        if known:
             pytest.xfail("a vector of length 0 cannot be drawn.")
         pytest.fail(f"{ZERO_VECTOR} opens without the known error: remove ZERO_VECTOR.")
     assert not errors, errors
