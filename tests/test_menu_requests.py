@@ -122,3 +122,35 @@ def test_error_dialog_is_resizable(qapp, monkeypatch):
     assert box.isSizeGripEnabled()
     box.close()
     box.deleteLater()
+
+
+@pytest.mark.skipif(not check_multipie(), reason="MultiPie is not installed.")
+def test_status_view_shows_the_current_multipie_group(app):
+    app.pyvista_widget.mp_set_group("D3^4")
+    app.action_window["status"].trigger()
+    text = app._data_views["status"].log.toPlainText()
+    assert "D3^4" in text, text[-600:]
+
+
+def test_error_dialog_keeps_its_contents_when_shrunk(qapp, monkeypatch):
+    from PySide6.QtCore import Qt
+    from PySide6.QtWidgets import QDialogButtonBox
+
+    from qtdraw.widget import message_box
+
+    shown = []
+
+    def show(self):
+        self.show()
+        shown.append(self)
+
+    monkeypatch.setattr(QMessageBox, "exec", show)
+    message_box.show_error("ValueError: bad", "Traceback ...\n" + "line\n" * 20)
+    box = shown[0]
+    assert not (box.windowFlags() & Qt.MSWindowsFixedSizeDialogHint)
+    box.resize(80, 40)
+    qapp.processEvents()
+    buttons = box.findChild(QDialogButtonBox)
+    assert buttons.height() > 0 and box.width() >= box.layout().totalMinimumSize().width()
+    box.close()
+    box.deleteLater()

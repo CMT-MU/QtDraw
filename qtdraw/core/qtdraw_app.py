@@ -1695,8 +1695,9 @@ class QtDraw(Window):
 
         :meta private:
         """
-        status = self.pyvista_widget._status
-        multipie = status.get("multipie", {})
+        pvw = self.pyvista_widget
+        status = pvw._status
+        multipie = pvw._mp_data.status if pvw._mp_data is not None else status.get("multipie", {})  # the current group.
         s = ""
         for key, val in status.items():
             if key not in ("plus", "multipie"):

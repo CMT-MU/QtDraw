@@ -6,7 +6,8 @@ This module provides message box dialog.
 
 from PySide6.QtWidgets import QDialog, QDialogButtonBox, QGridLayout, QMessageBox, QPlainTextEdit, QSizePolicy, QTextEdit
 from PySide6.QtGui import QFontDatabase
-from PySide6.QtCore import QEvent
+import shiboken6
+from PySide6.QtCore import QEvent, Qt
 
 
 # ==================================================
@@ -53,19 +54,23 @@ class ResizableMessageBox(QMessageBox):
     MAX_SIZE = 16777215  # QWIDGETSIZE_MAX.
 
     # ==================================================
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.setWindowFlag(Qt.MSWindowsFixedSizeDialogHint, False)  # a resizable frame on Windows.
+
+    # ==================================================
     def event(self, e):
         """
         Lift the fixed size that QMessageBox sets again whenever it is laid out.
 
         :meta private:
         """
-        try:
-            result = super().event(e)
-            if e.type() in (QEvent.LayoutRequest, QEvent.Resize, QEvent.Show):
-                self._lift_fixed_size()
-            return result
-        except RuntimeError:  # called while the box is being deleted.
+        if not shiboken6.isValid(self):  # called while the box is being deleted.
             return False
+        result = super().event(e)
+        if e.type() in (QEvent.LayoutRequest, QEvent.Resize, QEvent.Show):
+            self._lift_fixed_size()
+        return result
 
     # ==================================================
     def _lift_fixed_size(self):
@@ -75,7 +80,7 @@ class ResizableMessageBox(QMessageBox):
         :meta private:
         """
         self.setSizeGripEnabled(True)
-        self.setMinimumSize(0, 0)
+        self.setMinimumSize(self.layout().totalMinimumSize())  # the buttons and the message stay visible.
         self.setMaximumSize(self.MAX_SIZE, self.MAX_SIZE)
         self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         details = self.findChild(QTextEdit)
