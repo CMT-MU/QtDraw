@@ -17,7 +17,8 @@
 | create_gui | create gui. |
 | open_file | Open file dialog. |
 | load_file | Load file. |
-| save_file | Save file dialog. |
+| save_file | Save to the file opened or saved last, or ask for a file name. |
+| save_file_as | Save file dialog. |
 | _save_screenshot | Save screenshot dialog. |
 | create_panel | create right panel. |
 | create_gui_unit_cell | Create unit cell panel. |

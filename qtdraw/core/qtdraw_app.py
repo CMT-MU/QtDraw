@@ -10,8 +10,8 @@ import warnings
 from pathlib import Path
 import logging
 from PySide6.QtWidgets import QWidget, QMessageBox, QFileDialog, QDialog, QApplication, QAbstractButton, QComboBox
-from PySide6.QtCore import Qt, QTimer
-from PySide6.QtGui import QAction, QKeySequence
+from PySide6.QtCore import Qt, QTimer, QSettings, QUrl
+from PySide6.QtGui import QAction, QActionGroup, QKeySequence, QDesktopServices
 
 from qtdraw.core.pyvista_widget import PyVistaWidget, Window, same_snapshot
 from qtdraw.core.undo_history import UndoHistory
@@ -40,6 +40,22 @@ def add_extension(filename, ext):
     if filename.suffix == ext:
         return filename
     return filename.with_name(filename.name + ext)
+
+
+DOCUMENTATION_URL = "https://cmt-mu.github.io/QtDraw/"
+ISSUE_URL = "https://github.com/CMT-MU/QtDraw/issues"
+RECENT_FILES = 10  # number of files in File > Open Recent.
+
+
+# ==================================================
+def settings():
+    """
+    Settings of QtDraw kept between sessions, e.g. recent files.
+
+    Returns:
+        - (QSettings) -- settings (INI file in the user's configuration directory).
+    """
+    return QSettings(QSettings.IniFormat, QSettings.UserScope, "CMT-MU", "QtDraw")
 
 
 # ==================================================
@@ -97,6 +113,7 @@ class QtDraw(Window):
         warnings.filterwarnings("default", category=DeprecationWarning)
 
         self._is_view_updating = False
+        self._current_file = None  # QtDraw file opened or saved last, written by Save.
         self.pref_dialog = None  # preference dialog.
         self.multipie_dialog = None  # MultiPie dialog.
         self._history = UndoHistory(limit=50)  # document snapshots for undo.
@@ -180,7 +197,10 @@ class QtDraw(Window):
 
         menu = self.menuBar().addMenu("&File")
         self.action_open = action(menu, "&Open...", self.open_file, QKeySequence.Open)
-        self.action_save = action(menu, "&Save...", self.save_file, QKeySequence.Save)
+        self.menu_recent = menu.addMenu("Open &Recent")
+        self.menu_recent.aboutToShow.connect(self._update_recent_menu)
+        self.action_save = action(menu, "&Save", self.save_file, QKeySequence.Save)
+        self.action_save_as = action(menu, "Save &As...", self.save_file_as, QKeySequence.SaveAs)
         self.action_screenshot = action(menu, "Screens&hot...", self._save_screenshot)
         menu.addSeparator()
         self.action_clear = action(menu, "&Clear", self._clear_data)
@@ -191,6 +211,12 @@ class QtDraw(Window):
         menu = self.menuBar().addMenu("&Edit")
         self.action_undo = action(menu, "&Undo", self.undo, QKeySequence.Undo)
         self.action_redo = action(menu, "&Redo", self.redo, QKeySequence.Redo)
+        menu.addSeparator()
+        self.action_data_table = action(menu, "&Data Table...", lambda: self.pyvista_widget.open_tab_group_view())
+        self.action_preferences = action(menu, "&Preferences...", lambda: self._show_preference(), QKeySequence.Preferences)
+        self.action_preferences.setMenuRole(QAction.PreferencesRole)
+
+        self._create_view_menu(action)
 
         menu = self.menuBar().addMenu("&Window")
         self.action_info = action(menu, "&Info", lambda: self.info_dialog.show())
@@ -198,8 +224,140 @@ class QtDraw(Window):
 
         menu = self.menuBar().addMenu("&Help")
         self.action_help = action(menu, "&Mouse and Keys", self._show_help)
+        self.action_documentation = action(menu, "&Documentation", lambda: QDesktopServices.openUrl(QUrl(DOCUMENTATION_URL)))
+        self.action_report_issue = action(menu, "&Report an Issue", lambda: QDesktopServices.openUrl(QUrl(ISSUE_URL)))
+        menu.addSeparator()
         self.action_about = action(menu, "&About QtDraw", self._show_about)
         self.action_about.setMenuRole(QAction.AboutRole)
+
+    # ==================================================
+    def _create_view_menu(self, action):
+        """
+        Create view menu, following the view panel (the panel keeps the state).
+
+        Args:
+            action (function): create an action, action(menu, text, slot, shortcut=None).
+
+        :meta private:
+        """
+        menu = self.menuBar().addMenu("&View")
+        directions = [
+            ("+x", self.view_button_x),
+            ("+y", self.view_button_y),
+            ("+z", self.view_button_z),
+            ("-x", self.view_button_xm),
+            ("-y", self.view_button_ym),
+            ("-z", self.view_button_zm),
+        ]
+        self.action_view = {}
+        for i, (name, button) in enumerate(directions):
+            self.action_view[name] = action(menu, f"View from {name}", button.click, QKeySequence(f"Ctrl+{i + 1}"))
+        self.action_view["default"] = action(menu, "Default View", self.view_button_default.click, QKeySequence("Ctrl+0"))
+        menu.addSeparator()
+
+        toggles = [
+            ("parallel", "Parallel Projection", self.view_button_parallel),
+            ("grid", "Grid", self.view_button_grid),
+            ("bar", "Scalar Bar", self.view_button_bar),
+            None,
+            ("clip", "Clip", self.view_button_clip),
+            ("repeat", "Repeat", self.view_button_repeat),
+        ]
+        self.action_toggle = {}
+        for item in toggles:
+            if item is None:
+                menu.addSeparator()
+                continue
+            name, text, button = item
+            act = action(menu, text, lambda checked, b=button: b.setChecked(checked))  # the button applies the change.
+            act.setCheckable(True)
+            act.setChecked(button.isChecked())
+            button.toggled.connect(act.setChecked)  # also when the panel is updated, e.g. after loading.
+            self.action_toggle[name] = act
+        self.action_nonrepeat = action(menu, "Non-repeat", self.view_button_nonrepeat.click)
+        menu.addSeparator()
+
+        def choice(title, combo):
+            sub = menu.addMenu(title)
+            group = QActionGroup(self)
+            actions = {}
+            for i in range(combo.count()):
+                value = combo.itemText(i)
+                act = action(sub, value, lambda _=False, v=value: combo.setCurrentText(v))
+                act.setCheckable(True)
+                act.setChecked(value == combo.currentText())
+                group.addAction(act)
+                actions[value] = act
+            combo.currentTextChanged.connect(lambda v: actions[v].setChecked(True) if v in actions else None)
+            return actions
+
+        self.action_axis = choice("&Axis", self.view_combo_axis)
+        self.action_cell = choice("&Cell", self.view_combo_cell)
+
+    # ==================================================
+    def _recent_files(self):
+        """
+        Recent files, most recent first.
+
+        Returns:
+            - (list) -- absolute file names.
+
+        :meta private:
+        """
+        files = settings().value("recent_files", [])
+        if isinstance(files, str):  # a single entry is read back as str.
+            files = [files]
+        return [str(f) for f in files or []]
+
+    # ==================================================
+    def _add_recent_file(self, filename):
+        """
+        Add a file to the recent files.
+
+        Args:
+            filename (str): file name.
+
+        :meta private:
+        """
+        file = str(Path(filename).resolve())
+        files = [file] + [f for f in self._recent_files() if f != file]
+        settings().setValue("recent_files", files[:RECENT_FILES])
+
+    # ==================================================
+    def _update_recent_menu(self):
+        """
+        Fill File > Open Recent with existing recent files.
+
+        :meta private:
+        """
+        menu = self.menu_recent
+        menu.clear()
+        files = [f for f in self._recent_files() if Path(f).is_file()]
+        for f in files:
+            act = menu.addAction(Path(f).name)
+            act.setToolTip(f)
+            act.setStatusTip(f)
+            act.triggered.connect(lambda _=False, f=f: self._open_recent(f))
+        if files:
+            menu.addSeparator()
+            menu.addAction("Clear Menu").triggered.connect(lambda: settings().remove("recent_files"))
+        else:
+            menu.addAction("No Recent Files").setEnabled(False)
+
+    # ==================================================
+    def _open_recent(self, filename):
+        """
+        Open a recent file.
+
+        Args:
+            filename (str): file name.
+
+        :meta private:
+        """
+        self._flush()  # typed values and renames not yet applied are changes.
+        if not self._confirm_unsaved("opening another file"):
+            return
+        self.load_file(filename)
 
     # ==================================================
     def _set_tool_tips(self):
@@ -272,6 +430,7 @@ class QtDraw(Window):
         self._flush()
         with busy_cursor():
             self.pyvista_widget.load(filename)
+        self._loaded_from(filename)
 
         self._update_panel_quietly()
 
@@ -329,6 +488,22 @@ class QtDraw(Window):
     # ==================================================
     def save_file(self):
         """
+        Save to the file opened or saved last, or ask for a file name.
+
+        Returns:
+            - (bool) -- saved ? (False if the dialog was cancelled)
+
+        :meta private:
+        """
+        if self._current_file is None:
+            return self.save_file_as()
+        self._save(str(self._current_file))
+        self._saved_to(self._current_file)
+        return True
+
+    # ==================================================
+    def save_file_as(self):
+        """
         Save file dialog.
 
         Returns:
@@ -337,16 +512,47 @@ class QtDraw(Window):
         :meta private:
         """
         ext = detail["extension"]
-        file = self.pyvista_widget.document_dir() / (self.pyvista_widget._status["model"] + ext)
+        if self._current_file is not None:
+            file = self._current_file
+        else:
+            file = self.pyvista_widget.document_dir() / (self.pyvista_widget._status["model"] + ext)
         ext_set = f"QtDraw Files (*{ext})"
         filename, _ = QFileDialog.getSaveFileName(self, "Save File", str(file), ext_set, options=QFileDialog.Options())
-
         if not filename:  # cancelled.
             return False
         filename = add_extension(Path(filename), ext)
         self._save(str(filename))
-        self._mark_saved()
+        self._saved_to(filename)
         return True
+
+    # ==================================================
+    def _loaded_from(self, filename):
+        """
+        Remember a loaded file: Save writes to a QtDraw file, but never to a material file.
+
+        Args:
+            filename (str): file name.
+
+        :meta private:
+        """
+        file = Path(filename).absolute()
+        is_qtdraw = file.resolve().suffix == detail["extension"]  # as load() reads it, also through a link.
+        self._current_file = file if is_qtdraw else None
+        self._add_recent_file(file)
+
+    # ==================================================
+    def _saved_to(self, filename):
+        """
+        Mark the document saved to a file, which Save writes from now on.
+
+        Args:
+            filename (Path): file name.
+
+        :meta private:
+        """
+        self._mark_saved()
+        self._current_file = Path(filename).absolute()
+        self._add_recent_file(filename)
 
     # ==================================================
     def _save_screenshot(self):
@@ -3035,6 +3241,7 @@ class QtDraw(Window):
         """
         self._flush()
         self.pyvista_widget.load(filename)
+        self._loaded_from(filename)
         self._mark_saved()
         self._reset_history()
 
@@ -3047,7 +3254,7 @@ class QtDraw(Window):
             filename (str): file name, relative to the current directory (which is not changed).
         """
         self._save(filename)
-        self._mark_saved()
+        self._saved_to(filename)
 
     # ==================================================
     def _save(self, filename):

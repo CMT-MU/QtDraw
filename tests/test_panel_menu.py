@@ -29,7 +29,7 @@ def test_panel_has_edit_preference_about_multipie(app):
 # ==================================================
 def test_window_menu_opens_info_and_log(app):
     titles = [a.text() for a in app.menuBar().actions()]
-    assert titles == ["&File", "&Edit", "&Window", "&Help"]
+    assert titles == ["&File", "&Edit", "&View", "&Window", "&Help"]
 
     app.action_info.trigger()
     assert app.info_dialog.isVisible()
