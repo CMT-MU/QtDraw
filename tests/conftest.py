@@ -38,6 +38,23 @@ def isolated_settings(tmp_path_factory):
 
 
 # ==================================================
+@pytest.fixture(autouse=True)
+def isolated_svg_cache(tmp_path_factory, monkeypatch):
+    """
+    Keep the MathJax SVG cache of widgets created by a test in a temporary directory, not in the user's.
+    """
+    from qtdraw.widget import mathjax
+
+    directory = tmp_path_factory.mktemp("svg_cache")
+    init = mathjax.MathJaxSVG.__init__
+
+    def isolated(self, cache_dir=None, **kwargs):
+        init(self, cache_dir=cache_dir or directory, **kwargs)
+
+    monkeypatch.setattr(mathjax.MathJaxSVG, "__init__", isolated)
+
+
+# ==================================================
 @pytest.fixture(scope="session")
 def qapp():
     return get_qt_application()

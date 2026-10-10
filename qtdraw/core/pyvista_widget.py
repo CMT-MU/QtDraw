@@ -36,6 +36,7 @@ from qtdraw.core.pyvista_widget_setting import (
     COLUMN_CELL,
     COLUMN_POSITION,
     COLUMN_ISOSURFACE_FILE,
+    CHOP,
 )
 from qtdraw.core.pyvista_widget_setting import widget_detail as detail
 from qtdraw.core.qtdraw_info import __version__, __date__, __author__
@@ -3971,6 +3972,14 @@ class PyVistaWidget(QtInteractor):
         opacity = float(data["opacity"])
 
         directionT = convert_str_vector(vector=direction, transform=transform, A=self.A_matrix)
+        norm = float(np.linalg.norm(directionT))
+        drawn_length = abs(length) * norm if length < CHOP else length  # as create_vector() uses it.
+        if norm == 0.0 or drawn_length < CHOP:  # an arrow of length 0 cannot be made (the direction is normalized).
+            self.write_info(f"* vector '{data['name']}' is not drawn: its length is 0.")
+            if actor != "":  # remove the vector drawn before an edit.
+                self.delete_actor(actor)
+                self._data["vector"].set_row_data(index, COLUMN_NAME_ACTOR, "")
+            return
 
         obj = create_vector(
             direction=directionT,
