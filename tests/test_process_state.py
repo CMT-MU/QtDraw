@@ -97,6 +97,7 @@ def test_suppress_stderr_restores_descriptor(inheritable):
 
 
 # ==================================================
+@pytest.mark.skipif(sys.platform == "win32", reason="Python itself crashes on Windows without stderr (pythonw keeps it open).")
 def test_suppress_stderr_without_stderr():
     code = """
 import os

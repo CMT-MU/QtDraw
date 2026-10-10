@@ -66,6 +66,10 @@ jobs:
       - name: Import check
         run: python -c "import qtdraw.core.qtdraw_app, qtdraw.scripts.qtdraw, qtdraw.scripts.conv_qtdraw3"
 
+      - name: Fonts for the off-screen platform on Windows
+        if: runner.os == 'Windows'
+        run: echo "QT_QPA_FONTDIR=C:/Windows/Fonts" >> "$GITHUB_ENV"  # it finds no fonts there otherwise.
+
       - name: Run tests
         env:
           QT_QPA_PLATFORM: offscreen
