@@ -2775,7 +2775,7 @@ class QtDraw(Window):
             size (int, optional): caption size. (default: 8)
             color (str, optional): caption color. (default: black)
             font (str, optional): caption font. (default: arial)
-            position (str, optional): position in cell, [x,y,z]. (default: [0,0,0])
+            position (str, optional): position in the window, [x,y,0], x and y from 0 to 1 (z is not used). (default: [0.02,0.95,0])
             name (str, optional): name of group. (default: untitled)
 
         Note:

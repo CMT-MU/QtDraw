@@ -5,7 +5,7 @@ This module provides about dialog for PyVistaWidget.
 """
 
 from pathlib import Path
-import sys
+import platform
 from numpy import __version__ as numpy_ver
 from sympy import __version__ as sympy_ver
 from matplotlib import __version__ as matplot_ver
@@ -61,7 +61,7 @@ class AboutDialog(QDialog):
         indent = " " * 4
         vtk_ver = ".".join(map(str, pv.vtk_version_info))
         pyvista_ver = pv._version.__version__
-        python_ver = sys.version.replace(" [", f"\n{indent+indent}[")
+        python_ver = platform.python_version()
         multipie = "version" in self.pvw._status["multipie"].keys()
 
         panel = QWidget(parent)
@@ -124,8 +124,8 @@ def get_version_info():
     indent = " " * 4
     vtk_ver = ".".join(map(str, pv.vtk_version_info))
     pyvista_ver = pv._version.__version__
-    python_ver = sys.version
-    cr = f"Versoin {__version__}, Copyright (C) {__date__} by {__author__}"
+    python_ver = platform.python_version()
+    cr = f"Version {__version__}, Copyright (C) {__date__} by {__author__}"
 
     s = "* QtDraw: " + cr + "\n"
     s += f"{indent}Python: Ver. {python_ver}" + "\n"

@@ -1914,13 +1914,18 @@ class PyVistaWidget(QtInteractor):
             size (int, optional): caption size. (default: 8)
             color (str, optional): caption color. (default: black)
             font (str, optional): caption font. (default: arial)
-            position (str, optional): position in cell, [x,y,z]. (default: [0,0,0])
+            position (str, optional): position in the window, [x,y,0], x and y from 0 to 1 (z is not used). (default: [0.02,0.95,0])
             name (str, optional): name of group. (default: untitled)
+
+        Raises:
+            ValueError: the position does not have three components.
 
         Note:
             - if keyword is None, default value is used.
         """
         row_data = self.set_common_row_data("text2d", None, position, None, name, None, None)
+        if _parse_vector(row_data["position"]).shape != (3,):
+            raise ValueError(f"position of text2d is [x,y,0] (fractions of the window): {row_data['position']}.")
 
         if caption is not None:
             row_data["caption"] = caption
@@ -1954,8 +1959,13 @@ class PyVistaWidget(QtInteractor):
         ver = None
         material = None
         if file.suffix == detail["extension"]:
-            all_data = read_dict(f)
-            ver = int(all_data["version"].split(".")[0])  # major version.
+            try:
+                all_data = read_dict(f)
+                ver = int(all_data["version"].split(".")[0])  # major version.
+            except (OSError, MemoryError):  # e.g. missing file, as it is.
+                raise
+            except Exception as e:  # the parser's message is kept as the cause.
+                raise ValueError(f"{file.name} is not a valid QtDraw file, it cannot be read.") from e
             if ver < 2:  # a temporary widget is needed to convert version 1.
                 widget = PyVistaWidget(off_screen=True)
                 try:
@@ -2564,7 +2574,7 @@ class PyVistaWidget(QtInteractor):
         Returns:
             - (str) -- copyright string.
         """
-        cr = f"Versoin {__version__}, Copyright (C) {__date__} by {__author__}"
+        cr = f"Version {__version__}, Copyright (C) {__date__} by {__author__}"
         return cr
 
     # ==================================================
@@ -4691,7 +4701,7 @@ class PyVistaWidget(QtInteractor):
         color = all_colors[data["color"]][0]
         font = data["font"]
 
-        position = apply(float, text_to_list(position))[:2]
+        position = _parse_vector(position)[:2].tolist()  # as add_text2d() checks it, also with expressions.
 
         if actor == "":
             actor = f"Actor2D(Counter={self._label_counter})"
