@@ -55,8 +55,6 @@ def test_help_explains_mouse_and_keys(app, monkeypatch):
 def test_buttons_have_tool_tips(app):
     buttons = [
         app.ds_button_edit,
-        app.misc_button_pref,
-        app.misc_button_about,
         app.view_button_default,
         app.view_button_clip,
         app.view_button_repeat,

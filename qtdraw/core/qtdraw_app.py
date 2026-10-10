@@ -118,12 +118,7 @@ class QtDraw(Window):
         self.multipie_dialog = None  # MultiPie dialog.
         self._history = UndoHistory(limit=50)  # document snapshots for undo.
         self._restoring = False  # restoring a snapshot ?
-        if self.debug:
-            self.actor_dialog = None  #  actor list dialog.
-            self.data_dialog = None  # raw data dialog.
-            self.status_dialog = None  # status data dialog.
-            self.pref_data_dialog = None  # preference data dialog.
-            self.camera_dialog = None  # camera dialog.
+        self._data_views = {}  # windows showing internal data (Window menu), by name.
 
         self.create_gui()
         self.pyvista_widget.set_property(status, preference)
@@ -212,7 +207,7 @@ class QtDraw(Window):
         self.action_undo = action(menu, "&Undo", self.undo, QKeySequence.Undo)
         self.action_redo = action(menu, "&Redo", self.redo, QKeySequence.Redo)
         menu.addSeparator()
-        self.action_data_table = action(menu, "&Data Table...", lambda: self.pyvista_widget.open_tab_group_view())
+        self.action_data_table = action(menu, "&DataSet...", lambda: self.pyvista_widget.open_tab_group_view())
         self.action_preferences = action(menu, "&Preferences...", lambda: self._show_preference(), QKeySequence.Preferences)
         self.action_preferences.setMenuRole(QAction.PreferencesRole)
 
@@ -221,6 +216,19 @@ class QtDraw(Window):
         menu = self.menuBar().addMenu("&Window")
         self.action_info = action(menu, "&Info", lambda: self.info_dialog.show())
         self.action_log = action(menu, "&Log", lambda: self.logger.show())
+        menu.addSeparator()
+        views = [
+            ("camera", "&Camera", self._camera_text),
+            ("data", "&Data", self._raw_data_text),
+            ("actor", "&Actor", self._actor_text),
+            ("status", "&Status", self._status_text),
+            ("preference", "&Preference", self._preference_text),
+        ]
+        self.action_window = {}
+        for name, text, contents in views:
+            self.action_window[name] = action(
+                menu, text, lambda _=False, n=name, t=text, c=contents: self._show_data_view(n, t.replace("&", ""), c)
+            )
 
         menu = self.menuBar().addMenu("&Help")
         self.action_help = action(menu, "&Mouse and Keys", self._show_help)
@@ -368,8 +376,6 @@ class QtDraw(Window):
         """
         tips = {
             self.ds_button_edit: f"Open the data table of all objects (key: {detail['data_edit_key']}).",
-            self.misc_button_pref: "Change preferences such as colors, fonts and lights.",
-            self.misc_button_about: "Show the version and the authors.",
             self.view_button_default: "Reset the view to the default direction.",
             self.view_button_clip: "Hide objects outside the range lower-upper.",
             self.view_button_repeat: "Repeat the objects of the home cell in the range lower-upper.",
@@ -609,20 +615,13 @@ class QtDraw(Window):
         uc = self.create_gui_unit_cell(panel)
         view = self.create_gui_view(panel)
         buttons = self.create_gui_buttons(panel)
-        if self.debug:
-            debug = self.create_gui_debug(panel)
 
         layout.addWidget(uc, 0, 0, 1, 1)
         layout.addWidget(HBar(), 1, 0, 1, 1)
         layout.addWidget(view, 2, 0, 1, 1)
         layout.addWidget(HBar(), 3, 0, 1, 1)
         layout.addWidget(buttons, 4, 0, 1, 1)
-        if self.debug:
-            layout.addWidget(HBar(), 5, 0, 1, 1)
-            layout.addWidget(debug, 6, 0, 1, 1)
-            layout.addItem(VSpacer(), 7, 0, 1, 1)
-        else:
-            layout.addItem(VSpacer(), 5, 0, 1, 1)
+        layout.addItem(VSpacer(), 5, 0, 1, 1)
 
         return panel
 
@@ -831,54 +830,14 @@ class QtDraw(Window):
         layout = Layout(panel)
 
         self.ds_button_edit = Button(parent, text="edit")
-        self.misc_button_pref = Button(parent, text="preference")
-        self.misc_button_about = Button(parent, text="about")
         if check_multipie():
             self.misc_button_multipie = Button(parent, text="MultiPie")
 
         panel1 = QWidget(parent)
         layout1 = Layout(panel1)
         layout1.addWidget(self.ds_button_edit, 0, 0, 1, 1)
-        layout1.addWidget(self.misc_button_pref, 0, 1, 1, 1)
-        layout1.addWidget(self.misc_button_about, 1, 0, 1, 1)
         if check_multipie():
-            layout1.addWidget(self.misc_button_multipie, 1, 1, 1, 1)
-
-        layout.addWidget(panel1, 0, 0, 1, 1)
-
-        return panel
-
-    # ==================================================
-    def create_gui_debug(self, parent):
-        """
-        Create debug panel.
-
-        Args:
-            parent (QWidget): parent.
-
-        Returns:
-            - (QWidget) -- debug panel.
-
-        :meta private:
-        """
-        panel = QWidget(parent)
-        layout = Layout(panel)
-
-        label_debug = Label(parent, text="Debug", bold=True)
-        self.debug_button_camera = Button(parent, text="camera")
-        self.debug_button_actor = Button(parent, text="actor")
-        self.debug_button_data = Button(parent, text="data")
-        self.debug_button_status = Button(parent, text="status")
-        self.debug_button_preference = Button(parent, text="pref")
-
-        panel1 = QWidget(parent)
-        layout1 = Layout(panel1)
-        layout1.addWidget(label_debug, 0, 0, 1, 1)
-        layout1.addWidget(self.debug_button_camera, 0, 1, 1, 1)
-        layout1.addWidget(self.debug_button_data, 1, 0, 1, 1)
-        layout1.addWidget(self.debug_button_actor, 1, 1, 1, 1)
-        layout1.addWidget(self.debug_button_status, 2, 0, 1, 1)
-        layout1.addWidget(self.debug_button_preference, 2, 1, 1, 1)
+            layout1.addWidget(self.misc_button_multipie, 0, 1, 1, 1)
 
         layout.addWidget(panel1, 0, 0, 1, 1)
 
@@ -1609,18 +1568,8 @@ class QtDraw(Window):
 
         # button panel.
         self.ds_button_edit.released.connect(self.pyvista_widget.open_tab_group_view)
-        self.misc_button_pref.released.connect(self._show_preference)
-        self.misc_button_about.released.connect(self._show_about)
         if check_multipie():
             self.misc_button_multipie.released.connect(self._show_multipie)
-
-        # debug panel.
-        if self.debug:
-            self.debug_button_camera.released.connect(self._show_camera_info)
-            self.debug_button_data.released.connect(self._show_raw_data)
-            self.debug_button_actor.released.connect(self._show_actor_list)
-            self.debug_button_status.released.connect(self._show_status_data)
-            self.debug_button_preference.released.connect(self._show_preference_data)
 
         # pyvista.
         self.pyvista_widget.message.connect(self.write_info)
@@ -1717,45 +1666,68 @@ class QtDraw(Window):
                 self.multipie_dialog.show()
 
     # ==================================================
-    def _show_status_data(self):
+    def _show_data_view(self, name, title, contents):
         """
-        Show status data dialog.
+        Show a window with internal data (Window menu), refreshed each time it is shown.
+
+        Args:
+            name (str): name of the view.
+            title (str): window title.
+            contents (function): text of the data, contents().
 
         :meta private:
         """
+        view = self._data_views.get(name)
+        if view is None:
+            view = LogWidget(None, title, level=None)  # a view only: no log handler, no exception hook.
+            self._data_views[name] = view
+        view.set_text(contents())
+        view.show()
+        view.raise_()
+
+    # ==================================================
+    def _status_text(self):
+        """
+        Status data.
+
+        Returns:
+            - (str) -- text.
+
+        :meta private:
+        """
+        pvw = self.pyvista_widget
+        status = pvw._status
+        multipie = pvw._mp_data.status if pvw._mp_data is not None else status.get("multipie", {})  # the current group.
         s = ""
-        for key, val in self.pyvista_widget._status.items():
-            if key != "plus" and key != "multipie":
+        for key, val in status.items():
+            if key not in ("plus", "multipie"):
                 s += f"{key}: {val}\n"
 
         s += "\n=== multipie ===\n"
-        if "version" in self.pyvista_widget._status["multipie"].keys():
-            ver = self.pyvista_widget._status["multipie"]["version"]
-            s += f"version: {ver}\n"
-        for key, val in self.pyvista_widget._status["multipie"].items():
-            if key != "plus":
-                if key != "version":
-                    s += f"--- {key} ---\n"
-                    for k, v in val.items():
-                        s += f"{k}: {v}\n"
+        if "version" in multipie:
+            s += f"version: {multipie['version']}\n"
+        for key, val in multipie.items():
+            if key not in ("plus", "version"):
+                s += f"--- {key} ---\n"
+                for k, v in val.items():
+                    s += f"{k}: {v}\n"
 
         s += "\n=== plus ===\n"
-        for key, val in self.pyvista_widget._status["plus"].items():
+        for key, val in status.get("plus", {}).items():
             s += f"{key}: {val}\n"
 
         s += "\n=== multipie.plus ===\n"
-        for key, val in self.pyvista_widget._status["multipie"]["plus"].items():
+        for key, val in multipie.get("plus", {}).items():
             s += f"{key}: {val}\n"
-        s = s[:-1]
-
-        self.status_dialog = LogWidget("Status Data", None)
-        self.status_dialog.set_text(s)
-        self.status_dialog.show()
+        return s[:-1]
 
     # ==================================================
-    def _show_preference_data(self):
+    def _preference_text(self):
         """
-        Show preference data dialog.
+        Preference data.
+
+        Returns:
+            - (str) -- text.
 
         :meta private:
         """
@@ -1764,59 +1736,49 @@ class QtDraw(Window):
             s += f"=== {key} ===\n"
             for name, v in val.items():
                 s += f"{name}: {v}\n"
-        s = s[:-1]
-        self.pref_data_dialog = LogWidget("Preference Data", None)
-        self.pref_data_dialog.set_text(s)
-        self.pref_data_dialog.show()
+        return s[:-1]
 
     # ==================================================
-    def _show_actor_list(self):
+    def _actor_text(self):
         """
-        Show actor list dialog.
+        Actor names.
+
+        Returns:
+            - (str) -- text.
 
         :meta private:
         """
-        s = ""
-        for i in self.pyvista_widget.actor_list:
-            s += i + "\n"
-        s = s[:-1]
-        self.actor_dialog = LogWidget("Actor Data", None)
-        self.actor_dialog.set_text(s)
-        self.actor_dialog.show()
+        return "\n".join(self.pyvista_widget.actor_list)
 
     # ==================================================
-    def _show_raw_data(self):
+    def _raw_data_text(self):
         """
-        Show raw data dialog.
+        Raw data of all objects.
+
+        Returns:
+            - (str) -- text.
 
         :meta private:
         """
         s = ""
         for object_type, model in self.pyvista_widget._data.items():
             s += f"=== {object_type} ===\n"
-            data = model.tolist()
-            for row in data:
+            for row in model.tolist():
                 s += str(row) + "\n"
-        s = s[:-1]
-        self.data_dialog = LogWidget("Raw Data", None)
-        self.data_dialog.set_text(s)
-        self.data_dialog.show()
+        return s[:-1]
 
     # ==================================================
-    def _show_camera_info(self):
+    def _camera_text(self):
         """
-        Show camera info. dialog.
+        Camera info.
+
+        Returns:
+            - (str) -- text.
 
         :meta private:
         """
         camera = self.pyvista_widget.get_camera_info()
-        s = ""
-        for key, val in camera.items():
-            s += f"{key}: {val}\n"
-        s = s[:-1]
-        self.camera_dialog = LogWidget("Camera Info", None)
-        self.camera_dialog.set_text(s)
-        self.camera_dialog.show()
+        return "\n".join(f"{key}: {val}" for key, val in camera.items())
 
     # ==================================================
     def _clear_data(self):
@@ -1868,9 +1830,7 @@ class QtDraw(Window):
         if not ok:
             event.ignore()
         else:
-            dialogs = [self.multipie_dialog, self.logger, self.info_dialog]
-            if self.debug:
-                dialogs += [self.actor_dialog, self.data_dialog, self.status_dialog, self.pref_data_dialog, self.camera_dialog]
+            dialogs = [self.multipie_dialog, self.logger, self.info_dialog] + list(self._data_views.values())
             dialogs = [dialog for dialog in dialogs if dialog is not None]
 
             # delete closed windows, otherwise they remain and slow down new windows.
