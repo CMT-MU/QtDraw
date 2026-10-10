@@ -225,8 +225,8 @@ object_default = {
         "margin": ("int", {"min": 0, "max": "*"}, "3"),
         "position": ("list_float", {"shape": (3,), "var": [""], "digit": 4}, "[0,0,0]"),
         "cell": ("list_int", {"shape": (3,)}, "[0,0,0]"),
-        "shape": ("math", {"var": ["x", "y", "z", "r"]}, "3z**2-r**2"),
-        "surface": ("math", {"var": ["x", "y", "z", "r"]}, "3z**2-r**2"),
+        "shape": ("math", {"shape": (), "var": ["x", "y", "z", "r"]}, "3z**2-r**2"),
+        "surface": ("math", {"shape": (), "var": ["x", "y", "z", "r"]}, "3z**2-r**2"),
         "size": ("float", {"min": "*", "max": "*", "digit": 3}, "0.5"),
         "range": ("list_int", {"shape": (2, 2)}, "[[0,180],[0,360]]"),
         "color": ("color_both", {}, "Wistia"),
@@ -242,7 +242,7 @@ object_default = {
         "margin": ("int", {"min": 0, "max": "*"}, "3"),
         "position": ("list_float", {"shape": (3,), "var": [""], "digit": 4}, "[0,0,0]"),
         "cell": ("list_int", {"shape": (3,)}, "[0,0,0]"),
-        "shape": ("math", {"var": ["x", "y", "z", "r"]}, "1"),
+        "shape": ("math", {"shape": (), "var": ["x", "y", "z", "r"]}, "1"),
         "vector": ("math", {"shape": (3,), "var": ["x", "y", "z", "r"]}, "[x,y,z]"),
         "size": ("float", {"min": 0.0, "max": "*", "digit": 3}, "0.5"),
         "range": ("list_int", {"shape": (2, 2)}, "[[0,180],[0,360]]"),
@@ -421,7 +421,7 @@ object_default = {
         "cell": ("list_int", {"shape": (3,)}, "[0,0,0]"),
         "point": (
             "list_float",
-            {"shape": (3, 0), "var": [""], "digit": 4},
+            {"shape": (0, 3), "var": [""], "digit": 4},
             "[[0,0,0],[0.8,0,0],[0,0.6,0],[0,0,0.4],[0.6,0.6,0]]",
         ),
         "connectivity": ("list_int", {"shape": (0, 0)}, "[[0,1,4,2],[0,1,3],[1,4,3],[2,0,3],[2,3,4]]"),
@@ -446,7 +446,7 @@ object_default = {
         "margin": ("int", {"min": 0, "max": "*"}, "3"),
         "position": ("list_float", {"shape": (3,), "var": [""], "digit": 4}, "[0,0,0]"),
         "cell": ("list_int", {"shape": (3,)}, "[0,0,0]"),
-        "point": ("list_float", {"shape": (3, 0), "var": [""], "digit": 4}, "[[0,0,0],[1,0,1],[0,1,2]]"),
+        "point": ("list_float", {"shape": (0, 3), "var": [""], "digit": 4}, "[[0,0,0],[1,0,1],[0,1,2]]"),
         "width": ("float", {"min": 0.0, "max": "*", "digit": 3}, "0.01"),
         "n_interp": ("int", {"min": 0, "max": "*"}, "500"),
         "closed": ("check", {}, ""),
@@ -507,7 +507,7 @@ object_default = {
         "size": ("float", {"min": 0.0, "max": "*", "digit": 3}, "0.3"),
         "view": ("list_float", {"shape": (3,), "var": [""], "digit": 4}, "[0,0,1]"),
         "depth": ("float", {"min": "*", "max": "*", "digit": 3}, "0.2"),
-        "offset": ("float", {"min": "*", "max": "*", "digit": 3}, "[0,0,0]"),
+        "offset": ("list_float", {"shape": (3,), "var": [""], "digit": 4}, "[0,0,0]"),
         "color": ("color", {}, "iron"),
         "opacity": ("float", {"min": 0.0, "max": 1.0, "digit": 2}, "1.0"),
     },
@@ -536,10 +536,10 @@ object_default = {
         "label_check": ("hide", {}, ""),  # dummy.
         "label_actor": ("hide", {}, ""),  # dummy.
         "margin": ("int", {"min": 0, "max": "*"}, "3"),
-        "position": ("list_float", {"shape": (3, 0), "var": [""], "digit": 4}, "[[0,0,0],[1,0,0],[1,1,0]]"),
+        "position": ("list_float", {"shape": (0, 3), "var": [""], "digit": 4}, "[[0,0,0],[1,0,0],[1,1,0]]"),
         "cell": ("list_int", {"shape": (3,)}, "[0,0,0]"),
         "caption": ("str", {}, "[A,B,C]"),
-        "size": ("int", {"min": 0, "max": "*"}, "18"),
+        "size": ("int", {"min": 1, "max": "*"}, "18"),  # font size; text of size 0 cannot be drawn.
         "bold": ("check", {}, ""),
         "bold_check": ("bool", {}, True),
         "color": ("color", {}, "black"),
@@ -555,7 +555,7 @@ object_default = {
         "position": ("list_float", {"shape": (3,), "var": [""], "digit": 4}, "[0.02,0.95,0]"),  # z-comp. dummy.
         "cell": ("hide", {}, "[0,0,0]"),  # dummy.
         "caption": ("str", {}, "text"),
-        "size": ("int", {"min": 0, "max": "*"}, "8"),
+        "size": ("int", {"min": 1, "max": "*"}, "8"),  # font size; text of size 0 cannot be drawn.
         "color": ("color", {}, "black"),
         "font": ("combo", ["arial", "times", "courier"], "arial"),
     },
