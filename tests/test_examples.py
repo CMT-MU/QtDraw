@@ -14,6 +14,7 @@ import signal
 import subprocess
 import sys
 import textwrap
+import time
 from pathlib import Path
 
 import pytest
@@ -54,8 +55,8 @@ _qtdraw_app.QtDraw.exec = lambda self: None  # no event loop: the example only d
 from qtdraw.core.pyvista_widget import PyVistaWidget as _Widget
 _write_info = _Widget.write_info
 
-def _info(self, text):  # e.g. "* failed to render: ..." after a load.
-    if "failed" in text:
+def _info(self, text):  # failures that are only logged, e.g. a render failure after a load.
+    if text.startswith(("* failed to render:", "* failed to restore current data:")):
         print(text, file=sys.stderr, flush=True)
         os._exit(4)
     _write_info(self, text)
@@ -64,20 +65,38 @@ _Widget.write_info = _info
 """
 
 DRAWN = """
-def _rows():
-    widgets = [w for w in QApplication.allWidgets() if isinstance(w, _Widget)]
-    for w in widgets:
-        w.render()  # draws without an error.
-    return [sum(len(rows) for rows in w.get_data_dict().values()) for w in widgets]
-
-print("ROWS", _rows(), flush=True)
-assert _rows() and all(n > 0 for n in _rows()), _rows()
+_widgets = [w for w in QApplication.allWidgets() if isinstance(w, _Widget)]
+for _w in _widgets:
+    _w.render()  # draws without an error.
+_rows = [sum(len(rows) for rows in w.get_data_dict().values()) for w in _widgets]
+print("ROWS", _rows, flush=True)
+assert _rows and all(n > 0 for n in _rows), _rows
 """
 
 END = """
 print("OK", flush=True)
 os._exit(0)  # widgets left open (as in a notebook) would keep background threads alive.
 """
+
+
+if sys.platform == "win32":
+    GROUP = {"creationflags": subprocess.CREATE_NEW_PROCESS_GROUP}
+else:
+    GROUP = {"start_new_session": True}
+
+
+def kill_group(proc):
+    """
+    End a process and the processes it started, also if it has already ended.
+    """
+    if sys.platform == "win32":
+        subprocess.run(["taskkill", "/F", "/T", "/PID", str(proc.pid)], capture_output=True)
+    else:
+        try:
+            os.killpg(proc.pid, signal.SIGKILL)
+        except ProcessLookupError:  # the group has already ended.
+            pass
+    proc.wait()
 
 
 def notebook_code(name):
@@ -99,17 +118,19 @@ def run_example(code, tmp_path):
     script = work / "run_example.py"
     script.write_text(textwrap.dedent(PRELUDE) + "\n" + code + "\n" + END)
     out, err = tmp_path / "stdout.txt", tmp_path / "stderr.txt"
+    start = time.monotonic()
+    timed_out = False
     with open(out, "w") as fout, open(err, "w") as ferr:  # files: a helper process may keep pipes open.
-        proc = subprocess.Popen(
-            [sys.executable, str(script)], cwd=work, stdout=fout, stderr=ferr, env=env, start_new_session=True
-        )
+        proc = subprocess.Popen([sys.executable, "-u", str(script)], cwd=work, stdout=fout, stderr=ferr, env=env, **GROUP)
         try:
             proc.wait(timeout=TIMEOUT)
         except subprocess.TimeoutExpired:
-            os.killpg(proc.pid, signal.SIGKILL)  # also helper processes, e.g. the browser for MathJax.
-            proc.wait()
+            timed_out = True
+        finally:
+            kill_group(proc)  # always: also helper processes, e.g. the browser for MathJax.
     stdout, stderr = out.read_text(), err.read_text()
-    report = stdout[-2000:] + stderr[-4000:]
+    report = f"return code {proc.returncode}, {time.monotonic() - start:.0f} s, timed out: {timed_out}\n"
+    report += stdout[-2000:] + stderr[-4000:]
     assert proc.returncode == 0 and "OK" in stdout, report
     assert "Traceback" not in stderr, report
     return work
