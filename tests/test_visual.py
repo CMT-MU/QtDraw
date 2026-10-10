@@ -118,24 +118,35 @@ def render(widget):
         plotter.close()
 
 
+def on_background(image, background):
+    """
+    RGB image as seen on the background color (an RGBA image is composited with its alpha).
+    """
+    image = np.asarray(image).astype(float)
+    color = np.asarray(pv.Color(background).float_rgb) * 255
+    if image.shape[-1] == 4:
+        alpha = image[..., 3:] / 255
+        return image[..., :3] * alpha + color * (1 - alpha)
+    return image
+
+
 def drawn_fraction(image, background):
     """
     Fraction of the pixels that differ from the background color.
     """
-    rgb = np.asarray(image)[..., :3].astype(int)
-    color = np.round(np.asarray(pv.Color(background).float_rgb) * 255).astype(int)
-    return float(np.any(np.abs(rgb - color) > 8, axis=-1).mean())
+    color = np.asarray(pv.Color(background).float_rgb) * 255
+    return float(np.any(np.abs(on_background(image, background) - color) > 8, axis=-1).mean())
 
 
-def keep(image, name, reference=None):
+def keep(image, name, background, reference=None):
     if OUTPUT:
         directory = Path(OUTPUT, SYSTEM)
         directory.mkdir(parents=True, exist_ok=True)
         Image.fromarray(image).save(directory / f"{name}.png")
         if reference is not None:
             Image.fromarray(reference).save(directory / f"{name}-reference.png")
-            difference = np.abs(image[..., :3].astype(int) - reference[..., :3].astype(int)).astype(np.uint8)
-            Image.fromarray(difference).save(directory / f"{name}-difference.png")
+            difference = np.abs(on_background(image, background) - on_background(reference, background))
+            Image.fromarray(np.round(difference).astype(np.uint8)).save(directory / f"{name}-difference.png")
 
 
 # ==================================================
@@ -150,7 +161,9 @@ def test_drawing_looks_as_before(qapp, tmp_path, monkeypatch, name):
         background = widget.background_color
     finally:
         widget.close()
-    assert drawn_fraction(image, background) > 0.01, f"{name} is (almost) empty."  # also before an update.
+    if drawn_fraction(image, background) <= 0.01:  # also before an update.
+        keep(image, name, background)
+        pytest.fail(f"{name} is (almost) empty.")
 
     reference = REFERENCE / f"{name}.png"
     if UPDATE:
@@ -158,7 +171,7 @@ def test_drawing_looks_as_before(qapp, tmp_path, monkeypatch, name):
         Image.fromarray(image).save(reference)
         return
     if not reference.exists():
-        keep(image, name)
+        keep(image, name, background)
         if REQUIRE:
             pytest.fail(f"no reference image for {SYSTEM}.")
         pytest.skip(f"no reference image for {SYSTEM}.")
@@ -167,5 +180,13 @@ def test_drawing_looks_as_before(qapp, tmp_path, monkeypatch, name):
     limit = LARGER_ERROR.get(name, ERROR)
     print(f"{name}: error {error:.0f} (limit {limit:.0f})")
     if error > limit:
-        keep(image, name, expected)
+        keep(image, name, background, expected)
     assert error <= limit, f"{name} differs from {reference} (error {error:.0f} > {limit:.0f})."
+
+
+def test_drawn_fraction_ignores_transparent_pixels():
+    image = np.zeros((10, 10, 4), dtype=np.uint8)  # black, but fully transparent.
+    assert drawn_fraction(image, "white") == 0.0
+    image[:5, :, 3] = 255  # the upper half is drawn in black.
+    assert drawn_fraction(image, "white") == 0.5
+    assert drawn_fraction(np.full((10, 10, 3), 255, dtype=np.uint8), "white") == 0.0
