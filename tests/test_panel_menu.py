@@ -9,7 +9,7 @@ from qtdraw.util.util import check_multipie
 
 
 # ==================================================
-def test_panel_has_edit_preference_about_multipie(app):
+def test_panel_has_edit_and_multipie(app):
     for name in ["ds_button_clear", "ds_button_load", "ds_button_save", "ds_button_screenshot"]:
         assert not hasattr(app, name)
     for name in ["misc_button_info", "misc_button_log"]:
@@ -17,10 +17,10 @@ def test_panel_has_edit_preference_about_multipie(app):
 
     layout = app.ds_button_edit.parentWidget().layout()
     assert layout.itemAtPosition(0, 0).widget() is app.ds_button_edit
-    assert layout.itemAtPosition(0, 1).widget() is app.misc_button_pref
-    assert layout.itemAtPosition(1, 0).widget() is app.misc_button_about
     if check_multipie():
-        assert layout.itemAtPosition(1, 1).widget() is app.misc_button_multipie
+        assert layout.itemAtPosition(0, 1).widget() is app.misc_button_multipie
+    for name in ["misc_button_pref", "misc_button_about"]:  # in the menus (Preferences, About).
+        assert not hasattr(app, name)
 
     texts = [label.text() for label in app.findChildren(QLabel)]
     assert not any(t in ("DataSet", "Misc") for t in texts)

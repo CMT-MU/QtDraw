@@ -4,8 +4,9 @@ MessageBox dialog.
 This module provides message box dialog.
 """
 
-from PySide6.QtWidgets import QDialog, QDialogButtonBox, QGridLayout, QMessageBox, QPlainTextEdit
+from PySide6.QtWidgets import QDialog, QDialogButtonBox, QGridLayout, QMessageBox, QPlainTextEdit, QSizePolicy, QTextEdit
 from PySide6.QtGui import QFontDatabase
+from PySide6.QtCore import QEvent
 
 
 # ==================================================
@@ -44,6 +45,56 @@ class MessageBox(QDialog):
 
 
 # ==================================================
+class ResizableMessageBox(QMessageBox):
+    """
+    Message box whose size can be changed, e.g. to read long details.
+    """
+
+    MAX_SIZE = 16777215  # QWIDGETSIZE_MAX.
+
+    # ==================================================
+    def event(self, e):
+        """
+        Lift the fixed size that QMessageBox sets again whenever it is laid out.
+
+        :meta private:
+        """
+        try:
+            result = super().event(e)
+            if e.type() in (QEvent.LayoutRequest, QEvent.Resize, QEvent.Show):
+                self._lift_fixed_size()
+            return result
+        except RuntimeError:  # called while the box is being deleted.
+            return False
+
+    # ==================================================
+    def _lift_fixed_size(self):
+        """
+        Allow any size, and let the details grow with the box.
+
+        :meta private:
+        """
+        self.setSizeGripEnabled(True)
+        self.setMinimumSize(0, 0)
+        self.setMaximumSize(self.MAX_SIZE, self.MAX_SIZE)
+        self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        details = self.findChild(QTextEdit)
+        if details is not None:
+            details.setMaximumSize(self.MAX_SIZE, self.MAX_SIZE)
+            details.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+            layout = self.layout()
+            container = details.parentWidget() if layout.indexOf(details) < 0 else details
+            index = layout.indexOf(container)
+            if index >= 0 and hasattr(layout, "setRowStretch"):
+                container.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+                row = layout.getItemPosition(index)[0]
+                stretch = [1 if r == row else 0 for r in range(layout.rowCount())]
+                if [layout.rowStretch(r) for r in range(layout.rowCount())] != stretch:  # set once: it lays out again.
+                    for r, value in enumerate(stretch):
+                        layout.setRowStretch(r, value)  # only the details get the extra space.
+
+
+# ==================================================
 def show_error(summary, details, title="Error"):
     """
     Show an error with a short message, and the full details behind "Show Details...".
@@ -53,7 +104,7 @@ def show_error(summary, details, title="Error"):
         details (str): details, e.g. traceback.
         title (str, optional): window title.
     """
-    box = QMessageBox(QMessageBox.Critical, title, summary)
+    box = ResizableMessageBox(QMessageBox.Critical, title, summary)
     box.setInformativeText("See the details for the traceback. The error is also written to the log.")
     box.setDetailedText(details)
     box.exec()

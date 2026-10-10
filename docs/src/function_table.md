@@ -24,7 +24,6 @@
 | create_gui_unit_cell | Create unit cell panel. |
 | create_gui_view | Create view panel. |
 | create_gui_buttons | Create button panel (other commands are in the menu bar). |
-| create_gui_debug | Create debug panel. |
 | _update_panel | Update widget in panel. |
 | _update_application | Update application sytle. |
 | _update_title | Update window title. |
@@ -55,11 +54,12 @@
 | _show_preference | Show preference panel. |
 | _show_about | Show about panel. |
 | _show_multipie | Show MultiPie panel. |
-| _show_status_data | Show status data dialog. |
-| _show_preference_data | Show preference data dialog. |
-| _show_actor_list | Show actor list dialog. |
-| _show_raw_data | Show raw data dialog. |
-| _show_camera_info | Show camera info. dialog. |
+| _show_data_view | Show a window with internal data (Window menu), refreshed each time it is shown. |
+| _status_text | Status data. |
+| _preference_text | Preference data. |
+| _actor_text | Actor names. |
+| _raw_data_text | Raw data of all objects. |
+| _camera_text | Camera info. |
 | _clear_data | Clear data (actor and data). |
 | clear_data | Clear data (actor and data). |
 | exec | Execute QtDraw. |
