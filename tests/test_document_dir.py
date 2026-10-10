@@ -215,7 +215,7 @@ def test_dialogs_start_in_document_directory(app, tmp_path, monkeypatch):
     monkeypatch.setattr(QFileDialog, "getSaveFileName", lambda *a, **k: (seen.append(a[2]), ("", ""))[1])
     monkeypatch.setattr(QFileDialog, "getOpenFileName", lambda *a, **k: (seen.append(a[2]), ("", ""))[1])
     answer(monkeypatch, 0)  # no unsaved question expected; any answer.
-    app.save_file()
+    app.save_file_as()  # Save writes to the saved file without a dialog.
     app._save_screenshot()
     app.open_file()
     doc = str((tmp_path / "doc").resolve())
