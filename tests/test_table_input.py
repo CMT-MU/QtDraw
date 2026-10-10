@@ -150,17 +150,16 @@ def test_accepted_value_is_drawn(widget, qtbot, tmp_path, object_type, column, v
         if VALIDATORS[vtype](text, **option) is None or ((object_type, column) in DEGENERATE and is_zero(text)):
             continue
         accepted.append(text)
+        file = tmp_path / "a.qtdw"
         with qtbot.capture_exceptions() as exceptions:
             model.setData(model.index(0, i), text)  # as the editor of the table does.
             widget.render()
+            widget.save(str(file))
+            widget.load(str(file))
         assert not exceptions, f"{object_type}.{column} = {text!r}: {exceptions[0][1]!r}"
+        model = widget._data[object_type]
+        assert model.index(0, i).data() == text  # the text is kept as typed.
     assert accepted, f"no value is accepted for {object_type}.{column}."
-
-    file = tmp_path / "a.qtdw"
-    widget.save(str(file))
-    with qtbot.capture_exceptions() as exceptions:
-        widget.load(str(file))
-    assert not exceptions, f"{object_type}.{column}: {exceptions[0][1]!r}"
 
 
 @pytest.mark.xfail(strict=True, reason="an object without a direction or size is not handled yet.")
@@ -197,3 +196,43 @@ def test_hint_tells_that_faces_may_differ_in_length():
     assert "different lengths" in validator_hint(vtype, option)
     vtype, option, default = object_default["polygon"]["point"]
     assert "different lengths" not in validator_hint(vtype, option)
+
+
+@pytest.mark.parametrize("text", ["[[Max(0,1),2,3]]", "[[0,1,2],]", "[[4/2,0,1],[0,1,3,4]]"])
+def test_faces_with_expressions_are_drawn(widget, qtbot, text):
+    widget.add_polygon()
+    model = widget._data["polygon"]
+    vtype, option, default = object_default["polygon"]["connectivity"]
+    assert validator_list_int(text, **option) is not None
+    with qtbot.capture_exceptions() as exceptions:
+        model.setData(model.index(0, list(object_default["polygon"]).index("connectivity")), text)
+        widget.render()
+    assert not exceptions, repr(exceptions[0][1])
+
+
+@pytest.mark.parametrize("text", ["I", "1+2*I", "exp(I*pi/3)"])
+def test_modulation_coefficient_may_be_complex(text):
+    from qtdraw.multipie.multipie_modulation_dialog import modulation_panel
+
+    vtype, option, default = modulation_panel["coeff"]
+    assert VALIDATORS[vtype](text, **option) is not None
+
+
+@pytest.mark.parametrize("text", ["nan", "oo", "zoo"])
+def test_modulation_coefficient_is_finite(text):
+    from qtdraw.multipie.multipie_modulation_dialog import modulation_panel
+
+    vtype, option, default = modulation_panel["coeff"]
+    assert VALIDATORS[vtype](text, **option) is None
+
+
+@pytest.mark.parametrize("object_type, column", [("orbital", "shape"), ("orbital", "surface"), ("stream", "shape")])
+def test_constant_shape_is_real(object_type, column):
+    vtype, option, default = object_default[object_type][column]
+    assert VALIDATORS[vtype]("I", **option) is None
+    assert VALIDATORS[vtype]("I*x", **option) is not None  # the magnitude of a complex function is drawn.
+
+
+def test_constant_stream_vector_is_real():
+    vtype, option, default = object_default["stream"]["vector"]
+    assert VALIDATORS[vtype]("[I,0,0]", **option) is None

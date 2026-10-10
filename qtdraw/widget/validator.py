@@ -14,6 +14,7 @@ Validator type.
     - orbital_site_bond: (use var?)
 """
 
+import cmath
 import math
 
 import numpy as np
@@ -79,6 +80,20 @@ def _finite_floats(s):
     except (TypeError, ValueError, OverflowError):
         return None
     return values if all(math.isfinite(x) for x in values) else None
+
+
+# ==================================================
+def _finite_complex(s):
+    """
+    Complex numbers of numbers, None if one is not a finite number (e.g. nan or zoo).
+
+    :meta private:
+    """
+    try:
+        values = [complex(x) for x in _flat(s)]
+    except (TypeError, ValueError, OverflowError):
+        return None
+    return values if all(cmath.isfinite(x) for x in values) else None
 
 
 # ==================================================
@@ -272,7 +287,8 @@ def validator_math(text, **opt):
 
     Args:
         text (str): sympy string.
-        opt (dict, optional): option, "shape/var". (default: None,None)
+        opt (dict, optional): option, "shape/var/real". (default: None,None,False)
+            real: a constant must be a real number (otherwise also complex).
 
     Returns:
         - (str) -- LaTeX string if it is valid, otherwise None.
@@ -286,8 +302,8 @@ def validator_math(text, **opt):
         return None
     if np.size(s) == 0:  # an empty list.
         return None
-    if not check_symbol(s) and _finite_floats(s) is None:  # a constant must be a finite real number.
-        return None
+    if not check_symbol(s) and (_finite_floats(s) if opt.get("real", False) else _finite_complex(s)) is None:
+        return None  # a constant must be a finite (real) number.
 
     if isinstance(s, np.ndarray):
         s = str(to_latex(s).tolist()).replace("'", "").replace("\\\\", "\\")

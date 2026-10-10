@@ -4420,7 +4420,7 @@ class PyVistaWidget(QtInteractor):
         opacity = float(data["opacity"])
 
         pointT = convert_str_vector(vector=point, transform=transform, A=self.A_matrix)
-        connectivity = apply(lambda x: int(str_to_sympy(x)), text_to_list(connectivity))  # also expressions.
+        connectivity = [[int(x) for x in face] for face in str_to_sympy(connectivity)]  # faces may differ in size.
 
         obj = create_polygon(point=pointT, connectivity=connectivity)
         if wireframe:
