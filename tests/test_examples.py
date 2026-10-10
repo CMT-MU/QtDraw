@@ -79,24 +79,19 @@ os._exit(0)  # widgets left open (as in a notebook) would keep background thread
 """
 
 
-if sys.platform == "win32":
-    GROUP = {"creationflags": subprocess.CREATE_NEW_PROCESS_GROUP}
-else:
-    GROUP = {"start_new_session": True}
+# the process group of an example (and the browser it starts for MathJax) is ended on POSIX only.
+pytestmark = pytest.mark.skipif(sys.platform == "win32", reason="the process cleanup needs POSIX process groups.")
 
 
 def kill_group(proc):
     """
     End a process and the processes it started, also if it has already ended.
     """
-    if sys.platform == "win32":
-        subprocess.run(["taskkill", "/F", "/T", "/PID", str(proc.pid)], capture_output=True)
-    else:
-        try:
-            os.killpg(proc.pid, signal.SIGKILL)
-        except ProcessLookupError:  # the group has already ended.
-            pass
-    proc.wait()
+    try:
+        os.killpg(proc.pid, signal.SIGKILL)
+    except ProcessLookupError:  # the group has already ended.
+        pass
+    proc.wait(timeout=60)
 
 
 def notebook_code(name):
@@ -121,7 +116,9 @@ def run_example(code, tmp_path):
     start = time.monotonic()
     timed_out = False
     with open(out, "w") as fout, open(err, "w") as ferr:  # files: a helper process may keep pipes open.
-        proc = subprocess.Popen([sys.executable, "-u", str(script)], cwd=work, stdout=fout, stderr=ferr, env=env, **GROUP)
+        proc = subprocess.Popen(
+            [sys.executable, "-u", str(script)], cwd=work, stdout=fout, stderr=ferr, env=env, start_new_session=True
+        )
         try:
             proc.wait(timeout=TIMEOUT)
         except subprocess.TimeoutExpired:
@@ -131,7 +128,7 @@ def run_example(code, tmp_path):
     stdout, stderr = out.read_text(), err.read_text()
     report = f"return code {proc.returncode}, {time.monotonic() - start:.0f} s, timed out: {timed_out}\n"
     report += stdout[-2000:] + stderr[-4000:]
-    assert proc.returncode == 0 and "OK" in stdout, report
+    assert not timed_out and proc.returncode == 0 and "OK" in stdout, report
     assert "Traceback" not in stderr, report
     return work
 
