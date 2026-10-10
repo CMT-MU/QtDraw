@@ -20,7 +20,6 @@ COMPAT = Path(__file__).resolve().parent / "data" / "compat"
 EXAMPLES = Path(__file__).resolve().parents[1] / "docs" / "src" / "examples"
 EXPECTED = json.loads((COMPAT / "expected.json").read_text())
 HAS_MULTIPIE = importlib.util.find_spec("multipie") is not None
-ZERO_VECTOR = "v2_0_0_sample.qtdw"  # has a vector of length 0, which cannot be drawn: an error while opening.
 
 
 def as_now(expected):
@@ -38,7 +37,7 @@ def uses_multipie(source):
 
 def open_copy(widget, source, tmp_path, qtbot):
     """
-    Open a copy of a drawing; the known error of ZERO_VECTOR makes the test an expected failure.
+    Open a copy of a drawing, without errors while drawing.
     """
     if uses_multipie(source) and not HAS_MULTIPIE:
         pytest.skip("MultiPie is not installed.")
@@ -46,12 +45,6 @@ def open_copy(widget, source, tmp_path, qtbot):
     shutil.copy(source, file)
     with qtbot.capture_exceptions() as errors:  # errors while drawing are raised in Qt slots.
         widget.load(str(file))
-    if source.name == ZERO_VECTOR:
-        known = [error for error in errors if "finite values" in str(error[1])]
-        assert len(known) == len(errors), [error for error in errors if error not in known]  # no other error.
-        if known:
-            pytest.xfail("a vector of length 0 cannot be drawn.")
-        pytest.fail(f"{ZERO_VECTOR} opens without the known error: remove ZERO_VECTOR.")
     assert not errors, errors
     return file
 
