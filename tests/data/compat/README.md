@@ -10,6 +10,8 @@ Used by `tests/test_file_compat.py`. The files were taken from the history of th
 | `v2_3_0_*.qtdw` | 2.3.0 | aac3312 | `docs/src/examples/` |
 | `v2_4_2_sample.qtdw` | 2.4.2 | aac3312 | `docs/src/examples/sample.qtdw` |
 
-`expected.json` holds, for each file, the objects, the unit cell and range settings and the MultiPie group
-after opening it with the released QtDraw 3.2.0 (`main`, 267b526). Do not change these files: they record how
-drawings of earlier versions must be read.
+`expected.json` holds, for each file, what the released QtDraw 3.2.0 (`main`, 267b526) reads from it: the
+objects, the status, the preferences, the MultiPie status and the camera (see `tests/compat_helpers.py`).
+It was written by `make_expected.py` (see its docstring) with PySide6 6.11, pyvista 0.49, pyvistaqt 0.13 and
+MultiPie 2 on macOS. Do not change the drawings: they record how drawings of earlier versions must be read.
+Write `expected.json` again only with a released version, e.g. after an intended change of how they are read.

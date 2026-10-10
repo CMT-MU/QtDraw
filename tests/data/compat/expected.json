@@ -1,5 +1,28 @@
 {
  "v0_9_6_color_pattern.qtdw": {
+  "camera": {
+   "angle": 30.0,
+   "clipping_range": [
+    1.3436287726087575,
+    4.647917904025952
+   ],
+   "focal_point": [
+    0.4500000011175871,
+    0.47550381533801556,
+    0.0
+   ],
+   "position": [
+    -1.6862619219693067,
+    -1.304714453901062,
+    -0.35604365384781556
+   ],
+   "scale": 0.7255967429352715,
+   "viewup": [
+    0.0,
+    0.0,
+    1.0
+   ]
+  },
   "data": {
    "bond": [
     [
@@ -326,8 +349,45 @@
     ]
    ]
   },
-  "group": null,
+  "multipie": {},
+  "preference": {
+   "axis": {
+    "bold": true,
+    "italic": false,
+    "label": "[a,b,c]",
+    "size": 14
+   },
+   "cell": {
+    "color": "black",
+    "line_width": 1.0,
+    "opacity": 1.0
+   },
+   "general": {
+    "color_scheme": "Jmol",
+    "font": "Osaka",
+    "size": 12,
+    "style": "fusion"
+   },
+   "label": {
+    "bold": false,
+    "color": "licorice",
+    "default_check": false,
+    "font": "arial",
+    "italic": false,
+    "size": 18
+   },
+   "light": {
+    "color": "white",
+    "intensity": 0.5,
+    "metallic": 0.1,
+    "pbr": false,
+    "roughness": 0.2,
+    "type": "ver1"
+   }
+  },
   "status": {
+   "axis_type": "off",
+   "bar": false,
    "cell": {
     "a": 1.0,
     "alpha": 90.0,
@@ -336,8 +396,10 @@
     "c": 1.0,
     "gamma": 90.0
    },
+   "cell_mode": "off",
    "clip": false,
    "crystal": "monoclinic",
+   "grid": false,
    "lower": [
     0.0,
     0.0,
@@ -348,15 +410,44 @@
     0.0,
     0.0
    ],
+   "parallel_projection": true,
    "repeat": false,
    "upper": [
     1.0,
     1.0,
     1.0
+   ],
+   "view": [
+    0,
+    0,
+    1
    ]
   }
  },
  "v0_9_6_icon.qtdw": {
+  "camera": {
+   "angle": 30.0,
+   "clipping_range": [
+    6.505039189487546,
+    17.776711474068897
+   ],
+   "focal_point": [
+    -9.560585021972656e-05,
+    2.384185791015625e-06,
+    1.0462396421093236
+   ],
+   "position": [
+    -8.750078488095426,
+    -7.291650017685212,
+    -0.412090838264877
+   ],
+   "scale": 2.971994684491811,
+   "viewup": [
+    0.0,
+    0.0,
+    1.0
+   ]
+  },
   "data": {
    "orbital": [
     [
@@ -449,8 +540,45 @@
     ]
    ]
   },
-  "group": null,
+  "multipie": {},
+  "preference": {
+   "axis": {
+    "bold": true,
+    "italic": false,
+    "label": "[x,y,z]",
+    "size": 14
+   },
+   "cell": {
+    "color": "black",
+    "line_width": 1.0,
+    "opacity": 1.0
+   },
+   "general": {
+    "color_scheme": "Jmol",
+    "font": "Osaka",
+    "size": 12,
+    "style": "fusion"
+   },
+   "label": {
+    "bold": false,
+    "color": "licorice",
+    "default_check": false,
+    "font": "arial",
+    "italic": false,
+    "size": 18
+   },
+   "light": {
+    "color": "white",
+    "intensity": 0.5,
+    "metallic": 0.1,
+    "pbr": true,
+    "roughness": 0.2,
+    "type": "ver1"
+   }
+  },
   "status": {
+   "axis_type": "off",
+   "bar": false,
    "cell": {
     "a": 1.0,
     "alpha": 90.0,
@@ -459,8 +587,10 @@
     "c": 1.0,
     "gamma": 90.0
    },
+   "cell_mode": "off",
    "clip": false,
    "crystal": "",
+   "grid": false,
    "lower": [
     0.0,
     0.0,
@@ -471,15 +601,44 @@
     0.0,
     0.0
    ],
+   "parallel_projection": true,
    "repeat": false,
    "upper": [
     1.0,
     1.0,
     1.0
+   ],
+   "view": [
+    4,
+    5,
+    2
    ]
   }
  },
  "v1_1_0_sample_ver1.qtdw": {
+  "camera": {
+   "angle": 30.0,
+   "clipping_range": [
+    2.8814123619646117,
+    9.722171299696107
+   ],
+   "focal_point": [
+    -0.001989006996154785,
+    -0.0006320774555206299,
+    0.48339649103581905
+   ],
+   "position": [
+    -4.500543406898387,
+    -3.74942741070738,
+    -0.2663625756145528
+   ],
+   "scale": 1.5279663908297934,
+   "viewup": [
+    0.0,
+    0.0,
+    1.0
+   ]
+  },
   "data": {
    "bond": [
     [
@@ -830,8 +989,45 @@
     ]
    ]
   },
-  "group": null,
+  "multipie": {},
+  "preference": {
+   "axis": {
+    "bold": true,
+    "italic": false,
+    "label": "[x,y,z]",
+    "size": 18
+   },
+   "cell": {
+    "color": "black",
+    "line_width": 1.0,
+    "opacity": 1.0
+   },
+   "general": {
+    "color_scheme": "Jmol",
+    "font": "Osaka",
+    "size": 12,
+    "style": "fusion"
+   },
+   "label": {
+    "bold": false,
+    "color": "licorice",
+    "default_check": false,
+    "font": "arial",
+    "italic": false,
+    "size": 18
+   },
+   "light": {
+    "color": "white",
+    "intensity": 0.5,
+    "metallic": 0.1,
+    "pbr": false,
+    "roughness": 0.2,
+    "type": "ver1"
+   }
+  },
   "status": {
+   "axis_type": "on",
+   "bar": false,
    "cell": {
     "a": 1.0,
     "alpha": 90.0,
@@ -840,8 +1036,10 @@
     "c": 1.0,
     "gamma": 120.0
    },
+   "cell_mode": "single",
    "clip": true,
    "crystal": "hexagonal",
+   "grid": false,
    "lower": [
     -1.0,
     -1.0,
@@ -852,15 +1050,44 @@
     0.0,
     0.0
    ],
+   "parallel_projection": true,
    "repeat": false,
    "upper": [
     1.0,
     1.0,
     1.0
+   ],
+   "view": [
+    4,
+    5,
+    2
    ]
   }
  },
  "v2_0_0_color_pattern.qtdw": {
+  "camera": {
+   "angle": 30.0,
+   "clipping_range": [
+    1.770146,
+    4.11102
+   ],
+   "focal_point": [
+    0.45,
+    0.475504,
+    0.0
+   ],
+   "position": [
+    0.45,
+    3.078479,
+    1.04119
+   ],
+   "scale": 0.725597,
+   "viewup": [
+    -0.0,
+    -0.37139084876782025,
+    0.9284766219197541
+   ]
+  },
   "data": {
    "bond": [
     [
@@ -1187,8 +1414,77 @@
     ]
    ]
   },
-  "group": null,
+  "multipie": {
+   "basis": {
+    "bond": "[1/2, 1/2, 0] @ [1/4, 1/4, 0]",
+    "bond_definition": "[0,0,0];[1,0,0]",
+    "orbital": "[0, 0, 0] ; [1/2, 1/2, 0]",
+    "orbital_lc": "Q01",
+    "orbital_modulation": "",
+    "orbital_rank": 1,
+    "orbital_type": "Q",
+    "site": "[1/2, 1/2, 0]",
+    "vector": "[1/2, 1/2, 0]",
+    "vector_lc": "Q01",
+    "vector_modulation": "",
+    "vector_type": "Q"
+   },
+   "counter": {},
+   "group": {
+    "find_wyckoff": "[0,0,0]",
+    "tag": "Oh"
+   },
+   "object": {
+    "bond": "[0, 0, 0] ; [1/2, 1/2, 0]",
+    "orbital": "3z**2 - r**2 # [1/4, 1/4, 0]",
+    "orbital_average": false,
+    "orbital_type": "Q",
+    "site": "[1/2, 1/2, 0]",
+    "vector": "[0, 0, 1] # [1/2, 1/2, 0]",
+    "vector_average": false,
+    "vector_cartesian": true,
+    "vector_type": "Q"
+   },
+   "version": "2.0.0"
+  },
+  "preference": {
+   "axis": {
+    "bold": true,
+    "italic": false,
+    "label": "[a,b,c]",
+    "size": 14
+   },
+   "cell": {
+    "color": "black",
+    "line_width": 1.0,
+    "opacity": 1.0
+   },
+   "general": {
+    "color_scheme": "Jmol",
+    "font": "Osaka",
+    "size": 12,
+    "style": "fusion"
+   },
+   "label": {
+    "bold": false,
+    "color": "licorice",
+    "default_check": false,
+    "font": "arial",
+    "italic": false,
+    "size": 18
+   },
+   "light": {
+    "color": "white",
+    "intensity": 0.5,
+    "metallic": 0.1,
+    "pbr": false,
+    "roughness": 0.2,
+    "type": "ver1"
+   }
+  },
   "status": {
+   "axis_type": "full",
+   "bar": false,
    "cell": {
     "a": 1.0,
     "alpha": 90.0,
@@ -1197,8 +1493,10 @@
     "c": 1.0,
     "gamma": 90.0
    },
+   "cell_mode": "off",
    "clip": false,
    "crystal": "monoclinic",
+   "grid": false,
    "lower": [
     0.0,
     0.0,
@@ -1209,15 +1507,44 @@
     0.0,
     0.0
    ],
+   "parallel_projection": true,
    "repeat": false,
    "upper": [
     1.0,
     1.0,
     1.0
+   ],
+   "view": [
+    0,
+    5,
+    2
    ]
   }
  },
  "v2_0_0_helimag.qtdw": {
+  "camera": {
+   "angle": 30.0,
+   "clipping_range": [
+    15.899405,
+    19.668594
+   ],
+   "focal_point": [
+    4.35,
+    0.0,
+    0.0
+   ],
+   "position": [
+    4.35,
+    16.294151,
+    6.51766
+   ],
+   "scale": 4.542103,
+   "viewup": [
+    -0.0,
+    -0.37139084876782025,
+    0.9284766219197541
+   ]
+  },
   "data": {
    "site": [
     [
@@ -2964,8 +3291,77 @@
     ]
    ]
   },
-  "group": null,
+  "multipie": {
+   "basis": {
+    "bond": "[ 1/2, 1/2, 0 ] @ [ 1/4, 1/4, 0 ]",
+    "bond_definition": "[0,0,0];[1,0,0]",
+    "orbital": "[ 0, 0, 0 ]; [ 1/2, 1/2, 0 ]",
+    "orbital_lc": "Q01",
+    "orbital_modulation": "",
+    "orbital_rank": 1,
+    "orbital_type": "Q",
+    "site": "[ 1/2, 1/2, 0 ]",
+    "vector": "[0, 0, 0]",
+    "vector_lc": "Q01",
+    "vector_modulation": "",
+    "vector_type": "M"
+   },
+   "counter": {},
+   "group": {
+    "find_wyckoff": "[0,0,0]",
+    "tag": "C1^1"
+   },
+   "object": {
+    "bond": "[ 0, 0, 0 ] ; [ 1/2, 1/2, 0 ]",
+    "orbital": "3z**2 - r**2 # [ 1/4, 1/4, 0 ]",
+    "orbital_average": false,
+    "orbital_type": "Q",
+    "site": "[ 1/2, 1/2, 0 ]",
+    "vector": "[ 0, 0, 1 ] # [ 1/2, 1/2, 0 ]",
+    "vector_average": false,
+    "vector_cartesian": true,
+    "vector_type": "Q"
+   },
+   "version": "2.0.0"
+  },
+  "preference": {
+   "axis": {
+    "bold": true,
+    "italic": false,
+    "label": "[a,b,c]",
+    "size": 18
+   },
+   "cell": {
+    "color": "black",
+    "line_width": 1.0,
+    "opacity": 1.0
+   },
+   "general": {
+    "color_scheme": "Jmol",
+    "font": "Osaka",
+    "size": 12,
+    "style": "fusion"
+   },
+   "label": {
+    "bold": false,
+    "color": "licorice",
+    "default_check": false,
+    "font": "arial",
+    "italic": false,
+    "size": 18
+   },
+   "light": {
+    "color": "white",
+    "intensity": 0.5,
+    "metallic": 0.1,
+    "pbr": true,
+    "roughness": 0.2,
+    "type": "five"
+   }
+  },
   "status": {
+   "axis_type": "on",
+   "bar": false,
    "cell": {
     "a": 0.3,
     "alpha": 90.0,
@@ -2974,8 +3370,10 @@
     "c": 1.0,
     "gamma": 90.0
    },
+   "cell_mode": "single",
    "clip": true,
    "crystal": "triclinic",
+   "grid": false,
    "lower": [
     0.0,
     0.0,
@@ -2986,15 +3384,44 @@
     0.0,
     0.0
    ],
+   "parallel_projection": true,
    "repeat": false,
    "upper": [
     29.0,
     0.0,
     0.0
+   ],
+   "view": [
+    0,
+    5,
+    2
    ]
   }
  },
  "v2_0_0_icon.qtdw": {
+  "camera": {
+   "angle": 30.0,
+   "clipping_range": [
+    6.053499,
+    18.345107
+   ],
+   "focal_point": [
+    -9.6e-05,
+    2e-06,
+    1.04624
+   ],
+   "position": [
+    -4.547462,
+    9.654605,
+    5.285016
+   ],
+   "scale": 2.971995,
+   "viewup": [
+    0.741231938681961,
+    0.05542399541507788,
+    0.6689569446608735
+   ]
+  },
   "data": {
    "orbital": [
     [
@@ -3087,8 +3514,77 @@
     ]
    ]
   },
-  "group": null,
+  "multipie": {
+   "basis": {
+    "bond": "[1/2, 1/2, 0] @ [1/4, 1/4, 0]",
+    "bond_definition": "[0,0,0];[1,0,0]",
+    "orbital": "[0, 0, 0] ; [1/2, 1/2, 0]",
+    "orbital_lc": "Q01",
+    "orbital_modulation": "",
+    "orbital_rank": 1,
+    "orbital_type": "Q",
+    "site": "[1/2, 1/2, 0]",
+    "vector": "[1/2, 1/2, 0]",
+    "vector_lc": "Q01",
+    "vector_modulation": "",
+    "vector_type": "Q"
+   },
+   "counter": {},
+   "group": {
+    "find_wyckoff": "[0,0,0]",
+    "tag": "Oh"
+   },
+   "object": {
+    "bond": "[0, 0, 0] ; [1/2, 1/2, 0]",
+    "orbital": "3z**2 - r**2 # [1/4, 1/4, 0]",
+    "orbital_average": false,
+    "orbital_type": "Q",
+    "site": "[1/2, 1/2, 0]",
+    "vector": "[0, 0, 1] # [1/2, 1/2, 0]",
+    "vector_average": false,
+    "vector_cartesian": true,
+    "vector_type": "Q"
+   },
+   "version": "2.0.0"
+  },
+  "preference": {
+   "axis": {
+    "bold": true,
+    "italic": false,
+    "label": "[x,y,z]",
+    "size": 14
+   },
+   "cell": {
+    "color": "black",
+    "line_width": 1.0,
+    "opacity": 1.0
+   },
+   "general": {
+    "color_scheme": "Jmol",
+    "font": "Osaka",
+    "size": 12,
+    "style": "fusion"
+   },
+   "label": {
+    "bold": false,
+    "color": "licorice",
+    "default_check": false,
+    "font": "arial",
+    "italic": false,
+    "size": 18
+   },
+   "light": {
+    "color": "white",
+    "intensity": 0.5,
+    "metallic": 0.1,
+    "pbr": true,
+    "roughness": 0.2,
+    "type": "ver1"
+   }
+  },
   "status": {
+   "axis_type": "full",
+   "bar": false,
    "cell": {
     "a": 1.0,
     "alpha": 90.0,
@@ -3097,8 +3593,10 @@
     "c": 1.0,
     "gamma": 90.0
    },
+   "cell_mode": "off",
    "clip": false,
    "crystal": "",
+   "grid": false,
    "lower": [
     0.0,
     0.0,
@@ -3109,15 +3607,44 @@
     0.0,
     0.0
    ],
+   "parallel_projection": true,
    "repeat": false,
    "upper": [
     1.0,
     1.0,
     1.0
+   ],
+   "view": [
+    4,
+    5,
+    2
    ]
   }
  },
  "v2_0_0_old_sample.qtdw": {
+  "camera": {
+   "angle": 30.0,
+   "clipping_range": [
+    3.226876,
+    9.287304
+   ],
+   "focal_point": [
+    -0.001989,
+    -0.000632,
+    0.483396
+   ],
+   "position": [
+    1.769094,
+    5.112043,
+    2.84484
+   ],
+   "scale": 1.527966,
+   "viewup": [
+    -0.1309310355293197,
+    -0.3779641025639749,
+    0.9165152487046951
+   ]
+  },
   "data": {
    "bond": [
     [
@@ -3468,8 +3995,77 @@
     ]
    ]
   },
-  "group": null,
+  "multipie": {
+   "basis": {
+    "bond": "[1/2, 1/2, 0] @ [1/4, 1/4, 0]",
+    "bond_definition": "[0,0,0];[1,0,0]",
+    "orbital": "[0, 0, 0] ; [1/2, 1/2, 0]",
+    "orbital_lc": "Q01",
+    "orbital_modulation": "",
+    "orbital_rank": 1,
+    "orbital_type": "Q",
+    "site": "[1/2, 1/2, 0]",
+    "vector": "[1/2, 1/2, 0]",
+    "vector_lc": "Q01",
+    "vector_modulation": "",
+    "vector_type": "Q"
+   },
+   "counter": {},
+   "group": {
+    "find_wyckoff": "[0,0,0]",
+    "tag": "Oh"
+   },
+   "object": {
+    "bond": "[0, 0, 0] ; [1/2, 1/2, 0]",
+    "orbital": "3z**2 - r**2 # [1/4, 1/4, 0]",
+    "orbital_average": false,
+    "orbital_type": "Q",
+    "site": "[1/2, 1/2, 0]",
+    "vector": "[0, 0, 1] # [1/2, 1/2, 0]",
+    "vector_average": false,
+    "vector_cartesian": true,
+    "vector_type": "Q"
+   },
+   "version": "2.0.0"
+  },
+  "preference": {
+   "axis": {
+    "bold": true,
+    "italic": false,
+    "label": "[x,y,z]",
+    "size": 18
+   },
+   "cell": {
+    "color": "black",
+    "line_width": 1.0,
+    "opacity": 1.0
+   },
+   "general": {
+    "color_scheme": "Jmol",
+    "font": "Osaka",
+    "size": 12,
+    "style": "fusion"
+   },
+   "label": {
+    "bold": false,
+    "color": "licorice",
+    "default_check": false,
+    "font": "arial",
+    "italic": false,
+    "size": 18
+   },
+   "light": {
+    "color": "white",
+    "intensity": 0.5,
+    "metallic": 0.1,
+    "pbr": false,
+    "roughness": 0.2,
+    "type": "ver1"
+   }
+  },
   "status": {
+   "axis_type": "full",
+   "bar": false,
    "cell": {
     "a": 1.0,
     "alpha": 90.0,
@@ -3478,8 +4074,10 @@
     "c": 1.0,
     "gamma": 120.0
    },
+   "cell_mode": "off",
    "clip": true,
    "crystal": "hexagonal",
+   "grid": false,
    "lower": [
     -1.0,
     -1.0,
@@ -3490,15 +4088,44 @@
     0.0,
     0.0
    ],
+   "parallel_projection": true,
    "repeat": false,
    "upper": [
     1.0,
     1.0,
     1.0
+   ],
+   "view": [
+    4,
+    5,
+    2
    ]
   }
  },
  "v2_0_0_sample.qtdw": {
+  "camera": {
+   "angle": 30.0,
+   "clipping_range": [
+    15.203967,
+    51.340362
+   ],
+   "focal_point": [
+    3.0,
+    3.0,
+    3.125997
+   ],
+   "position": [
+    21.585467,
+    26.231834,
+    12.41873
+   ],
+   "scale": 8.067073,
+   "viewup": [
+    -0.18624807887188755,
+    -0.2328100985898594,
+    0.9545214042184236
+   ]
+  },
   "data": {
    "bond": [
     [
@@ -3958,8 +4585,45 @@
     ]
    ]
   },
-  "group": null,
+  "multipie": {},
+  "preference": {
+   "axis": {
+    "bold": true,
+    "italic": false,
+    "label": "[a,b,c]",
+    "size": 20
+   },
+   "cell": {
+    "color": "black",
+    "line_width": 1.0,
+    "opacity": 1.0
+   },
+   "general": {
+    "color_scheme": "Jmol",
+    "font": "Osaka",
+    "size": 12,
+    "style": "fusion"
+   },
+   "label": {
+    "bold": false,
+    "color": "licorice",
+    "default_check": true,
+    "font": "arial",
+    "italic": false,
+    "size": 18
+   },
+   "light": {
+    "color": "white",
+    "intensity": 0.0,
+    "metallic": 0.2,
+    "pbr": false,
+    "roughness": 0.5,
+    "type": "five"
+   }
+  },
   "status": {
+   "axis_type": "on",
+   "bar": false,
    "cell": {
     "a": 1.0,
     "alpha": 90.0,
@@ -3968,8 +4632,10 @@
     "c": 1.0,
     "gamma": 90.0
    },
+   "cell_mode": "single",
    "clip": false,
    "crystal": "",
+   "grid": false,
    "lower": [
     0.0,
     0.0,
@@ -3980,15 +4646,44 @@
     0.0,
     0.0
    ],
+   "parallel_projection": true,
    "repeat": false,
    "upper": [
     1.0,
     1.0,
     1.0
+   ],
+   "view": [
+    4,
+    5,
+    2
    ]
   }
  },
  "v2_3_0_color_pattern.qtdw": {
+  "camera": {
+   "angle": 30.0,
+   "clipping_range": [
+    1.770146,
+    4.11102
+   ],
+   "focal_point": [
+    0.45,
+    0.475504,
+    0.0
+   ],
+   "position": [
+    0.45,
+    3.078479,
+    1.04119
+   ],
+   "scale": 0.725597,
+   "viewup": [
+    -0.0,
+    -0.37139084876782025,
+    0.9284766219197541
+   ]
+  },
   "data": {
    "bond": [
     [
@@ -4315,8 +5010,45 @@
     ]
    ]
   },
-  "group": null,
+  "multipie": {},
+  "preference": {
+   "axis": {
+    "bold": true,
+    "italic": false,
+    "label": "[a,b,c]",
+    "size": 14
+   },
+   "cell": {
+    "color": "black",
+    "line_width": 1.0,
+    "opacity": 1.0
+   },
+   "general": {
+    "color_scheme": "Jmol",
+    "font": "Osaka",
+    "size": 12,
+    "style": "fusion"
+   },
+   "label": {
+    "bold": false,
+    "color": "licorice",
+    "default_check": false,
+    "font": "arial",
+    "italic": false,
+    "size": 18
+   },
+   "light": {
+    "color": "white",
+    "intensity": 0.5,
+    "metallic": 0.2,
+    "pbr": false,
+    "roughness": 0.1,
+    "type": "lightkit"
+   }
+  },
   "status": {
+   "axis_type": "off",
+   "bar": false,
    "cell": {
     "a": 1.0,
     "alpha": 90.0,
@@ -4325,8 +5057,10 @@
     "c": 1.0,
     "gamma": 90.0
    },
+   "cell_mode": "off",
    "clip": false,
    "crystal": "monoclinic",
+   "grid": false,
    "lower": [
     0.0,
     0.0,
@@ -4337,15 +5071,44 @@
     0.0,
     0.0
    ],
+   "parallel_projection": true,
    "repeat": false,
    "upper": [
     1.0,
     1.0,
     1.0
+   ],
+   "view": [
+    0,
+    5,
+    2
    ]
   }
  },
  "v2_3_0_helimag.qtdw": {
+  "camera": {
+   "angle": 30.0,
+   "clipping_range": [
+    15.899405,
+    19.668594
+   ],
+   "focal_point": [
+    4.35,
+    0.0,
+    0.0
+   ],
+   "position": [
+    4.35,
+    16.294151,
+    6.51766
+   ],
+   "scale": 4.542103,
+   "viewup": [
+    -0.0,
+    -0.37139084876782025,
+    0.9284766219197541
+   ]
+  },
   "data": {
    "site": [
     [
@@ -6092,8 +6855,45 @@
     ]
    ]
   },
-  "group": null,
+  "multipie": {},
+  "preference": {
+   "axis": {
+    "bold": true,
+    "italic": false,
+    "label": "[a,b,c]",
+    "size": 18
+   },
+   "cell": {
+    "color": "black",
+    "line_width": 1.0,
+    "opacity": 1.0
+   },
+   "general": {
+    "color_scheme": "Jmol",
+    "font": "Osaka",
+    "size": 12,
+    "style": "fusion"
+   },
+   "label": {
+    "bold": false,
+    "color": "licorice",
+    "default_check": false,
+    "font": "arial",
+    "italic": false,
+    "size": 18
+   },
+   "light": {
+    "color": "white",
+    "intensity": 0.5,
+    "metallic": 0.2,
+    "pbr": true,
+    "roughness": 0.1,
+    "type": "lightkit"
+   }
+  },
   "status": {
+   "axis_type": "on",
+   "bar": false,
    "cell": {
     "a": 0.3,
     "alpha": 90.0,
@@ -6102,8 +6902,10 @@
     "c": 1.0,
     "gamma": 90.0
    },
+   "cell_mode": "off",
    "clip": true,
    "crystal": "triclinic",
+   "grid": false,
    "lower": [
     0.0,
     0.0,
@@ -6114,15 +6916,44 @@
     0.0,
     0.0
    ],
+   "parallel_projection": true,
    "repeat": false,
    "upper": [
     29.0,
     0.0,
     0.0
+   ],
+   "view": [
+    0,
+    5,
+    2
    ]
   }
  },
  "v2_3_0_icon.qtdw": {
+  "camera": {
+   "angle": 30.0,
+   "clipping_range": [
+    6.053499,
+    18.345107
+   ],
+   "focal_point": [
+    -9.6e-05,
+    2e-06,
+    1.04624
+   ],
+   "position": [
+    -4.547462,
+    9.654605,
+    5.285016
+   ],
+   "scale": 2.971995,
+   "viewup": [
+    0.741231938681961,
+    0.05542399541507788,
+    0.6689569446608735
+   ]
+  },
   "data": {
    "orbital": [
     [
@@ -6215,8 +7046,45 @@
     ]
    ]
   },
-  "group": null,
+  "multipie": {},
+  "preference": {
+   "axis": {
+    "bold": true,
+    "italic": false,
+    "label": "[x,y,z]",
+    "size": 14
+   },
+   "cell": {
+    "color": "black",
+    "line_width": 1.0,
+    "opacity": 1.0
+   },
+   "general": {
+    "color_scheme": "Jmol",
+    "font": "Osaka",
+    "size": 12,
+    "style": "fusion"
+   },
+   "label": {
+    "bold": false,
+    "color": "licorice",
+    "default_check": false,
+    "font": "arial",
+    "italic": false,
+    "size": 18
+   },
+   "light": {
+    "color": "white",
+    "intensity": 0.5,
+    "metallic": 0.2,
+    "pbr": true,
+    "roughness": 0.1,
+    "type": "lightkit"
+   }
+  },
   "status": {
+   "axis_type": "off",
+   "bar": false,
    "cell": {
     "a": 1.0,
     "alpha": 90.0,
@@ -6225,8 +7093,10 @@
     "c": 1.0,
     "gamma": 90.0
    },
+   "cell_mode": "off",
    "clip": false,
    "crystal": "",
+   "grid": false,
    "lower": [
     0.0,
     0.0,
@@ -6237,15 +7107,44 @@
     0.0,
     0.0
    ],
+   "parallel_projection": true,
    "repeat": false,
    "upper": [
     1.0,
     1.0,
     1.0
+   ],
+   "view": [
+    4,
+    5,
+    2
    ]
   }
  },
  "v2_4_2_sample.qtdw": {
+  "camera": {
+   "angle": 30.0,
+   "clipping_range": [
+    15.4412,
+    51.041735
+   ],
+   "focal_point": [
+    3.0,
+    3.0,
+    3.125997
+   ],
+   "position": [
+    26.646087,
+    21.922535,
+    10.494363
+   ],
+   "scale": 8.067073,
+   "viewup": [
+    -0.19909998598166914,
+    -0.12945599088519819,
+    0.971390931605824
+   ]
+  },
   "data": {
    "bond": [
     [
@@ -6705,8 +7604,45 @@
     ]
    ]
   },
-  "group": null,
+  "multipie": {},
+  "preference": {
+   "axis": {
+    "bold": true,
+    "italic": false,
+    "label": "[a,b,c]",
+    "size": 20
+   },
+   "cell": {
+    "color": "black",
+    "line_width": 1.0,
+    "opacity": 1.0
+   },
+   "general": {
+    "color_scheme": "Jmol",
+    "font": "Osaka",
+    "size": 12,
+    "style": "fusion"
+   },
+   "label": {
+    "bold": false,
+    "color": "licorice",
+    "default_check": true,
+    "font": "arial",
+    "italic": false,
+    "size": 18
+   },
+   "light": {
+    "color": "white",
+    "intensity": 0.5,
+    "metallic": 0.2,
+    "pbr": false,
+    "roughness": 0.1,
+    "type": "lightkit"
+   }
+  },
   "status": {
+   "axis_type": "on",
+   "bar": false,
    "cell": {
     "a": 1.0,
     "alpha": 90.0,
@@ -6715,8 +7651,10 @@
     "c": 1.0,
     "gamma": 90.0
    },
+   "cell_mode": "single",
    "clip": false,
    "crystal": "",
+   "grid": false,
    "lower": [
     0.0,
     0.0,
@@ -6727,11 +7665,17 @@
     0.0,
     0.0
    ],
+   "parallel_projection": true,
    "repeat": false,
    "upper": [
     1.0,
     1.0,
     1.0
+   ],
+   "view": [
+    6,
+    5,
+    2
    ]
   }
  }
