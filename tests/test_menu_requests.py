@@ -39,7 +39,7 @@ def test_edit_menu_dataset(app):
     [
         ("camera", "Camera", "position"),
         ("data", "Data", "=== site ==="),
-        ("actor", "Actor", "Actor"),
+        ("actor", "Actor", None),  # names depend on the pyvista version, compared below.
         ("status", "Status", "=== plus ==="),
         ("preference", "Preference", "=== general ==="),
     ],
@@ -50,6 +50,9 @@ def test_window_menu_shows_data_views(app, name, title, expected):
     assert action.text().replace("&", "") == title
     action.trigger()
     view = app._data_views[name]
+    if expected is None:
+        expected = "\n".join(app.pyvista_widget.actor_list)
+        assert expected and view.log.toPlainText() == expected
     assert view.isVisible() and expected in view.log.toPlainText(), view.log.toPlainText()[:200]
 
 
