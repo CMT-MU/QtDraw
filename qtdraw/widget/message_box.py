@@ -67,7 +67,10 @@ class ResizableMessageBox(QMessageBox):
         """
         if not shiboken6.isValid(self):  # called while the box is being deleted.
             return False
-        result = super().event(e)
+        if e.type() == QEvent.LayoutRequest and self.isVisible():
+            result = QDialog.event(self, e)  # QMessageBox would fix the size again, e.g. with wrapped text.
+        else:
+            result = super().event(e)
         if e.type() in (QEvent.LayoutRequest, QEvent.Resize, QEvent.Show):
             self._lift_fixed_size()
         return result

@@ -154,3 +154,60 @@ def test_error_dialog_keeps_its_contents_when_shrunk(qapp, monkeypatch):
     assert buttons.height() > 0 and box.width() >= box.layout().totalMinimumSize().width()
     box.close()
     box.deleteLater()
+
+
+def test_error_dialog_with_details_shown(qapp, monkeypatch):
+    from PySide6.QtWidgets import QDialogButtonBox, QTextEdit
+
+    from qtdraw.widget import message_box
+
+    shown = []
+
+    def show(self):
+        self.show()
+        shown.append(self)
+
+    monkeypatch.setattr(QMessageBox, "exec", show)
+    message_box.show_error("ValueError: bad", "Traceback ...\n" + "line\n" * 100)
+    box = shown[0]
+    qapp.processEvents()
+    collapsed = box.minimumHeight()
+    toggle = [b for b in box.findChildren(QPushButton) if "Details" in b.text()][0]
+    for _ in range(2):  # repeated cycles.
+        toggle.click()  # show the details.
+        qapp.processEvents()
+        details = box.findChild(QTextEdit)
+        before = details.height()
+        box.resize(1000, 800)
+        qapp.processEvents()
+        assert details.height() > before + 200  # the details get the extra space.
+        box.resize(50, 50)
+        qapp.processEvents()
+        buttons = box.findChild(QDialogButtonBox)
+        assert buttons.height() > 0 and buttons.geometry().bottom() <= box.height()
+        toggle.click()  # hide the details.
+        qapp.processEvents()
+        assert box.minimumHeight() <= collapsed + 5  # the minimum follows the hidden details.
+    box.close()
+    box.deleteLater()
+
+
+def test_data_view_reopened_after_closing(app):
+    import sys
+
+    hook = sys.excepthook
+    app.action_window["actor"].trigger()
+    view = app._data_views["actor"]
+    view.close()
+    app.action_window["actor"].trigger()
+    assert app._data_views["actor"] is view and view.isVisible()
+    assert sys.excepthook is hook
+
+
+def test_status_text_of_old_files(app):
+    pvw = app.pyvista_widget
+    pvw._mp_data = None
+    for multipie in [{}, {"version": "1.0"}, {"version": "1.0", "group": {"group": "C1"}}]:
+        pvw._status["multipie"] = multipie
+        text = app._status_text()
+        assert "=== multipie ===" in text and "=== multipie.plus ===" in text
