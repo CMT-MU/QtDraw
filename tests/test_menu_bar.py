@@ -304,3 +304,79 @@ def test_help_links(app, monkeypatch):
     app.action_documentation.trigger()
     app.action_report_issue.trigger()
     assert opened == ["https://cmt-mu.github.io/QtDraw/", "https://github.com/CMT-MU/QtDraw/issues"]
+
+
+# ==================================================
+# The file written by Save, also after the Python methods and for symbolic links.
+# ==================================================
+def test_save_after_opening_a_link_to_a_material_asks_for_a_name(app, monkeypatch, tmp_path):
+    from grid_helpers import write_small_xsf
+
+    material = tmp_path / "m.xsf"
+    write_small_xsf(material)
+    before = material.read_bytes()
+    alias = tmp_path / "alias.qtdw"
+    alias.symlink_to(material)
+    app.load_file(str(alias))
+    shown = save_dialog(monkeypatch, tmp_path / "m.qtdw")
+    app.action_save.trigger()
+    assert len(shown) == 1 and material.read_bytes() == before
+
+
+def test_save_after_python_load_writes_the_loaded_file(app, monkeypatch, tmp_path):
+    a, b = tmp_path / "a.qtdw", tmp_path / "b.qtdw"
+    app.pyvista_widget.save(str(a))
+    app.pyvista_widget.save(str(b))
+    app.load_file(str(a))
+    app.load(str(b))
+    app.pyvista_widget.add_site()
+    shown = save_dialog(monkeypatch, tmp_path / "other.qtdw")
+    app.action_save.trigger()
+    assert shown == []
+    app.load_file(str(a))
+    assert n_sites(app) == 0
+    app.load_file(str(b))
+    assert n_sites(app) == 1
+
+
+def test_save_after_python_save_writes_that_file(app, monkeypatch, tmp_path):
+    a, b = tmp_path / "a.qtdw", tmp_path / "b.qtdw"
+    app.pyvista_widget.save(str(a))
+    app.load_file(str(a))
+    app.save(str(b))
+    app.pyvista_widget.add_site()
+    save_dialog(monkeypatch, tmp_path / "other.qtdw")
+    app.action_save.trigger()
+    app.load_file(str(a))
+    assert n_sites(app) == 0
+    app.load_file(str(b))
+    assert n_sites(app) == 1
+
+
+def test_save_after_python_load_of_a_material_asks_for_a_name(app, monkeypatch, tmp_path):
+    from grid_helpers import write_small_xsf
+
+    a, material = tmp_path / "a.qtdw", tmp_path / "m.xsf"
+    write_small_xsf(material)
+    app.pyvista_widget.save(str(a))
+    app.load_file(str(a))
+    app.load(str(material))
+    shown = save_dialog(monkeypatch, tmp_path / "m.qtdw")
+    app.action_save.trigger()
+    assert len(shown) == 1
+
+
+# ==================================================
+# Shortcuts through key events.
+# ==================================================
+@pytest.mark.parametrize("focus", ["view", "line edit"])
+def test_view_shortcut_by_key(app, focus):
+    from PySide6.QtCore import Qt
+    from PySide6.QtTest import QTest
+
+    app.show()
+    app.activateWindow()
+    widget = app.pyvista_widget if focus == "view" else app.uc_edit_a
+    widget.setFocus()
+    QTest.keyClick(widget, Qt.Key_2, Qt.ControlModifier)
+    assert app.pyvista_widget._status["view"] == [0, 1, 0]

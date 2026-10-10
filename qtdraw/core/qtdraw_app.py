@@ -430,9 +430,7 @@ class QtDraw(Window):
         self._flush()
         with busy_cursor():
             self.pyvista_widget.load(filename)
-        file = Path(filename).absolute()
-        self._current_file = file if file.suffix == detail["extension"] else None  # a material file is not written.
-        self._add_recent_file(file)
+        self._loaded_from(filename)
 
         self._update_panel_quietly()
 
@@ -526,6 +524,21 @@ class QtDraw(Window):
         self._save(str(filename))
         self._saved_to(filename)
         return True
+
+    # ==================================================
+    def _loaded_from(self, filename):
+        """
+        Remember a loaded file: Save writes to a QtDraw file, but never to a material file.
+
+        Args:
+            filename (str): file name.
+
+        :meta private:
+        """
+        file = Path(filename).absolute()
+        is_qtdraw = file.resolve().suffix == detail["extension"]  # as load() reads it, also through a link.
+        self._current_file = file if is_qtdraw else None
+        self._add_recent_file(file)
 
     # ==================================================
     def _saved_to(self, filename):
@@ -3228,6 +3241,7 @@ class QtDraw(Window):
         """
         self._flush()
         self.pyvista_widget.load(filename)
+        self._loaded_from(filename)
         self._mark_saved()
         self._reset_history()
 
@@ -3240,7 +3254,7 @@ class QtDraw(Window):
             filename (str): file name, relative to the current directory (which is not changed).
         """
         self._save(filename)
-        self._mark_saved()
+        self._saved_to(filename)
 
     # ==================================================
     def _save(self, filename):

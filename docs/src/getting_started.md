@@ -33,7 +33,7 @@ The `File` menu opens (Ctrl+O, Cmd+O on macOS), reopens one of the last 10 files
 
 The `Edit` menu undoes (Ctrl+Z, Cmd+Z on macOS) and redoes (Ctrl+Y or Ctrl+Shift+Z depending on the platform, Cmd+Shift+Z on macOS) changes of objects, unit cell, range and MultiPie group. The camera, view settings and preferences are not changed by undo or redo. Opening a file starts a new history; saving keeps it. `Data Table` opens the table of all objects (as the `e` key), and `Preferences` the preferences (in the application menu on macOS).
 
-The `View` menu sets the view direction (Ctrl+1 to Ctrl+6 for +x, +y, +z, -x, -y, -z, Ctrl+0 for the default) and switches parallel projection, grid, scalar bar, clip, repeat, axis and cell, as the panel does.
+The `View` menu sets the view direction (Ctrl+1 to Ctrl+6 for +x, +y, +z, -x, -y, -z, Ctrl+0 for the default; Cmd on macOS) and switches parallel projection, grid, scalar bar, clip, repeat, axis and cell, as the panel does.
 
 The `Window` menu shows the messages of QtDraw (`Info`) and the log (`Log`).
 

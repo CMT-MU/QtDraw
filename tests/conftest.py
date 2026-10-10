@@ -31,7 +31,9 @@ def isolated_settings(tmp_path_factory):
     """
     from PySide6.QtCore import QSettings
 
-    QSettings.setPath(QSettings.IniFormat, QSettings.UserScope, str(tmp_path_factory.mktemp("settings")))
+    directory = str(tmp_path_factory.mktemp("settings"))
+    for scope in (QSettings.UserScope, QSettings.SystemScope):  # also no fallback to installed system settings.
+        QSettings.setPath(QSettings.IniFormat, scope, directory)
     yield
 
 
