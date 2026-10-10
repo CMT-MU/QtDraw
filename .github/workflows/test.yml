@@ -63,4 +63,14 @@ jobs:
       - name: Run tests
         env:
           QT_QPA_PLATFORM: offscreen
+          QTDRAW_VISUAL_OUTPUT: visual-output  # images of failing or skipped visual tests.
+          QTDRAW_VISUAL_REQUIRE: ${{ matrix.dependencies == 'minimum' && '1' || '0' }}  # pinned versions have references.
         run: python -m pytest -v -n auto  # tests run in parallel processes.
+
+      - name: Keep images of the visual tests
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: visual-${{ matrix.os }}-${{ matrix.python-version }}-${{ matrix.dependencies }}
+          path: visual-output
+          if-no-files-found: ignore
