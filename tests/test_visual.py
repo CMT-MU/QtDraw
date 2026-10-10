@@ -7,7 +7,9 @@ Rendering differs between systems and VTK versions, so the reference images are 
 version in tests/data/visual/<system>-vtk<major.minor>/; without them, the tests are skipped.
 
 - QTDRAW_UPDATE_VISUAL=1 writes the reference images of this system (check them before committing).
-- QTDRAW_VISUAL_OUTPUT=<dir> receives the image of a failing or skipped test (CI keeps it as an artifact).
+- QTDRAW_VISUAL_OUTPUT=<dir> receives the image of a failing or skipped test, with the reference and their difference
+  for a failing one (CI keeps them as an artifact).
+- QTDRAW_VISUAL_REQUIRE=1 fails, instead of skipping, without reference images (CI with pinned versions).
 """
 
 import os
@@ -22,6 +24,7 @@ import vtk
 from PIL import Image
 
 from qtdraw.core.pyvista_widget import PyVistaWidget
+from qtdraw.core.pyvista_widget_setting import widget_detail
 from qtdraw.util.util import check_multipie
 
 EXAMPLES = Path(__file__).resolve().parents[1] / "docs" / "src" / "examples"
@@ -30,6 +33,7 @@ REFERENCE = Path(__file__).resolve().parent / "data" / "visual" / SYSTEM
 SIZE = (800, 600)
 ERROR = 500.0  # pyvista.compare_images error above which images differ (pyvista's own default for tests).
 UPDATE = os.environ.get("QTDRAW_UPDATE_VISUAL") == "1"
+REQUIRE = os.environ.get("QTDRAW_VISUAL_REQUIRE") == "1"
 OUTPUT = os.path.abspath(os.environ["QTDRAW_VISUAL_OUTPUT"]) if os.environ.get("QTDRAW_VISUAL_OUTPUT") else None
 
 
@@ -99,6 +103,11 @@ def render(widget):
     plotter = pv.Plotter(off_screen=True, window_size=SIZE)
     try:
         plotter.set_background(widget.background_color)
+        if widget_detail["anti_aliasing"]:
+            plotter.enable_anti_aliasing()
+        plotter.remove_all_lights()
+        for light in widget.renderer.lights:
+            plotter.add_light(light.copy())
         for name, actor in widget.renderer.actors.items():
             plotter.add_actor(actor, name=name, reset_camera=False)
         plotter.camera_position = widget.camera_position
@@ -109,10 +118,24 @@ def render(widget):
         plotter.close()
 
 
-def keep(image, name):
+def drawn_fraction(image, background):
+    """
+    Fraction of the pixels that differ from the background color.
+    """
+    rgb = np.asarray(image)[..., :3].astype(int)
+    color = np.round(np.asarray(pv.Color(background).float_rgb) * 255).astype(int)
+    return float(np.any(np.abs(rgb - color) > 8, axis=-1).mean())
+
+
+def keep(image, name, reference=None):
     if OUTPUT:
-        Path(OUTPUT, SYSTEM).mkdir(parents=True, exist_ok=True)
-        Image.fromarray(image).save(Path(OUTPUT, SYSTEM, f"{name}.png"))
+        directory = Path(OUTPUT, SYSTEM)
+        directory.mkdir(parents=True, exist_ok=True)
+        Image.fromarray(image).save(directory / f"{name}.png")
+        if reference is not None:
+            Image.fromarray(reference).save(directory / f"{name}-reference.png")
+            difference = np.abs(image[..., :3].astype(int) - reference[..., :3].astype(int)).astype(np.uint8)
+            Image.fromarray(difference).save(directory / f"{name}-difference.png")
 
 
 # ==================================================
@@ -124,8 +147,10 @@ def test_drawing_looks_as_before(qapp, tmp_path, monkeypatch, name):
         widget.window_size = SIZE  # 2D texts are placed in pixels of the widget.
         SCENES[name](widget, tmp_path)
         image = render(widget)
+        background = widget.background_color
     finally:
         widget.close()
+    assert drawn_fraction(image, background) > 0.01, f"{name} is (almost) empty."  # also before an update.
 
     reference = REFERENCE / f"{name}.png"
     if UPDATE:
@@ -134,11 +159,13 @@ def test_drawing_looks_as_before(qapp, tmp_path, monkeypatch, name):
         return
     if not reference.exists():
         keep(image, name)
+        if REQUIRE:
+            pytest.fail(f"no reference image for {SYSTEM}.")
         pytest.skip(f"no reference image for {SYSTEM}.")
-    error = pv.compare_images(image, np.asarray(Image.open(reference)))
+    expected = np.asarray(Image.open(reference))
+    error = pv.compare_images(image, expected)
     limit = LARGER_ERROR.get(name, ERROR)
     print(f"{name}: error {error:.0f} (limit {limit:.0f})")
     if error > limit:
-        keep(image, name)
+        keep(image, name, expected)
     assert error <= limit, f"{name} differs from {reference} (error {error:.0f} > {limit:.0f})."
-    assert np.asarray(image).std() > 0  # not an empty image.
