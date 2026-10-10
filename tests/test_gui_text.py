@@ -62,3 +62,23 @@ def test_about_dialog_shows_python_version(widget):
     texts = " ".join(label.text() for label in dialog.findChildren(QLabel))
     dialog.deleteLater()
     assert platform.python_version() in texts and "Versoin" not in texts
+
+
+def test_text2d_position_with_expressions(widget):
+    widget.add_text2d(caption="t", position="[1/2,0.9,0]")
+    row = widget._data["text2d"].tolist()[0]
+    assert row[COLUMN_NAME_ACTOR] in widget.actors
+
+
+def test_memory_error_while_reading_is_not_reworded(widget, tmp_path, monkeypatch):
+    import qtdraw.core.pyvista_widget as pvw_module
+
+    file = tmp_path / "big.qtdw"
+    widget.save(str(file))
+
+    def no_memory(filename):
+        raise MemoryError()
+
+    monkeypatch.setattr(pvw_module, "read_dict", no_memory)
+    with pytest.raises(MemoryError):
+        widget.load(str(file))

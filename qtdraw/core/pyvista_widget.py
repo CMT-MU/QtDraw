@@ -1962,7 +1962,7 @@ class PyVistaWidget(QtInteractor):
             try:
                 all_data = read_dict(f)
                 ver = int(all_data["version"].split(".")[0])  # major version.
-            except OSError:  # e.g. missing file, as it is.
+            except (OSError, MemoryError):  # e.g. missing file, as it is.
                 raise
             except Exception as e:  # the parser's message is kept as the cause.
                 raise ValueError(f"{file.name} is not a valid QtDraw file, it cannot be read.") from e
@@ -4701,7 +4701,7 @@ class PyVistaWidget(QtInteractor):
         color = all_colors[data["color"]][0]
         font = data["font"]
 
-        position = apply(float, text_to_list(position))[:2]
+        position = _parse_vector(position)[:2].tolist()  # as add_text2d() checks it, also with expressions.
 
         if actor == "":
             actor = f"Actor2D(Counter={self._label_counter})"
