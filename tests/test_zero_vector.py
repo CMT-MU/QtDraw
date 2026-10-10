@@ -45,3 +45,23 @@ def test_repeat_with_a_vector_of_length_zero(widget, qtbot):
         widget.set_clip(True)
         widget.set_repeat(False)
     assert not errors, errors
+
+
+@pytest.mark.parametrize("kwargs", [{"direction": "[1e-7,0,0]", "length": 1}, {"direction": "[1e-7,0,0]", "length": -1e7}])
+def test_short_direction_is_still_drawn(widget, qtbot, kwargs):
+    with qtbot.capture_exceptions() as errors:
+        widget.add_vector(**kwargs)  # the direction is normalized: the arrow is 1 long.
+    assert not errors, errors
+    assert vector_rows(widget)[0][COLUMN_NAME_ACTOR] in widget.actors
+
+
+def test_vector_direction_edited_to_zero_and_back(widget, qtbot):
+    widget.add_vector(name="V", label="v")
+    model = widget._data["vector"]
+    direction = model.index(0, model.header.index("direction"))
+    with qtbot.capture_exceptions() as errors:
+        model.setData(direction, "[0,0,0]")
+        assert vector_rows(widget)[0][COLUMN_NAME_ACTOR] == ""
+        model.setData(direction, "[1,0,0]")
+    assert not errors, errors
+    assert vector_rows(widget)[0][COLUMN_NAME_ACTOR] in widget.actors

@@ -3974,7 +3974,7 @@ class PyVistaWidget(QtInteractor):
         directionT = convert_str_vector(vector=direction, transform=transform, A=self.A_matrix)
         norm = float(np.linalg.norm(directionT))
         drawn_length = abs(length) * norm if length < CHOP else length  # as create_vector() uses it.
-        if norm < CHOP or drawn_length < CHOP:  # an arrow of length 0 cannot be made.
+        if norm == 0.0 or drawn_length < CHOP:  # an arrow of length 0 cannot be made (the direction is normalized).
             self.write_info(f"* vector '{data['name']}' is not drawn: its length is 0.")
             if actor != "":  # remove the vector drawn before an edit.
                 self.delete_actor(actor)
