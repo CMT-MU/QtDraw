@@ -24,6 +24,18 @@ def process_deleted_widgets():
 
 
 # ==================================================
+@pytest.fixture(autouse=True)
+def isolated_settings(tmp_path_factory):
+    """
+    Keep settings such as recent files in a temporary directory, not in the user's settings.
+    """
+    from PySide6.QtCore import QSettings
+
+    QSettings.setPath(QSettings.IniFormat, QSettings.UserScope, str(tmp_path_factory.mktemp("settings")))
+    yield
+
+
+# ==================================================
 @pytest.fixture(scope="session")
 def qapp():
     return get_qt_application()

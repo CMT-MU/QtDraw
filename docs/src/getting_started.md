@@ -29,11 +29,15 @@ In the `Dataset` window:
 - Right click: context menu to create or copy an object.
 - `Esc`: clear the selection. `Up`, `Down`: move the selection.
 
-The `File` menu opens (Ctrl+O, Cmd+O on macOS), saves (Ctrl+S, Cmd+S), saves a screenshot, clears all objects and quits (Ctrl+Q, Cmd+Q). When the window is closed with unsaved changes, QtDraw asks whether to save them; without changes it closes at once.
+The `File` menu opens (Ctrl+O, Cmd+O on macOS), reopens one of the last 10 files (`Open Recent`), saves (Ctrl+S, Cmd+S), saves under another name (`Save As`, Ctrl+Shift+S, Cmd+Shift+S), saves a screenshot, clears all objects and quits (Ctrl+Q, Cmd+Q). `Save` writes to the file opened or saved last, and asks for a name the first time or after importing a CIF, VESTA or XSF file. When the window is closed with unsaved changes, QtDraw asks whether to save them; without changes it closes at once.
 
-The `Edit` menu undoes (Ctrl+Z, Cmd+Z on macOS) and redoes (Ctrl+Y or Ctrl+Shift+Z depending on the platform, Cmd+Shift+Z on macOS) changes of objects, unit cell, range and MultiPie group. The camera, view settings and preferences are not changed by undo or redo. Opening a file starts a new history; saving keeps it.
+The `Edit` menu undoes (Ctrl+Z, Cmd+Z on macOS) and redoes (Ctrl+Y or Ctrl+Shift+Z depending on the platform, Cmd+Shift+Z on macOS) changes of objects, unit cell, range and MultiPie group. The camera, view settings and preferences are not changed by undo or redo. Opening a file starts a new history; saving keeps it. `Data Table` opens the table of all objects (as the `e` key), and `Preferences` the preferences (in the application menu on macOS).
+
+The `View` menu sets the view direction (Ctrl+1 to Ctrl+6 for +x, +y, +z, -x, -y, -z, Ctrl+0 for the default) and switches parallel projection, grid, scalar bar, clip, repeat, axis and cell, as the panel does.
 
 The `Window` menu shows the messages of QtDraw (`Info`) and the log (`Log`).
+
+The `Help` menu shows the mouse and key operations, opens this documentation and the page to report an issue, and shows the version information.
 
 The buttons below the unit cell and view settings open the `Dataset` window (`edit`), the preferences, the version information (`about`) and the MultiPie dialog.
 

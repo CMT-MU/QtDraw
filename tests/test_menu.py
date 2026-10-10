@@ -14,7 +14,7 @@ def test_menu_has_standard_shortcuts(app):
     assert app.action_save.shortcut() == QKeySequence(QKeySequence.Save)
     assert app.action_quit.shortcut() == QKeySequence(QKeySequence.Quit)
     titles = [a.text() for a in app.menuBar().actions()]
-    assert titles == ["&File", "&Edit", "&Window", "&Help"]
+    assert titles == ["&File", "&Edit", "&View", "&Window", "&Help"]
 
 
 # ==================================================
