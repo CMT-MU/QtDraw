@@ -103,15 +103,20 @@ def test_install_command_uses_pip_of_this_python():
     assert install_multipie_command()[4:] == ["multipie"]
 
 
-def test_command_text_can_be_run_in_a_shell():
-    command = ["/path with space/python", "-m", "pip", "install", "multipie"]
-    if sys.platform == "win32":
-        assert command_text(command) == '"/path with space/python" -m pip install multipie'
-    else:
-        import shlex
+@pytest.mark.parametrize("python", ["/usr/bin/python", "/path with space/R&D's (x)/python", "C:\\R&D\\python.exe"])
+def test_command_text_can_be_run_in_a_shell(monkeypatch, python):
+    import shlex
 
-        assert shlex.split(command_text(command)) == command
-    assert not set("<>|&;") & set(command_text(install_multipie_command()))  # nothing a shell would take.
+    command = [python, "-m", "pip", "install", "multipie"]
+    monkeypatch.setattr(sys, "platform", "linux")
+    assert shlex.split(command_text(command)) == command
+    monkeypatch.setattr(sys, "platform", "win32")  # for cmd.exe.
+    quoted = f'"{python}"' if set(python) & set(" &()") else python
+    assert command_text(command) == f"{quoted} -m pip install multipie"
+
+
+def test_install_command_has_no_shell_operator():
+    assert not set("<>|&;") & set("".join(install_multipie_command()[1:]))
 
 
 def test_missing_multipie(monkeypatch):

@@ -6,7 +6,6 @@ import re
 import ast
 import sys
 import shlex
-import subprocess
 import numpy as np
 import sympy as sp
 from sympy import SympifyError
@@ -240,7 +239,9 @@ def command_text(command):
     Returns:
         - (str) -- command line.
     """
-    return subprocess.list2cmdline(command) if sys.platform == "win32" else shlex.join(command)
+    if sys.platform == "win32":  # for cmd.exe: quote the arguments with spaces or its special characters.
+        return " ".join(f'"{a}"' if not a or set(a) & set(" \t&|<>^()") else a for a in command)
+    return shlex.join(command)
 
 
 # ==================================================
