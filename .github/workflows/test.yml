@@ -63,7 +63,10 @@ jobs:
           python -m playwright install --with-deps chromium
 
       - name: Import check
-        run: python -c "import qtdraw.core.qtdraw_app, qtdraw.scripts.qtdraw, qtdraw.scripts.conv_qtdraw3"
+        run: |
+          python -c "import qtdraw.core.qtdraw_app, qtdraw.scripts.qtdraw, qtdraw.scripts.conv_qtdraw3"
+          # MultiPie is loaded from Python 3.12, so that its tests are not skipped.
+          python -c "import sys; from qtdraw.util.util import check_multipie, multipie_message; assert sys.version_info < (3, 12) or check_multipie(), multipie_message()"
 
       - name: Fonts for the off-screen platform on Windows
         if: runner.os == 'Windows'

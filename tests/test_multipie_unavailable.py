@@ -29,9 +29,28 @@ def broken_multipie(path):
     return path
 
 
+ISOLATED = """
+import os
+from pathlib import Path
+from PySide6.QtCore import QSettings
+for scope in (QSettings.UserScope, QSettings.SystemScope):  # not the user's settings.
+    QSettings.setPath(QSettings.IniFormat, scope, os.environ["QTDRAW_TEST_HOME"])
+import qtdraw.widget.mathjax as mathjax
+init = mathjax.MathJaxSVG.__init__
+mathjax.MathJaxSVG.__init__ = lambda self, cache_dir=None, **kw: init(
+    self, cache_dir=cache_dir or Path(os.environ["QTDRAW_TEST_HOME"]) / "svg_cache", **kw
+)  # not the user's cache.
+"""
+
+
 def run(code, path):
+    """
+    Run code in a process that finds the MultiPie in path, with its settings and cache in path.
+    """
     env = {**os.environ, "QT_QPA_PLATFORM": "offscreen", "PYTHONPATH": os.pathsep.join([str(path), *sys.path])}
-    ret = subprocess.run([sys.executable, "-c", textwrap.dedent(code)], capture_output=True, text=True, timeout=120, env=env)
+    env["QTDRAW_TEST_HOME"] = str(path)
+    code = ISOLATED + textwrap.dedent(code)
+    ret = subprocess.run([sys.executable, "-c", code], capture_output=True, text=True, timeout=120, env=env)
     assert ret.returncode == 0 and "OK" in ret.stdout, ret.stdout + ret.stderr[-3000:]
     return ret.stdout
 
@@ -69,10 +88,25 @@ def test_qtdraw_runs_with_multipie_turned_off(tmp_path):
         window.misc_button_multipie.click()  # tells why, without opening the dialog.
         assert len(shown) == 1 and "cannot be loaded" in shown[0], shown
         assert window.multipie_dialog is None
-        window.pyvista_widget.load({str(SI_CIF)!r})  # a material file opens.
-        assert window.pyvista_widget._data["site"].rowCount() > 0
+        pvw = window.pyvista_widget
+        pvw.load({str(SI_CIF)!r})  # a material file opens.
+        sites = pvw._data["site"].rowCount()
+        assert sites > 0
+        from qtdraw.util.util import read_dict
+        file = Path(os.environ["QTDRAW_TEST_HOME"]) / "mp.qtdw"
+        pvw.save(str(file))
+        drawing = read_dict(str(file))
+        drawing["status"]["multipie"] = {{"version": "2.3.4", "group": {{"group": "D6h"}}}}
+        file.write_text(str(drawing))
+        try:  # a drawing with a MultiPie group is not opened, the current one is kept.
+            pvw.load(str(file))
+        except Exception as e:
+            assert "mp.qtdw uses MultiPie" in str(e) and "cannot be loaded" in str(e), e
+        else:
+            raise AssertionError("a MultiPie drawing opened without MultiPie")
+        assert pvw._data["site"].rowCount() == sites
         try:
-            window.pyvista_widget.mp_set_group("D6h")
+            pvw.mp_set_group("D6h")
         except Exception as e:
             assert "cannot be loaded" in str(e), e
         else:
