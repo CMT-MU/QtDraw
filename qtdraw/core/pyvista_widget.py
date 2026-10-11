@@ -3944,7 +3944,8 @@ class PyVistaWidget(QtInteractor):
         """
         if left_out:
             tips = " and ".join(left_out)
-            self.write_info(f"* {object_type} '{data['name']}' is drawn without {tips}: the tip has no length or direction.")
+            reason = "the tip has" if len(left_out) == 1 else "the tips have"
+            self.write_info(f"* {object_type} '{data['name']}' is drawn without {tips}: {reason} no length or direction.")
 
     # ==================================================
     def plot_data_bond(self, index, data, positionT):
