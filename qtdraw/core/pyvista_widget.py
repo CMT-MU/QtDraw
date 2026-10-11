@@ -2049,7 +2049,7 @@ class PyVistaWidget(QtInteractor):
 
         multipie = all_data["status"].get("multipie", {})
         if multipie:
-            self.mp_set_group(status=multipie)
+            self._mp_set_group(status=multipie, keep_crystal=True)  # the crystal and the cell of the file.
 
         if material is None:
             if "distance" in all_data["camera"]:
@@ -4970,11 +4970,28 @@ class PyVistaWidget(QtInteractor):
             group (str, optional): group tag [default: C1].
             status (dict, optional): multipie status update dict.
         """
+        self._mp_set_group(group, status)
+
+    # ==================================================
+    def _mp_set_group(self, group=None, status=None, keep_crystal=False):
+        """
+        MultiPie: Set group or group status.
+
+        Args:
+            group (str, optional): group tag [default: C1].
+            status (dict, optional): multipie status update dict.
+            keep_crystal (bool, optional): keep the crystal and the cell, e.g. those of an opened file ?
+
+        :meta private:
+        """
         if not check_multipie():
             raise Exception("MultiPie is not installed.")
 
         self._mp_data = MultiPieData(self)
         self._mp_data.set_status(status, group)
+        crystal = self._mp_data._crystal
+        if not keep_crystal and self._status["crystal"] != crystal:  # the cell of the group, as the main window.
+            self.set_crystal(crystal)
         self.document_changed.emit()
 
     # ==================================================

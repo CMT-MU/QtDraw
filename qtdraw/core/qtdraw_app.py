@@ -1253,7 +1253,8 @@ class QtDraw(Window):
 
         :meta private:
         """
-        self.pyvista_widget.set_crystal(crystal)
+        if crystal is None or crystal != self.pyvista_widget._status["crystal"]:  # the same: the cell is not drawn again.
+            self.pyvista_widget.set_crystal(crystal)
 
         self._update_unit_cell()
 
