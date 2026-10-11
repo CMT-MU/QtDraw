@@ -1671,14 +1671,14 @@ class QtDraw(Window):
         :meta private:
         """
         if not check_multipie():
-            text = f"{multipie_message()}\n\nMultiPie draws objects by symmetry."
             if multipie_missing():
                 command = command_text(install_multipie_command())
-                text += f" Install it now with the following command?\n\n{command}"
+                text = "MultiPie is not installed. MultiPie draws objects by symmetry.\n\n"
+                text += f"Install it now with the following command?\n\n{command}"
                 if QMessageBox.question(self, "MultiPie", text, QMessageBox.Yes | QMessageBox.No) == QMessageBox.Yes:
                     self._install_multipie()
             else:  # installed, but it cannot be loaded: installing does not help.
-                QMessageBox.information(self, "MultiPie", text)
+                QMessageBox.information(self, "MultiPie", f"{multipie_message()}\n\nMultiPie draws objects by symmetry.")
             return
         from qtdraw.multipie.multipie_dialog import MultiPieDialog
 

@@ -136,7 +136,7 @@ def test_declining_does_not_install(tmp_path):
         "no",
         INSTALLS,
         """
-        assert len(asked) == 1 and "pip install" in asked[0], asked
+        assert len(asked) == 1 and "Install it now" in asked[0] and "Successfully installed" in asked[0], asked
         assert not flag.exists() and shown == [] and window.multipie_dialog is None
         """,
     )
