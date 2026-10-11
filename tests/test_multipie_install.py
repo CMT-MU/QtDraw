@@ -10,7 +10,7 @@ import textwrap
 
 import pytest
 
-from qtdraw.util.util import check_multipie, install_multipie_command, multipie_missing
+from qtdraw.util.util import check_multipie, command_text, install_multipie_command, multipie_missing
 
 # MultiPie is not found until the flag file is written by the (replaced) installation.
 PRELUDE = """
@@ -24,6 +24,7 @@ import qtdraw.widget.mathjax as mathjax
 init = mathjax.MathJaxSVG.__init__
 mathjax.MathJaxSVG.__init__ = lambda self, cache_dir=None, **kw: init(self, cache_dir=cache_dir or home / "svg_cache", **kw)
 flag = home / "installed"
+sys.path.insert(0, str(home / "site"))  # where a replaced installation may write a package.
 
 
 class NotInstalled:
@@ -86,6 +87,13 @@ def run(tmp_path, answer, install, code):
 
 
 INSTALLS = "import os; open(os.path.join(os.environ['QTDRAW_TEST_HOME'], 'installed'), 'w').close(); print('Successfully installed multipie')"
+# a MultiPie that is installed but cannot be loaded, as MultiPie 2.3.4 on Python 3.11.
+BROKEN = (
+    "import os, pathlib; home = pathlib.Path(os.environ['QTDRAW_TEST_HOME']); package = home / 'site' / 'multipie'; "
+    "package.mkdir(parents=True); (package / '__init__.py').write_text('from .group import Group'); "
+    "(package / 'group.py').write_text('s = ('); (home / 'installed').touch()"
+)
+NOT_FOUND = "print('Successfully installed multipie')"  # where this Python does not search.
 FAILS = "import sys; print('No module named pip'); sys.exit(1)"
 
 
@@ -93,6 +101,16 @@ FAILS = "import sys; print('No module named pip'); sys.exit(1)"
 def test_install_command_uses_pip_of_this_python():
     assert install_multipie_command()[:4] == [sys.executable, "-m", "pip", "install"]
     assert install_multipie_command()[4].startswith("multipie")
+
+
+def test_command_text_can_be_run_in_a_shell():
+    command = ["/path with space/python", "-m", "pip", "install", "multipie>=2"]
+    if sys.platform == "win32":
+        assert command_text(command) == '"/path with space/python" -m pip install multipie>=2'
+    else:
+        import shlex
+
+        assert shlex.split(command_text(command)) == command and "'multipie>=2'" in command_text(command)
 
 
 def test_missing_multipie(monkeypatch):
@@ -133,15 +151,26 @@ def test_installing_opens_multipie_without_restart(tmp_path):
     )
 
 
-@pytest.mark.skipif(check_multipie(), reason="MultiPie can be loaded.")
 def test_installed_multipie_that_cannot_be_loaded_is_told(tmp_path):
     run(
         tmp_path,
         "yes",
-        INSTALLS,
+        BROKEN,
         """
         assert flag.exists() and window.multipie_dialog is None
         assert len(shown) == 1 and "cannot be loaded" in shown[0][1], shown
+        """,
+    )
+
+
+def test_installed_multipie_that_is_not_found_asks_to_restart(tmp_path):
+    run(
+        tmp_path,
+        "yes",
+        NOT_FOUND,
+        """
+        assert window.multipie_dialog is None
+        assert len(shown) == 1 and "Restart QtDraw" in shown[0][1], shown
         """,
     )
 
@@ -202,5 +231,35 @@ def test_closing_while_installing_asks_to_stop_it(tmp_path, stop):
         """)
     env = {**os.environ, "QT_QPA_PLATFORM": "offscreen", "QTDRAW_TEST_HOME": str(tmp_path)}
     env["ANSWER"] = "yes,yes" if stop else "yes,no"
+    ret = subprocess.run([sys.executable, "-c", script], capture_output=True, text=True, timeout=180, env=env)
+    assert ret.returncode == 0 and "OK" in ret.stdout, ret.stdout + ret.stderr[-3000:]
+
+
+def test_installation_that_ends_while_asking_to_stop_it(tmp_path):
+    script = PRELUDE + "qtdraw_app.install_multipie_command = lambda: [sys.executable, '-c', 'import time; time.sleep(2)']\n"
+    script += textwrap.dedent("""
+        def question(*a, **k):  # the installation ends while the question is shown.
+            asked.append(a[2])
+            if "being installed" in a[2]:
+                process.waitForFinished(30000)
+                while window._multipie_install is not None:
+                    QApplication.processEvents()
+            return QMessageBox.Yes
+
+
+        QMessageBox.question = question
+        try:
+            window.misc_button_multipie.click()
+            process = window._multipie_install
+            assert process is not None and process.waitForStarted(30000)
+            window.close()
+            assert "being installed" in asked[-1] and not window.isVisible(), asked
+            assert QApplication.overrideCursor() is None
+            print("OK", flush=True)
+        except BaseException:
+            fail(*sys.exc_info())
+        os._exit(0)
+        """)
+    env = {**os.environ, "QT_QPA_PLATFORM": "offscreen", "QTDRAW_TEST_HOME": str(tmp_path), "ANSWER": "yes"}
     ret = subprocess.run([sys.executable, "-c", script], capture_output=True, text=True, timeout=180, env=env)
     assert ret.returncode == 0 and "OK" in ret.stdout, ret.stdout + ret.stderr[-3000:]

@@ -5,6 +5,8 @@ For versatile utility.
 import re
 import ast
 import sys
+import shlex
+import subprocess
 import numpy as np
 import sympy as sp
 from sympy import SympifyError
@@ -225,6 +227,20 @@ def install_multipie_command():
         - (list) -- program and arguments.
     """
     return [sys.executable, "-m", "pip", "install", "multipie>=2"]
+
+
+# ==================================================
+def command_text(command):
+    """
+    Command as text to run in a shell, quoted.
+
+    Args:
+        command (list): program and arguments.
+
+    Returns:
+        - (str) -- command line.
+    """
+    return subprocess.list2cmdline(command) if sys.platform == "win32" else shlex.join(command)
 
 
 # ==================================================

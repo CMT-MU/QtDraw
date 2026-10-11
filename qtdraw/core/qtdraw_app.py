@@ -23,7 +23,7 @@ from qtdraw.core.dialog_about import get_version_info
 from qtdraw.widget.custom_widget import Label, Layout, LineEdit, HBar, Button, Combo, VSpacer
 from qtdraw.widget.logging_util import LogWidget
 from qtdraw.widget.qt_event_util import busy_cursor, font_style_sheet
-from qtdraw.util.util import check_multipie, multipie_message, multipie_missing, install_multipie_command
+from qtdraw.util.util import check_multipie, multipie_message, multipie_missing, install_multipie_command, command_text
 
 
 # ==================================================
@@ -1673,7 +1673,7 @@ class QtDraw(Window):
         if not check_multipie():
             text = f"{multipie_message()}\n\nMultiPie draws objects by symmetry."
             if multipie_missing():
-                command = " ".join(install_multipie_command())
+                command = command_text(install_multipie_command())
                 text += f" Install it now with the following command?\n\n{command}"
                 if QMessageBox.question(self, "MultiPie", text, QMessageBox.Yes | QMessageBox.No) == QMessageBox.Yes:
                     self._install_multipie()
@@ -1715,7 +1715,7 @@ class QtDraw(Window):
         self._multipie_install = process
         self.misc_button_multipie.setEnabled(False)
         QApplication.setOverrideCursor(Qt.BusyCursor)
-        self.logger.append_text("$ " + " ".join(command))
+        self.logger.append_text("$ " + command_text(command))
         self.logger.show()
         process.start(command[0], command[1:])
 
@@ -1739,7 +1739,7 @@ class QtDraw(Window):
         self.misc_button_multipie.setEnabled(True)
         if not ok:
             tail = "\n".join("".join(output).strip().splitlines()[-10:]) or process.errorString()
-            command = " ".join(install_multipie_command())
+            command = command_text(install_multipie_command())
             QMessageBox.warning(
                 self, "MultiPie", f"MultiPie could not be installed.\n\n{tail}\n\nInstall it by hand with:\n{command}"
             )
@@ -1747,6 +1747,8 @@ class QtDraw(Window):
         importlib.invalidate_caches()  # find the new package.
         if check_multipie():
             self._show_multipie()
+        elif multipie_missing():  # e.g. installed in a directory that this Python does not search yet.
+            QMessageBox.information(self, "MultiPie", "MultiPie was installed. Restart QtDraw to use it.")
         else:
             QMessageBox.information(self, "MultiPie", f"MultiPie was installed. {multipie_message()}")
 
@@ -1915,7 +1917,7 @@ class QtDraw(Window):
         if ok and self._multipie_install is not None:
             text = "MultiPie is being installed. Stop the installation and close?"
             ok = QMessageBox.question(self, "MultiPie", text, QMessageBox.Yes | QMessageBox.No) == QMessageBox.Yes
-            if ok:
+            if ok and self._multipie_install is not None:  # it may have finished while asking.
                 process, self._multipie_install = self._multipie_install, None
                 process.kill()
                 process.waitForFinished(5000)
