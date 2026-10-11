@@ -3,13 +3,20 @@ Streams, lines and bonds of length 0 are not drawn, and arrow tips of length 0 a
 drawing (#219).
 """
 
+import numpy as np
 import pytest
+import pyvista as pv
 
 from qtdraw.core.pyvista_widget_setting import COLUMN_NAME_ACTOR
+from qtdraw.util.basic_object import _arrow_tips, arrow_length
 
 
 def actor(widget, object_type):
     return widget._data[object_type].tolist()[0][COLUMN_NAME_ACTOR]
+
+
+def mesh(widget, name):
+    return pv.wrap(widget.actors[name].GetMapper().GetInput())
 
 
 @pytest.mark.parametrize(
@@ -37,7 +44,7 @@ def test_object_of_length_zero_is_not_drawn(widget, qtbot, object_type, kwargs):
     "object_type, kwargs",
     [
         ("line", {"arrow1": True, "tip_length": 0}),
-        ("line", {"arrow1": True, "arrow2": True, "width": 0}),
+        ("line", {"arrow1": True, "arrow2": True, "tip_length": 0}),
         ("spline", {"arrow1": True, "arrow2": True, "tip_length": 0}),
         ("spline", {"arrow1": True, "width": 0}),
         ("spline", {"point": "[[0,0,0],[0,0,0]]", "arrow1": True, "arrow2": True}),  # no direction at the ends.
@@ -45,19 +52,45 @@ def test_object_of_length_zero_is_not_drawn(widget, qtbot, object_type, kwargs):
     ],
 )
 def test_arrow_tip_of_length_zero_is_left_out(widget, qtbot, object_type, kwargs):
+    messages = []
+    widget.message.connect(messages.append)
+    add = getattr(widget, f"add_{object_type}")
     with qtbot.capture_exceptions() as errors:
-        getattr(widget, f"add_{object_type}")(**kwargs)
+        add(name="tips", **kwargs)
     assert not errors, errors
-    assert actor(widget, object_type) in widget.actors  # drawn without the tips.
+    add(name="none", **(kwargs | {"arrow1": False, "arrow2": False}))
+    tips, none = (mesh(widget, row[COLUMN_NAME_ACTOR]) for row in widget._data[object_type].tolist())
+    assert np.isfinite(tips.points).all()
+    assert tuple(tips.bounds) == pytest.approx(tuple(none.bounds))  # drawn without the tips.
+    requested = [arrow for arrow in ("arrow1", "arrow2") if kwargs.get(arrow)]
+    assert f"{object_type} 'tips' is drawn without {' and '.join(requested)}" in "\n".join(messages), messages
 
 
+@pytest.mark.parametrize("object_type", ["line", "spline", "spline_t"])
 @pytest.mark.parametrize("arrow", ["arrow1", "arrow2"])
-def test_line_with_arrow_tip_is_still_drawn_with_it(widget, arrow):
-    widget.add_line(name="plain")
-    widget.add_line(name="tip", **{arrow: True})
-    plain, tip = (widget.actors[row[COLUMN_NAME_ACTOR]] for row in widget._data["line"].tolist())
-    bounds = lambda a: a.GetMapper().GetInput().GetBounds()
-    assert bounds(tip)[1] > bounds(plain)[1]  # the tip is wider than the line.
+def test_arrow_tip_is_still_drawn(widget, object_type, arrow):
+    messages = []
+    widget.message.connect(messages.append)
+    add = getattr(widget, f"add_{object_type}")
+    add(name="none")
+    add(name="tip", **{arrow: True})
+    none, tip = (mesh(widget, row[COLUMN_NAME_ACTOR]) for row in widget._data[object_type].tolist())
+    assert tuple(tip.bounds) != pytest.approx(tuple(none.bounds))  # with the tip.
+    assert not any("drawn without" in text for text in messages), messages
+
+
+def test_only_the_tip_without_direction_is_left_out():
+    left_out = []
+    tips = _arrow_tips(True, True, np.zeros(3), np.array([1.0, 0.0, 0.0]), 0.1, left_out)
+    assert tips == [False, True] and left_out == ["arrow1"]
+
+
+@pytest.mark.parametrize(
+    "direction, length, expected",
+    [([1, 0, 0], 0.5, 0.5), ([0, 0, 0], 0.5, 0.0), ([2, 0, 0], -0.5, 1.0), ([1, 0, 0], 0, 0.0), ([3, 4, 0], 1e-7, 5e-7)],
+)
+def test_arrow_length_as_create_vector(direction, length, expected):
+    assert arrow_length(direction, length) == pytest.approx(expected)
 
 
 @pytest.mark.parametrize("object_type", ["stream", "line", "bond"])

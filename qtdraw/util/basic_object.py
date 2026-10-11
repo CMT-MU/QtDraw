@@ -314,6 +314,32 @@ def arrow_length(direction, length):
 
 
 # ==================================================
+def _arrow_tips(arrow1, arrow2, direction1, direction2, length, left_out=None):
+    """
+    Arrow tips that can be made: a tip of length 0 or without direction is left out.
+
+    Args:
+        arrow1 (bool): arrow at start point ?
+        arrow2 (bool): arrow at end point ?
+        direction1 (numpy.ndarray): direction of the tip at start point.
+        direction2 (numpy.ndarray): direction of the tip at end point.
+        length (float): tip length.
+        left_out (list, optional): "arrow1" and "arrow2" of tips left out are appended to it.
+
+    Returns:
+        - (bool) -- arrow at start point.
+        - (bool) -- arrow at end point.
+    """
+    tips = []
+    for name, arrow, direction in (("arrow1", arrow1, direction1), ("arrow2", arrow2, direction2)):
+        ok = arrow and arrow_length(direction, length) >= CHOP
+        if arrow and not ok and left_out is not None:
+            left_out.append(name)
+        tips.append(ok)
+    return tips
+
+
+# ==================================================
 def create_vector(
     direction,
     length=1.0,
@@ -487,7 +513,7 @@ def create_stream(
 
 
 # ==================================================
-def create_line(direction, width=1.0, arrow1=False, arrow2=False, tip_radius=2.0, tip_length=0.1):
+def create_line(direction, width=1.0, arrow1=False, arrow2=False, tip_radius=2.0, tip_length=0.1, left_out=None):
     """
     Create line object.
 
@@ -498,6 +524,7 @@ def create_line(direction, width=1.0, arrow1=False, arrow2=False, tip_radius=2.0
         arrow2 (bool, optional): arrow at end point ?
         tip_radius (float, optional): tip radius.
         tip_length (float, optional): tip length.
+        left_out (list, optional): "arrow1" and "arrow2" of tips left out (length 0) are appended to it.
 
     Returns:
         - (vtk.PolyData) -- cylinder object
@@ -510,8 +537,7 @@ def create_line(direction, width=1.0, arrow1=False, arrow2=False, tip_radius=2.0
     obj = pv.Cylinder(center=direction / 2, direction=direction, radius=width, height=length, resolution=resolution)
 
     tip = tip_length * width * 100.0
-    arrow1 = arrow1 and arrow_length(direction, tip) >= CHOP  # a tip of length 0 is left out.
-    arrow2 = arrow2 and arrow_length(direction, tip) >= CHOP
+    arrow1, arrow2 = _arrow_tips(arrow1, arrow2, -direction, direction, tip, left_out)  # a tip of length 0 is left out.
 
     if arrow1:
         a1 = create_vector(
@@ -771,7 +797,16 @@ def create_text2d(latex, mathjax, x, y, size, color):
 
 # ==================================================
 def create_spline(
-    point, width=1.0, n_interp=500, closed=False, natural=True, arrow1=False, arrow2=False, tip_radius=2.0, tip_length=0.1
+    point,
+    width=1.0,
+    n_interp=500,
+    closed=False,
+    natural=True,
+    arrow1=False,
+    arrow2=False,
+    tip_radius=2.0,
+    tip_length=0.1,
+    left_out=None,
 ):
     """
     Create spline object.
@@ -786,6 +821,7 @@ def create_spline(
         arrow2 (bool, optional): arrow at end point ?
         tip_radius (float, optional): tip radius.
         tip_length (float, optional): tip length.
+        left_out (list, optional): "arrow1" and "arrow2" of tips left out (length 0 or no direction) are appended to it.
 
     Returns:
         - (vtk.PolyData) -- spline object.
@@ -821,8 +857,7 @@ def create_spline(
     tip = tip_length * width * 100.0
     d1 = spline.points[0] - spline.points[1] if arrow1 else None
     d2 = spline.points[-1] - spline.points[-2] if arrow2 else None
-    arrow1 = arrow1 and arrow_length(d1, tip) >= CHOP  # a tip of length 0 or without direction is left out.
-    arrow2 = arrow2 and arrow_length(d2, tip) >= CHOP
+    arrow1, arrow2 = _arrow_tips(arrow1, arrow2, d1, d2, tip, left_out)  # a tip of length 0 or without direction is left out.
 
     if arrow1:
         a1 = create_vector(
@@ -854,6 +889,7 @@ def create_spline_t(
     tip_radius=2.0,
     tip_length=0.1,
     A=None,
+    left_out=None,
 ):
     """
     Create parametric spline object.
@@ -870,6 +906,7 @@ def create_spline_t(
         tip_radius (float, optional): tip radius.
         tip_length (float, optional): tip length.
         A (numpy.ndarray, optional): (a1, a2, a3) in each column, 4x4 (cartesian).
+        left_out (list, optional): "arrow1" and "arrow2" of tips left out (length 0 or no direction) are appended to it.
 
     Returns:
         - (vtk.PolyData) -- parameteric spline object.
@@ -893,7 +930,7 @@ def create_spline_t(
     pts = np.asarray([np.full(tp.shape, i) if i.is_Number else sp.lambdify(t, i, modules="numpy")(tp) for i in ex])
     pointA = np.dot(A[0:3, 0:3], pts).T
 
-    obj = create_spline(pointA, width, n_interp, closed, natural, arrow1, arrow2, tip_radius, tip_length)
+    obj = create_spline(pointA, width, n_interp, closed, natural, arrow1, arrow2, tip_radius, tip_length, left_out)
 
     return obj
 

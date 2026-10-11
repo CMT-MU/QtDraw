@@ -3931,6 +3931,22 @@ class PyVistaWidget(QtInteractor):
             self._data[object_type].set_row_data(index, COLUMN_NAME_ACTOR, "")
 
     # ==================================================
+    def _tips_left_out(self, object_type, data, left_out):
+        """
+        Tell that arrow tips of an object are not drawn.
+
+        Args:
+            object_type (str): object type.
+            data (dict): data list.
+            left_out (list): "arrow1" and "arrow2" of tips left out.
+
+        :meta private:
+        """
+        if left_out:
+            tips = " and ".join(left_out)
+            self.write_info(f"* {object_type} '{data['name']}' is drawn without {tips}: the tip has no length or direction.")
+
+    # ==================================================
     def plot_data_bond(self, index, data, positionT):
         """
         Plot bond.
@@ -4179,9 +4195,17 @@ class PyVistaWidget(QtInteractor):
             self._not_drawn("line", index, data, "its length is 0")
             return
 
+        left_out = []
         obj = create_line(
-            direction=directionT, width=width, arrow1=arrow1, arrow2=arrow2, tip_radius=tip_radius, tip_length=tip_length
+            direction=directionT,
+            width=width,
+            arrow1=arrow1,
+            arrow2=arrow2,
+            tip_radius=tip_radius,
+            tip_length=tip_length,
+            left_out=left_out,
         )
+        self._tips_left_out("line", data, left_out)
         option_add = {"color": color, "opacity": opacity}
 
         option = self.common_option(actor=actor, positionT=positionT, obj=obj)
@@ -4614,6 +4638,7 @@ class PyVistaWidget(QtInteractor):
 
         pointT = convert_str_vector(vector=point, transform=transform, A=self.A_matrix)
 
+        left_out = []
         obj = create_spline(
             point=pointT,
             width=width,
@@ -4624,7 +4649,9 @@ class PyVistaWidget(QtInteractor):
             arrow2=arrow2,
             tip_radius=tip_radius,
             tip_length=tip_length,
+            left_out=left_out,
         )
+        self._tips_left_out("spline", data, left_out)
         option_add = {"color": color, "opacity": opacity}
 
         option = self.common_option(actor=actor, positionT=positionT, obj=obj)
@@ -4664,7 +4691,11 @@ class PyVistaWidget(QtInteractor):
         t_range = convert_str_vector(vector=t_range, transform=False)
 
         A = self.A_matrix if transform else np.eye(4)
-        obj = create_spline_t(point, t_range, width, n_interp, closed, natural, arrow1, arrow2, tip_radius, tip_length, A)
+        left_out = []
+        obj = create_spline_t(
+            point, t_range, width, n_interp, closed, natural, arrow1, arrow2, tip_radius, tip_length, A, left_out
+        )
+        self._tips_left_out("spline_t", data, left_out)
         option_add = {"color": color, "opacity": opacity}
 
         option = self.common_option(actor=actor, positionT=positionT, obj=obj)
