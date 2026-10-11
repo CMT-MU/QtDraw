@@ -49,7 +49,7 @@ from qtdraw.widget.color_palette import all_colors, custom_colormap, check_color
 from qtdraw.parser.read_material import parse_draw, draw
 from qtdraw.parser.xsf import extract_data_xsf
 from qtdraw.parser.converter import convert_version3
-from qtdraw.util.util import text_to_list, apply, read_dict, str_to_sympy, check_multipie
+from qtdraw.util.util import text_to_list, apply, read_dict, str_to_sympy, check_multipie, to_plain
 from qtdraw.util.util_axis import (
     create_axes_widget,
     create_unit_cell,
@@ -1829,7 +1829,8 @@ class PyVistaWidget(QtInteractor):
             if type(data) == tuple:
                 name, dic = data
                 row_data["data"] = name
-                self._isosurface_data[name] = copy.deepcopy(dic)  # owned by QtDraw, so history can keep it.
+                # a copy owned by QtDraw, so history can keep it, with Python values to be saved as text.
+                self._isosurface_data[name] = to_plain(dic)
                 self._isosurface_in_memory.add(name)
             else:
                 row_data["data"] = self.set_isosurface_data(data)

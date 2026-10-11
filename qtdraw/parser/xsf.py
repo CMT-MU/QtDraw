@@ -80,7 +80,7 @@ def create_data(n, origin, A, endpoint, f_data, f_surface):
 
     grid_data = {
         "n": n,
-        "origin": origin,
+        "origin": np.asarray(origin, dtype=float).tolist(),
         "Ag": A.tolist(),
         "data": data,
         "surface": surface,
