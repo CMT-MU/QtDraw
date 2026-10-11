@@ -9,7 +9,6 @@ import sys
 import textwrap
 from pathlib import Path
 
-import pytest
 
 from qtdraw.util.util import MULTIPIE_INSTALL, check_multipie, multipie_message
 
@@ -90,8 +89,3 @@ def test_message_without_multipie_tells_how_to_install(monkeypatch):
     monkeypatch.setitem(sys.modules, "multipie", None)  # MultiPie is not installed: importing it fails.
     assert not check_multipie()
     assert multipie_message() == MULTIPIE_INSTALL
-
-
-@pytest.mark.skipif(not check_multipie(), reason="MultiPie cannot be loaded.")
-def test_multipie_that_loads_is_available():
-    assert check_multipie()
