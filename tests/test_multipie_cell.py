@@ -70,12 +70,26 @@ def test_main_window_sets_cell_once(app, monkeypatch):
 
 
 # ==================================================
-def test_opened_file_keeps_its_crystal_also_of_another_group(widget, tmp_path):
+@pytest.mark.parametrize(
+    "crystal, custom",
+    [("hexagonal", {"a": 2.5, "c": 4.0}), ("monoclinic", {"a": 2.0, "b": 3.0, "c": 4.0, "beta": 100.0})],
+)
+def test_opened_file_keeps_its_crystal_also_of_another_group(widget, tmp_path, crystal, custom):
     widget.mp_set_group("Oh")
-    widget.set_crystal("hexagonal")  # chosen after the group, as some files of QtDraw 2.0 have.
+    widget.set_crystal(crystal)  # chosen after the group, as some files of QtDraw 2.0 have.
+    widget.set_unit_cell(custom)
+    saved = (widget._status["crystal"], dict(widget._status["cell"]), widget.A_matrix.copy())
     widget.save(str(tmp_path / "a.qtdw"))
     widget.mp_set_group("Oh")
     assert cell(widget) == ("cubic", 90.0)
 
     widget.load(str(tmp_path / "a.qtdw"))  # as the release opens it.
-    assert cell(widget) == ("hexagonal", 120.0)
+    assert (widget._status["crystal"], widget._status["cell"]) == saved[:2]
+    assert widget.A_matrix == pytest.approx(saved[2])
+    assert widget._mp_data.status["group"]["tag"] == "Oh"
+
+    snapshot = widget.document_snapshot()
+    widget.mp_set_group("D6h")
+    widget.restore_document(snapshot)  # undo.
+    assert (widget._status["crystal"], widget._status["cell"]) == saved[:2]
+    assert widget.A_matrix == pytest.approx(saved[2])
