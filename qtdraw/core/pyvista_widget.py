@@ -81,6 +81,7 @@ from qtdraw.util.basic_object import (
     create_isosurface,
     create_orbital_data,
     create_stream_data,
+    arrow_length,
 )
 from qtdraw.multipie.multipie_data import MultiPieData
 
@@ -3911,6 +3912,25 @@ class PyVistaWidget(QtInteractor):
         self.clip_actor(data["position"], data["cell"], actor.name, data["label_actor"])
 
     # ==================================================
+    def _not_drawn(self, object_type, index, data, reason):
+        """
+        Tell that an object is not drawn, and remove the object drawn before an edit.
+
+        Args:
+            object_type (str): object type.
+            index (QModelIndex): index.
+            data (dict): data list.
+            reason (str): reason.
+
+        :meta private:
+        """
+        self.write_info(f"* {object_type} '{data['name']}' is not drawn: {reason}.")
+        actor = data["name_actor"]
+        if actor != "":
+            self.delete_actor(actor)
+            self._data[object_type].set_row_data(index, COLUMN_NAME_ACTOR, "")
+
+    # ==================================================
     def plot_data_bond(self, index, data, positionT):
         """
         Plot bond.
@@ -3931,6 +3951,9 @@ class PyVistaWidget(QtInteractor):
         opacity = float(data["opacity"])
 
         directionT = convert_str_vector(vector=direction, transform=transform, A=self.A_matrix)
+        if np.linalg.norm(directionT) == 0.0:  # a cylinder needs a direction.
+            self._not_drawn("bond", index, data, "its length is 0")
+            return
 
         if color2 != color:
             obj = create_bond(direction=directionT, width=width, twotone=True)
@@ -4078,6 +4101,10 @@ class PyVistaWidget(QtInteractor):
         tip_length = float(data["tip length"])
         opacity = float(data["opacity"])
 
+        if arrow_length([1.0, 0.0, 0.0], length) < CHOP:  # an arrow of length 0 cannot be made.
+            self._not_drawn("stream", index, data, "its length is 0")
+            return
+
         obj = create_stream(
             shape=shape,
             vector=vector,
@@ -4148,6 +4175,9 @@ class PyVistaWidget(QtInteractor):
         opacity = float(data["opacity"])
 
         directionT = convert_str_vector(vector=direction, transform=transform, A=self.A_matrix)
+        if np.linalg.norm(directionT) == 0.0:  # a cylinder needs a direction.
+            self._not_drawn("line", index, data, "its length is 0")
+            return
 
         obj = create_line(
             direction=directionT, width=width, arrow1=arrow1, arrow2=arrow2, tip_radius=tip_radius, tip_length=tip_length

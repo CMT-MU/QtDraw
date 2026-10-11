@@ -296,6 +296,24 @@ def create_bond(direction, width=1.0, twotone=True):
 
 
 # ==================================================
+def arrow_length(direction, length):
+    """
+    Length of the arrow that create_vector() makes.
+
+    Args:
+        direction (list or numpy.ndarray): direction (cartesian), [float].
+        length (float): length.
+
+    Returns:
+        - (float) -- length of the arrow, 0 if the direction is 0.
+    """
+    norm = float(np.linalg.norm(np.array(direction, dtype=np.float64)))
+    if norm == 0.0:
+        return 0.0
+    return abs(length) * norm if length < CHOP else length
+
+
+# ==================================================
 def create_vector(
     direction,
     length=1.0,
@@ -490,6 +508,10 @@ def create_line(direction, width=1.0, arrow1=False, arrow2=False, tip_radius=2.0
     length = np.linalg.norm(direction)
 
     obj = pv.Cylinder(center=direction / 2, direction=direction, radius=width, height=length, resolution=resolution)
+
+    tip = tip_length * width * 100.0
+    arrow1 = arrow1 and arrow_length(direction, tip) >= CHOP  # a tip of length 0 is left out.
+    arrow2 = arrow2 and arrow_length(direction, tip) >= CHOP
 
     if arrow1:
         a1 = create_vector(
@@ -796,13 +818,17 @@ def create_spline(
     if closed:
         return obj
 
+    tip = tip_length * width * 100.0
+    d1 = spline.points[0] - spline.points[1] if arrow1 else None
+    d2 = spline.points[-1] - spline.points[-2] if arrow2 else None
+    arrow1 = arrow1 and arrow_length(d1, tip) >= CHOP  # a tip of length 0 or without direction is left out.
+    arrow2 = arrow2 and arrow_length(d2, tip) >= CHOP
+
     if arrow1:
-        d1 = spline.points[0] - spline.points[1]
         a1 = create_vector(
             d1, tip_length * width * 100.0, 1.5 * tip_radius * width, offset=0.0, shaft_radius=0.0, tip_radius=1.0, tip_length=1.0
         ).translate(spline.points[0], inplace=True)
     if arrow2:
-        d2 = spline.points[-1] - spline.points[-2]
         a2 = create_vector(
             d2, tip_length * width * 100.0, 1.5 * tip_radius * width, offset=0.0, shaft_radius=0.0, tip_radius=1.0, tip_length=1.0
         ).translate(spline.points[-1], inplace=True)

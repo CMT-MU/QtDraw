@@ -30,8 +30,6 @@ LISTS = ["[]", "[[]]", "[[],[],[]]", "[0,0]", "[[0,0],[0,0]]"]
 # accepted values that are not drawn yet: an object without a direction or size (zero vector, length or step).
 # such a column has the value zero, e.g. "[0,0,0]" or "-0".
 DEGENERATE = {
-    ("bond", "direction"): "[0,0,0]",
-    ("line", "direction"): "[0,0,0]",
     ("plane", "normal"): "[0,0,0]",
     ("circle", "normal"): "[0,0,0]",
     ("torus", "normal"): "[0,0,0]",
@@ -41,7 +39,6 @@ DEGENERATE = {
     ("stream", "shape"): "0",
     ("stream", "vector"): "[0,0,0]",
     ("stream", "size"): "0",
-    ("stream", "length"): "0",
     ("spline_t", "t_range"): "[0,0,0]",
 }
 
