@@ -4117,7 +4117,7 @@ class PyVistaWidget(QtInteractor):
         tip_length = float(data["tip length"])
         opacity = float(data["opacity"])
 
-        if arrow_length([1.0, 0.0, 0.0], length) < CHOP:  # an arrow of length 0 cannot be made.
+        if arrow_length([1.0, 0.0, 0.0], length) == 0.0:  # an arrow of length 0 cannot be made (a short one is scaled).
             self._not_drawn("stream", index, data, "its length is 0")
             return
 

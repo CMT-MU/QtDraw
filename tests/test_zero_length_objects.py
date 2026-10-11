@@ -23,7 +23,7 @@ def mesh(widget, name):
     "object_type, kwargs",
     [
         ("stream", {"length": 0}),
-        ("stream", {"length": -1e-9}),
+        ("stream", {"length": -0.0}),
         ("line", {"direction": "[0,0,0]"}),
         ("line", {"direction": "[0,0,0]", "arrow1": True, "arrow2": True}),
         ("bond", {"direction": "[0,0,0]"}),
@@ -91,6 +91,14 @@ def test_only_the_tip_without_direction_is_left_out():
 )
 def test_arrow_length_as_create_vector(direction, length, expected):
     assert arrow_length(direction, length) == pytest.approx(expected)
+
+
+@pytest.mark.parametrize("kwargs", [{"length": 1e-7, "vector": "[100000000,0,0]", "abs_scale": True}, {"length": -1e-9}])
+def test_short_stream_is_still_drawn(widget, qtbot, kwargs):
+    with qtbot.capture_exceptions() as errors:
+        widget.add_stream(**kwargs)  # scaled by the vector, or the length is used as it is.
+    assert not errors, errors
+    assert np.isfinite(mesh(widget, actor(widget, "stream")).points).all()
 
 
 @pytest.mark.parametrize("object_type", ["stream", "line", "bond"])
