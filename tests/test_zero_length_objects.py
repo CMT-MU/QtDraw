@@ -142,3 +142,22 @@ def test_short_arrow_tip_is_still_drawn(widget, qtbot, object_type):
     assert np.isfinite(mesh(widget, actor(widget, object_type)).points).all()
     assert not any("drawn without" in text for text in messages), messages
     assert _arrow_tips(True, True, np.array([1.0, 0, 0]), np.array([1e-9, 0, 0]), 1e-9) == [True, True]
+
+
+@pytest.mark.parametrize("width", [0.05, 0])
+def test_line_width_is_used(widget, qtbot, width):
+    with qtbot.capture_exceptions() as errors:
+        widget.add_line(width=width, cartesian=True)
+        widget.add_line(width=width, cartesian=True, arrow2=True)  # with width 0, the tip has no length either.
+    assert not errors, errors
+    model = widget._data["line"]
+    assert [float(row[model.header.index("width")]) for row in model.tolist()] == [width, width]
+    line = mesh(widget, model.tolist()[0][COLUMN_NAME_ACTOR])
+    assert np.isfinite(line.points).all()
+    assert line.bounds[1] - line.bounds[0] == pytest.approx(2 * width, rel=1e-2, abs=1e-9)  # the diameter, of a polygon.
+
+
+def test_line_width_by_default(widget):
+    widget.add_line()
+    model = widget._data["line"]
+    assert model.tolist()[0][model.header.index("width")] == "0.02"

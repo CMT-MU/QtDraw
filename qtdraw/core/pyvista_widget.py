@@ -1115,6 +1115,8 @@ class PyVistaWidget(QtInteractor):
             if isinstance(direction, np.ndarray):
                 direction = direction.tolist()
             row_data["direction"] = convert_to_str(direction)
+        if width is not None:
+            row_data["width"] = convert_to_str(width)
         if arrow1 is not None:
             row_data["arrow1_check"] = arrow1
         if arrow2 is not None:
