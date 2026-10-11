@@ -190,6 +190,7 @@ def test_failed_installation_tells_why_and_how(tmp_path):
         assert window.multipie_dialog is None and window.misc_button_multipie.isEnabled()
         assert len(shown) == 1 and shown[0][0] == "warning", shown
         assert "No module named pip" in shown[0][1] and "sys.exit(1)" in shown[0][1], shown  # the command by hand.
+        assert "uv pip install multipie" in shown[0][1], shown  # also without pip.
         """,
     )
 

@@ -1740,9 +1740,9 @@ class QtDraw(Window):
         if not ok:
             tail = "\n".join("".join(output).strip().splitlines()[-10:]) or process.errorString()
             command = command_text(install_multipie_command())
-            QMessageBox.warning(
-                self, "MultiPie", f"MultiPie could not be installed.\n\n{tail}\n\nInstall it by hand with:\n{command}"
-            )
+            text = f"MultiPie could not be installed.\n\n{tail}\n\nInstall it by hand with:\n{command}\n\n"
+            text += "or with the tool that manages this Python environment, e.g. uv pip install multipie, for one without pip."
+            QMessageBox.warning(self, "MultiPie", text)
             return
         importlib.invalidate_caches()  # find the new package.
         if check_multipie():
