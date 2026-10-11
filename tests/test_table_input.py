@@ -27,9 +27,11 @@ VALIDATORS = {
 NUMBERS = ["0", "1", "-1", "0.5", "-0", "2/3", "pi", "sqrt(2)", "nan", "inf", "-inf", "1e400", "10**400", "I", "oo", "x"]
 LISTS = ["[]", "[[]]", "[[],[],[]]", "[0,0]", "[[0,0],[0,0]]"]
 
-# accepted values that are not drawn yet: an object without a direction or size (zero vector, length or step).
-# such a column has the value zero, e.g. "[0,0,0]" or "-0".
+# accepted values of an object without a direction or size (zero vector, length or step): the object is not drawn,
+# without an error (tests/test_zero_length_objects.py). such a column has the value zero, e.g. "[0,0,0]" or "-0".
 DEGENERATE = {
+    ("bond", "direction"): "[0,0,0]",
+    ("line", "direction"): "[0,0,0]",
     ("plane", "normal"): "[0,0,0]",
     ("circle", "normal"): "[0,0,0]",
     ("torus", "normal"): "[0,0,0]",
@@ -39,6 +41,7 @@ DEGENERATE = {
     ("stream", "shape"): "0",
     ("stream", "vector"): "[0,0,0]",
     ("stream", "size"): "0",
+    ("stream", "length"): "0",
     ("spline_t", "t_range"): "[0,0,0]",
 }
 
@@ -157,18 +160,22 @@ def test_accepted_value_is_drawn(widget, qtbot, tmp_path, object_type, column, v
     assert accepted, f"no value is accepted for {object_type}.{column}."
 
 
-@pytest.mark.xfail(strict=True, reason="an object without a direction or size is not handled yet.")
 @pytest.mark.parametrize("object_type, column", sorted(DEGENERATE), ids=[f"{t}.{c}" for t, c in sorted(DEGENERATE)])
-def test_degenerate_value_is_drawn(widget, qtbot, object_type, column):
+def test_degenerate_value_is_drawn(widget, qtbot, tmp_path, object_type, column):
     getattr(widget, f"add_{object_type}")()
     model = widget._data[object_type]
     vtype, option, default = object_default[object_type][column]
     text = DEGENERATE[(object_type, column)]
+    i = list(object_default[object_type]).index(column)
     assert VALIDATORS[vtype](text, **option) is not None
+    file = tmp_path / "a.qtdw"
     with qtbot.capture_exceptions() as exceptions:
-        model.setData(model.index(0, list(object_default[object_type]).index(column)), text)
+        model.setData(model.index(0, i), text)
         widget.render()
+        widget.save(str(file))
+        widget.load(str(file))  # not drawn again, without an error.
     assert not exceptions, repr(exceptions[0][1])
+    assert widget._data[object_type].index(0, i).data() == text
 
 
 @pytest.mark.parametrize("text", ["0", "-0", "1"])

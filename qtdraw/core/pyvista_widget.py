@@ -4138,6 +4138,9 @@ class PyVistaWidget(QtInteractor):
             tip_radius=tip_radius,
             tip_length=tip_length,
         )
+        if obj is None:
+            self._not_drawn("stream", index, data, "all its arrows have length 0")
+            return
 
         if check_color(color):
             option_add = {
@@ -4242,6 +4245,9 @@ class PyVistaWidget(QtInteractor):
         opacity = float(data["opacity"])
 
         normalT = convert_str_vector(vector=normal, transform=transform, A=self.A_matrix)
+        if np.linalg.norm(normalT) == 0.0:  # the object needs a direction.
+            self._not_drawn("plane", index, data, "its normal is 0")
+            return
 
         obj = create_plane(normal=normalT, x_size=x_size, y_size=y_size)
         option_add = {
@@ -4282,6 +4288,9 @@ class PyVistaWidget(QtInteractor):
         opacity = float(data["opacity"])
 
         normalT = convert_str_vector(vector=normal, transform=transform, A=self.A_matrix)
+        if np.linalg.norm(normalT) == 0.0:  # the object needs a direction.
+            self._not_drawn("circle", index, data, "its normal is 0")
+            return
 
         obj = create_circle(normal=normalT, size=size)
         option_add = {
@@ -4320,6 +4329,9 @@ class PyVistaWidget(QtInteractor):
         opacity = float(data["opacity"])
 
         normalT = convert_str_vector(vector=normal, transform=transform, A=self.A_matrix)
+        if np.linalg.norm(normalT) == 0.0:  # the object needs a direction.
+            self._not_drawn("torus", index, data, "its normal is 0")
+            return
 
         obj = create_torus(normal=normalT, size=size, width=width)
         option_add = {"color": color, "opacity": opacity}
@@ -4353,6 +4365,9 @@ class PyVistaWidget(QtInteractor):
         opacity = float(data["opacity"])
 
         normalT = convert_str_vector(vector=normal, transform=transform, A=self.A_matrix)
+        if np.linalg.norm(normalT) == 0.0:  # the object needs a direction.
+            self._not_drawn("ellipsoid", index, data, "its normal is 0")
+            return
 
         obj = create_ellipsoid(normal=normalT, x_size=x_size, y_size=y_size, z_size=z_size)
         option_add = {"color": color, "opacity": opacity}
@@ -4390,6 +4405,9 @@ class PyVistaWidget(QtInteractor):
         opacity = float(data["opacity"])
 
         normalT = convert_str_vector(vector=normal, transform=transform, A=self.A_matrix)
+        if np.linalg.norm(normalT) == 0.0:  # the object needs a direction.
+            self._not_drawn("toroid", index, data, "its normal is 0")
+            return
 
         obj = create_toroid(
             normal=normalT,
@@ -4534,6 +4552,9 @@ class PyVistaWidget(QtInteractor):
         opacity = float(data["opacity"])
 
         view = convert_str_vector(vector=view, transform=False)
+        if np.linalg.norm(view) == 0.0:  # the text needs a direction to face.
+            self._not_drawn("text3d", index, data, "its view direction is 0")
+            return
         offset = convert_str_vector(vector=offset, transform=False)
 
         obj = create_text3d(
@@ -4692,6 +4713,9 @@ class PyVistaWidget(QtInteractor):
         opacity = float(data["opacity"])
 
         t_range = convert_str_vector(vector=t_range, transform=False)
+        if t_range[2] == 0.0:  # the points of t would never end.
+            self._not_drawn("spline_t", index, data, "its step of t is 0")
+            return
 
         A = self.A_matrix if transform else np.eye(4)
         left_out = []

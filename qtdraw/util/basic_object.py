@@ -470,7 +470,7 @@ def create_stream(
         tip_length (float, optional): tip length.
 
     Returns:
-        - (vtk.PolyData) -- orbital object with "vector" and "vector_abs".
+        - (vtk.PolyData) -- orbital object with "vector" and "vector_abs", None if all the arrows have length 0.
 
     Note:
         - if theta_phi_range/division is None, default is used.
@@ -495,6 +495,8 @@ def create_stream(
     stream_vec["vector"] = fv
     stream_vec["vector_abs"] = fva
     stream_vec = stream_vec.extract_points(fva > CHOP, include_cells=False)
+    if stream_vec.n_points == 0:
+        return None
 
     g = create_vector(
         np.array([1.0, 0.0, 0.0]),

@@ -1,6 +1,6 @@
 """
-Streams, lines and bonds of length 0 are not drawn, and arrow tips of length 0 are left out, instead of failing while
-drawing (#219).
+Objects without a length, a direction or a size are not drawn, and arrow tips of length 0 are left out, instead of
+failing while drawing (#219, #224).
 """
 
 import numpy as np
@@ -8,7 +8,7 @@ import pytest
 import pyvista as pv
 
 from qtdraw.core.pyvista_widget_setting import COLUMN_NAME_ACTOR
-from qtdraw.util.basic_object import _arrow_tips, arrow_length
+from qtdraw.util.basic_object import _arrow_tips, arrow_length, create_stream
 
 
 def actor(widget, object_type):
@@ -31,13 +31,59 @@ def mesh(widget, name):
     ],
 )
 def test_object_of_length_zero_is_not_drawn(widget, qtbot, object_type, kwargs):
+    assert_not_drawn(widget, qtbot, object_type, kwargs, "its length is 0")
+
+
+def assert_not_drawn(widget, qtbot, object_type, kwargs, reason):
+    messages = []
+    widget.message.connect(messages.append)
+    with qtbot.capture_exceptions() as errors:
+        getattr(widget, f"add_{object_type}")(name="X", **kwargs)
+    assert not errors, errors
+    assert actor(widget, object_type) == ""
+    assert f"* {object_type} 'X' is not drawn: {reason}." in messages, messages
+
+
+@pytest.mark.parametrize(
+    "object_type, kwargs, reason",
+    [
+        ("plane", {"normal": "[0,0,0]"}, "its normal is 0"),
+        ("circle", {"normal": "[0,0,0]"}, "its normal is 0"),
+        ("torus", {"normal": "[0,0,0]"}, "its normal is 0"),
+        ("ellipsoid", {"normal": "[0,0,0]"}, "its normal is 0"),
+        ("toroid", {"normal": "[0,0,0]"}, "its normal is 0"),
+        ("text3d", {"view": "[0,0,0]"}, "its view direction is 0"),
+        ("stream", {"shape": "0"}, "all its arrows have length 0"),
+        ("stream", {"size": 0}, "all its arrows have length 0"),
+        ("stream", {"vector": "[0,0,0]"}, "all its arrows have length 0"),
+        ("stream", {"vector": "[0,0,0]", "abs_scale": True}, "all its arrows have length 0"),
+        ("spline_t", {"t_range": "[0,0,0]"}, "its step of t is 0"),
+        ("spline_t", {"t_range": "[0,1,0]"}, "its step of t is 0"),
+        ("spline_t", {"t_range": "[0,1,-0]"}, "its step of t is 0"),
+    ],
+)
+def test_object_without_direction_or_size_is_not_drawn(widget, qtbot, object_type, kwargs, reason):
+    assert_not_drawn(widget, qtbot, object_type, kwargs, reason)
+
+
+@pytest.mark.parametrize(
+    "object_type, kwargs",
+    [
+        ("stream", {"shape": "z"}),  # some arrows have length 0.
+        ("stream", {"vector": "[x,0,0]"}),
+        ("stream", {"size": 0, "vector": "[1,0,0]"}),  # all arrows at the centre.
+        *[(t, {"normal": "[0,0,1e-9]"}) for t in ("plane", "circle", "torus", "ellipsoid", "toroid")],
+        ("text3d", {"view": "[0,1e-9,0]"}),
+    ],
+)
+def test_object_with_some_direction_or_size_is_drawn(widget, qtbot, object_type, kwargs):
     messages = []
     widget.message.connect(messages.append)
     with qtbot.capture_exceptions() as errors:
         getattr(widget, f"add_{object_type}")(**kwargs)
     assert not errors, errors
-    assert actor(widget, object_type) == ""
-    assert any(f"{object_type} " in text and "is not drawn: its length is 0" in text for text in messages), messages
+    assert actor(widget, object_type) in widget.actors
+    assert not any("is not drawn" in text for text in messages), messages
 
 
 @pytest.mark.parametrize(
@@ -79,6 +125,11 @@ def test_arrow_tip_is_still_drawn(widget, object_type, arrow):
     assert not any("drawn without" in text for text in messages), messages
 
 
+def test_stream_without_arrows_is_none():
+    assert create_stream(vector="[0,0,0]") is None
+    assert create_stream(vector="[x,0,0]").n_points > 0
+
+
 def test_only_the_tip_without_direction_is_left_out():
     left_out = []
     tips = _arrow_tips(True, True, np.zeros(3), np.array([1.0, 0.0, 0.0]), 0.1, left_out)
@@ -101,13 +152,21 @@ def test_short_stream_is_still_drawn(widget, qtbot, kwargs):
     assert np.isfinite(mesh(widget, actor(widget, "stream")).points).all()
 
 
-@pytest.mark.parametrize("object_type", ["stream", "line", "bond"])
-def test_object_edited_to_length_zero_and_back(widget, qtbot, object_type):
-    column, zero, back = {
-        "stream": ("length", "0", "0.1"),
-        "line": ("direction", "[0,0,0]", "[1,0,0]"),
-        "bond": ("direction", "[0,0,0]", "[0,0,1]"),
-    }[object_type]
+EDITS = {
+    ("stream", "length"): ("0", "0.1"),
+    ("line", "direction"): ("[0,0,0]", "[1,0,0]"),
+    ("bond", "direction"): ("[0,0,0]", "[0,0,1]"),
+    ("plane", "normal"): ("[0,0,0]", "[0,0,1]"),
+    ("toroid", "normal"): ("[0,0,0]", "[0,0,1]"),
+    ("text3d", "view"): ("[0,0,0]", "[0,0,1]"),
+    ("stream", "vector"): ("[0,0,0]", "[x,y,z]"),
+    ("spline_t", "t_range"): ("[0,1,0]", "[0,1,0.05]"),
+}
+
+
+@pytest.mark.parametrize("object_type, column", sorted(EDITS), ids=[f"{t}.{c}" for t, c in sorted(EDITS)])
+def test_object_edited_to_length_zero_and_back(widget, qtbot, object_type, column):
+    zero, back = EDITS[(object_type, column)]
     getattr(widget, f"add_{object_type}")(name="X")
     model = widget._data[object_type]
     old = actor(widget, object_type)
@@ -125,6 +184,10 @@ def test_repeat_with_objects_of_length_zero(widget, qtbot):
     widget.add_bond(direction="[0,0,0]")
     widget.add_line(direction="[0,0,0]")
     widget.add_stream(length=0)
+    widget.add_plane(normal="[0,0,0]")
+    widget.add_text3d(view="[0,0,0]")
+    widget.add_stream(vector="[0,0,0]")
+    widget.add_spline_t(t_range="[0,1,0]")
     with qtbot.capture_exceptions() as errors:
         widget.set_repeat(True)
         widget.set_clip(True)
