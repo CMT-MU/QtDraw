@@ -98,13 +98,15 @@ def test_qtdraw_runs_with_multipie_turned_off(tmp_path):
         drawing = read_dict(str(file))
         drawing["status"]["multipie"] = {{"version": "2.3.4", "group": {{"group": "D6h"}}}}
         file.write_text(str(drawing))
+        pvw.add_site(position="[0.1,0.2,0.3]", name="current")  # only in the current drawing.
+        current = pvw.get_data_dict()
         try:  # a drawing with a MultiPie group is not opened, the current one is kept.
             pvw.load(str(file))
         except Exception as e:
             assert "mp.qtdw uses MultiPie" in str(e) and "cannot be loaded" in str(e), e
         else:
             raise AssertionError("a MultiPie drawing opened without MultiPie")
-        assert pvw._data["site"].rowCount() == sites
+        assert pvw.get_data_dict() == current
         try:
             pvw.mp_set_group("D6h")
         except Exception as e:
