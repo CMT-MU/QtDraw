@@ -91,6 +91,9 @@ def kill_group(proc):
         os.killpg(proc.pid, signal.SIGKILL)
     except ProcessLookupError:  # the group has already ended.
         pass
+    except PermissionError:  # macOS may return EPERM for a group of ended processes only.
+        if sys.platform != "darwin":
+            raise
     proc.wait(timeout=60)
 
 
