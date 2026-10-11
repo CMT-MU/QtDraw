@@ -31,8 +31,6 @@ LISTS = ["[]", "[[]]", "[[],[],[]]", "[0,0]", "[[0,0],[0,0]]"]
 # such a column has the value zero, e.g. "[0,0,0]" or "-0".
 DEGENERATE = {
     ("bond", "direction"): "[0,0,0]",
-    ("vector", "direction"): "[0,0,0]",
-    ("vector", "length"): "0",
     ("line", "direction"): "[0,0,0]",
     ("plane", "normal"): "[0,0,0]",
     ("circle", "normal"): "[0,0,0]",
