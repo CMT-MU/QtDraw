@@ -273,11 +273,11 @@ def test_multipie_button_is_always_shown(qapp, tmp_path, monkeypatch, no_multipi
     window = QtDraw()
     try:
         assert "MultiPie" in [b.text() for b in window.panel.findChildren(QPushButton)]
-        shown = []
-        monkeypatch.setattr(QMessageBox, "information", lambda *a, **k: shown.append(a[2]) or QMessageBox.Ok)
-        window.misc_button_multipie.click()
-        assert len(shown) == 1 and "pip install multipie" in shown[0]
-        assert window.multipie_dialog is None
+        asked = []
+        monkeypatch.setattr(QMessageBox, "question", lambda *a, **k: asked.append(a[2]) or QMessageBox.No)
+        window.misc_button_multipie.click()  # offers to install MultiPie, declined.
+        assert len(asked) == 1 and "pip install multipie" in asked[0]
+        assert window.multipie_dialog is None and window._multipie_install is None
     finally:
         monkeypatch.setattr(QMessageBox, "question", lambda *a, **k: QMessageBox.Discard)
         if shiboken6.isValid(window):
@@ -357,13 +357,12 @@ def test_qtdraw_starts_without_multipie():
         from qtdraw.core.qtdraw_app import QtDraw
         from qtdraw.util.util import check_multipie
         assert not check_multipie()
-        shown = []
-        QMessageBox.information = lambda *a, **k: shown.append(a[2]) or QMessageBox.Ok
-        QMessageBox.question = lambda *a, **k: QMessageBox.Discard
+        asked = []
+        QMessageBox.question = lambda *a, **k: asked.append(a[2]) or QMessageBox.No  # not installed, not saved.
         window = QtDraw()
         window.pyvista_widget.add_site()
         window.misc_button_multipie.click()
-        assert "pip install multipie" in shown[0], shown
+        assert "pip install multipie" in asked[0], asked
         window.close()
         print("OK")
         """)

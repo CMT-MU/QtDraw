@@ -6,11 +6,12 @@ This module provides application of QtDraw.
 
 import os
 import copy
+import importlib
 import warnings
 from pathlib import Path
 import logging
 from PySide6.QtWidgets import QWidget, QMessageBox, QFileDialog, QDialog, QApplication, QAbstractButton, QComboBox
-from PySide6.QtCore import Qt, QTimer, QSettings, QUrl
+from PySide6.QtCore import Qt, QTimer, QSettings, QUrl, QProcess
 from PySide6.QtGui import QAction, QActionGroup, QKeySequence, QDesktopServices
 
 from qtdraw.core.pyvista_widget import PyVistaWidget, Window, same_snapshot
@@ -22,7 +23,7 @@ from qtdraw.core.dialog_about import get_version_info
 from qtdraw.widget.custom_widget import Label, Layout, LineEdit, HBar, Button, Combo, VSpacer
 from qtdraw.widget.logging_util import LogWidget
 from qtdraw.widget.qt_event_util import busy_cursor, font_style_sheet
-from qtdraw.util.util import check_multipie, multipie_message
+from qtdraw.util.util import check_multipie, multipie_message, multipie_missing, install_multipie_command
 
 
 # ==================================================
@@ -116,6 +117,7 @@ class QtDraw(Window):
         self._current_file = None  # QtDraw file opened or saved last, written by Save.
         self.pref_dialog = None  # preference dialog.
         self.multipie_dialog = None  # MultiPie dialog.
+        self._multipie_install = None  # process installing MultiPie.
         self._history = UndoHistory(limit=50)  # document snapshots for undo.
         self._restoring = False  # restoring a snapshot ?
         self._data_views = {}  # windows showing internal data (Window menu), by name.
@@ -393,7 +395,7 @@ class QtDraw(Window):
             self.view_button_bar: "Show the color bar.",
             self.view_button_parallel: "Use parallel projection.",
             self.view_button_grid: "Show the grid.",
-            self.misc_button_multipie: "Open the MultiPie dialog for symmetry-adapted drawing (MultiPie must be installed).",
+            self.misc_button_multipie: "Open the MultiPie dialog for symmetry-adapted drawing (without MultiPie, it offers to install it).",
         }
         for button, tip in tips.items():
             if not button.toolTip():  # keep tool tips set elsewhere.
@@ -1664,12 +1666,19 @@ class QtDraw(Window):
     # ==================================================
     def _show_multipie(self):
         """
-        Show MultiPie panel, or how to install MultiPie.
+        Show MultiPie panel, or offer to install MultiPie.
 
         :meta private:
         """
         if not check_multipie():
-            QMessageBox.information(self, "MultiPie", f"{multipie_message()}\n\nMultiPie draws objects by symmetry.")
+            text = f"{multipie_message()}\n\nMultiPie draws objects by symmetry."
+            if multipie_missing():
+                command = " ".join(install_multipie_command())
+                text += f" Install it now with the following command?\n\n{command}"
+                if QMessageBox.question(self, "MultiPie", text, QMessageBox.Yes | QMessageBox.No) == QMessageBox.Yes:
+                    self._install_multipie()
+            else:  # installed, but it cannot be loaded: installing does not help.
+                QMessageBox.information(self, "MultiPie", text)
             return
         from qtdraw.multipie.multipie_dialog import MultiPieDialog
 
@@ -1678,6 +1687,68 @@ class QtDraw(Window):
             self.multipie_dialog.addActions([self.action_undo, self.action_redo])  # shortcuts in the dialog.
         else:
             self.multipie_dialog.show()
+
+    # ==================================================
+    def _install_multipie(self):
+        """
+        Install MultiPie with pip in the background, showing its output in the Log window.
+
+        :meta private:
+        """
+        command = install_multipie_command()
+        process = QProcess(self)
+        process.setProcessChannelMode(QProcess.MergedChannels)
+        output = []
+
+        def read():
+            text = bytes(process.readAllStandardOutput()).decode(errors="replace")
+            output.append(text)
+            self.logger.append_text(text.rstrip("\n"))
+
+        process.readyReadStandardOutput.connect(read)
+        process.finished.connect(
+            lambda code, status: self._multipie_installed(process, code == 0 and status == QProcess.NormalExit, output)
+        )
+        process.errorOccurred.connect(
+            lambda error: error == QProcess.FailedToStart and self._multipie_installed(process, False, output)
+        )
+        self._multipie_install = process
+        self.misc_button_multipie.setEnabled(False)
+        QApplication.setOverrideCursor(Qt.BusyCursor)
+        self.logger.append_text("$ " + " ".join(command))
+        self.logger.show()
+        process.start(command[0], command[1:])
+
+    # ==================================================
+    def _multipie_installed(self, process, ok, output):
+        """
+        Use MultiPie after its installation, or tell why it failed.
+
+        Args:
+            process (QProcess): installing process.
+            ok (bool): installed ?
+            output (list): output of the installation.
+
+        :meta private:
+        """
+        if self._multipie_install is not process:  # already handled, or stopped by closing.
+            return
+        self._multipie_install = None
+        process.deleteLater()
+        QApplication.restoreOverrideCursor()
+        self.misc_button_multipie.setEnabled(True)
+        if not ok:
+            tail = "\n".join("".join(output).strip().splitlines()[-10:]) or process.errorString()
+            command = " ".join(install_multipie_command())
+            QMessageBox.warning(
+                self, "MultiPie", f"MultiPie could not be installed.\n\n{tail}\n\nInstall it by hand with:\n{command}"
+            )
+            return
+        importlib.invalidate_caches()  # find the new package.
+        if check_multipie():
+            self._show_multipie()
+        else:
+            QMessageBox.information(self, "MultiPie", f"MultiPie was installed. {multipie_message()}")
 
     # ==================================================
     def _show_data_view(self, name, title, contents):
@@ -1841,6 +1912,14 @@ class QtDraw(Window):
         """
         self._flush()
         ok = self._confirm_unsaved("closing")
+        if ok and self._multipie_install is not None:
+            text = "MultiPie is being installed. Stop the installation and close?"
+            ok = QMessageBox.question(self, "MultiPie", text, QMessageBox.Yes | QMessageBox.No) == QMessageBox.Yes
+            if ok:
+                process, self._multipie_install = self._multipie_install, None
+                process.kill()
+                process.waitForFinished(5000)
+                QApplication.restoreOverrideCursor()
         if not ok:
             event.ignore()
         else:

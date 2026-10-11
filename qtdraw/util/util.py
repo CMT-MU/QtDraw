@@ -200,6 +200,34 @@ def multipie_message():
 
 
 # ==================================================
+def multipie_missing():
+    """
+    Check if MultiPie is not installed, not only that it cannot be loaded.
+
+    Returns:
+        - (bool) -- not installed ?
+    """
+    try:
+        _load_multipie()
+    except ModuleNotFoundError as e:
+        return e.name == "multipie"
+    except Exception:
+        return False
+    return False
+
+
+# ==================================================
+def install_multipie_command():
+    """
+    Command to install MultiPie with pip of this Python.
+
+    Returns:
+        - (list) -- program and arguments.
+    """
+    return [sys.executable, "-m", "pip", "install", "multipie>=2"]
+
+
+# ==================================================
 def create_grid(grid_n, grid_min, grid_max, A=None, endpoint=False):
     """
     Create grid.
