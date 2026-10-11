@@ -912,10 +912,29 @@ class QtDraw(Window):
 
         :meta private:
         """
+        self._show_axis_cell()  # e.g. set by a MultiPie group.
         if self._restoring:
             return
         self._modified_timer.start()
         self._update_undo_actions()
+
+    # ==================================================
+    def _show_axis_cell(self):
+        """
+        Show the axis and cell display in effect in the panel and the View menu, without applying it again.
+
+        :meta private:
+        """
+        status = self.pyvista_widget._status
+        for combo, actions, value in [
+            (self.view_combo_axis, self.action_axis, status["axis_type"]),
+            (self.view_combo_cell, self.action_cell, status["cell_mode"]),
+        ]:
+            if combo.currentText() != value:
+                combo.blockSignals(True)
+                combo.setCurrentText(value)
+                combo.blockSignals(False)
+                actions[value].setChecked(True)
 
     # ==================================================
     def _settle(self):
