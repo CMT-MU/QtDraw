@@ -15,6 +15,9 @@ jobs:
   test:
     runs-on: ${{ matrix.os }}
     timeout-minutes: 30
+    defaults:
+      run:
+        shell: bash  # the same scripts on Windows.
     strategy:
       fail-fast: false
       matrix:
@@ -25,6 +28,9 @@ jobs:
         dependencies: [latest]
         include:
           - os: macos-latest
+            python-version: "3.13"
+            dependencies: latest
+          - os: windows-latest
             python-version: "3.13"
             dependencies: latest
           # the lowest versions allowed in pyproject.toml.
@@ -60,7 +66,21 @@ jobs:
       - name: Import check
         run: python -c "import qtdraw.core.qtdraw_app, qtdraw.scripts.qtdraw, qtdraw.scripts.conv_qtdraw3"
 
+      - name: Fonts for the off-screen platform on Windows
+        if: runner.os == 'Windows'
+        run: echo "QT_QPA_FONTDIR=C:/Windows/Fonts" >> "$GITHUB_ENV"  # it finds no fonts there otherwise.
+
       - name: Run tests
         env:
           QT_QPA_PLATFORM: offscreen
+          QTDRAW_VISUAL_OUTPUT: visual-output  # images of failing or skipped visual tests.
+          QTDRAW_VISUAL_REQUIRE: ${{ matrix.dependencies == 'minimum' && '1' || '0' }}  # pinned versions have references.
         run: python -m pytest -v -n auto  # tests run in parallel processes.
+
+      - name: Keep images of the visual tests
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: visual-${{ matrix.os }}-${{ matrix.python-version }}-${{ matrix.dependencies }}
+          path: visual-output
+          if-no-files-found: ignore

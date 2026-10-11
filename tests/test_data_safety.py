@@ -3,6 +3,7 @@ Regression tests for save/load/preference operations that could lose user data.
 """
 
 import shutil
+import sys
 from pathlib import Path
 
 import pytest
@@ -135,6 +136,7 @@ def test_save_dialog_without_extension_saves(qapp, tmp_path, monkeypatch):
 
 
 # ==================================================
+@pytest.mark.skipif(sys.platform == "win32", reason="Windows has no POSIX file permissions.")
 def test_save_keeps_file_permission(widget, tmp_path):
     import os
 

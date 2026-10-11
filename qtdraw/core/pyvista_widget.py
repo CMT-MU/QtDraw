@@ -36,6 +36,7 @@ from qtdraw.core.pyvista_widget_setting import (
     COLUMN_CELL,
     COLUMN_POSITION,
     COLUMN_ISOSURFACE_FILE,
+    CHOP,
 )
 from qtdraw.core.pyvista_widget_setting import widget_detail as detail
 from qtdraw.core.qtdraw_info import __version__, __date__, __author__
@@ -3971,6 +3972,14 @@ class PyVistaWidget(QtInteractor):
         opacity = float(data["opacity"])
 
         directionT = convert_str_vector(vector=direction, transform=transform, A=self.A_matrix)
+        norm = float(np.linalg.norm(directionT))
+        drawn_length = abs(length) * norm if length < CHOP else length  # as create_vector() uses it.
+        if norm == 0.0 or drawn_length < CHOP:  # an arrow of length 0 cannot be made (the direction is normalized).
+            self.write_info(f"* vector '{data['name']}' is not drawn: its length is 0.")
+            if actor != "":  # remove the vector drawn before an edit.
+                self.delete_actor(actor)
+                self._data["vector"].set_row_data(index, COLUMN_NAME_ACTOR, "")
+            return
 
         obj = create_vector(
             direction=directionT,
@@ -4006,7 +4015,7 @@ class PyVistaWidget(QtInteractor):
         shape = data["shape"]
         surface = data["surface"]
         size = float(data["size"])
-        theta_phi_range = apply(float, text_to_list(data["range"]))
+        theta_phi_range = _parse_vector(data["range"]).tolist()  # also expressions, as the table accepts.
         color = data["color"]
         opacity = float(data["opacity"])
 
@@ -4056,8 +4065,8 @@ class PyVistaWidget(QtInteractor):
         shape = data["shape"]
         vector = data["vector"]
         size = float(data["size"])
-        theta_phi_range = apply(float, text_to_list(data["range"]))
-        division = apply(int, text_to_list(data["division"]))
+        theta_phi_range = _parse_vector(data["range"]).tolist()  # also expressions, as the table accepts.
+        division = _parse_vector(data["division"], as_int=True).tolist()
         length = float(data["length"])
         width = float(data["width"])
         offset = float(data["offset"])
@@ -4420,7 +4429,7 @@ class PyVistaWidget(QtInteractor):
         opacity = float(data["opacity"])
 
         pointT = convert_str_vector(vector=point, transform=transform, A=self.A_matrix)
-        connectivity = apply(int, text_to_list(connectivity))
+        connectivity = [[int(x) for x in face] for face in str_to_sympy(connectivity)]  # faces may differ in size.
 
         obj = create_polygon(point=pointT, connectivity=connectivity)
         if wireframe:
@@ -4501,10 +4510,10 @@ class PyVistaWidget(QtInteractor):
         """
         actor = data["name_actor"]
         data_name = data["data"]
-        value = apply(float, text_to_list(data["value"]))
+        value = _parse_vector(data["value"]).tolist()  # also expressions, as the table accepts.
         surface = data["surface"]
         color = data["color"]
-        color_range = apply(float, text_to_list(data["color_range"]))
+        color_range = _parse_vector(data["color_range"]).tolist()
         opacity = float(data["opacity"])
 
         if data_name == "":

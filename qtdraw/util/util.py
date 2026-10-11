@@ -25,10 +25,15 @@ def _check_shape(a, shape):
 
     Note:
         - "0" in shape means any size.
+        - for shape (n,0), rows of different lengths are also accepted, e.g. faces of a polygon.
     """
     if shape is None:
         return True
-    return a.ndim == len(shape) and all(s == 0 or x == s for x, s in zip(a.shape, shape))
+    if a.ndim == len(shape) and all(s == 0 or x == s for x, s in zip(a.shape, shape)):
+        return not any(isinstance(x, (list, tuple)) for x in a.flat)  # not deeper than the shape, e.g. [[[0]],[1]].
+    if len(shape) == 2 and shape[1] == 0 and a.ndim == 1 and shape[0] in (0, len(a)):  # rows of different lengths.
+        return all(isinstance(row, (list, tuple)) and not any(isinstance(x, (list, tuple)) for x in row) for row in a)
+    return False
 
 
 # ==================================================
