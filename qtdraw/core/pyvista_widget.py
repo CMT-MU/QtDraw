@@ -49,7 +49,7 @@ from qtdraw.widget.color_palette import all_colors, custom_colormap, check_color
 from qtdraw.parser.read_material import parse_draw, draw
 from qtdraw.parser.xsf import extract_data_xsf
 from qtdraw.parser.converter import convert_version3
-from qtdraw.util.util import text_to_list, apply, read_dict, str_to_sympy, check_multipie, MULTIPIE_INSTALL
+from qtdraw.util.util import text_to_list, apply, read_dict, str_to_sympy, check_multipie, multipie_message
 from qtdraw.util.util_axis import (
     create_axes_widget,
     create_unit_cell,
@@ -1967,7 +1967,7 @@ class PyVistaWidget(QtInteractor):
             except Exception as e:  # the parser's message is kept as the cause.
                 raise ValueError(f"{file.name} is not a valid QtDraw file, it cannot be read.") from e
             if isinstance(all_data, dict) and all_data.get("multipie") and not check_multipie():  # version 1.
-                raise Exception(f"{file.name} uses MultiPie. {MULTIPIE_INSTALL}")
+                raise Exception(f"{file.name} uses MultiPie. {multipie_message()}")
             if ver < 2:  # a temporary widget is needed to convert version 1.
                 widget = PyVistaWidget(off_screen=True)
                 try:
@@ -1988,7 +1988,7 @@ class PyVistaWidget(QtInteractor):
         if missing:
             raise Exception(f"cannot read {f}, missing {missing}.")
         if all_data["status"].get("multipie") and not check_multipie():  # not opened: saving would lose its MultiPie data.
-            raise Exception(f"{file.name} uses MultiPie. {MULTIPIE_INSTALL}")
+            raise Exception(f"{file.name} uses MultiPie. {multipie_message()}")
         if material is None:
             for object_type, rows in all_data["data"].items():
                 if object_type not in self._data.keys():
@@ -4973,7 +4973,7 @@ class PyVistaWidget(QtInteractor):
             status (dict, optional): multipie status update dict.
         """
         if not check_multipie():
-            raise Exception(MULTIPIE_INSTALL)
+            raise Exception(multipie_message())
         from qtdraw.multipie.multipie_data import MultiPieData  # only with MultiPie: QtDraw also runs without it.
 
         self._mp_data = MultiPieData(self)

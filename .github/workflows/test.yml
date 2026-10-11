@@ -22,9 +22,8 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest]
-        # Python 3.11 is not tested: MultiPie 2.3.4 uses f-string syntax that needs Python 3.12
-        # (fixed in MultiPie's develop branch, not released yet).
-        python-version: ["3.12", "3.13"]
+        # on Python 3.11, MultiPie 2.3.4 cannot be loaded (its f-strings need Python 3.12): QtDraw runs without it.
+        python-version: ["3.11", "3.12", "3.13"]
         dependencies: [latest]
         include:
           - os: macos-latest

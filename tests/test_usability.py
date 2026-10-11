@@ -8,6 +8,7 @@ import pytest
 from PySide6.QtWidgets import QFileDialog, QMessageBox
 
 from gui_helpers import app, answer  # noqa: F401  (fixture and helper)
+from qtdraw.util.util import check_multipie
 
 
 # ==================================================
@@ -138,6 +139,7 @@ def test_long_operations_show_wait_cursor(app, monkeypatch):
 
 
 # ==================================================
+@pytest.mark.skipif(not check_multipie(), reason="MultiPie cannot be loaded.")
 def test_multipie_info_dialogs_show_wait_cursor():
     import inspect
     from qtdraw.multipie import multipie_info_dialog as m
