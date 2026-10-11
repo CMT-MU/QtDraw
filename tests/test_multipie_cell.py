@@ -93,3 +93,47 @@ def test_opened_file_keeps_its_crystal_also_of_another_group(widget, tmp_path, c
     widget.restore_document(snapshot)  # undo.
     assert (widget._status["crystal"], widget._status["cell"]) == saved[:2]
     assert widget.A_matrix == pytest.approx(saved[2])
+
+
+# ==================================================
+@pytest.mark.parametrize("dialog_open", [False, True])
+def test_main_window_opens_file_with_its_crystal(widget, app, tmp_path, monkeypatch, dialog_open):
+    widget.mp_set_group("Oh")
+    widget.set_crystal("hexagonal")  # another crystal than the group's (#238).
+    widget.set_unit_cell({"a": 2.5, "c": 4.0})
+    widget.add_site(position="[1/3,2/3,0]")
+    saved = (widget._status["crystal"], dict(widget._status["cell"]), widget.A_matrix.copy())
+    widget.save(str(tmp_path / "a.qtdw"))
+    if dialog_open:
+        app.mp_set_group("D6h")  # the dialog is open already.
+
+    answer(monkeypatch, QMessageBox.Discard)
+    app.load_file(str(tmp_path / "a.qtdw"))
+    pvw = app.pyvista_widget
+    assert (pvw._status["crystal"], pvw._status["cell"]) == saved[:2]
+    assert pvw.A_matrix == pytest.approx(saved[2])
+    assert app.uc_combo_crystal.currentText() == "hexagonal"  # the panel shows the crystal of the file.
+    assert pvw._mp_data.status["group"]["tag"] == "Oh"
+    assert app.multipie_dialog._sub_panel.combo_crystal_type.currentText() == "cubic"  # the dialog shows the group.
+    assert not app.isWindowModified()  # opened as saved.
+
+
+# ==================================================
+def test_main_window_opens_file_of_space_group_in_open_dialog(app, tmp_path, monkeypatch):
+    from PySide6.QtWidgets import QApplication
+
+    app.mp_set_group("Oh^1")  # a space group: axis on, cell single.
+    app.pyvista_widget.save(str(tmp_path / "a.qtdw"))
+    app.mp_set_group("D6h")  # the dialog shows another group.
+
+    answer(monkeypatch, QMessageBox.Discard)
+    app.load_file(str(tmp_path / "a.qtdw"))
+    QApplication.processEvents()
+    pvw, sub = app.pyvista_widget, app.multipie_dialog._sub_panel
+    assert cell(pvw) == ("cubic", 90.0) and pvw._mp_data._type == "SG"
+    assert sub.combo_crystal_type.currentText() == "cubic" and sub.combo_group_type.currentIndex() == 1
+    assert sub.combo_group.currentIndex() == pvw._mp_data._idx  # the group of the file is chosen.
+    assert "Oh^1" in sub.label_sg_name.text()
+    status = pvw._status
+    assert (app.view_combo_axis.currentText(), app.view_combo_cell.currentText()) == (status["axis_type"], status["cell_mode"])
+    assert not app.isWindowModified()
