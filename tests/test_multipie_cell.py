@@ -67,3 +67,15 @@ def test_main_window_sets_cell_once(app, monkeypatch):
     app.mp_set_group("D6h")
     assert len(calls) == 1 and cell(widget) == ("hexagonal", 120.0)
     assert app.uc_combo_crystal.currentText() == "hexagonal"  # the panel shows it.
+
+
+# ==================================================
+def test_opened_file_keeps_its_crystal_also_of_another_group(widget, tmp_path):
+    widget.mp_set_group("Oh")
+    widget.set_crystal("hexagonal")  # chosen after the group, as some files of QtDraw 2.0 have.
+    widget.save(str(tmp_path / "a.qtdw"))
+    widget.mp_set_group("Oh")
+    assert cell(widget) == ("cubic", 90.0)
+
+    widget.load(str(tmp_path / "a.qtdw"))  # as the release opens it.
+    assert cell(widget) == ("hexagonal", 120.0)
