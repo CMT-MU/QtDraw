@@ -931,9 +931,9 @@ class QtDraw(Window):
             (self.view_combo_cell, self.action_cell, status["cell_mode"]),
         ]:
             if combo.currentText() != value:
-                combo.blockSignals(True)
+                blocked = combo.blockSignals(True)
                 combo.setCurrentText(value)
-                combo.blockSignals(False)
+                combo.blockSignals(blocked)
                 actions[value].setChecked(True)
 
     # ==================================================

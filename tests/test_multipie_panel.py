@@ -70,3 +70,32 @@ def test_panel_still_sets_the_display(app):
     app.view_combo_axis.setCurrentText("on")  # the panel works from the shown values.
     app.view_combo_cell.setCurrentText("single")
     assert_shown(app, "on", "single")
+
+
+# ==================================================
+def test_shown_without_applying_again(app, monkeypatch):
+    pvw = app.pyvista_widget
+    pvw.set_axis("axis")  # changed on the widget, e.g. from Python.
+    pvw.set_cell("all")
+    calls = []
+    monkeypatch.setattr(pvw, "set_axis", lambda *a, **k: calls.append("axis"))
+    monkeypatch.setattr(pvw, "set_cell", lambda *a, **k: calls.append("cell"))
+    pvw.document_changed.emit()
+    assert_shown(app, "axis", "all")
+    assert calls == []  # not drawn again.
+
+
+# ==================================================
+def test_shown_after_undo_and_redo(app):
+    def settle():
+        app._modified_timer.stop()
+        app._settle()
+
+    app.mp_set_group("Oh^1")
+    settle()
+    app.mp_set_group("Ci")
+    settle()
+    for move in (app.undo, app.redo, app.undo):
+        move()
+        st = app.pyvista_widget._status
+        assert_shown(app, st["axis_type"], st["cell_mode"])
