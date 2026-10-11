@@ -226,7 +226,7 @@ def install_multipie_command():
     Returns:
         - (list) -- program and arguments.
     """
-    return [sys.executable, "-m", "pip", "install", "multipie>=2"]
+    return [sys.executable, "-m", "pip", "install", "multipie"]  # no version specifier: ">" is a redirection in a shell.
 
 
 # ==================================================
