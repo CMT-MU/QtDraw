@@ -130,3 +130,15 @@ def test_repeat_with_objects_of_length_zero(widget, qtbot):
         widget.set_clip(True)
         widget.set_repeat(False)
     assert not errors, errors
+
+
+@pytest.mark.parametrize("object_type", ["line", "spline", "spline_t"])
+def test_short_arrow_tip_is_still_drawn(widget, qtbot, object_type):
+    messages = []
+    widget.message.connect(messages.append)
+    with qtbot.capture_exceptions() as errors:
+        getattr(widget, f"add_{object_type}")(arrow1=True, arrow2=True, tip_length=1e-9)
+    assert not errors, errors
+    assert np.isfinite(mesh(widget, actor(widget, object_type)).points).all()
+    assert not any("drawn without" in text for text in messages), messages
+    assert _arrow_tips(True, True, np.array([1.0, 0, 0]), np.array([1e-9, 0, 0]), 1e-9) == [True, True]

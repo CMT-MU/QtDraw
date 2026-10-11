@@ -332,7 +332,7 @@ def _arrow_tips(arrow1, arrow2, direction1, direction2, length, left_out=None):
     """
     tips = []
     for name, arrow, direction in (("arrow1", arrow1, direction1), ("arrow2", arrow2, direction2)):
-        ok = arrow and arrow_length(direction, length) >= CHOP
+        ok = arrow and arrow_length(direction, length) > 0.0  # a short one is still made.
         if arrow and not ok and left_out is not None:
             left_out.append(name)
         tips.append(ok)
