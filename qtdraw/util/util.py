@@ -5,6 +5,7 @@ For versatile utility.
 import re
 import ast
 import sys
+import shlex
 import copy
 import numpy as np
 import sympy as sp
@@ -198,6 +199,50 @@ def multipie_message():
             s += " This version of MultiPie needs Python 3.12 or later."
         return s
     return MULTIPIE_INSTALL
+
+
+# ==================================================
+def multipie_missing():
+    """
+    Check if MultiPie is not installed, not only that it cannot be loaded.
+
+    Returns:
+        - (bool) -- not installed ?
+    """
+    try:
+        _load_multipie()
+    except ModuleNotFoundError as e:
+        return e.name == "multipie"
+    except Exception:
+        return False
+    return False
+
+
+# ==================================================
+def install_multipie_command():
+    """
+    Command to install MultiPie with pip of this Python.
+
+    Returns:
+        - (list) -- program and arguments.
+    """
+    return [sys.executable, "-m", "pip", "install", "multipie"]  # no version specifier: ">" is a redirection in a shell.
+
+
+# ==================================================
+def command_text(command):
+    """
+    Command as text to run in a shell, quoted.
+
+    Args:
+        command (list): program and arguments.
+
+    Returns:
+        - (str) -- command line.
+    """
+    if sys.platform == "win32":  # for cmd.exe: quote the arguments with spaces or its special characters.
+        return " ".join(f'"{a}"' if not a or set(a) & set(" \t&|<>^()") else a for a in command)
+    return shlex.join(command)
 
 
 # ==================================================
