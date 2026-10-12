@@ -19,12 +19,13 @@ class MultiPieDialog(QDialog):
     group_changed = Signal()
 
     # ==================================================
-    def __init__(self, parent):
+    def __init__(self, parent, quiet=False):
         """
         MultiPie dialog.
 
         Args:
             parent (MultiPiePlugin): parent.
+            quiet (bool, optional): only show the group, without applying its crystal, e.g. of an opened file ?
         """
         super().__init__()
         self._pvw = parent.pyvista_widget  # PyVistaWidget.
@@ -58,7 +59,7 @@ class MultiPieDialog(QDialog):
         self.group_changed.connect(self._sub_panel.set_group_name)
         self._pvw.data_removed.connect(self.clear_data)
 
-        self.set_data()
+        self.set_data(quiet)
 
         self.show()
 

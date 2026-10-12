@@ -453,10 +453,12 @@ class QtDraw(Window):
         self._update_panel_quietly()
 
         multipie = self.pyvista_widget._status.get("multipie", {})
-        if multipie and self.pyvista_widget._mp_data is not None:
-            self._show_multipie()
-            if self.multipie_dialog is not None:
-                self.multipie_dialog.set_data()
+        if multipie and self.pyvista_widget._mp_data is not None:  # show the group, with the crystal of the file.
+            if self.multipie_dialog is None:
+                self._show_multipie(quiet=True)
+            else:
+                self.multipie_dialog.show()
+                self.multipie_dialog.set_data(quiet=True)
 
         self._mark_saved()
         self._reset_history()
@@ -1684,9 +1686,12 @@ class QtDraw(Window):
         self.about_dialog.exec()  # open as modal mode.
 
     # ==================================================
-    def _show_multipie(self):
+    def _show_multipie(self, quiet=False):
         """
         Show MultiPie panel, or offer to install MultiPie.
+
+        Args:
+            quiet (bool, optional): only show the group, without applying its crystal ?
 
         :meta private:
         """
@@ -1703,7 +1708,7 @@ class QtDraw(Window):
         from qtdraw.multipie.multipie_dialog import MultiPieDialog
 
         if self.multipie_dialog is None:
-            self.multipie_dialog = MultiPieDialog(self)
+            self.multipie_dialog = MultiPieDialog(self, quiet)
             self.multipie_dialog.addActions([self.action_undo, self.action_redo])  # shortcuts in the dialog.
         else:
             self.multipie_dialog.show()
