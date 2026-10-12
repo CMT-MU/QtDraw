@@ -3306,6 +3306,12 @@ class PyVistaWidget(QtInteractor):
             return
 
         for object_type, model in data.items():
+            model = [list(row) for row in model]
+            n = self._data[object_type].columnCount()
+            for row in model:  # actor names belong to the widget that drew them, and new ones are given by counters.
+                if len(row) == n:  # others are skipped by the model.
+                    row[COLUMN_NAME_ACTOR] = ""
+                    row[COLUMN_LABEL_ACTOR] = ""
             self._data[object_type].set_data(model)
 
     # ==================================================

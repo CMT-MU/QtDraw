@@ -249,6 +249,33 @@ def test_objects_have_their_own_actors_when_mesh_addresses_are_reused(widget, mo
 
 
 # ==================================================
+def test_actor_names_in_added_data_are_not_reused(widget):
+    # actor names belong to the widget that drew them: names in given data, e.g. a hand-made file, are dropped.
+    from qtdraw.core.pyvista_widget_setting import COLUMN_NAME_ACTOR, COLUMN_LABEL_ACTOR
+
+    other = pw.PyVistaWidget(off_screen=True)
+    try:
+        add_sites(other, 1)
+        data = other._data["site"].tolist()  # with the names of the actors of the other widget.
+    finally:
+        other.close()
+    assert data[0][COLUMN_NAME_ACTOR] != "" and data[0][COLUMN_LABEL_ACTOR] != ""
+    short = data[0][:3]
+    given = [list(row) for row in data + [short]]
+    widget.add_data({"site": data + [short]})
+    assert data + [short] == given  # the given data is not changed.
+    widget.add_site(name="new", label="new")
+    model = widget._data["site"]
+    model.setData(model.index(1, model.header.index("label_check")), "True")
+
+    rows = widget._data["site"].tolist()
+    assert len(rows) == 2  # the short row is skipped as before.
+    assert len({row[COLUMN_NAME_ACTOR] for row in rows}) == 2
+    assert len({row[COLUMN_LABEL_ACTOR] for row in rows}) == 2
+    assert widget.renderer.GetViewProps().GetNumberOfItems() == len(widget.renderer.actors)  # no hidden duplicate.
+
+
+# ==================================================
 @pytest.mark.parametrize("n", [4, 16])
 def test_new_objects_do_not_read_all_actors(widget, count_renderer_actors, n):
     # an object drawn for the first time has a new name, so there is no actor of that name to look for.
