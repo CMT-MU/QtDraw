@@ -53,18 +53,26 @@ def close_open_widgets():
         if not isinstance(widget, PyVistaWidget) or not shiboken6.isValid(widget) or widget._closed:
             continue
         window = widget.window()
-        if window is not widget:
+        errors = []
+        if window is widget:
+            left.append(f"{type(widget).__name__} (off_screen={widget._off_screen})")
+        else:
             left.append(f"{type(window).__name__} window '{window.windowTitle()}'")
             question = QMessageBox.question
             QMessageBox.question = close_answer
             try:
                 window.close()
+            except Exception as e:  # an error does not keep the widget and the others open.
+                errors.append(e)
             finally:
                 QMessageBox.question = question
-        else:
-            left.append(f"{type(widget).__name__} (off_screen={widget._off_screen})")
         if not widget._closed:  # e.g. the window refused to close.
-            widget.close()
+            try:
+                widget.close()
+            except Exception as e:
+                errors.append(e)
+        if errors:
+            left[-1] += " (error while closing: " + "; ".join(f"{type(e).__name__}: {e}" for e in errors) + ")"
     return left
 
 
