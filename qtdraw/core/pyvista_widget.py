@@ -8,6 +8,7 @@ This module provides a class to draw various
 import os
 import re
 import ast
+import inspect
 import threading
 from collections import OrderedDict
 from pathlib import Path
@@ -83,6 +84,9 @@ from qtdraw.util.basic_object import (
     create_stream_data,
     arrow_length,
 )
+
+# add_mesh takes remove_existing_actor (not in pyvista 0.46).
+REMOVE_EXISTING_ACTOR = "remove_existing_actor" in inspect.signature(pv.plotting.plotter.BasePlotter.add_mesh).parameters
 
 
 # ==================================================
@@ -3306,6 +3310,12 @@ class PyVistaWidget(QtInteractor):
             return
 
         for object_type, model in data.items():
+            model = [list(row) for row in model]
+            n = self._data[object_type].columnCount()
+            for row in model:  # actor names belong to the widget that drew them, and new ones are given by counters.
+                if len(row) == n:  # others are skipped by the model.
+                    row[COLUMN_NAME_ACTOR] = ""
+                    row[COLUMN_LABEL_ACTOR] = ""
             self._data[object_type].set_data(model)
 
     # ==================================================
@@ -3818,9 +3828,10 @@ class PyVistaWidget(QtInteractor):
             "metallic": self._preference["light"]["metallic"],
             "roughness": self._preference["light"]["roughness"],
             "name": actor,
-            "remove_existing_actor": not new,  # a new name has no actor to remove: no search through all actors.
             "show_edges": False,
         }
+        if REMOVE_EXISTING_ACTOR:
+            option["remove_existing_actor"] = not new  # a new name has no actor to remove: no search through all actors.
 
         return option
 
