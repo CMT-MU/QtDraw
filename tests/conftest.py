@@ -10,7 +10,7 @@ import pytest
 import shiboken6
 
 from qtdraw.widget.qt_event_util import get_qt_application
-from gui_helpers import process_deleted
+from gui_helpers import close_open_widgets, process_deleted
 
 
 # ==================================================
@@ -21,6 +21,21 @@ def process_deleted_widgets():
     """
     yield
     process_deleted()
+
+
+# ==================================================
+@pytest.fixture(autouse=True)
+def no_open_widgets(process_deleted_widgets):
+    """
+    Fail a test that leaves a drawing open, after closing it: on Linux with Mesa and the off-screen Qt platform,
+    a window left open crashes later tests that use off-screen widgets (#197).
+
+    The closed windows are deleted afterwards by process_deleted_widgets.
+    """
+    yield
+    left = close_open_widgets()
+    if left:
+        pytest.fail("left open by the test (closed now, without saving): " + ", ".join(left))
 
 
 # ==================================================

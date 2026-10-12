@@ -23,8 +23,8 @@ def n_widgets():
 
 
 def run_python(code):
-    # a separate process: an off-screen PyVistaWidget created after a QtDraw window has drawn
-    # in the same process crashes with Mesa on Linux, whether or not closed widgets are deleted.
+    # a separate process, with only the widgets of the code. it was introduced for #197: there, a QtDraw window
+    # left open (its close was cancelled) crashed later off-screen widgets on Linux; no_open_widgets prevents it.
     ret = subprocess.run(
         [sys.executable, "-c", textwrap.dedent(code)],
         capture_output=True,
