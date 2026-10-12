@@ -49,7 +49,7 @@ from qtdraw.widget.color_palette import all_colors, custom_colormap, check_color
 from qtdraw.parser.read_material import parse_draw, draw
 from qtdraw.parser.xsf import extract_data_xsf
 from qtdraw.parser.converter import convert_version3
-from qtdraw.util.util import text_to_list, apply, read_dict, str_to_sympy, check_multipie, multipie_message
+from qtdraw.util.util import text_to_list, apply, read_dict, str_to_sympy, check_multipie, multipie_message, to_plain
 from qtdraw.util.util_axis import (
     create_axes_widget,
     create_unit_cell,
@@ -1828,7 +1828,8 @@ class PyVistaWidget(QtInteractor):
             if type(data) == tuple:
                 name, dic = data
                 row_data["data"] = name
-                self._isosurface_data[name] = copy.deepcopy(dic)  # owned by QtDraw, so history can keep it.
+                # a copy owned by QtDraw, so history can keep it, with Python values to be saved as text.
+                self._isosurface_data[name] = to_plain(dic)
                 self._isosurface_in_memory.add(name)
             else:
                 row_data["data"] = self.set_isosurface_data(data)
@@ -2051,7 +2052,7 @@ class PyVistaWidget(QtInteractor):
 
         multipie = all_data["status"].get("multipie", {})
         if multipie:
-            self.mp_set_group(status=multipie)
+            self._mp_set_group(status=multipie, keep_crystal=True)  # the crystal and the cell of the file.
 
         if material is None:
             if "distance" in all_data["camera"]:
@@ -4972,12 +4973,29 @@ class PyVistaWidget(QtInteractor):
             group (str, optional): group tag [default: C1].
             status (dict, optional): multipie status update dict.
         """
+        self._mp_set_group(group, status)
+
+    # ==================================================
+    def _mp_set_group(self, group=None, status=None, keep_crystal=False):
+        """
+        MultiPie: Set group or group status.
+
+        Args:
+            group (str, optional): group tag [default: C1].
+            status (dict, optional): multipie status update dict.
+            keep_crystal (bool, optional): keep the crystal and the cell, e.g. those of an opened file ?
+
+        :meta private:
+        """
         if not check_multipie():
             raise Exception(multipie_message())
         from qtdraw.multipie.multipie_data import MultiPieData  # only with MultiPie: QtDraw also runs without it.
 
         self._mp_data = MultiPieData(self)
         self._mp_data.set_status(status, group)
+        crystal = self._mp_data._crystal
+        if not keep_crystal and self._status["crystal"] != crystal:  # the cell of the group, as the main window.
+            self.set_crystal(crystal)
         self.document_changed.emit()
 
     # ==================================================
