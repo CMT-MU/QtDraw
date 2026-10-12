@@ -6,6 +6,7 @@ import re
 import ast
 import sys
 import shlex
+import copy
 import numpy as np
 import sympy as sp
 from sympy import SympifyError
@@ -275,6 +276,18 @@ def create_grid(grid_n, grid_min, grid_max, A=None, endpoint=False):
 
 
 # ==================================================
+class _NotFinite(ast.NodeTransformer):
+    """
+    Read nan and inf (as Python writes such float values) as numbers.
+    """
+
+    def visit_Name(self, node):
+        if node.id in ("nan", "inf"):
+            return ast.copy_location(ast.Constant(float(node.id)), node)
+        return node
+
+
+# ==================================================
 def read_dict(filename):
     """
     Read dict text file.
@@ -294,9 +307,34 @@ def read_dict(filename):
     c = ast.get_docstring(ast.parse(s))
     if c is not None:
         s = s.replace(c, "").replace('"""', "")
-    d = ast.literal_eval(s)
+    try:
+        d = ast.literal_eval(s)
+    except ValueError:  # e.g. nan or inf (slower, so only when needed).
+        d = ast.literal_eval(_NotFinite().visit(ast.parse(s, mode="eval")))
 
     return d
+
+
+# ==================================================
+def to_plain(obj):
+    """
+    Convert numpy values in nested dict, list and tuple to Python values, which can be written as text and read again.
+
+    Args:
+        obj (any): object.
+
+    Returns:
+        - (any) -- copy of the object with Python values.
+    """
+    if isinstance(obj, np.ndarray):
+        return to_plain(obj.tolist()) if obj.dtype == object else obj.tolist()  # elements of an object array may be arrays.
+    if isinstance(obj, np.generic):
+        return obj.item()
+    if isinstance(obj, dict):
+        return {to_plain(k): to_plain(v) for k, v in obj.items()}
+    if isinstance(obj, (list, tuple)):
+        return type(obj)(to_plain(v) for v in obj)
+    return copy.deepcopy(obj)  # not shared with the given object.
 
 
 # ==================================================
