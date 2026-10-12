@@ -848,7 +848,7 @@ class QtDraw(Window):
         panel = QWidget(parent)
         layout = Layout(panel)
 
-        self.ds_button_edit = Button(parent, text="edit")
+        self.ds_button_edit = Button(parent, text="DataSet")
         self.misc_button_multipie = Button(parent, text="MultiPie")  # also without MultiPie: it tells how to install it.
 
         panel1 = QWidget(parent)
@@ -1196,7 +1196,7 @@ class QtDraw(Window):
         title = self.pyvista_widget.window_title
         if self.is_modified():
             title += " *"
-        data_title = title.replace("QtDraw", "Dataset")
+        data_title = title.replace("QtDraw", "DataSet")
         self.setWindowTitle(title)
         self.pyvista_widget._tab_group_view.setWindowTitle(data_title)
         if self.multipie_dialog is not None:

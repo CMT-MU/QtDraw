@@ -8,11 +8,11 @@ The main window of **QtDraw** is the following, which has the main and control p
 
 ## Create and Edit Object
 
-To draw these objects, push `e` key or `edit` button in the right panel, and then the `Dataset` window appears as follows.
+To draw these objects, push `e` key or the `DataSet` button in the right panel, and then the `DataSet` window appears as follows.
 
 ![sample.jpg](fig/dataset.jpg)
 
-In the `Dataset` window, you can choose the object in the tab, and in each tab, you can create or copy an object in the context menu by right-clicking. The easiest way to create an object, you first create an object with the default value, and then you can edit it freely.
+In the `DataSet` window, you can choose the object in the tab, and in each tab, you can create or copy an object in the context menu by right-clicking. The easiest way to create an object, you first create an object with the default value, and then you can edit it freely.
 
 By right-clicking at the object in the main panel, the context menu shows up, and you can remove, hide, or open the corresponding object.
 
@@ -22,10 +22,10 @@ The same summary is shown by `Help` > `Mouse and Keys` in the menu bar.
 
 In the main panel:
 - Left drag: rotate. Shift + left drag: move. Wheel or right drag: zoom.
-- Right click (without dragging) on an object: context menu to open it in the `Dataset` window, hide or remove it.
-- `e`: open the `Dataset` window.
+- Right click (without dragging) on an object: context menu to open it in the `DataSet` window, hide or remove it.
+- `e`: open the `DataSet` window.
 
-In the `Dataset` window:
+In the `DataSet` window:
 - Right click: context menu to create or copy an object.
 - `Esc`: clear the selection. `Up`, `Down`: move the selection.
 
@@ -39,7 +39,7 @@ The `Window` menu shows the messages of QtDraw (`Info`) and the log (`Log`), and
 
 The `Help` menu shows the mouse and key operations, opens this documentation and the page to report an issue, and shows the version information.
 
-The buttons below the unit cell and view settings open the `Dataset` window (`edit`) and the MultiPie dialog. Without MultiPie, the `MultiPie` button tells how to install it (`pip install multipie`); a drawing that uses MultiPie can be opened only when it is installed. The preferences are in `Edit` > `Preferences`, and the version information in `Help` > `About QtDraw` (both in the application menu on macOS).
+The `DataSet` and `MultiPie` buttons below the unit cell and view settings open the `DataSet` window and the MultiPie dialog. Without MultiPie, the `MultiPie` button tells how to install it (`pip install multipie`); a drawing that uses MultiPie can be opened only when it is installed. The preferences are in `Edit` > `Preferences`, and the version information in `Help` > `About QtDraw` (both in the application menu on macOS).
 
 If an error occurs, a short message is shown; the traceback is behind `Show Details...` and also in the log. Please include it when you report a problem.
 

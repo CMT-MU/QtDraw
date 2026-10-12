@@ -5,7 +5,7 @@ The main window and available objects looks like the following.
 
 ![sample.jpg](fig/sample.jpg)
 
-All objects can be modified by GUI in the `Dataset` window.
+All objects can be modified by GUI in the `DataSet` window.
 
 ![dataset.jpg](fig/dataset.jpg)
 
