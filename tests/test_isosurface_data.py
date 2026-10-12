@@ -9,7 +9,7 @@ import pytest
 
 from qtdraw.core.pyvista_widget_setting import COLUMN_NAME_ACTOR, COLUMN_POSITION, COLUMN_CELL
 from qtdraw.util.basic_object import create_isosurface
-from qtdraw.util.util import create_grid
+from qtdraw.util.util import create_grid, check_multipie
 from qtdraw.parser.xsf import create_data
 
 EXAMPLES = Path(__file__).resolve().parents[1] / "docs" / "src" / "examples"
@@ -80,6 +80,10 @@ def test_nonrepeat_with_fractional_position(widget):
 
 
 # ==================================================
+needs_multipie = pytest.mark.skipif(not check_multipie(), reason="MultiPie cannot be loaded.")
+
+
+@needs_multipie
 @pytest.mark.parametrize("s", ["[[Q1,1,[1,0,0]", "]]", "[[Q1,1,[1,0,0]]]", "[[Q1]]"])
 def test_parse_modulation_invalid(s):
     from qtdraw.multipie.multipie_data import MultiPieData
@@ -88,6 +92,7 @@ def test_parse_modulation_invalid(s):
 
 
 # ==================================================
+@needs_multipie
 def test_parse_modulation_valid():
     from qtdraw.multipie.multipie_data import MultiPieData
 

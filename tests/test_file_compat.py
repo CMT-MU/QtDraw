@@ -6,7 +6,6 @@ reads from them (written by tests/data/compat/make_expected.py).
 """
 
 import copy
-import importlib.util
 import json
 import shutil
 from pathlib import Path
@@ -15,11 +14,12 @@ import pytest
 
 from compat_helpers import assert_same, contents
 from qtdraw.core.pyvista_widget import PyVistaWidget
+from qtdraw.util.util import check_multipie
 
 COMPAT = Path(__file__).resolve().parent / "data" / "compat"
 EXAMPLES = Path(__file__).resolve().parents[1] / "docs" / "src" / "examples"
 EXPECTED = json.loads((COMPAT / "expected.json").read_text())
-HAS_MULTIPIE = importlib.util.find_spec("multipie") is not None
+HAS_MULTIPIE = check_multipie()
 
 
 def as_now(expected):
@@ -40,7 +40,7 @@ def open_copy(widget, source, tmp_path, qtbot):
     Open a copy of a drawing, without errors while drawing.
     """
     if uses_multipie(source) and not HAS_MULTIPIE:
-        pytest.skip("MultiPie is not installed.")
+        pytest.skip("MultiPie cannot be loaded.")
     file = tmp_path / source.name
     shutil.copy(source, file)
     with qtbot.capture_exceptions() as errors:  # errors while drawing are raised in Qt slots.

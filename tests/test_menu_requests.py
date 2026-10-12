@@ -263,6 +263,7 @@ def no_multipie(monkeypatch):
 
     for module in (pvw_module, app_module):
         monkeypatch.setattr(module, "check_multipie", lambda: False)
+    monkeypatch.setitem(sys.modules, "multipie", None)  # not installed, also where it cannot be loaded.
 
 
 def test_multipie_button_is_always_shown(qapp, tmp_path, monkeypatch, no_multipie):

@@ -6,7 +6,6 @@ notebook are run as one script, so the Qt integration of IPython (the event loop
 Any uncaught exception, error dialog, render failure or traceback on stderr fails the example.
 """
 
-import importlib.util
 import json
 import os
 import shutil
@@ -18,6 +17,8 @@ import time
 from pathlib import Path
 
 import pytest
+
+from qtdraw.util.util import check_multipie
 
 EXAMPLES = Path(__file__).resolve().parents[1] / "docs" / "src" / "examples"
 TIMEOUT = 600
@@ -136,7 +137,7 @@ def run_example(code, tmp_path):
     return work
 
 
-needs_multipie = pytest.mark.skipif(importlib.util.find_spec("multipie") is None, reason="MultiPie is not installed.")
+needs_multipie = pytest.mark.skipif(not check_multipie(), reason="MultiPie cannot be loaded.")
 
 
 # ==================================================

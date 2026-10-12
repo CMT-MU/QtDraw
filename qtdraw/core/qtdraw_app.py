@@ -22,7 +22,7 @@ from qtdraw.core.dialog_about import get_version_info
 from qtdraw.widget.custom_widget import Label, Layout, LineEdit, HBar, Button, Combo, VSpacer
 from qtdraw.widget.logging_util import LogWidget
 from qtdraw.widget.qt_event_util import busy_cursor, font_style_sheet
-from qtdraw.util.util import check_multipie, MULTIPIE_INSTALL
+from qtdraw.util.util import check_multipie, multipie_message
 
 
 # ==================================================
@@ -1670,7 +1670,7 @@ class QtDraw(Window):
         :meta private:
         """
         if not check_multipie():
-            QMessageBox.information(self, "MultiPie", f"{MULTIPIE_INSTALL}\n\nMultiPie draws objects by symmetry.")
+            QMessageBox.information(self, "MultiPie", f"{multipie_message()}\n\nMultiPie draws objects by symmetry.")
             return
         from qtdraw.multipie.multipie_dialog import MultiPieDialog
 
@@ -3259,7 +3259,7 @@ class QtDraw(Window):
     # ==================================================
     def _check_multipie(self):
         if not check_multipie():
-            raise Exception(MULTIPIE_INSTALL)
+            raise Exception(multipie_message())
         if self.multipie_dialog is None:
             QMessageBox.question(self, "", "Call 'mp_set_group(tag)' at first.", QMessageBox.Ok)
             return True

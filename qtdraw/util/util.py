@@ -4,6 +4,7 @@ For versatile utility.
 
 import re
 import ast
+import sys
 import copy
 import numpy as np
 import sympy as sp
@@ -152,19 +153,51 @@ MULTIPIE_INSTALL = "MultiPie is not installed. Install it with: pip install mult
 
 
 # ==================================================
+def _load_multipie():
+    """
+    Import the parts of MultiPie used by QtDraw, which raises the error when they cannot be loaded.
+    """
+    from multipie import Group
+    from multipie.util.util_harmonics import harmonics_decomposition
+    from multipie.util.util_response_tensor import convert_mp_alias
+
+
+# ==================================================
 def check_multipie():
     """
-    Check if multipie is installed or not.
+    Check if multipie is installed and can be loaded.
 
     Returns:
-        - (bool) -- installed ?
+        - (bool) -- available ?
+
+    Note:
+        - without it, the functions of MultiPie are turned off, e.g. MultiPie 2.3.4 on Python 3.11.
     """
     try:
-        import multipie
-
+        _load_multipie()
         return True
-    except ImportError:
+    except Exception:
         return False
+
+
+# ==================================================
+def multipie_message():
+    """
+    Tell why MultiPie cannot be used.
+
+    Returns:
+        - (str) -- how to install MultiPie, or why the installed one cannot be loaded.
+    """
+    try:
+        _load_multipie()
+    except Exception as e:
+        if isinstance(e, ModuleNotFoundError) and e.name == "multipie":
+            return MULTIPIE_INSTALL
+        s = f"MultiPie cannot be loaded ({type(e).__name__}: {e})."
+        if isinstance(e, SyntaxError) and sys.version_info < (3, 12):
+            s += " This version of MultiPie needs Python 3.12 or later."
+        return s
+    return MULTIPIE_INSTALL
 
 
 # ==================================================
