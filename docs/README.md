@@ -5,7 +5,7 @@ Drawings are associated with crystallographic symmetry operations provided by [M
 
 - **Authors**: Hiroaki Kusunose
 
-- **Installation**: QtDraw can be installed from PyPI using pip on Python >= 3.11 (the functions of MultiPie need Python >= 3.12 with MultiPie 2.3.4):
+- **Installation**: QtDraw can be installed from PyPI using pip on Python >= 3.12:
   In order to use MathJax rendering for LaTeX, install playwright browser such as chromium.
     ```bash
     pip install qtdraw

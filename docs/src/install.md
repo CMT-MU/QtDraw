@@ -1,11 +1,11 @@
 # Installing QtDraw
 
-**QtDraw** can be installed from PyPI using pip on Python 3.11 or later.
+**QtDraw** can be installed from PyPI using pip on Python 3.12 or later.
 
 ## Requirements
 
-- Python ≥ 3.11
-- [MultiPie](https://github.com/CMT-MU/MultiPie) provides crystallographic symmetry operations. It is installed automatically together with QtDraw. MultiPie 2.3.4 needs Python 3.12 or later: on Python 3.11, QtDraw runs with the functions of MultiPie turned off. When MultiPie is not installed, the MultiPie button offers to install it with pip.
+- Python ≥ 3.12
+- [MultiPie](https://github.com/CMT-MU/MultiPie) provides crystallographic symmetry operations. It is installed automatically together with QtDraw. When MultiPie is not installed, the MultiPie button offers to install it with pip.
 
 ## Installation
 
