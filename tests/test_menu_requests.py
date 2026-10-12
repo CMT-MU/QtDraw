@@ -3,6 +3,10 @@ Tests for the panel and menu changes: DataSet, the Window menu with the data vie
 and a resizable error dialog.
 """
 
+import os
+import sys
+from pathlib import Path
+
 import pytest
 import shiboken6
 from PySide6.QtWidgets import QMessageBox, QPushButton
@@ -214,3 +218,221 @@ def test_status_text_of_old_files(app):
         pvw._status["multipie"] = multipie
         text = app._status_text()
         assert "=== multipie ===" in text and "=== multipie.plus ===" in text
+
+
+# ==================================================
+def test_only_quit_preferences_and_about_move_to_the_application_menu(app):
+    from PySide6.QtGui import QAction
+    from PySide6.QtWidgets import QMenu
+
+    roles = {}
+    for menu in app.findChildren(QMenu):  # not QAction.menu(): with PySide6 6.9 it deletes the menu.
+        for action in menu.actions():
+            if action.text():
+                roles[action.text().replace("&", "")] = action.menuRole()
+    moved = {text: role for text, role in roles.items() if role != QAction.NoRole}
+    assert moved == {
+        "Quit": QAction.QuitRole,
+        "Preferences...": QAction.PreferencesRole,
+        "About QtDraw": QAction.AboutRole,
+    }, moved
+    assert shiboken6.isValid(app.menu_recent)
+
+
+@pytest.mark.skipif(sys.platform != "darwin", reason="the application menu is on macOS only.")
+def test_application_menu_is_named_qtdraw():
+    import subprocess
+    import textwrap
+
+    code = textwrap.dedent("""
+        from qtdraw.widget.qt_event_util import get_qt_application, macos_bundle_name
+        get_qt_application()
+        print("NAME", macos_bundle_name())
+        """)
+    env = {**os.environ, "QT_QPA_PLATFORM": "offscreen"}
+    ret = subprocess.run([sys.executable, "-c", code], capture_output=True, text=True, timeout=60, env=env)
+    assert ret.returncode == 0, ret.stdout + ret.stderr
+    assert "NAME QtDraw" in ret.stdout, ret.stdout + ret.stderr
+
+
+# ==================================================
+@pytest.fixture
+def no_multipie(monkeypatch):
+    import qtdraw.core.pyvista_widget as pvw_module
+    import qtdraw.core.qtdraw_app as app_module
+
+    for module in (pvw_module, app_module):
+        monkeypatch.setattr(module, "check_multipie", lambda: False)
+    monkeypatch.setitem(sys.modules, "multipie", None)  # not installed, also where it cannot be loaded.
+
+
+def test_multipie_button_is_always_shown(qapp, tmp_path, monkeypatch, no_multipie):
+    from qtdraw.core.qtdraw_app import QtDraw
+
+    monkeypatch.chdir(tmp_path)
+    window = QtDraw()
+    try:
+        assert "MultiPie" in [b.text() for b in window.panel.findChildren(QPushButton)]
+        asked = []
+        monkeypatch.setattr(QMessageBox, "question", lambda *a, **k: asked.append(a[2]) or QMessageBox.No)
+        window.misc_button_multipie.click()  # offers to install MultiPie, declined.
+        assert len(asked) == 1 and "pip install multipie" in asked[0]
+        assert window.multipie_dialog is None and window._multipie_install is None
+    finally:
+        monkeypatch.setattr(QMessageBox, "question", lambda *a, **k: QMessageBox.Discard)
+        if shiboken6.isValid(window):
+            window.close()
+
+
+def test_opening_a_multipie_drawing_asks_to_install(widget, tmp_path, monkeypatch):
+    if not check_multipie():
+        pytest.skip("a drawing with a MultiPie group is written with MultiPie.")
+    widget.mp_set_group("Ci")
+    widget.save(str(tmp_path / "mp.qtdw"))
+    widget.mp_set_group("C2h")  # the current drawing, kept when opening fails.
+    import qtdraw.core.pyvista_widget as pvw_module
+
+    monkeypatch.setattr(pvw_module, "check_multipie", lambda: False)
+    with pytest.raises(Exception, match="mp.qtdw uses MultiPie.*pip install multipie"):
+        widget.load(str(tmp_path / "mp.qtdw"))
+    assert "C2h" in str(widget._mp_data.status)
+
+
+def test_multipie_methods_ask_to_install(widget, no_multipie):
+    with pytest.raises(Exception, match="pip install multipie"):
+        widget.mp_set_group("Ci")
+
+
+def test_no_menu_role_in_submenus_and_recent_files(app, tmp_path):
+    from PySide6.QtGui import QAction
+
+    for name in ["Preferences.qtdw", "About.qtdw", "Quit.qtdw"]:
+        app.pyvista_widget.save(str(tmp_path / name))
+        app.load_file(str(tmp_path / name))
+    app.menu_recent.aboutToShow.emit()
+    from PySide6.QtWidgets import QMenu
+
+    special = {app.action_quit, app.action_preferences, app.action_about}
+    for menu in app.findChildren(QMenu):  # also the submenus and the recent files.
+        for action in menu.actions():
+            if action not in special and not action.isSeparator():
+                assert action.menuRole() == QAction.NoRole, action.text()
+
+
+@pytest.mark.skipif(sys.platform != "darwin", reason="the application menu is on macOS only.")
+@pytest.mark.parametrize("existing", [False, True])
+def test_application_name_with_an_application_created_by_ipython(existing):
+    import subprocess
+    import textwrap
+
+    code = textwrap.dedent(f"""
+        import sys
+        from PySide6.QtWidgets import QApplication
+        import qtdraw.widget.qt_event_util as util
+        if {existing}:  # an application that existed before.
+            app = QApplication(sys.argv)
+            app.setApplicationName("Other")
+        util.gui_qt = lambda: QApplication.instance() or QApplication(sys.argv)  # as IPython's Qt integration.
+        app = util.get_qt_application()
+        print("NAME", util.macos_bundle_name(), app.applicationName())
+        """)
+    env = {**os.environ, "QT_QPA_PLATFORM": "offscreen"}
+    ret = subprocess.run([sys.executable, "-c", code], capture_output=True, text=True, timeout=60, env=env)
+    assert ret.returncode == 0, ret.stdout + ret.stderr
+    bundle, name = ret.stdout.split("NAME ")[1].split()[:2]
+    if existing:
+        assert name == "Other"  # an application that existed before keeps its name.
+    else:
+        assert (bundle, name) == ("QtDraw", "QtDraw")
+
+
+def test_qtdraw_starts_without_multipie():
+    import subprocess
+    import textwrap
+
+    code = textwrap.dedent("""
+        import sys
+        sys.modules["multipie"] = None  # MultiPie is not installed: importing it fails.
+        from PySide6.QtWidgets import QMessageBox
+        from qtdraw.core.qtdraw_app import QtDraw
+        from qtdraw.util.util import check_multipie
+        assert not check_multipie()
+        asked = []
+        QMessageBox.question = lambda *a, **k: asked.append(a[2]) or QMessageBox.No  # not installed, not saved.
+        window = QtDraw()
+        window.pyvista_widget.add_site()
+        window.misc_button_multipie.click()
+        assert "pip install multipie" in asked[0], asked
+        window.close()
+        print("OK")
+        """)
+    env = {**os.environ, "QT_QPA_PLATFORM": "offscreen"}
+    ret = subprocess.run([sys.executable, "-c", code], capture_output=True, text=True, timeout=120, env=env)
+    assert ret.returncode == 0 and "OK" in ret.stdout, ret.stdout + ret.stderr[-2000:]
+
+
+def test_rejected_multipie_drawing_keeps_the_table_and_backup(widget, tmp_path, monkeypatch):
+    if not check_multipie():
+        pytest.skip("a drawing with a MultiPie group is written with MultiPie.")
+    widget.mp_set_group("Ci")
+    widget.save(str(tmp_path / "mp.qtdw"))
+    widget.add_site(name="kept")
+    widget.open_tab_group_view()
+    backup = repr(getattr(widget, "_backup", None))
+    import qtdraw.core.pyvista_widget as pvw_module
+
+    monkeypatch.setattr(pvw_module, "check_multipie", lambda: False)
+    with pytest.raises(Exception, match="uses MultiPie"):
+        widget.load(str(tmp_path / "mp.qtdw"))
+    assert widget._tab_group_view.isVisible()  # nothing was changed before the drawing was rejected.
+    assert repr(getattr(widget, "_backup", None)) == backup
+    assert [row[0] for row in widget.get_data_dict()["site"]] == ["kept"]
+
+
+def test_version1_drawing_with_multipie_is_rejected_without_it(widget, tmp_path, monkeypatch, no_multipie):
+    import qtdraw.core.pyvista_widget as pvw_module
+
+    converted = []
+    monkeypatch.setattr(pvw_module, "convert_version3", lambda *a: converted.append(1))
+    file = tmp_path / "old.qtdw"
+    file.write_text("{'version': '1.0.0', 'multipie': {'group': {'group': 'C1'}}}")  # MultiPie data at the top level.
+    with pytest.raises(Exception, match="old.qtdw uses MultiPie"):
+        widget.load(str(file))
+    assert converted == []  # rejected before the conversion.
+
+
+@pytest.mark.parametrize("answer_button, replaced", [(QMessageBox.Cancel, False), (QMessageBox.Ok, True)])
+def test_save_as_asks_before_replacing_the_file_with_the_added_extension(app, tmp_path, monkeypatch, answer_button, replaced):
+    from PySide6.QtWidgets import QFileDialog
+
+    target = tmp_path / "existing.txt.qtdw"
+    target.write_text("old")
+    monkeypatch.setattr(QFileDialog, "getSaveFileName", lambda *a, **k: (str(tmp_path / "existing.txt"), ""))
+    asked = []
+    monkeypatch.setattr(QMessageBox, "question", lambda *a, **k: asked.append(a[2]) or answer_button)
+    app.pyvista_widget.add_site()
+    assert app.save_file_as() == replaced
+    assert len(asked) == 1 and "existing.txt.qtdw" in asked[0]
+    assert (target.read_text() != "old") == replaced
+
+
+# ==================================================
+@pytest.mark.parametrize("name", ["Si.cif", "Si.vesta", "Si.xsf"])
+def test_material_file_opens_without_multipie(widget, monkeypatch, name):
+    import qtdraw.parser.util_parser as parser_module
+    import qtdraw.core.pyvista_widget as pvw_module
+
+    for module in (parser_module, pvw_module):
+        monkeypatch.setattr(module, "check_multipie", lambda: False, raising=False)
+    widget.load(str(Path(__file__).resolve().parents[1] / "docs" / "src" / "examples" / name))
+    assert widget._status["crystal"] == "cubic"
+    assert widget._data["site"].rowCount() > 0
+    assert not widget._status.get("multipie") and widget._mp_data is None  # nothing of MultiPie to lose by saving.
+
+
+# ==================================================
+def test_material_file_sets_its_space_group_with_multipie(widget):
+    if not check_multipie():
+        pytest.skip("MultiPie is not installed.")
+    widget.load(str(Path(__file__).resolve().parents[1] / "docs" / "src" / "examples" / "Si.cif"))
+    assert widget._mp_data.status["group"]["tag"] == "SG:227"

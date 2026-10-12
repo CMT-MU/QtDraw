@@ -18,6 +18,7 @@ from qtdraw.core.qtdraw_info import __version__
 from qtdraw.parser.element import element_color
 from qtdraw.parser.vesta import parse_vesta, create_structure_vesta
 from qtdraw.multipie.multipie_setting import default_status as multipie_default
+from qtdraw.util.util import check_multipie
 
 
 # ==================================================
@@ -196,8 +197,10 @@ def parse_material(filename):
     name, cell = get_model_cell(graph)
     crystal = sga.get_crystal_system()
 
-    multipie = copy.deepcopy(multipie_default)
-    multipie["group"]["tag"] = f"SG:{sg_no}"
+    multipie = {}  # without MultiPie, the material is drawn without its space group.
+    if check_multipie():
+        multipie = copy.deepcopy(multipie_default)
+        multipie["group"]["tag"] = f"SG:{sg_no}"
     status = copy.deepcopy(default_status)
     status.update({"model": name, "crystal": crystal, "cell": cell, "clip": False, "multipie": multipie})
     preference = copy.deepcopy(default_preference)

@@ -6,11 +6,12 @@ This module provides application of QtDraw.
 
 import os
 import copy
+import importlib
 import warnings
 from pathlib import Path
 import logging
 from PySide6.QtWidgets import QWidget, QMessageBox, QFileDialog, QDialog, QApplication, QAbstractButton, QComboBox
-from PySide6.QtCore import Qt, QTimer, QSettings, QUrl
+from PySide6.QtCore import Qt, QTimer, QSettings, QUrl, QProcess
 from PySide6.QtGui import QAction, QActionGroup, QKeySequence, QDesktopServices
 
 from qtdraw.core.pyvista_widget import PyVistaWidget, Window, same_snapshot
@@ -22,7 +23,7 @@ from qtdraw.core.dialog_about import get_version_info
 from qtdraw.widget.custom_widget import Label, Layout, LineEdit, HBar, Button, Combo, VSpacer
 from qtdraw.widget.logging_util import LogWidget
 from qtdraw.widget.qt_event_util import busy_cursor, font_style_sheet
-from qtdraw.util.util import check_multipie
+from qtdraw.util.util import check_multipie, multipie_message, multipie_missing, install_multipie_command, command_text
 
 
 # ==================================================
@@ -116,6 +117,7 @@ class QtDraw(Window):
         self._current_file = None  # QtDraw file opened or saved last, written by Save.
         self.pref_dialog = None  # preference dialog.
         self.multipie_dialog = None  # MultiPie dialog.
+        self._multipie_install = None  # process installing MultiPie.
         self._history = UndoHistory(limit=50)  # document snapshots for undo.
         self._restoring = False  # restoring a snapshot ?
         self._data_views = {}  # windows showing internal data (Window menu), by name.
@@ -184,6 +186,7 @@ class QtDraw(Window):
 
         def action(menu, text, slot, shortcut=None):
             act = QAction(text, self)
+            act.setMenuRole(QAction.NoRole)  # on macOS, only roles set below move items to the application menu.
             if shortcut is not None:
                 act.setShortcut(shortcut)
             act.triggered.connect(slot)
@@ -193,6 +196,7 @@ class QtDraw(Window):
         menu = self.menuBar().addMenu("&File")
         self.action_open = action(menu, "&Open...", self.open_file, QKeySequence.Open)
         self.menu_recent = menu.addMenu("Open &Recent")
+        self.menu_recent.menuAction().setMenuRole(QAction.NoRole)  # submenus are not moved by their text either.
         self.menu_recent.aboutToShow.connect(self._update_recent_menu)
         self.action_save = action(menu, "&Save", self.save_file, QKeySequence.Save)
         self.action_save_as = action(menu, "Save &As...", self.save_file_as, QKeySequence.SaveAs)
@@ -237,6 +241,9 @@ class QtDraw(Window):
         menu.addSeparator()
         self.action_about = action(menu, "&About QtDraw", self._show_about)
         self.action_about.setMenuRole(QAction.AboutRole)
+
+        for menu_action in self.menuBar().actions():  # the menus themselves are not moved by their text either.
+            menu_action.setMenuRole(QAction.NoRole)
 
     # ==================================================
     def _create_view_menu(self, action):
@@ -287,6 +294,7 @@ class QtDraw(Window):
 
         def choice(title, combo):
             sub = menu.addMenu(title)
+            sub.menuAction().setMenuRole(QAction.NoRole)
             group = QActionGroup(self)
             actions = {}
             for i in range(combo.count()):
@@ -343,14 +351,19 @@ class QtDraw(Window):
         files = [f for f in self._recent_files() if Path(f).is_file()]
         for f in files:
             act = menu.addAction(Path(f).name)
+            act.setMenuRole(QAction.NoRole)
             act.setToolTip(f)
             act.setStatusTip(f)
             act.triggered.connect(lambda _=False, f=f: self._open_recent(f))
         if files:
             menu.addSeparator()
-            menu.addAction("Clear Menu").triggered.connect(lambda: settings().remove("recent_files"))
+            clear = menu.addAction("Clear Menu")
+            clear.setMenuRole(QAction.NoRole)
+            clear.triggered.connect(lambda: settings().remove("recent_files"))
         else:
-            menu.addAction("No Recent Files").setEnabled(False)
+            empty = menu.addAction("No Recent Files")
+            empty.setMenuRole(QAction.NoRole)
+            empty.setEnabled(False)
 
     # ==================================================
     def _open_recent(self, filename):
@@ -382,9 +395,8 @@ class QtDraw(Window):
             self.view_button_bar: "Show the color bar.",
             self.view_button_parallel: "Use parallel projection.",
             self.view_button_grid: "Show the grid.",
+            self.misc_button_multipie: "Open the MultiPie dialog for symmetry-adapted drawing (without MultiPie, it offers to install it).",
         }
-        if hasattr(self, "misc_button_multipie"):
-            tips[self.misc_button_multipie] = "Open the MultiPie dialog for symmetry-adapted drawing."
         for button, tip in tips.items():
             if not button.toolTip():  # keep tool tips set elsewhere.
                 button.setToolTip(tip)
@@ -528,7 +540,12 @@ class QtDraw(Window):
         filename, _ = QFileDialog.getSaveFileName(self, "Save File", str(file), ext_set, options=QFileDialog.Options())
         if not filename:  # cancelled.
             return False
-        filename = add_extension(Path(filename), ext)
+        chosen = Path(filename)
+        filename = add_extension(chosen, ext)
+        if filename != chosen and filename.exists():  # the dialog asked about the chosen name only.
+            text = f"{filename.name} already exists.\nReplace it?"
+            if QMessageBox.question(self, "Save File", text, QMessageBox.Ok | QMessageBox.Cancel) != QMessageBox.Ok:
+                return False
         self._save(str(filename))
         self._saved_to(filename)
         return True
@@ -832,14 +849,12 @@ class QtDraw(Window):
         layout = Layout(panel)
 
         self.ds_button_edit = Button(parent, text="edit")
-        if check_multipie():
-            self.misc_button_multipie = Button(parent, text="MultiPie")
+        self.misc_button_multipie = Button(parent, text="MultiPie")  # also without MultiPie: it tells how to install it.
 
         panel1 = QWidget(parent)
         layout1 = Layout(panel1)
         layout1.addWidget(self.ds_button_edit, 0, 0, 1, 1)
-        if check_multipie():
-            layout1.addWidget(self.misc_button_multipie, 0, 1, 1, 1)
+        layout1.addWidget(self.misc_button_multipie, 0, 1, 1, 1)
 
         layout.addWidget(panel1, 0, 0, 1, 1)
 
@@ -914,10 +929,29 @@ class QtDraw(Window):
 
         :meta private:
         """
+        self._show_axis_cell()  # e.g. set by a MultiPie group.
         if self._restoring:
             return
         self._modified_timer.start()
         self._update_undo_actions()
+
+    # ==================================================
+    def _show_axis_cell(self):
+        """
+        Show the axis and cell display in effect in the panel and the View menu, without applying it again.
+
+        :meta private:
+        """
+        status = self.pyvista_widget._status
+        for combo, actions, value in [
+            (self.view_combo_axis, self.action_axis, status["axis_type"]),
+            (self.view_combo_cell, self.action_cell, status["cell_mode"]),
+        ]:
+            if combo.currentText() != value:
+                blocked = combo.blockSignals(True)
+                combo.setCurrentText(value)
+                combo.blockSignals(blocked)
+                actions[value].setChecked(True)
 
     # ==================================================
     def _settle(self):
@@ -1571,8 +1605,7 @@ class QtDraw(Window):
 
         # button panel.
         self.ds_button_edit.released.connect(self.pyvista_widget.open_tab_group_view)
-        if check_multipie():
-            self.misc_button_multipie.released.connect(self._show_multipie)
+        self.misc_button_multipie.released.connect(self._show_multipie)
 
         # pyvista.
         self.pyvista_widget.message.connect(self.write_info)
@@ -1655,21 +1688,94 @@ class QtDraw(Window):
     # ==================================================
     def _show_multipie(self, quiet=False):
         """
-        Show MultiPie panel.
+        Show MultiPie panel, or offer to install MultiPie.
 
         Args:
             quiet (bool, optional): only show the group, without applying its crystal ?
 
         :meta private:
         """
-        if check_multipie():
-            from qtdraw.multipie.multipie_dialog import MultiPieDialog
+        if not check_multipie():
+            if multipie_missing():
+                command = command_text(install_multipie_command())
+                text = "MultiPie is not installed. MultiPie draws objects by symmetry.\n\n"
+                text += f"Install it now with the following command?\n\n{command}"
+                if QMessageBox.question(self, "MultiPie", text, QMessageBox.Yes | QMessageBox.No) == QMessageBox.Yes:
+                    self._install_multipie()
+            else:  # installed, but it cannot be loaded: installing does not help.
+                QMessageBox.information(self, "MultiPie", f"{multipie_message()}\n\nMultiPie draws objects by symmetry.")
+            return
+        from qtdraw.multipie.multipie_dialog import MultiPieDialog
 
-            if self.multipie_dialog is None:
-                self.multipie_dialog = MultiPieDialog(self, quiet)
-                self.multipie_dialog.addActions([self.action_undo, self.action_redo])  # shortcuts in the dialog.
-            else:
-                self.multipie_dialog.show()
+        if self.multipie_dialog is None:
+            self.multipie_dialog = MultiPieDialog(self, quiet)
+            self.multipie_dialog.addActions([self.action_undo, self.action_redo])  # shortcuts in the dialog.
+        else:
+            self.multipie_dialog.show()
+
+    # ==================================================
+    def _install_multipie(self):
+        """
+        Install MultiPie with pip in the background, showing its output in the Log window.
+
+        :meta private:
+        """
+        command = install_multipie_command()
+        process = QProcess(self)
+        process.setProcessChannelMode(QProcess.MergedChannels)
+        output = []
+
+        def read():
+            text = bytes(process.readAllStandardOutput()).decode(errors="replace")
+            output.append(text)
+            self.logger.append_text(text.rstrip("\n"))
+
+        process.readyReadStandardOutput.connect(read)
+        process.finished.connect(
+            lambda code, status: self._multipie_installed(process, code == 0 and status == QProcess.NormalExit, output)
+        )
+        process.errorOccurred.connect(
+            lambda error: error == QProcess.FailedToStart and self._multipie_installed(process, False, output)
+        )
+        self._multipie_install = process
+        self.misc_button_multipie.setEnabled(False)
+        QApplication.setOverrideCursor(Qt.BusyCursor)
+        self.logger.append_text("$ " + command_text(command))
+        self.logger.show()
+        process.start(command[0], command[1:])
+
+    # ==================================================
+    def _multipie_installed(self, process, ok, output):
+        """
+        Use MultiPie after its installation, or tell why it failed.
+
+        Args:
+            process (QProcess): installing process.
+            ok (bool): installed ?
+            output (list): output of the installation.
+
+        :meta private:
+        """
+        if self._multipie_install is not process:  # already handled, or stopped by closing.
+            return
+        self._multipie_install = None
+        process.deleteLater()
+        QApplication.restoreOverrideCursor()
+        self.misc_button_multipie.setEnabled(True)
+        if not ok:
+            tail = "\n".join("".join(output).strip().splitlines()[-10:]) or process.errorString()
+            command = command_text(install_multipie_command())
+            text = f"MultiPie could not be installed.\n\n{tail}\n\nInstall it by hand with:\n{command}\n\n"
+            text += "or with the tool that manages this Python environment, e.g. uv pip install multipie, for one without pip."
+            QMessageBox.warning(self, "MultiPie", text)
+            return
+        importlib.invalidate_caches()  # find the new package.
+        if check_multipie():
+            self._show_multipie()
+        elif multipie_missing():  # e.g. installed in a directory that this Python does not search yet.
+            QMessageBox.information(self, "MultiPie", "MultiPie was installed. Restart QtDraw to use it.")
+        else:
+            QMessageBox.information(self, "MultiPie", f"MultiPie was installed. {multipie_message()}")
 
     # ==================================================
     def _show_data_view(self, name, title, contents):
@@ -1833,6 +1939,14 @@ class QtDraw(Window):
         """
         self._flush()
         ok = self._confirm_unsaved("closing")
+        if ok and self._multipie_install is not None:
+            text = "MultiPie is being installed. Stop the installation and close?"
+            ok = QMessageBox.question(self, "MultiPie", text, QMessageBox.Yes | QMessageBox.No) == QMessageBox.Yes
+            if ok and self._multipie_install is not None:  # it may have finished while asking.
+                process, self._multipie_install = self._multipie_install, None
+                process.kill()
+                process.waitForFinished(5000)
+                QApplication.restoreOverrideCursor()
         if not ok:
             event.ignore()
         else:
@@ -3250,7 +3364,7 @@ class QtDraw(Window):
     # ==================================================
     def _check_multipie(self):
         if not check_multipie():
-            raise Exception("MultiPie is not installed.")
+            raise Exception(multipie_message())
         if self.multipie_dialog is None:
             QMessageBox.question(self, "", "Call 'mp_set_group(tag)' at first.", QMessageBox.Ok)
             return True

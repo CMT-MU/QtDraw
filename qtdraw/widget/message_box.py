@@ -5,9 +5,9 @@ This module provides message box dialog.
 """
 
 from PySide6.QtWidgets import QDialog, QDialogButtonBox, QGridLayout, QMessageBox, QPlainTextEdit, QSizePolicy, QTextEdit
-from PySide6.QtGui import QFontDatabase
+from PySide6.QtGui import QFontDatabase, QGuiApplication
 import shiboken6
-from PySide6.QtCore import QEvent, Qt
+from PySide6.QtCore import QEvent, Qt, QTimer
 
 
 # ==================================================
@@ -76,15 +76,31 @@ class ResizableMessageBox(QMessageBox):
         return result
 
     # ==================================================
+    def _unfill_screen(self, size):
+        """
+        Give the box its size again if it fills the screen, but keep any other size, e.g. set by the user.
+
+        :meta private:
+        """
+        if not shiboken6.isValid(self) or self.screen() is None:
+            return
+        screen = self.screen().availableGeometry().size()
+        if self.width() >= screen.width() and self.height() >= screen.height() - 40:  # the title bar is not counted.
+            self.resize(size)
+
+    # ==================================================
     def _lift_fixed_size(self):
         """
         Allow any size, and let the details grow with the box.
 
         :meta private:
         """
+        fixed, size = self.maximumSize() == self.minimumSize(), self.size()
         self.setSizeGripEnabled(True)
         self.setMinimumSize(self.layout().totalMinimumSize())  # the buttons and the message stay visible.
         self.setMaximumSize(self.MAX_SIZE, self.MAX_SIZE)
+        if fixed and self.isVisible() and QGuiApplication.platformName() == "cocoa":  # macOS then fills the screen (later).
+            QTimer.singleShot(0, lambda: self._unfill_screen(size))
         self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         details = self.findChild(QTextEdit)
         if details is not None:

@@ -49,7 +49,7 @@ from qtdraw.widget.color_palette import all_colors, custom_colormap, check_color
 from qtdraw.parser.read_material import parse_draw, draw
 from qtdraw.parser.xsf import extract_data_xsf
 from qtdraw.parser.converter import convert_version3
-from qtdraw.util.util import text_to_list, apply, read_dict, str_to_sympy, check_multipie, to_plain
+from qtdraw.util.util import text_to_list, apply, read_dict, str_to_sympy, check_multipie, multipie_message, to_plain
 from qtdraw.util.util_axis import (
     create_axes_widget,
     create_unit_cell,
@@ -81,8 +81,8 @@ from qtdraw.util.basic_object import (
     create_isosurface,
     create_orbital_data,
     create_stream_data,
+    arrow_length,
 )
-from qtdraw.multipie.multipie_data import MultiPieData
 
 
 # ==================================================
@@ -1114,6 +1114,8 @@ class PyVistaWidget(QtInteractor):
             if isinstance(direction, np.ndarray):
                 direction = direction.tolist()
             row_data["direction"] = convert_to_str(direction)
+        if width is not None:
+            row_data["width"] = convert_to_str(width)
         if arrow1 is not None:
             row_data["arrow1_check"] = arrow1
         if arrow2 is not None:
@@ -1968,6 +1970,8 @@ class PyVistaWidget(QtInteractor):
                 raise
             except Exception as e:  # the parser's message is kept as the cause.
                 raise ValueError(f"{file.name} is not a valid QtDraw file, it cannot be read.") from e
+            if isinstance(all_data, dict) and all_data.get("multipie") and not check_multipie():  # version 1.
+                raise Exception(f"{file.name} uses MultiPie. {multipie_message()}")
             if ver < 2:  # a temporary widget is needed to convert version 1.
                 widget = PyVistaWidget(off_screen=True)
                 try:
@@ -1987,6 +1991,8 @@ class PyVistaWidget(QtInteractor):
         missing = [key for key in required if not isinstance(all_data.get(key), dict)]
         if missing:
             raise Exception(f"cannot read {f}, missing {missing}.")
+        if all_data["status"].get("multipie") and not check_multipie():  # not opened: saving would lose its MultiPie data.
+            raise Exception(f"{file.name} uses MultiPie. {multipie_message()}")
         if material is None:
             for object_type, rows in all_data["data"].items():
                 if object_type not in self._data.keys():
@@ -3912,6 +3918,42 @@ class PyVistaWidget(QtInteractor):
         self.clip_actor(data["position"], data["cell"], actor.name, data["label_actor"])
 
     # ==================================================
+    def _not_drawn(self, object_type, index, data, reason):
+        """
+        Tell that an object is not drawn, and remove the object drawn before an edit.
+
+        Args:
+            object_type (str): object type.
+            index (QModelIndex): index.
+            data (dict): data list.
+            reason (str): reason.
+
+        :meta private:
+        """
+        self.write_info(f"* {object_type} '{data['name']}' is not drawn: {reason}.")
+        actor = data["name_actor"]
+        if actor != "":
+            self.delete_actor(actor)
+            self._data[object_type].set_row_data(index, COLUMN_NAME_ACTOR, "")
+
+    # ==================================================
+    def _tips_left_out(self, object_type, data, left_out):
+        """
+        Tell that arrow tips of an object are not drawn.
+
+        Args:
+            object_type (str): object type.
+            data (dict): data list.
+            left_out (list): "arrow1" and "arrow2" of tips left out.
+
+        :meta private:
+        """
+        if left_out:
+            tips = " and ".join(left_out)
+            reason = "the tip has" if len(left_out) == 1 else "the tips have"
+            self.write_info(f"* {object_type} '{data['name']}' is drawn without {tips}: {reason} no length or direction.")
+
+    # ==================================================
     def plot_data_bond(self, index, data, positionT):
         """
         Plot bond.
@@ -3932,6 +3974,9 @@ class PyVistaWidget(QtInteractor):
         opacity = float(data["opacity"])
 
         directionT = convert_str_vector(vector=direction, transform=transform, A=self.A_matrix)
+        if np.linalg.norm(directionT) == 0.0:  # a cylinder needs a direction.
+            self._not_drawn("bond", index, data, "its length is 0")
+            return
 
         if color2 != color:
             obj = create_bond(direction=directionT, width=width, twotone=True)
@@ -4079,6 +4124,10 @@ class PyVistaWidget(QtInteractor):
         tip_length = float(data["tip length"])
         opacity = float(data["opacity"])
 
+        if arrow_length([1.0, 0.0, 0.0], length) == 0.0:  # an arrow of length 0 cannot be made (a short one is scaled).
+            self._not_drawn("stream", index, data, "its length is 0")
+            return
+
         obj = create_stream(
             shape=shape,
             vector=vector,
@@ -4093,6 +4142,9 @@ class PyVistaWidget(QtInteractor):
             tip_radius=tip_radius,
             tip_length=tip_length,
         )
+        if obj is None:
+            self._not_drawn("stream", index, data, "all its arrows have length 0")
+            return
 
         if check_color(color):
             option_add = {
@@ -4149,10 +4201,21 @@ class PyVistaWidget(QtInteractor):
         opacity = float(data["opacity"])
 
         directionT = convert_str_vector(vector=direction, transform=transform, A=self.A_matrix)
+        if np.linalg.norm(directionT) == 0.0:  # a cylinder needs a direction.
+            self._not_drawn("line", index, data, "its length is 0")
+            return
 
+        left_out = []
         obj = create_line(
-            direction=directionT, width=width, arrow1=arrow1, arrow2=arrow2, tip_radius=tip_radius, tip_length=tip_length
+            direction=directionT,
+            width=width,
+            arrow1=arrow1,
+            arrow2=arrow2,
+            tip_radius=tip_radius,
+            tip_length=tip_length,
+            left_out=left_out,
         )
+        self._tips_left_out("line", data, left_out)
         option_add = {"color": color, "opacity": opacity}
 
         option = self.common_option(actor=actor, positionT=positionT, obj=obj)
@@ -4186,6 +4249,9 @@ class PyVistaWidget(QtInteractor):
         opacity = float(data["opacity"])
 
         normalT = convert_str_vector(vector=normal, transform=transform, A=self.A_matrix)
+        if np.linalg.norm(normalT) == 0.0:  # the object needs a direction.
+            self._not_drawn("plane", index, data, "its normal is 0")
+            return
 
         obj = create_plane(normal=normalT, x_size=x_size, y_size=y_size)
         option_add = {
@@ -4226,6 +4292,9 @@ class PyVistaWidget(QtInteractor):
         opacity = float(data["opacity"])
 
         normalT = convert_str_vector(vector=normal, transform=transform, A=self.A_matrix)
+        if np.linalg.norm(normalT) == 0.0:  # the object needs a direction.
+            self._not_drawn("circle", index, data, "its normal is 0")
+            return
 
         obj = create_circle(normal=normalT, size=size)
         option_add = {
@@ -4264,6 +4333,9 @@ class PyVistaWidget(QtInteractor):
         opacity = float(data["opacity"])
 
         normalT = convert_str_vector(vector=normal, transform=transform, A=self.A_matrix)
+        if np.linalg.norm(normalT) == 0.0:  # the object needs a direction.
+            self._not_drawn("torus", index, data, "its normal is 0")
+            return
 
         obj = create_torus(normal=normalT, size=size, width=width)
         option_add = {"color": color, "opacity": opacity}
@@ -4297,6 +4369,9 @@ class PyVistaWidget(QtInteractor):
         opacity = float(data["opacity"])
 
         normalT = convert_str_vector(vector=normal, transform=transform, A=self.A_matrix)
+        if np.linalg.norm(normalT) == 0.0:  # the object needs a direction.
+            self._not_drawn("ellipsoid", index, data, "its normal is 0")
+            return
 
         obj = create_ellipsoid(normal=normalT, x_size=x_size, y_size=y_size, z_size=z_size)
         option_add = {"color": color, "opacity": opacity}
@@ -4334,6 +4409,9 @@ class PyVistaWidget(QtInteractor):
         opacity = float(data["opacity"])
 
         normalT = convert_str_vector(vector=normal, transform=transform, A=self.A_matrix)
+        if np.linalg.norm(normalT) == 0.0:  # the object needs a direction.
+            self._not_drawn("toroid", index, data, "its normal is 0")
+            return
 
         obj = create_toroid(
             normal=normalT,
@@ -4478,6 +4556,9 @@ class PyVistaWidget(QtInteractor):
         opacity = float(data["opacity"])
 
         view = convert_str_vector(vector=view, transform=False)
+        if np.linalg.norm(view) == 0.0:  # the text needs a direction to face.
+            self._not_drawn("text3d", index, data, "its view direction is 0")
+            return
         offset = convert_str_vector(vector=offset, transform=False)
 
         obj = create_text3d(
@@ -4585,6 +4666,7 @@ class PyVistaWidget(QtInteractor):
 
         pointT = convert_str_vector(vector=point, transform=transform, A=self.A_matrix)
 
+        left_out = []
         obj = create_spline(
             point=pointT,
             width=width,
@@ -4595,7 +4677,9 @@ class PyVistaWidget(QtInteractor):
             arrow2=arrow2,
             tip_radius=tip_radius,
             tip_length=tip_length,
+            left_out=left_out,
         )
+        self._tips_left_out("spline", data, left_out)
         option_add = {"color": color, "opacity": opacity}
 
         option = self.common_option(actor=actor, positionT=positionT, obj=obj)
@@ -4633,9 +4717,16 @@ class PyVistaWidget(QtInteractor):
         opacity = float(data["opacity"])
 
         t_range = convert_str_vector(vector=t_range, transform=False)
+        if t_range[2] == 0.0:  # the points of t would never end.
+            self._not_drawn("spline_t", index, data, "its step of t is 0")
+            return
 
         A = self.A_matrix if transform else np.eye(4)
-        obj = create_spline_t(point, t_range, width, n_interp, closed, natural, arrow1, arrow2, tip_radius, tip_length, A)
+        left_out = []
+        obj = create_spline_t(
+            point, t_range, width, n_interp, closed, natural, arrow1, arrow2, tip_radius, tip_length, A, left_out
+        )
+        self._tips_left_out("spline_t", data, left_out)
         option_add = {"color": color, "opacity": opacity}
 
         option = self.common_option(actor=actor, positionT=positionT, obj=obj)
@@ -4985,7 +5076,8 @@ class PyVistaWidget(QtInteractor):
         :meta private:
         """
         if not check_multipie():
-            raise Exception("MultiPie is not installed.")
+            raise Exception(multipie_message())
+        from qtdraw.multipie.multipie_data import MultiPieData  # only with MultiPie: QtDraw also runs without it.
 
         self._mp_data = MultiPieData(self)
         self._mp_data.set_status(status, group)

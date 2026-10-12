@@ -26,9 +26,11 @@ def menu_texts(menu):
 
 
 def submenu(app, title):
-    for action in app.menuBar().actions():
-        if action.text() == title:
-            return action.menu()
+    from PySide6.QtWidgets import QMenu
+
+    for menu in app.findChildren(QMenu):  # not QAction.menu(): with PySide6 6.9 it deletes the menu.
+        if menu.title() == title:
+            return menu
     raise KeyError(title)
 
 
