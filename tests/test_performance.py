@@ -276,6 +276,33 @@ def test_actor_names_in_added_data_are_not_reused(widget):
 
 
 # ==================================================
+def test_objects_are_drawn_with_pyvista_without_remove_existing_actor(widget, monkeypatch):
+    # add_mesh of pyvista 0.46 (the minimum version) rejects remove_existing_actor.
+    from pyvista.plotting.plotter import BasePlotter
+    from qtdraw.core.pyvista_widget_setting import COLUMN_NAME_ACTOR
+
+    add_mesh = BasePlotter.add_mesh
+
+    def old_add_mesh(self, *args, **kwargs):
+        if "remove_existing_actor" in kwargs:
+            raise TypeError('"remove_existing_actor" is an invalid keyword argument')
+        return add_mesh(self, *args, **kwargs)
+
+    monkeypatch.setattr(pw, "REMOVE_EXISTING_ACTOR", False)
+    monkeypatch.setattr(BasePlotter, "add_mesh", old_add_mesh)
+    add_sites(widget, 2)
+    names = [row[COLUMN_NAME_ACTOR] for row in widget._data["site"].tolist()]
+    assert len(set(names)) == 2 and all(name in widget.actors for name in names)
+
+    model = widget._data["site"]
+    model.setData(model.index(0, model.header.index("size")), "0.2")  # redrawn under its name.
+    assert widget._data["site"].tolist()[0][COLUMN_NAME_ACTOR] == names[0]
+    assert widget.actors[names[0]].mapper.dataset.length > 0.39  # drawn with the new size.
+    assert widget.renderer.GetViewProps().GetNumberOfItems() == len(widget.renderer.actors)
+
+
+# ==================================================
+@pytest.mark.skipif(not pw.REMOVE_EXISTING_ACTOR, reason="add_mesh of this pyvista always looks for an actor of the name.")
 @pytest.mark.parametrize("n", [4, 16])
 def test_new_objects_do_not_read_all_actors(widget, count_renderer_actors, n):
     # an object drawn for the first time has a new name, so there is no actor of that name to look for.
