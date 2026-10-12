@@ -39,7 +39,7 @@ The `Window` menu shows the messages of QtDraw (`Info`) and the log (`Log`), and
 
 The `Help` menu shows the mouse and key operations, opens this documentation and the page to report an issue, and shows the version information.
 
-The buttons below the unit cell and view settings open the `Dataset` window (`edit`) and the MultiPie dialog. The preferences are in `Edit` > `Preferences`, and the version information in `Help` > `About QtDraw` (both in the application menu on macOS).
+The buttons below the unit cell and view settings open the `Dataset` window (`edit`) and the MultiPie dialog. Without MultiPie, the `MultiPie` button tells how to install it (`pip install multipie`); a drawing that uses MultiPie can be opened only when it is installed. The preferences are in `Edit` > `Preferences`, and the version information in `Help` > `About QtDraw` (both in the application menu on macOS).
 
 If an error occurs, a short message is shown; the traceback is behind `Show Details...` and also in the log. Please include it when you report a problem.
 

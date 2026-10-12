@@ -148,6 +148,9 @@ def to_latex(a, style="scalar"):
     raise ValueError(f"unknown style, {style}.")
 
 
+MULTIPIE_INSTALL = "MultiPie is not installed. Install it with: pip install multipie"
+
+
 # ==================================================
 def check_multipie():
     """
