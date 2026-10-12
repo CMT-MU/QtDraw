@@ -47,3 +47,46 @@ def test_closed_widgets_are_not_reported(widget):
     widget.close()
 
     assert close_open_widgets() == []
+
+
+# ==================================================
+def test_other_widgets_are_closed_when_one_fails_to_close(widget):
+    from qtdraw.core.pyvista_widget import PyVistaWidget
+
+    failing = PyVistaWidget(off_screen=True)
+
+    def fail():
+        raise OSError("cannot close")
+
+    failing.close = fail
+    try:
+        left = close_open_widgets()
+    finally:
+        del failing.close
+        failing.close()
+
+    assert len(left) == 2
+    assert any("cannot close" in i for i in left)  # the error is reported.
+    assert widget._closed
+
+
+# ==================================================
+def test_widget_is_closed_when_its_window_fails_to_close(qapp, tmp_path, monkeypatch):
+    from qtdraw.core.qtdraw_app import QtDraw
+
+    monkeypatch.chdir(tmp_path)
+    window = QtDraw()
+
+    def fail():
+        raise OSError("cannot close")
+
+    window.close = fail
+    try:
+        left = close_open_widgets()
+
+        assert len(left) == 1 and "cannot close" in left[0]  # the error is reported.
+        assert window.pyvista_widget._closed is True
+    finally:
+        del window.close
+        monkeypatch.setattr(QMessageBox, "question", lambda *args, **kwargs: QMessageBox.Discard)
+        window.close()
