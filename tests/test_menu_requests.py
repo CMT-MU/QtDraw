@@ -23,7 +23,7 @@ def panel_buttons(app):
 def test_panel_has_no_preference_and_about_buttons(app):
     texts = panel_buttons(app)
     assert "preference" not in texts and "about" not in texts
-    assert "edit" in texts
+    assert "DataSet" in texts and "edit" not in texts
     assert not hasattr(app, "misc_button_pref") and not hasattr(app, "misc_button_about")
     layout = app.ds_button_edit.parentWidget().layout()
     assert layout.itemAtPosition(0, 0).widget() is app.ds_button_edit
@@ -35,6 +35,14 @@ def test_edit_menu_dataset(app):
     assert app.action_data_table.text() == "&DataSet..."
     app.action_data_table.trigger()
     assert app.pyvista_widget._tab_group_view.isVisible()
+
+
+# ==================================================
+def test_dataset_button_and_window_are_named_dataset(app):
+    assert app.ds_button_edit.text() == "DataSet"  # the same name as the menu and the window.
+    app._update_title()
+    title = app.pyvista_widget._tab_group_view.windowTitle()
+    assert title.startswith("DataSet") and "Dataset" not in title
 
 
 # ==================================================
