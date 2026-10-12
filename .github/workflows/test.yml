@@ -84,3 +84,45 @@ jobs:
           name: visual-${{ matrix.os }}-${{ matrix.python-version }}-${{ matrix.dependencies }}
           path: visual-output
           if-no-files-found: ignore
+
+  # the built package, installed as users do (not in editable mode), and run outside the source tree.
+  install:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        package: [wheel, sdist]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Set up headless display
+        uses: pyvista/setup-headless-display-action@v4
+        with:
+          qt: true
+
+      - name: Build
+        run: |
+          python -m pip install --upgrade pip build
+          python -m build --${{ matrix.package }} --outdir dist
+
+      - name: Install
+        run: |
+          python -m venv "$RUNNER_TEMP/venv"
+          "$RUNNER_TEMP/venv/bin/python" -m pip install dist/*
+          "$RUNNER_TEMP/venv/bin/python" -m pip check
+          "$RUNNER_TEMP/venv/bin/python" -m playwright install --with-deps chromium
+
+      - name: Check the installed package
+        env:
+          QT_QPA_PLATFORM: offscreen
+        run: |
+          cp tests/install_check.py "$RUNNER_TEMP"
+          cd "$RUNNER_TEMP"
+          "$RUNNER_TEMP/venv/bin/python" -I install_check.py --mathjax
