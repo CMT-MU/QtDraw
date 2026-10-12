@@ -748,6 +748,7 @@ class PyVistaWidget(QtInteractor):
         self.set_additional_status()
         self._preference = copy.deepcopy(default_preference)
         self._label_counter = 0  # id for label actor.
+        self._object_counter = 0  # id for object actor.
         self._isosurface_data = {}
         self._isosurface_in_memory = set()  # names of data given without a file.
         self._backup = None
@@ -3802,8 +3803,10 @@ class PyVistaWidget(QtInteractor):
 
         :meta private:
         """
-        if actor == "":
-            actor = None
+        new = actor == ""
+        if new:  # not the default name by the mesh address, which can be reused after the mesh is freed.
+            actor = f"Object(Counter={self._object_counter})"
+            self._object_counter += 1
 
         g = obj.copy()
         g = g.translate(positionT, inplace=True)
@@ -3815,6 +3818,7 @@ class PyVistaWidget(QtInteractor):
             "metallic": self._preference["light"]["metallic"],
             "roughness": self._preference["light"]["roughness"],
             "name": actor,
+            "remove_existing_actor": not new,  # a new name has no actor to remove: no search through all actors.
             "show_edges": False,
         }
 

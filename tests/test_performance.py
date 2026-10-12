@@ -221,6 +221,44 @@ def test_clear_removes_object_and_label_actors_only(widget):
 
 
 # ==================================================
+def test_objects_have_their_own_actors_when_mesh_addresses_are_reused(widget, monkeypatch):
+    # the meshes named by default are freed after drawing, and their addresses may be reused (#235).
+    import pyvista
+    from qtdraw.core.pyvista_widget_setting import COLUMN_NAME_ACTOR
+
+    others = set(widget.renderer.actors)
+    monkeypatch.setattr(pyvista.DataObject, "memory_address", property(lambda self: "Addr=reused"))
+    add_sites(widget, 4)
+    widget.add_bond()
+    names = [row[COLUMN_NAME_ACTOR] for model in widget._data.values() for row in model.tolist()]
+    assert len(set(names)) == len(names) == 5
+    assert widget.renderer.GetViewProps().GetNumberOfItems() == len(widget.renderer.actors)  # no hidden duplicate.
+
+    # an edit redraws an object under its name, replacing its actor.
+    n_props = widget.renderer.GetViewProps().GetNumberOfItems()
+    model = widget._data["site"]
+    model.setData(model.index(0, model.header.index("size")), "0.2")
+    assert widget._data["site"].tolist()[0][COLUMN_NAME_ACTOR] == names[0]
+    assert widget.actors[names[0]].mapper.dataset.length > 0.39  # drawn with the new size.
+    assert widget.renderer.GetViewProps().GetNumberOfItems() == n_props
+
+    widget.clear_data()
+
+    assert set(widget.renderer.actors) == others
+    assert widget.renderer.GetViewProps().GetNumberOfItems() == len(others)
+
+
+# ==================================================
+@pytest.mark.parametrize("n", [4, 16])
+def test_new_objects_do_not_read_all_actors(widget, count_renderer_actors, n):
+    # an object drawn for the first time has a new name, so there is no actor of that name to look for.
+    count_renderer_actors["n"] = 0
+    for i in range(n):
+        widget.add_site(position=f"[{i / n},0,0]")
+    assert count_renderer_actors["n"] <= 8  # not once or more per object.
+
+
+# ==================================================
 def test_clear_removes_suffixed_actors_but_not_similar_names(widget):
     import pyvista
 
