@@ -1,6 +1,6 @@
 """
 QtDraw runs with the functions of MultiPie turned off when MultiPie is not installed, or is installed but cannot
-be loaded (e.g. MultiPie 2.3.4 on Python 3.11, whose f-strings need Python 3.12).
+be loaded (e.g. a broken or incompatible installation).
 """
 
 import os
@@ -18,7 +18,7 @@ SI_CIF = Path(__file__).resolve().parents[1] / "docs" / "src" / "examples" / "Si
 # ==================================================
 def broken_multipie(path):
     """
-    A MultiPie that is found and imported, but whose parts used by QtDraw fail to load, as on Python 3.11.
+    A MultiPie that is found and imported, but whose parts used by QtDraw fail to load.
     """
     package = path / "multipie"
     package.mkdir()
@@ -59,7 +59,6 @@ def run(code, path):
 def test_multipie_that_fails_to_load_is_not_available(tmp_path):
     out = run(
         """
-        import sys
         import multipie  # found, and its package imports.
         from qtdraw.util.util import check_multipie, multipie_message
         assert not check_multipie()
@@ -71,7 +70,6 @@ def test_multipie_that_fails_to_load_is_not_available(tmp_path):
     message = out.split("MESSAGE ")[1].split("\nOK")[0]
     assert "cannot be loaded" in message and "SyntaxError" in message, message
     assert "pip install multipie" not in message, message  # it is installed.
-    assert ("Python 3.12" in message) == (sys.version_info < (3, 12)), message
 
 
 def test_qtdraw_runs_with_multipie_turned_off(tmp_path):

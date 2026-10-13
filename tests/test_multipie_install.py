@@ -87,7 +87,7 @@ def run(tmp_path, answer, install, code):
 
 
 INSTALLS = "import os; open(os.path.join(os.environ['QTDRAW_TEST_HOME'], 'installed'), 'w').close(); print('Successfully installed multipie')"
-# a MultiPie that is installed but cannot be loaded, as MultiPie 2.3.4 on Python 3.11.
+# a MultiPie that is installed but cannot be loaded.
 BROKEN = (
     "import os, pathlib; home = pathlib.Path(os.environ['QTDRAW_TEST_HOME']); package = home / 'site' / 'multipie'; "
     "package.mkdir(parents=True); (package / '__init__.py').write_text('from .group import Group'); "

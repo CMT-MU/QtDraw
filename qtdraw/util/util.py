@@ -172,7 +172,7 @@ def check_multipie():
         - (bool) -- available ?
 
     Note:
-        - without it, the functions of MultiPie are turned off, e.g. MultiPie 2.3.4 on Python 3.11.
+        - without it, the functions of MultiPie are turned off.
     """
     try:
         _load_multipie()
@@ -194,10 +194,7 @@ def multipie_message():
     except Exception as e:
         if isinstance(e, ModuleNotFoundError) and e.name == "multipie":
             return MULTIPIE_INSTALL
-        s = f"MultiPie cannot be loaded ({type(e).__name__}: {e})."
-        if isinstance(e, SyntaxError) and sys.version_info < (3, 12):
-            s += " This version of MultiPie needs Python 3.12 or later."
-        return s
+        return f"MultiPie cannot be loaded ({type(e).__name__}: {e})."
     return MULTIPIE_INSTALL
 
 
