@@ -22,8 +22,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest]
-        # on Python 3.11, MultiPie 2.3.4 cannot be loaded (its f-strings need Python 3.12): QtDraw runs without it.
-        python-version: ["3.11", "3.12", "3.13"]
+        python-version: ["3.12", "3.13"]
         dependencies: [latest]
         include:
           - os: macos-latest
@@ -65,8 +64,8 @@ jobs:
       - name: Import check
         run: |
           python -c "import qtdraw.core.qtdraw_app, qtdraw.scripts.qtdraw, qtdraw.scripts.conv_qtdraw3"
-          # MultiPie is loaded from Python 3.12, so that its tests are not skipped.
-          python -c "import sys; from qtdraw.util.util import check_multipie, multipie_message; assert sys.version_info < (3, 12) or check_multipie(), multipie_message()"
+          # MultiPie is loaded, so that its tests are not skipped.
+          python -c "from qtdraw.util.util import check_multipie, multipie_message; assert check_multipie(), multipie_message()"
 
       - name: Fonts for the off-screen platform on Windows
         if: runner.os == 'Windows'
