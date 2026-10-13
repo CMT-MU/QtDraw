@@ -13,7 +13,7 @@
 
 - **macOS**
 
-  - Install [Homebrew](https://brew.sh) (if not already installed):
+  - Install [Homebrew](https://brew.sh) (if not already installed).
   - Install Python:
 
     ```bash
@@ -39,6 +39,20 @@
     ```
 
   - If you use a virtual environment, ensure its bin directory appears before the global Python path.
+  - On WSL2 (e.g. Ubuntu 22.04.4 LTS), add the following line to your `.bashrc`:
+
+    ```bash
+    export QT_QPA_PLATFORM=xcb
+    ```
+
+    and install the required system libraries:
+
+    ```bash
+    sudo apt update
+    sudo apt upgrade  # optional, but recommended
+    sudo apt install libxcb-cursor0
+    ```
+
   - Restart your shell.
 
 - **Windows**
@@ -53,7 +67,7 @@
 
     ```bash
     pip install qtdraw
-    playwright install chromium  # for Linux use `playwright install-deps chromium` instead.
+    playwright install chromium  # on Linux, also run `playwright install-deps chromium`.
     ```
 
 3. Update MultiPie (optional)
@@ -64,27 +78,12 @@
     pip install -U multipie
     ```
 
-- **Linux** (Ubuntu 22.04.4 LTS on WSL2)
-   - Add the following line to your `.bashrc`:
-
-      ```bash
-      export QT_QPA_PLATFORM=xcb
-      ```
-
-   - Install required system libraries:
-
-      ```bash
-      sudo apt update
-      sudo apt upgrade  # optional, but recommended
-      sudo apt install libxcb-cursor0
-      ```
-
 4. Associate QtDraw file (**.qtdw**) to the application
 
     It is useful to associate with the following application with `.qtdw`, `.cif`, `.vesta`, and `.xsf` extensions.
 
 - **MacOS**
-  - Download and extract [QtDraw_MacApp.zip](https://github.com/CMT-MU/QtDraw/tree/main/others/QtDraw_MacApp.zip), and move it into Applications folder
+  - Download and extract [QtDraw_MacApp.zip](https://github.com/CMT-MU/QtDraw/blob/main/others/QtDraw_MacApp.zip), and move it into Applications folder
   - Associate extensions with `QtDraw.app`
   - (Note) `QtDraw.app` is created by Automator with the following script:
 
@@ -100,15 +99,15 @@
     ![automator.jpg](fig/automator.jpg)
 
 - **Windows**
-  - Associate extensions with `qtdraw.exe` in `Scripts` folder or [QtDraw_WinApp.zip](https://github.com/CMT-MU/QtDraw/tree/main/others/QtDraw_WinApp.zip)
+  - Associate extensions with `qtdraw.exe` in `Scripts` folder or [QtDraw_WinApp.zip](https://github.com/CMT-MU/QtDraw/blob/main/others/QtDraw_WinApp.zip)
   - `Scripts` is found usually under `C:\Users\<username>\AppData\Local\Programs\Python\Python<version>\`
 
 ## Shell Commands
 
 QtDraw provides the following command-line utilities:
 
-- `qtdraw [filename]` : Open QtDraw file.
-- `conv_qtdraw3 [ver1_file.qtdw]` : Convert Version 1 `.qtdw` file into this version (Version 3).
+- `qtdraw [filename]` : Open a QtDraw file (`.qtdw`, which may be omitted) or a material file (`.cif`, `.vesta`, `.xsf`).
+- `conv_qtdraw3 ver1_file[.qtdw]` : Convert a version-1 `.qtdw` file to version 3, written as `ver1_file_v3.qtdw` next to it.
 
 See the [Getting Started](getting_started.md) guide for examples.
 

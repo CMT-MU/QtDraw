@@ -1,7 +1,7 @@
 # Usage from Python code
 
 **QtDraw** and **PyVistaWidget** can be used from Python code.
-The following API is avalilable to draw objects.
+The following API is available to draw objects.
 
 ## Undo and redo
 
