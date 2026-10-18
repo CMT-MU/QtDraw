@@ -202,14 +202,14 @@ class QtDraw(Window):
         self.action_save_as = action(menu, "Save &As...", self.save_file_as, QKeySequence.SaveAs)
         self.action_screenshot = action(menu, "Screens&hot...", self._save_screenshot)
         menu.addSeparator()
-        self.action_clear = action(menu, "&Clear", self._clear_data)
-        menu.addSeparator()
         self.action_quit = action(menu, "&Quit", self.close, QKeySequence.Quit)
         self.action_quit.setMenuRole(QAction.QuitRole)
 
         menu = self.menuBar().addMenu("&Edit")
         self.action_undo = action(menu, "&Undo", self.undo, QKeySequence.Undo)
         self.action_redo = action(menu, "&Redo", self.redo, QKeySequence.Redo)
+        menu.addSeparator()
+        self.action_clear = action(menu, "&Clear", self._clear_data)
         menu.addSeparator()
         self.action_data_table = action(menu, "&DataSet...", lambda: self.pyvista_widget.open_tab_group_view())
         self.action_preferences = action(menu, "&Preferences...", lambda: self._show_preference(), QKeySequence.Preferences)
@@ -1900,11 +1900,8 @@ class QtDraw(Window):
         :meta private:
         """
         self._flush()
-        if self.is_modified():
-            if self._confirm_unsaved("clearing"):
-                self.clear_data()
-            return
-        ret = QMessageBox.question(self, "", "Are you sure ?", QMessageBox.Cancel, QMessageBox.Ok)
+        text = "Clear all objects?\nIt can be undone with Undo."
+        ret = QMessageBox.question(self, "Clear", text, QMessageBox.Ok | QMessageBox.Cancel, QMessageBox.Cancel)
         if ret == QMessageBox.Ok:
             self.clear_data()
 

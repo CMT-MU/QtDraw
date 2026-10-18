@@ -8,7 +8,7 @@ from pathlib import Path
 import pytest
 import shiboken6
 from PySide6.QtCore import QCoreApplication, QEvent
-from PySide6.QtWidgets import QApplication, QMessageBox
+from PySide6.QtWidgets import QApplication, QFileDialog, QMessageBox
 
 from gui_helpers import app, answer  # noqa: F401  (fixture and helper)
 from qtdraw.util.util import check_multipie
@@ -122,6 +122,44 @@ def test_clear_is_undone(app, monkeypatch):
     settle(app)
     app.undo()
     assert names(app) == ["A"]
+
+
+@pytest.mark.parametrize("loaded", [False, True])
+@pytest.mark.parametrize("multipie", [False, True])
+def test_clear_from_menu_is_undone(app, tmp_path, monkeypatch, multipie, loaded):
+    if multipie and not check_multipie():
+        pytest.skip("MultiPie is not installed.")
+    monkeypatch.chdir(tmp_path)
+    write_small_xsf(tmp_path / "Si.xsf")
+    pvw = app.pyvista_widget
+    if multipie:
+        pvw.mp_set_group("Ci")
+        app._show_multipie()
+    pvw.add_site(name="A")
+    pvw.add_isosurface(data="Si.xsf", value=[0.01])
+    settle(app)
+    file = tmp_path / "a.qtdw"
+    monkeypatch.setattr(QFileDialog, "getSaveFileName", lambda *a, **k: (str(file), ""))
+    assert app.save_file()
+    if loaded:
+        monkeypatch.setattr(QFileDialog, "getOpenFileName", lambda *a, **k: (str(file), ""))
+        app.open_file()
+        settle(app)
+        assert names(app) == ["A"] and not app.is_modified()
+    before = app._document_state()
+
+    asked = answer(monkeypatch, QMessageBox.Ok)
+    app.action_clear.trigger()
+    settle(app)
+    assert len(asked) == 1 and asked[0][3] == QMessageBox.Ok | QMessageBox.Cancel and asked[0][4] == QMessageBox.Cancel
+    assert names(app) == [] and names(app, "isosurface") == []
+    assert app.is_modified() and app._current_file == file
+
+    app.undo()
+    assert app._document_state() == before and not app.is_modified()
+    assert "Si.xsf" in pvw._isosurface_data and app._current_file == file
+    app.redo()
+    assert names(app) == [] and names(app, "isosurface") == []
 
 
 def test_undo_isosurface_removal(app, tmp_path, monkeypatch):
