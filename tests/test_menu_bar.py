@@ -212,7 +212,7 @@ def test_recent_files_are_shared_with_a_new_window(app, qapp, tmp_path, monkeypa
 # Edit menu.
 # ==================================================
 def test_clear_is_in_edit_menu(app):
-    file_menu, edit_menu = (a.menu() for a in app.menuBar().actions()[:2])
+    file_menu, edit_menu = submenu(app, "&File"), submenu(app, "&Edit")
     assert app.action_clear in edit_menu.actions()
     assert app.action_clear not in file_menu.actions()
 
