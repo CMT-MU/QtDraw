@@ -98,12 +98,16 @@ def test_close_after_save_does_not_ask(app, monkeypatch, tmp_path):
 
 
 # ==================================================
-@pytest.mark.parametrize("button, remaining", [(QMessageBox.Cancel, 1), (QMessageBox.Discard, 0)])
-def test_clear_asks_to_save(app, monkeypatch, button, remaining):
+@pytest.mark.parametrize("saved", [False, True])
+@pytest.mark.parametrize("button, remaining", [(QMessageBox.Cancel, 1), (QMessageBox.Ok, 0)])
+def test_clear_asks_to_confirm(app, monkeypatch, tmp_path, saved, button, remaining):
     app.pyvista_widget.add_site(position="[0,0,0]")
+    if saved:
+        monkeypatch.setattr(QFileDialog, "getSaveFileName", lambda *a, **k: (str(tmp_path / "a.qtdw"), ""))
+        assert app.save_file()
     asked = answer(monkeypatch, button)
     app._clear_data()
-    assert "Save changes" in asked[0][2]
+    assert len(asked) == 1 and "Clear all objects?" in asked[0][2]  # not asked to save, as clearing is undone.
     assert n_sites(app) == remaining
 
 
@@ -292,9 +296,19 @@ def test_open_with_pending_rename_asks(app, monkeypatch, tmp_path):
     assert shown == []  # cancelled before choosing a file.
 
 
-def test_clear_with_pending_rename_asks_to_save(app, monkeypatch, tmp_path):
+def test_clear_with_pending_rename_keeps_the_rename(app, monkeypatch, tmp_path):
     saved_with_pending_rename(app, monkeypatch, tmp_path)
     asked = answer(monkeypatch, QMessageBox.Cancel)
     app._clear_data()
-    assert len(asked) == 1 and "Save changes" in asked[0][2]
-    assert n_sites(app) == 1
+    assert len(asked) == 1 and "Clear all objects?" in asked[0][2]
+    assert [row[0] for row in app.pyvista_widget.get_data_dict()["site"]] == ["B"]
+
+
+def test_clear_with_pending_rename_is_undone_with_the_rename(app, monkeypatch, tmp_path):
+    saved_with_pending_rename(app, monkeypatch, tmp_path)
+    answer(monkeypatch, QMessageBox.Ok)
+    app._clear_data()
+    site_names = lambda: [row[0] for row in app.pyvista_widget.get_data_dict().get("site", [])]
+    assert site_names() == []
+    app.undo()
+    assert site_names() == ["B"] and app.is_modified()  # the rename is not saved.
