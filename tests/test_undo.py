@@ -148,10 +148,10 @@ def test_clear_from_menu_is_undone(app, tmp_path, monkeypatch, multipie, loaded)
         assert names(app) == ["A"] and not app.is_modified()
     before = app._document_state()
 
-    asked = answer(monkeypatch, QMessageBox.Ok)
+    asked = answer(monkeypatch, QMessageBox.Cancel)
     app.action_clear.trigger()
     settle(app)
-    assert len(asked) == 1 and asked[0][3] == QMessageBox.Ok | QMessageBox.Cancel and asked[0][4] == QMessageBox.Cancel
+    assert asked == []  # not asked, as clearing is undone.
     assert names(app) == [] and names(app, "isosurface") == []
     assert app.is_modified() and app._current_file == file
 

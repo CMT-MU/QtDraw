@@ -1900,10 +1900,7 @@ class QtDraw(Window):
         :meta private:
         """
         self._flush()
-        text = "Clear all objects?\nIt can be undone with Undo."
-        ret = QMessageBox.question(self, "Clear", text, QMessageBox.Ok | QMessageBox.Cancel, QMessageBox.Cancel)
-        if ret == QMessageBox.Ok:
-            self.clear_data()
+        self.clear_data()  # without asking, as clearing is undone.
 
     # ==================================================
     def clear_data(self):
