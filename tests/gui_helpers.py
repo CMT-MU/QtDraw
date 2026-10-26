@@ -2,6 +2,7 @@
 Fixture and helpers for tests of the main window.
 """
 
+import copy
 import sys
 import traceback
 
@@ -92,10 +93,12 @@ def app(qapp, tmp_path, monkeypatch, request):
     yield window
     if shiboken6.isValid(window):  # not yet closed (and deleted) by the test.
         out_of_date = {}
-        if not window.pyvista_widget._closed and request.node.get_closest_marker("panel_not_checked") is None:
-            out_of_date = panel_out_of_date(window)
-        monkeypatch.setattr(QMessageBox, "question", close_answer)
-        window.close()
+        try:
+            if not window.pyvista_widget._closed and request.node.get_closest_marker("panel_not_checked") is None:
+                out_of_date = panel_out_of_date(window)
+        finally:
+            monkeypatch.setattr(QMessageBox, "question", close_answer)
+            window.close()
         if out_of_date:
             pytest.fail(f"the panel does not show the status, {{widget: (shown, status)}}: {out_of_date}")
 
@@ -119,13 +122,24 @@ def panel_state(app):
         elif isinstance(widget, QAbstractButton) and widget.isCheckable():
             state[name] = widget.isChecked()
         elif isinstance(widget, QLineEdit):
-            state[name] = getattr(widget, "_validated", widget.text())  # the shown text is raw while it has focus.
+            state[name] = line_edit_value(widget)
         elif isinstance(widget, QLabel):
             state[name] = widget.text()
     for group in ["action_toggle", "action_axis", "action_cell"]:
         for value, act in getattr(app, group).items():
             state[f"{group}[{value}]"] = act.isChecked()
     return state
+
+
+def line_edit_value(edit):
+    """
+    Value shown in a line edit.
+
+    Note:
+        - while it has focus, the accepted value is shown raw (e.g. 1.0 for 1.0000) until it is edited.
+    """
+    raw = edit.hasFocus() and not getattr(edit, "_edited", True) and edit.text() == getattr(edit, "_raw", None)
+    return edit._validated if raw else edit.text()
 
 
 def panel_out_of_date(app):
@@ -137,11 +151,13 @@ def panel_out_of_date(app):
 
     Note:
         - the expected values are those shown by the window from the status (_show_status), so the panel is
-          brought up to date by the check.
+          brought up to date by the check. That every status is shown by it is checked in test_panel_status.py.
     """
+    status = copy.deepcopy(app.pyvista_widget._status)
     shown = panel_state(app)
     app._show_status()
     expected = panel_state(app)
+    assert app.pyvista_widget._status == status, "showing the status changed it"
     return {name: (shown[name], expected[name]) for name in shown if shown[name] != expected[name]}
 
 

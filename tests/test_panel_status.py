@@ -8,7 +8,7 @@ import copy
 
 import pytest
 
-from gui_helpers import app  # noqa: F401  (fixture)
+from gui_helpers import app, panel_out_of_date, panel_state  # noqa: F401  (fixture and helpers)
 from qtdraw.core.pyvista_widget import PyVistaWidget
 from qtdraw.core.pyvista_widget_setting import default_status
 from qtdraw.core.qtdraw_app import QtDraw
@@ -80,6 +80,28 @@ NOT_STATUS = {
 # status shown in the panel.
 SHOWN = [key for key in default_status if key != "model"]
 
+# a value different from the default for each status shown in the panel (cell by each key).
+OTHER_STATUS = {
+    "origin": [0.5, 0.0, 0.0],
+    "cell.a": 2.0,
+    "cell.b": 2.0,
+    "cell.c": 2.0,
+    "cell.alpha": 80.0,
+    "cell.beta": 80.0,
+    "cell.gamma": 80.0,
+    "crystal": "cubic",
+    "clip": True,
+    "repeat": True,
+    "lower": [-1.0, -1.0, -1.0],
+    "upper": [2.0, 2.0, 2.0],
+    "view": [1, 0, 0],
+    "parallel_projection": False,
+    "grid": True,
+    "bar": True,
+    "axis_type": "off",
+    "cell_mode": "off",
+}
+
 
 def cases(classes):
     return [
@@ -109,13 +131,15 @@ def test_status_change_is_notified(widget, target, name, args, changed):
     shown = lambda: copy.deepcopy({key: widget._status[key] for key in SHOWN})
     notified = []
     widget.status_changed.connect(lambda: notified.append(shown()))
-    widget.camera_view.connect(lambda view: notified.append(shown()))
+    views = []  # (view notified, view in the status).
+    widget.camera_view.connect(lambda view: (notified.append(shown()), views.append((list(view), widget._status["view"]))))
     before = shown()
 
     getattr(widget, name)(*args)
 
     assert shown() != before  # the test changes the status.
     assert notified and notified[-1] == shown()  # a panel following the notifications shows the final status.
+    assert all(view == status for view, status in views)
 
 
 # ==================================================
@@ -138,3 +162,71 @@ def test_shown_without_applying_again(app, monkeypatch):
     pvw.set_crystal("cubic")
     pvw.set_bar(True)
     assert calls == ["set_crystal", "set_unit_cell", "set_bar"]  # the panel does not set them again.
+
+
+# ==================================================
+def test_other_status_covers_the_status_shown():
+    assert {key.split(".")[0] for key in OTHER_STATUS} == set(SHOWN)
+    assert {key.split(".")[1] for key in OTHER_STATUS if key.startswith("cell.")} == set(default_status["cell"])
+
+
+# ==================================================
+@pytest.mark.parametrize("key", OTHER_STATUS)
+def test_every_status_is_shown(app, key):
+    # the end-of-test check (panel_out_of_date) takes the values shown from the status as expected ones.
+    status = app.pyvista_widget._status
+    saved = copy.deepcopy(status)
+    before = panel_state(app)
+    if key.startswith("cell."):
+        status["cell"][key.split(".")[1]] = OTHER_STATUS[key]
+    else:
+        status[key] = OTHER_STATUS[key]
+    try:
+        app._show_status()
+        assert panel_state(app) != before
+    finally:
+        status.clear()
+        status.update(saved)
+        app._show_status()
+
+
+# ==================================================
+def test_out_of_date_panel_is_detected(app):
+    app.uc_edit_a.setText("3.0")
+    app.action_toggle["grid"].setChecked(True)
+    assert panel_out_of_date(app) == {
+        "uc_edit_a": ("3.0000", "1.0000"),
+        "action_toggle[grid]": (True, False),
+    }
+    assert panel_out_of_date(app) == {}  # brought up to date by the check.
+
+
+# ==================================================
+def test_focused_field_is_checked_by_its_value(app):
+    from PySide6.QtTest import QTest
+
+    app.show()
+    app.activateWindow()
+    app.uc_edit_a.setFocus()
+    QTest.qWait(50)
+    assert app.uc_edit_a.hasFocus()
+    assert app.uc_edit_a.text() == "1.0"  # shown raw while it has focus.
+    assert panel_out_of_date(app) == {}
+
+    app.uc_edit_a.setText("abc")  # shown, but not accepted.
+    assert panel_out_of_date(app) == {"uc_edit_a": ("abc", "1.0000")}
+
+
+# ==================================================
+@pytest.mark.parametrize("typed", ["2.5", "1.0"])  # also the raw text shown on focus, typed again.
+def test_typed_value_not_confirmed_is_detected(app, typed):
+    from PySide6.QtTest import QTest
+
+    app.show()
+    app.activateWindow()
+    app.uc_edit_a.setFocus()
+    QTest.qWait(50)
+    app.uc_edit_a.selectAll()
+    QTest.keyClicks(app.uc_edit_a, typed)  # not confirmed by Enter, the field keeps focus.
+    assert app.uc_edit_a.hasFocus() and app.uc_edit_a._edited
+    assert panel_out_of_date(app) == {"uc_edit_a": (typed, "1.0000")}
