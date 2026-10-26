@@ -78,15 +78,71 @@ def close_open_widgets():
 
 # ==================================================
 @pytest.fixture
-def app(qapp, tmp_path, monkeypatch):
+def app(qapp, tmp_path, monkeypatch, request):
+    """
+    Main window, checked at the end of the test that the panel shows the status (see panel_out_of_date).
+
+    A test that leaves the panel out of date on purpose (e.g. a value typed but not confirmed) is marked with
+    @pytest.mark.panel_not_checked(reason).
+    """
     from qtdraw.core.qtdraw_app import QtDraw
 
     monkeypatch.chdir(tmp_path)
     window = QtDraw()
     yield window
     if shiboken6.isValid(window):  # not yet closed (and deleted) by the test.
+        out_of_date = {}
+        if not window.pyvista_widget._closed and request.node.get_closest_marker("panel_not_checked") is None:
+            out_of_date = panel_out_of_date(window)
         monkeypatch.setattr(QMessageBox, "question", close_answer)
         window.close()
+        if out_of_date:
+            pytest.fail(f"the panel does not show the status, {{widget: (shown, status)}}: {out_of_date}")
+
+
+# ==================================================
+def panel_state(app):
+    """
+    Values shown in the panel and the View menu.
+
+    Returns:
+        - (dict) -- {name: value}, for every widget of the panel (attributes uc_*, view_*) and the View menu.
+    """
+    from PySide6.QtWidgets import QAbstractButton, QComboBox, QLabel, QLineEdit
+
+    state = {}
+    for name, widget in vars(app).items():
+        if not name.startswith(("uc_", "view_")) or not shiboken6.isValid(widget):
+            continue
+        if isinstance(widget, QComboBox):
+            state[name] = widget.currentText()
+        elif isinstance(widget, QAbstractButton) and widget.isCheckable():
+            state[name] = widget.isChecked()
+        elif isinstance(widget, QLineEdit):
+            state[name] = getattr(widget, "_validated", widget.text())  # the shown text is raw while it has focus.
+        elif isinstance(widget, QLabel):
+            state[name] = widget.text()
+    for group in ["action_toggle", "action_axis", "action_cell"]:
+        for value, act in getattr(app, group).items():
+            state[f"{group}[{value}]"] = act.isChecked()
+    return state
+
+
+def panel_out_of_date(app):
+    """
+    Values of the panel and the View menu that differ from the status of the drawing.
+
+    Returns:
+        - (dict) -- {name: (shown, status)}, empty if the panel shows the status.
+
+    Note:
+        - the expected values are those shown by the window from the status (_show_status), so the panel is
+          brought up to date by the check.
+    """
+    shown = panel_state(app)
+    app._show_status()
+    expected = panel_state(app)
+    return {name: (shown[name], expected[name]) for name in shown if shown[name] != expected[name]}
 
 
 def close_answer(parent, title, text, buttons, *args):
