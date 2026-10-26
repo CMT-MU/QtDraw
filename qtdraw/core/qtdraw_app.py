@@ -279,6 +279,7 @@ class QtDraw(Window):
             ("repeat", "Repeat", self.view_button_repeat),
         ]
         self.action_toggle = {}
+        self._toggle_button = {}
         for item in toggles:
             if item is None:
                 menu.addSeparator()
@@ -289,6 +290,7 @@ class QtDraw(Window):
             act.setChecked(button.isChecked())
             button.toggled.connect(act.setChecked)  # also when the panel is updated, e.g. after loading.
             self.action_toggle[name] = act
+            self._toggle_button[name] = button
         self.action_nonrepeat = action(menu, "Non-repeat", self.view_button_nonrepeat.click)
         menu.addSeparator()
 
@@ -929,29 +931,33 @@ class QtDraw(Window):
 
         :meta private:
         """
-        self._show_axis_cell()  # e.g. set by a MultiPie group.
         if self._restoring:
             return
         self._modified_timer.start()
         self._update_undo_actions()
 
     # ==================================================
-    def _show_axis_cell(self):
+    def _show_status(self):
         """
-        Show the axis and cell display in effect in the panel and the View menu, without applying it again.
+        Show the status in effect in the panel and the View menu, without applying it again.
 
         :meta private:
         """
-        status = self.pyvista_widget._status
-        for combo, actions, value in [
-            (self.view_combo_axis, self.action_axis, status["axis_type"]),
-            (self.view_combo_cell, self.action_cell, status["cell_mode"]),
-        ]:
-            if combo.currentText() != value:
-                blocked = combo.blockSignals(True)
-                combo.setCurrentText(value)
-                combo.blockSignals(blocked)
-                actions[value].setChecked(True)
+        widgets = [w for cls in (QAbstractButton, QComboBox, LineEdit) for w in self.panel.findChildren(cls)]
+        blocked = [widget.blockSignals(True) for widget in widgets]
+        try:
+            self._update_unit_cell()
+            self._update_view()
+        finally:
+            for widget, b in zip(widgets, blocked):
+                widget.blockSignals(b)
+
+        # the View menu follows the panel by signals, which were blocked.
+        for name, act in self.action_toggle.items():
+            act.setChecked(self._toggle_button[name].isChecked())
+        for combo, actions in [(self.view_combo_axis, self.action_axis), (self.view_combo_cell, self.action_cell)]:
+            if combo.currentText() in actions:
+                actions[combo.currentText()].setChecked(True)
 
     # ==================================================
     def _settle(self):
@@ -1610,6 +1616,7 @@ class QtDraw(Window):
         # pyvista.
         self.pyvista_widget.message.connect(self.write_info)
         self.pyvista_widget.camera_view.connect(self.set_view_index)
+        self.pyvista_widget.status_changed.connect(self._show_status)  # also when set from Python.
 
     # ==================================================
     def set_view_index(self, index):
