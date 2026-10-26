@@ -69,6 +69,7 @@ line-length = 130
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+markers = ["panel_not_checked(reason): the test leaves the panel out of date on purpose (see the app fixture)"]
 
 [tool.build_sphinx]
 source-dir = 'docs'
