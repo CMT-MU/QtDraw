@@ -585,6 +585,7 @@ class PyVistaWidget(QtInteractor):
     # none.
     data_removed = Signal()  #: :meta private:
     document_changed = Signal()  #: :meta private:
+    status_changed = Signal()  #: :meta private:
     # view index.
     camera_view = Signal(list)  #: :meta private:
 
@@ -2623,6 +2624,7 @@ class PyVistaWidget(QtInteractor):
 
         self.set_unit_cell()
         self.document_changed.emit()
+        self.status_changed.emit()
 
     # ==================================================
     def set_origin(self, origin=None):
@@ -2643,6 +2645,7 @@ class PyVistaWidget(QtInteractor):
 
         self.set_cell()
         self.document_changed.emit()
+        self.status_changed.emit()
 
     # ==================================================
     def set_unit_cell(self, cell=None):
@@ -2664,6 +2667,7 @@ class PyVistaWidget(QtInteractor):
         self.set_cell()
         self.redraw()
         self.document_changed.emit()
+        self.status_changed.emit()
 
     # ==================================================
     def set_clip(self, mode=None):
@@ -2686,6 +2690,7 @@ class PyVistaWidget(QtInteractor):
         else:
             self.show_outside_actor()
         self.document_changed.emit()
+        self.status_changed.emit()
 
     # ==================================================
     def hide_outside_actor(self):
@@ -2817,6 +2822,7 @@ class PyVistaWidget(QtInteractor):
 
         self.repeat_data()
         self.document_changed.emit()
+        self.status_changed.emit()
 
     # ==================================================
     def set_range(self, lower=None, upper=None):
@@ -2855,6 +2861,7 @@ class PyVistaWidget(QtInteractor):
         self.set_cell()
         self.set_repeat()
         self.document_changed.emit()
+        self.status_changed.emit()
 
     # ==================================================
     def set_view(self, view=None):
@@ -2909,6 +2916,7 @@ class PyVistaWidget(QtInteractor):
             self.enable_parallel_projection()
         else:
             self.disable_parallel_projection()
+        self.status_changed.emit()
 
     # ==================================================
     def set_grid(self, mode=None):
@@ -2931,6 +2939,7 @@ class PyVistaWidget(QtInteractor):
         else:
             self.remove_bounds_axes()
             self.remove_bounding_box()
+        self.status_changed.emit()
 
     # ==================================================
     def set_bar(self, mode=None):
@@ -2960,6 +2969,7 @@ class PyVistaWidget(QtInteractor):
             )
         elif self.scalar_bars:
             self.remove_scalar_bar()
+        self.status_changed.emit()
 
     # ==================================================
     def set_axis(self, axis_type=None):
@@ -2996,6 +3006,7 @@ class PyVistaWidget(QtInteractor):
             viewport = False
         else:
             self.renderer.hide_axes()
+            self.status_changed.emit()
             return
 
         create_axes_widget(
@@ -3009,6 +3020,7 @@ class PyVistaWidget(QtInteractor):
             viewport=viewport,
             full=(axis_type == "full"),
         )
+        self.status_changed.emit()
 
     # ==================================================
     def set_cell(self, mode=None):
@@ -3033,6 +3045,7 @@ class PyVistaWidget(QtInteractor):
         else:
             self.show_cell()
         self.set_axis()
+        self.status_changed.emit()
 
     # ==================================================
     # internal use (general).
