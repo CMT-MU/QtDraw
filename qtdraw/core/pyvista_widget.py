@@ -47,6 +47,7 @@ from qtdraw.core.pyvista_widget_setting import (
     CHOP,
 )
 from qtdraw.core.pyvista_widget_setting import widget_detail as detail
+from qtdraw.widget.validator import check_cell
 from qtdraw.core.qtdraw_info import __version__, __date__, __author__
 from qtdraw.widget.mathjax import MathJaxSVG
 from qtdraw.widget.group_model import GroupModel
@@ -681,6 +682,7 @@ class PyVistaWidget(QtInteractor):
 
         self._mp_data = None
         self._loading = False  # True while data_removed is emitted after loading a file.
+        self.replaced_cells = []  # invalid cells of the last loaded file, set to the defaults (see load).
 
         # refresh.
         self.refresh()
@@ -1966,6 +1968,10 @@ class PyVistaWidget(QtInteractor):
         Args:
             filename (str): file name, relative to the current directory.
 
+        Returns:
+            - (list) -- cells that the table would reject, set to the defaults of their columns,
+              [(object_type, row, column, value)] with the row counted from 1 (also in `replaced_cells`).
+
         Note:
             - data file names of isosurfaces in the file are relative to its directory; the current directory is not changed.
         """
@@ -2013,6 +2019,9 @@ class PyVistaWidget(QtInteractor):
                 n = self._data[object_type].columnCount()
                 if not isinstance(rows, list) or any(not isinstance(row, list) or len(row) != n for row in rows):
                     raise Exception(f"cannot read {f}, invalid data for '{object_type}'.")
+            replaced = self._replace_invalid_cells(all_data["data"])
+        else:
+            replaced = []
 
         # set data (current data is restored if this fails).
         current = self._get_current_state()
@@ -2032,6 +2041,37 @@ class PyVistaWidget(QtInteractor):
             self.data_removed.emit()
         finally:
             self._loading = loading  # restore, also for a load started by a listener.
+
+        self.replaced_cells = replaced
+        if replaced:
+            self.write_info(f"* {len(replaced)} invalid cells in {file.name} were set to the default values:")
+            for object_type, row, column, value in replaced:
+                self.write_info(f"  {object_type}, row {row}, {column}: {value!r}")
+        return replaced
+
+    # ==================================================
+    def _replace_invalid_cells(self, data):
+        """
+        Set the cells that the table would reject to the defaults of their columns.
+
+        Args:
+            data (dict): object data read from a file, {object_type: [[data]]}, changed in place.
+
+        Returns:
+            - (list) -- replaced cells, [(object_type, row, column, value)] with the row counted from 1.
+
+        :meta private:
+        """
+        replaced = []
+        for object_type, rows in data.items():
+            model = self._data[object_type]
+            columns = list(object_default[object_type].keys())
+            for i, row in enumerate(rows):
+                for j, (vtype, option, default) in enumerate(zip(model.column_type, model.column_option, model.column_default)):
+                    if not check_cell(vtype, option, row[j]):
+                        replaced.append((object_type, i + 1, columns[j], row[j]))
+                        row[j] = default
+        return replaced
 
     # ==================================================
     @_batched

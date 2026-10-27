@@ -69,8 +69,8 @@ def str_to_sympy(s, check_var=None, check_shape=None, rational=True, subs=None, 
     # reserved words in sympy (functions, constants, etc.).
     reserved = set(sp.__all__) | {"pi", "E", "I", "oo", "zoo"}
 
-    # extract candidate variable names.
-    var = sorted(set(re.findall(r"[A-Za-z_]\w*", s)))
+    # extract candidate variable names, without the exponents of numbers such as 1e-3.
+    var = sorted(set(re.findall(r"[A-Za-z_]\w*", re.sub(r"(?<![\w.])(\d+\.?\d*|\.\d+)[eE][+-]?\d+", "0", s))))
     # remove reserved ones.
     var = [v for v in var if v not in reserved]
 
