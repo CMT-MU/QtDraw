@@ -1,3 +1,10 @@
+# SPDX-License-Identifier: MPL-2.0
+# Copyright (C) 2021- The QtDraw developers
+#
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
 """
 QtDraw runs with the functions of MultiPie turned off when MultiPie is not installed, or is installed but cannot
 be loaded (e.g. a broken or incompatible installation).
