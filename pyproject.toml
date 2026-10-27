@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=61"]
+requires = ["setuptools>=77"]  # 77: license as an SPDX expression (PEP 639).
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -24,11 +24,11 @@ authors = [
 description = "3D drawing tool for molecules and crystals based on Pyvista and PySide6."
 readme = {file = "docs/README.md", content-type = "text/markdown"}
 keywords = ['pyvista', 'PySide6', 'multipie']
-license = {file = "LICENSE"}
+license = "MPL-2.0"
+license-files = ["LICENSE"]
 classifiers = [
     'Intended Audience :: Science/Research',
     'Topic :: Scientific/Engineering :: Visualization',
-    'License :: OSI Approved :: MIT License',
     'Operating System :: Microsoft :: Windows',
     'Operating System :: POSIX',
     'Operating System :: MacOS',
