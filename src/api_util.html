@@ -1,0 +1,1734 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Utilities &#8212; QtDraw</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=34ddd5e8" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
+
+    <script src="../_static/documentation_options.js?v=a8e58a58"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'src/api_util';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <script src="../_static/custom.js?v=9c3a2667"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Widget" href="api_widget.html" />
+    <link rel="prev" title="Script" href="api_script.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../_static/searchtools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../README.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/qtdraw_logo.png" class="logo__image only-light" alt="QtDraw - Home"/>
+    <img src="../_static/qtdraw_logo.png" class="logo__image only-dark pst-js-only" alt="QtDraw - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installing QtDraw</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="user_guide.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="example.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="from_python.html">Usage from Python code</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="api_summary.html">API Reference</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="api_core.html">Core</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_multipie.html">MultiPie</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_parser.html">Parser</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_script.html">Script</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Utilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_widget.html">Widget</a></li>
+<li class="toctree-l2"><a class="reference internal" href="function_table.html">Function Summary</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/CMT-MU/QtDraw.git" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/CMT-MU/QtDraw.git/edit/main/docs/src/api_util.md" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/CMT-MU/QtDraw.git/issues/new?title=Issue%20on%20page%20%2Fsrc/api_util.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Utilities</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-qtdraw.util.basic_object">Utility</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.arrow_length"><code class="docutils literal notranslate"><span class="pre">arrow_length()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_bond"><code class="docutils literal notranslate"><span class="pre">create_bond()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_box"><code class="docutils literal notranslate"><span class="pre">create_box()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_circle"><code class="docutils literal notranslate"><span class="pre">create_circle()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_ellipsoid"><code class="docutils literal notranslate"><span class="pre">create_ellipsoid()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_isosurface"><code class="docutils literal notranslate"><span class="pre">create_isosurface()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_line"><code class="docutils literal notranslate"><span class="pre">create_line()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_orbital"><code class="docutils literal notranslate"><span class="pre">create_orbital()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_orbital_data"><code class="docutils literal notranslate"><span class="pre">create_orbital_data()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_plane"><code class="docutils literal notranslate"><span class="pre">create_plane()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_polygon"><code class="docutils literal notranslate"><span class="pre">create_polygon()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_sphere"><code class="docutils literal notranslate"><span class="pre">create_sphere()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_spline"><code class="docutils literal notranslate"><span class="pre">create_spline()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_spline_t"><code class="docutils literal notranslate"><span class="pre">create_spline_t()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_stream"><code class="docutils literal notranslate"><span class="pre">create_stream()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_stream_data"><code class="docutils literal notranslate"><span class="pre">create_stream_data()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_text2d"><code class="docutils literal notranslate"><span class="pre">create_text2d()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_text3d"><code class="docutils literal notranslate"><span class="pre">create_text3d()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_toroid"><code class="docutils literal notranslate"><span class="pre">create_toroid()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_torus"><code class="docutils literal notranslate"><span class="pre">create_torus()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_vector"><code class="docutils literal notranslate"><span class="pre">create_vector()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.apply"><code class="docutils literal notranslate"><span class="pre">apply()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.check_multipie"><code class="docutils literal notranslate"><span class="pre">check_multipie()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.command_text"><code class="docutils literal notranslate"><span class="pre">command_text()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.create_grid"><code class="docutils literal notranslate"><span class="pre">create_grid()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.distance"><code class="docutils literal notranslate"><span class="pre">distance()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.igrid"><code class="docutils literal notranslate"><span class="pre">igrid()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.install_multipie_command"><code class="docutils literal notranslate"><span class="pre">install_multipie_command()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.multipie_message"><code class="docutils literal notranslate"><span class="pre">multipie_message()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.multipie_missing"><code class="docutils literal notranslate"><span class="pre">multipie_missing()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.read_dict"><code class="docutils literal notranslate"><span class="pre">read_dict()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.str_to_sympy"><code class="docutils literal notranslate"><span class="pre">str_to_sympy()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.text_to_list"><code class="docutils literal notranslate"><span class="pre">text_to_list()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.to_latex"><code class="docutils literal notranslate"><span class="pre">to_latex()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.to_plain"><code class="docutils literal notranslate"><span class="pre">to_plain()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.write_dict"><code class="docutils literal notranslate"><span class="pre">write_dict()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util_axis.create_axes_widget"><code class="docutils literal notranslate"><span class="pre">create_axes_widget()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util_axis.create_cell_grid"><code class="docutils literal notranslate"><span class="pre">create_cell_grid()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util_axis.create_unit_cell"><code class="docutils literal notranslate"><span class="pre">create_unit_cell()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util_axis.get_camera_params"><code class="docutils literal notranslate"><span class="pre">get_camera_params()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util_axis.get_hkl_from_camera"><code class="docutils literal notranslate"><span class="pre">get_hkl_from_camera()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util_axis.get_lattice_vector"><code class="docutils literal notranslate"><span class="pre">get_lattice_vector()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util_axis.get_outside_box"><code class="docutils literal notranslate"><span class="pre">get_outside_box()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util_axis.get_repeat_range"><code class="docutils literal notranslate"><span class="pre">get_repeat_range()</span></code></a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="utilities">
+<h1>Utilities<a class="headerlink" href="#utilities" title="Link to this heading">#</a></h1>
+<section id="module-qtdraw.util.basic_object">
+<span id="utility"></span><h2>Utility<a class="headerlink" href="#module-qtdraw.util.basic_object" title="Link to this heading">#</a></h2>
+<p>Basic PolyData objects.</p>
+<p>This module provides PolyData objects as fundamental elements to draw.
+The following objects are available.</p>
+<ul class="simple">
+<li><p>sphere</p></li>
+<li><p>bond</p></li>
+<li><p>vector</p></li>
+<li><p>orbital</p></li>
+<li><p>vector stream</p></li>
+<li><p>line</p></li>
+<li><p>plane</p></li>
+<li><p>circle</p></li>
+<li><p>torus</p></li>
+<li><p>ellipsoid</p></li>
+<li><p>toroid</p></li>
+<li><p>box</p></li>
+<li><p>polygon</p></li>
+<li><p>text3d</p></li>
+<li><p>text2d (math)</p></li>
+<li><p>spline</p></li>
+<li><p>spline (parametric)</p></li>
+<li><p>isosurface</p></li>
+</ul>
+<dl class="py function">
+<dt class="sig sig-object py" id="qtdraw.util.basic_object.arrow_length">
+<span class="sig-name descname"><span class="pre">arrow_length</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">direction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/basic_object.html#arrow_length"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.basic_object.arrow_length" title="Link to this definition">#</a></dt>
+<dd><p>Length of the arrow that create_vector() makes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>direction</strong> (<em>list</em><em> or </em><em>numpy.ndarray</em>) – direction (cartesian), [float].</p></li>
+<li><p><strong>length</strong> (<em>float</em>) – length.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>(float) – length of the arrow, 0 if the direction is 0.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qtdraw.util.basic_object.create_bond">
+<span class="sig-name descname"><span class="pre">create_bond</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">direction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">twotone</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/basic_object.html#create_bond"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.basic_object.create_bond" title="Link to this definition">#</a></dt>
+<dd><p>Create bond object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>direction</strong> (<em>list</em><em> or </em><em>numpy.ndarray</em>) – bond direction (cartesian), [float].</p></li>
+<li><p><strong>width</strong> (<em>float</em><em>, </em><em>optional</em>) – width.</p></li>
+<li><p><strong>twotone</strong> (<em>bool</em><em>, </em><em>optional</em>) – twotone color ?</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>(vtk.PolyData) – cylinder object</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>bond position is at center.</p></li>
+</ul>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qtdraw.util.basic_object.create_box">
+<span class="sig-name descname"><span class="pre">create_box</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a1</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a3</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/basic_object.html#create_box"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.basic_object.create_box" title="Link to this definition">#</a></dt>
+<dd><p>Create box object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>a1</strong> (<em>numpy.ndarray</em><em>, </em><em>optional</em>) – a1 vector (cartesian).</p></li>
+<li><p><strong>a2</strong> (<em>numpy.ndarray</em><em>, </em><em>optional</em>) – a2 vector (cartesian).</p></li>
+<li><p><strong>a3</strong> (<em>numpy.ndarray</em><em>, </em><em>optional</em>) – a3 vector (cartesian).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>(vtk.PolyData) – cube object.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>if a1/a2/a3 is None, unit vector is used.</p></li>
+</ul>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qtdraw.util.basic_object.create_circle">
+<span class="sig-name descname"><span class="pre">create_circle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">normal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/basic_object.html#create_circle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.basic_object.create_circle" title="Link to this definition">#</a></dt>
+<dd><p>Create circle object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>normal</strong> (<em>list</em><em> or </em><em>numpy.ndarray</em>) – normal vector (cartesian), [float].</p></li>
+<li><p><strong>size</strong> (<em>float</em><em>, </em><em>optional</em>) – size.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>(vtk.PolyData) – circle object.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qtdraw.util.basic_object.create_ellipsoid">
+<span class="sig-name descname"><span class="pre">create_ellipsoid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">normal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.3</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/basic_object.html#create_ellipsoid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.basic_object.create_ellipsoid" title="Link to this definition">#</a></dt>
+<dd><p>Create ellipsoid object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>normal</strong> (<em>list</em><em> or </em><em>numpy.ndarray</em>) – normal vector (cartesian), [float].</p></li>
+<li><p><strong>x_size</strong> (<em>float</em><em>, </em><em>optional</em>) – x_size.</p></li>
+<li><p><strong>y_size</strong> (<em>float</em><em>, </em><em>optional</em>) – y_size.</p></li>
+<li><p><strong>z_size</strong> (<em>float</em><em>, </em><em>optional</em>) – z_size.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>(vtk.PolyData) – ellipsoid object.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qtdraw.util.basic_object.create_isosurface">
+<span class="sig-name descname"><span class="pre">create_isosurface</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">grid_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">surface_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/basic_object.html#create_isosurface"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.basic_object.create_isosurface" title="Link to this definition">#</a></dt>
+<dd><p>Create isosurface.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>grid_data</strong> (<em>dict</em>) – grid data.</p></li>
+<li><p><strong>value</strong> (<em>list</em><em> or </em><em>numpy.ndarray</em>) – value of isosurface.</p></li>
+<li><p><strong>surface_name</strong> (<em>str</em>) – surface data.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>(vtk.DataSet) – isosurface object.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>n : [nx,ny,nz] division of grid.</p></li>
+<li><p>origin : [rx,ry,rz] origin in fractional coordinate.</p></li>
+<li><p>Ag : [g1,g2,g3] grid vectors in 4x4 matrix.</p></li>
+<li><p>data : data at each grid point.</p></li>
+<li><p>surface : surface data at each grid point.</p></li>
+<li><p>endpoint : include endpoint ?</p></li>
+<li><p>row_major : row-major grid ?</p></li>
+</ul>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qtdraw.util.basic_object.create_line">
+<span class="sig-name descname"><span class="pre">create_line</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">direction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arrow1</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arrow2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tip_radius</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tip_length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">left_out</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/basic_object.html#create_line"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.basic_object.create_line" title="Link to this definition">#</a></dt>
+<dd><p>Create line object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>direction</strong> (<em>list</em><em> or </em><em>numpy.ndarray</em>) – bond direction (cartesian), [float].</p></li>
+<li><p><strong>width</strong> (<em>float</em><em>, </em><em>optional</em>) – width.</p></li>
+<li><p><strong>arrow1</strong> (<em>bool</em><em>, </em><em>optional</em>) – arrow at start point ?</p></li>
+<li><p><strong>arrow2</strong> (<em>bool</em><em>, </em><em>optional</em>) – arrow at end point ?</p></li>
+<li><p><strong>tip_radius</strong> (<em>float</em><em>, </em><em>optional</em>) – tip radius.</p></li>
+<li><p><strong>tip_length</strong> (<em>float</em><em>, </em><em>optional</em>) – tip length.</p></li>
+<li><p><strong>left_out</strong> (<em>list</em><em>, </em><em>optional</em>) – “arrow1” and “arrow2” of tips left out (length 0) are appended to it.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>(vtk.PolyData) – cylinder object</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qtdraw.util.basic_object.create_orbital">
+<span class="sig-name descname"><span class="pre">create_orbital</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shape</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">surface</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta_phi_range</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta_phi_resolution</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/basic_object.html#create_orbital"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.basic_object.create_orbital" title="Link to this definition">#</a></dt>
+<dd><p>Create orbital object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>shape</strong> (<em>str</em>) – (x,y,z) shape (cartesian).</p></li>
+<li><p><strong>surface</strong> (<em>str</em><em>, </em><em>optional</em>) – (x,y,z) surface color (cartesian).</p></li>
+<li><p><strong>size</strong> (<em>float</em><em>, </em><em>optional</em>) – size.</p></li>
+<li><p><strong>theta_phi_range</strong> (<em>list</em><em> or </em><em>numpy.ndarray</em><em>, </em><em>optional</em>) – theta and phi range, [[float]].</p></li>
+<li><p><strong>theta_phi_resolution</strong> (<em>list</em>) – theta and phi resolution, [int].</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>(vtk.PolyData) – orbital object with “surface”.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>if surface is “”, the same one of shape is used.</p></li>
+<li><p>if size is positive, max. value is equivalent to size.</p></li>
+<li><p>if size is negative, abs. value is scaled by size.</p></li>
+<li><p>if theta_phi_range is None, default is used.</p></li>
+<li><p>if theta_phi_resolution is None, default is used.</p></li>
+</ul>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qtdraw.util.basic_object.create_orbital_data">
+<span class="sig-name descname"><span class="pre">create_orbital_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shape</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">surface</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spherical_plot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">point_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.03</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/basic_object.html#create_orbital_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.basic_object.create_orbital_data" title="Link to this definition">#</a></dt>
+<dd><p>Create orbital object from data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>shape</strong> (<em>ndarray</em>) – (x,y,z) shape (cartesian).</p></li>
+<li><p><strong>surface</strong> (<em>ndarray</em><em>, </em><em>optional</em>) – (x,y,z) surface color (cartesian).</p></li>
+<li><p><strong>size</strong> (<em>float</em><em>, </em><em>optional</em>) – size.</p></li>
+<li><p><strong>spherical_plot</strong> (<em>bool</em><em>, </em><em>optional</em>) – spherical-like plot ?</p></li>
+<li><p><strong>point_size</strong> (<em>float</em><em>, </em><em>optional</em>) – point size.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>(vtk.PolyData) – orbital object with “surface”.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>if surface is None, the same one of shape is used.</p></li>
+<li><p>if size is positive, max. value is equivalent to size.</p></li>
+<li><p>if size is negative, abs. value is scaled by size.</p></li>
+<li><p>if point_size is None, no point is shown.</p></li>
+</ul>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qtdraw.util.basic_object.create_plane">
+<span class="sig-name descname"><span class="pre">create_plane</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">normal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/basic_object.html#create_plane"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.basic_object.create_plane" title="Link to this definition">#</a></dt>
+<dd><p>Create plane object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>normal</strong> (<em>list</em><em> or </em><em>numpy.ndarray</em>) – normal vector (cartesian), [float].</p></li>
+<li><p><strong>x_size</strong> (<em>float</em><em>, </em><em>optional</em>) – x size.</p></li>
+<li><p><strong>y_size</strong> (<em>float</em><em>, </em><em>optional</em>) – y size.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>(vtk.PolyData) – plane object.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qtdraw.util.basic_object.create_polygon">
+<span class="sig-name descname"><span class="pre">create_polygon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">point</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">connectivity</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/basic_object.html#create_polygon"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.basic_object.create_polygon" title="Link to this definition">#</a></dt>
+<dd><p>Create polygon object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>point</strong> (<em>list</em><em> or </em><em>numpy.ndarray</em>) – vertices (cartesian), [float].</p></li>
+<li><p><strong>conectivity</strong> (<em>list</em>) – list connectivities of #point for each plane, [[int]].</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>(vtk.PolyData) – polygon object.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qtdraw.util.basic_object.create_sphere">
+<span class="sig-name descname"><span class="pre">create_sphere</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">radius</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta_phi_range</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta_phi_resolution</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/basic_object.html#create_sphere"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.basic_object.create_sphere" title="Link to this definition">#</a></dt>
+<dd><p>Create sphere object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>radius</strong> (<em>float</em>) – radius.</p></li>
+<li><p><strong>theta_phi_range</strong> (<em>list</em><em> or </em><em>numpy.ndarray</em><em>, </em><em>optional</em>) – theta and phi range, [[float]].</p></li>
+<li><p><strong>theta_phi_resolution</strong> (<em>list</em>) – theta and phi resolution, [int].</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>(vtk.PolyData) – sphere object.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>if theta_phi_range/theta_phi_resolution is None, default is used.</p></li>
+</ul>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qtdraw.util.basic_object.create_spline">
+<span class="sig-name descname"><span class="pre">create_spline</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">point</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_interp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">closed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">natural</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arrow1</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arrow2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tip_radius</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tip_length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">left_out</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/basic_object.html#create_spline"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.basic_object.create_spline" title="Link to this definition">#</a></dt>
+<dd><p>Create spline object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>point</strong> (<em>list</em><em> or </em><em>numpy.ndarray</em>) – points to be connected, [[float]].</p></li>
+<li><p><strong>width</strong> (<em>float</em><em>, </em><em>optional</em>)</p></li>
+<li><p><strong>n_interp</strong> (<em>int</em><em>, </em><em>optional</em>) – number of interpolation points.</p></li>
+<li><p><strong>closed</strong> (<em>bool</em><em>, </em><em>optional</em>) – closed spline ?</p></li>
+<li><p><strong>natural</strong> (<em>bool</em><em>, </em><em>optional</em>) – natural boundary ?</p></li>
+<li><p><strong>arrow1</strong> (<em>bool</em><em>, </em><em>optional</em>) – arrow at start point ?</p></li>
+<li><p><strong>arrow2</strong> (<em>bool</em><em>, </em><em>optional</em>) – arrow at end point ?</p></li>
+<li><p><strong>tip_radius</strong> (<em>float</em><em>, </em><em>optional</em>) – tip radius.</p></li>
+<li><p><strong>tip_length</strong> (<em>float</em><em>, </em><em>optional</em>) – tip length.</p></li>
+<li><p><strong>left_out</strong> (<em>list</em><em>, </em><em>optional</em>) – “arrow1” and “arrow2” of tips left out (length 0 or no direction) are appended to it.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>(vtk.PolyData) – spline object.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qtdraw.util.basic_object.create_spline_t">
+<span class="sig-name descname"><span class="pre">create_spline_t</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">point</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_range</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_interp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">300</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">closed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">natural</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arrow1</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arrow2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tip_radius</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tip_length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">A</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">left_out</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/basic_object.html#create_spline_t"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.basic_object.create_spline_t" title="Link to this definition">#</a></dt>
+<dd><p>Create parametric spline object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>point</strong> (<em>str</em>) – sympy expression for point in terms of “t”.</p></li>
+<li><p><strong>t_range</strong> (<em>list</em><em> or </em><em>numpy.ndarray</em><em>, </em><em>optional</em>) – t range, [start, stop, step], [float].</p></li>
+<li><p><strong>width</strong> (<em>float</em><em>, </em><em>optional</em>) – width.</p></li>
+<li><p><strong>n_interp</strong> (<em>int</em><em>, </em><em>optional</em>) – interpolation points.</p></li>
+<li><p><strong>closed</strong> (<em>bool</em><em>, </em><em>optional</em>) – closed spline ?</p></li>
+<li><p><strong>natural</strong> (<em>bool</em><em>, </em><em>optional</em>) – natural boundary ?</p></li>
+<li><p><strong>arrow1</strong> (<em>bool</em><em>, </em><em>optional</em>) – arrow at start point ?</p></li>
+<li><p><strong>arrow2</strong> (<em>bool</em><em>, </em><em>optional</em>) – arrow at end point ?</p></li>
+<li><p><strong>tip_radius</strong> (<em>float</em><em>, </em><em>optional</em>) – tip radius.</p></li>
+<li><p><strong>tip_length</strong> (<em>float</em><em>, </em><em>optional</em>) – tip length.</p></li>
+<li><p><strong>A</strong> (<em>numpy.ndarray</em><em>, </em><em>optional</em>) – (a1, a2, a3) in each column, 4x4 (cartesian).</p></li>
+<li><p><strong>left_out</strong> (<em>list</em><em>, </em><em>optional</em>) – “arrow1” and “arrow2” of tips left out (length 0 or no direction) are appended to it.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>(vtk.PolyData) – parameteric spline object.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>if t_range is None, default is used.</p></li>
+<li><p>if A is None, unit vector is used.</p></li>
+</ul>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qtdraw.util.basic_object.create_stream">
+<span class="sig-name descname"><span class="pre">create_stream</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shape</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'1'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vector</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'[x,y,z]'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta_phi_range</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">division</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-0.43</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">abs_scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shaft_radius</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tip_radius</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tip_length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.25</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/basic_object.html#create_stream"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.basic_object.create_stream" title="Link to this definition">#</a></dt>
+<dd><p>Create steam vector object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>shape</strong> (<em>str</em><em>, </em><em>optional</em>) – f(x,y,z) shape (cartesian).</p></li>
+<li><p><strong>vector</strong> (<em>str</em><em>, </em><em>optional</em>) – stream vector [vx(x,y,z),vy(x,y,z),vz(x,y,z)] (cartesina).</p></li>
+<li><p><strong>size</strong> (<em>float</em><em>, </em><em>optional</em>) – shape size.</p></li>
+<li><p><strong>theta_phi_range</strong> (<em>list</em><em> or </em><em>numpy.ndarray</em><em>, </em><em>optional</em>) – theta and phi range, [[float]].</p></li>
+<li><p><strong>division</strong> (<em>list</em><em>, </em><em>optional</em>) – division for theta and phi, [int].</p></li>
+<li><p><strong>length</strong> (<em>float</em><em>, </em><em>optional</em>) – length.</p></li>
+<li><p><strong>width</strong> (<em>float</em><em>, </em><em>optional</em>) – width.</p></li>
+<li><p><strong>offset</strong> (<em>float</em><em>, </em><em>optional</em>) – offest ratio.</p></li>
+<li><p><strong>abs_scale</strong> (<em>bool</em><em>, </em><em>optional</em>) – use |v(x,y,z)| * length ?</p></li>
+<li><p><strong>shaft_radius</strong> (<em>float</em><em>, </em><em>optional</em>) – shaft radius.</p></li>
+<li><p><strong>tip_radius</strong> (<em>float</em><em>, </em><em>optional</em>) – tip radius.</p></li>
+<li><p><strong>tip_length</strong> (<em>float</em><em>, </em><em>optional</em>) – tip length.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>(vtk.PolyData) – orbital object with “vector” and “vector_abs”, None if all the arrows have length 0.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>if theta_phi_range/division is None, default is used.</p></li>
+<li><p>if size is negative, shape is normalized.</p></li>
+</ul>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qtdraw.util.basic_object.create_stream_data">
+<span class="sig-name descname"><span class="pre">create_stream_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shape</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">surface</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vector</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-0.43</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">abs_scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shaft_radius</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tip_radius</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tip_length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.25</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spherical_plot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/basic_object.html#create_stream_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.basic_object.create_stream_data" title="Link to this definition">#</a></dt>
+<dd><p>Create steam vector object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>shape</strong> (<em>ndarray</em>) – f(x,y,z) shape (cartesian).</p></li>
+<li><p><strong>surface</strong> (<em>ndarray</em><em>, </em><em>optional</em>) – (x,y,z) surface color (cartesian).</p></li>
+<li><p><strong>vector</strong> (<em>ndarray</em>) – stream vector [vx(x,y,z),vy(x,y,z),vz(x,y,z)] (cartesina).</p></li>
+<li><p><strong>size</strong> (<em>float</em><em>, </em><em>optional</em>) – shape size.</p></li>
+<li><p><strong>length</strong> (<em>float</em><em>, </em><em>optional</em>) – length.</p></li>
+<li><p><strong>width</strong> (<em>float</em><em>, </em><em>optional</em>) – width.</p></li>
+<li><p><strong>offset</strong> (<em>float</em><em>, </em><em>optional</em>) – offest ratio.</p></li>
+<li><p><strong>abs_scale</strong> (<em>bool</em><em>, </em><em>optional</em>) – use |v(x,y,z)| * length ?</p></li>
+<li><p><strong>shaft_radius</strong> (<em>float</em><em>, </em><em>optional</em>) – shaft radius.</p></li>
+<li><p><strong>tip_radius</strong> (<em>float</em><em>, </em><em>optional</em>) – tip radius.</p></li>
+<li><p><strong>tip_length</strong> (<em>float</em><em>, </em><em>optional</em>) – tip length.</p></li>
+<li><p><strong>spherical_plot</strong> (<em>bool</em><em>, </em><em>optional</em>) – spherical-like plot ?</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>(vtk.PolyData) – orbital object with “vector” and “vector_abs”.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>if size is negative, shape is normalized.</p></li>
+</ul>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qtdraw.util.basic_object.create_text2d">
+<span class="sig-name descname"><span class="pre">create_text2d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">latex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mathjax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/basic_object.html#create_text2d"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.basic_object.create_text2d" title="Link to this definition">#</a></dt>
+<dd><p>Create text 2d (math).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>latex</strong> (<em>str</em>) – LaTeX with $.</p></li>
+<li><p><strong>mathjax</strong> (<a class="reference internal" href="api_widget.html#qtdraw.widget.mathjax.MathJaxSVG" title="qtdraw.widget.mathjax.MathJaxSVG"><em>MathJaxSVG</em></a>) – mathjax converter.</p></li>
+<li><p><strong>x</strong> (<em>int</em>) – x position from left.</p></li>
+<li><p><strong>y</strong> (<em>int</em>) – y position from bottom.</p></li>
+<li><p><strong>size</strong> (<em>int</em>) – size (height).</p></li>
+<li><p><strong>color</strong> (<em>str</em>) – color.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>(vtkActor2D) – actor.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qtdraw.util.basic_object.create_text3d">
+<span class="sig-name descname"><span class="pre">create_text3d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">view</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">depth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[0,</span> <span class="pre">0,</span> <span class="pre">0]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">A</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/basic_object.html#create_text3d"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.basic_object.create_text3d" title="Link to this definition">#</a></dt>
+<dd><p>Create text3d object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>text</strong> (<em>str</em>) – text.</p></li>
+<li><p><strong>size</strong> (<em>float</em><em>, </em><em>optional</em>) – size.</p></li>
+<li><p><strong>view</strong> (<em>list</em><em>, </em><em>optional</em>) – normal indices, [int].</p></li>
+<li><p><strong>depth</strong> (<em>float</em><em>, </em><em>optional</em>) – depth.</p></li>
+<li><p><strong>offset</strong> (<em>list</em><em> or </em><em>numpy.ndarray</em><em>, </em><em>optional</em>) – offset, [float].</p></li>
+<li><p><strong>A</strong> (<em>numpy.ndarray</em><em>, </em><em>optional</em>) – (a1, a2, a3) in each column, 4x4 (cartesian).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>(vtk.PolyData) – text3d object.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>if normal is None, default is used.</p></li>
+<li><p>if A is None, unit vector is used.</p></li>
+</ul>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qtdraw.util.basic_object.create_toroid">
+<span class="sig-name descname"><span class="pre">create_toroid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">normal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.15</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z_scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ring_shape</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tube_shape</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.3</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/basic_object.html#create_toroid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.basic_object.create_toroid" title="Link to this definition">#</a></dt>
+<dd><p>Create ellipsoid object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>normal</strong> (<em>list</em><em> or </em><em>numpy.ndarray</em>) – normal vector (cartesian), [float].</p></li>
+<li><p><strong>size</strong> (<em>float</em><em>, </em><em>optional</em>) – ring size.</p></li>
+<li><p><strong>width</strong> (<em>float</em><em>, </em><em>optional</em>) – tube width.</p></li>
+<li><p><strong>x_scale</strong> (<em>float</em><em>, </em><em>optional</em>) – scale factor for x axis.</p></li>
+<li><p><strong>y_scale</strong> (<em>float</em><em>, </em><em>optional</em>) – scale factor for y axis.</p></li>
+<li><p><strong>z_scale</strong> (<em>float</em><em>, </em><em>optional</em>) – scale factor for z axis.</p></li>
+<li><p><strong>ring_shape</strong> (<em>float</em><em>, </em><em>optional</em>) – ring shape.</p></li>
+<li><p><strong>tube_shape</strong> (<em>float</em><em>, </em><em>optional</em>) – tube shape.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>(vtk.PolyData) – toroid object.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qtdraw.util.basic_object.create_torus">
+<span class="sig-name descname"><span class="pre">create_torus</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">normal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.15</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/basic_object.html#create_torus"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.basic_object.create_torus" title="Link to this definition">#</a></dt>
+<dd><p>Create torus object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>normal</strong> (<em>list</em><em> or </em><em>numpy.ndarray</em>) – normal vector (cartesian), [float].</p></li>
+<li><p><strong>size</strong> (<em>float</em><em>, </em><em>optional</em>) – size.</p></li>
+<li><p><strong>width</strong> (<em>float</em><em>, </em><em>optioanl</em>) – torus width.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>(vtk.PolyData) – torus object.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qtdraw.util.basic_object.create_vector">
+<span class="sig-name descname"><span class="pre">create_vector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">direction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-0.43</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shaft_radius</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tip_radius</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tip_length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.25</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/basic_object.html#create_vector"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.basic_object.create_vector" title="Link to this definition">#</a></dt>
+<dd><p>Create vector object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>direction</strong> (<em>list</em><em> or </em><em>numpy.ndarray</em>) – direction (cartesian), [float].</p></li>
+<li><p><strong>length</strong> (<em>float</em><em>, </em><em>optional</em>) – length.</p></li>
+<li><p><strong>width</strong> (<em>float</em><em>, </em><em>optional</em>) – width.</p></li>
+<li><p><strong>offset</strong> (<em>float</em><em>, </em><em>optional</em>) – offest ratio.</p></li>
+<li><p><strong>shaft_radius</strong> (<em>float</em><em>, </em><em>optional</em>) – shaft radius.</p></li>
+<li><p><strong>tip_radius</strong> (<em>float</em><em>, </em><em>optional</em>) – tip radius.</p></li>
+<li><p><strong>tip_length</strong> (<em>float</em><em>, </em><em>optional</em>) – tip length.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>(vtk.PolyData) – arrow object.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>if length is negative, norm of direction multiplied by <a href="#id1"><span class="problematic" id="id2">|length|</span></a> is used.</p></li>
+</ul>
+</div>
+</dd></dl>
+
+<p id="module-qtdraw.util.util">For versatile utility.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="qtdraw.util.util.apply">
+<span class="sig-name descname"><span class="pre">apply</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">f</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lst</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/util.html#apply"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.util.apply" title="Link to this definition">#</a></dt>
+<dd><p>Apply function to (nested) list.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>f</strong> (<em>function</em>) – function to apply to each element of list.</p></li>
+<li><p><strong>lst</strong> (<em>list</em><em> or </em><em>value</em>) – (nested) list to apply.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>(list or value) – applied list.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qtdraw.util.util.check_multipie">
+<span class="sig-name descname"><span class="pre">check_multipie</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/util.html#check_multipie"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.util.check_multipie" title="Link to this definition">#</a></dt>
+<dd><p>Check if multipie is installed and can be loaded.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>(bool) – available ?</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>without it, the functions of MultiPie are turned off.</p></li>
+</ul>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qtdraw.util.util.command_text">
+<span class="sig-name descname"><span class="pre">command_text</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">command</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/util.html#command_text"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.util.command_text" title="Link to this definition">#</a></dt>
+<dd><p>Command as text to run in a shell, quoted.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>command</strong> (<em>list</em>) – program and arguments.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>(str) – command line.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qtdraw.util.util.create_grid">
+<span class="sig-name descname"><span class="pre">create_grid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">grid_n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grid_min</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grid_max</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">A</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endpoint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/util.html#create_grid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.util.create_grid" title="Link to this definition">#</a></dt>
+<dd><p>Create grid.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>grid_n</strong> (<em>list</em>) – grid size.</p></li>
+<li><p><strong>grid_min</strong> (<em>list</em>) – grid minimum.</p></li>
+<li><p><strong>grid_max</strong> (<em>list</em>) – grid maximum.</p></li>
+<li><p><strong>A</strong> (<em>list</em>) – [a1,a2,a3].</p></li>
+<li><p><strong>endpoint</strong> (<em>bool</em><em>, </em><em>optional</em>) – include end points ?</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>uniform grid.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>UniformGrid</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>grid in column-major order.</p></li>
+</ul>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qtdraw.util.util.distance">
+<span class="sig-name descname"><span class="pre">distance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">G</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">accuracy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/util.html#distance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.util.distance" title="Link to this definition">#</a></dt>
+<dd><p>group of sites with the same distance (in increasing order).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>s1</strong> (<em>ndarray</em>) – vector array.</p></li>
+<li><p><strong>s2</strong> (<em>ndarray</em>) – vector array.</p></li>
+<li><p><strong>G</strong> (<em>ndarray</em><em>, </em><em>optional</em>) – metric matrix (None = unit matrix).</p></li>
+<li><p><strong>accuracy</strong> (<em>int</em><em>, </em><em>optional</em>) – accuracy of digit.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>i, j are indices of positions (i&lt;=j only for s1=s2), { distance(float): [(i(int),j(int))] }.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qtdraw.util.util.igrid">
+<span class="sig-name descname"><span class="pre">igrid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">N</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/util.html#igrid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.util.igrid" title="Link to this definition">#</a></dt>
+<dd><p>create integer grid points.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>N</strong> (<em>list</em>) – number of points in each direction.</p></li>
+<li><p><strong>offset</strong> (<em>tuple</em><em>, </em><em>optional</em>) – offset in each direction. 0 is used for None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>grid points.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ndarray</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>grid point: increase of indices from left to right.</p></li>
+<li><p>x[i] = offset + i.</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qtdraw.util.util.install_multipie_command">
+<span class="sig-name descname"><span class="pre">install_multipie_command</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/util.html#install_multipie_command"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.util.install_multipie_command" title="Link to this definition">#</a></dt>
+<dd><p>Command to install MultiPie with pip of this Python.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>(list) – program and arguments.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qtdraw.util.util.multipie_message">
+<span class="sig-name descname"><span class="pre">multipie_message</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/util.html#multipie_message"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.util.multipie_message" title="Link to this definition">#</a></dt>
+<dd><p>Tell why MultiPie cannot be used.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>(str) – how to install MultiPie, or why the installed one cannot be loaded.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qtdraw.util.util.multipie_missing">
+<span class="sig-name descname"><span class="pre">multipie_missing</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/util.html#multipie_missing"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.util.multipie_missing" title="Link to this definition">#</a></dt>
+<dd><p>Check if MultiPie is not installed, not only that it cannot be loaded.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>(bool) – not installed ?</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qtdraw.util.util.read_dict">
+<span class="sig-name descname"><span class="pre">read_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/util.html#read_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.util.read_dict" title="Link to this definition">#</a></dt>
+<dd><p>Read dict text file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>filename</strong> (<em>str</em>) – file name.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>(dict) – dictionary from dict text.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qtdraw.util.util.str_to_sympy">
+<span class="sig-name descname"><span class="pre">str_to_sympy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check_var</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check_shape</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rational</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">assumptions</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/util.html#str_to_sympy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.util.str_to_sympy" title="Link to this definition">#</a></dt>
+<dd><p>Convert a string to a sympy.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>s</strong> (<em>str</em>) – a string.</p></li>
+<li><p><strong>check_var</strong> (<em>list</em><em>, </em><em>optional</em>) – variables to accept, None (all).</p></li>
+<li><p><strong>check_shape</strong> (<em>tuple</em><em>, </em><em>optional</em>) – shape, (), (n,), (n,m), …</p></li>
+<li><p><strong>rational</strong> (<em>bool</em><em>, </em><em>optional</em>) – use rational number ?</p></li>
+<li><p><strong>subs</strong> (<em>dict</em><em>, </em><em>optional</em>) – replace dict for local variables.</p></li>
+<li><p><strong>**assumptions</strong> (<em>dict</em><em>, </em><em>optional</em>) – common assumptions for all variables.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>(ndarray) – (list of) sympy.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>if format error occurs, raise ValueError.</p></li>
+<li><p>if s cannot be converted to a sympy, raise ValueError.</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qtdraw.util.util.text_to_list">
+<span class="sig-name descname"><span class="pre">text_to_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/util.html#text_to_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.util.text_to_list" title="Link to this definition">#</a></dt>
+<dd><p>Convert single text to list.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>text</strong> (<em>str</em>) – text to convert.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>(list or str) – converted list.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>if format error occurs, return None.</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qtdraw.util.util.to_latex">
+<span class="sig-name descname"><span class="pre">to_latex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">style</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'scalar'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/util.html#to_latex"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.util.to_latex" title="Link to this definition">#</a></dt>
+<dd><p>convert list to latex list.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>a</strong> (<em>array-like</em>) – list of sympy.</p></li>
+<li><p><strong>style</strong> (<em>str</em><em>, </em><em>optional</em>) – style, “scalar/vector/matrix”.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>(ndarray or str) – (list of) LaTeX string without “$”.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qtdraw.util.util.to_plain">
+<span class="sig-name descname"><span class="pre">to_plain</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/util.html#to_plain"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.util.to_plain" title="Link to this definition">#</a></dt>
+<dd><p>Convert numpy values in nested dict, list and tuple to Python values, which can be written as text and read again.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>obj</strong> (<em>any</em>) – object.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>(any) – copy of the object with Python values.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qtdraw.util.util.write_dict">
+<span class="sig-name descname"><span class="pre">write_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dic</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">header</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">var</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/util.html#write_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.util.write_dict" title="Link to this definition">#</a></dt>
+<dd><p>write dict text file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filename</strong> (<em>str</em>) – filename.</p></li>
+<li><p><strong>dic</strong> (<em>dict</em>) – dictionary to write.</p></li>
+<li><p><strong>header</strong> (<em>str</em><em>, </em><em>optional</em>) – header comment at the top of file.</p></li>
+<li><p><strong>var</strong> (<em>str</em><em>, </em><em>optional</em>) – varialbe of dict.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<p id="module-qtdraw.util.util_axis">Utility for axis actor and label, unit cell, and view vector.</p>
+<p>This module contains utility for axis, etc.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="qtdraw.util.util_axis.create_axes_widget">
+<span class="sig-name descname"><span class="pre">create_axes_widget</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pv_widget</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">A</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'[x,y,z]'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">28</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_bold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_italic</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['black',</span> <span class="pre">'black',</span> <span class="pre">'black']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">viewport</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">full</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/util_axis.html#create_axes_widget"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.util_axis.create_axes_widget" title="Link to this definition">#</a></dt>
+<dd><p>Create axes widget.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pv_widget</strong> (<a class="reference internal" href="from_python.html#qtdraw.core.pyvista_widget.PyVistaWidget" title="qtdraw.core.pyvista_widget.PyVistaWidget"><em>PyVistaWidget</em></a>) – pyvista widget.</p></li>
+<li><p><strong>A</strong> (<em>numpy.ndarray</em>) – (a1, a2, a3) unit vectors, 4x4 [float].</p></li>
+<li><p><strong>label</strong> (<em>str</em><em>, </em><em>optional</em>) – axes labels.</p></li>
+<li><p><strong>label_size</strong> (<em>int</em><em>, </em><em>optional</em>) – font size.</p></li>
+<li><p><strong>label_bold</strong> (<em>bool</em><em>, </em><em>optional</em>) – bold face ?</p></li>
+<li><p><strong>label_italic</strong> (<em>bool</em><em>, </em><em>optional</em>) – italic ?</p></li>
+<li><p><strong>label_color</strong> (<em>list</em><em>, </em><em>optional</em>) – axes label color names, [str].</p></li>
+<li><p><strong>viewport</strong> (<em>bool</em><em>, </em><em>optional</em>) – set viewport ?</p></li>
+<li><p><strong>full</strong> (<em>bool</em><em>, </em><em>optional</em>) – full axes ?</p></li>
+</ul>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>if label is None, no label is used.</p></li>
+</ul>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qtdraw.util.util_axis.create_cell_grid">
+<span class="sig-name descname"><span class="pre">create_cell_grid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ilower</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dims</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/util_axis.html#create_cell_grid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.util_axis.create_cell_grid" title="Link to this definition">#</a></dt>
+<dd><p>Create grid point.</p>
+<p>Parameters:
+:param ilower: start cell.
+:type ilower: list
+:param dims: range in each dim.
+:type dims: list</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>(list) – grid point, [str].</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qtdraw.util.util_axis.create_unit_cell">
+<span class="sig-name descname"><span class="pre">create_unit_cell</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">A</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">origin</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lower</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dimensions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/util_axis.html#create_unit_cell"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.util_axis.create_unit_cell" title="Link to this definition">#</a></dt>
+<dd><p>Create unit cell mesh.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>A</strong> (<em>numpy.ndarray</em>) – (a1, a2, a3) unit vectors, 4x4 [float].</p></li>
+<li><p><strong>origin</strong> (<em>list</em><em> or </em><em>numpy.ndarray</em>) – origin, [float].</p></li>
+<li><p><strong>lower</strong> (<em>list</em><em>, </em><em>optional</em>) – lower bound indices, [int].</p></li>
+<li><p><strong>dimensions</strong> (<em>list</em><em>, </em><em>optional</em>) – repeat times, [int].</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>(pyvista.PolyData) – unit cel mesh.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qtdraw.util.util_axis.get_camera_params">
+<span class="sig-name descname"><span class="pre">get_camera_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hkl</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">A</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">camera</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bounds</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/util_axis.html#get_camera_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.util_axis.get_camera_params" title="Link to this definition">#</a></dt>
+<dd><p>Get camera parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>hkl</strong> (<em>list</em>) – index.</p></li>
+<li><p><strong>A</strong> (<em>ndarray</em>) – A = [a1, a2, a3].</p></li>
+<li><p><strong>camera</strong> (<em>Camera</em><em>, </em><em>optional</em>) – current camera.</p></li>
+<li><p><strong>bounds</strong> (<em>ndarray</em><em>, </em><em>optional</em>) – render bounds.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>(ndarray) – position.</p></li>
+<li><p>(ndarray) – focal point.</p></li>
+<li><p>(ndarray) – view up.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qtdraw.util.util_axis.get_hkl_from_camera">
+<span class="sig-name descname"><span class="pre">get_hkl_from_camera</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">camera</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">A</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/util_axis.html#get_hkl_from_camera"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.util_axis.get_hkl_from_camera" title="Link to this definition">#</a></dt>
+<dd><p>Get index from camera.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>camera</strong> (<em>Camera</em>) – camera.</p></li>
+<li><p><strong>A</strong> (<em>ndarray</em>) – A = [a1, a2, a3].</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>(list) – index (cannot determine hkl, return [0,0,0]).</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qtdraw.util.util_axis.get_lattice_vector">
+<span class="sig-name descname"><span class="pre">get_lattice_vector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">crystal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cell</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/util_axis.html#get_lattice_vector"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.util_axis.get_lattice_vector" title="Link to this definition">#</a></dt>
+<dd><p>Get lattice vector.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>crystal</strong> (<em>str</em>) – crystal.</p></li>
+<li><p><strong>cell</strong> (<em>dict</em>) – cell.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>cell.
+- list: A.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>dict</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qtdraw.util.util_axis.get_outside_box">
+<span class="sig-name descname"><span class="pre">get_outside_box</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">point</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lower</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">upper</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/util_axis.html#get_outside_box"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.util_axis.get_outside_box" title="Link to this definition">#</a></dt>
+<dd><p>Get indices outside range.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>point</strong> (<em>numpy.ndarray</em>) – a set of points.</p></li>
+<li><p><strong>lower</strong> (<em>list</em>) – lower bound.</p></li>
+<li><p><strong>upper</strong> (<em>list</em>) – upper bound.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>(numpy.ndarray) – list of indices.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qtdraw.util.util_axis.get_repeat_range">
+<span class="sig-name descname"><span class="pre">get_repeat_range</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lower</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">upper</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtdraw/util/util_axis.html#get_repeat_range"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qtdraw.util.util_axis.get_repeat_range" title="Link to this definition">#</a></dt>
+<dd><p>Get repeart range.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>lower</strong> (<em>list</em>) – upper.</p></li>
+<li><p><strong>upper</strong> (<em>list</em>) – lower.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>lower cell.
+- list: size of repeat.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>list</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./src"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-qtdraw.util.basic_object">Utility</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.arrow_length"><code class="docutils literal notranslate"><span class="pre">arrow_length()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_bond"><code class="docutils literal notranslate"><span class="pre">create_bond()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_box"><code class="docutils literal notranslate"><span class="pre">create_box()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_circle"><code class="docutils literal notranslate"><span class="pre">create_circle()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_ellipsoid"><code class="docutils literal notranslate"><span class="pre">create_ellipsoid()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_isosurface"><code class="docutils literal notranslate"><span class="pre">create_isosurface()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_line"><code class="docutils literal notranslate"><span class="pre">create_line()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_orbital"><code class="docutils literal notranslate"><span class="pre">create_orbital()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_orbital_data"><code class="docutils literal notranslate"><span class="pre">create_orbital_data()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_plane"><code class="docutils literal notranslate"><span class="pre">create_plane()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_polygon"><code class="docutils literal notranslate"><span class="pre">create_polygon()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_sphere"><code class="docutils literal notranslate"><span class="pre">create_sphere()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_spline"><code class="docutils literal notranslate"><span class="pre">create_spline()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_spline_t"><code class="docutils literal notranslate"><span class="pre">create_spline_t()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_stream"><code class="docutils literal notranslate"><span class="pre">create_stream()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_stream_data"><code class="docutils literal notranslate"><span class="pre">create_stream_data()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_text2d"><code class="docutils literal notranslate"><span class="pre">create_text2d()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_text3d"><code class="docutils literal notranslate"><span class="pre">create_text3d()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_toroid"><code class="docutils literal notranslate"><span class="pre">create_toroid()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_torus"><code class="docutils literal notranslate"><span class="pre">create_torus()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.basic_object.create_vector"><code class="docutils literal notranslate"><span class="pre">create_vector()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.apply"><code class="docutils literal notranslate"><span class="pre">apply()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.check_multipie"><code class="docutils literal notranslate"><span class="pre">check_multipie()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.command_text"><code class="docutils literal notranslate"><span class="pre">command_text()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.create_grid"><code class="docutils literal notranslate"><span class="pre">create_grid()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.distance"><code class="docutils literal notranslate"><span class="pre">distance()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.igrid"><code class="docutils literal notranslate"><span class="pre">igrid()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.install_multipie_command"><code class="docutils literal notranslate"><span class="pre">install_multipie_command()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.multipie_message"><code class="docutils literal notranslate"><span class="pre">multipie_message()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.multipie_missing"><code class="docutils literal notranslate"><span class="pre">multipie_missing()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.read_dict"><code class="docutils literal notranslate"><span class="pre">read_dict()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.str_to_sympy"><code class="docutils literal notranslate"><span class="pre">str_to_sympy()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.text_to_list"><code class="docutils literal notranslate"><span class="pre">text_to_list()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.to_latex"><code class="docutils literal notranslate"><span class="pre">to_latex()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.to_plain"><code class="docutils literal notranslate"><span class="pre">to_plain()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util.write_dict"><code class="docutils literal notranslate"><span class="pre">write_dict()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util_axis.create_axes_widget"><code class="docutils literal notranslate"><span class="pre">create_axes_widget()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util_axis.create_cell_grid"><code class="docutils literal notranslate"><span class="pre">create_cell_grid()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util_axis.create_unit_cell"><code class="docutils literal notranslate"><span class="pre">create_unit_cell()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util_axis.get_camera_params"><code class="docutils literal notranslate"><span class="pre">get_camera_params()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util_axis.get_hkl_from_camera"><code class="docutils literal notranslate"><span class="pre">get_hkl_from_camera()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util_axis.get_lattice_vector"><code class="docutils literal notranslate"><span class="pre">get_lattice_vector()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util_axis.get_outside_box"><code class="docutils literal notranslate"><span class="pre">get_outside_box()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qtdraw.util.util_axis.get_repeat_range"><code class="docutils literal notranslate"><span class="pre">get_repeat_range()</span></code></a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Hiroaki Kusunose
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2021-.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
