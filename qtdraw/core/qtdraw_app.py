@@ -29,6 +29,7 @@ from qtdraw.core.dialog_about import AboutDialog
 from qtdraw.core.dialog_about import get_version_info
 from qtdraw.widget.custom_widget import Label, Layout, LineEdit, HBar, Button, Combo, VSpacer
 from qtdraw.widget.logging_util import LogWidget
+from qtdraw.widget.message_box import ResizableMessageBox
 from qtdraw.widget.qt_event_util import busy_cursor, font_style_sheet
 from qtdraw.util.util import check_multipie, multipie_message, multipie_missing, install_multipie_command, command_text
 
@@ -471,6 +472,32 @@ class QtDraw(Window):
 
         self._mark_saved()
         self._reset_history()
+
+        replaced = self.pyvista_widget.replaced_cells
+        if replaced:
+            self._show_replaced_cells(filename, replaced)
+
+    # ==================================================
+    def _show_replaced_cells(self, filename, replaced):
+        """
+        Show the invalid cells of a loaded file, which were set to the defaults of their columns.
+
+        Args:
+            filename (str): file name.
+            replaced (list): replaced cells, [(object_type, row, column, value)].
+
+        :meta private:
+        """
+        details = "\n".join(f"{object_type}, row {row}, {column}: {value!r}" for object_type, row, column, value in replaced)
+        box = ResizableMessageBox(
+            QMessageBox.Warning,
+            "Invalid Data",
+            f"{len(replaced)} cells of {Path(filename).name} have invalid values, and were set to the default values.",
+            parent=self,
+        )
+        box.setInformativeText("See the details for the object, row and column of each. They are also written to Info.")
+        box.setDetailedText(details)
+        box.exec()
 
     # ==================================================
     def _update_panel_quietly(self):

@@ -233,9 +233,9 @@ object_default = {
         "position": ("list_float", {"shape": (3,), "var": [""], "digit": 4}, "[0,0,0]"),
         "cell": ("list_int", {"shape": (3,)}, "[0,0,0]"),
         "shape": ("math", {"shape": (), "var": ["x", "y", "z", "r"], "real": True}, "3z**2-r**2"),
-        "surface": ("math", {"shape": (), "var": ["x", "y", "z", "r"], "real": True}, "3z**2-r**2"),
+        "surface": ("math", {"shape": (), "var": ["x", "y", "z", "r"], "real": True, "allow_empty": True}, "3z**2-r**2"),
         "size": ("float", {"min": "*", "max": "*", "digit": 3}, "0.5"),
-        "range": ("list_int", {"shape": (2, 2)}, "[[0,180],[0,360]]"),
+        "range": ("list_float", {"shape": (2, 2), "var": [""], "digit": 2}, "[[0,180],[0,360]]"),  # degrees.
         "color": ("color_both", {}, "Wistia"),
         "opacity": ("float", {"min": 0.0, "max": 1.0, "digit": 2}, "1.0"),
     },
@@ -250,10 +250,10 @@ object_default = {
         "position": ("list_float", {"shape": (3,), "var": [""], "digit": 4}, "[0,0,0]"),
         "cell": ("list_int", {"shape": (3,)}, "[0,0,0]"),
         "shape": ("math", {"shape": (), "var": ["x", "y", "z", "r"], "real": True}, "1"),
-        "vector": ("math", {"shape": (3,), "var": ["x", "y", "z", "r"], "real": True}, "[x,y,z]"),
-        "size": ("float", {"min": 0.0, "max": "*", "digit": 3}, "0.5"),
-        "range": ("list_int", {"shape": (2, 2)}, "[[0,180],[0,360]]"),
-        "division": ("list_int", {"shape": (2,)}, "[9,18]"),
+        "vector": ("math", {"shape": (3,), "var": ["x", "y", "z", "r"], "real": True, "real_function": True}, "[x,y,z]"),
+        "size": ("float", {"min": "*", "max": "*", "digit": 3}, "0.5"),  # negative: |size| times the vector, as orbital.
+        "range": ("list_float", {"shape": (2, 2), "var": [""], "digit": 2}, "[[0,180],[0,360]]"),  # degrees.
+        "division": ("list_int", {"shape": (2,), "max": [729, 2187]}, "[9,18]"),  # [3**6,3**7]: more takes very long.
         "length": ("float", {"min": 0.0, "max": "*", "digit": 3}, "0.1"),
         "width": ("float", {"min": 0.0, "max": "*", "digit": 3}, "0.01"),
         "offset": ("float", {"min": "*", "max": "*", "digit": 3}, "-0.43"),
@@ -380,7 +380,7 @@ object_default = {
         "position": ("list_float", {"shape": (3,), "var": [""], "digit": 4}, "[0,0,0]"),
         "cell": ("list_int", {"shape": (3,)}, "[0,0,0]"),
         "normal": ("list_float", {"shape": (3,), "var": [""], "digit": 4}, "[0,0,1]"),
-        "size": ("float", {"min": 0.0, "max": "*", "digit": 3}, "0.5"),
+        "size": ("float", {"min": 0.0, "max": 1000.0, "digit": 3}, "0.5"),  # larger sizes take very long to draw.
         "width": ("float", {"min": 0.0, "max": "*", "digit": 3}, "0.15"),
         "x_scale": ("float", {"min": 0.0, "max": "*", "digit": 3}, "1.0"),
         "y_scale": ("float", {"min": 0.0, "max": "*", "digit": 3}, "1.0"),
