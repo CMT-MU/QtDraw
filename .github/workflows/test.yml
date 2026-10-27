@@ -1,0 +1,129 @@
+name: test
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 3 * * 1"  # weekly, to catch breakage by new releases of dependencies.
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
+    defaults:
+      run:
+        shell: bash  # the same scripts on Windows.
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+        python-version: ["3.12", "3.13"]
+        dependencies: [latest]
+        include:
+          - os: macos-latest
+            python-version: "3.13"
+            dependencies: latest
+          - os: windows-latest
+            python-version: "3.13"
+            dependencies: latest
+          # the lowest versions allowed in pyproject.toml.
+          - os: ubuntu-latest
+            python-version: "3.12"
+            dependencies: minimum
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+
+      - name: Set up headless display
+        uses: pyvista/setup-headless-display-action@v4
+        with:
+          qt: true
+
+      - name: Install QtDraw
+        run: |
+          python -m pip install --upgrade pip
+          pins=""
+          if [ "${{ matrix.dependencies }}" = "minimum" ]; then
+            pins="PySide6==6.9.0 pyvista==0.46.0 pyvistaqt==0.13.0"
+          fi
+          python -m pip install -e . pytest pytest-qt pytest-xdist $pins
+          python -m pip check
+          python -m pip list | grep -iE "^(pyside6|pyvista|pyvistaqt|vtk) "
+          python -m playwright install --with-deps chromium
+
+      - name: Import check
+        run: |
+          python -c "import qtdraw.core.qtdraw_app, qtdraw.scripts.qtdraw, qtdraw.scripts.conv_qtdraw3"
+          # MultiPie is loaded, so that its tests are not skipped.
+          python -c "from qtdraw.util.util import check_multipie, multipie_message; assert check_multipie(), multipie_message()"
+
+      - name: Fonts for the off-screen platform on Windows
+        if: runner.os == 'Windows'
+        run: echo "QT_QPA_FONTDIR=C:/Windows/Fonts" >> "$GITHUB_ENV"  # it finds no fonts there otherwise.
+
+      - name: Run tests
+        env:
+          QT_QPA_PLATFORM: offscreen
+          QTDRAW_VISUAL_OUTPUT: visual-output  # images of failing or skipped visual tests.
+          QTDRAW_VISUAL_REQUIRE: ${{ matrix.dependencies == 'minimum' && '1' || '0' }}  # pinned versions have references.
+        run: python -m pytest -v -n auto  # tests run in parallel processes.
+
+      - name: Keep images of the visual tests
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: visual-${{ matrix.os }}-${{ matrix.python-version }}-${{ matrix.dependencies }}
+          path: visual-output
+          if-no-files-found: ignore
+
+  # the built package, installed as users do (not in editable mode), and run outside the source tree.
+  install:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        package: [wheel, sdist]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Set up headless display
+        uses: pyvista/setup-headless-display-action@v4
+        with:
+          qt: true
+
+      - name: Build
+        run: |
+          python -m pip install --upgrade pip build
+          python -m build --${{ matrix.package }} --outdir dist
+
+      - name: Install
+        run: |
+          python -m venv "$RUNNER_TEMP/venv"
+          "$RUNNER_TEMP/venv/bin/python" -m pip install dist/*
+          "$RUNNER_TEMP/venv/bin/python" -m pip check
+          "$RUNNER_TEMP/venv/bin/python" -m playwright install --with-deps chromium
+
+      - name: Check the installed package
+        env:
+          QT_QPA_PLATFORM: offscreen
+        run: |
+          cp tests/install_check.py "$RUNNER_TEMP"
+          cd "$RUNNER_TEMP"
+          "$RUNNER_TEMP/venv/bin/python" -I install_check.py --mathjax

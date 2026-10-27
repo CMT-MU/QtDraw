@@ -1,3 +1,10 @@
+# SPDX-License-Identifier: MPL-2.0
+# Copyright (C) 2021- The QtDraw developers
+#
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
 """
 Multipie dialog.
 
@@ -19,18 +26,18 @@ class MultiPieDialog(QDialog):
     group_changed = Signal()
 
     # ==================================================
-    def __init__(self, parent):
+    def __init__(self, parent, quiet=False):
         """
         MultiPie dialog.
 
         Args:
             parent (MultiPiePlugin): parent.
+            quiet (bool, optional): only show the group, without applying its crystal, e.g. of an opened file ?
         """
         super().__init__()
         self._pvw = parent.pyvista_widget  # PyVistaWidget.
         if self._pvw._mp_data is None:
             self._pvw.mp_set_group()
-        self._data = parent.pyvista_widget._mp_data
         self._qtdraw = parent  # QtDraw.
 
         self.set_title()
@@ -59,9 +66,21 @@ class MultiPieDialog(QDialog):
         self.group_changed.connect(self._sub_panel.set_group_name)
         self._pvw.data_removed.connect(self.clear_data)
 
-        self.set_data()
+        self.set_data(quiet)
 
         self.show()
+
+    # ==================================================
+    @property
+    def _data(self):
+        """
+        MultiPie data of the PyVistaWidget.
+
+        It is read each time, because opening a file replaces it.
+
+        :meta private:
+        """
+        return self._pvw._mp_data
 
     # ==================================================
     def set_title(self):
@@ -69,8 +88,14 @@ class MultiPieDialog(QDialog):
         self.setWindowTitle(title)
 
     # ==================================================
-    def set_data(self):
-        self._sub_panel.set_data()
+    def set_data(self, quiet=False):
+        """
+        Show the MultiPie data.
+
+        Args:
+            quiet (bool, optional): only show the data, without applying the crystal and group again ?
+        """
+        self._sub_panel.set_data(quiet)
         self._group_panel.set_data()
         self._object_panel.set_data()
         self._basis_panel.set_data()
@@ -81,7 +106,9 @@ class MultiPieDialog(QDialog):
         self._group_panel.clear_data()
         self._object_panel.clear_data()
         self._basis_panel.clear_data()
-        self._data.clear_data()
+        # the data of a file that has just been opened is kept.
+        if self._pvw._mp_data is not None and not self._pvw._loading:
+            self._pvw._mp_data.clear_data()
 
     # ==================================================
     def closeEvent(self, event):

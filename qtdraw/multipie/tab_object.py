@@ -1,3 +1,10 @@
+# SPDX-License-Identifier: MPL-2.0
+# Copyright (C) 2021- The QtDraw developers
+#
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
 """
 Multipie object tab.
 
@@ -16,7 +23,6 @@ class TabObject(QWidget):
     def __init__(self, parent):
         super().__init__(parent)
         self.parent = parent
-        self.data = parent._data
 
         layout = Layout(self)
         layout.setContentsMargins(10, 10, 10, 10)
@@ -96,6 +102,16 @@ class TabObject(QWidget):
         self.edit_bond.returnPressed.connect(self.show_bond)
         self.edit_vector.returnPressed.connect(self.show_vector)
         self.edit_orbital.returnPressed.connect(self.show_orbital)
+
+    # ==================================================
+    @property
+    def data(self):
+        """
+        MultiPie data, read from the dialog each time (opening a file replaces it).
+
+        :meta private:
+        """
+        return self.parent._data
 
     # ==================================================
     def show_site(self):

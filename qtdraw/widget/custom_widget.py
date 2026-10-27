@@ -1,3 +1,10 @@
+# SPDX-License-Identifier: MPL-2.0
+# Copyright (C) 2021- The QtDraw developers
+#
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
 """
 Custom widget.
 
@@ -18,14 +25,16 @@ from PySide6.QtWidgets import (
     QCheckBox,
     QSpacerItem,
     QApplication,
+    QToolTip,
 )
 from PySide6.QtGui import QPainter, QFont, QIcon
-from PySide6.QtCore import Signal, QSize, Qt
+from PySide6.QtCore import Signal, QSize, Qt, QTimer
 from PySide6.QtSvg import QSvgRenderer
 from xml.etree import ElementTree as ET
 
 from qtdraw.widget.color_selector_util import color2pixmap, color_palette
 from qtdraw.widget.validator import (
+    validator_hint,
     validator_int,
     validator_float,
     validator_list_int,
@@ -341,10 +350,10 @@ class Combo(QComboBox):
         Args:
             item (list): item list.
         """
-        self.blockSignals(True)
+        blocked = self.blockSignals(True)
         self.clear()
         self.addItems(item)
-        self.blockSignals(False)
+        self.blockSignals(blocked)  # keep signals blocked if the caller blocked them.
 
     # ==================================================
     def find_index(self, key):
@@ -468,8 +477,11 @@ class LineEdit(QLineEdit):
         self._read_only = False
         self._valid = True
         self._in_edit = False
+        self._edited = False  # text is changed by user (not only cursor moves).
+        self._show_hint = False
         self._raw = ""
         self._validated = ""
+        self.textEdited.connect(self._set_edited)
 
         if validator:
             self.set_validator(validator)
@@ -492,6 +504,7 @@ class LineEdit(QLineEdit):
             "orbital_site_bond": validator_orbital_site_bond,
         }
         self._validator_func = lambda t: VALIDATORS[vtype](t, **option)
+        self.setToolTip(validator_hint(vtype, option))
 
     # ==================================================
     def setText(self, text):
@@ -557,14 +570,17 @@ class LineEdit(QLineEdit):
             self._valid = True
             self._update_style()
             self._in_edit = False
+            self._edited = False  # edit is cancelled.
             return
 
         if k in (Qt.Key_Return, Qt.Key_Enter):
             self.setText(self.text())
-            self.clearFocus()
             if self._valid:
+                self._in_edit = False  # before clearFocus, not to apply it again in focusOutEvent.
+                self.clearFocus()
                 self.returnPressed.emit()
-                self._in_edit = False
+            else:  # keep focus to correct it, and show accepted input after key release.
+                self._show_hint = bool(self.toolTip())
             return
 
         self._in_edit = True
@@ -572,17 +588,50 @@ class LineEdit(QLineEdit):
         super().keyPressEvent(event)
 
     # ==================================================
-    def focusOutEvent(self, event):
-        if not self._in_edit:
+    def keyReleaseEvent(self, event):
+        super().keyReleaseEvent(event)
+        if self._show_hint and event.key() in (Qt.Key_Return, Qt.Key_Enter):
+            self._show_hint = False
+            # show after the key event is fully processed, since key events hide tooltip.
+            QTimer.singleShot(0, lambda: QToolTip.showText(self.mapToGlobal(self.rect().bottomLeft()), self.toolTip(), self))
+
+    # ==================================================
+    def _set_edited(self, text):
+        self._edited = True
+
+    # ==================================================
+    def commit_pending(self):
+        """
+        Apply text changed by user but not confirmed by Enter if valid, otherwise discard it.
+        """
+        if not (self._in_edit and self._edited) or self._read_only:
+            return
+        self._in_edit = False
+        self._edited = False
+        self._show_hint = False
+        self.setText(self.text())
+        if self._valid:
+            self.returnPressed.emit()
+        else:
             super().setText(self._validated)
             self._valid = True
             self._update_style()
+
+    # ==================================================
+    def focusOutEvent(self, event):
+        self.commit_pending()
+        self._in_edit = False
+        self._edited = False
+        super().setText(self._validated)
+        self._valid = True
+        self._update_style()
         super().focusOutEvent(event)
         self.focusOut.emit()
 
     # ==================================================
     def focusInEvent(self, event):
         if not self._in_edit:
+            self._edited = False
             super().setText(self._raw)
             self._update_style()
         super().focusInEvent(event)
@@ -624,6 +673,7 @@ class Editor(Panel):
         self._math_mode = validator is not None and validator[0] == "math"
 
         self._editor = LineEdit(parent=parent, text=text, validator=validator, bold=bold, size=size)
+        self.setToolTip(self._editor.toolTip())
 
         validated = self._editor._validated or text
 

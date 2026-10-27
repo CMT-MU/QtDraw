@@ -1,3 +1,10 @@
+# SPDX-License-Identifier: MPL-2.0
+# Copyright (C) 2021- The QtDraw developers
+#
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
 """
 Preference dialog.
 
@@ -6,8 +13,10 @@ This module provides preference dialog for PyVistaWidget.
 
 from PySide6.QtWidgets import QDialog, QTabWidget, QWidget, QDialogButtonBox
 from PySide6.QtCore import Qt
+from PySide6.QtGui import QFontDatabase
 
 from qtdraw.widget.custom_widget import Layout, Label, Combo, Spin, DSpin, Check, VSpacer, HSpacer, ColorSelector
+from qtdraw.widget.qt_event_util import font_style_sheet
 
 
 # ==================================================
@@ -268,35 +277,30 @@ class PreferenceDialog(QDialog):
         preference = self.preference["general"]
 
         # widgets.
-        label_style = Label(parent, text="style")
-        combo_style = Combo(parent, ["fusion", "macos", "windows"])
         label_font = Label(parent, text="font")
-        combo_font = Combo(parent, ["Osaka", "Monaco", "Arial", "Times New Roman", "Helvetica Neue"])
+        # fonts installed on this system (and current one).
+        combo_font = Combo(parent, sorted(set(QFontDatabase.families()) | {preference["font"]}, key=str.lower))
         label_color = Label(parent, text="scheme")
         combo_color = Combo(parent, ["Jmol", "VESTA"])
         label_size = Label(parent, text="size")
         spin_size = Spin(parent, 9, 14)
 
         # set layout.
-        layout.addWidget(label_style, 0, 0, 1, 1, Qt.AlignRight)
-        layout.addWidget(combo_style, 0, 1, 1, 1)
-        layout.addWidget(label_font, 1, 0, 1, 1, Qt.AlignRight)
-        layout.addWidget(combo_font, 1, 1, 1, 1)
-        layout.addWidget(label_size, 1, 2, 1, 1, Qt.AlignRight)
-        layout.addWidget(spin_size, 1, 3, 1, 1)
-        layout.addWidget(label_color, 2, 0, 1, 1, Qt.AlignRight)
-        layout.addWidget(combo_color, 2, 1, 1, 1)
-        layout.addItem(HSpacer(), 1, 4, 1, 1)
-        layout.addItem(VSpacer(), 3, 0, 1, 1)
+        layout.addWidget(label_font, 0, 0, 1, 1, Qt.AlignRight)
+        layout.addWidget(combo_font, 0, 1, 1, 1)
+        layout.addWidget(label_size, 0, 2, 1, 1, Qt.AlignRight)
+        layout.addWidget(spin_size, 0, 3, 1, 1)
+        layout.addWidget(label_color, 1, 0, 1, 1, Qt.AlignRight)
+        layout.addWidget(combo_color, 1, 1, 1, 1)
+        layout.addItem(HSpacer(), 0, 4, 1, 1)
+        layout.addItem(VSpacer(), 2, 0, 1, 1)
 
         # initial values.
-        combo_style.setCurrentText(preference["style"])
         combo_font.setCurrentText(preference["font"])
         combo_color.setCurrentText(preference["color_scheme"])
         spin_size.setProperty("value", preference["size"])
 
         # connections.
-        combo_style.currentTextChanged.connect(lambda v: preference.update({"style": v}))
         combo_font.currentTextChanged.connect(lambda v: preference.update({"font": v}))
         combo_color.currentTextChanged.connect(lambda v: preference.update({"color_scheme": v}))
         spin_size.valueChanged.connect(lambda v: preference.update({"size": v}))
@@ -315,7 +319,7 @@ class PreferenceDialog(QDialog):
         """
         font = self.preference["general"]["font"]
         size = self.preference["general"]["size"]
-        self.parent().app.setStyleSheet("QWidget { font-family: " + f"{font}" + "; font-size: " + f"{size}" + "pt; }")
+        self.parent().app.setStyleSheet(font_style_sheet(font, size))
 
         self.widget.refresh()
         self.widget.redraw()

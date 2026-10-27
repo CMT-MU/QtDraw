@@ -1,3 +1,10 @@
+# SPDX-License-Identifier: MPL-2.0
+# Copyright (C) 2021- The QtDraw developers
+#
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
 """
 Multipie data.
 
@@ -7,6 +14,7 @@ This module provides a data manager for MultiPie.
 import numpy as np
 import sympy as sp
 import copy
+from functools import wraps
 
 from multipie import __version__, Group
 from qtdraw.multipie.multipie_group_list import group_list, group_list_index
@@ -23,6 +31,20 @@ from qtdraw.multipie.multipie_plot import (
     plot_orbital_cluster,
 )
 from qtdraw.multipie.multipie_util import check_linear_combination, convert_vector_object, create_samb_modulation, phase_factor
+
+
+# ==================================================
+def _batched(method):
+    """
+    Decorator: add objects in a batch, rendering once at its end (see PyVistaWidget._batch_render).
+    """
+
+    @wraps(method)
+    def wrapper(self, *args, **kwargs):
+        with self.pvw._batch_render():
+            return method(self, *args, **kwargs)
+
+    return wrapper
 
 
 # ==================================================
@@ -144,6 +166,7 @@ class MultiPieData:
         self._mp_group = None
 
         self.set_axis()
+        self.pvw.document_changed.emit()
 
     # ==================================================
     def set_status(self, status=None, group=None):
@@ -223,6 +246,7 @@ class MultiPieData:
         self.status["group"]["find_wyckoff"] = find_wyckoff
 
     # ==================================================
+    @_batched
     def add_site(self, site, size=None, color=None, opacity=None):
         self.status["object"]["site"] = site
 
@@ -230,6 +254,7 @@ class MultiPieData:
         plot_cell_site(self, sites, wp=wp, label=mp, size=size, color=color, opacity=opacity)
 
     # ==================================================
+    @_batched
     def add_bond(self, bond, width=None, color=None, color2=None, opacity=None):
         self.status["object"]["bond"] = bond
 
@@ -237,6 +262,7 @@ class MultiPieData:
         plot_cell_bond(self, bonds, wp=wp, label=mp, width=width, color=color, color2=color2, opacity=opacity)
 
     # ==================================================
+    @_batched
     def add_vector(self, vector, tp="Q", cartesian=True, average=False, length=None, width=None, color=None, opacity=None):
         self.status["object"]["vector_type"] = tp
         self.status["object"]["vector"] = vector
@@ -260,6 +286,7 @@ class MultiPieData:
         )
 
     # ==================================================
+    @_batched
     def add_orbital(self, orbital, tp="Q", average=False, size=None, color=None, opacity=None):
         self.status["object"]["orbital_type"] = tp
         self.status["object"]["orbital"] = orbital
@@ -269,6 +296,7 @@ class MultiPieData:
         plot_cell_multipole(self, orbitals, sites, tp, wp=wp, label=mp, average=average, size=size, color=color, opacity=opacity)
 
     # ==================================================
+    @_batched
     def add_bond_definition(self, bond, length=None, width=None, color=None, opacity=None):
         self.status["basis"]["bond_definition"] = bond
 
@@ -297,6 +325,7 @@ class MultiPieData:
         return self._site_list
 
     # ==================================================
+    @_batched
     def add_site_samb(self, tag, size=None, p_color=None, n_color=None, z_color=None, z_size=None):
         if tag not in self._site_list:
             return
@@ -336,6 +365,7 @@ class MultiPieData:
         return self._bond_list
 
     # ==================================================
+    @_batched
     def add_bond_samb(self, tag, width=None, p_color=None, n_color=None, z_color=None, z_width=None, a_size=None):
         if tag not in self._bond_list:
             return
@@ -392,6 +422,7 @@ class MultiPieData:
         return self._vector_list
 
     # ==================================================
+    @_batched
     def add_vector_samb(self, lc, length=None, width=None, color=None, opacity=None):
         ex, var = check_linear_combination(lc, self._vector_samb_var)
         if ex is None:
@@ -421,6 +452,7 @@ class MultiPieData:
         )
 
     # ==================================================
+    @_batched
     def add_vector_samb_modulation(self, modulation_range, length=None, width=None, color=None, opacity=None):
         modulation, rng = modulation_range.split(":")
         mod_list, is_magnetic = self._parse_modulation(modulation)
@@ -493,6 +525,7 @@ class MultiPieData:
         return self._orbital_list
 
     # ==================================================
+    @_batched
     def add_orbital_samb(self, lc, size=None, color=None, opacity=None):
         ex, var = check_linear_combination(lc, self._orbital_samb_var)
         if ex is None:
@@ -519,6 +552,7 @@ class MultiPieData:
         plot_orbital_cluster(self, site, obj, X, wp=lc + " # " + wp, label=mp, size=size, color=color, opacity=opacity)
 
     # ==================================================
+    @_batched
     def add_orbital_samb_modulation(self, modulation_range, size=None, color=None, opacity=None):
         modulation, rng = modulation_range.split(":")
         mod_list, is_magnetic = self._parse_modulation(modulation)
@@ -578,7 +612,7 @@ class MultiPieData:
                         token = ""
                     depth -= 1
                     if depth < 0:
-                        return []
+                        return [], False
                     continue
 
                 if c == "," and depth == 2:
@@ -590,10 +624,10 @@ class MultiPieData:
                     token += c
 
             except Exception as e:
-                return []
+                return [], False
 
-        if depth != 0:
-            return []
+        if depth != 0 or any(len(r) != 4 for r in rows):
+            return [], False
 
         rows = [[r[0], r[1], "[" + r[2] + "]", r[3]] for r in rows]
 

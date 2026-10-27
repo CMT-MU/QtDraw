@@ -1,9 +1,19 @@
+# SPDX-License-Identifier: MPL-2.0
+# Copyright (C) 2021- The QtDraw developers
+#
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
 """
 For versatile utility.
 """
 
 import re
 import ast
+import sys
+import shlex
+import copy
 import numpy as np
 import sympy as sp
 from sympy import SympifyError
@@ -25,10 +35,15 @@ def _check_shape(a, shape):
 
     Note:
         - "0" in shape means any size.
+        - for shape (n,0), rows of different lengths are also accepted, e.g. faces of a polygon.
     """
     if shape is None:
         return True
-    return a.ndim == len(shape) and all(s == 0 or x == s for x, s in zip(a.shape, shape))
+    if a.ndim == len(shape) and all(s == 0 or x == s for x, s in zip(a.shape, shape)):
+        return not any(isinstance(x, (list, tuple)) for x in a.flat)  # not deeper than the shape, e.g. [[[0]],[1]].
+    if len(shape) == 2 and shape[1] == 0 and a.ndim == 1 and shape[0] in (0, len(a)):  # rows of different lengths.
+        return all(isinstance(row, (list, tuple)) and not any(isinstance(x, (list, tuple)) for x in row) for row in a)
+    return False
 
 
 # ==================================================
@@ -54,8 +69,8 @@ def str_to_sympy(s, check_var=None, check_shape=None, rational=True, subs=None, 
     # reserved words in sympy (functions, constants, etc.).
     reserved = set(sp.__all__) | {"pi", "E", "I", "oo", "zoo"}
 
-    # extract candidate variable names.
-    var = sorted(set(re.findall(r"[A-Za-z_]\w*", s)))
+    # extract candidate variable names, without the exponents of numbers such as 1e-3.
+    var = sorted(set(re.findall(r"[A-Za-z_]\w*", re.sub(r"(?<![\w.])(\d+\.?\d*|\.\d+)[eE][+-]?\d+", "0", s))))
     # remove reserved ones.
     var = [v for v in var if v not in reserved]
 
@@ -142,20 +157,96 @@ def to_latex(a, style="scalar"):
     raise ValueError(f"unknown style, {style}.")
 
 
+MULTIPIE_INSTALL = "MultiPie is not installed. Install it with: pip install multipie"
+
+
+# ==================================================
+def _load_multipie():
+    """
+    Import the parts of MultiPie used by QtDraw, which raises the error when they cannot be loaded.
+    """
+    from multipie import Group
+    from multipie.util.util_harmonics import harmonics_decomposition
+    from multipie.util.util_response_tensor import convert_mp_alias
+
+
 # ==================================================
 def check_multipie():
     """
-    Check if multipie is installed or not.
+    Check if multipie is installed and can be loaded.
 
     Returns:
-        - (bool) -- installed ?
+        - (bool) -- available ?
+
+    Note:
+        - without it, the functions of MultiPie are turned off.
     """
     try:
-        import multipie
-
+        _load_multipie()
         return True
-    except ImportError:
+    except Exception:
         return False
+
+
+# ==================================================
+def multipie_message():
+    """
+    Tell why MultiPie cannot be used.
+
+    Returns:
+        - (str) -- how to install MultiPie, or why the installed one cannot be loaded.
+    """
+    try:
+        _load_multipie()
+    except Exception as e:
+        if isinstance(e, ModuleNotFoundError) and e.name == "multipie":
+            return MULTIPIE_INSTALL
+        return f"MultiPie cannot be loaded ({type(e).__name__}: {e})."
+    return MULTIPIE_INSTALL
+
+
+# ==================================================
+def multipie_missing():
+    """
+    Check if MultiPie is not installed, not only that it cannot be loaded.
+
+    Returns:
+        - (bool) -- not installed ?
+    """
+    try:
+        _load_multipie()
+    except ModuleNotFoundError as e:
+        return e.name == "multipie"
+    except Exception:
+        return False
+    return False
+
+
+# ==================================================
+def install_multipie_command():
+    """
+    Command to install MultiPie with pip of this Python.
+
+    Returns:
+        - (list) -- program and arguments.
+    """
+    return [sys.executable, "-m", "pip", "install", "multipie"]  # no version specifier: ">" is a redirection in a shell.
+
+
+# ==================================================
+def command_text(command):
+    """
+    Command as text to run in a shell, quoted.
+
+    Args:
+        command (list): program and arguments.
+
+    Returns:
+        - (str) -- command line.
+    """
+    if sys.platform == "win32":  # for cmd.exe: quote the arguments with spaces or its special characters.
+        return " ".join(f'"{a}"' if not a or set(a) & set(" \t&|<>^()") else a for a in command)
+    return shlex.join(command)
 
 
 # ==================================================
@@ -189,6 +280,18 @@ def create_grid(grid_n, grid_min, grid_max, A=None, endpoint=False):
 
 
 # ==================================================
+class _NotFinite(ast.NodeTransformer):
+    """
+    Read nan and inf (as Python writes such float values) as numbers.
+    """
+
+    def visit_Name(self, node):
+        if node.id in ("nan", "inf"):
+            return ast.copy_location(ast.Constant(float(node.id)), node)
+        return node
+
+
+# ==================================================
 def read_dict(filename):
     """
     Read dict text file.
@@ -208,9 +311,34 @@ def read_dict(filename):
     c = ast.get_docstring(ast.parse(s))
     if c is not None:
         s = s.replace(c, "").replace('"""', "")
-    d = ast.literal_eval(s)
+    try:
+        d = ast.literal_eval(s)
+    except ValueError:  # e.g. nan or inf (slower, so only when needed).
+        d = ast.literal_eval(_NotFinite().visit(ast.parse(s, mode="eval")))
 
     return d
+
+
+# ==================================================
+def to_plain(obj):
+    """
+    Convert numpy values in nested dict, list and tuple to Python values, which can be written as text and read again.
+
+    Args:
+        obj (any): object.
+
+    Returns:
+        - (any) -- copy of the object with Python values.
+    """
+    if isinstance(obj, np.ndarray):
+        return to_plain(obj.tolist()) if obj.dtype == object else obj.tolist()  # elements of an object array may be arrays.
+    if isinstance(obj, np.generic):
+        return obj.item()
+    if isinstance(obj, dict):
+        return {to_plain(k): to_plain(v) for k, v in obj.items()}
+    if isinstance(obj, (list, tuple)):
+        return type(obj)(to_plain(v) for v in obj)
+    return copy.deepcopy(obj)  # not shared with the given object.
 
 
 # ==================================================

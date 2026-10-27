@@ -1,19 +1,28 @@
+# SPDX-License-Identifier: MPL-2.0
+# Copyright (C) 2021- The QtDraw developers
+#
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
 """
 Control Qt event loop.
 
 This module provides functions to control Qt event loop.
 """
 
+import functools
+from contextlib import contextmanager
 import sys
 import logging
-from IPython.core import ultratb
+import traceback as tb
 from PySide6.QtCore import QObject, Signal, Qt
-from PySide6.QtGui import QFont, QPalette, QColor
+from PySide6.QtGui import QFont, QFontDatabase, QPalette, QColor
 from PySide6.QtWidgets import QApplication
 
 from qtdraw.core.pyvista_widget_setting import default_preference
 
-from qtdraw.widget.message_box import MessageBox
+from qtdraw.widget.message_box import show_error
 
 
 # ==================================================
@@ -34,6 +43,97 @@ def gui_qt():
 
 
 # ==================================================
+def _bundle_info():
+    """
+    Info dictionary of the main bundle and helpers to call Objective-C (macOS only).
+
+    Returns:
+        - (tuple) -- (info dictionary, NSString from str, str from NSString), None if not available.
+
+    :meta private:
+    """
+    import ctypes
+    import ctypes.util
+
+    objc = ctypes.cdll.LoadLibrary(ctypes.util.find_library("objc"))
+    ctypes.cdll.LoadLibrary(ctypes.util.find_library("Foundation"))
+    objc.objc_getClass.restype = ctypes.c_void_p
+    objc.objc_getClass.argtypes = [ctypes.c_char_p]
+    objc.sel_registerName.restype = ctypes.c_void_p
+    objc.sel_registerName.argtypes = [ctypes.c_char_p]
+    address = ctypes.cast(objc.objc_msgSend, ctypes.c_void_p).value
+
+    def send(restype, *argtypes):
+        return ctypes.CFUNCTYPE(restype, ctypes.c_void_p, ctypes.c_void_p, *argtypes)(address)
+
+    def sel(name):
+        return objc.sel_registerName(name.encode())
+
+    def ns_string(text):
+        cls = objc.objc_getClass(b"NSString")
+        return send(ctypes.c_void_p, ctypes.c_char_p)(cls, sel("stringWithUTF8String:"), text.encode())
+
+    def py_string(ns):
+        return send(ctypes.c_char_p)(ns, sel("UTF8String")).decode() if ns else None
+
+    bundle = send(ctypes.c_void_p)(objc.objc_getClass(b"NSBundle"), sel("mainBundle"))
+    info = send(ctypes.c_void_p)(bundle, sel("infoDictionary")) if bundle else None
+    if not info:
+        return None
+    return info, ns_string, py_string, send, sel
+
+
+# ==================================================
+def set_macos_app_name(name):
+    """
+    Name of the application menu on macOS (instead of "Python"), set before the application is created.
+
+    Args:
+        name (str): name.
+
+    Note:
+        - best effort: it does nothing on other platforms, and Python errors are only logged.
+    """
+    if sys.platform != "darwin":
+        return
+    try:
+        import ctypes
+
+        found = _bundle_info()
+        if found is None:
+            return
+        info, ns_string, _, send, sel = found
+        setter = sel("setObject:forKey:")
+        if not send(ctypes.c_bool, ctypes.c_void_p)(info, sel("respondsToSelector:"), setter):
+            return  # a dictionary that cannot be changed: an Objective-C exception would end the process.
+        for key in ("CFBundleName", "CFBundleDisplayName"):
+            send(None, ctypes.c_void_p, ctypes.c_void_p)(info, setter, ns_string(name), ns_string(key))
+    except Exception as e:  # cosmetic only.
+        logging.debug(f"cannot set the application name: {e}")
+
+
+# ==================================================
+def macos_bundle_name():
+    """
+    Name of the application menu on macOS.
+
+    Returns:
+        - (str) -- name, None on other platforms.
+
+    :meta private:
+    """
+    if sys.platform != "darwin":
+        return None
+    import ctypes
+
+    found = _bundle_info()
+    if found is None:
+        return None
+    info, ns_string, py_string, send, sel = found
+    return py_string(send(ctypes.c_void_p, ctypes.c_void_p)(info, sel("objectForKey:"), ns_string("CFBundleName")))
+
+
+# ==================================================
 def get_qt_application():
     """
     Get Qt application.
@@ -46,19 +146,23 @@ def get_qt_application():
             - self.app = get_qt_application()
             - ExceptionHook()
     """
+    new = QApplication.instance() is None  # an application that already exists keeps its name.
+    if new:
+        set_macos_app_name("QtDraw")  # read when the application is created, also by IPython's Qt integration.
     gui_qt()
     app = QApplication.instance() or QApplication(sys.argv)
+    if new:
+        app.setApplicationName("QtDraw")
 
     # for high-resolution setting.
     app.setAttribute(Qt.AA_EnableHighDpiScaling)
     app.setAttribute(Qt.AA_UseHighDpiPixmaps)
 
     # set general appearance.
-    style = default_preference["general"]["style"]
     font = default_preference["general"]["font"]
     size = default_preference["general"]["size"]
-    app.setStyle(style)
-    app.setFont(QFont(font, size))
+    app.setStyle("fusion")  # the same look on all platforms.
+    app.setFont(QFont(font_family(font), size))
 
     # use light-mode palette.
     palette = QPalette()
@@ -81,8 +185,89 @@ def get_qt_application():
 
 
 # ==================================================
+def font_family(name):
+    """
+    Font family available on this system.
+
+    Args:
+        name (str): font family name.
+
+    Returns:
+        - (str) -- name if it is installed, otherwise system default font family.
+    """
+    if name in QFontDatabase.families():
+        return name
+    return QFontDatabase.systemFont(QFontDatabase.GeneralFont).family()
+
+
+# ==================================================
+def font_style_sheet(name, size):
+    """
+    Style sheet for application font.
+
+    Args:
+        name (str): font family name.
+        size (int): font size in point.
+
+    Returns:
+        - (str) -- style sheet.
+    """
+    return 'QWidget { font-family: "' + font_family(name) + '"; font-size: ' + f"{size}pt; }}"
+
+
+# ==================================================
+@contextmanager
+def busy_cursor():
+    """
+    Show wait cursor during long operation.
+    """
+    QApplication.setOverrideCursor(Qt.WaitCursor)
+    try:
+        yield
+    finally:
+        QApplication.restoreOverrideCursor()
+
+
+# ==================================================
+def with_busy_cursor(func):
+    """
+    Decorator to show wait cursor while func is running.
+    """
+
+    @functools.wraps(func)
+    def wrapper(*args, **kwargs):
+        with busy_cursor():
+            return func(*args, **kwargs)
+
+    return wrapper
+
+
+# ==================================================
+def error_summary(type, value, max_length=300):
+    """
+    Short message of an exception: its type and the first line of its message.
+
+    Args:
+        type (type): type of exception.
+        value (BaseException): exception.
+        max_length (int, optional): maximum length of the message.
+
+    Returns:
+        - (str) -- e.g. "ValueError: invalid value".
+    """
+    message = value.msg if isinstance(value, SyntaxError) and value.msg else str(value)
+    lines = message.strip().splitlines()
+    first = lines[0] if lines else ""
+    if len(first) > max_length:
+        first = first[: max_length - 3] + "..."
+    elif len(lines) > 1:
+        first += " ..."
+    return f"{type.__name__}: {first}" if first else type.__name__
+
+
+# ==================================================
 class ExceptionHook(QObject):
-    msg_signal = Signal(str)
+    msg_signal = Signal(str)  # full message.
 
     # ==================================================
     def __init__(self, parent=None):
@@ -103,7 +288,24 @@ class ExceptionHook(QObject):
         sys.excepthook = self.hook
 
         # connection.
-        self.msg_signal.connect(lambda x: MessageBox(x, "Exception Message"))
+        self._summary = {}  # short message for each full message (the same message has the same summary).
+        self.msg_signal.connect(self._show_error)
+
+    # ==================================================
+    def _show_error(self, details):
+        """
+        Show the error dialog for a full message.
+
+        Args:
+            details (str): full message.
+
+        :meta private:
+        """
+        summary = self._summary.get(details)
+        if summary is None:  # no longer kept: use the last line of the message, e.g. "ValueError: ...".
+            lines = [line.strip() for line in details.splitlines() if line.strip().strip("-")]
+            summary = lines[-1][:300] if lines else "Error"
+        show_error(summary, details, "Exception Message")
 
     # ==================================================
     def hook(self, type, value, traceback):
@@ -119,10 +321,21 @@ class ExceptionHook(QObject):
             sys.__excepthook__(type, value, traceback)  # ignore keyboard interrupt for console applications.
         else:
             bar = "---------------------------------------------------------------------------"
-            handler = ultratb.VerboseTB(color_scheme="NoColor", long_header=False)
-            log_msg = handler.text(type, value, traceback)
+            try:
+                from IPython.core import ultratb
+
+                handler = ultratb.VerboseTB(color_scheme="NoColor", long_header=False)
+                log_msg = handler.text(type, value, traceback)
+                simple = ultratb.SyntaxTB(theme_name="NoColor").text(type, value, traceback)
+            except ImportError:  # IPython is optional.
+                log_msg = "".join(tb.format_exception(type, value, traceback))
+                simple = "".join(tb.format_exception_only(type, value))
             log_msg += "\n" + bar
-            simple = "\n" + bar + "\n" + ultratb.SyntaxTB(theme_name="NoColor").text(type, value, traceback) + bar
+            simple = "\n" + bar + "\n" + simple + bar
+            self._summary.pop(log_msg, None)  # keep the latest messages at the end.
+            self._summary[log_msg] = error_summary(type, value)
+            while len(self._summary) > 100:  # keep only the latest ones.
+                del self._summary[next(iter(self._summary))]
             self.msg_signal.emit(log_msg)
             logging.critical(simple)
 

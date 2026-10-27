@@ -1,3 +1,10 @@
+# SPDX-License-Identifier: MPL-2.0
+# Copyright (C) 2021- The QtDraw developers
+#
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
 """
 Converter for QtDraw ver. 1.
 
@@ -607,7 +614,7 @@ def convert_version3(dic, ver, widget):
     Args:
         dic (dict): ver.1/2 dict.
         ver (int): major version.
-        widget (PyVistaWidget): PyVistaWidget.
+        widget (PyVistaWidget or None): PyVistaWidget, used only for ver. 1 (None for ver. 2).
 
     Returns:
         - (dict) -- all data dict in ver. 3.

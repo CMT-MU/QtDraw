@@ -1,12 +1,34 @@
 # Usage from Python code
 
 **QtDraw** and **PyVistaWidget** can be used from Python code.
-The following API is avalilable to draw objects.
+The following API is available to draw objects.
+
+## Undo and redo
+
+`QtDraw` keeps the history of the document (objects, unit cell, range and MultiPie group) as the `Edit` menu does.
+`undo()` and `redo()` move in this history, and `can_undo()` and `can_redo()` tell whether they can.
+
+```python
+qtdraw.add_site(name="A")
+qtdraw.add_bond(name="B")  # the same cell: one step together with the site.
+qtdraw.undo()  # removes both.
+```
+
+A change is recorded when the event loop runs after it, so the calls in one Jupyter cell or in one function are one step.
+If the calls run the event loop themselves (e.g. a dialog or `processEvents()`), they may be split into several steps.
+`PyVistaWidget` used alone has no history.
+
+## Files and directories
+
+`load()` and `save()` do not change the current directory. A file name given to them is relative to the current directory.
+Data files of isosurfaces (e.g. `add_isosurface(data="grid.dat")`) are relative to the directory of the drawing file once it is loaded or saved, and to the current directory before that.
 
 ## API in QtDraw
 
 ```{eval-rst}
-.. automodule:: qtdraw.core.qtdraw_app
+.. autoclass:: qtdraw.core.qtdraw_app.QtDraw
+   :members:
+   :exclude-members: staticMetaObject
 ```
 
 ## API in PyVistaWidget
@@ -14,5 +36,5 @@ The following API is avalilable to draw objects.
 ```{eval-rst}
 .. autoclass:: qtdraw.core.pyvista_widget.PyVistaWidget
    :members:
-   :show-inheritance:
+   :exclude-members: staticMetaObject
 ```

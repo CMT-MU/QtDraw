@@ -2,22 +2,63 @@
 
 ## <div class='my-heading' style='color: darkgreen;'>qtdraw_app.py
 
+### <div class='my-heading' style='color: royalblue;'>Global function
+
+| Function | Summary |
+|--------|----------|
+| add_extension | Add extension to file name if it does not have it. |
+| settings | Settings of QtDraw kept between sessions, e.g. recent files. |
+| help_text | Mouse and key operations. |
+| action |  |
+| choice |  |
+| read |  |
+
+
 ### <div class='my-heading' style='color: royalblue;'>QtDraw
 
 | Function | Summary |
 |--------|----------|
 | QtDraw | 3D drawing tool. |
 | create_gui | create gui. |
+| _create_menu | Create menu bar with standard shortcuts. |
+| _create_view_menu | Create view menu, following the view panel (the panel keeps the state). |
+| _recent_files | Recent files, most recent first. |
+| _add_recent_file | Add a file to the recent files. |
+| _update_recent_menu | Fill File > Open Recent with existing recent files. |
+| _open_recent | Open a recent file. |
+| _set_tool_tips | Set tool tips of buttons. |
+| _show_help | Show mouse and key operations. |
 | open_file | Open file dialog. |
 | load_file | Load file. |
-| save_file | Save file dialog. |
+| _update_panel_quietly | Update panel without applying its values to the document again. |
+| save_file | Save to the file opened or saved last, or ask for a file name. |
+| save_file_as | Save file dialog. |
+| _loaded_from | Remember a loaded file: Save writes to a QtDraw file, but never to a material file. |
+| _saved_to | Mark the document saved to a file, which Save writes from now on. |
 | _save_screenshot | Save screenshot dialog. |
 | create_panel | create right panel. |
 | create_gui_unit_cell | Create unit cell panel. |
 | create_gui_view | Create view panel. |
-| create_gui_dataset | Create dataset panel. |
-| create_gui_misc | Create misc. panel. |
-| create_gui_debug | Create debug panel. |
+| create_gui_buttons | Create button panel (other commands are in the menu bar). |
+| _document_state | Current document state to detect unsaved changes. |
+| is_modified | Is document modified after it was opened or saved ? |
+| _mark_saved | Mark current document as saved. |
+| _create_modified_check | Update "*" in window title shortly after objects are changed. |
+| _document_changed | Start the timer to record the document after a change. |
+| _show_axis_cell | Show the axis and cell display in effect in the panel and the View menu, without applying it again. |
+| _settle | Record the settled document for undo, and update the title. |
+| _flush | Record a pending change now (before undo, redo, load, save and checking for unsaved changes). |
+| _reset_history | Start a new undo history with the current document. |
+| _update_undo_actions | Enable undo and redo in Edit menu. |
+| _move_history | Undo (step=-1) or redo (step=1). |
+| _restore | Restore a snapshot, or the current document again if it fails. |
+| _after_restore | Update panel and MultiPie dialog after a restore. |
+| undo | Undo the last change of the document (objects, unit cell, range and MultiPie). |
+| redo | Redo the change undone last. |
+| can_undo | Undo possible ? |
+| can_redo | Redo possible ? |
+| _commit_pending_input | Apply value typed in focused field but not confirmed by Enter. |
+| _confirm_unsaved | Ask to save unsaved changes. |
 | _update_panel | Update widget in panel. |
 | _update_application | Update application sytle. |
 | _update_title | Update window title. |
@@ -47,16 +88,19 @@
 | _nonrepeat | Transform data into non-repeat data. |
 | _show_preference | Show preference panel. |
 | _show_about | Show about panel. |
-| _show_multipie | Show MultiPie panel. |
-| _show_status_data | Show status data dialog. |
-| _show_preference_data | Show preference data dialog. |
-| _show_actor_list | Show actor list dialog. |
-| _show_raw_data | Show raw data dialog. |
-| _show_camera_info | Show camera info. dialog. |
+| _show_multipie | Show MultiPie panel, or offer to install MultiPie. |
+| _install_multipie | Install MultiPie with pip in the background, showing its output in the Log window. |
+| _multipie_installed | Use MultiPie after its installation, or tell why it failed. |
+| _show_data_view | Show a window with internal data (Window menu), refreshed each time it is shown. |
+| _status_text | Status data. |
+| _preference_text | Preference data. |
+| _actor_text | Actor names. |
+| _raw_data_text | Raw data of all objects. |
+| _camera_text | Camera info. |
 | _clear_data | Clear data (actor and data). |
 | clear_data | Clear data (actor and data). |
 | exec | Execute QtDraw. |
-| closeEvent | Close with dialog. |
+| closeEvent | Close, asking to save unsaved changes. |
 | update_status | Update status. |
 | update_preference | Update preference. |
 | write_info | Write text message into Info dialog. |
@@ -99,6 +143,7 @@
 | remove_actor | Remove actor. |
 | load | Load all info. |
 | save | save all info. |
+| _save | Save the document, and keep the history valid in the new directory. |
 | _check_multipie |  |
 | mp_set_group | MultiPie: Set group. |
 | mp_add_site | MultiPie: Add equivalent sites. |
@@ -143,12 +188,29 @@
 |--------|----------|
 | convert_to_str | Convert from object to str, and remove spaces. |
 | get_data_range |  |
+| _literal_list | A list of plain numbers read without sympy, None if it is not one. |
+| _parse_float | Parse a string of a list of numbers or expressions to floats (plain numbers without sympy, which is slow). |
+| _parse_int | Parse a string of a list of integers or expressions to integers (truncated exactly, as sympy does). |
+| _parse_cached_clear | Clear the cache of parsed strings. |
+| _parse_cache_size | Number of cached strings. |
+| _parse_vector | Parse a string of a list of numbers or expressions to a new array. |
 | convert_str_vector | Convert 3-component vector(s) to A.(position+cell). |
+| _caption_labels | Labels of a caption, one for each position. |
 | split_filename | Split file name. |
+| relative_path | Relative path, also to a directory outside start. |
 | cat_filename | Cat filename. |
+| format_text | Format Python text by black command if available. |
+| write_text_atomic | Write text to file atomically (the old file is kept if writing fails). |
+| _site_sphere | Sphere for site, shared by sites of the same size. |
+| _suppress_stderr | Suppress output to stderr (file descriptor 2) of VTK and Qt, and restore it afterwards. |
+| _batched | Decorator: run a method in a batch, rendering once at its end (see PyVistaWidget._batch_render). |
+| isosurface_rename | New names of isosurface data files, relative to a new directory. |
+| same_snapshot | Are two document snapshots the same ? |
 | create_qtdraw_file | Create QtDraw file as background. |
 | convert_qtdraw_v3 | Convert qtdraw file to version 3. |
+| wrapper |  |
 | set_light_prop |  |
+| is_object |  |
 
 
 ### <div class='my-heading' style='color: royalblue;'>Window
@@ -170,7 +232,9 @@
 | Function | Summary |
 |--------|----------|
 | PyVistaWidget | Widget for 3d plot layer using PyVista. |
-| actors |  |
+| render | Render, or only note the request while a batch of changes is made (see _batch_render). |
+| _batch_render | Make a batch of changes, rendering once at its end instead of once for each object. |
+| actors | Access to renderer.actors. |
 | clear_info | Clear info. |
 | set_additional_status | Set additional status. |
 | add_site | Add site. |
@@ -193,10 +257,17 @@
 | add_caption | Add caption. |
 | add_text2d | Add text 2d. |
 | load | Load all info. |
+| _set_loaded_data | Set loaded data. |
+| document_snapshot | Snapshot of the document for undo. |
+| rebase_snapshot | Snapshot whose isosurface data file names are relative to a new directory, as save() does. |
+| restore_document | Restore a document snapshot (camera, view settings and preferences are kept). |
+| _get_current_state | Get current state to restore it when loading fails. |
+| _set_current_state | Set state obtained by _get_current_state. |
 | get_data_dict | Get data dict. |
 | restore | Restore data and status from backup. |
 | save_current | Save current data and stutus into self._backup. |
 | save | save all info. |
+| _rebase_isosurface_data | Make isosurface data file names relative to a new directory. |
 | save_screenshot | Save screenshot to file. |
 | write_info | Write text message (emit message signal). |
 | set_property | Set status and preference. |
@@ -220,6 +291,7 @@
 | set_unit_cell | Set unit cell. |
 | set_clip | Set clip mode. |
 | hide_outside_actor | Hide actors outside the range. |
+| _caption_outside | Are all positions of a caption outside the range ? |
 | clip_actor | Clip actor. |
 | show_outside_actor | Show actors outside the range. |
 | set_repeat | Set repeat mode. |
@@ -238,9 +310,11 @@
 | screen_off | Screen off. |
 | screen_on | Screen on. |
 | clear_data | Clear Data. |
+| _clear_rows | Clear all rows (isosurface data is kept). |
+| _remove_object_actors | Remove actors of all objects and their labels at once. |
 | get_camera_info | Get camera info. |
 | set_camera_info | Get camera info. |
-| _set_default_zoom |  |
+| _set_default_zoom | Set default zoom. |
 | add_data | Add data. |
 | repeat_data | Repeat data. |
 | set_nonrepeat | Transform data to non-repeat data. |
@@ -269,6 +343,8 @@
 | label_option | Create common option to plot. |
 | check_hide | Check hide state. |
 | plot_data_site | Plot site. |
+| _not_drawn | Tell that an object is not drawn, and remove the object drawn before an edit. |
+| _tips_left_out | Tell that arrow tips of an object are not drawn. |
 | plot_data_bond | Plot bond. |
 | plot_data_vector | Plot vector. |
 | plot_data_orbital | Plot orbital. |
@@ -288,10 +364,12 @@
 | plot_data_caption | Plot caption. |
 | plot_data_text2d | Plot text 2d. |
 | plot_label | Plot label. |
+| document_dir | Directory that data file names of the drawing are relative to. |
 | set_isosurface_data | Set isosurface data. |
 | plot_orbital_from_data | Plot orbital from data. |
 | plot_stream_from_data | Plot stream from data (vectors in cartesian coordinate). |
 | mp_set_group | MultiPie: Set group or group status. |
+| _mp_set_group | MultiPie: Set group or group status. |
 | mp_add_site | MultiPie: Add equivalent sites. |
 | mp_add_bond | MultiPie: Add equivalent bonds. |
 | mp_add_vector | MultiPie: Add transformed vectors at equivalent sites or bonds. |
@@ -324,6 +402,26 @@
 | apply | Apply change. |
 
 
+## <div class='my-heading' style='color: darkgreen;'>undo_history.py
+
+### <div class='my-heading' style='color: royalblue;'>UndoHistory
+
+| Function | Summary |
+|--------|----------|
+| UndoHistory | Undo history. |
+| reset | Start a new history. |
+| clear | Empty the history. |
+| current | Snapshot at the current position. |
+| record | Record a snapshot after the current position. |
+| map | Replace every snapshot by func(snapshot), keeping the position. |
+| can_undo | Undo possible ? |
+| can_redo | Redo possible ? |
+| peek_undo | Snapshot that undo restores (no move), None if not possible. |
+| peek_redo | Snapshot that redo restores (no move), None if not possible. |
+| commit_undo | Move the position back by one (after a successful restore). |
+| commit_redo | Move the position forward by one (after a successful restore). |
+
+
 ## <div class='my-heading' style='color: darkgreen;'>validator.py
 
 ### <div class='my-heading' style='color: royalblue;'>Global function
@@ -331,6 +429,11 @@
 | Function | Summary |
 |--------|----------|
 | check_symbol | Check symbol. |
+| _flat | Elements of a (nested, possibly ragged) list or array. |
+| _format | Text of a (nested, possibly ragged) list or array, with each element formatted by fmt. |
+| _finite_floats | Floats of numbers, None if one is not a finite real number (e.g. nan, oo or I). |
+| _finite_complex | Complex numbers of numbers, None if one is not a finite number (e.g. nan or zoo). |
+| _integers | Integers of numbers, None if one is not an integer fitting in 64 bits. |
 | convert_to_bond | Convert to bond from str. |
 | validator_int | Validator for int. |
 | validator_float | Validator for float. |
@@ -342,7 +445,11 @@
 | validator_site_bond | Validator for site or bond. |
 | validator_vector_site_bond | Validator for vector on site or bond. |
 | validator_orbital_site_bond | Validator for orbital on site or bond. |
+| validator_hint | Explanation of accepted input for validator (used as tooltip). |
 | fmt |  |
+| value_range |  |
+| shape_text |  |
+| variables |  |
 
 
 ## <div class='my-heading' style='color: darkgreen;'>group_model.py
@@ -367,6 +474,9 @@
 | emit_update_data | Emit update data. |
 | append_row | Append row. |
 | remove_row | Remove row. |
+| _remove_row | Remove row. |
+| _run_rename | Run a deferred rename once. |
+| run_pending_renames | Run deferred group renames now. |
 | move_row | Move row. |
 | action_copy_row | Slot for copy row action. |
 | action_insert_row | Slot for insert row action. |
@@ -388,9 +498,14 @@
 | Function | Summary |
 |--------|----------|
 | MathJaxSVG | MathJax converter. |
+| available | Is MathJax available ? |
 | _thread_main |  |
 | convert | Convert latex to SVG string. |
+| _convert_plain | Convert latex to SVG string as plain text (when MathJax is not available). |
 | close |  |
+| _save_cache | Write memory cache to disk cache (a file that cannot be written is skipped). |
+| _read_cache_file | Read a cache file. |
+| _write_cache_file | Write a cache file atomically, so that another process never reads a partly written file. |
 | _get_cache_path |  |
 | _get_attribute |  |
 | _replace_attribute |  |
@@ -502,11 +617,28 @@
 
 ## <div class='my-heading' style='color: darkgreen;'>message_box.py
 
+### <div class='my-heading' style='color: royalblue;'>Global function
+
+| Function | Summary |
+|--------|----------|
+| show_error | Show an error with a short message, and the full details behind "Show Details...". |
+
+
 ### <div class='my-heading' style='color: royalblue;'>MessageBox
 
 | Function | Summary |
 |--------|----------|
 | MessageBox | Message box. |
+
+
+### <div class='my-heading' style='color: royalblue;'>ResizableMessageBox
+
+| Function | Summary |
+|--------|----------|
+| ResizableMessageBox |  |
+| event | Lift the fixed size that QMessageBox sets again whenever it is laid out. |
+| _unfill_screen | Give the box its size again if it fills the screen, but keep any other size, e.g. set by the user. |
+| _lift_fixed_size | Allow any size, and let the details grow with the box. |
 
 
 ## <div class='my-heading' style='color: darkgreen;'>group_view.py
@@ -544,7 +676,20 @@
 | Function | Summary |
 |--------|----------|
 | gui_qt | Execute Qt GUI mode in IPython (if available). |
+| _bundle_info | Info dictionary of the main bundle and helpers to call Objective-C (macOS only). |
+| set_macos_app_name | Name of the application menu on macOS (instead of "Python"), set before the application is created. |
+| macos_bundle_name | Name of the application menu on macOS. |
 | get_qt_application | Get Qt application. |
+| font_family | Font family available on this system. |
+| font_style_sheet | Style sheet for application font. |
+| busy_cursor | Show wait cursor during long operation. |
+| with_busy_cursor | Decorator to show wait cursor while func is running. |
+| error_summary | Short message of an exception: its type and the first line of its message. |
+| send |  |
+| sel |  |
+| ns_string |  |
+| py_string |  |
+| wrapper |  |
 
 
 ### <div class='my-heading' style='color: royalblue;'>ExceptionHook
@@ -552,6 +697,7 @@
 | Function | Summary |
 |--------|----------|
 | ExceptionHook | Exception hook. |
+| _show_error | Show the error dialog for a full message. |
 | hook | Callback for uncaught exceptions. |
 | reset | Reset exception hook. |
 
@@ -683,6 +829,9 @@
 | raw_text |  |
 | set_read_only |  |
 | keyPressEvent |  |
+| keyReleaseEvent |  |
+| _set_edited |  |
+| commit_pending | Apply text changed by user but not confirmed by Enter if valid, otherwise discard it. |
 | focusOutEvent |  |
 | focusInEvent |  |
 | sizeHint |  |
@@ -755,9 +904,15 @@
 | _check_shape | Check array shape. |
 | str_to_sympy | Convert a string to a sympy. |
 | to_latex | convert list to latex list. |
-| check_multipie | Check if multipie is installed or not. |
+| _load_multipie | Import the parts of MultiPie used by QtDraw, which raises the error when they cannot be loaded. |
+| check_multipie | Check if multipie is installed and can be loaded. |
+| multipie_message | Tell why MultiPie cannot be used. |
+| multipie_missing | Check if MultiPie is not installed, not only that it cannot be loaded. |
+| install_multipie_command | Command to install MultiPie with pip of this Python. |
+| command_text | Command as text to run in a shell, quoted. |
 | create_grid | Create grid. |
 | read_dict | Read dict text file. |
+| to_plain | Convert numpy values in nested dict, list and tuple to Python values, which can be written as text and read again. |
 | write_dict | write dict text file. |
 | text_to_list | Convert single text to list. |
 | apply | Apply function to (nested) list. |
@@ -765,6 +920,13 @@
 | igrid | create integer grid points. |
 | vec_latex |  |
 | mat_latex |  |
+
+
+### <div class='my-heading' style='color: royalblue;'>_NotFinite
+
+| Function | Summary |
+|--------|----------|
+| visit_Name |  |
 
 
 ## <div class='my-heading' style='color: darkgreen;'>basic_object.py
@@ -780,6 +942,8 @@
 | _translate_and_orient | Translate and orient a mesh to a new center and direction. |
 | create_sphere | Create sphere object. |
 | create_bond | Create bond object. |
+| arrow_length | Length of the arrow that create_vector() makes. |
+| _arrow_tips | Arrow tips that can be made: a tip of length 0 or without direction is left out. |
 | create_vector | Create vector object. |
 | create_orbital | Create orbital object. |
 | create_stream | Create steam vector object. |
@@ -806,6 +970,8 @@
 
 | Function | Summary |
 |--------|----------|
+| parse_draw | Parse CIF, XSF, VESTA file without drawing. |
+| draw | Draw parsed CIF, XSF, VESTA data. |
 | read_draw | Read and draw CIF, XSF, VESTA file. |
 
 
@@ -863,7 +1029,7 @@
 
 | Function | Summary |
 |--------|----------|
-| cmd | execute QtDraw. |
+| cmd | Execute QtDraw. |
 
 
 ## <div class='my-heading' style='color: darkgreen;'>conv_qtdraw3.py
@@ -872,7 +1038,16 @@
 
 | Function | Summary |
 |--------|----------|
-| cmd | Convert QtDraw to version 2. |
+| cmd | Convert QtDraw file of old version to version 3. |
+
+
+## <div class='my-heading' style='color: darkgreen;'>cli_util.py
+
+### <div class='my-heading' style='color: royalblue;'>Global function
+
+| Function | Summary |
+|--------|----------|
+| resolve_file | Resolve file name, ext is added if the file without it does not exist. |
 
 
 ## <div class='my-heading' style='color: darkgreen;'>tab_basis.py
@@ -882,6 +1057,7 @@
 | Function | Summary |
 |--------|----------|
 | TabBasis |  |
+| data | MultiPie data, read from the dialog each time (opening a file replaces it). |
 | set_site |  |
 | show_site_info |  |
 | set_bond |  |
@@ -909,6 +1085,14 @@
 
 
 ## <div class='my-heading' style='color: darkgreen;'>multipie_data.py
+
+### <div class='my-heading' style='color: royalblue;'>Global function
+
+| Function | Summary |
+|--------|----------|
+| _batched | Decorator: add objects in a batch, rendering once at its end (see PyVistaWidget._batch_render). |
+| wrapper |  |
+
 
 ### <div class='my-heading' style='color: royalblue;'>MultiPieData
 
@@ -957,8 +1141,9 @@
 | Function | Summary |
 |--------|----------|
 | MultiPieDialog | MultiPie dialog. |
+| _data | MultiPie data of the PyVistaWidget. |
 | set_title |  |
-| set_data |  |
+| set_data | Show the MultiPie data. |
 | clear_data |  |
 | closeEvent |  |
 
@@ -988,6 +1173,7 @@
 | Function | Summary |
 |--------|----------|
 | SubGroup |  |
+| data | MultiPie data, read from the dialog each time (opening a file replaces it). |
 | set_crystal_type |  |
 | set_group_type |  |
 | set_group |  |
@@ -1009,6 +1195,7 @@
 | Function | Summary |
 |--------|----------|
 | TabGroup |  |
+| data | MultiPie data, read from the dialog each time (opening a file replaces it). |
 | set_irrep_list |  |
 | set_harm_list |  |
 | set_wyckoff_list |  |
@@ -1053,6 +1240,7 @@
 | Function | Summary |
 |--------|----------|
 | TabObject |  |
+| data | MultiPie data, read from the dialog each time (opening a file replaces it). |
 | show_site |  |
 | show_bond |  |
 | show_vector |  |

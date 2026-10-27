@@ -1,3 +1,10 @@
+# SPDX-License-Identifier: MPL-2.0
+# Copyright (C) 2021- The QtDraw developers
+#
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
 """
 Read data in xsf file.
 
@@ -80,7 +87,7 @@ def create_data(n, origin, A, endpoint, f_data, f_surface):
 
     grid_data = {
         "n": n,
-        "origin": origin,
+        "origin": np.asarray(origin, dtype=float).tolist(),
         "Ag": A.tolist(),
         "data": data,
         "surface": surface,

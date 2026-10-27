@@ -1,3 +1,10 @@
+# SPDX-License-Identifier: MPL-2.0
+# Copyright (C) 2021- The QtDraw developers
+#
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
 """
 Core widget to draw 3d objects via PyVista.
 
@@ -6,12 +13,19 @@ This module provides a class to draw various
 """
 
 import os
-import sys
-from pathlib import Path
+import re
 import ast
+import inspect
+import threading
+from collections import OrderedDict
+from pathlib import Path
 import subprocess
+import shutil
+import tempfile
 import numpy as np
 import copy
+from functools import lru_cache, wraps
+from contextlib import contextmanager
 from PySide6.QtWidgets import QMainWindow, QMenu, QSizePolicy
 from PySide6.QtGui import QCursor, QMouseEvent
 from PySide6.QtCore import QEvent, Qt, QCoreApplication, Signal, QSize, QObject, QModelIndex
@@ -30,8 +44,10 @@ from qtdraw.core.pyvista_widget_setting import (
     COLUMN_CELL,
     COLUMN_POSITION,
     COLUMN_ISOSURFACE_FILE,
+    CHOP,
 )
 from qtdraw.core.pyvista_widget_setting import widget_detail as detail
+from qtdraw.widget.validator import check_cell
 from qtdraw.core.qtdraw_info import __version__, __date__, __author__
 from qtdraw.widget.mathjax import MathJaxSVG
 from qtdraw.widget.group_model import GroupModel
@@ -39,10 +55,10 @@ from qtdraw.widget.tab_group_view import TabGroupView
 from qtdraw.widget.qt_event_util import get_qt_application
 from qtdraw.widget.logging_util import LogWidget
 from qtdraw.widget.color_palette import all_colors, custom_colormap, check_color
-from qtdraw.parser.read_material import read_draw
+from qtdraw.parser.read_material import parse_draw, draw
 from qtdraw.parser.xsf import extract_data_xsf
 from qtdraw.parser.converter import convert_version3
-from qtdraw.util.util import text_to_list, apply, read_dict, str_to_sympy, check_multipie
+from qtdraw.util.util import text_to_list, apply, read_dict, str_to_sympy, check_multipie, multipie_message, to_plain
 from qtdraw.util.util_axis import (
     create_axes_widget,
     create_unit_cell,
@@ -74,8 +90,11 @@ from qtdraw.util.basic_object import (
     create_isosurface,
     create_orbital_data,
     create_stream_data,
+    arrow_length,
 )
-from qtdraw.multipie.multipie_data import MultiPieData
+
+# add_mesh takes remove_existing_actor (not in pyvista 0.46).
+REMOVE_EXISTING_ACTOR = "remove_existing_actor" in inspect.signature(pv.plotting.plotter.BasePlotter.add_mesh).parameters
 
 
 # ==================================================
@@ -107,6 +126,115 @@ def get_data_range(data):
 
 
 # ==================================================
+_PLAIN_NUMBERS = re.compile(r"[\s\[\],0-9.eE+-]*")  # numbers in (nested) lists only.
+_PLAIN_INTEGERS = re.compile(r"[\s\[\],0-9+-]*")  # integers in (nested) lists only.
+_MAX_CACHED = 256  # longer strings (e.g. points of a polygon) are not cached.
+_MAX_CACHED_SIZE = 300  # nor larger results.
+_MAX_ENTRIES = 4096
+_cache = OrderedDict()  # (string, as_int) -> read-only array, least recently used first.
+_cache_lock = threading.Lock()  # objects are also plotted from a thread.
+
+
+# ==================================================
+def _literal_list(s, pattern):
+    """
+    A list of plain numbers read without sympy, None if it is not one.
+
+    :meta private:
+    """
+    if not pattern.fullmatch(s):
+        return None
+    try:
+        value = ast.literal_eval(s)
+    except (ValueError, SyntaxError, TypeError, MemoryError, RecursionError):  # left to sympy.
+        return None
+    return value if isinstance(value, (list, tuple)) else None  # a single number is left to sympy (an error).
+
+
+# ==================================================
+def _parse_float(s):
+    """
+    Parse a string of a list of numbers or expressions to floats (plain numbers without sympy, which is slow).
+
+    :meta private:
+    """
+    value = _literal_list(s, _PLAIN_NUMBERS)
+    if value is not None:
+        try:
+            return np.array(value, dtype=float)
+        except (OverflowError, ValueError):  # e.g. a huge integer or a ragged list, left to sympy.
+            pass
+    return str_to_sympy(s, rational=False).astype(float)
+
+
+# ==================================================
+def _parse_int(s):
+    """
+    Parse a string of a list of integers or expressions to integers (truncated exactly, as sympy does).
+
+    :meta private:
+    """
+    value = _literal_list(s, _PLAIN_INTEGERS)
+    if value is not None:
+        try:
+            return np.array(value, dtype=int)
+        except (OverflowError, ValueError):  # e.g. beyond int64 or a ragged list, left to sympy.
+            pass
+    return str_to_sympy(s).astype(int)
+
+
+# ==================================================
+def _parse_cached_clear():
+    """
+    Clear the cache of parsed strings.
+
+    :meta private:
+    """
+    with _cache_lock:
+        _cache.clear()
+
+
+# ==================================================
+def _parse_cache_size():
+    """
+    Number of cached strings.
+
+    :meta private:
+    """
+    with _cache_lock:
+        return len(_cache)
+
+
+# ==================================================
+def _parse_vector(s, as_int=False):
+    """
+    Parse a string of a list of numbers or expressions to a new array.
+
+    Args:
+        s (str): string, e.g. "[0.1,0.2,0.3]" or "[1/2,0,0]".
+        as_int (bool, optional): integers (e.g. a cell) ?
+
+    Returns:
+        - (numpy.ndarray) -- new array of floats or integers.
+
+    :meta private:
+    """
+    key = (s, as_int)
+    with _cache_lock:
+        value = _cache.get(key)
+        if value is not None:
+            _cache.move_to_end(key)
+            return value.copy()
+    value = _parse_int(s) if as_int else _parse_float(s)
+    if len(s) <= _MAX_CACHED and value.size <= _MAX_CACHED_SIZE:
+        with _cache_lock:
+            _cache[key] = value.copy()
+            if len(_cache) > _MAX_ENTRIES:
+                _cache.popitem(last=False)
+    return value
+
+
+# ==================================================
 def convert_str_vector(vector, cell="[0,0,0]", transform=True, A=None):
     """
     Convert 3-component vector(s) to A.(position+cell).
@@ -120,8 +248,8 @@ def convert_str_vector(vector, cell="[0,0,0]", transform=True, A=None):
     Returns:
         - (numpy.ndarray) -- transformed position.
     """
-    cell = str_to_sympy(cell).astype(int)
-    vector = str_to_sympy(vector, rational=False).astype(float)
+    cell = _parse_vector(cell, as_int=True)
+    vector = _parse_vector(vector)
 
     vectorT = vector + cell
     if transform:
@@ -132,28 +260,69 @@ def convert_str_vector(vector, cell="[0,0,0]", transform=True, A=None):
 
 
 # ==================================================
-def split_filename(filename):
+def _caption_labels(caption, position):
+    """
+    Labels of a caption, one for each position.
+
+    Args:
+        caption (str): caption list, e.g. "[A,B,C]".
+        position (numpy.ndarray): position(s), [float] or [[float]].
+
+    Returns:
+        - (list) -- labels, None if their number does not match the positions.
+
+    :meta private:
+    """
+    labels = text_to_list(caption)
+    n = 1 if np.ndim(position) == 1 else len(position)
+    if not isinstance(labels, list) or len(labels) != n:
+        return None
+    return labels
+
+
+# ==================================================
+def split_filename(filename, base=None):
     """
     Split file name.
 
     Args:
         filename (str): filename.
+        base (Path, optional): directory a relative filename is relative to, default is the current directory.
 
     Returns:
         - (str) -- filename with absolute path.
-        - (str) -- filename with relative path.
+        - (str) -- filename with path relative to base.
         - (str) -- base filename.
         - (str) -- extension.
         - (str) -- directory.
     """
+    base = Path.cwd() if base is None else Path(base)
     path = Path(filename)
-    path_abs = path if path.is_absolute() else (Path.cwd() / path).resolve()
-    path_rel = path_abs.relative_to(Path.cwd())
+    path_abs = path if path.is_absolute() else (base / path).resolve()
+    path_rel = relative_path(path_abs, base)
     base = str(path_rel.stem)
     ext = str(path_rel.suffix)
     folder = str(path_abs.parent)
 
     return str(path_abs), str(path_rel), base, ext, folder
+
+
+# ==================================================
+def relative_path(path, start):
+    """
+    Relative path, also to a directory outside start.
+
+    Args:
+        path (Path): absolute path.
+        start (Path): absolute path of a directory.
+
+    Returns:
+        - (Path) -- relative path, or absolute path if there is no relative path (e.g. another drive).
+    """
+    try:
+        return Path(os.path.relpath(path, start))
+    except ValueError:
+        return Path(path)
 
 
 # ==================================================
@@ -176,6 +345,57 @@ def cat_filename(base, ext=None):
 
 
 # ==================================================
+def format_text(text):
+    """
+    Format Python text by black command if available.
+
+    Args:
+        text (str): text to format.
+
+    Returns:
+        - (str) -- formatted text (original text if black is not available).
+    """
+    cmd = shutil.which("black")
+    if cmd is None:
+        return text
+    try:
+        ret = subprocess.run([cmd, "-q", "--line-length=300", "-"], input=text, capture_output=True, text=True, check=True)
+    except (OSError, subprocess.SubprocessError):
+        return text
+
+    return ret.stdout
+
+
+# ==================================================
+def write_text_atomic(filename, text):
+    """
+    Write text to file atomically (the old file is kept if writing fails).
+
+    Args:
+        filename (str): file name.
+        text (str): text to write.
+    """
+    file = Path(filename)
+    fd, tmp = tempfile.mkstemp(dir=file.parent, prefix="." + file.name + ".", suffix=".tmp")
+    try:
+        with os.fdopen(fd, mode="w", encoding="utf-8") as f:
+            f.write(text)
+        # keep permission of existing file, or use default one (mkstemp creates it as 0600).
+        if file.exists():
+            mode = file.stat().st_mode & 0o777
+        else:
+            umask = os.umask(0)
+            os.umask(umask)
+            mode = 0o666 & ~umask
+        os.chmod(tmp, mode)
+        os.replace(tmp, file)
+    except BaseException:
+        if os.path.exists(tmp):
+            os.remove(tmp)
+        raise
+
+
+# ==================================================
 class Window(QMainWindow):
     # ==================================================
     def __init__(self, level):
@@ -193,6 +413,117 @@ class Window(QMainWindow):
 
 
 # ==================================================
+@lru_cache(maxsize=32)
+def _site_sphere(radius):
+    """
+    Sphere for site, shared by sites of the same size.
+
+    Args:
+        radius (float): radius.
+
+    Returns:
+        - (vtk.PolyData) -- sphere object, do not modify it.
+
+    :meta private:
+    """
+    return create_sphere(radius=radius)
+
+
+# ==================================================
+@contextmanager
+def _suppress_stderr():
+    """
+    Suppress output to stderr (file descriptor 2) of VTK and Qt, and restore it afterwards.
+
+    :meta private:
+    """
+    try:
+        saved = os.dup(2)
+        inheritable = os.get_inheritable(2)
+    except OSError:  # no stderr.
+        yield
+        return
+    try:
+        dev = os.open(os.devnull, os.O_WRONLY)
+        try:
+            os.dup2(dev, 2)
+        finally:
+            os.close(dev)
+        yield
+    finally:
+        os.dup2(saved, 2, inheritable=inheritable)
+        os.close(saved)
+
+
+# ==================================================
+def _batched(method):
+    """
+    Decorator: run a method in a batch, rendering once at its end (see PyVistaWidget._batch_render).
+
+    :meta private:
+    """
+
+    @wraps(method)
+    def wrapper(self, *args, **kwargs):
+        with self._batch_render():
+            return method(self, *args, **kwargs)
+
+    return wrapper
+
+
+# ==================================================
+def isosurface_rename(names, in_memory, old_dir, new_dir):
+    """
+    New names of isosurface data files, relative to a new directory.
+
+    Args:
+        names (set): data names used by rows, relative to old_dir.
+        in_memory (set): names of data given without a file (kept).
+        old_dir (Path): directory the names are relative to (resolved).
+        new_dir (Path): new directory (resolved).
+
+    Returns:
+        - (dict) -- {name: new name} for names that change.
+    """
+    rename = {}
+    for name in names:
+        source = old_dir / name
+        if name not in in_memory and source.exists():
+            new_name = relative_path(source.resolve(), new_dir).as_posix()
+            if new_name != name:
+                rename[name] = new_name
+    # a name that stays in use for other data is not available: refer to the file by its absolute path.
+    kept = names - rename.keys()
+    for name, new_name in rename.items():
+        if new_name in kept:
+            rename[name] = (old_dir / name).resolve().as_posix()
+    return rename
+
+
+# ==================================================
+DOCUMENT_STATUS = ["origin", "cell", "crystal", "clip", "repeat", "lower", "upper"]  # status saved and undone.
+
+
+# ==================================================
+def same_snapshot(a, b):
+    """
+    Are two document snapshots the same ?
+
+    Args:
+        a (dict): snapshot, see PyVistaWidget.document_snapshot().
+        b (dict): snapshot.
+
+    Returns:
+        - (bool) -- same rows, status and MultiPie status, and the same grid objects.
+    """
+    if a is None or b is None:
+        return a is b
+    if a["doc"] != b["doc"] or a["grids"].keys() != b["grids"].keys() or a["in_memory"] != b["in_memory"]:
+        return False
+    return all(a["grids"][k] is b["grids"][k] for k in a["grids"])
+
+
+# ==================================================
 def create_qtdraw_file(filename, callback):
     """
     Create QtDraw file as background.
@@ -201,10 +532,14 @@ def create_qtdraw_file(filename, callback):
         filename (str): full filename.
         callback (function): callback to draw objects, f(widget).
     """
+    filename = Path(filename).absolute()  # before the callback, which may change the current directory.
     app = get_qt_application()
     widget = PyVistaWidget(off_screen=True)
-    callback(widget)
-    widget.save(filename)
+    try:
+        callback(widget)
+        widget.save(str(filename))
+    finally:
+        widget.close()
     app.quit()
 
 
@@ -216,12 +551,14 @@ def convert_qtdraw_v3(filename):
     Args:
         filename (str): filename.
     """
+    src = Path(filename).absolute().resolve()  # a symbolic link is followed, as load() does.
     app = get_qt_application()
     widget = PyVistaWidget(off_screen=True)
-    widget.load(filename)
-    path_abs, path_rel, base, ext, folder = split_filename(filename)
-    filename2 = cat_filename(base + "_v3", ext)
-    widget.save(filename2)
+    try:
+        widget.load(str(src))
+        widget.save(str(src.with_name(src.stem + "_v3" + src.suffix)))  # next to the source.
+    finally:
+        widget.close()
     app.quit()
 
 
@@ -251,9 +588,14 @@ class PlotSignal(QObject):
 # ==================================================
 class PyVistaWidget(QtInteractor):
     # signal for write info.
-    message = Signal(str)  # messsage.
-    data_removed = Signal()
-    camera_view = Signal(list)  # view index.
+    # message.
+    message = Signal(str)  #: :meta private:
+    # none.
+    data_removed = Signal()  #: :meta private:
+    document_changed = Signal()  #: :meta private:
+    status_changed = Signal()  #: :meta private:
+    # view index.
+    camera_view = Signal(list)  #: :meta private:
 
     # ==================================================
     def __init__(self, parent=None, off_screen=False):
@@ -267,29 +609,26 @@ class PyVistaWidget(QtInteractor):
         os.environ["PYVISTA_QT_BACKEND"] = "PySide6"
         # avoid recursion of the close() until the PyVistaWidget.__init__() is called, see pyvistaqt/plotting.py.
         self._closed = True
-
-        # suppress std err.
-        fd = sys.stderr.fileno()
-        se = os.dup(fd)
-        dev = os.open(os.devnull, os.O_WRONLY)
-        self._iosave = {"file_no": fd, "stderr": se, "dev_null": dev}
-        os.dup2(dev, fd)
-        os.close(dev)
+        self._close_done = False  # closeEvent can be called again when the widget is deleted.
 
         # set default.
         self._off_screen = off_screen
+        self._document_dir = None  # directory of the drawing file, data file names are relative to it.
+        self._batch_depth = 0  # nesting depth of _batch_render().
+        self._batch_dirty = False  # render requested during the current batch ?
         self.clear_info()
 
-        # set interactor.
-        super().__init__(
-            parent=parent,
-            off_screen=self._off_screen,
-            multi_samples=detail["multi_samples"],
-            line_smoothing=detail["line_smoothing"],
-            point_smoothing=detail["point_smoothing"],
-            polygon_smoothing=detail["polygon_smoothing"],
-            auto_update=detail["auto_update"],
-        )
+        # set interactor (suppress messages of VTK and Qt during initialization only).
+        with _suppress_stderr():
+            super().__init__(
+                parent=parent,
+                off_screen=self._off_screen,
+                multi_samples=detail["multi_samples"],
+                line_smoothing=detail["line_smoothing"],
+                point_smoothing=detail["point_smoothing"],
+                polygon_smoothing=detail["polygon_smoothing"],
+                auto_update=detail["auto_update"],
+            )
         assert not self._closed
 
         if off_screen:
@@ -342,23 +681,67 @@ class PyVistaWidget(QtInteractor):
             self._plot_signal[object_type] = PlotSignal(self, f)
 
         self._mp_data = None
+        self._loading = False  # True while data_removed is emitted after loading a file.
+        self.replaced_cells = []  # invalid cells of the last loaded file, set to the defaults (see load).
 
         # refresh.
         self.refresh()
         self.set_view()
 
-        # if self.iren is not None: # for automatic update for a,b,c indices.
-        #    self.iren.add_observer("EndInteractionEvent", self._camera_view_changed)
+    # ==================================================
+    def render(self):
+        """
+        Render, or only note the request while a batch of changes is made (see _batch_render).
+
+        :meta private:
+        """
+        if self._batch_depth > 0:
+            self._batch_dirty = True
+            return None
+        return super().render()
 
     # ==================================================
-    # def _camera_view_changed(self, observer=None, event=None):
-    #    view = get_hkl_from_camera(self.camera, self.A_matrix)
-    #    view = [0, 0, 0]
-    #    self.set_view(view)
+    @contextmanager
+    def _batch_render(self, log_render_error=False):
+        """
+        Make a batch of changes, rendering once at its end instead of once for each object.
+
+        Args:
+            log_render_error (bool, optional): only log a failing render also after a successful batch ?
+
+        Note:
+            - at most one render is submitted when the outermost batch ends (none if nothing requested it).
+            - if the batch fails, its exception is kept, and a failing render is only logged.
+            - batches are used in the GUI thread only, without processing events inside them.
+
+        :meta private:
+        """
+        self._batch_depth += 1
+        failed = True
+        try:
+            yield
+            failed = False
+        finally:
+            self._batch_depth -= 1
+            if self._batch_depth == 0 and self._batch_dirty:
+                self._batch_dirty = False
+                if not self._closed:
+                    if failed or log_render_error:
+                        try:
+                            self.render()
+                        except Exception as e:  # keep original exception.
+                            self.write_info(f"* failed to render: {e}")
+                    else:
+                        self.render()
 
     # ==================================================
     @property
     def actors(self):
+        """
+        Access to renderer.actors.
+
+        :meta private:
+        """
         # in order to access directly to renderer.actors.
         try:
             return self.renderer.actors
@@ -379,9 +762,12 @@ class PyVistaWidget(QtInteractor):
         self.set_additional_status()
         self._preference = copy.deepcopy(default_preference)
         self._label_counter = 0  # id for label actor.
+        self._object_counter = 0  # id for object actor.
         self._isosurface_data = {}
+        self._isosurface_in_memory = set()  # names of data given without a file.
         self._backup = None
         self._block_remove_isosurface = False
+        self._block_remove_actor = False  # actors are removed at once (clear).
 
     # ==================================================
     def set_additional_status(self):
@@ -743,6 +1129,8 @@ class PyVistaWidget(QtInteractor):
             if isinstance(direction, np.ndarray):
                 direction = direction.tolist()
             row_data["direction"] = convert_to_str(direction)
+        if width is not None:
+            row_data["width"] = convert_to_str(width)
         if arrow1 is not None:
             row_data["arrow1_check"] = arrow1
         if arrow2 is not None:
@@ -1458,7 +1846,9 @@ class PyVistaWidget(QtInteractor):
             if type(data) == tuple:
                 name, dic = data
                 row_data["data"] = name
-                self._isosurface_data[name] = dic
+                # a copy owned by QtDraw, so history can keep it, with Python values to be saved as text.
+                self._isosurface_data[name] = to_plain(dic)
+                self._isosurface_in_memory.add(name)
             else:
                 row_data["data"] = self.set_isosurface_data(data)
 
@@ -1503,6 +1893,9 @@ class PyVistaWidget(QtInteractor):
             name (str, optional): name of group. (default: untitled)
             margin (int, optional): label margin. (default: 3)
 
+        Raises:
+            ValueError: the number of captions differs from the number of positions.
+
         Note:
             - if keyword is None, default value is used.
         """
@@ -1510,6 +1903,8 @@ class PyVistaWidget(QtInteractor):
 
         if caption is not None:
             row_data["caption"] = caption
+        if _caption_labels(row_data["caption"], _parse_vector(row_data["position"])) is None:
+            raise ValueError(f"one caption for each position is needed, e.g. [A,B,C] for 3 positions: {row_data['caption']}.")
         if size is not None:
             row_data["size"] = convert_to_str(size)
         if bold is not None:
@@ -1538,13 +1933,18 @@ class PyVistaWidget(QtInteractor):
             size (int, optional): caption size. (default: 8)
             color (str, optional): caption color. (default: black)
             font (str, optional): caption font. (default: arial)
-            position (str, optional): position in cell, [x,y,z]. (default: [0,0,0])
+            position (str, optional): position in the window, [x,y,0], x and y from 0 to 1 (z is not used). (default: [0.02,0.95,0])
             name (str, optional): name of group. (default: untitled)
+
+        Raises:
+            ValueError: the position does not have three components.
 
         Note:
             - if keyword is None, default value is used.
         """
         row_data = self.set_common_row_data("text2d", None, position, None, name, None, None)
+        if _parse_vector(row_data["position"]).shape != (3,):
+            raise ValueError(f"position of text2d is [x,y,0] (fractions of the window): {row_data['position']}.")
 
         if caption is not None:
             row_data["caption"] = caption
@@ -1566,32 +1966,138 @@ class PyVistaWidget(QtInteractor):
         Load all info.
 
         Args:
-            filename (str): full file name.
+            filename (str): file name, relative to the current directory.
+
+        Returns:
+            - (list) -- cells that the table would reject, set to the defaults of their columns,
+              [(object_type, row, column, value)] with the row counted from 1 (also in `replaced_cells`).
+
+        Note:
+            - data file names of isosurfaces in the file are relative to its directory; the current directory is not changed.
         """
-        # rename.
-        file = Path(filename)
-        folder = file.parent.as_posix()
+        file = Path(filename).resolve()
+        f = file.as_posix()
 
-        # set current directory.
-        self.set_model(file.stem)
-        if folder != "":
-            os.chdir(folder)
-
-        # read.
-        f = file.resolve().as_posix()
-        self.clear_data()
-        self.clear_info()
+        # read (current data is kept if this fails).
+        ver = None
+        material = None
         if file.suffix == detail["extension"]:
-            all_data = read_dict(f)
-            ver = int(all_data["version"].split(".")[0])  # major version.
-            if ver < 3:
+            try:
+                all_data = read_dict(f)
+                ver = int(all_data["version"].split(".")[0])  # major version.
+            except (OSError, MemoryError):  # e.g. missing file, as it is.
+                raise
+            except Exception as e:  # the parser's message is kept as the cause.
+                raise ValueError(f"{file.name} is not a valid QtDraw file, it cannot be read.") from e
+            if isinstance(all_data, dict) and all_data.get("multipie") and not check_multipie():  # version 1.
+                raise Exception(f"{file.name} uses MultiPie. {multipie_message()}")
+            if ver < 2:  # a temporary widget is needed to convert version 1.
                 widget = PyVistaWidget(off_screen=True)
-                all_data = convert_version3(all_data, ver, widget)  # for old version.
-                widget.close()
+                try:
+                    with widget._batch_render():  # the converter adds objects one by one.
+                        all_data = convert_version3(all_data, ver, widget)
+                finally:
+                    widget.close()
+            elif ver < 3:
+                all_data = convert_version3(all_data, ver, None)
+            required = ["status", "preference", "camera", "data"]
         elif file.suffix in detail["ext_material"]:
-            all_data = read_draw(f, self)
+            all_data, material = parse_draw(f)
+            required = ["status", "preference"]
         else:
             raise Exception(f"cannot read {file.suffix} file.")
+
+        missing = [key for key in required if not isinstance(all_data.get(key), dict)]
+        if missing:
+            raise Exception(f"cannot read {f}, missing {missing}.")
+        if all_data["status"].get("multipie") and not check_multipie():  # not opened: saving would lose its MultiPie data.
+            raise Exception(f"{file.name} uses MultiPie. {multipie_message()}")
+        if material is None:
+            for object_type, rows in all_data["data"].items():
+                if object_type not in self._data.keys():
+                    raise Exception(f"cannot read {f}, unknown object type '{object_type}'.")
+                n = self._data[object_type].columnCount()
+                if not isinstance(rows, list) or any(not isinstance(row, list) or len(row) != n for row in rows):
+                    raise Exception(f"cannot read {f}, invalid data for '{object_type}'.")
+            replaced = self._replace_invalid_cells(all_data["data"])
+        else:
+            replaced = []
+
+        # set data (current data is restored if this fails).
+        current = self._get_current_state()
+        # rendered once, also after restoring the current data; a loaded drawing is kept if only its render fails.
+        with self._batch_render(log_render_error=True):
+            try:
+                self._set_loaded_data(file, all_data, ver, material)
+            except BaseException:
+                try:
+                    self._set_current_state(current)
+                except Exception as e:  # keep original exception.
+                    self.write_info(f"* failed to restore current data: {e}")
+                raise
+        # notify only after success, to keep data such as MultiPie panel on failure.
+        loading, self._loading = self._loading, True  # the MultiPie data now belongs to the loaded file, and is kept.
+        try:
+            self.data_removed.emit()
+        finally:
+            self._loading = loading  # restore, also for a load started by a listener.
+
+        self.replaced_cells = replaced
+        if replaced:
+            self.write_info(f"* {len(replaced)} invalid cells in {file.name} were set to the default values:")
+            for object_type, row, column, value in replaced:
+                self.write_info(f"  {object_type}, row {row}, {column}: {value!r}")
+        return replaced
+
+    # ==================================================
+    def _replace_invalid_cells(self, data):
+        """
+        Set the cells that the table would reject to the defaults of their columns.
+
+        Args:
+            data (dict): object data read from a file, {object_type: [[data]]}, changed in place.
+
+        Returns:
+            - (list) -- replaced cells, [(object_type, row, column, value)] with the row counted from 1.
+
+        :meta private:
+        """
+        replaced = []
+        for object_type, rows in data.items():
+            model = self._data[object_type]
+            columns = list(object_default[object_type].keys())
+            for i, row in enumerate(rows):
+                for j, (vtype, option, default) in enumerate(zip(model.column_type, model.column_option, model.column_default)):
+                    if not check_cell(vtype, option, row[j]):
+                        replaced.append((object_type, i + 1, columns[j], row[j]))
+                        row[j] = default
+        return replaced
+
+    # ==================================================
+    @_batched
+    def _set_loaded_data(self, file, all_data, ver, material):
+        """
+        Set loaded data.
+
+        Args:
+            file (Path): file name with absolute path.
+            all_data (dict): all data.
+            ver (int): major version for QtDraw file, None for material file.
+            material (dict): material info. to draw, None for QtDraw file.
+
+        :meta private:
+        """
+        f = file.as_posix()
+
+        # data file names of the drawing are relative to its directory.
+        self.set_model(file.stem)
+        self._document_dir = file.parent
+
+        self._tab_group_view.close()
+        self._clear_rows()
+        self.clear_info()
+        if material is not None:
+            draw(self, f, all_data, material)
         self.write_info(f"* read from {f}.")
 
         # set data.
@@ -1602,9 +2108,9 @@ class PyVistaWidget(QtInteractor):
 
         multipie = all_data["status"].get("multipie", {})
         if multipie:
-            self.mp_set_group(status=multipie)
+            self._mp_set_group(status=multipie, keep_crystal=True)  # the crystal and the cell of the file.
 
-        if file.suffix == detail["extension"]:
+        if material is None:
             if "distance" in all_data["camera"]:
                 del all_data["camera"]["distance"]
             self.add_data(all_data["data"])
@@ -1613,6 +2119,126 @@ class PyVistaWidget(QtInteractor):
                 self.reset_camera()
         else:
             self.set_view()
+
+    # ==================================================
+    def document_snapshot(self):
+        """
+        Snapshot of the document for undo.
+
+        Returns:
+            - (dict) -- {"doc": rows, status and MultiPie status (copy), "grids": isosurface data used by rows,
+              "in_memory": names of those data given without a file}.
+
+        :meta private:
+        """
+        status = {key: self._status.get(key) for key in DOCUMENT_STATUS}
+        multipie = self._mp_data.status if self._mp_data is not None else {}
+        doc = copy.deepcopy({"data": self.get_data_dict(), "status": status, "multipie": multipie})
+        names = {row[COLUMN_ISOSURFACE_FILE] for row in doc["data"].get("isosurface", [])}
+        grids = {name: self._isosurface_data[name] for name in names if name in self._isosurface_data}
+        in_memory = self._isosurface_in_memory & grids.keys()
+        return {"doc": doc, "grids": grids, "in_memory": in_memory}
+
+    # ==================================================
+    def rebase_snapshot(self, snapshot, old_dir, new_dir):
+        """
+        Snapshot whose isosurface data file names are relative to a new directory, as save() does.
+
+        Args:
+            snapshot (dict): snapshot from document_snapshot().
+            old_dir (Path): directory the names are relative to.
+            new_dir (Path): new directory.
+
+        Returns:
+            - (dict) -- snapshot (the same object if nothing changes; grids are shared).
+
+        :meta private:
+        """
+        rows = snapshot["doc"]["data"].get("isosurface", [])
+        names = {row[COLUMN_ISOSURFACE_FILE] for row in rows} - {""}
+        rename = isosurface_rename(names, snapshot["in_memory"], Path(old_dir).resolve(), Path(new_dir).resolve())
+        if not rename:
+            return snapshot
+        doc = copy.deepcopy(snapshot["doc"])
+        for row in doc["data"]["isosurface"]:
+            row[COLUMN_ISOSURFACE_FILE] = rename.get(row[COLUMN_ISOSURFACE_FILE], row[COLUMN_ISOSURFACE_FILE])
+        grids = {rename.get(name, name): grid for name, grid in snapshot["grids"].items()}
+        return {"doc": doc, "grids": grids, "in_memory": set(snapshot["in_memory"])}
+
+    # ==================================================
+    @_batched
+    def restore_document(self, snapshot):
+        """
+        Restore a document snapshot (camera, view settings and preferences are kept).
+
+        Args:
+            snapshot (dict): snapshot from document_snapshot().
+
+        :meta private:
+        """
+        doc = copy.deepcopy(snapshot["doc"])
+        camera = self.get_camera_info()
+        view = {key: copy.deepcopy(self._status[key]) for key in self._status if key not in DOCUMENT_STATUS}
+
+        table_visible = self._tab_group_view.isVisible()
+        self._tab_group_view.close()
+        self._clear_rows()
+        self._isosurface_data = dict(snapshot["grids"])
+        self._isosurface_in_memory = set(snapshot["in_memory"])
+        if doc["multipie"]:
+            self.mp_set_group(status=doc["multipie"])  # also sets axis and cell view, restored below.
+        else:
+            self._mp_data = None
+        self._status.update(view)
+        self._status.update(doc["status"])
+        self.set_additional_status()
+        self.refresh()
+        self.add_data(doc["data"])
+        self.set_camera_info(camera)
+        if table_visible:
+            self._tab_group_view.show()
+
+    # ==================================================
+    def _get_current_state(self):
+        """
+        Get current state to restore it when loading fails.
+
+        Returns:
+            - (dict) -- current state.
+
+        :meta private:
+        """
+        return {
+            "document_dir": self._document_dir,
+            "data": self.get_data_dict(),
+            "status": copy.deepcopy(self._status),
+            "preference": copy.deepcopy(self._preference),
+            "camera": self.get_camera_info(),
+            "isosurface": dict(self._isosurface_data),
+            "isosurface_in_memory": set(self._isosurface_in_memory),
+            "multipie": self._mp_data,
+        }
+
+    # ==================================================
+    @_batched
+    def _set_current_state(self, state):
+        """
+        Set state obtained by _get_current_state.
+
+        Args:
+            state (dict): state.
+
+        :meta private:
+        """
+        self._document_dir = state["document_dir"]
+        self._clear_rows()
+        self.clear_info()
+        self._isosurface_data = state["isosurface"]
+        self._isosurface_in_memory = state["isosurface_in_memory"]
+        self._mp_data = state["multipie"]
+        self.set_property(state["status"], state["preference"])
+        self.add_data(state["data"])
+        self.set_camera_info(state["camera"])
 
     # ==================================================
     def get_data_dict(self, home_cell=False):
@@ -1656,6 +2282,7 @@ class PyVistaWidget(QtInteractor):
         camera = self._backup["camera"]
         data = self._backup["data"]
 
+        self._clear_rows()
         self.set_property(status, preference)
         self.set_camera_info(camera)
         self.add_data(data)
@@ -1684,15 +2311,20 @@ class PyVistaWidget(QtInteractor):
         save all info.
 
         Args:
-            filename (str): full file name.
+            filename (str): file name, relative to the current directory.
+
+        Note:
+            - data file names of isosurfaces are made relative to the directory of the file, and data given
+              without a file is written there. These files and the drawing are written one by one (each atomically):
+              if writing fails, data files written before stay, and an existing data file may already be replaced.
         """
-        # rename.
-        file = Path(filename)
-        folder = file.parent.as_posix()
-        base = file.stem
-        self.set_model(base)
-        if folder != "":
-            os.chdir(folder)
+        given = Path(filename).absolute()  # the name (also of a symbolic link) gives the model name.
+        file = given.resolve()  # written to the target of a symbolic link; data are relative to its directory.
+        if not file.parent.is_dir():
+            raise FileNotFoundError(f"no directory {file.parent}.")
+        self.set_model(given.stem)
+        self._rebase_isosurface_data(self.document_dir(), file.parent)
+        self._document_dir = file.parent
 
         # set self._backup.
         self.save_current()
@@ -1702,29 +2334,67 @@ class PyVistaWidget(QtInteractor):
 
         isosurface = self._backup["data"].get("isosurface")
         if isosurface and len(isosurface) > 0:
-            for iso in isosurface:
-                name = iso[COLUMN_ISOSURFACE_FILE]
-                with open(name, mode="w", encoding="utf-8") as f:
-                    print(self._isosurface_data[name], file=f)
+            for name in {iso[COLUMN_ISOSURFACE_FILE] for iso in isosurface}:
+                # imported .xsf is a source file, and is read again when loaded.
+                if name == "" or Path(name).suffix == ".xsf" or name not in self._isosurface_data:
+                    continue
+                # data read from a file is not written again: the file is the source, wherever it is.
+                if name not in self._isosurface_in_memory and (file.parent / name).exists():
+                    continue
+                write_text_atomic(file.parent / name, str(self._isosurface_data[name]) + "\n")
 
         if self._mp_data is not None:
             self._backup["status"]["multipie"] = self._mp_data.status
 
         # write.
-        file = file.resolve().as_posix()
+        file = file.as_posix()
         header = "\nQtDraw data file in Python dict format.\n"
-        with open(file, mode="w", encoding="utf-8") as f:
-            print('"""' + header + '"""', file=f)
-            print(self._backup, file=f)
-
-        # formatter.
-        try:
-            cmd = f"black --line-length=300 {filename}"
-            subprocess.run(cmd, capture_output=True, check=True, shell=True)
-        except:
-            pass
+        text = format_text('"""' + header + '"""\n' + str(self._backup) + "\n")
+        write_text_atomic(file, text)
 
         self.write_info(f"* write to {file}.")
+
+    # ==================================================
+    def _rebase_isosurface_data(self, old_dir, new_dir):
+        """
+        Make isosurface data file names relative to a new directory.
+
+        Args:
+            old_dir (Path): directory the names are relative to.
+            new_dir (Path): new directory.
+
+        Note:
+            - names of existing files are changed, e.g. "a.xsf" -> "../work/a.xsf".
+            - names of data given without a file are kept; save() writes the data to the new directory.
+
+        :meta private:
+        """
+        old_dir = Path(old_dir).resolve()
+        new_dir = Path(new_dir).resolve()  # compare and relate real paths, also through symbolic links.
+        if old_dir == new_dir:
+            return
+
+        # all rows, also those grouped under a parent row.
+        model = self._data["isosurface"]
+        root = model.invisibleRootItem()
+        indexes = []
+        for parent_row in range(root.rowCount()):
+            item = root.child(parent_row)
+            if item.hasChildren():
+                indexes += [item.child(row).index() for row in range(item.rowCount())]
+            else:
+                indexes.append(item.index())
+
+        names = {model.get_row_data(index)[COLUMN_ISOSURFACE_FILE] for index in indexes} - {""}
+        rename = isosurface_rename(names, self._isosurface_in_memory, old_dir, new_dir)
+        if not rename:
+            return
+
+        for index in indexes:
+            name = model.get_row_data(index)[COLUMN_ISOSURFACE_FILE]
+            if name in rename:
+                model.set_row_data(index, COLUMN_ISOSURFACE_FILE, rename[name])
+        self._isosurface_data = {rename.get(name, name): data for name, data in self._isosurface_data.items()}
 
     # ==================================================
     def save_screenshot(self, filename):
@@ -1732,7 +2402,7 @@ class PyVistaWidget(QtInteractor):
         Save screenshot to file.
 
         Args:
-            full_path (str): fullpath file name.
+            filename (str): file name, extension is one of image or vector file types.
         """
         file = Path(filename)
         f = file.resolve().as_posix()
@@ -1741,6 +2411,8 @@ class PyVistaWidget(QtInteractor):
             self.screenshot(f, transparent_background=True)
         elif file.suffix in detail["vector_file"]:
             self.save_graphic(f, "")
+        else:
+            raise ValueError(f"unsupported file type '{file.suffix}' for screenshot.")
 
         self.write_info(f"* write screenshot to {f}.")
 
@@ -1776,6 +2448,8 @@ class PyVistaWidget(QtInteractor):
         if preference is not None:
             for key, value in preference.items():
                 for k, v in value.items():
+                    if key == "general" and k == "style":  # no longer a preference (always fusion), e.g. in old files.
+                        continue
                     self._preference[key][k] = v
 
         if status is not None or preference is not None:
@@ -1935,6 +2609,8 @@ class PyVistaWidget(QtInteractor):
 
         Returns:
             - (list) -- actor names, [str].
+
+        :meta private:
         """
         return list(self.actors.keys())
 
@@ -1959,7 +2635,7 @@ class PyVistaWidget(QtInteractor):
         Returns:
             - (str) -- copyright string.
         """
-        cr = f"Versoin {__version__}, Copyright (C) {__date__} by {__author__}"
+        cr = f"Version {__version__}, Copyright (C) {__date__} by {__author__}"
         return cr
 
     # ==================================================
@@ -1994,6 +2670,8 @@ class PyVistaWidget(QtInteractor):
             self._status["crystal"] = crystal
 
         self.set_unit_cell()
+        self.document_changed.emit()
+        self.status_changed.emit()
 
     # ==================================================
     def set_origin(self, origin=None):
@@ -2013,6 +2691,8 @@ class PyVistaWidget(QtInteractor):
             self._status["origin"] = origin
 
         self.set_cell()
+        self.document_changed.emit()
+        self.status_changed.emit()
 
     # ==================================================
     def set_unit_cell(self, cell=None):
@@ -2033,6 +2713,8 @@ class PyVistaWidget(QtInteractor):
 
         self.set_cell()
         self.redraw()
+        self.document_changed.emit()
+        self.status_changed.emit()
 
     # ==================================================
     def set_clip(self, mode=None):
@@ -2054,6 +2736,8 @@ class PyVistaWidget(QtInteractor):
             self.hide_outside_actor()
         else:
             self.show_outside_actor()
+        self.document_changed.emit()
+        self.status_changed.emit()
 
     # ==================================================
     def hide_outside_actor(self):
@@ -2064,26 +2748,54 @@ class PyVistaWidget(QtInteractor):
         """
         lower = self._status["lower"]
         upper = self._status["upper"]
+        actors = self.actors  # dict of all actors is created for each access.
         for object_type, model in self._data.items():
             if object_type != "text2d":
                 value = np.array(model.tolist(), dtype=object)
                 if len(value) > 0:
-                    point = "[" + ",".join(value[:, COLUMN_POSITION]) + "]"
-                    cell = "[" + ",".join(value[:, COLUMN_CELL]) + "]"
                     name_actor = value[:, COLUMN_NAME_ACTOR]
-                    point = convert_str_vector(point, cell, False)
-                    idx = get_outside_box(point, lower, upper)
+                    if object_type == "caption":  # each caption has its own number of positions.
+                        idx = [
+                            i
+                            for i, (p, c) in enumerate(zip(value[:, COLUMN_POSITION], value[:, COLUMN_CELL]))
+                            if self._caption_outside(p, c, lower, upper)
+                        ]
+                    else:
+                        point = "[" + ",".join(value[:, COLUMN_POSITION]) + "]"
+                        cell = "[" + ",".join(value[:, COLUMN_CELL]) + "]"
+                        point = convert_str_vector(point, cell, False)
+                        idx = get_outside_box(point, lower, upper)
                     hide = name_actor[idx]
                     for actor_name in hide:
                         if actor_name != "":
-                            actor = self.actors[actor_name]
+                            actor = actors[actor_name]
                             actor.SetVisibility(False)
                             # self.hide_action(actor)
                     if object_type != "caption":
                         label_actor = value[:, COLUMN_LABEL_ACTOR][idx]
                         for i in label_actor:
                             if i != "":
-                                self.actors[i].SetVisibility(False)
+                                actors[i].SetVisibility(False)
+
+    # ==================================================
+    @staticmethod
+    def _caption_outside(position, cell, lower, upper):
+        """
+        Are all positions of a caption outside the range ?
+
+        Args:
+            position (str): position(s), str([float]) or str([[float]]).
+            cell (str): cell, str([int]).
+            lower (list): lower bound.
+            upper (list): upper bound.
+
+        Returns:
+            - (bool) -- all outside ?
+
+        :meta private:
+        """
+        point = np.atleast_2d(convert_str_vector(position, cell, False))
+        return len(get_outside_box(point, lower, upper)) == len(point)
 
     # ==================================================
     def clip_actor(self, position, cell, name_actor, label_actor):
@@ -2119,6 +2831,7 @@ class PyVistaWidget(QtInteractor):
 
         :meta private:
         """
+        actors = self.actors  # dict of all actors is created for each access.
         for object_type, model in self._data.items():
             if object_type != "text2d":
                 value = np.array(model.tolist(), dtype=object)
@@ -2128,15 +2841,16 @@ class PyVistaWidget(QtInteractor):
                     idx = name_actor_check
                     show = name_actor[idx]
                     for actor_name in show:
-                        actor = self.actors[actor_name]
-                        actor.SetVisibility(True)
+                        if actor_name != "":  # a row that could not be drawn has no actor.
+                            actor = actors[actor_name]
+                            actor.SetVisibility(True)
                     if object_type != "caption":
                         label_actor_check = value[:, COLUMN_LABEL_CHECK].astype(bool)
                         idx = label_actor_check
                         label_actor = value[:, COLUMN_LABEL_ACTOR][idx]
                         for i in label_actor:
                             if i != "":
-                                self.actors[i].SetVisibility(True)
+                                actors[i].SetVisibility(True)
 
     # ==================================================
     def set_repeat(self, mode=None):
@@ -2154,6 +2868,8 @@ class PyVistaWidget(QtInteractor):
             self._status["repeat"] = mode
 
         self.repeat_data()
+        self.document_changed.emit()
+        self.status_changed.emit()
 
     # ==================================================
     def set_range(self, lower=None, upper=None):
@@ -2191,6 +2907,8 @@ class PyVistaWidget(QtInteractor):
 
         self.set_cell()
         self.set_repeat()
+        self.document_changed.emit()
+        self.status_changed.emit()
 
     # ==================================================
     def set_view(self, view=None):
@@ -2245,6 +2963,7 @@ class PyVistaWidget(QtInteractor):
             self.enable_parallel_projection()
         else:
             self.disable_parallel_projection()
+        self.status_changed.emit()
 
     # ==================================================
     def set_grid(self, mode=None):
@@ -2267,6 +2986,7 @@ class PyVistaWidget(QtInteractor):
         else:
             self.remove_bounds_axes()
             self.remove_bounding_box()
+        self.status_changed.emit()
 
     # ==================================================
     def set_bar(self, mode=None):
@@ -2296,6 +3016,7 @@ class PyVistaWidget(QtInteractor):
             )
         elif self.scalar_bars:
             self.remove_scalar_bar()
+        self.status_changed.emit()
 
     # ==================================================
     def set_axis(self, axis_type=None):
@@ -2332,6 +3053,7 @@ class PyVistaWidget(QtInteractor):
             viewport = False
         else:
             self.renderer.hide_axes()
+            self.status_changed.emit()
             return
 
         create_axes_widget(
@@ -2345,6 +3067,7 @@ class PyVistaWidget(QtInteractor):
             viewport=viewport,
             full=(axis_type == "full"),
         )
+        self.status_changed.emit()
 
     # ==================================================
     def set_cell(self, mode=None):
@@ -2369,6 +3092,7 @@ class PyVistaWidget(QtInteractor):
         else:
             self.show_cell()
         self.set_axis()
+        self.status_changed.emit()
 
     # ==================================================
     # internal use (general).
@@ -2385,6 +3109,7 @@ class PyVistaWidget(QtInteractor):
         self._data = {}
         for object_type, value in object_default.items():
             self._data[object_type] = GroupModel(self, object_type, value)
+            self._data[object_type].batch = self._batch_render  # a change of a group renders once.
 
     # ==================================================
     def set_theme(self, theme=None):
@@ -2526,13 +3251,53 @@ class PyVistaWidget(QtInteractor):
         """
         Clear Data.
         """
-        self.deselect_actor_all()
         self._tab_group_view.close()
-        self._block_remove_isosurface = True
-        for model in self._data.values():
-            model.clear_data()
-        self._block_remove_isosurface = False
+        self._clear_rows()
         self.data_removed.emit()
+
+    # ==================================================
+    def _clear_rows(self):
+        """
+        Clear all rows (isosurface data is kept).
+
+        :meta private:
+        """
+        self.deselect_actor_all()
+        self._remove_object_actors()
+        self._block_remove_isosurface = True
+        self._block_remove_actor = True  # already removed.
+        try:
+            for model in self._data.values():
+                model.clear_data()
+        finally:
+            self._block_remove_isosurface = False
+            self._block_remove_actor = False
+
+    # ==================================================
+    def _remove_object_actors(self):
+        """
+        Remove actors of all objects and their labels at once.
+
+        Note:
+            - removing actors one by one by name reads the dict of all actors each time.
+            - as remove_actor(name), actors named "name-..." are also removed.
+
+        :meta private:
+        """
+        names = set()
+        for model in self._data.values():
+            for row in model.tolist():
+                names.update({row[COLUMN_NAME_ACTOR], row[COLUMN_LABEL_ACTOR]} - {""})
+        if not names:
+            return
+
+        def is_object(key):
+            return key in names or any(key[:i] in names for i, c in enumerate(key) if c == "-")
+
+        actors = [actor for key, actor in self.renderer.actors.items() if is_object(key)]
+        self.renderer.remove_actor(actors, reset_camera=False, render=False)
+        for name in names:
+            self._actor_object_type.pop(name, None)
 
     # ==================================================
     def get_camera_info(self):
@@ -2578,6 +3343,11 @@ class PyVistaWidget(QtInteractor):
 
     # ==================================================
     def _set_default_zoom(self):
+        """
+        Set default zoom.
+
+        :meta private:
+        """
         view_vec = self.camera.direction
         self.view_vector(view_vec)
         self.reset_camera()
@@ -2586,6 +3356,7 @@ class PyVistaWidget(QtInteractor):
     # ==================================================
     # internal use (access data).
     # ==================================================
+    @_batched
     def add_data(self, data):
         """
         Add data.
@@ -2599,9 +3370,16 @@ class PyVistaWidget(QtInteractor):
             return
 
         for object_type, model in data.items():
+            model = [list(row) for row in model]
+            n = self._data[object_type].columnCount()
+            for row in model:  # actor names belong to the widget that drew them, and new ones are given by counters.
+                if len(row) == n:  # others are skipped by the model.
+                    row[COLUMN_NAME_ACTOR] = ""
+                    row[COLUMN_LABEL_ACTOR] = ""
             self._data[object_type].set_data(model)
 
     # ==================================================
+    @_batched
     def repeat_data(self):
         """
         Repeat data.
@@ -2629,8 +3407,10 @@ class PyVistaWidget(QtInteractor):
         Transform data to non-repeat data.
         """
         self.nonrepeat_data()
+        self.document_changed.emit()
 
     # ==================================================
+    @_batched
     def nonrepeat_data(self):
         """
         Transform data to non-repeat data.
@@ -2642,8 +3422,8 @@ class PyVistaWidget(QtInteractor):
             n = len(model)
             if object_type not in ["text2d", "caption"] and n > 0:
                 model = np.array(model, dtype=object)
-                pos = np.array(list(map(ast.literal_eval, model[:, COLUMN_POSITION])))
-                cell = np.array(list(map(ast.literal_eval, model[:, COLUMN_CELL])))
+                pos = np.array([_parse_vector(i) for i in model[:, COLUMN_POSITION]])
+                cell = np.array([_parse_vector(i, as_int=True) for i in model[:, COLUMN_CELL]])
                 pos += cell
                 pos = np.array(list(map(str, pos.tolist())), dtype=object)
                 model[:, COLUMN_POSITION] = pos
@@ -2760,16 +3540,23 @@ class PyVistaWidget(QtInteractor):
 
         :meta private:
         """
-        self._mathjax.close()
-        self._tab_group_view.close()
+        if self._close_done:
+            return
+        self._close_done = True
 
-        # restore std err.
-        if self._iosave["stderr"] is not None:
-            os.dup2(self._iosave["stderr"], self._iosave["file_no"])
-            os.close(self._iosave["stderr"])
-            self._iosave["stderr"] = None
+        # delete the data table, otherwise it remains and slows down new windows.
+        # scheduled first, so that a failing step below cannot skip it.
+        # the VTK widget itself is not deleted: deleting it occasionally corrupts memory with Mesa on Linux.
+        self._tab_group_view.deleteLater()
 
-        super().close()
+        # finish closing even if a step fails; the error is raised afterwards.
+        try:
+            try:
+                self._mathjax.close()
+            finally:
+                self._tab_group_view.close()
+        finally:
+            super().close()
 
     # ==================================================
     def remove_data(self, object_type, row_data, index):
@@ -2783,17 +3570,21 @@ class PyVistaWidget(QtInteractor):
 
         :meta private:
         """
-        actor_name = row_data[COLUMN_NAME_ACTOR]
-        self.delete_actor(actor_name)
-
-        if object_type not in ["caption", "text2d"]:
-            actor_name = row_data[COLUMN_LABEL_ACTOR]
+        if not self._block_remove_actor:
+            actor_name = row_data[COLUMN_NAME_ACTOR]
             self.delete_actor(actor_name)
+
+            if object_type not in ["caption", "text2d"]:
+                actor_name = row_data[COLUMN_LABEL_ACTOR]
+                self.delete_actor(actor_name)
 
         if object_type == "isosurface" and not self._block_remove_isosurface:
             filename = row_data[COLUMN_ISOSURFACE_FILE]
-            if filename in self._isosurface_data.keys():
+            # the removed row is still in the model here.
+            n_used = sum(row[COLUMN_ISOSURFACE_FILE] == filename for row in self._data["isosurface"].tolist())
+            if filename in self._isosurface_data.keys() and n_used <= 1:
                 del self._isosurface_data[filename]
+                self._isosurface_in_memory.discard(filename)
 
     # ==================================================
     # internal use (context menu).
@@ -2925,9 +3716,10 @@ class PyVistaWidget(QtInteractor):
 
         :meta private:
         """
+        actors = self.actors  # dict of all actors is created for each access.
         for actor_name, prop in self._selected_actor.items():
-            if actor_name in self.actors.keys():
-                actor = self.actors[actor_name]
+            if actor_name in actors:
+                actor = actors[actor_name]
                 actor.prop.show_edges = prop[0]
                 actor.prop.edge_color = prop[1]
         self._selected_actor = {}
@@ -3056,6 +3848,7 @@ class PyVistaWidget(QtInteractor):
             self.plot_label(object_type, index, row_info, positionT)
 
     # ==================================================
+    @_batched
     def redraw(self):
         """
         Redraw all object.
@@ -3080,8 +3873,10 @@ class PyVistaWidget(QtInteractor):
 
         :meta private:
         """
-        if actor == "":
-            actor = None
+        new = actor == ""
+        if new:  # not the default name by the mesh address, which can be reused after the mesh is freed.
+            actor = f"Object(Counter={self._object_counter})"
+            self._object_counter += 1
 
         g = obj.copy()
         g = g.translate(positionT, inplace=True)
@@ -3095,6 +3890,8 @@ class PyVistaWidget(QtInteractor):
             "name": actor,
             "show_edges": False,
         }
+        if REMOVE_EXISTING_ACTOR:
+            option["remove_existing_actor"] = not new  # a new name has no actor to remove: no search through all actors.
 
         return option
 
@@ -3152,16 +3949,17 @@ class PyVistaWidget(QtInteractor):
         else:
             label_check = True
 
-        if not label_check:
-            label = row_data["label_actor"]
-            if label in self.actors.keys():
-                actor = self.actors[label]
-                actor.SetVisibility(False)
-        if not name_check:
-            name = row_data["name_actor"]
-            if name in self.actors.keys():
-                actor = self.actors[name]
-                actor.SetVisibility(False)
+        # hide existing actors (new rows have no actor yet).
+        hide = []
+        if not label_check and row_data["label_actor"]:
+            hide.append(row_data["label_actor"])
+        if not name_check and row_data["name_actor"]:
+            hide.append(row_data["name_actor"])
+        if hide:
+            actors = self.actors  # dict of all actors is created for each access.
+            for name in hide:
+                if name in actors:
+                    actors[name].SetVisibility(False)
 
         return name_check, label_check
 
@@ -3184,7 +3982,7 @@ class PyVistaWidget(QtInteractor):
         color = all_colors[data["color"]][0]  # hex
         opacity = float(data["opacity"])
 
-        obj = create_sphere(radius=size)
+        obj = _site_sphere(size)  # copied in common_option.
         option_add = {"color": color, "opacity": opacity}
 
         option = self.common_option(actor=actor, positionT=positionT, obj=obj)
@@ -3193,6 +3991,42 @@ class PyVistaWidget(QtInteractor):
         actor = self.add_mesh(**option)
         self.set_actor("site", index, actor.name)
         self.clip_actor(data["position"], data["cell"], actor.name, data["label_actor"])
+
+    # ==================================================
+    def _not_drawn(self, object_type, index, data, reason):
+        """
+        Tell that an object is not drawn, and remove the object drawn before an edit.
+
+        Args:
+            object_type (str): object type.
+            index (QModelIndex): index.
+            data (dict): data list.
+            reason (str): reason.
+
+        :meta private:
+        """
+        self.write_info(f"* {object_type} '{data['name']}' is not drawn: {reason}.")
+        actor = data["name_actor"]
+        if actor != "":
+            self.delete_actor(actor)
+            self._data[object_type].set_row_data(index, COLUMN_NAME_ACTOR, "")
+
+    # ==================================================
+    def _tips_left_out(self, object_type, data, left_out):
+        """
+        Tell that arrow tips of an object are not drawn.
+
+        Args:
+            object_type (str): object type.
+            data (dict): data list.
+            left_out (list): "arrow1" and "arrow2" of tips left out.
+
+        :meta private:
+        """
+        if left_out:
+            tips = " and ".join(left_out)
+            reason = "the tip has" if len(left_out) == 1 else "the tips have"
+            self.write_info(f"* {object_type} '{data['name']}' is drawn without {tips}: {reason} no length or direction.")
 
     # ==================================================
     def plot_data_bond(self, index, data, positionT):
@@ -3215,6 +4049,9 @@ class PyVistaWidget(QtInteractor):
         opacity = float(data["opacity"])
 
         directionT = convert_str_vector(vector=direction, transform=transform, A=self.A_matrix)
+        if np.linalg.norm(directionT) == 0.0:  # a cylinder needs a direction.
+            self._not_drawn("bond", index, data, "its length is 0")
+            return
 
         if color2 != color:
             obj = create_bond(direction=directionT, width=width, twotone=True)
@@ -3256,6 +4093,14 @@ class PyVistaWidget(QtInteractor):
         opacity = float(data["opacity"])
 
         directionT = convert_str_vector(vector=direction, transform=transform, A=self.A_matrix)
+        norm = float(np.linalg.norm(directionT))
+        drawn_length = abs(length) * norm if length < CHOP else length  # as create_vector() uses it.
+        if norm == 0.0 or drawn_length < CHOP:  # an arrow of length 0 cannot be made (the direction is normalized).
+            self.write_info(f"* vector '{data['name']}' is not drawn: its length is 0.")
+            if actor != "":  # remove the vector drawn before an edit.
+                self.delete_actor(actor)
+                self._data["vector"].set_row_data(index, COLUMN_NAME_ACTOR, "")
+            return
 
         obj = create_vector(
             direction=directionT,
@@ -3291,7 +4136,7 @@ class PyVistaWidget(QtInteractor):
         shape = data["shape"]
         surface = data["surface"]
         size = float(data["size"])
-        theta_phi_range = apply(float, text_to_list(data["range"]))
+        theta_phi_range = _parse_vector(data["range"]).tolist()  # also expressions, as the table accepts.
         color = data["color"]
         opacity = float(data["opacity"])
 
@@ -3341,8 +4186,8 @@ class PyVistaWidget(QtInteractor):
         shape = data["shape"]
         vector = data["vector"]
         size = float(data["size"])
-        theta_phi_range = apply(float, text_to_list(data["range"]))
-        division = apply(int, text_to_list(data["division"]))
+        theta_phi_range = _parse_vector(data["range"]).tolist()  # also expressions, as the table accepts.
+        division = _parse_vector(data["division"], as_int=True).tolist()
         length = float(data["length"])
         width = float(data["width"])
         offset = float(data["offset"])
@@ -3353,6 +4198,10 @@ class PyVistaWidget(QtInteractor):
         tip_radius = float(data["tip R"])
         tip_length = float(data["tip length"])
         opacity = float(data["opacity"])
+
+        if arrow_length([1.0, 0.0, 0.0], length) == 0.0:  # an arrow of length 0 cannot be made (a short one is scaled).
+            self._not_drawn("stream", index, data, "its length is 0")
+            return
 
         obj = create_stream(
             shape=shape,
@@ -3368,6 +4217,9 @@ class PyVistaWidget(QtInteractor):
             tip_radius=tip_radius,
             tip_length=tip_length,
         )
+        if obj is None:
+            self._not_drawn("stream", index, data, "all its arrows have length 0")
+            return
 
         if check_color(color):
             option_add = {
@@ -3424,10 +4276,21 @@ class PyVistaWidget(QtInteractor):
         opacity = float(data["opacity"])
 
         directionT = convert_str_vector(vector=direction, transform=transform, A=self.A_matrix)
+        if np.linalg.norm(directionT) == 0.0:  # a cylinder needs a direction.
+            self._not_drawn("line", index, data, "its length is 0")
+            return
 
+        left_out = []
         obj = create_line(
-            direction=directionT, width=width, arrow1=arrow1, arrow2=arrow2, tip_radius=tip_radius, tip_length=tip_length
+            direction=directionT,
+            width=width,
+            arrow1=arrow1,
+            arrow2=arrow2,
+            tip_radius=tip_radius,
+            tip_length=tip_length,
+            left_out=left_out,
         )
+        self._tips_left_out("line", data, left_out)
         option_add = {"color": color, "opacity": opacity}
 
         option = self.common_option(actor=actor, positionT=positionT, obj=obj)
@@ -3461,6 +4324,9 @@ class PyVistaWidget(QtInteractor):
         opacity = float(data["opacity"])
 
         normalT = convert_str_vector(vector=normal, transform=transform, A=self.A_matrix)
+        if np.linalg.norm(normalT) == 0.0:  # the object needs a direction.
+            self._not_drawn("plane", index, data, "its normal is 0")
+            return
 
         obj = create_plane(normal=normalT, x_size=x_size, y_size=y_size)
         option_add = {
@@ -3501,6 +4367,9 @@ class PyVistaWidget(QtInteractor):
         opacity = float(data["opacity"])
 
         normalT = convert_str_vector(vector=normal, transform=transform, A=self.A_matrix)
+        if np.linalg.norm(normalT) == 0.0:  # the object needs a direction.
+            self._not_drawn("circle", index, data, "its normal is 0")
+            return
 
         obj = create_circle(normal=normalT, size=size)
         option_add = {
@@ -3539,6 +4408,9 @@ class PyVistaWidget(QtInteractor):
         opacity = float(data["opacity"])
 
         normalT = convert_str_vector(vector=normal, transform=transform, A=self.A_matrix)
+        if np.linalg.norm(normalT) == 0.0:  # the object needs a direction.
+            self._not_drawn("torus", index, data, "its normal is 0")
+            return
 
         obj = create_torus(normal=normalT, size=size, width=width)
         option_add = {"color": color, "opacity": opacity}
@@ -3572,6 +4444,9 @@ class PyVistaWidget(QtInteractor):
         opacity = float(data["opacity"])
 
         normalT = convert_str_vector(vector=normal, transform=transform, A=self.A_matrix)
+        if np.linalg.norm(normalT) == 0.0:  # the object needs a direction.
+            self._not_drawn("ellipsoid", index, data, "its normal is 0")
+            return
 
         obj = create_ellipsoid(normal=normalT, x_size=x_size, y_size=y_size, z_size=z_size)
         option_add = {"color": color, "opacity": opacity}
@@ -3609,6 +4484,9 @@ class PyVistaWidget(QtInteractor):
         opacity = float(data["opacity"])
 
         normalT = convert_str_vector(vector=normal, transform=transform, A=self.A_matrix)
+        if np.linalg.norm(normalT) == 0.0:  # the object needs a direction.
+            self._not_drawn("toroid", index, data, "its normal is 0")
+            return
 
         obj = create_toroid(
             normal=normalT,
@@ -3705,7 +4583,7 @@ class PyVistaWidget(QtInteractor):
         opacity = float(data["opacity"])
 
         pointT = convert_str_vector(vector=point, transform=transform, A=self.A_matrix)
-        connectivity = apply(int, text_to_list(connectivity))
+        connectivity = [[int(x) for x in face] for face in str_to_sympy(connectivity)]  # faces may differ in size.
 
         obj = create_polygon(point=pointT, connectivity=connectivity)
         if wireframe:
@@ -3753,6 +4631,9 @@ class PyVistaWidget(QtInteractor):
         opacity = float(data["opacity"])
 
         view = convert_str_vector(vector=view, transform=False)
+        if np.linalg.norm(view) == 0.0:  # the text needs a direction to face.
+            self._not_drawn("text3d", index, data, "its view direction is 0")
+            return
         offset = convert_str_vector(vector=offset, transform=False)
 
         obj = create_text3d(
@@ -3786,10 +4667,10 @@ class PyVistaWidget(QtInteractor):
         """
         actor = data["name_actor"]
         data_name = data["data"]
-        value = apply(float, text_to_list(data["value"]))
+        value = _parse_vector(data["value"]).tolist()  # also expressions, as the table accepts.
         surface = data["surface"]
         color = data["color"]
-        color_range = apply(float, text_to_list(data["color_range"]))
+        color_range = _parse_vector(data["color_range"]).tolist()
         opacity = float(data["opacity"])
 
         if data_name == "":
@@ -3800,7 +4681,7 @@ class PyVistaWidget(QtInteractor):
             return
 
         grid_data = self._isosurface_data[data_name]
-        if surface not in grid_data["surface"].keys():
+        if surface not in (grid_data["surface"] or {}).keys():
             surface = ""
 
         obj = create_isosurface(grid_data, value, surface)
@@ -3860,6 +4741,7 @@ class PyVistaWidget(QtInteractor):
 
         pointT = convert_str_vector(vector=point, transform=transform, A=self.A_matrix)
 
+        left_out = []
         obj = create_spline(
             point=pointT,
             width=width,
@@ -3870,7 +4752,9 @@ class PyVistaWidget(QtInteractor):
             arrow2=arrow2,
             tip_radius=tip_radius,
             tip_length=tip_length,
+            left_out=left_out,
         )
+        self._tips_left_out("spline", data, left_out)
         option_add = {"color": color, "opacity": opacity}
 
         option = self.common_option(actor=actor, positionT=positionT, obj=obj)
@@ -3908,9 +4792,16 @@ class PyVistaWidget(QtInteractor):
         opacity = float(data["opacity"])
 
         t_range = convert_str_vector(vector=t_range, transform=False)
+        if t_range[2] == 0.0:  # the points of t would never end.
+            self._not_drawn("spline_t", index, data, "its step of t is 0")
+            return
 
         A = self.A_matrix if transform else np.eye(4)
-        obj = create_spline_t(point, t_range, width, n_interp, closed, natural, arrow1, arrow2, tip_radius, tip_length, A)
+        left_out = []
+        obj = create_spline_t(
+            point, t_range, width, n_interp, closed, natural, arrow1, arrow2, tip_radius, tip_length, A, left_out
+        )
+        self._tips_left_out("spline_t", data, left_out)
         option_add = {"color": color, "opacity": opacity}
 
         option = self.common_option(actor=actor, positionT=positionT, obj=obj)
@@ -3934,7 +4825,13 @@ class PyVistaWidget(QtInteractor):
         """
         actor = data["name_actor"]
         margin = int(data["margin"])
-        caption = text_to_list(data["caption"])
+        caption = _caption_labels(data["caption"], positionT)
+        if caption is None:  # e.g. from a file or a table edit.
+            self.write_info(f"* caption '{data['name']}' is not drawn: one caption for each position is needed.")
+            if actor != "":  # remove the caption drawn before the edit.
+                self.delete_actor(actor)
+                self._data["caption"].set_row_data(index, COLUMN_NAME_ACTOR, "")
+            return
         size = int(data["size"])
         bold = data["bold_check"]
         color = all_colors[data["color"]][0]  # hex
@@ -3980,7 +4877,7 @@ class PyVistaWidget(QtInteractor):
         color = all_colors[data["color"]][0]
         font = data["font"]
 
-        position = apply(float, text_to_list(position))[:2]
+        position = _parse_vector(position)[:2].tolist()  # as add_text2d() checks it, also with expressions.
 
         if actor == "":
             actor = f"Actor2D(Counter={self._label_counter})"
@@ -4031,6 +4928,16 @@ class PyVistaWidget(QtInteractor):
         self.set_actor(object_type, index, actor + "-labels", COLUMN_LABEL_ACTOR)
 
     # ==================================================
+    def document_dir(self):
+        """
+        Directory that data file names of the drawing are relative to.
+
+        Returns:
+            - (Path) -- directory of the drawing file, or the current directory if it was never loaded or saved.
+        """
+        return self._document_dir if self._document_dir is not None else Path.cwd()
+
+    # ==================================================
     def set_isosurface_data(self, filename):
         """
         Set isosurface data.
@@ -4043,7 +4950,7 @@ class PyVistaWidget(QtInteractor):
 
         :meta private:
         """
-        path_abs, path_rel, base, ext, folder = split_filename(filename)
+        path_abs, path_rel, base, ext, folder = split_filename(filename, self.document_dir())
         if os.path.exists(path_abs):
             if type(filename) != tuple:
                 if ext == ".xsf":
@@ -4051,8 +4958,8 @@ class PyVistaWidget(QtInteractor):
                 else:
                     grid_data = read_dict(path_abs)
 
-            fname = path_rel
-            self._isosurface_data[path_rel] = grid_data
+            fname = Path(path_rel).as_posix()  # the same name on all platforms.
+            self._isosurface_data[fname] = grid_data
         else:
             fname = ""
 
@@ -4229,11 +5136,30 @@ class PyVistaWidget(QtInteractor):
             group (str, optional): group tag [default: C1].
             status (dict, optional): multipie status update dict.
         """
+        self._mp_set_group(group, status)
+
+    # ==================================================
+    def _mp_set_group(self, group=None, status=None, keep_crystal=False):
+        """
+        MultiPie: Set group or group status.
+
+        Args:
+            group (str, optional): group tag [default: C1].
+            status (dict, optional): multipie status update dict.
+            keep_crystal (bool, optional): keep the crystal and the cell, e.g. those of an opened file ?
+
+        :meta private:
+        """
         if not check_multipie():
-            raise Exception("MultiPie is not installed.")
+            raise Exception(multipie_message())
+        from qtdraw.multipie.multipie_data import MultiPieData  # only with MultiPie: QtDraw also runs without it.
 
         self._mp_data = MultiPieData(self)
         self._mp_data.set_status(status, group)
+        crystal = self._mp_data._crystal
+        if not keep_crystal and self._status["crystal"] != crystal:  # the cell of the group, as the main window.
+            self.set_crystal(crystal)
+        self.document_changed.emit()
 
     # ==================================================
     def mp_add_site(self, site, size=None, color=None, opacity=None):
@@ -4323,7 +5249,7 @@ class PyVistaWidget(QtInteractor):
         if self._mp_data is None:
             return
 
-        self._mpdata.add_bond_definition(bond, length, width, color, opacity)
+        self._mp_data.add_bond_definition(bond, length, width, color, opacity)
 
     # ==================================================
     def mp_site_samb_list(self, site):

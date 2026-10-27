@@ -1,12 +1,19 @@
+# SPDX-License-Identifier: MPL-2.0
+# Copyright (C) 2021- The QtDraw developers
+#
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
 """
 Validator type.
 
 - type: option.
     - int: (min, max)
     - float: (min, max, digit)
-    - list_int: (shape, var)
+    - list_int: (shape, var, min, max)
     - list_float: (shape, var ,digit)
-    - math: (shape, var)
+    - math: (shape, var, real, real_function, allow_empty)
     - site: (use var?)
     - bond: (use var?)
     - site_bond: (use var?)
@@ -14,11 +21,16 @@ Validator type.
     - orbital_site_bond: (use var?)
 """
 
+import cmath
+import math
+
 import numpy as np
+import sympy
 
 from qtdraw.util.util import str_to_sympy, to_latex
 
 DISPLAY_DIGIT = 5
+INT_LIMIT = 2**63  # integers must fit in 64 bits.
 
 
 # ==================================================
@@ -32,10 +44,98 @@ def check_symbol(expr):
     Returns:
         - (bool) -- if expr contains symbol, return True otherwise False.
     """
-    if isinstance(expr, np.ndarray):
-        return any(check_symbol(e) for e in expr.flat)
+    if isinstance(expr, (list, tuple, np.ndarray)):  # also rows of different lengths.
+        return any(check_symbol(e) for e in _flat(expr))
 
-    return bool(expr.free_symbols)
+    return bool(getattr(expr, "free_symbols", None))  # e.g. a dict read from "{}" has none.
+
+
+# ==================================================
+def _flat(s):
+    """
+    Elements of a (nested, possibly ragged) list or array.
+
+    :meta private:
+    """
+    if isinstance(s, (list, tuple, np.ndarray)):
+        for x in s:
+            yield from _flat(x)
+    else:
+        yield s
+
+
+# ==================================================
+def _format(s, fmt):
+    """
+    Text of a (nested, possibly ragged) list or array, with each element formatted by fmt.
+
+    :meta private:
+    """
+    if isinstance(s, (list, tuple, np.ndarray)):
+        return "[" + ",".join(_format(x, fmt) for x in s) + "]"
+    return fmt(s)
+
+
+# ==================================================
+def _finite_floats(s):
+    """
+    Floats of numbers, None if one is not a finite real number (e.g. nan, oo or I).
+
+    :meta private:
+    """
+    try:
+        values = [float(x) for x in _flat(s)]
+    except (TypeError, ValueError, OverflowError):
+        return None
+    return values if all(math.isfinite(x) for x in values) else None
+
+
+# ==================================================
+def _finite_complex(s):
+    """
+    Complex numbers of numbers, None if one is not a finite number (e.g. nan or zoo).
+
+    :meta private:
+    """
+    try:
+        values = [complex(x) for x in _flat(s)]
+    except (TypeError, ValueError, OverflowError):
+        return None
+    return values if all(cmath.isfinite(x) for x in values) else None
+
+
+# ==================================================
+def _integers(s):
+    """
+    Integers of numbers, None if one is not an integer fitting in 64 bits.
+
+    :meta private:
+    """
+    values = []
+    for x in _flat(s):
+        if not getattr(x, "is_integer", False):
+            return None
+        x = int(x)
+        if not -INT_LIMIT <= x < INT_LIMIT:
+            return None
+        values.append(x)
+    return values
+
+
+# ==================================================
+def _in_range(values, r_min, r_max):
+    """
+    Whether the values are within [r_min, r_max] ("*" for no limit), each a number or a list for each value.
+
+    :meta private:
+    """
+    for limit, inside in ((r_min, lambda x, b: x >= b), (r_max, lambda x, b: x <= b)):
+        if limit == "*":
+            continue
+        bounds = limit if isinstance(limit, (list, tuple)) else [limit] * len(values)
+        if len(bounds) != len(values) or not all(inside(x, b) for x, b in zip(values, bounds)):
+            return False
+    return True
 
 
 # ==================================================
@@ -94,6 +194,8 @@ def validator_int(text, **opt):
         s = int(text)
     except ValueError:
         return None
+    if not -INT_LIMIT <= s < INT_LIMIT:
+        return None
 
     r_min = opt.get("min", "*")
     r_max = opt.get("max", "*")
@@ -119,6 +221,8 @@ def validator_float(text, **opt):
     try:
         s = float(text)
     except ValueError:
+        return None
+    if not math.isfinite(s):  # nan, inf or too large.
         return None
 
     r_min = opt.get("min", "*")
@@ -152,13 +256,13 @@ def validator_list_float(text, **opt):
         s = str_to_sympy(text, check_var=var, check_shape=shape)
     except Exception:
         return None
+    if np.size(s) == 0:  # an empty list.
+        return None
+    if not check_symbol(s) and _finite_floats(s) is None:
+        return None
 
     if digit is not None and not check_symbol(s):
-        if isinstance(s, np.ndarray):
-            s = np.vectorize(lambda x: f"{float(x):.{digit}f}")(s)
-            return str(s.tolist()).replace("'", "").replace(" ", "")
-        else:
-            return f"{float(s):.{digit}f}"
+        return _format(s, lambda x: f"{float(x):.{digit}f}")
 
     if isinstance(s, np.ndarray):
         return str(s.tolist()).replace(" ", "")
@@ -173,8 +277,8 @@ def validator_list_int(text, **opt):
 
     Args:
         text (str): string with list.
-        opt (dict, optional): option, "shape/var". (default: None,[""])
-            e.g., (), (n,), (n,m), ..., ["x", "y", ...].
+        opt (dict, optional): option, "shape/var/min/max". (default: None,[""],"*","*")
+            e.g., (), (n,), (n,m), ..., ["x", "y", ...]. min/max is a number, or a list for each element.
 
     Returns:
         - (str) -- formatted string if it is valid, otherwise None.
@@ -186,16 +290,14 @@ def validator_list_int(text, **opt):
         s = str_to_sympy(text, check_var=var, check_shape=shape)
     except Exception:
         return None
+    if np.size(s) == 0:  # an empty list.
+        return None
 
     if not check_symbol(s):
-        try:
-            if isinstance(s, np.ndarray):
-                s = np.vectorize(lambda x: f"{int(x)}")(s)
-                return str(s.tolist()).replace("'", "").replace(" ", "")
-            else:
-                return f"{int(s)}"
-        except Exception:
+        values = _integers(s)
+        if values is None or not _in_range(values, opt.get("min", "*"), opt.get("max", "*")):
             return None
+        return _format(s, lambda x: f"{int(x)}")
 
     if isinstance(s, np.ndarray):
         return str(s.tolist()).replace(" ", "")
@@ -210,7 +312,9 @@ def validator_math(text, **opt):
 
     Args:
         text (str): sympy string.
-        opt (dict, optional): option, "shape/var". (default: None,None)
+        opt (dict, optional): option, "shape/var/real/real_function". (default: None,None,False,False)
+            real: a constant must be a real number (otherwise also complex).
+            real_function: an expression must not contain the imaginary unit I, e.g. I*x is rejected.
 
     Returns:
         - (str) -- LaTeX string if it is valid, otherwise None.
@@ -221,6 +325,12 @@ def validator_math(text, **opt):
     try:
         s = str_to_sympy(text, check_var=var, check_shape=shape)
     except Exception:
+        return None
+    if np.size(s) == 0:  # an empty list.
+        return None
+    if not check_symbol(s) and (_finite_floats(s) if opt.get("real", False) else _finite_complex(s)) is None:
+        return None  # a constant must be a finite (real) number.
+    if opt.get("real_function", False) and any(sympy.sympify(x).has(sympy.I) for x in _flat(s)):
         return None
 
     if isinstance(s, np.ndarray):
@@ -340,3 +450,123 @@ def validator_orbital_site_bond(s, use_var=False):
     sb = validator_site_bond(sb, use_var)
 
     return None if v is None or sb is None else v + "#" + sb
+
+
+# ==================================================
+def validator_hint(vtype, option=None):
+    """
+    Explanation of accepted input for validator (used as tooltip).
+
+    Args:
+        vtype (str): validator type.
+        option (dict, optional): validator option.
+
+    Returns:
+        - (str) -- explanation.
+    """
+    if option is None:
+        option = {}
+
+    def value_range():
+        r_min, r_max = option.get("min", "*"), option.get("max", "*")
+        if r_min == "*" and r_max == "*":
+            return ""
+        r_min, r_max = (str(r).replace(" ", "") for r in (r_min, r_max))  # a list for each element.
+        if r_max == "*":
+            return f" (≥ {r_min})"
+        if r_min == "*":
+            return f" (≤ {r_max})"
+        return f" ({r_min} to {r_max})"
+
+    def shape_text(kind):
+        shape = option.get("shape", None)
+        if shape is None:
+            return f"{kind} or list of {kind}s"
+        if len(shape) == 0:
+            return kind
+        if len(shape) == 1:
+            if shape[0] == 0:  # 0 means any length.
+                return f"list of {kind}s of any length, e.g. [1] or [1,2]"
+            example = "[" + ",".join(["0"] * shape[0]) + "]"
+            return f"list of {shape[0]} {kind}s, e.g. {example}"
+        dims = ", ".join("n" if n == 0 else str(n) for n in shape)
+        text = f"nested list of {kind}s with shape ({dims})" + (", n is any length" if 0 in shape else "")
+        if len(shape) == 2 and shape[1] == 0:
+            text += ", rows may have different lengths"
+        return text
+
+    def variables(var):
+        var = [v for v in (var or []) if v != ""]
+        return f" Variables: {', '.join(var)}." if var else ""
+
+    expression = " Expressions such as 1/2 or sqrt(3)/2 are accepted."
+    site = "[x,y,z], e.g. [1/2,0,0]"
+    bond = "[tail];[head], [vector]@[center] or [start]:[vector]"
+    xyz = " x, y, z can be used." if option.get("use_var", False) else ""
+
+    if vtype == "int":
+        return f"Integer{value_range()}."
+    if vtype == "float":
+        return f"Number{value_range()}."
+    if vtype == "list_float":
+        return f"Number: {shape_text('number')}.{expression}{variables(option.get('var'))}"
+    if vtype == "list_int":
+        return f"Integer: {shape_text('integer')}{value_range()}.{variables(option.get('var'))}"
+    if vtype == "math":
+        real = " Real only, without I." if option.get("real_function", False) else ""
+        return f"Math expression: {shape_text('expression')}.{variables(option.get('var'))}{real}"
+    if vtype == "site":
+        return f"Site {site}.{expression}{xyz}"
+    if vtype == "bond":
+        return f"Bond {bond}.{expression}{xyz}"
+    if vtype == "site_bond":
+        return f"Site {site}, or bond {bond}.{xyz}"
+    if vtype == "vector_site_bond":
+        return f"[vector]#[site or bond], e.g. [0,0,1]#[0,0,0]. Bond is {bond}.{xyz}"
+    if vtype == "orbital_site_bond":
+        return f"[orbital]#[site or bond], e.g. x*y#[0,0,0]. Orbital uses x, y, z, r. Bond is {bond}.{xyz}"
+    return ""
+
+
+# ==================================================
+def check_cell(vtype, option, value):
+    """
+    Check the value of a cell of the data table, e.g. read from a file.
+
+    Args:
+        vtype (str): column type, e.g. "float", "bool" or "color".
+        option (dict or list): validator option of the column, or the choices of a "combo" column.
+        value (any): value of the cell.
+
+    Returns:
+        - (bool) -- True if the table accepts the value in this column.
+    """
+    from matplotlib import colormaps
+
+    from qtdraw.widget.color_palette import all_colors
+
+    validators = {
+        "int": validator_int,
+        "float": validator_float,
+        "list_float": validator_list_float,
+        "list_int": validator_list_int,
+        "math": validator_math,
+    }
+    if vtype == "bool":
+        return isinstance(value, bool)
+    if not isinstance(value, str):
+        return False
+    if vtype == "combo":
+        return value in option
+    if value == "" and option.get("allow_empty", False):  # e.g. the surface of an orbital, the same as its shape.
+        return True
+    if vtype in validators:
+        try:
+            return validators[vtype](value, **option) is not None
+        except (TypeError, ValueError, AttributeError, ArithmeticError):  # values that the parser does not expect.
+            return False
+    if vtype == "color":
+        return value in all_colors
+    if vtype == "color_both":  # a color, or a colormap (marked with "*" in the color selector).
+        return value in all_colors or value.strip("*") in colormaps
+    return True  # names, labels, actors and text.

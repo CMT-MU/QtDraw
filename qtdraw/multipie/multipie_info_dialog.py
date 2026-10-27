@@ -1,3 +1,10 @@
+# SPDX-License-Identifier: MPL-2.0
+# Copyright (C) 2021- The QtDraw developers
+#
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
 """
 MultiPie information dialog.
 
@@ -12,6 +19,7 @@ from multipie.util.util_harmonics import harmonics_decomposition
 from multipie.util.util_response_tensor import convert_mp_alias
 from qtdraw.widget.custom_widget import Layout
 from qtdraw.widget.table_view import TableView
+from qtdraw.widget.qt_event_util import with_busy_cursor
 from qtdraw.util.util import to_latex
 from qtdraw.multipie.multipie_util import convert_vector_object
 
@@ -48,6 +56,7 @@ class InfoPanel(QDialog):
 
 
 # ==================================================
+@with_busy_cursor
 def show_group_info(group, name, header, data, vertical, parent=None):
     """
     Show group info.
@@ -68,6 +77,7 @@ def show_group_info(group, name, header, data, vertical, parent=None):
 
 
 # ==================================================
+@with_busy_cursor
 def show_symmetry_operation(group, parent):
     """
     Show symmetry operation panel.
@@ -111,6 +121,7 @@ def show_symmetry_operation(group, parent):
 
 
 # ==================================================
+@with_busy_cursor
 def show_character_table(group, parent):
     """
     Show character table panel.
@@ -136,6 +147,7 @@ def show_character_table(group, parent):
 
 
 # ==================================================
+@with_busy_cursor
 def show_wyckoff_site(group, parent):
     """
     Show Wyckoff position panel.
@@ -178,6 +190,7 @@ def show_wyckoff_site(group, parent):
 
 
 # ==================================================
+@with_busy_cursor
 def show_wyckoff_bond(group, parent):
     """
     Show Wyckoff position panel.
@@ -220,6 +233,7 @@ def show_wyckoff_bond(group, parent):
 
 
 # ==================================================
+@with_busy_cursor
 def show_product_table(group, parent):
     """
     Show product table panel.
@@ -251,6 +265,7 @@ def show_product_table(group, parent):
 
 
 # ==================================================
+@with_busy_cursor
 def show_harmonics_decomp(group, basis, rank, head, parent):
     """
     Show harmonics decomposition panel.
@@ -282,6 +297,7 @@ def show_harmonics_decomp(group, basis, rank, head, parent):
 
 
 # ==================================================
+@with_busy_cursor
 def show_harmonics_info(group, head, rank, parent):
     """
     Show harmonics decomposition panel.
@@ -310,6 +326,7 @@ def show_harmonics_info(group, head, rank, parent):
 
 
 # ==================================================
+@with_busy_cursor
 def show_atomic_multipole(group, bra, ket, head, basis_type, tesseral, parent):
     """
     Show atomic multipole panel.
@@ -388,6 +405,7 @@ def show_atomic_multipole(group, bra, ket, head, basis_type, tesseral, parent):
 
 
 # ==================================================
+@with_busy_cursor
 def show_response(group, rank, r_type, parent):
     """
     Show response tensor panel.
@@ -443,6 +461,7 @@ def show_response(group, rank, r_type, parent):
 
 
 # ==================================================
+@with_busy_cursor
 def show_site_samb_panel(group, lst, wp, samb_list, samb, parent):
     """
     Show site SAMB panel.
@@ -472,6 +491,7 @@ def show_site_samb_panel(group, lst, wp, samb_list, samb, parent):
 
 
 # ==================================================
+@with_busy_cursor
 def show_bond_samb_panel(group, lst, wp, samb_list, samb, parent):
     """
     Show bond SAMB panel.
@@ -501,6 +521,7 @@ def show_bond_samb_panel(group, lst, wp, samb_list, samb, parent):
 
 
 # ==================================================
+@with_busy_cursor
 def show_vector_samb_panel(group, lst, wp, tp, samb_list, samb, parent):
     """
     Show vector SAMB panel.
@@ -533,6 +554,7 @@ def show_vector_samb_panel(group, lst, wp, tp, samb_list, samb, parent):
 
 
 # ==================================================
+@with_busy_cursor
 def show_orbital_samb_panel(group, lst, wp, tp, samb_list, samb, parent):
     """
     Show orbital SAMB panel.

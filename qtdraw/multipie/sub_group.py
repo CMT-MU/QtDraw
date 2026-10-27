@@ -1,3 +1,10 @@
+# SPDX-License-Identifier: MPL-2.0
+# Copyright (C) 2021- The QtDraw developers
+#
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
 """
 Multipie side panel.
 
@@ -22,7 +29,6 @@ class SubGroup(QWidget):
     def __init__(self, parent):
         super().__init__(parent)
         self.parent = parent
-        self.data = parent._data
 
         self.setMinimumWidth(270)
         layout = Layout(self)
@@ -81,6 +87,16 @@ class SubGroup(QWidget):
         self.button_wyckoff_site.released.connect(self.show_wyckoff_site)
         self.button_wyckoff_bond.released.connect(self.show_wyckoff_bond)
         self.button_product_table.released.connect(self.show_product_table)
+
+    # ==================================================
+    @property
+    def data(self):
+        """
+        MultiPie data, read from the dialog each time (opening a file replaces it).
+
+        :meta private:
+        """
+        return self.parent._data
 
     # ==================================================
     def set_crystal_type(self, crystal):
@@ -149,18 +165,27 @@ class SubGroup(QWidget):
         super().closeEvent(event)
 
     # ==================================================
-    def set_data(self):
+    def set_data(self, quiet=False):
         d = {"PG": 0, "SG": 1, "MPG": 2, "MSG": 3}
         crystal = self.data._crystal
         tp = self.data._type
         idx = self.data._idx
 
-        group_list = self.data._get_group_list()
-        self.combo_crystal_type.setCurrentText(crystal)
-        self.combo_group_type.setCurrentIndex(d[tp])
-        self.combo_group.set_item(group_list)
-        self.combo_group.setCurrentIndex(idx)
-        self.parent._qtdraw._set_crystal(crystal)
+        combos = [self.combo_crystal_type, self.combo_group_type, self.combo_group]
+        if quiet:  # show only: the combos do not set the group (and the axis) again.
+            for combo in combos:
+                combo.blockSignals(True)
+        try:
+            group_list = self.data._get_group_list()
+            self.combo_crystal_type.setCurrentText(crystal)
+            self.combo_group_type.setCurrentIndex(d[tp])
+            self.combo_group.set_item(group_list)
+            self.combo_group.setCurrentIndex(idx)
+        finally:
+            for combo in combos:
+                combo.blockSignals(False)
+        if not quiet:
+            self.parent._qtdraw._set_crystal(crystal)
         self.parent.group_changed.emit()
 
         self._symmetry_operation_dialog = None

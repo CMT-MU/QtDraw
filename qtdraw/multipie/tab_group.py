@@ -1,3 +1,10 @@
+# SPDX-License-Identifier: MPL-2.0
+# Copyright (C) 2021- The QtDraw developers
+#
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
 """
 Multipie group tab.
 
@@ -21,7 +28,6 @@ class TabGroup(QWidget):
     def __init__(self, parent):
         super().__init__(parent)
         self.parent = parent
-        self.data = parent._data
 
         layout = Layout(self)
         layout.setContentsMargins(10, 10, 10, 10)
@@ -250,6 +256,16 @@ class TabGroup(QWidget):
         self.combo_atomic_basis_type.currentTextChanged.connect(self.set_atomic_bra_ket)
 
     # ==================================================
+    @property
+    def data(self):
+        """
+        MultiPie data, read from the dialog each time (opening a file replaces it).
+
+        :meta private:
+        """
+        return self.parent._data
+
+    # ==================================================
     def set_irrep_list(self):
         group = self.data.p_group
         lst = list(group.character["table"].keys())
@@ -337,45 +353,47 @@ class TabGroup(QWidget):
 
     # ==================================================
     def show_wyckoff_site(self):
-        group = self.data.group
-        wp = self.combo_wyckoff_site.currentText()
+        with self.data.pvw._batch_render():  # rendered once for all objects.
+            group = self.data.group
+            wp = self.combo_wyckoff_site.currentText()
 
-        # plot sites.
-        sites = group.wyckoff["site"][wp]["reference"].astype(float)
-        mp = group.wyckoff["site"][wp]["mapping"]
-        if len(sites) != len(mp):
-            mp = mp * (len(sites) // len(mp))
-        plot_cell_site(self.data, sites, wp=wp, label=mp)
+            # plot sites.
+            sites = group.wyckoff["site"][wp]["reference"].astype(float)
+            mp = group.wyckoff["site"][wp]["mapping"]
+            if len(sites) != len(mp):
+                mp = mp * (len(sites) // len(mp))
+            plot_cell_site(self.data, sites, wp=wp, label=mp)
 
-        # plot bonds.
-        neighbor = self.edit_ws_neighbor.text()
-        neighbor = list(map(int, neighbor.strip("[]").split(",")))
-        G = self.parent._pvw.G_matrix[0:3, 0:3]
-        d = distance(sites, sites, G)
-        dkey = list(d.keys())
+            # plot bonds.
+            neighbor = self.edit_ws_neighbor.text()
+            neighbor = list(map(int, neighbor.strip("[]").split(",")))
+            G = self.parent._pvw.G_matrix[0:3, 0:3]
+            d = distance(sites, sites, G)
+            dkey = list(d.keys())
 
-        for i in neighbor:
-            if i < len(d):
-                name = f"{wp}_N{i}"
-                bonds = []
-                for idxs in d[dkey[i]]:
-                    t, h = sites[idxs[0]], sites[idxs[1]]
-                    c = (t + h) / 2
-                    v = h - t
-                    bonds.append(np.concatenate([v, c]).tolist())
-                plot_cell_bond(self.data, bonds, name=name)
+            for i in neighbor:
+                if i < len(d):
+                    name = f"{wp}_N{i}"
+                    bonds = []
+                    for idxs in d[dkey[i]]:
+                        t, h = sites[idxs[0]], sites[idxs[1]]
+                        c = (t + h) / 2
+                        v = h - t
+                        bonds.append(np.concatenate([v, c]).tolist())
+                    plot_cell_bond(self.data, bonds, name=name)
 
     # ==================================================
     def show_wyckoff_bond(self):
-        group = self.data.ps_group
-        wp = self.combo_wyckoff_bond.currentText()
+        with self.data.pvw._batch_render():  # rendered once for all objects.
+            group = self.data.ps_group
+            wp = self.combo_wyckoff_bond.currentText()
 
-        # plot bonds.
-        bonds = group.wyckoff["bond"][wp]["reference"].astype(float)
-        mp = group.wyckoff["bond"][wp]["mapping"]
-        if len(bonds) != len(mp):
-            mp = mp * (len(bonds) // len(mp))
-        plot_cell_bond(self.data, bonds, wp=wp, label=mp)
+            # plot bonds.
+            bonds = group.wyckoff["bond"][wp]["reference"].astype(float)
+            mp = group.wyckoff["bond"][wp]["mapping"]
+            if len(bonds) != len(mp):
+                mp = mp * (len(bonds) // len(mp))
+            plot_cell_bond(self.data, bonds, wp=wp, label=mp)
 
     # ==================================================
     def find_wyckoff_set(self):

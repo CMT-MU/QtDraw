@@ -1,3 +1,10 @@
+# SPDX-License-Identifier: MPL-2.0
+# Copyright (C) 2021- The QtDraw developers
+#
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
 """
 Application of QtDraw.
 
@@ -5,20 +12,87 @@ This module provides application of QtDraw.
 """
 
 import os
+import copy
+import importlib
 import warnings
 from pathlib import Path
 import logging
-from PySide6.QtWidgets import QWidget, QMessageBox, QFileDialog, QDialog
-from PySide6.QtCore import Qt
+from PySide6.QtWidgets import QWidget, QMessageBox, QFileDialog, QDialog, QApplication, QAbstractButton, QComboBox
+from PySide6.QtCore import Qt, QTimer, QSettings, QUrl, QProcess
+from PySide6.QtGui import QAction, QActionGroup, QKeySequence, QDesktopServices
 
-from qtdraw.core.pyvista_widget import PyVistaWidget, Window
+from qtdraw.core.pyvista_widget import PyVistaWidget, Window, same_snapshot
+from qtdraw.core.undo_history import UndoHistory
 from qtdraw.core.pyvista_widget_setting import widget_detail as detail
 from qtdraw.core.dialog_preference import PreferenceDialog
 from qtdraw.core.dialog_about import AboutDialog
 from qtdraw.core.dialog_about import get_version_info
 from qtdraw.widget.custom_widget import Label, Layout, LineEdit, HBar, Button, Combo, VSpacer
 from qtdraw.widget.logging_util import LogWidget
-from qtdraw.util.util import check_multipie
+from qtdraw.widget.message_box import ResizableMessageBox
+from qtdraw.widget.qt_event_util import busy_cursor, font_style_sheet
+from qtdraw.util.util import check_multipie, multipie_message, multipie_missing, install_multipie_command, command_text
+
+
+# ==================================================
+def add_extension(filename, ext):
+    """
+    Add extension to file name if it does not have it.
+
+    Args:
+        filename (Path): file name.
+        ext (str): extension with ".".
+
+    Returns:
+        - (Path) -- file name with extension.
+    """
+    if filename.suffix == ext:
+        return filename
+    return filename.with_name(filename.name + ext)
+
+
+DOCUMENTATION_URL = "https://cmt-mu.github.io/QtDraw/"
+ISSUE_URL = "https://github.com/CMT-MU/QtDraw/issues"
+RECENT_FILES = 10  # number of files in File > Open Recent.
+
+
+# ==================================================
+def settings():
+    """
+    Settings of QtDraw kept between sessions, e.g. recent files.
+
+    Returns:
+        - (QSettings) -- settings (INI file in the user's configuration directory).
+    """
+    return QSettings(QSettings.IniFormat, QSettings.UserScope, "CMT-MU", "QtDraw")
+
+
+# ==================================================
+def help_text():
+    """
+    Mouse and key operations.
+
+    Returns:
+        - (str) -- help text.
+    """
+    open_key = QKeySequence(QKeySequence.Open).toString(QKeySequence.NativeText)
+    save_key = QKeySequence(QKeySequence.Save).toString(QKeySequence.NativeText)
+    quit_key = QKeySequence(QKeySequence.Quit).toString(QKeySequence.NativeText)
+    undo_key = QKeySequence(QKeySequence.Undo).toString(QKeySequence.NativeText)
+    redo_key = QKeySequence(QKeySequence.Redo).toString(QKeySequence.NativeText)
+    return (
+        "In the view:\n"
+        "- Left drag: rotate. Shift + left drag: move. Wheel or right drag: zoom.\n"
+        "- Right click (without dragging) on an object: menu to open it in the data table, hide or remove it.\n"
+        f"- {detail['data_edit_key']}: open the data table of all objects.\n"
+        "\n"
+        "In the data table:\n"
+        "- Right click: menu to create or copy an object.\n"
+        "- Esc: clear the selection. Up, Down: move the selection.\n"
+        "\n"
+        f"{open_key}: open a file. {save_key}: save. {quit_key}: quit.\n"
+        f"{undo_key}: undo. {redo_key}: redo (objects, unit cell, range and MultiPie group; not the camera)."
+    )
 
 
 # ==================================================
@@ -48,19 +122,23 @@ class QtDraw(Window):
         warnings.filterwarnings("default", category=DeprecationWarning)
 
         self._is_view_updating = False
+        self._current_file = None  # QtDraw file opened or saved last, written by Save.
         self.pref_dialog = None  # preference dialog.
         self.multipie_dialog = None  # MultiPie dialog.
-        if self.debug:
-            self.actor_dialog = None  #  actor list dialog.
-            self.data_dialog = None  # raw data dialog.
-            self.status_dialog = None  # status data dialog.
-            self.pref_data_dialog = None  # preference data dialog.
-            self.camera_dialog = None  # camera dialog.
+        self._multipie_install = None  # process installing MultiPie.
+        self._history = UndoHistory(limit=50)  # document snapshots for undo.
+        self._restoring = False  # restoring a snapshot ?
+        self._data_views = {}  # windows showing internal data (Window menu), by name.
 
         self.create_gui()
         self.pyvista_widget.set_property(status, preference)
+        self._saved_state = self._document_state()
         self._update_panel()
         self.create_connection()
+        self._create_modified_check()
+        self._history.reset(self.pyvista_widget.document_snapshot())
+        self._update_undo_actions()
+        self.pyvista_widget._tab_group_view.addActions([self.action_undo, self.action_redo])  # shortcuts in data table.
 
         # event loop.
         self.show()
@@ -75,7 +153,7 @@ class QtDraw(Window):
 
         :meta private:
         """
-        self.resize(1000, 500)
+        self.resize(*detail["window_size"])
 
         # central grid.
         central_widget = QWidget(self)
@@ -103,6 +181,245 @@ class QtDraw(Window):
         layout.addWidget(self.panel, 0, 1, 1, 1)
         layout.addWidget(self.status, 1, 0, 1, 2)
 
+        self._create_menu()
+        self._set_tool_tips()
+
+    # ==================================================
+    def _create_menu(self):
+        """
+        Create menu bar with standard shortcuts.
+
+        :meta private:
+        """
+
+        def action(menu, text, slot, shortcut=None):
+            act = QAction(text, self)
+            act.setMenuRole(QAction.NoRole)  # on macOS, only roles set below move items to the application menu.
+            if shortcut is not None:
+                act.setShortcut(shortcut)
+            act.triggered.connect(slot)
+            menu.addAction(act)
+            return act
+
+        menu = self.menuBar().addMenu("&File")
+        self.action_open = action(menu, "&Open...", self.open_file, QKeySequence.Open)
+        self.menu_recent = menu.addMenu("Open &Recent")
+        self.menu_recent.menuAction().setMenuRole(QAction.NoRole)  # submenus are not moved by their text either.
+        self.menu_recent.aboutToShow.connect(self._update_recent_menu)
+        self.action_save = action(menu, "&Save", self.save_file, QKeySequence.Save)
+        self.action_save_as = action(menu, "Save &As...", self.save_file_as, QKeySequence.SaveAs)
+        self.action_screenshot = action(menu, "Screens&hot...", self._save_screenshot)
+        menu.addSeparator()
+        self.action_quit = action(menu, "&Quit", self.close, QKeySequence.Quit)
+        self.action_quit.setMenuRole(QAction.QuitRole)
+
+        menu = self.menuBar().addMenu("&Edit")
+        self.action_undo = action(menu, "&Undo", self.undo, QKeySequence.Undo)
+        self.action_redo = action(menu, "&Redo", self.redo, QKeySequence.Redo)
+        menu.addSeparator()
+        self.action_clear = action(menu, "&Clear", self._clear_data)
+        menu.addSeparator()
+        self.action_data_table = action(menu, "&DataSet...", lambda: self.pyvista_widget.open_tab_group_view())
+        self.action_preferences = action(menu, "&Preferences...", lambda: self._show_preference(), QKeySequence.Preferences)
+        self.action_preferences.setMenuRole(QAction.PreferencesRole)
+
+        self._create_view_menu(action)
+
+        menu = self.menuBar().addMenu("&Window")
+        self.action_info = action(menu, "&Info", lambda: self.info_dialog.show())
+        self.action_log = action(menu, "&Log", lambda: self.logger.show())
+        menu.addSeparator()
+        views = [
+            ("camera", "&Camera", self._camera_text),
+            ("data", "&Data", self._raw_data_text),
+            ("actor", "&Actor", self._actor_text),
+            ("status", "&Status", self._status_text),
+            ("preference", "&Preference", self._preference_text),
+        ]
+        self.action_window = {}
+        for name, text, contents in views:
+            self.action_window[name] = action(
+                menu, text, lambda _=False, n=name, t=text, c=contents: self._show_data_view(n, t.replace("&", ""), c)
+            )
+
+        menu = self.menuBar().addMenu("&Help")
+        self.action_help = action(menu, "&Mouse and Keys", self._show_help)
+        self.action_documentation = action(menu, "&Documentation", lambda: QDesktopServices.openUrl(QUrl(DOCUMENTATION_URL)))
+        self.action_report_issue = action(menu, "&Report an Issue", lambda: QDesktopServices.openUrl(QUrl(ISSUE_URL)))
+        menu.addSeparator()
+        self.action_about = action(menu, "&About QtDraw", self._show_about)
+        self.action_about.setMenuRole(QAction.AboutRole)
+
+        for menu_action in self.menuBar().actions():  # the menus themselves are not moved by their text either.
+            menu_action.setMenuRole(QAction.NoRole)
+
+    # ==================================================
+    def _create_view_menu(self, action):
+        """
+        Create view menu, following the view panel (the panel keeps the state).
+
+        Args:
+            action (function): create an action, action(menu, text, slot, shortcut=None).
+
+        :meta private:
+        """
+        menu = self.menuBar().addMenu("&View")
+        directions = [
+            ("+x", self.view_button_x),
+            ("+y", self.view_button_y),
+            ("+z", self.view_button_z),
+            ("-x", self.view_button_xm),
+            ("-y", self.view_button_ym),
+            ("-z", self.view_button_zm),
+        ]
+        self.action_view = {}
+        for i, (name, button) in enumerate(directions):
+            self.action_view[name] = action(menu, f"View from {name}", button.click, QKeySequence(f"Ctrl+{i + 1}"))
+        self.action_view["default"] = action(menu, "Default View", self.view_button_default.click, QKeySequence("Ctrl+0"))
+        menu.addSeparator()
+
+        toggles = [
+            ("parallel", "Parallel Projection", self.view_button_parallel),
+            ("grid", "Grid", self.view_button_grid),
+            ("bar", "Scalar Bar", self.view_button_bar),
+            None,
+            ("clip", "Clip", self.view_button_clip),
+            ("repeat", "Repeat", self.view_button_repeat),
+        ]
+        self.action_toggle = {}
+        self._toggle_button = {}
+        for item in toggles:
+            if item is None:
+                menu.addSeparator()
+                continue
+            name, text, button = item
+            act = action(menu, text, lambda checked, b=button: b.setChecked(checked))  # the button applies the change.
+            act.setCheckable(True)
+            act.setChecked(button.isChecked())
+            button.toggled.connect(act.setChecked)  # also when the panel is updated, e.g. after loading.
+            self.action_toggle[name] = act
+            self._toggle_button[name] = button
+        self.action_nonrepeat = action(menu, "Non-repeat", self.view_button_nonrepeat.click)
+        menu.addSeparator()
+
+        def choice(title, combo):
+            sub = menu.addMenu(title)
+            sub.menuAction().setMenuRole(QAction.NoRole)
+            group = QActionGroup(self)
+            actions = {}
+            for i in range(combo.count()):
+                value = combo.itemText(i)
+                act = action(sub, value, lambda _=False, v=value: combo.setCurrentText(v))
+                act.setCheckable(True)
+                act.setChecked(value == combo.currentText())
+                group.addAction(act)
+                actions[value] = act
+            combo.currentTextChanged.connect(lambda v: actions[v].setChecked(True) if v in actions else None)
+            return actions
+
+        self.action_axis = choice("&Axis", self.view_combo_axis)
+        self.action_cell = choice("&Cell", self.view_combo_cell)
+
+    # ==================================================
+    def _recent_files(self):
+        """
+        Recent files, most recent first.
+
+        Returns:
+            - (list) -- absolute file names.
+
+        :meta private:
+        """
+        files = settings().value("recent_files", [])
+        if isinstance(files, str):  # a single entry is read back as str.
+            files = [files]
+        return [str(f) for f in files or []]
+
+    # ==================================================
+    def _add_recent_file(self, filename):
+        """
+        Add a file to the recent files.
+
+        Args:
+            filename (str): file name.
+
+        :meta private:
+        """
+        file = str(Path(filename).resolve())
+        files = [file] + [f for f in self._recent_files() if f != file]
+        settings().setValue("recent_files", files[:RECENT_FILES])
+
+    # ==================================================
+    def _update_recent_menu(self):
+        """
+        Fill File > Open Recent with existing recent files.
+
+        :meta private:
+        """
+        menu = self.menu_recent
+        menu.clear()
+        files = [f for f in self._recent_files() if Path(f).is_file()]
+        for f in files:
+            act = menu.addAction(Path(f).name)
+            act.setMenuRole(QAction.NoRole)
+            act.setToolTip(f)
+            act.setStatusTip(f)
+            act.triggered.connect(lambda _=False, f=f: self._open_recent(f))
+        if files:
+            menu.addSeparator()
+            clear = menu.addAction("Clear Menu")
+            clear.setMenuRole(QAction.NoRole)
+            clear.triggered.connect(lambda: settings().remove("recent_files"))
+        else:
+            empty = menu.addAction("No Recent Files")
+            empty.setMenuRole(QAction.NoRole)
+            empty.setEnabled(False)
+
+    # ==================================================
+    def _open_recent(self, filename):
+        """
+        Open a recent file.
+
+        Args:
+            filename (str): file name.
+
+        :meta private:
+        """
+        self._flush()  # typed values and renames not yet applied are changes.
+        if not self._confirm_unsaved("opening another file"):
+            return
+        self.load_file(filename)
+
+    # ==================================================
+    def _set_tool_tips(self):
+        """
+        Set tool tips of buttons.
+
+        :meta private:
+        """
+        tips = {
+            self.ds_button_edit: f"Open the data table of all objects (key: {detail['data_edit_key']}).",
+            self.view_button_default: "Reset the view to the default direction.",
+            self.view_button_clip: "Hide objects outside the range lower-upper.",
+            self.view_button_repeat: "Repeat the objects of the home cell in the range lower-upper.",
+            self.view_button_bar: "Show the color bar.",
+            self.view_button_parallel: "Use parallel projection.",
+            self.view_button_grid: "Show the grid.",
+            self.misc_button_multipie: "Open the MultiPie dialog for symmetry-adapted drawing (without MultiPie, it offers to install it).",
+        }
+        for button, tip in tips.items():
+            if not button.toolTip():  # keep tool tips set elsewhere.
+                button.setToolTip(tip)
+
+    # ==================================================
+    def _show_help(self):
+        """
+        Show mouse and key operations.
+
+        :meta private:
+        """
+        QMessageBox.information(self, "Mouse and Keys", help_text())
+
     # ==================================================
     def open_file(self):
         """
@@ -110,11 +427,15 @@ class QtDraw(Window):
 
         :meta private:
         """
+        self._flush()  # typed values and renames not yet applied are changes.
+        if not self._confirm_unsaved("opening another file"):
+            return
+
         ext = detail["extension"]
         mat = "*" + " *".join(detail["ext_material"])
-        cwd = os.getcwd()
+        directory = str(self.pyvista_widget.document_dir())
         ext_set = f"QtDraw, CIF, VESTA, XSF Files (*{ext} {mat})"
-        filename, _ = QFileDialog.getOpenFileName(self, "Open File", cwd, ext_set, options=QFileDialog.Options())
+        filename, _ = QFileDialog.getOpenFileName(self, "Open File", directory, ext_set, options=QFileDialog.Options())
 
         if filename:
             filename = Path(filename)
@@ -130,12 +451,61 @@ class QtDraw(Window):
         Load file.
 
         Args:
-            filename (str): full file name.
+            filename (str): file name, relative to the current directory (which is not changed).
 
         :meta private:
         """
-        self.pyvista_widget.load(filename)
+        self._flush()
+        with busy_cursor():
+            self.pyvista_widget.load(filename)
+        self._loaded_from(filename)
 
+        self._update_panel_quietly()
+
+        multipie = self.pyvista_widget._status.get("multipie", {})
+        if multipie and self.pyvista_widget._mp_data is not None:  # show the group, with the crystal of the file.
+            if self.multipie_dialog is None:
+                self._show_multipie(quiet=True)
+            else:
+                self.multipie_dialog.show()
+                self.multipie_dialog.set_data(quiet=True)
+
+        self._mark_saved()
+        self._reset_history()
+
+        replaced = self.pyvista_widget.replaced_cells
+        if replaced:
+            self._show_replaced_cells(filename, replaced)
+
+    # ==================================================
+    def _show_replaced_cells(self, filename, replaced):
+        """
+        Show the invalid cells of a loaded file, which were set to the defaults of their columns.
+
+        Args:
+            filename (str): file name.
+            replaced (list): replaced cells, [(object_type, row, column, value)].
+
+        :meta private:
+        """
+        details = "\n".join(f"{object_type}, row {row}, {column}: {value!r}" for object_type, row, column, value in replaced)
+        box = ResizableMessageBox(
+            QMessageBox.Warning,
+            "Invalid Data",
+            f"{len(replaced)} cells of {Path(filename).name} have invalid values, and were set to the default values.",
+            parent=self,
+        )
+        box.setInformativeText("See the details for the object, row and column of each. They are also written to Info.")
+        box.setDetailedText(details)
+        box.exec()
+
+    # ==================================================
+    def _update_panel_quietly(self):
+        """
+        Update panel without applying its values to the document again.
+
+        :meta private:
+        """
         # to avoid redraw object twice.
         # disconnect unit cell.
         self.uc_combo_crystal.currentTextChanged.disconnect(self._set_crystal)
@@ -171,32 +541,79 @@ class QtDraw(Window):
         self.view_edit_lower.returnPressed.connect(self._set_lower)
         self.view_edit_upper.returnPressed.connect(self._set_upper)
 
-        multipie = self.pyvista_widget._status.get("multipie", {})
-        if multipie and self.pyvista_widget._mp_data is not None:
-            self._show_multipie()
-            if self.multipie_dialog is not None:
-                self.multipie_dialog.set_data()
-
     # ==================================================
     def save_file(self):
         """
+        Save to the file opened or saved last, or ask for a file name.
+
+        Returns:
+            - (bool) -- saved ? (False if the dialog was cancelled)
+
+        :meta private:
+        """
+        if self._current_file is None:
+            return self.save_file_as()
+        self._save(str(self._current_file))
+        self._saved_to(self._current_file)
+        return True
+
+    # ==================================================
+    def save_file_as(self):
+        """
         Save file dialog.
+
+        Returns:
+            - (bool) -- saved ? (False if the dialog was cancelled)
 
         :meta private:
         """
         ext = detail["extension"]
-        file = Path.cwd() / (self.pyvista_widget._status["model"] + ext)
+        if self._current_file is not None:
+            file = self._current_file
+        else:
+            file = self.pyvista_widget.document_dir() / (self.pyvista_widget._status["model"] + ext)
         ext_set = f"QtDraw Files (*{ext})"
-        filename, _ = QFileDialog.getSaveFileName(self, "Save File", str(file.name), ext_set, options=QFileDialog.Options())
+        filename, _ = QFileDialog.getSaveFileName(self, "Save File", str(file), ext_set, options=QFileDialog.Options())
+        if not filename:  # cancelled.
+            return False
+        chosen = Path(filename)
+        filename = add_extension(chosen, ext)
+        if filename != chosen and filename.exists():  # the dialog asked about the chosen name only.
+            text = f"{filename.name} already exists.\nReplace it?"
+            if QMessageBox.question(self, "Save File", text, QMessageBox.Ok | QMessageBox.Cancel) != QMessageBox.Ok:
+                return False
+        self._save(str(filename))
+        self._saved_to(filename)
+        return True
 
-        if filename:
-            filename = Path(filename)
-            cur_ext = filename.suffix
-            if cur_ext == "":
-                filename = filename / ext
-            if cur_ext == ext:
-                self.pyvista_widget.save(str(filename))
-                self._update_title()
+    # ==================================================
+    def _loaded_from(self, filename):
+        """
+        Remember a loaded file: Save writes to a QtDraw file, but never to a material file.
+
+        Args:
+            filename (str): file name.
+
+        :meta private:
+        """
+        file = Path(filename).absolute()
+        is_qtdraw = file.resolve().suffix == detail["extension"]  # as load() reads it, also through a link.
+        self._current_file = file if is_qtdraw else None
+        self._add_recent_file(file)
+
+    # ==================================================
+    def _saved_to(self, filename):
+        """
+        Mark the document saved to a file, which Save writes from now on.
+
+        Args:
+            filename (Path): file name.
+
+        :meta private:
+        """
+        self._mark_saved()
+        self._current_file = Path(filename).absolute()
+        self._add_recent_file(filename)
 
     # ==================================================
     def _save_screenshot(self):
@@ -209,12 +626,27 @@ class QtDraw(Window):
         gfile = " ".join(detail["vector_file"]).replace(".", "*.")
         ext = detail["image_file"][0]
 
-        file = Path.cwd() / (self.pyvista_widget._status["model"] + ext)
+        file = self.pyvista_widget.document_dir() / (self.pyvista_widget._status["model"] + ext)
 
         ext_set = f"Image Files ({ifile});;Graphic Files ({gfile})"
-        filename, _ = QFileDialog.getSaveFileName(self, "Save Screenshot", str(file.name), ext_set)
+        filename, selected = QFileDialog.getSaveFileName(self, "Save Screenshot", str(file), ext_set)
+        if not filename:  # cancelled.
+            return
 
-        self.pyvista_widget.save_screenshot(filename)
+        # add extension of selected filter if not given.
+        filename = Path(filename)
+        if filename.suffix not in detail["image_file"] + detail["vector_file"]:
+            ext = detail["vector_file"][0] if selected.startswith("Graphic") else detail["image_file"][0]
+            filename = filename.with_name(filename.name + ext)
+            # the dialog asked about the original name only.
+            if filename.exists():
+                ret = QMessageBox.question(
+                    self, "Save Screenshot", f"{filename.name} already exists.\nReplace it?", QMessageBox.Ok | QMessageBox.Cancel
+                )
+                if ret != QMessageBox.Ok:
+                    return
+
+        self.pyvista_widget.save_screenshot(str(filename))
 
     # ==================================================
     def create_panel(self, parent):
@@ -237,24 +669,14 @@ class QtDraw(Window):
 
         uc = self.create_gui_unit_cell(panel)
         view = self.create_gui_view(panel)
-        dataset = self.create_gui_dataset(panel)
-        misc = self.create_gui_misc(panel)
-        if self.debug:
-            debug = self.create_gui_debug(panel)
+        buttons = self.create_gui_buttons(panel)
 
         layout.addWidget(uc, 0, 0, 1, 1)
         layout.addWidget(HBar(), 1, 0, 1, 1)
         layout.addWidget(view, 2, 0, 1, 1)
         layout.addWidget(HBar(), 3, 0, 1, 1)
-        layout.addWidget(dataset, 4, 0, 1, 1)
-        layout.addWidget(HBar(), 5, 0, 1, 1)
-        layout.addWidget(misc, 6, 0, 1, 1)
-        if self.debug:
-            layout.addWidget(HBar(), 7, 0, 1, 1)
-            layout.addWidget(debug, 8, 0, 1, 1)
-            layout.addItem(VSpacer(), 9, 0, 1, 1)
-        else:
-            layout.addItem(VSpacer(), 7, 0, 1, 1)
+        layout.addWidget(buttons, 4, 0, 1, 1)
+        layout.addItem(VSpacer(), 5, 0, 1, 1)
 
         return panel
 
@@ -359,6 +781,9 @@ class QtDraw(Window):
         self.view_button_clip = Button(parent, text="clip", toggle=True)
         self.view_button_repeat = Button(parent, text="repeat", toggle=True)
         self.view_button_nonrepeat = Button(parent, text="non-repeat")
+        self.view_button_nonrepeat.setToolTip(
+            "Convert repeated copies into independent objects in the home cell (can be undone with Undo)."
+        )
 
         label_lower = Label(parent, text="lower")
         self.view_edit_lower = LineEdit(parent, "", validator=("list_float", {"shape": (3,), "var": [""], "digit": 2}))
@@ -444,114 +869,338 @@ class QtDraw(Window):
         return panel
 
     # ==================================================
-    def create_gui_dataset(self, parent):
+    def create_gui_buttons(self, parent):
         """
-        Create dataset panel.
+        Create button panel (other commands are in the menu bar).
 
         Args:
             parent (QWidget): parent.
 
         Returns:
-            - (QWidget) -- dataset panel.
+            - (QWidget) -- button panel.
 
         :meta private:
         """
         panel = QWidget(parent)
         layout = Layout(panel)
 
-        label_dataset = Label(parent, text="DataSet", bold=True)
-        self.ds_button_edit = Button(parent, text="edit")
-        self.ds_button_clear = Button(parent, text="clear")
-        self.ds_button_load = Button(parent, text="load")
-        self.ds_button_save = Button(parent, text="save")
-        self.ds_button_screenshot = Button(parent, text="screenshot")
+        self.ds_button_edit = Button(parent, text="DataSet")
+        self.misc_button_multipie = Button(parent, text="MultiPie")  # also without MultiPie: it tells how to install it.
 
         panel1 = QWidget(parent)
         layout1 = Layout(panel1)
-        layout1.addWidget(label_dataset, 0, 0, 1, 1)
-        layout1.addWidget(self.ds_button_clear, 0, 1, 1, 1)
-        layout1.addWidget(self.ds_button_edit, 1, 0, 1, 1)
-        layout1.addWidget(self.ds_button_screenshot, 1, 1, 1, 1)
-        layout1.addWidget(self.ds_button_load, 2, 0, 1, 1)
-        layout1.addWidget(self.ds_button_save, 2, 1, 1, 1)
+        layout1.addWidget(self.ds_button_edit, 0, 0, 1, 1)
+        layout1.addWidget(self.misc_button_multipie, 0, 1, 1, 1)
 
         layout.addWidget(panel1, 0, 0, 1, 1)
 
         return panel
 
     # ==================================================
-    def create_gui_misc(self, parent):
+    def _document_state(self):
         """
-        Create misc. panel.
-
-        Args:
-            parent (QWidget): parent.
+        Current document state to detect unsaved changes.
 
         Returns:
-            - (QWidget) -- misc. panel.
+            - (dict) -- objects, status saved in file, and MultiPie status.
 
         :meta private:
         """
-        panel = QWidget(parent)
-        layout = Layout(panel)
-
-        label_misc = Label(parent, text="Misc", bold=True)
-        self.misc_button_info = Button(parent, text="info")
-        self.misc_button_pref = Button(parent, text="preference")
-        self.misc_button_about = Button(parent, text="about")
-        self.misc_button_log = Button(parent, text="log")
-        if check_multipie():
-            self.misc_button_multipie = Button(parent, text="MultiPie")
-
-        panel1 = QWidget(parent)
-        layout1 = Layout(panel1)
-        layout1.addWidget(label_misc, 0, 0, 1, 1)
-        layout1.addWidget(self.misc_button_pref, 0, 1, 1, 1)
-        layout1.addWidget(self.misc_button_info, 1, 0, 1, 1)
-        layout1.addWidget(self.misc_button_about, 1, 1, 1, 1)
-        layout1.addWidget(self.misc_button_log, 2, 0, 1, 1)
-        if check_multipie():
-            layout1.addWidget(self.misc_button_multipie, 2, 1, 1, 1)
-
-        layout.addWidget(panel1, 0, 0, 1, 1)
-
-        return panel
+        # status saved in file and changed by editing (view settings are not counted as modification).
+        keys = ["origin", "cell", "crystal", "clip", "repeat", "lower", "upper"]
+        widget = self.pyvista_widget
+        status = {key: widget._status.get(key) for key in keys}
+        multipie = widget._mp_data.status if widget._mp_data is not None else {}
+        return copy.deepcopy({"data": widget.get_data_dict(), "status": status, "multipie": multipie})
 
     # ==================================================
-    def create_gui_debug(self, parent):
+    def is_modified(self):
         """
-        Create debug panel.
-
-        Args:
-            parent (QWidget): parent.
+        Is document modified after it was opened or saved ?
 
         Returns:
-            - (QWidget) -- debug panel.
+            - (bool) -- modified ?
+        """
+        return self._document_state() != self._saved_state
+
+    # ==================================================
+    def _mark_saved(self):
+        """
+        Mark current document as saved.
 
         :meta private:
         """
-        panel = QWidget(parent)
-        layout = Layout(panel)
+        self._saved_state = self._document_state()
+        self._update_title()
 
-        label_debug = Label(parent, text="Debug", bold=True)
-        self.debug_button_camera = Button(parent, text="camera")
-        self.debug_button_actor = Button(parent, text="actor")
-        self.debug_button_data = Button(parent, text="data")
-        self.debug_button_status = Button(parent, text="status")
-        self.debug_button_preference = Button(parent, text="pref")
+    # ==================================================
+    def _create_modified_check(self):
+        """
+        Update "*" in window title shortly after objects are changed.
 
-        panel1 = QWidget(parent)
-        layout1 = Layout(panel1)
-        layout1.addWidget(label_debug, 0, 0, 1, 1)
-        layout1.addWidget(self.debug_button_camera, 0, 1, 1, 1)
-        layout1.addWidget(self.debug_button_data, 1, 0, 1, 1)
-        layout1.addWidget(self.debug_button_actor, 1, 1, 1, 1)
-        layout1.addWidget(self.debug_button_status, 2, 0, 1, 1)
-        layout1.addWidget(self.debug_button_preference, 2, 1, 1, 1)
+        :meta private:
+        """
+        self._modified_timer = QTimer(self)
+        self._modified_timer.setSingleShot(True)
+        self._modified_timer.setInterval(300)
+        self._modified_timer.timeout.connect(self._settle)
+        for model in self.pyvista_widget._data.values():
+            model.dataModified.connect(self._document_changed)
+            model.dataRemoved.connect(self._document_changed)
+            model.checkChanged.connect(self._document_changed)
+            model.modelReset.connect(self._document_changed)  # deferred group rename.
+        self.pyvista_widget.document_changed.connect(self._document_changed)
+        # status changed from panel (e.g. clip), which may not change objects.
+        for button in self.findChildren(QAbstractButton):
+            button.clicked.connect(self._document_changed)
+        for combo in self.findChildren(QComboBox):
+            combo.currentIndexChanged.connect(self._document_changed)
+        for edit in self.findChildren(LineEdit):
+            edit.returnPressed.connect(self._document_changed)
 
-        layout.addWidget(panel1, 0, 0, 1, 1)
+    # ==================================================
+    def _document_changed(self, *args):
+        """
+        Start the timer to record the document after a change.
 
-        return panel
+        :meta private:
+        """
+        if self._restoring:
+            return
+        self._modified_timer.start()
+        self._update_undo_actions()
+
+    # ==================================================
+    def _show_status(self):
+        """
+        Show the status in effect in the panel and the View menu, without applying it again.
+
+        :meta private:
+        """
+        widgets = [w for cls in (QAbstractButton, QComboBox, LineEdit) for w in self.panel.findChildren(cls)]
+        blocked = [widget.blockSignals(True) for widget in widgets]
+        try:
+            self._update_unit_cell()
+            self._update_view()
+        finally:
+            for widget, b in zip(widgets, blocked):
+                widget.blockSignals(b)
+
+        # the View menu follows the panel by signals, which were blocked.
+        for name, act in self.action_toggle.items():
+            act.setChecked(self._toggle_button[name].isChecked())
+        for combo, actions in [(self.view_combo_axis, self.action_axis), (self.view_combo_cell, self.action_cell)]:
+            if combo.currentText() in actions:
+                actions[combo.currentText()].setChecked(True)
+
+    # ==================================================
+    def _settle(self):
+        """
+        Record the settled document for undo, and update the title.
+
+        :meta private:
+        """
+        if self._restoring:
+            return
+        snapshot = self.pyvista_widget.document_snapshot()
+        if self._history.current() is None:
+            self._history.reset(snapshot)
+        else:
+            self._history.record(snapshot, same=same_snapshot)
+        self._update_title()
+        self._update_undo_actions()
+
+    # ==================================================
+    def _flush(self):
+        """
+        Record a pending change now (before undo, redo, load, save and checking for unsaved changes).
+
+        :meta private:
+        """
+        self._commit_pending_input()
+        for model in self.pyvista_widget._data.values():
+            model.run_pending_renames()
+        self._modified_timer.stop()
+        self._settle()
+
+    # ==================================================
+    def _reset_history(self):
+        """
+        Start a new undo history with the current document.
+
+        :meta private:
+        """
+        self._modified_timer.stop()
+        self._history.reset(self.pyvista_widget.document_snapshot())
+        self._update_undo_actions()
+
+    # ==================================================
+    def _update_undo_actions(self):
+        """
+        Enable undo and redo in Edit menu.
+
+        :meta private:
+        """
+        if hasattr(self, "action_undo"):
+            self.action_undo.setEnabled(self.can_undo())
+            self.action_redo.setEnabled(self.can_redo())
+
+    # ==================================================
+    def _move_history(self, step):
+        """
+        Undo (step=-1) or redo (step=1).
+
+        :meta private:
+        """
+        if self._restoring:
+            return
+        self._flush()
+        target = self._history.peek_undo() if step < 0 else self._history.peek_redo()
+        if target is None:
+            return
+        try:
+            self._restore(target, self._history.commit_undo if step < 0 else self._history.commit_redo)
+        finally:
+            self._update_title()
+            self._update_undo_actions()
+
+    # ==================================================
+    def _restore(self, snapshot, commit):
+        """
+        Restore a snapshot, or the current document again if it fails.
+
+        Args:
+            snapshot (dict): snapshot.
+            commit (callable): called when the snapshot is restored (before it is rendered).
+
+        Note:
+            - the document is rendered once, also after restoring the current document.
+            - an exception is raised if the snapshot is not restored.
+
+        :meta private:
+        """
+        pvw = self.pyvista_widget
+        before = pvw.document_snapshot()
+        self._restoring = True
+        try:
+            with pvw._batch_render():
+                try:
+                    pvw.restore_document(snapshot)
+                except Exception:
+                    try:
+                        pvw.restore_document(before)
+                    except Exception:
+                        self._history.clear()
+                        try:
+                            self._history.reset(pvw.document_snapshot())
+                        except Exception:
+                            pass  # history stays empty until the next successful snapshot.
+                    raise
+                commit()
+        finally:
+            try:
+                self._after_restore()
+            finally:
+                self._restoring = False
+                self._modified_timer.stop()  # changes made by the restore are not recorded.
+
+    # ==================================================
+    def _after_restore(self):
+        """
+        Update panel and MultiPie dialog after a restore.
+
+        :meta private:
+        """
+        self._update_panel_quietly()
+        if self.multipie_dialog is not None:
+            if self.pyvista_widget._mp_data is None:
+                self.multipie_dialog.close()
+                self.multipie_dialog.deleteLater()  # by Qt at a safe point, not by the garbage collector later.
+                self.multipie_dialog = None
+                self.status.setText("MultiPie dialog closed: the restored document has no MultiPie group.")
+            else:
+                self.multipie_dialog.set_data(quiet=True)  # show the restored group, without changing it.
+
+    # ==================================================
+    def undo(self):
+        """
+        Undo the last change of the document (objects, unit cell, range and MultiPie).
+
+        Note:
+            - camera, view settings and preferences are not changed.
+            - changes made in a row without running the event loop, e.g. in one Jupyter cell, are one step.
+        """
+        self._move_history(-1)
+
+    # ==================================================
+    def redo(self):
+        """
+        Redo the change undone last.
+
+        Note:
+            - changes made in a row without running the event loop, e.g. in one Jupyter cell, are one step.
+        """
+        self._move_history(1)
+
+    # ==================================================
+    def can_undo(self):
+        """
+        Undo possible ?
+
+        Returns:
+            - (bool) -- there is a change to undo ?
+        """
+        return self._history.can_undo() or self._modified_timer.isActive()
+
+    # ==================================================
+    def can_redo(self):
+        """
+        Redo possible ?
+
+        Returns:
+            - (bool) -- there is an undone change to redo ?
+        """
+        return not self._modified_timer.isActive() and self._history.can_redo()
+
+    # ==================================================
+    def _commit_pending_input(self):
+        """
+        Apply value typed in focused field but not confirmed by Enter.
+
+        :meta private:
+        """
+        widget = QApplication.focusWidget()
+        if isinstance(widget, LineEdit):
+            widget.commit_pending()
+
+    # ==================================================
+    def _confirm_unsaved(self, action):
+        """
+        Ask to save unsaved changes.
+
+        Args:
+            action (str): action to be done, e.g. "closing".
+
+        Returns:
+            - (bool) -- go on with the action ?
+
+        :meta private:
+        """
+        if not self.is_modified():
+            return True
+
+        model = self.pyvista_widget._status["model"]
+        text = f"Save changes to '{model}' before {action}?"
+        ret = QMessageBox.question(
+            self,
+            "",
+            text,
+            QMessageBox.Save | QMessageBox.Discard | QMessageBox.Cancel,
+            QMessageBox.Save,
+        )
+        if ret == QMessageBox.Save:
+            return self.save_file()  # not saved if save dialog was cancelled.
+        return ret == QMessageBox.Discard
 
     # ==================================================
     def _update_panel(self):
@@ -572,10 +1221,10 @@ class QtDraw(Window):
 
         :meta private:
         """
-        self.app.setStyle(self.pyvista_widget._preference["general"]["style"])
+        self.app.setStyle("fusion")  # fixed, the same look on all platforms.
         font_type = self.pyvista_widget._preference["general"]["font"]
         size = self.pyvista_widget._preference["general"]["size"]
-        self.app.setStyleSheet("QWidget { font-family: " + f"{font_type}" + "; font-size: " + f"{size}" + "pt; }")
+        self.app.setStyleSheet(font_style_sheet(font_type, size))
 
     # ==================================================
     def _update_title(self):
@@ -585,7 +1234,9 @@ class QtDraw(Window):
         :meta private:
         """
         title = self.pyvista_widget.window_title
-        data_title = title.replace("QtDraw", "Dataset")
+        if self.is_modified():
+            title += " *"
+        data_title = title.replace("QtDraw", "DataSet")
         self.setWindowTitle(title)
         self.pyvista_widget._tab_group_view.setWindowTitle(data_title)
         if self.multipie_dialog is not None:
@@ -678,7 +1329,8 @@ class QtDraw(Window):
 
         :meta private:
         """
-        self.pyvista_widget.set_crystal(crystal)
+        if crystal is None or crystal != self.pyvista_widget._status["crystal"]:  # the same: the cell is not drawn again.
+            self.pyvista_widget.set_crystal(crystal)
 
         self._update_unit_cell()
 
@@ -991,32 +1643,14 @@ class QtDraw(Window):
         self.view_combo_axis.currentTextChanged.connect(self._set_axis_type)
         self.view_combo_cell.currentTextChanged.connect(self._set_cell_mode)
 
-        # dataset panel.
+        # button panel.
         self.ds_button_edit.released.connect(self.pyvista_widget.open_tab_group_view)
-        self.ds_button_clear.released.connect(self._clear_data)
-        self.ds_button_load.released.connect(self.open_file)
-        self.ds_button_save.released.connect(self.save_file)
-        self.ds_button_screenshot.released.connect(self._save_screenshot)
-
-        # misc panel.
-        self.misc_button_info.released.connect(lambda: self.info_dialog.show())
-        self.misc_button_pref.released.connect(self._show_preference)
-        self.misc_button_about.released.connect(self._show_about)
-        self.misc_button_log.released.connect(self.logger.show)
-        if check_multipie():
-            self.misc_button_multipie.released.connect(self._show_multipie)
-
-        # debug panel.
-        if self.debug:
-            self.debug_button_camera.released.connect(self._show_camera_info)
-            self.debug_button_data.released.connect(self._show_raw_data)
-            self.debug_button_actor.released.connect(self._show_actor_list)
-            self.debug_button_status.released.connect(self._show_status_data)
-            self.debug_button_preference.released.connect(self._show_preference_data)
+        self.misc_button_multipie.released.connect(self._show_multipie)
 
         # pyvista.
         self.pyvista_widget.message.connect(self.write_info)
         self.pyvista_widget.camera_view.connect(self.set_view_index)
+        self.pyvista_widget.status_changed.connect(self._show_status)  # also when set from Python.
 
     # ==================================================
     def set_view_index(self, index):
@@ -1048,7 +1682,17 @@ class QtDraw(Window):
 
         :meta private:
         """
-        self.pyvista_widget.nonrepeat_data()
+        ret = QMessageBox.question(
+            self,
+            "non-repeat",
+            "Convert repeated copies into independent objects?\nIt can be undone with Undo.",
+            QMessageBox.Ok | QMessageBox.Cancel,
+            QMessageBox.Cancel,
+        )
+        if ret != QMessageBox.Ok:
+            return
+        with busy_cursor():
+            self.pyvista_widget.nonrepeat_data()
 
     # ==================================================
     def _show_preference(self):
@@ -1083,60 +1727,160 @@ class QtDraw(Window):
         self.about_dialog.exec()  # open as modal mode.
 
     # ==================================================
-    def _show_multipie(self):
+    def _show_multipie(self, quiet=False):
         """
-        Show MultiPie panel.
+        Show MultiPie panel, or offer to install MultiPie.
+
+        Args:
+            quiet (bool, optional): only show the group, without applying its crystal ?
 
         :meta private:
         """
-        if check_multipie():
-            from qtdraw.multipie.multipie_dialog import MultiPieDialog
+        if not check_multipie():
+            if multipie_missing():
+                command = command_text(install_multipie_command())
+                text = "MultiPie is not installed. MultiPie draws objects by symmetry.\n\n"
+                text += f"Install it now with the following command?\n\n{command}"
+                if QMessageBox.question(self, "MultiPie", text, QMessageBox.Yes | QMessageBox.No) == QMessageBox.Yes:
+                    self._install_multipie()
+            else:  # installed, but it cannot be loaded: installing does not help.
+                QMessageBox.information(self, "MultiPie", f"{multipie_message()}\n\nMultiPie draws objects by symmetry.")
+            return
+        from qtdraw.multipie.multipie_dialog import MultiPieDialog
 
-            if self.multipie_dialog is None:
-                self.multipie_dialog = MultiPieDialog(self)
-            else:
-                self.multipie_dialog.show()
+        if self.multipie_dialog is None:
+            self.multipie_dialog = MultiPieDialog(self, quiet)
+            self.multipie_dialog.addActions([self.action_undo, self.action_redo])  # shortcuts in the dialog.
+        else:
+            self.multipie_dialog.show()
 
     # ==================================================
-    def _show_status_data(self):
+    def _install_multipie(self):
         """
-        Show status data dialog.
+        Install MultiPie with pip in the background, showing its output in the Log window.
 
         :meta private:
         """
+        command = install_multipie_command()
+        process = QProcess(self)
+        process.setProcessChannelMode(QProcess.MergedChannels)
+        output = []
+
+        def read():
+            text = bytes(process.readAllStandardOutput()).decode(errors="replace")
+            output.append(text)
+            self.logger.append_text(text.rstrip("\n"))
+
+        process.readyReadStandardOutput.connect(read)
+        process.finished.connect(
+            lambda code, status: self._multipie_installed(process, code == 0 and status == QProcess.NormalExit, output)
+        )
+        process.errorOccurred.connect(
+            lambda error: error == QProcess.FailedToStart and self._multipie_installed(process, False, output)
+        )
+        self._multipie_install = process
+        self.misc_button_multipie.setEnabled(False)
+        QApplication.setOverrideCursor(Qt.BusyCursor)
+        self.logger.append_text("$ " + command_text(command))
+        self.logger.show()
+        process.start(command[0], command[1:])
+
+    # ==================================================
+    def _multipie_installed(self, process, ok, output):
+        """
+        Use MultiPie after its installation, or tell why it failed.
+
+        Args:
+            process (QProcess): installing process.
+            ok (bool): installed ?
+            output (list): output of the installation.
+
+        :meta private:
+        """
+        if self._multipie_install is not process:  # already handled, or stopped by closing.
+            return
+        self._multipie_install = None
+        process.deleteLater()
+        QApplication.restoreOverrideCursor()
+        self.misc_button_multipie.setEnabled(True)
+        if not ok:
+            tail = "\n".join("".join(output).strip().splitlines()[-10:]) or process.errorString()
+            command = command_text(install_multipie_command())
+            text = f"MultiPie could not be installed.\n\n{tail}\n\nInstall it by hand with:\n{command}\n\n"
+            text += "or with the tool that manages this Python environment, e.g. uv pip install multipie, for one without pip."
+            QMessageBox.warning(self, "MultiPie", text)
+            return
+        importlib.invalidate_caches()  # find the new package.
+        if check_multipie():
+            self._show_multipie()
+        elif multipie_missing():  # e.g. installed in a directory that this Python does not search yet.
+            QMessageBox.information(self, "MultiPie", "MultiPie was installed. Restart QtDraw to use it.")
+        else:
+            QMessageBox.information(self, "MultiPie", f"MultiPie was installed. {multipie_message()}")
+
+    # ==================================================
+    def _show_data_view(self, name, title, contents):
+        """
+        Show a window with internal data (Window menu), refreshed each time it is shown.
+
+        Args:
+            name (str): name of the view.
+            title (str): window title.
+            contents (function): text of the data, contents().
+
+        :meta private:
+        """
+        view = self._data_views.get(name)
+        if view is None:
+            view = LogWidget(None, title, level=None)  # a view only: no log handler, no exception hook.
+            self._data_views[name] = view
+        view.set_text(contents())
+        view.show()
+        view.raise_()
+
+    # ==================================================
+    def _status_text(self):
+        """
+        Status data.
+
+        Returns:
+            - (str) -- text.
+
+        :meta private:
+        """
+        pvw = self.pyvista_widget
+        status = pvw._status
+        multipie = pvw._mp_data.status if pvw._mp_data is not None else status.get("multipie", {})  # the current group.
         s = ""
-        for key, val in self.pyvista_widget._status.items():
-            if key != "plus" and key != "multipie":
+        for key, val in status.items():
+            if key not in ("plus", "multipie"):
                 s += f"{key}: {val}\n"
 
         s += "\n=== multipie ===\n"
-        if "version" in self.pyvista_widget._status["multipie"].keys():
-            ver = self.pyvista_widget._status["multipie"]["version"]
-            s += f"version: {ver}\n"
-        for key, val in self.pyvista_widget._status["multipie"].items():
-            if key != "plus":
-                if key != "version":
-                    s += f"--- {key} ---\n"
-                    for k, v in val.items():
-                        s += f"{k}: {v}\n"
+        if "version" in multipie:
+            s += f"version: {multipie['version']}\n"
+        for key, val in multipie.items():
+            if key not in ("plus", "version"):
+                s += f"--- {key} ---\n"
+                for k, v in val.items():
+                    s += f"{k}: {v}\n"
 
         s += "\n=== plus ===\n"
-        for key, val in self.pyvista_widget._status["plus"].items():
+        for key, val in status.get("plus", {}).items():
             s += f"{key}: {val}\n"
 
         s += "\n=== multipie.plus ===\n"
-        for key, val in self.pyvista_widget._status["multipie"]["plus"].items():
+        for key, val in multipie.get("plus", {}).items():
             s += f"{key}: {val}\n"
-        s = s[:-1]
-
-        self.status_dialog = LogWidget("Status Data", None)
-        self.status_dialog.set_text(s)
-        self.status_dialog.show()
+        return s[:-1]
 
     # ==================================================
-    def _show_preference_data(self):
+    def _preference_text(self):
         """
-        Show preference data dialog.
+        Preference data.
+
+        Returns:
+            - (str) -- text.
 
         :meta private:
         """
@@ -1145,59 +1889,49 @@ class QtDraw(Window):
             s += f"=== {key} ===\n"
             for name, v in val.items():
                 s += f"{name}: {v}\n"
-        s = s[:-1]
-        self.pref_data_dialog = LogWidget("Preference Data", None)
-        self.pref_data_dialog.set_text(s)
-        self.pref_data_dialog.show()
+        return s[:-1]
 
     # ==================================================
-    def _show_actor_list(self):
+    def _actor_text(self):
         """
-        Show actor list dialog.
+        Actor names.
+
+        Returns:
+            - (str) -- text.
 
         :meta private:
         """
-        s = ""
-        for i in self.pyvista_widget.actor_list:
-            s += i + "\n"
-        s = s[:-1]
-        self.actor_dialog = LogWidget("Actor Data", None)
-        self.actor_dialog.set_text(s)
-        self.actor_dialog.show()
+        return "\n".join(self.pyvista_widget.actor_list)
 
     # ==================================================
-    def _show_raw_data(self):
+    def _raw_data_text(self):
         """
-        Show raw data dialog.
+        Raw data of all objects.
+
+        Returns:
+            - (str) -- text.
 
         :meta private:
         """
         s = ""
         for object_type, model in self.pyvista_widget._data.items():
             s += f"=== {object_type} ===\n"
-            data = model.tolist()
-            for row in data:
+            for row in model.tolist():
                 s += str(row) + "\n"
-        s = s[:-1]
-        self.data_dialog = LogWidget("Raw Data", None)
-        self.data_dialog.set_text(s)
-        self.data_dialog.show()
+        return s[:-1]
 
     # ==================================================
-    def _show_camera_info(self):
+    def _camera_text(self):
         """
-        Show camera info. dialog.
+        Camera info.
+
+        Returns:
+            - (str) -- text.
 
         :meta private:
         """
         camera = self.pyvista_widget.get_camera_info()
-        s = ""
-        for key, val in camera.items():
-            s += f"{key}: {val}\n"
-        s = s[:-1]
-        self.camera_dialog = LogWidget("Camera Info", None)
-        self.camera_dialog.set_text(s)
-        self.camera_dialog.show()
+        return "\n".join(f"{key}: {val}" for key, val in camera.items())
 
     # ==================================================
     def _clear_data(self):
@@ -1206,9 +1940,8 @@ class QtDraw(Window):
 
         :meta private:
         """
-        ret = QMessageBox.question(self, "", "Are you sure ?", QMessageBox.Cancel, QMessageBox.Ok)
-        if ret == QMessageBox.Ok:
-            self.clear_data()
+        self._flush()
+        self.clear_data()  # without asking, as clearing is undone.
 
     # ==================================================
     def clear_data(self):
@@ -1232,34 +1965,44 @@ class QtDraw(Window):
     # ==================================================
     def closeEvent(self, event):
         """
-        Close with dialog.
+        Close, asking to save unsaved changes.
 
         Args:
             event (Event): event.
 
         :meta private:
         """
-        ret = QMessageBox.question(self, "", "Quit QtDraw ?", QMessageBox.Cancel, QMessageBox.Ok)
-        if ret != QMessageBox.Ok:
+        self._flush()
+        ok = self._confirm_unsaved("closing")
+        if ok and self._multipie_install is not None:
+            text = "MultiPie is being installed. Stop the installation and close?"
+            ok = QMessageBox.question(self, "MultiPie", text, QMessageBox.Yes | QMessageBox.No) == QMessageBox.Yes
+            if ok and self._multipie_install is not None:  # it may have finished while asking.
+                process, self._multipie_install = self._multipie_install, None
+                process.kill()
+                process.waitForFinished(5000)
+                QApplication.restoreOverrideCursor()
+        if not ok:
             event.ignore()
         else:
-            if self.debug:
-                if self.actor_dialog is not None:
-                    self.actor_dialog.close()
-                if self.data_dialog is not None:
-                    self.data_dialog.close()
-                if self.status_dialog is not None:
-                    self.status_dialog.close()
-                if self.pref_data_dialog is not None:
-                    self.pref_data_dialog.close()
-                if self.camera_dialog is not None:
-                    self.camera_dialog.close()
-            if self.multipie_dialog is not None:
-                self.multipie_dialog.close()
-            self.logger.close()
-            self.info_dialog.close()
-            self.pyvista_widget.close()
-            super().closeEvent(event)
+            dialogs = [self.multipie_dialog, self.logger, self.info_dialog] + list(self._data_views.values())
+            dialogs = [dialog for dialog in dialogs if dialog is not None]
+
+            # delete closed windows, otherwise they remain and slow down new windows.
+            # scheduled first, so that a failing step below cannot skip it.
+            for dialog in dialogs:
+                dialog.deleteLater()
+            self.deleteLater()
+            # keep the VTK widget, as a closed standalone PyVistaWidget: deleting it together
+            # with the window occasionally corrupts memory with Mesa on Linux.
+            self.pyvista_widget.setParent(None)
+
+            try:
+                for dialog in dialogs:
+                    dialog.close()
+                self.pyvista_widget.close()
+            finally:
+                super().closeEvent(event)
 
     # ==================================================
     def update_status(self, key, value):
@@ -2147,7 +2890,7 @@ class QtDraw(Window):
             size (int, optional): caption size. (default: 8)
             color (str, optional): caption color. (default: black)
             font (str, optional): caption font. (default: arial)
-            position (str, optional): position in cell, [x,y,z]. (default: [0,0,0])
+            position (str, optional): position in the window, [x,y,0], x and y from 0 to 1 (z is not used). (default: [0.02,0.95,0])
             name (str, optional): name of group. (default: untitled)
 
         Note:
@@ -2598,6 +3341,8 @@ class QtDraw(Window):
 
         Returns:
             - (bool) -- True if actor is removed.
+
+        :meta private:
         """
         return self.pyvista_widget.remove_actor(actor, reset_camera, render)
 
@@ -2607,9 +3352,13 @@ class QtDraw(Window):
         Load all info.
 
         Args:
-            filename (str): full file name.
+            filename (str): file name, relative to the current directory (which is not changed).
         """
+        self._flush()
         self.pyvista_widget.load(filename)
+        self._loaded_from(filename)
+        self._mark_saved()
+        self._reset_history()
 
     # ==================================================
     def save(self, filename):
@@ -2617,16 +3366,40 @@ class QtDraw(Window):
         save all info.
 
         Args:
-            filename (str): full file name.
+            filename (str): file name, relative to the current directory (which is not changed).
         """
-        self.pyvista_widget.save(filename)
+        self._save(filename)
+        self._saved_to(filename)
+
+    # ==================================================
+    def _save(self, filename):
+        """
+        Save the document, and keep the history valid in the new directory.
+
+        Args:
+            filename (str): file name, relative to the current directory (which is not changed).
+
+        Note:
+            - saving makes the data file names of isosurfaces relative to the directory of the file.
+
+        :meta private:
+        """
+        self._flush()
+        pvw = self.pyvista_widget
+        old_dir = pvw.document_dir().resolve()
+        try:
+            pvw.save(filename)
+        finally:  # also when writing fails after the names were made relative to the new directory.
+            new_dir = pvw.document_dir().resolve()
+            if old_dir != new_dir:
+                self._history.map(lambda s: pvw.rebase_snapshot(s, old_dir, new_dir))
 
     # ==================================================
     # MultiPie interface
     # ==================================================
     def _check_multipie(self):
         if not check_multipie():
-            raise Exception("MultiPie is not installed.")
+            raise Exception(multipie_message())
         if self.multipie_dialog is None:
             QMessageBox.question(self, "", "Call 'mp_set_group(tag)' at first.", QMessageBox.Ok)
             return True

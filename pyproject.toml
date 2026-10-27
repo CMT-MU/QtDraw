@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools", "Cython"]
+requires = ["setuptools>=77"]  # 77: license as an SPDX expression (PEP 639).
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -7,31 +7,31 @@ name = "qtdraw"
 dependencies = [
     "numpy",
     "matplotlib",
-    "PySide6",
-    "pyvista",
-    "pyvistaqt",
+    # lower bounds of PySide6, pyvista and pyvistaqt: keep in sync with the "minimum" job in .github/workflows/test.yml.
+    "PySide6>=6.9",
+    "pyvista>=0.46",
+    "pyvistaqt>=0.13",
     "click",
     "pymatgen",
     "multipie>=2",
     "playwright",
 ]
 dynamic = ["version"]
-requires-python = ">=3.11"
+requires-python = ">=3.12"
 authors = [
   { name="Hiroaki Kusunose", email="hiroaki.kusunose@gmail.com" },
 ]
 description = "3D drawing tool for molecules and crystals based on Pyvista and PySide6."
 readme = {file = "docs/README.md", content-type = "text/markdown"}
 keywords = ['pyvista', 'PySide6', 'multipie']
-license = {file = "LICENSE"}
+license = "MPL-2.0"
+license-files = ["LICENSE"]
 classifiers = [
     'Intended Audience :: Science/Research',
     'Topic :: Scientific/Engineering :: Visualization',
-    'License :: OSI Approved :: MIT License',
     'Operating System :: Microsoft :: Windows',
     'Operating System :: POSIX',
     'Operating System :: MacOS',
-    'Programming Language :: Python :: 3.11',
     'Programming Language :: Python :: 3.12',
     'Programming Language :: Python :: 3.13',
 ]
@@ -50,6 +50,9 @@ dev = [
     "ipython",
     "jupyter-book<2",
     "ghp-import",
+    "pytest",
+    "pytest-qt",
+    "pytest-xdist",
 ]
 
 [tool.setuptools.dynamic]
@@ -63,6 +66,10 @@ exclude = ["build", "tests"]
 
 [tool.black]
 line-length = 130
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = ["panel_not_checked(reason): the test leaves the panel out of date on purpose (see the app fixture)"]
 
 [tool.build_sphinx]
 source-dir = 'docs'
