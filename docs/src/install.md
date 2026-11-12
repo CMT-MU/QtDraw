@@ -72,10 +72,10 @@
 
 3. Update MultiPie (optional)
 
-    The symmetry operation tool MultiPie is installed together with QtDraw. To update it to the latest version:
+    The symmetry operation tool MultiPie is installed together with QtDraw. This version of QtDraw works with MultiPie 2.5 or later in Ver.2 (not with Ver.3). To update it to the latest of them:
 
     ```bash
-    pip install -U multipie
+    pip install -U "multipie~=2.5"
     ```
 
 4. Associate QtDraw file (**.qtdw**) to the application

@@ -30,8 +30,8 @@ def broken_multipie(path):
     package = path / "multipie"
     package.mkdir()
     (package / "__init__.py").write_text(
-        'import importlib\n__version__ = "2.3.4"\n\n\ndef __getattr__(name):\n    importlib.import_module("multipie.group")\n'
-    )
+        'import importlib\n__version__ = "2.5.0"\n\n\ndef __getattr__(name):\n    importlib.import_module("multipie.group")\n'
+    )  # a supported version: the parts used by QtDraw fail to load.
     (package / "group.py").write_text("s = (\n")  # a syntax error.
     return path
 
@@ -76,7 +76,7 @@ def test_multipie_that_fails_to_load_is_not_available(tmp_path):
     )
     message = out.split("MESSAGE ")[1].split("\nOK")[0]
     assert "cannot be loaded" in message and "SyntaxError" in message, message
-    assert "pip install multipie" not in message, message  # it is installed.
+    assert "pip install" not in message, message  # it is installed: installing does not help.
 
 
 def test_qtdraw_runs_with_multipie_turned_off(tmp_path):

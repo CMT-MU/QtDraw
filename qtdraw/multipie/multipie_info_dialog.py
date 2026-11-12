@@ -16,7 +16,7 @@ import sympy as sp
 from PySide6.QtWidgets import QDialog
 
 from multipie.util.util_harmonics import harmonics_decomposition
-from multipie.util.util_response_tensor import convert_mp_alias
+from multipie.util.util_response_tensor import convert_mp_alias, multipole_rank
 from qtdraw.widget.custom_widget import Layout
 from qtdraw.widget.table_view import TableView
 from qtdraw.widget.qt_event_util import with_busy_cursor
@@ -318,8 +318,8 @@ def show_harmonics_info(group, head, rank, parent):
     header = ["symbol", "expression"]
 
     data = []
-    for idx, (ex, u, lc) in harmonics.items():
-        for comp, e in enumerate(ex):
+    for idx, value in harmonics.items():  # value = (expression, U, ...): only the expression is used.
+        for comp, e in enumerate(value[0]):
             data.append([group.tag_multipole(idx, comp, True), to_latex(e)])
 
     return show_group_info(group, name, header, data, True, parent)
@@ -419,14 +419,12 @@ def show_response(group, rank, r_type, parent):
     Returns:
         - (InfoPanel) -- response tensor panel.
     """
-    rank_dict = {0: "s", 1: "p", 2: "d", 3: "f", 4: "g"}
     d = group.response_tensor_all(r_type)
     lst0 = group.active_multipole
     lst = {}
-    for i in lst0:
-        for r in range(rank + 1):
-            if rank_dict[r] in i:
-                lst[i[0]] = lst.get(i[0], []) + ["$" + convert_mp_alias(i, latex=True) + "$"]
+    for i in lst0:  # active multipoles up to the rank.
+        if multipole_rank(i) <= rank:
+            lst[i[0]] = lst.get(i[0], []) + ["$" + convert_mp_alias(i, latex=True) + "$"]
 
     data = []
     data.append([r"\text{active multipole}"])
