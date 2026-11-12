@@ -31,7 +31,14 @@ from qtdraw.widget.custom_widget import Label, Layout, LineEdit, HBar, Button, C
 from qtdraw.widget.logging_util import LogWidget
 from qtdraw.widget.message_box import ResizableMessageBox
 from qtdraw.widget.qt_event_util import busy_cursor, font_style_sheet
-from qtdraw.util.util import check_multipie, multipie_message, multipie_missing, install_multipie_command, command_text
+from qtdraw.util.util import (
+    check_multipie,
+    multipie_message,
+    multipie_missing,
+    install_multipie_command,
+    command_text,
+    pip_install_multipie,
+)
 
 
 # ==================================================
@@ -1807,7 +1814,8 @@ class QtDraw(Window):
             tail = "\n".join("".join(output).strip().splitlines()[-10:]) or process.errorString()
             command = command_text(install_multipie_command())
             text = f"MultiPie could not be installed.\n\n{tail}\n\nInstall it by hand with:\n{command}\n\n"
-            text += "or with the tool that manages this Python environment, e.g. uv pip install multipie, for one without pip."
+            text += f"or with the tool that manages this Python environment, e.g. {pip_install_multipie('uv pip')}, "
+            text += "for one without pip."
             QMessageBox.warning(self, "MultiPie", text)
             return
         importlib.invalidate_caches()  # find the new package.
