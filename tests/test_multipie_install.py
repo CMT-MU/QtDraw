@@ -17,7 +17,7 @@ import textwrap
 
 import pytest
 
-from qtdraw.util.util import check_multipie, command_text, install_multipie_command, multipie_missing
+from qtdraw.util.util import MULTIPIE_REQUIREMENT, check_multipie, command_text, install_multipie_command, multipie_missing
 
 # MultiPie is not found until the flag file is written by the (replaced) installation.
 PRELUDE = """
@@ -107,7 +107,7 @@ FAILS = "import sys; print('No module named pip'); sys.exit(1)"
 # ==================================================
 def test_install_command_uses_pip_of_this_python():
     assert install_multipie_command()[:4] == [sys.executable, "-m", "pip", "install"]
-    assert install_multipie_command()[4:] == ["multipie"]
+    assert install_multipie_command()[4:] == [MULTIPIE_REQUIREMENT]  # the versions that QtDraw supports.
 
 
 @pytest.mark.parametrize("python", ["/usr/bin/python", "/path with space/R&D's (x)/python", "C:\\R&D\\python.exe"])
@@ -197,7 +197,7 @@ def test_failed_installation_tells_why_and_how(tmp_path):
         assert window.multipie_dialog is None and window.misc_button_multipie.isEnabled()
         assert len(shown) == 1 and shown[0][0] == "warning", shown
         assert "No module named pip" in shown[0][1] and "sys.exit(1)" in shown[0][1], shown  # the command by hand.
-        assert "uv pip install multipie" in shown[0][1], shown  # also without pip.
+        assert "uv pip install" in shown[0][1] and "multipie~=" in shown[0][1], shown  # also without pip.
         """,
     )
 

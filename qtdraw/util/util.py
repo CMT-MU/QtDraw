@@ -157,7 +157,15 @@ def to_latex(a, style="scalar"):
     raise ValueError(f"unknown style, {style}.")
 
 
-MULTIPIE_INSTALL = "MultiPie is not installed. Install it with: pip install multipie"
+MULTIPIE_REQUIREMENT = "multipie~=2.5"  # >=2.5,<3 without a shell operator: the same as in pyproject.toml.
+MULTIPIE_VERSION = ((2, 5), (3, 0))  # [lower, upper) of (major, minor).
+
+
+# ==================================================
+class MultiPieVersionError(ImportError):
+    """
+    MultiPie is installed, but its version is not supported.
+    """
 
 
 # ==================================================
@@ -165,9 +173,18 @@ def _load_multipie():
     """
     Import the parts of MultiPie used by QtDraw, which raises the error when they cannot be loaded.
     """
+    from multipie import __version__
+
+    m = re.match(r"(\d+)\.(\d+)", __version__)
+    if m is None or not (MULTIPIE_VERSION[0] <= (int(m[1]), int(m[2])) < MULTIPIE_VERSION[1]):
+        raise MultiPieVersionError(
+            f"MultiPie {__version__} is installed, but QtDraw needs {MULTIPIE_REQUIREMENT} (>=2.5,<3). "
+            f"Install it with: {pip_install_multipie()}"
+        )
+
     from multipie import Group
     from multipie.util.util_harmonics import harmonics_decomposition
-    from multipie.util.util_response_tensor import convert_mp_alias
+    from multipie.util.util_response_tensor import convert_mp_alias, multipole_rank
 
 
 # ==================================================
@@ -201,6 +218,8 @@ def multipie_message():
     except Exception as e:
         if isinstance(e, ModuleNotFoundError) and e.name == "multipie":
             return MULTIPIE_INSTALL
+        if isinstance(e, MultiPieVersionError):
+            return str(e)
         return f"MultiPie cannot be loaded ({type(e).__name__}: {e})."
     return MULTIPIE_INSTALL
 
@@ -230,7 +249,7 @@ def install_multipie_command():
     Returns:
         - (list) -- program and arguments.
     """
-    return [sys.executable, "-m", "pip", "install", "multipie"]  # no version specifier: ">" is a redirection in a shell.
+    return [sys.executable, "-m", "pip", "install", MULTIPIE_REQUIREMENT]  # "~=", not ">": ">" is a redirection in a shell.
 
 
 # ==================================================
@@ -247,6 +266,23 @@ def command_text(command):
     if sys.platform == "win32":  # for cmd.exe: quote the arguments with spaces or its special characters.
         return " ".join(f'"{a}"' if not a or set(a) & set(" \t&|<>^()") else a for a in command)
     return shlex.join(command)
+
+
+# ==================================================
+def pip_install_multipie(tool="pip"):
+    """
+    Command line to install the supported MultiPie, to be shown to the user.
+
+    Args:
+        tool (str, optional): installer, e.g., "pip" or "uv pip".
+
+    Returns:
+        - (str) -- command line, quoted for a shell.
+    """
+    return command_text([*tool.split(), "install", MULTIPIE_REQUIREMENT])
+
+
+MULTIPIE_INSTALL = f"MultiPie is not installed. Install it with: {pip_install_multipie()}"
 
 
 # ==================================================

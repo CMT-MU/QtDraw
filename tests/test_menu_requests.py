@@ -11,6 +11,7 @@ and a resizable error dialog.
 """
 
 import os
+import re
 import sys
 from pathlib import Path
 
@@ -19,7 +20,7 @@ import shiboken6
 from PySide6.QtWidgets import QMessageBox, QPushButton
 
 from gui_helpers import app  # noqa: F401  (fixture)
-from qtdraw.util.util import check_multipie
+from qtdraw.util.util import check_multipie, pip_install_multipie
 
 
 # ==================================================
@@ -291,7 +292,7 @@ def test_multipie_button_is_always_shown(qapp, tmp_path, monkeypatch, no_multipi
         asked = []
         monkeypatch.setattr(QMessageBox, "question", lambda *a, **k: asked.append(a[2]) or QMessageBox.No)
         window.misc_button_multipie.click()  # offers to install MultiPie, declined.
-        assert len(asked) == 1 and "pip install multipie" in asked[0]
+        assert len(asked) == 1 and "pip install" in asked[0] and "multipie~=" in asked[0]  # the supported MultiPie.
         assert window.multipie_dialog is None and window._multipie_install is None
     finally:
         monkeypatch.setattr(QMessageBox, "question", lambda *a, **k: QMessageBox.Discard)
@@ -308,13 +309,13 @@ def test_opening_a_multipie_drawing_asks_to_install(widget, tmp_path, monkeypatc
     import qtdraw.core.pyvista_widget as pvw_module
 
     monkeypatch.setattr(pvw_module, "check_multipie", lambda: False)
-    with pytest.raises(Exception, match="mp.qtdw uses MultiPie.*pip install multipie"):
+    with pytest.raises(Exception, match="mp.qtdw uses MultiPie.*" + re.escape(pip_install_multipie())):
         widget.load(str(tmp_path / "mp.qtdw"))
     assert "C2h" in str(widget._mp_data.status)
 
 
 def test_multipie_methods_ask_to_install(widget, no_multipie):
-    with pytest.raises(Exception, match="pip install multipie"):
+    with pytest.raises(Exception, match=re.escape(pip_install_multipie())):
         widget.mp_set_group("Ci")
 
 
@@ -377,7 +378,7 @@ def test_qtdraw_starts_without_multipie():
         window = QtDraw()
         window.pyvista_widget.add_site()
         window.misc_button_multipie.click()
-        assert "pip install multipie" in asked[0], asked
+        assert "pip install" in asked[0] and "multipie~=" in asked[0], asked
         window.close()
         print("OK")
         """)
