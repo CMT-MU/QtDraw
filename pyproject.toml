@@ -13,7 +13,7 @@ dependencies = [
     "pyvistaqt>=0.13",
     "click",
     "pymatgen",
-    "multipie~=2.5",  # >=2.5,<3: keep in sync with MULTIPIE_REQUIREMENT in qtdraw/util/util.py.
+    "multipie~=3.0.dev0",  # >=3.0.dev0,<4 (MultiPie Ver.3): keep in sync with MULTIPIE_REQUIREMENT in qtdraw/util/util.py.
     "playwright",
 ]
 dynamic = ["version"]

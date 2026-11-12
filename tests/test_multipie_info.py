@@ -32,7 +32,10 @@ def test_requirement_is_the_same_as_in_pyproject():
 
 # ==================================================
 @needs_multipie
-@pytest.mark.parametrize("version, ok", [("2.5.0", True), ("2.6.1", True), ("2.4.1", False), ("3.0.0", False), ("x", False)])
+@pytest.mark.parametrize(
+    "version, ok",
+    [("3.0.0.dev0", True), ("3.0.0a1", True), ("3.0.0", True), ("3.2.1", True), ("2.5.0", False), ("4.0.0", False), ("x", False)],
+)
 def test_supported_multipie_version(monkeypatch, version, ok):
     import multipie
 

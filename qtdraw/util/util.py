@@ -157,8 +157,9 @@ def to_latex(a, style="scalar"):
     raise ValueError(f"unknown style, {style}.")
 
 
-MULTIPIE_REQUIREMENT = "multipie~=2.5"  # >=2.5,<3 without a shell operator: the same as in pyproject.toml.
-MULTIPIE_VERSION = ((2, 5), (3, 0))  # [lower, upper) of (major, minor).
+MULTIPIE_REQUIREMENT = "multipie~=3.0.dev0"  # >=3.0.dev0,<4 without a shell operator: the same as in pyproject.toml.
+MULTIPIE_VERSION = ((3, 0), (4, 0))  # [lower, upper) of (major, minor).
+MULTIPIE_RANGE = ">=3.0,<4"  # MULTIPIE_VERSION in words (including the development and pre-release versions of 3.0).
 
 
 # ==================================================
@@ -178,7 +179,7 @@ def _load_multipie():
     m = re.match(r"(\d+)\.(\d+)", __version__)
     if m is None or not (MULTIPIE_VERSION[0] <= (int(m[1]), int(m[2])) < MULTIPIE_VERSION[1]):
         raise MultiPieVersionError(
-            f"MultiPie {__version__} is installed, but QtDraw needs {MULTIPIE_REQUIREMENT} (>=2.5,<3). "
+            f"MultiPie {__version__} is installed, but QtDraw needs {MULTIPIE_REQUIREMENT} ({MULTIPIE_RANGE}). "
             f"Install it with: {pip_install_multipie()}"
         )
 

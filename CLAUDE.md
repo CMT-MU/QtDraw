@@ -10,6 +10,14 @@ QtDraw is a 3D drawing tool for molecules and crystals, built on PyVista/pyvista
 - After a PR merges, delete its branch (`gh pr merge --delete-branch`), pull `develop` and run the tests on it.
 - The maintainer opens and merges the `develop` → `main` PR by hand. Never delete `develop`, so GitHub's "Automatically delete head branches" stays off.
 
+### QtDraw 3.4 for MultiPie Ver.3 (`develop-v3.4`)
+
+- `develop-v3.4` is the development line of QtDraw 3.4 (version `3.4.0.devN`), which works with MultiPie Ver.3 (`multipie~=3.0.dev0`, i.e. `>=3.0.dev0,<4`; MultiPie's branch `develop-v3`). `develop` and `main` stay QtDraw 3.3 for MultiPie Ver.2 (`multipie~=2.5`). Never delete `develop-v3.4`.
+- Work for QtDraw 3.4 branches from `develop-v3.4`, and its PRs target `develop-v3.4` (`gh pr create --base develop-v3.4`). After merging, delete the branch and run the tests on the updated `develop-v3.4`, as for `develop`.
+- Fixes for QtDraw 3.3 go to `develop` as usual. Bring them into 3.4 by merging `develop` into `develop-v3.4`; do not rebase or force-push `develop-v3.4`.
+- The MultiPie requirement is in `pyproject.toml` and in `MULTIPIE_REQUIREMENT`, `MULTIPIE_VERSION` and `MULTIPIE_RANGE` (`qtdraw/util/util.py`); keep them in sync.
+- MultiPie Ver.3 is not on PyPI yet: CI (`.github/workflows/test.yml`, which also runs on pushes to `develop-v3.4`) installs it from MultiPie's `develop-v3` before QtDraw, and so does a local setup, e.g. `pip install -e <MultiPie checkout of develop-v3>` and then `pip install -e ".[dev]"`. Remove these steps when MultiPie Ver.3 is released.
+
 ## Commands
 
 ```bash
