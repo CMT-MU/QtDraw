@@ -1112,6 +1112,24 @@ class QtDraw(Window):
                 self._modified_timer.stop()  # changes made by the restore are not recorded.
 
     # ==================================================
+    def _close_multipie_dialog(self):
+        """
+        Close the MultiPie dialog and delete it.
+
+        Note:
+            - the dialog has no parent and reference cycles, so dropping it would leave its deletion to the
+              garbage collector, which can run in any thread (e.g. the MathJax thread). Deleted in a thread
+              without a Qt event loop, its widgets cannot stop their timers, and a pending timer of the
+              main thread then fires on a freed widget (a segmentation fault at a distance). It is deleted
+              by Qt in the main thread instead.
+
+        :meta private:
+        """
+        self.multipie_dialog.close()
+        self.multipie_dialog.deleteLater()
+        self.multipie_dialog = None
+
+    # ==================================================
     def _after_restore(self):
         """
         Update panel and MultiPie dialog after a restore.
@@ -1121,9 +1139,7 @@ class QtDraw(Window):
         self._update_panel_quietly()
         if self.multipie_dialog is not None:
             if self.pyvista_widget._mp_data is None:
-                self.multipie_dialog.close()
-                self.multipie_dialog.deleteLater()  # by Qt at a safe point, not by the garbage collector later.
-                self.multipie_dialog = None
+                self._close_multipie_dialog()
                 self.status.setText("MultiPie dialog closed: the restored document has no MultiPie group.")
             else:
                 self.multipie_dialog.set_data(quiet=True)  # show the restored group, without changing it.
@@ -3422,8 +3438,7 @@ class QtDraw(Window):
             group (str): group tag [default: C1].
         """
         if self.multipie_dialog is not None:
-            self.multipie_dialog.close()
-            self.multipie_dialog = None
+            self._close_multipie_dialog()
 
         self.pyvista_widget.mp_set_group(group=group)
         self.misc_button_multipie.released.emit()
