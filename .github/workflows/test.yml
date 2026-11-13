@@ -12,7 +12,30 @@ permissions:
   contents: read
 
 jobs:
+  # MultiPie Ver.3 is not on PyPI yet: build its wheel from its development branch, on Linux, as git on Windows cannot
+  # check out its data files, whose names have ":" (e.g., MPG:1.1.1.pkl). The wheel (pure Python) is used on all OS.
+  multipie:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Build the wheel of MultiPie
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip wheel --no-deps --wheel-dir multipie-wheel "multipie @ git+https://github.com/CMT-MU/MultiPie.git@develop-v3"
+          ls multipie-wheel
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: multipie-wheel
+          path: multipie-wheel
+
   test:
+    needs: multipie
     runs-on: ${{ matrix.os }}
     timeout-minutes: 30
     defaults:
@@ -39,6 +62,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - uses: actions/download-artifact@v4
+        with:
+          name: multipie-wheel
+          path: multipie-wheel
+
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
@@ -52,8 +80,7 @@ jobs:
       - name: Install QtDraw
         run: |
           python -m pip install --upgrade pip
-          # MultiPie Ver.3 is not on PyPI yet: install it from its development branch.
-          python -m pip install "multipie @ git+https://github.com/CMT-MU/MultiPie.git@develop-v3"
+          python -m pip install multipie-wheel/*.whl  # MultiPie Ver.3 (job "multipie").
           pins=""
           if [ "${{ matrix.dependencies }}" = "minimum" ]; then
             pins="PySide6==6.9.0 pyvista==0.46.0 pyvistaqt==0.13.0"
@@ -90,6 +117,7 @@ jobs:
 
   # the built package, installed as users do (not in editable mode), and run outside the source tree.
   install:
+    needs: multipie
     runs-on: ubuntu-latest
     timeout-minutes: 30
     strategy:
@@ -99,6 +127,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: multipie-wheel
+          path: ${{ runner.temp }}/multipie-wheel  # outside the source tree, not to be packed in the sdist.
 
       - uses: actions/setup-python@v5
         with:
@@ -118,7 +151,7 @@ jobs:
       - name: Install
         run: |
           python -m venv "$RUNNER_TEMP/venv"
-          "$RUNNER_TEMP/venv/bin/python" -m pip install "multipie @ git+https://github.com/CMT-MU/MultiPie.git@develop-v3"
+          "$RUNNER_TEMP/venv/bin/python" -m pip install "$RUNNER_TEMP"/multipie-wheel/*.whl  # MultiPie Ver.3 (job "multipie").
           "$RUNNER_TEMP/venv/bin/python" -m pip install dist/*
           "$RUNNER_TEMP/venv/bin/python" -m pip check
           "$RUNNER_TEMP/venv/bin/python" -m playwright install --with-deps chromium
