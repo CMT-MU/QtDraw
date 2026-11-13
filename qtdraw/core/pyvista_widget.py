@@ -524,6 +524,30 @@ def same_snapshot(a, b):
 
 
 # ==================================================
+def _delete_temporary_widget(widget):
+    """
+    Close a temporary off-screen widget and delete it.
+
+    Args:
+        widget (PyVistaWidget): temporary widget.
+
+    Note:
+        - closing alone does not delete it: its signals are connected to lambdas holding it, a reference
+          cycle through Qt that the garbage collector cannot see, so each temporary widget (a VTK widget with
+          its Python data) would remain for the rest of the process.
+        - deleted by Qt in this (main) thread, and at once, as a script may have no event loop afterwards.
+          Its render window is already finalized by close().
+
+    :meta private:
+    """
+    try:
+        widget.close()
+    finally:
+        widget.deleteLater()
+        QCoreApplication.sendPostedEvents(widget, QEvent.DeferredDelete)
+
+
+# ==================================================
 def create_qtdraw_file(filename, callback):
     """
     Create QtDraw file as background.
@@ -539,7 +563,7 @@ def create_qtdraw_file(filename, callback):
         callback(widget)
         widget.save(str(filename))
     finally:
-        widget.close()
+        _delete_temporary_widget(widget)
     app.quit()
 
 
@@ -558,7 +582,7 @@ def convert_qtdraw_v3(filename):
         widget.load(str(src))
         widget.save(str(src.with_name(src.stem + "_v3" + src.suffix)))  # next to the source.
     finally:
-        widget.close()
+        _delete_temporary_widget(widget)
     app.quit()
 
 
@@ -1997,7 +2021,7 @@ class PyVistaWidget(QtInteractor):
                     with widget._batch_render():  # the converter adds objects one by one.
                         all_data = convert_version3(all_data, ver, widget)
                 finally:
-                    widget.close()
+                    _delete_temporary_widget(widget)
             elif ver < 3:
                 all_data = convert_version3(all_data, ver, None)
             required = ["status", "preference", "camera", "data"]
