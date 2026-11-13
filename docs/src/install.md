@@ -1,5 +1,7 @@
 # Installing QtDraw
 
+A Japanese version is [here](install_ja.md).
+
 **QtDraw** can be installed from PyPI using pip on Python 3.12 or later.
 
 ## Requirements
