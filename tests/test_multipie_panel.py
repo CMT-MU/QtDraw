@@ -10,9 +10,10 @@ The panel and the View menu show the axis and cell display that a MultiPie group
 """
 
 import pytest
+import shiboken6
 from PySide6.QtWidgets import QMessageBox
 
-from gui_helpers import app, answer  # noqa: F401  (fixture and helper)
+from gui_helpers import app, answer, process_deleted  # noqa: F401  (fixture and helpers)
 from qtdraw.util.util import check_multipie
 
 pytestmark = pytest.mark.skipif(not check_multipie(), reason="MultiPie is not installed.")
@@ -106,3 +107,17 @@ def test_shown_after_undo_and_redo(app):
         move()
         st = app.pyvista_widget._status
         assert_shown(app, st["axis_type"], st["cell_mode"])
+
+
+# ==================================================
+def test_replaced_dialog_is_deleted_by_qt(app):
+    app.mp_set_group("Oh^1")
+    old = app.multipie_dialog
+    app.mp_set_group("Ci")
+    assert app.multipie_dialog is not old
+
+    process_deleted()
+
+    # deleted by Qt in the main thread, not left to the garbage collector, which may run in another
+    # thread, where the dialog cannot stop its timers (a segmentation fault later in CI).
+    assert not shiboken6.isValid(old)
