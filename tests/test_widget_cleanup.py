@@ -13,9 +13,11 @@ setStyleSheet re-apply the style to all existing widgets.
 """
 
 import os
+import shutil
 import subprocess
 import sys
 import textwrap
+from pathlib import Path
 
 import pytest
 import shiboken6
@@ -258,3 +260,46 @@ def test_failing_close_in_event_loop_is_reported():
         assert len(destroyed) == 2, "window or data table is not deleted"
         print("OK")
         """)
+
+
+# ==================================================
+def test_temporary_widgets_are_deleted(tmp_path):
+    # create_qtdraw_file, convert_qtdraw_v3 and loading a version-1 file use a temporary off-screen widget.
+    # closed only, each remained for the rest of the process (its signals hold it through Qt).
+    v1 = Path(__file__).parent / "data" / "compat" / "v1_1_0_sample_ver1.qtdw"
+    src = tmp_path / v1.name
+    shutil.copy(v1, src)
+    run_python(STANDALONE + f"""
+from PySide6.QtCore import QEventLoop, QTimer
+sys.excepthook = lambda *exc: (errors.append(exc), sys.__excepthook__(*exc))  # with the traceback, for a failure.
+from qtdraw.core.pyvista_widget import create_qtdraw_file, convert_qtdraw_v3
+
+create_qtdraw_file({str(tmp_path / "new.qtdw")!r}, lambda w: w.add_site())
+assert n_widgets() == before, "create_qtdraw_file"
+convert_qtdraw_v3({str(src)!r})
+assert n_widgets() == before, "convert_qtdraw_v3"
+
+w = PyVistaWidget(off_screen=True)
+opened = n_widgets()
+w.load({str(src)!r})
+assert n_widgets() == opened, "load a version-1 file"
+
+# also in a running event loop, as from a menu.
+loop = QEventLoop()
+counts = []
+
+
+def load():
+    try:
+        w.load({str(src)!r})
+        counts.append(len(QApplication.allWidgets()))
+    finally:
+        loop.quit()
+
+
+QTimer.singleShot(0, load)
+loop.exec()
+assert counts and counts[0] == opened, ("load in an event loop", counts, opened)
+assert not errors, errors
+print("OK")
+""")
