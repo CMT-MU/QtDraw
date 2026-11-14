@@ -10,7 +10,7 @@ dependencies = [
     # lower bounds of PySide6, pyvista and pyvistaqt: keep in sync with the "minimum" job in .github/workflows/test.yml.
     "PySide6>=6.9",
     "pyvista>=0.46",
-    "pyvistaqt>=0.13",
+    "pyvistaqt>=0.13.2",  # 0.13.2 drops the wrapper of a deleted GL surface (see PyVistaWidget.closeEvent).
     "click",
     "pymatgen",
     "multipie~=2.5",  # >=2.5,<3: keep in sync with MULTIPIE_REQUIREMENT in qtdraw/util/util.py.

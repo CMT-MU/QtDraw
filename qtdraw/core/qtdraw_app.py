@@ -2016,10 +2016,7 @@ class QtDraw(Window):
             # scheduled first, so that a failing step below cannot skip it.
             for dialog in dialogs:
                 dialog.deleteLater()
-            self.deleteLater()
-            # keep the VTK widget, as a closed standalone PyVistaWidget: deleting it together
-            # with the window occasionally corrupts memory with Mesa on Linux.
-            self.pyvista_widget.setParent(None)
+            self.deleteLater()  # with the VTK widget, which deletes itself also when closed alone.
 
             try:
                 for dialog in dialogs:
