@@ -14,6 +14,7 @@ This module provides a class to draw various
 
 import os
 import re
+import sys
 import ast
 import inspect
 import threading
@@ -526,7 +527,7 @@ def same_snapshot(a, b):
 # ==================================================
 def _delete_temporary_widget(widget):
     """
-    Close a temporary off-screen widget and delete it.
+    Close a temporary off-screen widget and delete it, except on Linux.
 
     Args:
         widget (PyVistaWidget): temporary widget.
@@ -537,14 +538,17 @@ def _delete_temporary_widget(widget):
           its Python data) would remain for the rest of the process.
         - deleted by Qt in this (main) thread, and at once, as a script may have no event loop afterwards.
           Its render window is already finalized by close().
+        - on Linux it is only closed, and remains, as before: deleting it lost the CI runner (LINUX_EVIDENCE),
+          as deleting the VTK widget of a closed window occasionally corrupts memory with Mesa on Linux.
 
     :meta private:
     """
     try:
         widget.close()
     finally:
-        widget.deleteLater()
-        QCoreApplication.sendPostedEvents(widget, QEvent.DeferredDelete)
+        if not sys.platform.startswith("linux"):
+            widget.deleteLater()
+            QCoreApplication.sendPostedEvents(widget, QEvent.DeferredDelete)
 
 
 # ==================================================
