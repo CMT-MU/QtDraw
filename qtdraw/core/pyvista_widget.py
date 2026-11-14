@@ -532,11 +532,8 @@ def _delete_temporary_widget(widget):
         widget (PyVistaWidget): temporary widget.
 
     Note:
-        - closing alone does not delete it: its signals are connected to lambdas holding it, a reference
-          cycle through Qt that the garbage collector cannot see, so each temporary widget (a VTK widget with
-          its Python data) would remain for the rest of the process.
-        - deleted by Qt in this (main) thread, and at once, as a script may have no event loop afterwards.
-          Its render window is already finalized by close().
+        - closing schedules its deletion (see closeEvent). It is deleted here at once, as a script may have no
+          event loop afterwards, and also if closing fails. Its render window is already finalized by close().
 
     :meta private:
     """
@@ -3568,10 +3565,13 @@ class PyVistaWidget(QtInteractor):
             return
         self._close_done = True
 
-        # delete the data table, otherwise it remains and slows down new windows.
-        # scheduled first, so that a failing step below cannot skip it.
-        # the VTK widget itself is not deleted: deleting it occasionally corrupts memory with Mesa on Linux.
+        # delete the data table and the VTK widget itself, otherwise they remain and slow down new windows. the
+        # VTK widget is not freed by the garbage collector: its signals are connected to lambdas holding it, a
+        # reference cycle through Qt. kept, each closed widget used memory for the rest of the process, which
+        # exhausted the memory of the Linux CI runner (Mesa renders in software).
+        # scheduled first, so that a failing step below cannot skip it; deleted by Qt in the main thread.
         self._tab_group_view.deleteLater()
+        self.deleteLater()
 
         # finish closing even if a step fails; the error is raised afterwards.
         try:

@@ -76,10 +76,11 @@ def test_closed_qtdraw_is_deleted(qapp, tmp_path, monkeypatch):
     for i in range(1, 3):
         window = QtDraw()
         assert n_widgets() > before + i
+        vtk_widget = window.pyvista_widget
         window.close()
-        # the window and its dialogs are deleted; only the detached VTK widget remains.
-        assert n_widgets() == before + i
-        assert window.pyvista_widget.parent() is None
+        # the window, its dialogs and its VTK widget are deleted.
+        assert n_widgets() == before
+        assert not shiboken6.isValid(vtk_widget)
 
 
 # ==================================================
@@ -102,27 +103,23 @@ def test_cancelled_close_keeps_qtdraw(qapp, tmp_path, monkeypatch):
 
 
 # ==================================================
-def test_closed_standalone_widget_deletes_its_data_table():
+def test_closed_standalone_widget_is_deleted():
+    # kept, each closed VTK widget used memory for the rest of the process (its signals hold it through Qt),
+    # which exhausted the memory of the Linux CI runner.
     run_python(STANDALONE + """
-import gc
 import shiboken6
 
-for i in range(1, 3):
+for i in range(2):
     w = PyVistaWidget(off_screen=True)
     w.add_site()
     w.open_tab_group_view()
     table = w._tab_group_view
-    assert n_widgets() > before + i
+    assert n_widgets() > before
     w.close()
-    assert n_widgets() == before + i  # the data table is deleted; the VTK widget is kept.
+    w.close()  # closing again before the deletion does nothing.
+    assert n_widgets() == before  # the VTK widget and its data table are deleted.
+    assert not shiboken6.isValid(w)
     assert not shiboken6.isValid(table)
-    w.close()  # closing again after the data table is deleted does nothing.
-    assert n_widgets() == before + i
-
-# as before, a closed VTK widget stays for the rest of the process, also after garbage collection.
-del w
-gc.collect()
-assert n_widgets() == before + 2
 assert not errors, errors
 print("OK")
 """)
@@ -155,8 +152,9 @@ except OSError as e:
 else:
     raise AssertionError("no error")
 assert closed  # the data table is closed anyway,
-assert n_widgets() == before + 1  # and deleted; the VTK widget is kept.
+assert n_widgets() == before  # and deleted, with the VTK widget.
 assert not shiboken6.isValid(table)
+assert not shiboken6.isValid(w)
 assert not errors, errors
 print("OK")
 """)
@@ -192,7 +190,7 @@ def test_closing_twice_deletes_once(qapp, tmp_path, monkeypatch):
     window = QtDraw()
     window.close()
     window.close()  # before the deferred deletion.
-    assert n_widgets() == before + 1  # only the detached VTK widget.
+    assert n_widgets() == before  # also the VTK widget.
     assert not shiboken6.isValid(window)
 
 
