@@ -25,6 +25,12 @@ def process_deleted():
     Delete widgets scheduled for deletion (deleteLater), as the event loop would.
 
     Errors are reported as a test failure instead of being shown in a (blocking) message box.
+
+    Note:
+        - the other pending events (timers, paint, native messages, ...) are processed before and after the
+          deletion, so that the events left by a test are handled in its own teardown, while its widgets still
+          exist, instead of at the setup of the next test (pytest-qt processes events there). A crash on them
+          (an access violation seen on Windows in CI) is then reported for the test that left them.
     """
     if QCoreApplication.instance() is None:
         return
@@ -32,7 +38,9 @@ def process_deleted():
     hook = sys.excepthook
     sys.excepthook = lambda *exc: errors.append("".join(traceback.format_exception(*exc)))
     try:
+        QCoreApplication.processEvents()
         QCoreApplication.sendPostedEvents(None, QEvent.DeferredDelete)
+        QCoreApplication.processEvents()
     finally:
         sys.excepthook = hook
     if errors:

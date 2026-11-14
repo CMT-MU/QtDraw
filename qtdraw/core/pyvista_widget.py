@@ -524,6 +524,27 @@ def same_snapshot(a, b):
 
 
 # ==================================================
+def _delete_temporary_widget(widget):
+    """
+    Close a temporary off-screen widget and delete it.
+
+    Args:
+        widget (PyVistaWidget): temporary widget.
+
+    Note:
+        - closing schedules its deletion (see closeEvent). It is deleted here at once, as a script may have no
+          event loop afterwards, and also if closing fails. Its render window is already finalized by close().
+
+    :meta private:
+    """
+    try:
+        widget.close()
+    finally:
+        widget.deleteLater()
+        QCoreApplication.sendPostedEvents(widget, QEvent.DeferredDelete)
+
+
+# ==================================================
 def create_qtdraw_file(filename, callback):
     """
     Create QtDraw file as background.
@@ -539,7 +560,7 @@ def create_qtdraw_file(filename, callback):
         callback(widget)
         widget.save(str(filename))
     finally:
-        widget.close()
+        _delete_temporary_widget(widget)
     app.quit()
 
 
@@ -558,7 +579,7 @@ def convert_qtdraw_v3(filename):
         widget.load(str(src))
         widget.save(str(src.with_name(src.stem + "_v3" + src.suffix)))  # next to the source.
     finally:
-        widget.close()
+        _delete_temporary_widget(widget)
     app.quit()
 
 
@@ -1997,7 +2018,7 @@ class PyVistaWidget(QtInteractor):
                     with widget._batch_render():  # the converter adds objects one by one.
                         all_data = convert_version3(all_data, ver, widget)
                 finally:
-                    widget.close()
+                    _delete_temporary_widget(widget)
             elif ver < 3:
                 all_data = convert_version3(all_data, ver, None)
             required = ["status", "preference", "camera", "data"]
@@ -3544,10 +3565,14 @@ class PyVistaWidget(QtInteractor):
             return
         self._close_done = True
 
-        # delete the data table, otherwise it remains and slows down new windows.
-        # scheduled first, so that a failing step below cannot skip it.
-        # the VTK widget itself is not deleted: deleting it occasionally corrupts memory with Mesa on Linux.
+        # delete the data table and the VTK widget itself, otherwise they remain and slow down new windows. the
+        # VTK widget is not freed by the garbage collector: its signals are connected to lambdas holding it, a
+        # reference cycle through Qt. kept, each closed widget used memory for the rest of the process, which
+        # exhausted the memory of the Linux CI runner (Mesa renders in software). deleting it needs pyvistaqt >= 0.13.2:
+        # before, the wrapper of its deleted GL surface stayed, and was returned for a new object at the same address.
+        # scheduled first, so that a failing step below cannot skip it; deleted by Qt in the main thread.
         self._tab_group_view.deleteLater()
+        self.deleteLater()
 
         # finish closing even if a step fails; the error is raised afterwards.
         try:
