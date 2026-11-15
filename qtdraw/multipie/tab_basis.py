@@ -346,7 +346,7 @@ class TabBasis(QWidget):
         if sum([len(i) for i in self.data._vector_samb_var.values()]) == 0:
             return
 
-        if not self.data.ps_group.is_point_group:
+        if self.data.modulation_available():  # a warning for a point group.
             modulation = self.edit_vector_modulation.text()
             self._vector_modulation_dialog = ModulationDialog(self, modulation, self.data._vector_samb_var, vec=True)
 
@@ -355,7 +355,7 @@ class TabBasis(QWidget):
         if sum([len(i) for i in self.data._orbital_samb_var.values()]) == 0:
             return
 
-        if not self.data.ps_group.is_point_group:
+        if self.data.modulation_available():  # a warning for a point group.
             modulation = self.edit_orbital_modulation.text()
             self._orbital_modulation_dialog = ModulationDialog(self, modulation, self.data._orbital_samb_var, vec=False)
 

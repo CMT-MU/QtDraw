@@ -11,6 +11,7 @@ Multipie data.
 This module provides a data manager for MultiPie.
 """
 
+import logging
 import numpy as np
 import sympy as sp
 import copy
@@ -452,8 +453,24 @@ class MultiPieData:
         )
 
     # ==================================================
+    def modulation_available(self):
+        """
+        Is modulation available for the group, i.e., a space group or a magnetic space group (with lattice translations) ?
+        A warning is shown for a point group or a magnetic point group.
+
+        Returns:
+            - (bool) -- available ?
+        """
+        if self.ps_group.is_point_group:
+            logging.warning(f"modulation is not available for a point group ({self.status['group']['tag']}): ignored.")
+            return False
+        return True
+
+    # ==================================================
     @_batched
     def add_vector_samb_modulation(self, modulation_range, length=None, width=None, color=None, opacity=None):
+        if not self.modulation_available():
+            return
         modulation, rng = modulation_range.split(":")
         mod_list, is_magnetic = self._parse_modulation(modulation)
         if not mod_list:
@@ -554,6 +571,8 @@ class MultiPieData:
     # ==================================================
     @_batched
     def add_orbital_samb_modulation(self, modulation_range, size=None, color=None, opacity=None):
+        if not self.modulation_available():
+            return
         modulation, rng = modulation_range.split(":")
         mod_list, is_magnetic = self._parse_modulation(modulation)
         if not mod_list:

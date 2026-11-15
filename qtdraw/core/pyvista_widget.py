@@ -5373,7 +5373,7 @@ class PyVistaWidget(QtInteractor):
     # ==================================================
     def mp_add_vector_samb_modulation(self, modulation_range, length=None, width=None, color=None, opacity=None):
         """
-        MultiPie: Add vector SAMB with modulation.
+        MultiPie: Add vector SAMB with modulation (space group only; ignored with a warning for a point group).
 
         Args:
             modulation_range (str): modulation and range, "[[tag, coeff, k_vector, cos/sin]] : [r1, r2, r3]".
@@ -5418,7 +5418,7 @@ class PyVistaWidget(QtInteractor):
     # ==================================================
     def mp_add_orbital_samb_modulation(self, modulation_range, size=None, color=None, opacity=None):
         """
-        MultiPie: Add orbital SAMB with modulation.
+        MultiPie: Add orbital SAMB with modulation (space group only; ignored with a warning for a point group).
 
         Args:
             modulation_range (str): modulation and range, "[[tag, coeff, k_vector, cos/sin]] : [r1, r2, r3]".
