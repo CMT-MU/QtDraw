@@ -74,13 +74,13 @@ A Japanese version is [here](install_ja.md).
 
 3. Update MultiPie (optional)
 
-    The symmetry operation tool MultiPie is installed together with QtDraw. This version of QtDraw (3.4) works with MultiPie Ver.3 (not with Ver.2; use QtDraw 3.3 for MultiPie Ver.2). To update it to the latest of them:
+    The symmetry operation tool MultiPie is installed together with QtDraw. This version of QtDraw (3.4) works with MultiPie Ver.2 (2.5 or later) and with Ver.3. To update it to the latest of them:
 
     ```bash
-    pip install -U "multipie~=3.0.dev0"
+    pip install -U "multipie>=2.5,<4"
     ```
 
-    Until MultiPie Ver.3 is released, install it from its development branch:
+    Until MultiPie Ver.3 is released, install it from its development branch to use it:
 
     ```bash
     pip install "git+https://github.com/CMT-MU/MultiPie.git@develop-v3"

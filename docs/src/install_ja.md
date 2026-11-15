@@ -78,13 +78,13 @@ orphan: true
 
 3. MultiPie を更新します（オプション）
 
-    対称操作のツール MultiPie は、QtDraw とともにインストールされます。このバージョンの QtDraw (3.4) は MultiPie Ver.3 で動作します（Ver.2 では動作しません。MultiPie Ver.2 には QtDraw 3.3 を使ってください）。それらの最新版に更新するには：
+    対称操作のツール MultiPie は、QtDraw とともにインストールされます。このバージョンの QtDraw (3.4) は MultiPie Ver.2（2.5 以降）と Ver.3 の両方で動作します。それらの最新版に更新するには：
 
     ```bash
-    pip install -U "multipie~=3.0.dev0"
+    pip install -U "multipie>=2.5,<4"
     ```
 
-    MultiPie Ver.3 がリリースされるまでは、その開発ブランチからインストールします：
+    MultiPie Ver.3 を使うには、リリースされるまではその開発ブランチからインストールします：
 
     ```bash
     pip install "git+https://github.com/CMT-MU/MultiPie.git@develop-v3"

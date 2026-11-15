@@ -157,9 +157,9 @@ def to_latex(a, style="scalar"):
     raise ValueError(f"unknown style, {style}.")
 
 
-MULTIPIE_REQUIREMENT = "multipie~=3.0.dev0"  # >=3.0.dev0,<4 without a shell operator: the same as in pyproject.toml.
-MULTIPIE_VERSION = ((3, 0), (4, 0))  # [lower, upper) of (major, minor).
-MULTIPIE_RANGE = ">=3.0,<4"  # MULTIPIE_VERSION in words (including the development and pre-release versions of 3.0).
+MULTIPIE_REQUIREMENT = "multipie>=2.5,<4"  # the same as in pyproject.toml (quoted when shown for a shell).
+MULTIPIE_VERSION = ((2, 5), (4, 0))  # [lower, upper) of (major, minor).
+MULTIPIE_RANGE = "Ver.2 from 2.5, or Ver.3"  # MULTIPIE_VERSION in words (including the development versions of Ver.3).
 
 
 # ==================================================
@@ -250,7 +250,8 @@ def install_multipie_command():
     Returns:
         - (list) -- program and arguments.
     """
-    return [sys.executable, "-m", "pip", "install", MULTIPIE_REQUIREMENT]  # "~=", not ">": ">" is a redirection in a shell.
+    # run without a shell, so ">" and "<" are not redirections (command_text quotes them when shown).
+    return [sys.executable, "-m", "pip", "install", MULTIPIE_REQUIREMENT]
 
 
 # ==================================================
