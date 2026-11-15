@@ -65,11 +65,11 @@ A Japanese version is [here](install_ja.md).
 
 2. Install QtDraw
 
-    All required dependencies will be installed automatically. In order to use MathJax rendering for LaTeX, install playwright browser such as chromium.
+    All required dependencies will be installed automatically. In order to use MathJax rendering for LaTeX, install the browser of playwright (only the headless shell of chromium, about 200 MB, is needed). Without it, LaTeX is shown as plain text, and QtDraw offers to install it at startup.
 
     ```bash
     pip install qtdraw
-    playwright install chromium  # on Linux, also run `playwright install-deps chromium`.
+    playwright install --only-shell chromium  # on Linux, also run `sudo playwright install-deps chromium`.
     ```
 
 3. Update MultiPie (optional)

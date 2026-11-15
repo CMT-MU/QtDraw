@@ -6,10 +6,10 @@ Drawings are associated with crystallographic symmetry operations provided by [M
 - **Authors**: Hiroaki Kusunose
 
 - **Installation**: QtDraw can be installed from PyPI using pip on Python >= 3.12:
-  In order to use MathJax rendering for LaTeX, install playwright browser such as chromium.
+  In order to use MathJax rendering for LaTeX, install the browser of playwright (only the headless shell of chromium is needed; QtDraw offers to install it at startup when it is missing).
     ```bash
     pip install qtdraw
-    playwright install chromium  # on Linux, also run `playwright install-deps chromium`.
+    playwright install --only-shell chromium  # on Linux, also run `sudo playwright install-deps chromium`.
     ```
 
 - **Shell commands**:
