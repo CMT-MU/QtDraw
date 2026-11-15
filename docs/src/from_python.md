@@ -1,5 +1,7 @@
 # Usage from Python code
 
+A Japanese version is [here](from_python_ja.md).
+
 **QtDraw** and **PyVistaWidget** can be used from Python code.
 The following API is available to draw objects.
 

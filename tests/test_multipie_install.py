@@ -122,8 +122,16 @@ def test_command_text_can_be_run_in_a_shell(monkeypatch, python):
     assert command_text(command) == f"{quoted} -m pip install multipie"
 
 
-def test_install_command_has_no_shell_operator():
-    assert not set("<>|&;") & set("".join(install_multipie_command()[1:]))
+def test_install_command_is_quoted_for_a_shell(monkeypatch):
+    import shlex
+
+    # the requirement has "<" and ">": run without a shell, and quoted when shown, so that they are not redirections.
+    command = install_multipie_command()
+    monkeypatch.setattr(sys, "platform", "linux")
+    assert shlex.split(command_text(command)) == command
+    assert f"'{MULTIPIE_REQUIREMENT}'" in command_text(command)
+    monkeypatch.setattr(sys, "platform", "win32")  # for cmd.exe.
+    assert command_text(command).endswith(f'install "{MULTIPIE_REQUIREMENT}"')
 
 
 def test_missing_multipie(monkeypatch):
@@ -197,7 +205,7 @@ def test_failed_installation_tells_why_and_how(tmp_path):
         assert window.multipie_dialog is None and window.misc_button_multipie.isEnabled()
         assert len(shown) == 1 and shown[0][0] == "warning", shown
         assert "No module named pip" in shown[0][1] and "sys.exit(1)" in shown[0][1], shown  # the command by hand.
-        assert "uv pip install" in shown[0][1] and "multipie~=" in shown[0][1], shown  # also without pip.
+        assert "uv pip install" in shown[0][1] and "multipie>=2.5,<4" in shown[0][1], shown  # also without pip.
         """,
     )
 

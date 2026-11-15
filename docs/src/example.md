@@ -1,5 +1,7 @@
 # Examples
 
+A Japanese version is [here](example_ja.md).
+
 The examples for **QtDraw**.
 
 ## load from files

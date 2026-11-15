@@ -1,5 +1,7 @@
 # Getting Started
 
+A Japanese version is [here](getting_started_ja.md).
+
 ## Main window
 
 The main window of **QtDraw** is the following, which has the main and control panels.

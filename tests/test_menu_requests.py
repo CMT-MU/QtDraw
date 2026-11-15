@@ -292,7 +292,7 @@ def test_multipie_button_is_always_shown(qapp, tmp_path, monkeypatch, no_multipi
         asked = []
         monkeypatch.setattr(QMessageBox, "question", lambda *a, **k: asked.append(a[2]) or QMessageBox.No)
         window.misc_button_multipie.click()  # offers to install MultiPie, declined.
-        assert len(asked) == 1 and "pip install" in asked[0] and "multipie~=" in asked[0]  # the supported MultiPie.
+        assert len(asked) == 1 and "pip install" in asked[0] and "multipie>=2.5,<4" in asked[0]  # the supported MultiPie.
         assert window.multipie_dialog is None and window._multipie_install is None
     finally:
         monkeypatch.setattr(QMessageBox, "question", lambda *a, **k: QMessageBox.Discard)
@@ -378,7 +378,7 @@ def test_qtdraw_starts_without_multipie():
         window = QtDraw()
         window.pyvista_widget.add_site()
         window.misc_button_multipie.click()
-        assert "pip install" in asked[0] and "multipie~=" in asked[0], asked
+        assert "pip install" in asked[0] and "multipie>=2.5,<4" in asked[0], asked
         window.close()
         print("OK")
         """)

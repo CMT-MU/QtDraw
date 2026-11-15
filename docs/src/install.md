@@ -1,5 +1,7 @@
 # Installing QtDraw
 
+A Japanese version is [here](install_ja.md).
+
 **QtDraw** can be installed from PyPI using pip on Python 3.12 or later.
 
 ## Requirements
@@ -63,19 +65,25 @@
 
 2. Install QtDraw
 
-    All required dependencies will be installed automatically. In order to use MathJax rendering for LaTeX, install playwright browser such as chromium.
+    All required dependencies will be installed automatically. In order to use MathJax rendering for LaTeX, install the browser of playwright (only the headless shell of chromium, about 200 MB, is needed). Without it, LaTeX is shown as plain text, and QtDraw offers to install it at startup.
 
     ```bash
     pip install qtdraw
-    playwright install chromium  # on Linux, also run `playwright install-deps chromium`.
+    playwright install --only-shell chromium  # on Linux, also run `sudo playwright install-deps chromium`.
     ```
 
 3. Update MultiPie (optional)
 
-    The symmetry operation tool MultiPie is installed together with QtDraw. This version of QtDraw works with MultiPie 2.5 or later in Ver.2 (not with Ver.3). To update it to the latest of them:
+    The symmetry operation tool MultiPie is installed together with QtDraw. This version of QtDraw (3.4) works with MultiPie Ver.2 (2.5 or later) and with Ver.3. To update it to the latest of them:
 
     ```bash
-    pip install -U "multipie~=2.5"
+    pip install -U "multipie>=2.5,<4"
+    ```
+
+    Until MultiPie Ver.3 is released, install it from its development branch to use it:
+
+    ```bash
+    pip install "git+https://github.com/CMT-MU/MultiPie.git@develop-v3"
     ```
 
 4. Associate QtDraw file (**.qtdw**) to the application
