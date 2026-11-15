@@ -69,11 +69,11 @@ orphan: true
 
 2. QtDraw をインストールします
 
-    必要な依存パッケージはすべて自動でインストールされます。LaTeX の表示に MathJax を使うには、chromium などの playwright のブラウザをインストールします。
+    必要な依存パッケージはすべて自動でインストールされます。LaTeX の表示に MathJax を使うには、playwright のブラウザをインストールします（必要なのは chromium の headless shell だけで、約 200 MB です）。ブラウザがないと LaTeX はそのままの文字列で表示され、QtDraw は起動時にそのインストールを提案します。
 
     ```bash
     pip install qtdraw
-    playwright install chromium  # on Linux, also run `playwright install-deps chromium`.
+    playwright install --only-shell chromium  # on Linux, also run `sudo playwright install-deps chromium`.
     ```
 
 3. MultiPie を更新します（オプション）

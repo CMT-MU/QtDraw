@@ -13,6 +13,8 @@ This module provides mathjax to SVG converter.
 
 import os
 import re
+import sys
+import weakref
 import tempfile
 import html
 import hashlib
@@ -28,6 +30,10 @@ from qtdraw.widget.color_palette import all_colors
 
 # ===============================
 # Global constants.
+_BROWSER_MISSING = "Executable doesn't exist"  # error of playwright without its browser.
+_DEPENDENCIES_MISSING = "missing dependencies"  # error of playwright on Linux without the libraries of its browser.
+INSTALL_BROWSER = "playwright install --only-shell chromium"  # MathJax runs in the headless shell of chromium.
+INSTALL_DEPENDENCIES = "playwright install-deps chromium"  # system libraries of the browser on Linux.
 _MATHJAX_PATH = str(Path(__top_dir__) / "qtdraw" / "mathjax" / "es5" / "tex-svg-full.js")
 _HTML_TEMPLATE = """
 <!DOCTYPE html>
@@ -58,8 +64,33 @@ _HTML_TEMPLATE = """
 
 
 # ===============================
+def install_browser_command():
+    """
+    Command to install the browser of playwright for MathJax with this Python.
+
+    Only the headless shell of chromium is installed (about a third of chromium), as MathJax runs headless.
+
+    Returns:
+        - (list) -- program and arguments.
+    """
+    return [sys.executable, "-m", "playwright", "install", "--only-shell", "chromium"]
+
+
+# ===============================
+def install_dependencies_command():
+    """
+    Command to install the system libraries of the browser on Linux (needs root, e.g. with sudo).
+
+    Returns:
+        - (list) -- program and arguments.
+    """
+    return [sys.executable, "-m", "playwright", "install-deps", "chromium"]
+
+
+# ===============================
 class MathJaxSVG:
     _SVG_NS = "http://www.w3.org/2000/svg"
+    _instances = weakref.WeakSet()  # converters, started again after the browser is installed.
 
     # ===============================
     def __init__(self, cache_dir=None, clear_cache=False, timeout=60):
@@ -103,16 +134,85 @@ class MathJaxSVG:
         self._thread = threading.Thread(target=self._thread_main, daemon=True)
         self._thread.start()
         self._init_future = asyncio.run_coroutine_threadsafe(self._async_init(), self._loop)
+        self._wait_browser(timeout)
+        MathJaxSVG._instances.add(self)
 
-        # wait for execution of playwright.
+    # ===============================
+    def _wait_browser(self, timeout):
+        """
+        Wait for the browser to start, and release the resources if it does not.
+
+        Args:
+            timeout (float): timeout [s].
+        """
         if not self._ready.wait(timeout):
             self._error = TimeoutError(f"browser did not start in {timeout} s.")
         if self._error is not None:
             asyncio.run_coroutine_threadsafe(self._async_shutdown(), self._loop)  # release resources in background.
-            logging.warning(
-                f"MathJax is not available ({self._error}), LaTeX is shown as plain text. "
-                "Install browser by 'playwright install chromium'."
-            )
+            text = f"MathJax is not available ({str(self._error).splitlines()[0]}), LaTeX is shown as plain text."
+            if self.browser_missing:
+                text += f" Install the browser by '{INSTALL_BROWSER}'."
+            elif self.dependencies_missing:
+                text += f" Install the libraries of the browser by '{INSTALL_DEPENDENCIES}' (as root, e.g. with sudo)."
+            logging.warning(text)
+
+    # ===============================
+    def retry(self, timeout=60):
+        """
+        Start the browser again, e.g. after it is installed.
+
+        Args:
+            timeout (float, optional): timeout [s] to start browser.
+
+        Returns:
+            - (bool) -- available ?
+        """
+        with self._close_lock:
+            if self._closed or self.available:
+                return self.available
+            asyncio.run_coroutine_threadsafe(self._async_shutdown(), self._loop).result()  # resources of the last try.
+            self._shutdown_task = None
+            self._error = None
+            self._ready = threading.Event()
+            self._init_future = asyncio.run_coroutine_threadsafe(self._async_init(), self._loop)
+            self._wait_browser(timeout)
+            return self.available
+
+    # ===============================
+    @classmethod
+    def retry_all(cls, timeout=60):
+        """
+        Start the browser again in all converters without it, e.g. after it is installed.
+
+        Args:
+            timeout (float, optional): timeout [s] to start browser.
+
+        Returns:
+            - (bool) -- available in all converters ?
+        """
+        return all([converter.retry(timeout) for converter in list(cls._instances)])
+
+    # ===============================
+    @property
+    def browser_missing(self):
+        """
+        Is MathJax not available because the browser of playwright is not installed ?
+
+        Returns:
+            - (bool) -- browser is not installed ?
+        """
+        return self._error is not None and _BROWSER_MISSING in str(self._error)
+
+    # ===============================
+    @property
+    def dependencies_missing(self):
+        """
+        Is MathJax not available because the system libraries of the browser are not installed (Linux) ?
+
+        Returns:
+            - (bool) -- libraries are not installed ?
+        """
+        return self._error is not None and _DEPENDENCIES_MISSING in str(self._error).lower()
 
     # ===============================
     @property
@@ -236,6 +336,7 @@ class MathJaxSVG:
             if self._closed:
                 return
             self._closed = True
+            MathJaxSVG._instances.discard(self)
             asyncio.run_coroutine_threadsafe(self._async_shutdown(), self._loop).result()
             self._loop.call_soon_threadsafe(self._loop.stop)
             self._thread.join()

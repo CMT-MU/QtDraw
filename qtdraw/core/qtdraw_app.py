@@ -17,9 +17,18 @@ import importlib
 import warnings
 from pathlib import Path
 import logging
-from PySide6.QtWidgets import QWidget, QMessageBox, QFileDialog, QDialog, QApplication, QAbstractButton, QComboBox
+from PySide6.QtWidgets import (
+    QWidget,
+    QMessageBox,
+    QFileDialog,
+    QDialog,
+    QApplication,
+    QAbstractButton,
+    QComboBox,
+    QCheckBox,
+)
 from PySide6.QtCore import Qt, QTimer, QSettings, QUrl, QProcess
-from PySide6.QtGui import QAction, QActionGroup, QKeySequence, QDesktopServices
+from PySide6.QtGui import QAction, QActionGroup, QKeySequence, QDesktopServices, QGuiApplication
 
 from qtdraw.core.pyvista_widget import PyVistaWidget, Window, same_snapshot
 from qtdraw.core.undo_history import UndoHistory
@@ -31,6 +40,7 @@ from qtdraw.widget.custom_widget import Label, Layout, LineEdit, HBar, Button, C
 from qtdraw.widget.logging_util import LogWidget
 from qtdraw.widget.message_box import ResizableMessageBox
 from qtdraw.widget.qt_event_util import busy_cursor, font_style_sheet
+from qtdraw.widget.mathjax import MathJaxSVG, install_browser_command, INSTALL_DEPENDENCIES
 from qtdraw.util.util import (
     check_multipie,
     multipie_message,
@@ -72,6 +82,17 @@ def settings():
         - (QSettings) -- settings (INI file in the user's configuration directory).
     """
     return QSettings(QSettings.IniFormat, QSettings.UserScope, "CMT-MU", "QtDraw")
+
+
+# ==================================================
+def can_ask():
+    """
+    Can QtDraw ask the user at startup, i.e., is it shown on a screen (not off screen, e.g. in tests) ?
+
+    Returns:
+        - (bool) -- can ask ?
+    """
+    return QGuiApplication.platformName() not in ("offscreen", "minimal")
 
 
 # ==================================================
@@ -133,6 +154,7 @@ class QtDraw(Window):
         self.pref_dialog = None  # preference dialog.
         self.multipie_dialog = None  # MultiPie dialog.
         self._multipie_install = None  # process installing MultiPie.
+        self._browser_install = None  # process installing the browser of MathJax.
         self._history = UndoHistory(limit=50)  # document snapshots for undo.
         self._restoring = False  # restoring a snapshot ?
         self._data_views = {}  # windows showing internal data (Window menu), by name.
@@ -152,6 +174,8 @@ class QtDraw(Window):
 
         if filename is not None and os.path.exists(filename):
             self.load_file(filename)
+
+        QTimer.singleShot(0, self._check_mathjax)  # after the window is shown.
 
     # ==================================================
     def create_gui(self):
@@ -1784,7 +1808,21 @@ class QtDraw(Window):
 
         :meta private:
         """
-        command = install_multipie_command()
+        self.misc_button_multipie.setEnabled(False)
+        self._run_install(install_multipie_command(), "_multipie_install", self._multipie_installed)
+
+    # ==================================================
+    def _run_install(self, command, attribute, finished):
+        """
+        Run an installation in the background, showing its output in the Log window.
+
+        Args:
+            command (list): program and arguments.
+            attribute (str): attribute that keeps the process while it runs.
+            finished (function): called at the end, finished(process, ok, output).
+
+        :meta private:
+        """
         process = QProcess(self)
         process.setProcessChannelMode(QProcess.MergedChannels)
         output = []
@@ -1795,14 +1833,9 @@ class QtDraw(Window):
             self.logger.append_text(text.rstrip("\n"))
 
         process.readyReadStandardOutput.connect(read)
-        process.finished.connect(
-            lambda code, status: self._multipie_installed(process, code == 0 and status == QProcess.NormalExit, output)
-        )
-        process.errorOccurred.connect(
-            lambda error: error == QProcess.FailedToStart and self._multipie_installed(process, False, output)
-        )
-        self._multipie_install = process
-        self.misc_button_multipie.setEnabled(False)
+        process.finished.connect(lambda code, status: finished(process, code == 0 and status == QProcess.NormalExit, output))
+        process.errorOccurred.connect(lambda error: error == QProcess.FailedToStart and finished(process, False, output))
+        setattr(self, attribute, process)  # before starting: a failing start finishes at once.
         QApplication.setOverrideCursor(Qt.BusyCursor)
         self.logger.append_text("$ " + command_text(command))
         self.logger.show()
@@ -1841,6 +1874,104 @@ class QtDraw(Window):
             QMessageBox.information(self, "MultiPie", "MultiPie was installed. Restart QtDraw to use it.")
         else:
             QMessageBox.information(self, "MultiPie", f"MultiPie was installed. {multipie_message()}")
+
+    # ==================================================
+    def _check_mathjax(self):
+        """
+        Offer to install the browser that draws LaTeX with MathJax, when it is not installed.
+
+        :meta private:
+        """
+        mathjax = self.pyvista_widget._mathjax
+        if mathjax.available or not can_ask() or settings().value("mathjax/no_question", False, type=bool):
+            return
+        if mathjax.browser_missing:
+            text = "The browser that draws LaTeX with MathJax is not installed, so LaTeX is shown as plain text.\n\n"
+            text += f"Install it now (about 200 MB) with the following command?\n\n{command_text(install_browser_command())}"
+            if self._ask_mathjax(text, QMessageBox.Yes | QMessageBox.No) == QMessageBox.Yes:
+                self._install_browser()
+        elif mathjax.dependencies_missing:
+            self._ask_mathjax(self._dependencies_text(), QMessageBox.Ok)
+
+    # ==================================================
+    def _ask_mathjax(self, text, buttons):
+        """
+        Ask about MathJax, with "Do not ask again".
+
+        Args:
+            text (str): question.
+            buttons (QMessageBox.StandardButtons): buttons.
+
+        Returns:
+            - (QMessageBox.StandardButton) -- answer.
+
+        :meta private:
+        """
+        box = QMessageBox(QMessageBox.Question, "MathJax", text, buttons, self)
+        check = QCheckBox("Do not ask again", box)  # kept here: PySide may delete the one only the box refers to.
+        box.setCheckBox(check)
+        try:
+            answer = box.exec()
+            if check.isChecked():
+                settings().setValue("mathjax/no_question", True)
+        finally:
+            box.deleteLater()
+        return answer
+
+    # ==================================================
+    @staticmethod
+    def _dependencies_text():
+        """
+        How to install the system libraries of the browser (Linux, as root).
+
+        :meta private:
+        """
+        text = "The browser that draws LaTeX with MathJax cannot start without its system libraries, "
+        text += "so LaTeX is shown as plain text.\n\nInstall them as root, e.g.\n\n"
+        text += f"sudo {INSTALL_DEPENDENCIES}\n\nand restart QtDraw."
+        return text
+
+    # ==================================================
+    def _install_browser(self):
+        """
+        Install the browser of MathJax in the background, showing its output in the Log window.
+
+        :meta private:
+        """
+        self._run_install(install_browser_command(), "_browser_install", self._browser_installed)
+
+    # ==================================================
+    def _browser_installed(self, process, ok, output):
+        """
+        Draw LaTeX with MathJax after the browser is installed, or tell why it failed.
+
+        Args:
+            process (QProcess): installing process.
+            ok (bool): installed ?
+            output (list): output of the installation.
+
+        :meta private:
+        """
+        if self._browser_install is not process:  # already handled, or stopped by closing.
+            return
+        self._browser_install = None
+        process.deleteLater()
+        QApplication.restoreOverrideCursor()
+        if not ok:
+            tail = "\n".join("".join(output).strip().splitlines()[-10:]) or process.errorString()
+            text = f"The browser could not be installed.\n\n{tail}\n\n"
+            text += f"Install it by hand with:\n{command_text(install_browser_command())}"
+            QMessageBox.warning(self, "MathJax", text)
+            return
+        with busy_cursor():
+            available = MathJaxSVG.retry_all()
+        if available:
+            self.pyvista_widget.redraw()
+            QMessageBox.information(self, "MathJax", "The browser was installed. LaTeX is drawn with MathJax.")
+        elif self.pyvista_widget._mathjax.dependencies_missing:
+            QMessageBox.information(self, "MathJax", self._dependencies_text())
+        else:
+            QMessageBox.information(self, "MathJax", "The browser was installed. Restart QtDraw to draw LaTeX with MathJax.")
 
     # ==================================================
     def _show_data_view(self, name, title, contents):
@@ -1998,14 +2129,19 @@ class QtDraw(Window):
         """
         self._flush()
         ok = self._confirm_unsaved("closing")
-        if ok and self._multipie_install is not None:
-            text = "MultiPie is being installed. Stop the installation and close?"
-            ok = QMessageBox.question(self, "MultiPie", text, QMessageBox.Yes | QMessageBox.No) == QMessageBox.Yes
-            if ok and self._multipie_install is not None:  # it may have finished while asking.
-                process, self._multipie_install = self._multipie_install, None
-                process.kill()
-                process.waitForFinished(5000)
-                QApplication.restoreOverrideCursor()
+        for name, title, attribute in [
+            ("MultiPie", "MultiPie", "_multipie_install"),
+            ("The browser of MathJax", "MathJax", "_browser_install"),
+        ]:
+            if ok and getattr(self, attribute) is not None:
+                text = f"{name} is being installed. Stop the installation and close?"
+                ok = QMessageBox.question(self, title, text, QMessageBox.Yes | QMessageBox.No) == QMessageBox.Yes
+                process = getattr(self, attribute)
+                if ok and process is not None:  # it may have finished while asking.
+                    setattr(self, attribute, None)
+                    process.kill()
+                    process.waitForFinished(5000)
+                    QApplication.restoreOverrideCursor()
         if not ok:
             event.ignore()
         else:
