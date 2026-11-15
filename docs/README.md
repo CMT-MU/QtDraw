@@ -1,5 +1,11 @@
 # [QtDraw](https://cmt-mu.github.io/QtDraw/)
 
+[![PyPI](https://img.shields.io/pypi/v/qtdraw?label=pip%20install%20qtdraw)](https://pypi.org/project/qtdraw/)
+[![Python](https://img.shields.io/pypi/pyversions/qtdraw)](https://pypi.org/project/qtdraw/)
+[![License](https://img.shields.io/github/license/CMT-MU/QtDraw)](https://github.com/CMT-MU/QtDraw/blob/main/LICENSE)
+[![test](https://github.com/CMT-MU/QtDraw/actions/workflows/test.yml/badge.svg)](https://github.com/CMT-MU/QtDraw/actions/workflows/test.yml)
+[![docs](https://github.com/CMT-MU/QtDraw/actions/workflows/docs.yml/badge.svg)](https://cmt-mu.github.io/QtDraw/)
+
 3D drawing tool especially for molecules and crystals based on [PyVista](https://docs.pyvista.org/) and [PySide6](https://doc.qt.io/qtforpython-6/index.html).
 Drawings are associated with crystallographic symmetry operations provided by [MultiPie](https://github.com/CMT-MU/MultiPie).
 
