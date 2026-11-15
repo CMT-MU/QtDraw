@@ -30,7 +30,7 @@ def broken_multipie(path):
     package = path / "multipie"
     package.mkdir()
     (package / "__init__.py").write_text(
-        'import importlib\n__version__ = "2.5.0"\n\n\ndef __getattr__(name):\n    importlib.import_module("multipie.group")\n'
+        'import importlib\n__version__ = "3.0.0"\n\n\ndef __getattr__(name):\n    importlib.import_module("multipie.group")\n'
     )  # a supported version: the parts used by QtDraw fail to load.
     (package / "group.py").write_text("s = (\n")  # a syntax error.
     return path

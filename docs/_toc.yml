@@ -14,12 +14,13 @@ parts:
     - file: src/user_guide
     - file: src/example
     - file: src/from_python
+- caption: API reference
+  chapters:
     - file: src/api_summary
-      sections:
-      - file: src/api_core
-      - file: src/api_multipie
-      - file: src/api_parser
-      - file: src/api_script
-      - file: src/api_util
-      - file: src/api_widget
-      - file: src/function_table
+    - file: src/api_core
+    - file: src/api_multipie
+    - file: src/api_parser
+    - file: src/api_script
+    - file: src/api_util
+    - file: src/api_widget
+    - file: src/function_table
