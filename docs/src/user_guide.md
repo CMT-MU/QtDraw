@@ -446,6 +446,7 @@ win.add_site(position="[2/3,1/3,0]", size=0.2, label="C2")
 win.add_bond(position="[1/2,1/2,0]", direction="[1/3,-1/3,0]")  # C1-C2.
 win.set_view([0, 0, 1])  # view along c.
 win.save("graphene.qtdw")
+win.save_screenshot("graphene.png")  # also .pdf, .svg, ...
 win.exec()  # in a script, show the window until it is closed (not needed in Jupyter).
 ```
 
@@ -472,6 +473,7 @@ create_qtdraw_file(filename="chain.qtdw", callback=draw)
 | `set_view`, `set_parallel_projection`, `set_axis`, `set_cell`, `set_grid` | view |
 | `set_model` | model name |
 | `load`, `save` | files |
+| `save_screenshot` | image of the drawing (`.png`, `.bmp`, `.tif`, `.tiff`, `.svg`, `.eps`, `.ps`, `.pdf`), as `File` > `Screenshot` |
 | `clear_data` | remove all objects |
 | `update_preference` | preferences, e.g. `update_preference("label", "default_check", True)` to show labels |
 | `undo`, `redo` | history |

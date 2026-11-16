@@ -3529,6 +3529,20 @@ class QtDraw(Window):
         self._saved_to(filename)
 
     # ==================================================
+    def save_screenshot(self, filename):
+        """
+        Save screenshot of the drawing to file (as File > Screenshot).
+
+        Args:
+            filename (str): file name, relative to the current directory; its extension is one of the image files
+                (.png, .bmp, .tif, .tiff) or of the vector graphics files (.svg, .eps, .ps, .pdf).
+
+        Raises:
+            ValueError: the extension is not one of them.
+        """
+        self.pyvista_widget.save_screenshot(filename)
+
+    # ==================================================
     def _save(self, filename):
         """
         Save the document, and keep the history valid in the new directory.

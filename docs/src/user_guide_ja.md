@@ -450,6 +450,7 @@ win.add_site(position="[2/3,1/3,0]", size=0.2, label="C2")
 win.add_bond(position="[1/2,1/2,0]", direction="[1/3,-1/3,0]")  # C1-C2.
 win.set_view([0, 0, 1])  # view along c.
 win.save("graphene.qtdw")
+win.save_screenshot("graphene.png")  # also .pdf, .svg, ...
 win.exec()  # in a script, show the window until it is closed (not needed in Jupyter).
 ```
 
@@ -476,6 +477,7 @@ create_qtdraw_file(filename="chain.qtdw", callback=draw)
 | `set_view`、`set_parallel_projection`、`set_axis`、`set_cell`、`set_grid` | 表示 |
 | `set_model` | モデルの名前 |
 | `load`、`save` | ファイル |
+| `save_screenshot` | 図の画像（`.png`、`.bmp`、`.tif`、`.tiff`、`.svg`、`.eps`、`.ps`、`.pdf`）。`File` > `Screenshot` と同じ |
 | `clear_data` | すべてのオブジェクトを消す |
 | `update_preference` | 設定。例：`update_preference("label", "default_check", True)` でラベルを表示する |
 | `undo`、`redo` | 履歴 |
