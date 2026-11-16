@@ -37,7 +37,7 @@ orphan: true
     SAMB のオブジェクトを（複数のセルにわたる変調も含めて）描きます。
     ![multipie_basis.jpg](fig/multipie_basis.jpg)
 
-QtDraw を使った MultiPie の実践的なチュートリアルは [Tutorial via QtDraw](tutorial_multipie_qtdraw.pdf) にあります。
+[QtDraw を使った MultiPie の実践的なチュートリアル](tutorial_multipie_qtdraw_ja.pdf)（PDF）があります。
 
 API については、次を参照してください：
 
