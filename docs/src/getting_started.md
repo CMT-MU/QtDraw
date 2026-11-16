@@ -28,7 +28,8 @@ In the main panel:
 - `e`: open the `DataSet` window.
 
 In the `DataSet` window:
-- Right click: context menu to insert, copy or remove an object.
+- Right click: context menu to insert, copy or remove objects.
+- Shift or Ctrl (Cmd on macOS) + click: select several rows. `Delete` (also `Backspace` on macOS): remove the selected rows.
 - `Esc`: clear the selection. `Up`, `Down`: move the selection.
 
 The `File` menu opens (Ctrl+O, Cmd+O on macOS), reopens one of the last 10 files (`Open Recent`), saves (Ctrl+S, Cmd+S), saves under another name (`Save As`, Ctrl+Shift+S, Cmd+Shift+S), saves a screenshot and quits (Ctrl+Q, Cmd+Q). `Save` writes to the file opened or saved last, and asks for a name the first time or after importing a CIF, VESTA or XSF file. When the window is closed with unsaved changes, QtDraw asks whether to save them; without changes it closes at once.
