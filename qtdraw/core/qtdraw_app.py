@@ -27,8 +27,10 @@ from PySide6.QtWidgets import (
     QAbstractButton,
     QComboBox,
     QCheckBox,
+    QHBoxLayout,
+    QSizePolicy,
 )
-from PySide6.QtCore import Qt, QTimer, QSettings, QUrl, QProcess
+from PySide6.QtCore import Qt, QTimer, QSettings, QUrl, QProcess, Signal
 from PySide6.QtGui import QAction, QActionGroup, QKeySequence, QDesktopServices, QGuiApplication
 
 from qtdraw.core.pyvista_widget import PyVistaWidget, Window, same_snapshot
@@ -127,8 +129,32 @@ def help_text():
     )
 
 
+MESSAGE_TIME = 8000  # time [ms] that a message stays in the message field at the bottom of the window.
+
+
+# ==================================================
+class _MessageHandler(logging.Handler):
+    """
+    Log handler that sends warnings and errors to the message field of a window (by a signal: logging may run in
+    another thread).
+    """
+
+    def __init__(self, signal):
+        super().__init__(level=logging.WARNING)
+        self._signal = signal
+
+    def emit(self, record):
+        try:
+            text = record.getMessage().strip().splitlines()
+            self._signal.emit(f"{record.levelname.capitalize()}: {text[0] if text else ''} (see Window > Log)")
+        except Exception:  # a log handler must not raise, e.g. after the window is deleted.
+            pass
+
+
 # ==================================================
 class QtDraw(Window):
+    log_message = Signal(str)  #: :meta private:  # a warning or an error, for the message field.
+
     # ==================================================
     def __init__(self, filename=None, status=None, preference=None):
         """
@@ -173,6 +199,13 @@ class QtDraw(Window):
         self._update_undo_actions()
         self.pyvista_widget._tab_group_view.addActions([self.action_undo, self.action_redo])  # shortcuts in data table.
 
+        # warnings and errors also in the message field (the Log window has them all).
+        self._message_handler = _MessageHandler(self.log_message)
+        self.log_message.connect(self.show_message)
+        logging.getLogger().addHandler(self._message_handler)
+        handler = self._message_handler
+        self.destroyed.connect(lambda: logging.getLogger().removeHandler(handler))
+
         # event loop.
         self.show()
 
@@ -206,15 +239,26 @@ class QtDraw(Window):
         # Control panel.
         self.panel = self.create_panel(parent=self)
 
-        # Status bar.
-        self.status = Label(self, "")
-        self.status.setAlignment(Qt.AlignRight)
-        self.status.setContentsMargins(0, 0, 10, 0)
-        self.status.setText(self.pyvista_widget.copyright)
+        # Status bar: messages on the left, version and copyright on the right.
+        self.status = Label(self, "")  # message field.
+        self.status.setAlignment(Qt.AlignLeft | Qt.AlignVCenter)
+        self.status.setContentsMargins(10, 0, 0, 0)
+        self.status.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Preferred)  # a long message does not widen the window.
+        self.status_version = Label(self, self.pyvista_widget.copyright)
+        self.status_version.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
+        self.status_version.setContentsMargins(0, 0, 10, 0)
+        self._status_timer = QTimer(self)
+        self._status_timer.setSingleShot(True)
+        self._status_timer.timeout.connect(lambda: self.status.setText(""))
 
         layout.addWidget(self.pyvista_widget, 0, 0, 1, 1)
         layout.addWidget(self.panel, 0, 1, 1, 1)
-        layout.addWidget(self.status, 1, 0, 1, 2)
+        status_bar = QWidget(self)
+        status_layout = QHBoxLayout(status_bar)
+        status_layout.setContentsMargins(0, 0, 0, 0)
+        status_layout.addWidget(self.status, 1)
+        status_layout.addWidget(self.status_version, 0)
+        layout.addWidget(status_bar, 1, 0, 1, 2)
 
         self._create_menu()
         self._set_tool_tips()
@@ -1091,8 +1135,11 @@ class QtDraw(Window):
             return
         self._flush()
         target = self._history.peek_undo() if step < 0 else self._history.peek_redo()
+        name = "undo" if step < 0 else "redo"
         if target is None:
+            self.show_message(f"Nothing to {name}.")
             return
+        self.show_message(name.capitalize() + ".")  # first: a message of the restore, e.g. of MultiPie, is kept.
         try:
             self._restore(target, self._history.commit_undo if step < 0 else self._history.commit_redo)
         finally:
@@ -1168,7 +1215,7 @@ class QtDraw(Window):
         if self.multipie_dialog is not None:
             if self.pyvista_widget._mp_data is None:
                 self._close_multipie_dialog()
-                self.status.setText("MultiPie dialog closed: the restored document has no MultiPie group.")
+                self.show_message("MultiPie dialog closed: the restored document has no MultiPie group.")
             else:
                 self.multipie_dialog.set_data(quiet=True)  # show the restored group, without changing it.
 
@@ -1841,6 +1888,7 @@ class QtDraw(Window):
         process.errorOccurred.connect(lambda error: error == QProcess.FailedToStart and finished(process, False, output))
         setattr(self, attribute, process)  # before starting: a failing start finishes at once.
         QApplication.setOverrideCursor(Qt.BusyCursor)
+        self.show_message("Installing... (see Window > Log)", timeout=0)  # until it finishes.
         self.logger.append_text("$ " + command_text(command))
         self.logger.show()
         process.start(command[0], command[1:])
@@ -1863,6 +1911,7 @@ class QtDraw(Window):
         process.deleteLater()
         QApplication.restoreOverrideCursor()
         self.misc_button_multipie.setEnabled(True)
+        self.show_message("MultiPie installed." if ok else "MultiPie could not be installed (see Window > Log).")
         if not ok:
             tail = "\n".join("".join(output).strip().splitlines()[-10:]) or process.errorString()
             command = command_text(install_multipie_command())
@@ -1961,6 +2010,7 @@ class QtDraw(Window):
         self._browser_install = None
         process.deleteLater()
         QApplication.restoreOverrideCursor()
+        self.show_message("MathJax browser installed." if ok else "MathJax browser could not be installed (see Window > Log).")
         if not ok:
             tail = "\n".join("".join(output).strip().splitlines()[-10:]) or process.errorString()
             text = f"The browser could not be installed.\n\n{tail}\n\n"
@@ -2149,6 +2199,7 @@ class QtDraw(Window):
         if not ok:
             event.ignore()
         else:
+            logging.getLogger().removeHandler(self._message_handler)  # no messages to a closed window.
             dialogs = [self.multipie_dialog, self.logger, self.info_dialog] + list(self._data_views.values())
             dialogs = [dialog for dialog in dialogs if dialog is not None]
 
@@ -2205,6 +2256,27 @@ class QtDraw(Window):
         :meta private:
         """
         self.info_dialog.append_text(text)
+        first = text.splitlines()[0] if text else ""
+        if first.startswith("* ") and hasattr(self, "status"):  # a message, not its details or the version information.
+            self.show_message(first[2:])
+
+    # ==================================================
+    def show_message(self, text, timeout=MESSAGE_TIME):
+        """
+        Show a short message in the message field at the bottom of the window.
+
+        Args:
+            text (str): message (one line).
+            timeout (int, optional): time [ms] to show it, 0 for until the next message.
+
+        :meta private:
+        """
+        self.status.setText(text)
+        self.status.setToolTip(text)  # the whole message, also when the field is too narrow.
+        if timeout > 0:
+            self._status_timer.start(timeout)
+        else:
+            self._status_timer.stop()
 
     # ==================================================
     def add_site(self, size=None, color=None, opacity=None, position=None, cell=None, name=None, label=None, margin=None):

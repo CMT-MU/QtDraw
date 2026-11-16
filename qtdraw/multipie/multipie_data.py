@@ -168,6 +168,11 @@ class MultiPieData:
 
         self.set_axis()
         self.pvw.document_changed.emit()
+        try:
+            name = self.group.info.tag  # e.g. "D6h^1" for "SG:191".
+        except Exception:  # not in this MultiPie: the tag alone.
+            name = None
+        self.pvw.write_info(f"* MultiPie group {name} ({group})." if name and name != group else f"* MultiPie group {group}.")
 
     # ==================================================
     def set_status(self, status=None, group=None):
@@ -253,6 +258,7 @@ class MultiPieData:
 
         sites, mp, wp = self.group.create_cell_site(site)
         plot_cell_site(self, sites, wp=wp, label=mp, size=size, color=color, opacity=opacity)
+        self.pvw.write_info(f"* {len(sites)} sites equivalent to {site} drawn.")
 
     # ==================================================
     @_batched
@@ -261,6 +267,7 @@ class MultiPieData:
 
         bonds, mp, wp = self.group.create_cell_bond(bond)
         plot_cell_bond(self, bonds, wp=wp, label=mp, width=width, color=color, color2=color2, opacity=opacity)
+        self.pvw.write_info(f"* {len(bonds)} bonds equivalent to {bond} drawn.")
 
     # ==================================================
     @_batched
@@ -285,6 +292,7 @@ class MultiPieData:
             color=color,
             opacity=opacity,
         )
+        self.pvw.write_info(f"* {len(vectors)} vectors equivalent to {vector} drawn.")
 
     # ==================================================
     @_batched
@@ -295,6 +303,7 @@ class MultiPieData:
 
         orbitals, sites, mp, wp = self.group.create_cell_multipole(orbital, tp, average)
         plot_cell_multipole(self, orbitals, sites, tp, wp=wp, label=mp, average=average, size=size, color=color, opacity=opacity)
+        self.pvw.write_info(f"* {len(orbitals)} orbitals equivalent to {orbital} drawn.")
 
     # ==================================================
     @_batched
@@ -348,6 +357,7 @@ class MultiPieData:
             zero_size=z_size,
             size_ratio=size,
         )
+        self.pvw.write_info(f"* site SAMB {tag} drawn.")
 
     # ==================================================
     def bond_samb_list(self, bond):
@@ -391,6 +401,7 @@ class MultiPieData:
             arrow_ratio=a_size,
             width_ratio=width,
         )
+        self.pvw.write_info(f"* bond SAMB {tag} drawn.")
 
     # ==================================================
     def vector_samb_list(self, vector, tp="Q"):
@@ -451,6 +462,7 @@ class MultiPieData:
         plot_vector_cluster(
             self, site, obj, X, wp=lc + " # " + wp, label=mp, length=length, width=width, color=color, opacity=opacity
         )
+        self.pvw.write_info(f"* vector SAMB {lc} drawn.")
 
     # ==================================================
     def modulation_available(self):
@@ -508,6 +520,7 @@ class MultiPieData:
             color=color,
             opacity=opacity,
         )
+        self.pvw.write_info(f"* vector SAMB modulation drawn: {modulation_range.strip()}.")
 
     # ==================================================
     def orbital_samb_list(self, orbital, tp="Q", rank=0):
@@ -567,6 +580,7 @@ class MultiPieData:
         obj = np.array(ex.subs(lc_obj)).reshape(-1)
 
         plot_orbital_cluster(self, site, obj, X, wp=lc + " # " + wp, label=mp, size=size, color=color, opacity=opacity)
+        self.pvw.write_info(f"* orbital SAMB {lc} drawn.")
 
     # ==================================================
     @_batched
@@ -600,6 +614,7 @@ class MultiPieData:
         plot_orbital_cluster(
             self, full_site, obj, X, wp=modulation_range + " # " + wp, label=site_idx, size=size, color=color, opacity=opacity
         )
+        self.pvw.write_info(f"* orbital SAMB modulation drawn: {modulation_range.strip()}.")
 
     # ==================================================
     @staticmethod

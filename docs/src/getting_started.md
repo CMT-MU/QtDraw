@@ -8,6 +8,8 @@ The main window of **QtDraw** is the following, which has the main and control p
 
 ![sample.jpg](fig/sample.jpg)
 
+The bar at the bottom shows short messages on the left for a few seconds (e.g. a file saved, an object that is not drawn, undo, a MultiPie group, a warning), and the version on the right. The messages are also kept in the `Info` window, and the warnings and errors in the `Log` window (`Window` menu).
+
 ## Create and Edit Object
 
 To draw these objects, push `e` key or the `DataSet` button in the right panel, and then the `DataSet` window appears as follows.
