@@ -428,12 +428,11 @@ win.mp_add_vector_samb_modulation("[[M01, 1, [1/2,0,0], cos]] : [2,2,1]")  # [[t
 
 ## 4. Python コードからの使い方
 
-### 3つの使い方
+### 2つの使い方
 
 | 使い方 | 用途 |
 | --- | --- |
 | `QtDraw()` | QtDraw のウィンドウ。スクリプトや Jupyter ノートブックから描く |
-| `PyVistaWidget()` | 描画領域だけ。たとえば自分の Qt アプリケーションに組み込む |
 | `create_qtdraw_file(filename, callback)` | ウィンドウを出さずに `.qtdw` ファイルを書く（バックグラウンドの処理） |
 
 `add_*` の引数はデータ表の列と同じで、文字列か数値で与えます。省いた引数（または `None`）には既定値が使われます。
@@ -451,7 +450,6 @@ win.add_site(position="[2/3,1/3,0]", size=0.2, label="C2")
 win.add_bond(position="[1/2,1/2,0]", direction="[1/3,-1/3,0]")  # C1-C2.
 win.set_view([0, 0, 1])  # view along c.
 win.save("graphene.qtdw")
-win.pyvista_widget.save_screenshot("graphene.png")  # the drawing area of the window.
 win.exec()  # in a script, show the window until it is closed (not needed in Jupyter).
 ```
 
@@ -478,9 +476,8 @@ create_qtdraw_file(filename="chain.qtdw", callback=draw)
 | `set_view`、`set_parallel_projection`、`set_axis`、`set_cell`、`set_grid` | 表示 |
 | `set_model` | モデルの名前 |
 | `load`、`save` | ファイル |
-| `save_screenshot` | 図の画像（`.png`、`.pdf`、`.svg` など）。`PyVistaWidget` のメソッドなので、`QtDraw` からは `win.pyvista_widget.save_screenshot(...)` |
 | `clear_data` | すべてのオブジェクトを消す |
 | `update_preference` | 設定。例：`update_preference("label", "default_check", True)` でラベルを表示する |
-| `undo`、`redo` | 履歴（`QtDraw` のみ） |
+| `undo`、`redo` | 履歴 |
 
 すべてのメソッドは [Python のコードからの利用](from_python_ja.md) に、ほかの例は [例](example_ja.md) にあります。

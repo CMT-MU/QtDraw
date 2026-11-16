@@ -17,8 +17,6 @@ The examples for **QtDraw**.
   ![mp_graphene.jpg](fig/mp_graphene.jpg)
 - [Te with MultiPie](examples/mp_Te.ipynb)
   ![mp_Te.jpg](fig/mp_Te.jpg)
-- [PyVistaWidget](examples/pyvista_widget.ipynb)
-  ![pyvista.jpg](fig/pyvista.jpg)
 - [with MultiPie](examples/multipie.ipynb)
   ![multipie.jpg](fig/multipie.jpg)
 

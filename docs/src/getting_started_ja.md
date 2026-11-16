@@ -61,11 +61,7 @@ orphan: true
 すべてのオブジェクトは、Python のコードや Jupyter Notebook からも描けます。
 Jupyter Notebook の例は [qtdraw.ipynb](examples/qtdraw.ipynb) にあります。
 詳しくは [API](from_python_ja.md) を参照してください。
-この機能を使うと、バックグラウンドでの処理ができます。
-次の例を参照してください。
-```{literalinclude} examples/background.py
-```
-同じことは、次のようにもっと簡単にできます。
+この機能を使うと、バックグラウンドでの処理ができます。`create_qtdraw_file` は、ウィンドウを出さずに図をファイルに書きます。
 ```{literalinclude} examples/background_s.py
 ```
 

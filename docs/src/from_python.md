@@ -2,7 +2,7 @@
 
 A Japanese version is [here](from_python_ja.md).
 
-**QtDraw** and **PyVistaWidget** can be used from Python code.
+**QtDraw** can be used from Python code.
 The following API is available to draw objects.
 
 ## Undo and redo
@@ -18,7 +18,6 @@ qtdraw.undo()  # removes both.
 
 A change is recorded when the event loop runs after it, so the calls in one Jupyter cell or in one function are one step.
 If the calls run the event loop themselves (e.g. a dialog or `processEvents()`), they may be split into several steps.
-`PyVistaWidget` used alone has no history.
 
 ## Files and directories
 
@@ -29,14 +28,6 @@ Data files of isosurfaces (e.g. `add_isosurface(data="grid.dat")`) are relative 
 
 ```{eval-rst}
 .. autoclass:: qtdraw.core.qtdraw_app.QtDraw
-   :members:
-   :exclude-members: staticMetaObject
-```
-
-## API in PyVistaWidget
-
-```{eval-rst}
-.. autoclass:: qtdraw.core.pyvista_widget.PyVistaWidget
    :members:
    :exclude-members: staticMetaObject
 ```
