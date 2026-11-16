@@ -14,6 +14,7 @@ This module provides application of QtDraw.
 import os
 import copy
 import importlib
+import sys
 import warnings
 from pathlib import Path
 import logging
@@ -26,8 +27,10 @@ from PySide6.QtWidgets import (
     QAbstractButton,
     QComboBox,
     QCheckBox,
+    QHBoxLayout,
+    QSizePolicy,
 )
-from PySide6.QtCore import Qt, QTimer, QSettings, QUrl, QProcess
+from PySide6.QtCore import Qt, QTimer, QSettings, QUrl, QProcess, Signal
 from PySide6.QtGui import QAction, QActionGroup, QKeySequence, QDesktopServices, QGuiApplication
 
 from qtdraw.core.pyvista_widget import PyVistaWidget, Window, same_snapshot
@@ -41,6 +44,7 @@ from qtdraw.widget.logging_util import LogWidget
 from qtdraw.widget.message_box import ResizableMessageBox
 from qtdraw.widget.qt_event_util import busy_cursor, font_style_sheet
 from qtdraw.widget.mathjax import MathJaxSVG, install_browser_command, INSTALL_DEPENDENCIES
+from qtdraw.core.python_code import python_code
 from qtdraw.util.util import (
     check_multipie,
     multipie_message,
@@ -108,6 +112,8 @@ def help_text():
     quit_key = QKeySequence(QKeySequence.Quit).toString(QKeySequence.NativeText)
     undo_key = QKeySequence(QKeySequence.Undo).toString(QKeySequence.NativeText)
     redo_key = QKeySequence(QKeySequence.Redo).toString(QKeySequence.NativeText)
+    select_key = "Shift or Cmd" if sys.platform == "darwin" else "Shift or Ctrl"
+    delete_key = "Delete or Backspace" if sys.platform == "darwin" else "Delete"
     return (
         "In the view:\n"
         "- Left drag: rotate. Shift + left drag: move. Wheel or right drag: zoom.\n"
@@ -115,7 +121,8 @@ def help_text():
         f"- {detail['data_edit_key']}: open the data table of all objects.\n"
         "\n"
         "In the data table:\n"
-        "- Right click: menu to create or copy an object.\n"
+        "- Right click: menu to create, copy or remove objects.\n"
+        f"- {select_key} + click: select several rows. {delete_key}: remove the selected rows.\n"
         "- Esc: clear the selection. Up, Down: move the selection.\n"
         "\n"
         f"{open_key}: open a file. {save_key}: save. {quit_key}: quit.\n"
@@ -123,8 +130,40 @@ def help_text():
     )
 
 
+MESSAGE_TIME = 8000  # time [ms] that a message stays in the message field at the bottom of the window.
+
+
+# ==================================================
+class _MessageHandler(logging.Handler):
+    """
+    Log handler that sends the warnings and errors of QtDraw to the message field of a window (by a signal: logging
+    may run in another thread).
+
+    Note:
+        - only the records of the qtdraw package are shown: others, e.g. VTK errors of a software renderer or Python
+          warnings, can come often, and stay in the Log window only.
+    """
+
+    _package = str(Path(__file__).resolve().parents[1])  # the qtdraw package.
+
+    def __init__(self, signal):
+        super().__init__(level=logging.WARNING)
+        self._signal = signal
+
+    def emit(self, record):
+        if getattr(record, "python_warning", False) or not str(Path(record.pathname).resolve()).startswith(self._package):
+            return
+        try:
+            text = record.getMessage().strip().splitlines()
+            self._signal.emit(f"{record.levelname.capitalize()}: {text[0] if text else ''} (see Window > Log)")
+        except Exception:  # a log handler must not raise, e.g. after the window is deleted.
+            pass
+
+
 # ==================================================
 class QtDraw(Window):
+    log_message = Signal(str)  #: :meta private:  # a warning or an error, for the message field.
+
     # ==================================================
     def __init__(self, filename=None, status=None, preference=None):
         """
@@ -146,7 +185,9 @@ class QtDraw(Window):
         super().__init__(log_id[level])
         self.debug = level == "debug"
 
-        warnings.showwarning = lambda message, category, filename, lineno, file=None, line=None: logging.warning(str(message))
+        warnings.showwarning = lambda message, category, filename, lineno, file=None, line=None: logging.warning(
+            str(message), extra={"python_warning": True}  # in the Log window, not in the message field.
+        )
         warnings.filterwarnings("default", category=DeprecationWarning)
 
         self._is_view_updating = False
@@ -168,6 +209,13 @@ class QtDraw(Window):
         self._history.reset(self.pyvista_widget.document_snapshot())
         self._update_undo_actions()
         self.pyvista_widget._tab_group_view.addActions([self.action_undo, self.action_redo])  # shortcuts in data table.
+
+        # warnings and errors also in the message field (the Log window has them all).
+        self._message_handler = _MessageHandler(self.log_message)
+        self.log_message.connect(self.show_message)
+        logging.getLogger().addHandler(self._message_handler)
+        handler = self._message_handler
+        self.destroyed.connect(lambda: logging.getLogger().removeHandler(handler))
 
         # event loop.
         self.show()
@@ -194,7 +242,7 @@ class QtDraw(Window):
         layout.setVerticalSpacing(5)
 
         # PyVista widget.
-        self.info_dialog = LogWidget(title="Information")
+        self.info_dialog = LogWidget(title="Information", level=None)  # messages only: warnings are in the Log window.
         txt = get_version_info()
         self.write_info(txt)
         self.pyvista_widget = PyVistaWidget(self)
@@ -202,15 +250,26 @@ class QtDraw(Window):
         # Control panel.
         self.panel = self.create_panel(parent=self)
 
-        # Status bar.
-        self.status = Label(self, "")
-        self.status.setAlignment(Qt.AlignRight)
-        self.status.setContentsMargins(0, 0, 10, 0)
-        self.status.setText(self.pyvista_widget.copyright)
+        # Status bar: messages on the left, version and copyright on the right.
+        self.status = Label(self, "")  # message field.
+        self.status.setAlignment(Qt.AlignLeft | Qt.AlignVCenter)
+        self.status.setContentsMargins(10, 0, 0, 0)
+        self.status.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Preferred)  # a long message does not widen the window.
+        self.status_version = Label(self, self.pyvista_widget.copyright)
+        self.status_version.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
+        self.status_version.setContentsMargins(0, 0, 10, 0)
+        self._status_timer = QTimer(self)
+        self._status_timer.setSingleShot(True)
+        self._status_timer.timeout.connect(lambda: self.status.setText(""))
 
         layout.addWidget(self.pyvista_widget, 0, 0, 1, 1)
         layout.addWidget(self.panel, 0, 1, 1, 1)
-        layout.addWidget(self.status, 1, 0, 1, 2)
+        status_bar = QWidget(self)
+        status_layout = QHBoxLayout(status_bar)
+        status_layout.setContentsMargins(0, 0, 0, 0)
+        status_layout.addWidget(self.status, 1)
+        status_layout.addWidget(self.status_version, 0)
+        layout.addWidget(status_bar, 1, 0, 1, 2)
 
         self._create_menu()
         self._set_tool_tips()
@@ -240,6 +299,7 @@ class QtDraw(Window):
         self.action_save = action(menu, "&Save", self.save_file, QKeySequence.Save)
         self.action_save_as = action(menu, "Save &As...", self.save_file_as, QKeySequence.SaveAs)
         self.action_screenshot = action(menu, "Screens&hot...", self._save_screenshot)
+        self.action_export_python = action(menu, "Export as &Python...", self._export_python)
         menu.addSeparator()
         self.action_quit = action(menu, "&Quit", self.close, QKeySequence.Quit)
         self.action_quit.setMenuRole(QAction.QuitRole)
@@ -1087,8 +1147,11 @@ class QtDraw(Window):
             return
         self._flush()
         target = self._history.peek_undo() if step < 0 else self._history.peek_redo()
+        name = "undo" if step < 0 else "redo"
         if target is None:
+            self.show_message(f"Nothing to {name}.")
             return
+        self.show_message(name.capitalize() + ".")  # first: a message of the restore, e.g. of MultiPie, is kept.
         try:
             self._restore(target, self._history.commit_undo if step < 0 else self._history.commit_redo)
         finally:
@@ -1164,7 +1227,7 @@ class QtDraw(Window):
         if self.multipie_dialog is not None:
             if self.pyvista_widget._mp_data is None:
                 self._close_multipie_dialog()
-                self.status.setText("MultiPie dialog closed: the restored document has no MultiPie group.")
+                self.show_message("MultiPie dialog closed: the restored document has no MultiPie group.")
             else:
                 self.multipie_dialog.set_data(quiet=True)  # show the restored group, without changing it.
 
@@ -1837,6 +1900,7 @@ class QtDraw(Window):
         process.errorOccurred.connect(lambda error: error == QProcess.FailedToStart and finished(process, False, output))
         setattr(self, attribute, process)  # before starting: a failing start finishes at once.
         QApplication.setOverrideCursor(Qt.BusyCursor)
+        self.show_message("Installing... (see Window > Log)", timeout=0)  # until it finishes.
         self.logger.append_text("$ " + command_text(command))
         self.logger.show()
         process.start(command[0], command[1:])
@@ -1859,6 +1923,7 @@ class QtDraw(Window):
         process.deleteLater()
         QApplication.restoreOverrideCursor()
         self.misc_button_multipie.setEnabled(True)
+        self.show_message("MultiPie installed." if ok else "MultiPie could not be installed (see Window > Log).")
         if not ok:
             tail = "\n".join("".join(output).strip().splitlines()[-10:]) or process.errorString()
             command = command_text(install_multipie_command())
@@ -1957,6 +2022,7 @@ class QtDraw(Window):
         self._browser_install = None
         process.deleteLater()
         QApplication.restoreOverrideCursor()
+        self.show_message("MathJax browser installed." if ok else "MathJax browser could not be installed (see Window > Log).")
         if not ok:
             tail = "\n".join("".join(output).strip().splitlines()[-10:]) or process.errorString()
             text = f"The browser could not be installed.\n\n{tail}\n\n"
@@ -2145,6 +2211,7 @@ class QtDraw(Window):
         if not ok:
             event.ignore()
         else:
+            logging.getLogger().removeHandler(self._message_handler)  # no messages to a closed window.
             dialogs = [self.multipie_dialog, self.logger, self.info_dialog] + list(self._data_views.values())
             dialogs = [dialog for dialog in dialogs if dialog is not None]
 
@@ -2201,9 +2268,42 @@ class QtDraw(Window):
         :meta private:
         """
         self.info_dialog.append_text(text)
+        first = text.splitlines()[0] if text else ""
+        if first.startswith("* ") and hasattr(self, "status"):  # a message, not its details or the version information.
+            self.show_message(first[2:])
 
     # ==================================================
-    def add_site(self, size=None, color=None, opacity=None, position=None, cell=None, name=None, label=None, margin=None):
+    def show_message(self, text, timeout=MESSAGE_TIME):
+        """
+        Show a short message in the message field at the bottom of the window.
+
+        Args:
+            text (str): message (one line).
+            timeout (int, optional): time [ms] to show it, 0 for until the next message.
+
+        :meta private:
+        """
+        self.status.setText(text)
+        self.status.setToolTip(text)  # the whole message, also when the field is too narrow.
+        if timeout > 0:
+            self._status_timer.start(timeout)
+        else:
+            self._status_timer.stop()
+
+    # ==================================================
+    def add_site(
+        self,
+        size=None,
+        color=None,
+        opacity=None,
+        position=None,
+        cell=None,
+        name=None,
+        label=None,
+        margin=None,
+        show=None,
+        show_label=None,
+    ):
         """
         Add site.
 
@@ -2216,11 +2316,13 @@ class QtDraw(Window):
             name (str, optional): name of group. (default: untitled)
             label (str, optional): label. (default: label)
             margin (int, optional): label margin. (default: 3)
+            show (bool, optional): show the object ? (default: True)
+            show_label (bool, optional): show the label ? (default: preference label.default_check if label is given, else False)
 
         Note:
             - if keyword is None, default value is used.
         """
-        self.pyvista_widget.add_site(size, color, opacity, position, cell, name, label, margin)
+        self.pyvista_widget.add_site(size, color, opacity, position, cell, name, label, margin, show, show_label)
 
     # ==================================================
     def add_bond(
@@ -2236,6 +2338,8 @@ class QtDraw(Window):
         name=None,
         label=None,
         margin=None,
+        show=None,
+        show_label=None,
     ):
         """
         Add bond.
@@ -2252,12 +2356,16 @@ class QtDraw(Window):
             name (str, optional): name of group. (default: untitled)
             label (str, optional): label. (default: label)
             margin (int, optional): label margin. (default: 3)
+            show (bool, optional): show the object ? (default: True)
+            show_label (bool, optional): show the label ? (default: preference label.default_check if label is given, else False)
 
         Note:
             - if keyword is None, default value is used.
             - bond position is at center.
         """
-        self.pyvista_widget.add_bond(direction, width, color, color2, cartesian, opacity, position, cell, name, label, margin)
+        self.pyvista_widget.add_bond(
+            direction, width, color, color2, cartesian, opacity, position, cell, name, label, margin, show, show_label
+        )
 
     # ==================================================
     def add_vector(
@@ -2277,6 +2385,8 @@ class QtDraw(Window):
         name=None,
         label=None,
         margin=None,
+        show=None,
+        show_label=None,
     ):
         """
         Add vector.
@@ -2297,6 +2407,8 @@ class QtDraw(Window):
             name (str, optional): name of group. (default: untitled)
             label (str, optional): label. (default: label)
             margin (int, optional): label margin. (default: 3)
+            show (bool, optional): show the object ? (default: True)
+            show_label (bool, optional): show the label ? (default: preference label.default_check if label is given, else False)
 
         Note:
             - if keyword is None, default value is used.
@@ -2318,6 +2430,8 @@ class QtDraw(Window):
             name,
             label,
             margin,
+            show,
+            show_label,
         )
 
     # ==================================================
@@ -2334,6 +2448,8 @@ class QtDraw(Window):
         name=None,
         label=None,
         margin=None,
+        show=None,
+        show_label=None,
     ):
         """
         Add orbital.
@@ -2350,6 +2466,8 @@ class QtDraw(Window):
             name (str, optional): name of group. (default: untitled)
             label (str, optional): label. (default: label)
             margin (int, optional): label margin. (default: 3)
+            show (bool, optional): show the object ? (default: True)
+            show_label (bool, optional): show the label ? (default: preference label.default_check if label is given, else False)
 
         Note:
             - if keyword is None, default value is used.
@@ -2357,7 +2475,9 @@ class QtDraw(Window):
             - if size is positive, max. value is equivalent to size.
             - if size is negative, abs. value is scaled by size.
         """
-        self.pyvista_widget.add_orbital(shape, surface, size, range, color, opacity, position, cell, name, label, margin)
+        self.pyvista_widget.add_orbital(
+            shape, surface, size, range, color, opacity, position, cell, name, label, margin, show, show_label
+        )
 
     # ==================================================
     def add_stream(
@@ -2382,6 +2502,8 @@ class QtDraw(Window):
         name=None,
         label=None,
         margin=None,
+        show=None,
+        show_label=None,
     ):
         """
         Add stream.
@@ -2407,6 +2529,8 @@ class QtDraw(Window):
             name (str, optional): name of group. (default: untitled)
             label (str, optional): label. (default: label)
             margin (int, optional): label margin. (default: 3)
+            show (bool, optional): show the object ? (default: True)
+            show_label (bool, optional): show the label ? (default: preference label.default_check if label is given, else False)
 
         Note:
             - if keyword is None, default value is used.
@@ -2433,6 +2557,8 @@ class QtDraw(Window):
             name,
             label,
             margin,
+            show,
+            show_label,
         )
 
     # ==================================================
@@ -2452,6 +2578,8 @@ class QtDraw(Window):
         name=None,
         label=None,
         margin=None,
+        show=None,
+        show_label=None,
     ):
         """
         Add line.
@@ -2471,12 +2599,29 @@ class QtDraw(Window):
             name (str, optional): name of group. (default: untitled)
             label (str, optional): label. (default: label)
             margin (int, optional): label margin. (default: 3)
+            show (bool, optional): show the object ? (default: True)
+            show_label (bool, optional): show the label ? (default: preference label.default_check if label is given, else False)
 
         Note:
             - if keyword is None, default value is used.
         """
         self.pyvista_widget.add_line(
-            direction, width, arrow1, arrow2, tip_R, tip_length, color, cartesian, opacity, position, cell, name, label, margin
+            direction,
+            width,
+            arrow1,
+            arrow2,
+            tip_R,
+            tip_length,
+            color,
+            cartesian,
+            opacity,
+            position,
+            cell,
+            name,
+            label,
+            margin,
+            show,
+            show_label,
         )
 
     # ==================================================
@@ -2496,6 +2641,8 @@ class QtDraw(Window):
         name=None,
         label=None,
         margin=None,
+        show=None,
+        show_label=None,
     ):
         """
         Add plane.
@@ -2515,12 +2662,29 @@ class QtDraw(Window):
             name (str, optional): name of group. (default: untitled)
             label (str, optional): label. (default: label)
             margin (int, optional): label margin. (default: 3)
+            show (bool, optional): show the object ? (default: True)
+            show_label (bool, optional): show the label ? (default: preference label.default_check if label is given, else False)
 
         Note:
             - if keyword is None, default value is used.
         """
         self.pyvista_widget.add_plane(
-            normal, x_size, y_size, color, width, grid, grid_color, cartesian, opacity, position, cell, name, label, margin
+            normal,
+            x_size,
+            y_size,
+            color,
+            width,
+            grid,
+            grid_color,
+            cartesian,
+            opacity,
+            position,
+            cell,
+            name,
+            label,
+            margin,
+            show,
+            show_label,
         )
 
     # ==================================================
@@ -2539,6 +2703,8 @@ class QtDraw(Window):
         name=None,
         label=None,
         margin=None,
+        show=None,
+        show_label=None,
     ):
         """
         Add circle.
@@ -2557,12 +2723,28 @@ class QtDraw(Window):
             name (str, optional): name of group. (default: untitled)
             label (str, optional): label. (default: label)
             margin (int, optional): label margin. (default: 3)
+            show (bool, optional): show the object ? (default: True)
+            show_label (bool, optional): show the label ? (default: preference label.default_check if label is given, else False)
 
         Note:
             - if keyword is None, default value is used.
         """
         self.pyvista_widget.add_circle(
-            normal, size, color, width, edge, edge_color, cartesian, opacity, position, cell, name, label, margin
+            normal,
+            size,
+            color,
+            width,
+            edge,
+            edge_color,
+            cartesian,
+            opacity,
+            position,
+            cell,
+            name,
+            label,
+            margin,
+            show,
+            show_label,
         )
 
     # ==================================================
@@ -2579,6 +2761,8 @@ class QtDraw(Window):
         name=None,
         label=None,
         margin=None,
+        show=None,
+        show_label=None,
     ):
         """
         Add torus.
@@ -2595,11 +2779,15 @@ class QtDraw(Window):
             name (str, optional): name of group. (default: untitled)
             label (str, optional): label. (default: label)
             margin (int, optional): label margin. (default: 3)
+            show (bool, optional): show the object ? (default: True)
+            show_label (bool, optional): show the label ? (default: preference label.default_check if label is given, else False)
 
         Note:
             - if keyword is None, default value is used.
         """
-        self.pyvista_widget.add_torus(normal, size, width, color, cartesian, opacity, position, cell, name, label, margin)
+        self.pyvista_widget.add_torus(
+            normal, size, width, color, cartesian, opacity, position, cell, name, label, margin, show, show_label
+        )
 
     # ==================================================
     def add_ellipsoid(
@@ -2616,6 +2804,8 @@ class QtDraw(Window):
         name=None,
         label=None,
         margin=None,
+        show=None,
+        show_label=None,
     ):
         """
         Add ellipsoid.
@@ -2633,12 +2823,14 @@ class QtDraw(Window):
             name (str, optional): name of group. (default: untitled)
             label (str, optional): label. (default: label)
             margin (int, optional): label margin. (default: 3)
+            show (bool, optional): show the object ? (default: True)
+            show_label (bool, optional): show the label ? (default: preference label.default_check if label is given, else False)
 
         Note:
             - if keyword is None, default value is used.
         """
         self.pyvista_widget.add_ellipsoid(
-            normal, x_size, y_size, z_size, color, cartesian, opacity, position, cell, name, label, margin
+            normal, x_size, y_size, z_size, color, cartesian, opacity, position, cell, name, label, margin, show, show_label
         )
 
     # ==================================================
@@ -2660,6 +2852,8 @@ class QtDraw(Window):
         name=None,
         label=None,
         margin=None,
+        show=None,
+        show_label=None,
     ):
         """
         Add toroid.
@@ -2681,6 +2875,8 @@ class QtDraw(Window):
             name (str, optional): name of group. (default: untitled)
             label (str, optional): label. (default: label)
             margin (int, optional): label margin. (default: 3)
+            show (bool, optional): show the object ? (default: True)
+            show_label (bool, optional): show the label ? (default: preference label.default_check if label is given, else False)
 
         Note:
             - if keyword is None, default value is used.
@@ -2702,6 +2898,8 @@ class QtDraw(Window):
             name,
             label,
             margin,
+            show,
+            show_label,
         )
 
     # ==================================================
@@ -2722,6 +2920,8 @@ class QtDraw(Window):
         name=None,
         label=None,
         margin=None,
+        show=None,
+        show_label=None,
     ):
         """
         Add box.
@@ -2742,12 +2942,30 @@ class QtDraw(Window):
             name (str, optional): name of group. (default: untitled)
             label (str, optional): label. (default: label)
             margin (int, optional): label margin. (default: 3)
+            show (bool, optional): show the object ? (default: True)
+            show_label (bool, optional): show the label ? (default: preference label.default_check if label is given, else False)
 
         Note:
             - if keyword is None, default value is used.
         """
         self.pyvista_widget.add_box(
-            a1, a2, a3, width, edge, edge_color, wireframe, color, cartesian, opacity, position, cell, name, label, margin
+            a1,
+            a2,
+            a3,
+            width,
+            edge,
+            edge_color,
+            wireframe,
+            color,
+            cartesian,
+            opacity,
+            position,
+            cell,
+            name,
+            label,
+            margin,
+            show,
+            show_label,
         )
 
     # ==================================================
@@ -2767,6 +2985,8 @@ class QtDraw(Window):
         name=None,
         label=None,
         margin=None,
+        show=None,
+        show_label=None,
     ):
         """
         Add polygon.
@@ -2786,6 +3006,8 @@ class QtDraw(Window):
             name (str, optional): name of group. (default: untitled)
             label (str, optional): label. (default: label)
             margin (int, optional): label margin. (default: 3)
+            show (bool, optional): show the object ? (default: True)
+            show_label (bool, optional): show the label ? (default: preference label.default_check if label is given, else False)
 
         Note:
             - if keyword is None, default value is used.
@@ -2805,6 +3027,8 @@ class QtDraw(Window):
             name,
             label,
             margin,
+            show,
+            show_label,
         )
 
     # ==================================================
@@ -2827,6 +3051,8 @@ class QtDraw(Window):
         name=None,
         label=None,
         margin=None,
+        show=None,
+        show_label=None,
     ):
         """
         Add spline.
@@ -2849,6 +3075,8 @@ class QtDraw(Window):
             name (str, optional): name of group. (default: untitled)
             label (str, optional): label. (default: label)
             margin (int, optional): label margin. (default: 3)
+            show (bool, optional): show the object ? (default: True)
+            show_label (bool, optional): show the label ? (default: preference label.default_check if label is given, else False)
 
         Note:
             - if keyword is None, default value is used.
@@ -2871,6 +3099,8 @@ class QtDraw(Window):
             name,
             label,
             margin,
+            show,
+            show_label,
         )
 
     # ==================================================
@@ -2894,6 +3124,8 @@ class QtDraw(Window):
         name=None,
         label=None,
         margin=None,
+        show=None,
+        show_label=None,
     ):
         """
         Add spline (parametric).
@@ -2917,6 +3149,8 @@ class QtDraw(Window):
             name (str, optional): name of group. (default: untitled)
             label (str, optional): label. (default: label)
             margin (int, optional): label margin. (default: 3)
+            show (bool, optional): show the object ? (default: True)
+            show_label (bool, optional): show the label ? (default: preference label.default_check if label is given, else False)
 
         Note:
             - if keyword is None, default value is used.
@@ -2940,6 +3174,8 @@ class QtDraw(Window):
             name,
             label,
             margin,
+            show,
+            show_label,
         )
 
     # ==================================================
@@ -2957,6 +3193,8 @@ class QtDraw(Window):
         name=None,
         label=None,
         margin=None,
+        show=None,
+        show_label=None,
     ):
         """
         Add text 3d.
@@ -2974,11 +3212,15 @@ class QtDraw(Window):
             name (str, optional): name of group. (default: untitled)
             label (str, optional): label. (default: label)
             margin (int, optional): label margin. (default: 3)
+            show (bool, optional): show the object ? (default: True)
+            show_label (bool, optional): show the label ? (default: preference label.default_check if label is given, else False)
 
         Note:
             - if keyword is None, default value is used.
         """
-        self.pyvista_widget.add_text3d(text, size, view, depth, offset, color, opacity, position, cell, name, label, margin)
+        self.pyvista_widget.add_text3d(
+            text, size, view, depth, offset, color, opacity, position, cell, name, label, margin, show, show_label
+        )
 
     # ==================================================
     def add_isosurface(
@@ -2994,6 +3236,8 @@ class QtDraw(Window):
         name=None,
         label=None,
         margin=None,
+        show=None,
+        show_label=None,
     ):
         """
         Add isosurface.
@@ -3010,15 +3254,21 @@ class QtDraw(Window):
             name (str, optional): name of group. (default: untitled)
             label (str, optional): label. (default: label)
             margin (int, optional): label margin. (default: 3)
+            show (bool, optional): show the object ? (default: True)
+            show_label (bool, optional): show the label ? (default: preference label.default_check if label is given, else False)
 
         Note:
             - if keyword is None, default value is used.
             - if filename is tuple, (name, dict), use dict data as name.
         """
-        self.pyvista_widget.add_isosurface(data, value, surface, color, color_range, opacity, position, cell, name, label, margin)
+        self.pyvista_widget.add_isosurface(
+            data, value, surface, color, color_range, opacity, position, cell, name, label, margin, show, show_label
+        )
 
     # ==================================================
-    def add_caption(self, caption=None, size=None, bold=None, color=None, position=None, cell=None, name=None, margin=None):
+    def add_caption(
+        self, caption=None, size=None, bold=None, color=None, position=None, cell=None, name=None, margin=None, show=None
+    ):
         """
         Add caption.
 
@@ -3031,14 +3281,15 @@ class QtDraw(Window):
             cell (str, optional): cell. (default: [0,0,0])
             name (str, optional): name of group. (default: untitled)
             margin (int, optional): label margin. (default: 3)
+            show (bool, optional): show the object ? (default: True)
 
         Note:
             - if keyword is None, default value is used.
         """
-        self.pyvista_widget.add_caption(caption, size, bold, color, position, cell, name, margin)
+        self.pyvista_widget.add_caption(caption, size, bold, color, position, cell, name, margin, show)
 
     # ==================================================
-    def add_text2d(self, caption=None, size=None, color=None, font=None, position=None, name=None):
+    def add_text2d(self, caption=None, size=None, color=None, font=None, position=None, name=None, show=None):
         """
         Add text 2d.
 
@@ -3049,11 +3300,12 @@ class QtDraw(Window):
             font (str, optional): caption font. (default: arial)
             position (str, optional): position in the window, [x,y,0], x and y from 0 to 1 (z is not used). (default: [0.02,0.95,0])
             name (str, optional): name of group. (default: untitled)
+            show (bool, optional): show the object ? (default: True)
 
         Note:
             - if keyword is None, default value is used.
         """
-        self.pyvista_widget.add_text2d(caption, size, color, font, position, name)
+        self.pyvista_widget.add_text2d(caption, size, color, font, position, name, show)
 
     # ==================================================
     def plot_orbital_from_data(
@@ -3527,6 +3779,76 @@ class QtDraw(Window):
         """
         self._save(filename)
         self._saved_to(filename)
+
+    # ==================================================
+    def to_python(self):
+        """
+        Python code that draws the current drawing with the QtDraw API.
+
+        Returns:
+            - (str) -- Python code.
+
+        Note:
+            - the code is made from the current state: the objects, the unit cell, the range, repeat and clip, the
+              view settings, the model name and the MultiPie group. The camera (zoom and rotation), the preferences
+              and the MultiPie dialog are not written.
+            - the objects drawn by MultiPie are written as add_* of each object, after mp_set_group().
+            - with repeat, only the objects of the home cell are written; set_repeat(True) at the end repeats them.
+            - only the values that differ from the defaults are written.
+        """
+        widget = self.pyvista_widget
+        return python_code(widget, in_memory=widget._isosurface_in_memory)
+
+    # ==================================================
+    def save_python(self, filename):
+        """
+        Save the Python code of the current drawing to file (as File > Export as Python).
+
+        Args:
+            filename (str): file name, relative to the current directory.
+
+        Note:
+            - see to_python().
+        """
+        file = Path(filename).absolute()
+        file.write_text(self.to_python(), encoding="utf-8")
+        self.pyvista_widget.write_info(f"* write Python code to {file}.")
+
+    # ==================================================
+    def _export_python(self):
+        """
+        Export as Python dialog.
+
+        :meta private:
+        """
+        file = self.pyvista_widget.document_dir() / (self.pyvista_widget._status["model"] + ".py")
+        filename, _ = QFileDialog.getSaveFileName(self, "Export as Python", str(file), "Python Files (*.py)")
+        if not filename:  # cancelled.
+            return
+        filename = Path(filename)
+        if filename.suffix != ".py":
+            filename = filename.with_name(filename.name + ".py")
+            if filename.exists():  # the dialog asked about the original name only.
+                ret = QMessageBox.question(
+                    self, "Export as Python", f"{filename.name} already exists.\nReplace it?", QMessageBox.Ok | QMessageBox.Cancel
+                )
+                if ret != QMessageBox.Ok:
+                    return
+        self.save_python(str(filename))
+
+    # ==================================================
+    def save_screenshot(self, filename):
+        """
+        Save screenshot of the drawing to file (as File > Screenshot).
+
+        Args:
+            filename (str): file name, relative to the current directory; its extension is one of the image files
+                (.png, .bmp, .tif, .tiff) or of the vector graphics files (.svg, .eps, .ps, .pdf).
+
+        Raises:
+            ValueError: the extension is not one of them.
+        """
+        self.pyvista_widget.save_screenshot(filename)
 
     # ==================================================
     def _save(self, filename):

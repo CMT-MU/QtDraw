@@ -96,7 +96,7 @@ widget_detail = {
     # general.
     "extension": ".qtdw",
     "ext_material": [".vesta", ".cif", ".xsf"],
-    "log_level": "error",  # debug/info/warning/error/critical.
+    "log_level": "error",  # debug/info/warning/error/critical; the Log window records warnings and errors in any case.
     "default_view": [6, 5, 1],
     "image_file": [".png", ".bmp", ".tif", ".tiff"],
     "vector_file": [".svg", ".eps", ".ps", ".pdf"],

@@ -6,7 +6,7 @@ orphan: true
 
 英語版は[こちら](from_python.md)です。
 
-**QtDraw** と **PyVistaWidget** は、Python のコードから使えます。
+**QtDraw** は、Python のコードから使えます。
 オブジェクトを描くために、次の API が使えます。
 
 ## 元に戻す・やり直す
@@ -22,7 +22,6 @@ qtdraw.undo()  # removes both.
 
 変更は、そのあとにイベントループが回ったときに記録されます。そのため、Jupyter の一つのセルや一つの関数の中での呼び出しは、一つのステップになります。
 呼び出し自身がイベントループを回す場合（例えばダイアログや `processEvents()`）は、いくつかのステップに分かれることがあります。
-`PyVistaWidget` を単独で使う場合は、履歴はありません。
 
 ## ファイルとディレクトリ
 
@@ -32,7 +31,3 @@ qtdraw.undo()  # removes both.
 ## QtDraw の API
 
 API の一覧は英語版の [Usage from Python code](from_python.md) の「API in QtDraw」を参照してください。
-
-## PyVistaWidget の API
-
-API の一覧は英語版の [Usage from Python code](from_python.md) の「API in PyVistaWidget」を参照してください。

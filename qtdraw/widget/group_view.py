@@ -12,7 +12,9 @@ This module provides a view class to show object data.
 By clicking right button of mouse, the context menu appears.
 """
 
-from PySide6.QtWidgets import QMenu, QTreeView, QHeaderView, QSizePolicy
+import sys
+
+from PySide6.QtWidgets import QAbstractItemView, QMenu, QTreeView, QHeaderView, QSizePolicy
 from PySide6.QtCore import Qt, Signal, QPoint, QModelIndex, QItemSelection, QItemSelectionModel
 
 from qtdraw.core.pyvista_widget_setting import COLOR_WIDGET, COMBO_WIDGET, EDITOR_WIDGET, HIDE_TYPE
@@ -106,6 +108,8 @@ class GroupView(QTreeView):
             model.updateWidget.connect(self.update_widget)
 
         # set properties.
+        self.setSelectionMode(QAbstractItemView.ExtendedSelection)  # several rows with Shift or Ctrl (Cmd on macOS).
+        self.setSelectionBehavior(QAbstractItemView.SelectRows)
         self.setAlternatingRowColors(True)
         self.header().setSectionsMovable(False)
         self.setUniformRowHeights(False)
@@ -191,8 +195,16 @@ class GroupView(QTreeView):
     # ==================================================
     def keyPressEvent(self, event):
         """
-        Key press event for ESC and up and down keys.
+        Key press event for ESC, delete, and up and down keys.
         """
+        # remove the selected rows by Delete key (also Backspace on macOS), but not while a cell is edited.
+        delete_keys = [Qt.Key_Delete, Qt.Key_Backspace] if sys.platform == "darwin" else [Qt.Key_Delete]
+        if event.key() in delete_keys and self.state() != QAbstractItemView.EditingState:
+            if self.selectionModel().selectedRows():
+                self.remove_row()
+            event.accept()
+            return
+
         # in order to deselect by ESC key.
         if event.key() == Qt.Key_Escape:
             self.clear_selection()
@@ -231,8 +243,9 @@ class GroupView(QTreeView):
         menu = QMenu(self)
         menu.addAction("insert", self.insert_row)
         if index.isValid():
+            n = len(self.selectionModel().selectedRows())
             menu.addAction("copy", self.copy_row)
-            menu.addAction("remove", self.remove_row)
+            menu.addAction("remove" if n <= 1 else f"remove {n} rows", self.remove_row)
         if self._debug["raw_data"]:
             menu.addAction("raw_data", lambda: print(self.model().tolist()))
         menu.popup(self.mapToGlobal(position))
@@ -260,9 +273,12 @@ class GroupView(QTreeView):
     # ==================================================
     def remove_row(self):
         """
-        Remove row.
+        Remove the selected rows at once.
         """
-        indexes = self.selectedIndexes()
+        indexes = self.selectionModel().selectedRows()
+        if not indexes:
+            return
+        self.clear_selection()  # the selected objects are removed.
         self.model().action_remove_row(indexes)
         self.clear_row_heights()
 
@@ -277,33 +293,19 @@ class GroupView(QTreeView):
         """
         model = self.model()
 
-        deselected = [i for i in deselected.indexes() if i.column() == 0]
-        if deselected:
-            index0 = deselected[0]
-            row_data0 = []
-            if model.rowCount(index0) == 0:
-                row_data0.append(model.get_row_data(index0))
-            else:
-                for row in range(model.rowCount(index0)):
-                    cindex0 = model.index(row, 0, index0)
-                    row_data0.append(model.get_row_data(cindex0))
-        else:
-            row_data0 = []
+        def objects(selection):  # row data of the objects of the rows (all objects of a group).
+            row_data = []
+            for index in selection.indexes():
+                if index.column() != 0 or not index.isValid():
+                    continue
+                if model.rowCount(index) == 0:
+                    row_data.append(model.get_row_data(index))
+                else:
+                    for row in range(model.rowCount(index)):
+                        row_data.append(model.get_row_data(model.index(row, 0, index)))
+            return row_data
 
-        selected = [i for i in selected.indexes() if i.column() == 0]
-        if selected:
-            index1 = selected[0]
-            row_data1 = []
-            if model.rowCount(index1) == 0:
-                row_data1.append(model.get_row_data(index1))
-            else:
-                for row in range(model.rowCount(index1)):
-                    cindex1 = model.index(row, 0, index1)
-                    row_data1.append(model.get_row_data(cindex1))
-        else:
-            row_data1 = []
-
-        self.selectionChanged.emit(model.group_name, row_data0, row_data1)
+        self.selectionChanged.emit(model.group_name, objects(deselected), objects(selected))
 
     # ==================================================
     def select_row(self, index):

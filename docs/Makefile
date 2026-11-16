@@ -1,4 +1,7 @@
+PYTHON ?= python
+
 build:
+	$(PYTHON) tools/create_function_table.py
 	jb build --all -v .
 
 upload:	build

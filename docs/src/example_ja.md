@@ -21,8 +21,6 @@ orphan: true
   ![mp_graphene.jpg](fig/mp_graphene.jpg)
 - [MultiPie を使った Te](examples/mp_Te.ipynb)
   ![mp_Te.jpg](fig/mp_Te.jpg)
-- [PyVistaWidget](examples/pyvista_widget.ipynb)
-  ![pyvista.jpg](fig/pyvista.jpg)
 - [MultiPie とともに](examples/multipie.ipynb)
   ![multipie.jpg](fig/multipie.jpg)
 

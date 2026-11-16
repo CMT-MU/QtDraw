@@ -16,6 +16,7 @@ import os
 import re
 import ast
 import inspect
+import logging
 import threading
 from collections import OrderedDict
 from pathlib import Path
@@ -408,7 +409,8 @@ class Window(QMainWindow):
         :meta private:
         """
         self.app = get_qt_application()
-        self.logger = LogWidget(level=level)
+        # warnings and errors are always recorded (#291); a lower level, e.g. debug, is recorded when asked for.
+        self.logger = LogWidget(level=min(level, logging.WARNING))
         super().__init__()
 
 
@@ -807,7 +809,19 @@ class PyVistaWidget(QtInteractor):
     # ==================================================
     # add_object_type
     # ==================================================
-    def add_site(self, size=None, color=None, opacity=None, position=None, cell=None, name=None, label=None, margin=None):
+    def add_site(
+        self,
+        size=None,
+        color=None,
+        opacity=None,
+        position=None,
+        cell=None,
+        name=None,
+        label=None,
+        margin=None,
+        show=None,
+        show_label=None,
+    ):
         """
         Add site.
 
@@ -820,11 +834,13 @@ class PyVistaWidget(QtInteractor):
             name (str, optional): name of group. (default: untitled)
             label (str, optional): label. (default: label)
             margin (int, optional): label margin. (default: 3)
+            show (bool, optional): show the object ? (default: True)
+            show_label (bool, optional): show the label ? (default: preference label.default_check if label is given, else False)
 
         Note:
             - if keyword is None, default value is used.
         """
-        row_data = self.set_common_row_data("site", opacity, position, cell, name, label, margin)
+        row_data = self.set_common_row_data("site", opacity, position, cell, name, label, margin, show, show_label)
 
         if size is not None:
             row_data["size"] = convert_to_str(size)
@@ -848,6 +864,8 @@ class PyVistaWidget(QtInteractor):
         name=None,
         label=None,
         margin=None,
+        show=None,
+        show_label=None,
     ):
         """
         Add bond.
@@ -864,12 +882,14 @@ class PyVistaWidget(QtInteractor):
             name (str, optional): name of group. (default: untitled)
             label (str, optional): label. (default: label)
             margin (int, optional): label margin. (default: 3)
+            show (bool, optional): show the object ? (default: True)
+            show_label (bool, optional): show the label ? (default: preference label.default_check if label is given, else False)
 
         Note:
             - if keyword is None, default value is used.
             - bond position is at center.
         """
-        row_data = self.set_common_row_data("bond", opacity, position, cell, name, label, margin)
+        row_data = self.set_common_row_data("bond", opacity, position, cell, name, label, margin, show, show_label)
 
         if direction is not None:
             if isinstance(direction, np.ndarray):
@@ -905,6 +925,8 @@ class PyVistaWidget(QtInteractor):
         name=None,
         label=None,
         margin=None,
+        show=None,
+        show_label=None,
     ):
         """
         Add vector.
@@ -925,12 +947,14 @@ class PyVistaWidget(QtInteractor):
             name (str, optional): name of group. (default: untitled)
             label (str, optional): label. (default: label)
             margin (int, optional): label margin. (default: 3)
+            show (bool, optional): show the object ? (default: True)
+            show_label (bool, optional): show the label ? (default: preference label.default_check if label is given, else False)
 
         Note:
             - if keyword is None, default value is used.
             - if length is negative, norm of direction multiplied by |length| is used.
         """
-        row_data = self.set_common_row_data("vector", opacity, position, cell, name, label, margin)
+        row_data = self.set_common_row_data("vector", opacity, position, cell, name, label, margin, show, show_label)
 
         if direction is not None:
             if isinstance(direction, np.ndarray):
@@ -970,6 +994,8 @@ class PyVistaWidget(QtInteractor):
         name=None,
         label=None,
         margin=None,
+        show=None,
+        show_label=None,
     ):
         """
         Add orbital.
@@ -986,6 +1012,8 @@ class PyVistaWidget(QtInteractor):
             name (str, optional): name of group. (default: untitled)
             label (str, optional): label. (default: label)
             margin (int, optional): label margin. (default: 3)
+            show (bool, optional): show the object ? (default: True)
+            show_label (bool, optional): show the label ? (default: preference label.default_check if label is given, else False)
 
         Note:
             - if keyword is None, default value is used.
@@ -993,7 +1021,7 @@ class PyVistaWidget(QtInteractor):
             - if size is positive, max. value is equivalent to size.
             - if size is negative, abs. value is scaled by size.
         """
-        row_data = self.set_common_row_data("orbital", opacity, position, cell, name, label, margin)
+        row_data = self.set_common_row_data("orbital", opacity, position, cell, name, label, margin, show, show_label)
 
         if shape is not None:
             row_data["shape"] = shape
@@ -1036,6 +1064,8 @@ class PyVistaWidget(QtInteractor):
         name=None,
         label=None,
         margin=None,
+        show=None,
+        show_label=None,
     ):
         """
         Add stream.
@@ -1061,12 +1091,14 @@ class PyVistaWidget(QtInteractor):
             name (str, optional): name of group. (default: untitled)
             label (str, optional): label. (default: label)
             margin (int, optional): label margin. (default: 3)
+            show (bool, optional): show the object ? (default: True)
+            show_label (bool, optional): show the label ? (default: preference label.default_check if label is given, else False)
 
         Note:
             - if keyword is None, default value is used.
             - if size is negative, shape is normalized.
         """
-        row_data = self.set_common_row_data("stream", opacity, position, cell, name, label, margin)
+        row_data = self.set_common_row_data("stream", opacity, position, cell, name, label, margin, show, show_label)
 
         if shape is not None:
             row_data["shape"] = shape
@@ -1121,6 +1153,8 @@ class PyVistaWidget(QtInteractor):
         name=None,
         label=None,
         margin=None,
+        show=None,
+        show_label=None,
     ):
         """
         Add line.
@@ -1140,11 +1174,13 @@ class PyVistaWidget(QtInteractor):
             name (str, optional): name of group. (default: untitled)
             label (str, optional): label. (default: label)
             margin (int, optional): label margin. (default: 3)
+            show (bool, optional): show the object ? (default: True)
+            show_label (bool, optional): show the label ? (default: preference label.default_check if label is given, else False)
 
         Note:
             - if keyword is None, default value is used.
         """
-        row_data = self.set_common_row_data("line", opacity, position, cell, name, label, margin)
+        row_data = self.set_common_row_data("line", opacity, position, cell, name, label, margin, show, show_label)
 
         if direction is not None:
             if isinstance(direction, np.ndarray):
@@ -1185,6 +1221,8 @@ class PyVistaWidget(QtInteractor):
         name=None,
         label=None,
         margin=None,
+        show=None,
+        show_label=None,
     ):
         """
         Add plane.
@@ -1204,11 +1242,13 @@ class PyVistaWidget(QtInteractor):
             name (str, optional): name of group. (default: untitled)
             label (str, optional): label. (default: label)
             margin (int, optional): label margin. (default: 3)
+            show (bool, optional): show the object ? (default: True)
+            show_label (bool, optional): show the label ? (default: preference label.default_check if label is given, else False)
 
         Note:
             - if keyword is None, default value is used.
         """
-        row_data = self.set_common_row_data("plane", opacity, position, cell, name, label, margin)
+        row_data = self.set_common_row_data("plane", opacity, position, cell, name, label, margin, show, show_label)
 
         if normal is not None:
             if isinstance(normal, np.ndarray):
@@ -1248,6 +1288,8 @@ class PyVistaWidget(QtInteractor):
         name=None,
         label=None,
         margin=None,
+        show=None,
+        show_label=None,
     ):
         """
         Add circle.
@@ -1266,11 +1308,13 @@ class PyVistaWidget(QtInteractor):
             name (str, optional): name of group. (default: untitled)
             label (str, optional): label. (default: label)
             margin (int, optional): label margin. (default: 3)
+            show (bool, optional): show the object ? (default: True)
+            show_label (bool, optional): show the label ? (default: preference label.default_check if label is given, else False)
 
         Note:
             - if keyword is None, default value is used.
         """
-        row_data = self.set_common_row_data("circle", opacity, position, cell, name, label, margin)
+        row_data = self.set_common_row_data("circle", opacity, position, cell, name, label, margin, show, show_label)
 
         if normal is not None:
             if isinstance(normal, np.ndarray):
@@ -1306,6 +1350,8 @@ class PyVistaWidget(QtInteractor):
         name=None,
         label=None,
         margin=None,
+        show=None,
+        show_label=None,
     ):
         """
         Add torus.
@@ -1322,11 +1368,13 @@ class PyVistaWidget(QtInteractor):
             name (str, optional): name of group. (default: untitled)
             label (str, optional): label. (default: label)
             margin (int, optional): label margin. (default: 3)
+            show (bool, optional): show the object ? (default: True)
+            show_label (bool, optional): show the label ? (default: preference label.default_check if label is given, else False)
 
         Note:
             - if keyword is None, default value is used.
         """
-        row_data = self.set_common_row_data("torus", opacity, position, cell, name, label, margin)
+        row_data = self.set_common_row_data("torus", opacity, position, cell, name, label, margin, show, show_label)
 
         if normal is not None:
             if isinstance(normal, np.ndarray):
@@ -1359,6 +1407,8 @@ class PyVistaWidget(QtInteractor):
         name=None,
         label=None,
         margin=None,
+        show=None,
+        show_label=None,
     ):
         """
         Add ellipsoid.
@@ -1376,11 +1426,13 @@ class PyVistaWidget(QtInteractor):
             name (str, optional): name of group. (default: untitled)
             label (str, optional): label. (default: label)
             margin (int, optional): label margin. (default: 3)
+            show (bool, optional): show the object ? (default: True)
+            show_label (bool, optional): show the label ? (default: preference label.default_check if label is given, else False)
 
         Note:
             - if keyword is None, default value is used.
         """
-        row_data = self.set_common_row_data("ellipsoid", opacity, position, cell, name, label, margin)
+        row_data = self.set_common_row_data("ellipsoid", opacity, position, cell, name, label, margin, show, show_label)
 
         if normal is not None:
             if isinstance(normal, np.ndarray):
@@ -1419,6 +1471,8 @@ class PyVistaWidget(QtInteractor):
         name=None,
         label=None,
         margin=None,
+        show=None,
+        show_label=None,
     ):
         """
         Add toroid.
@@ -1440,11 +1494,13 @@ class PyVistaWidget(QtInteractor):
             name (str, optional): name of group. (default: untitled)
             label (str, optional): label. (default: label)
             margin (int, optional): label margin. (default: 3)
+            show (bool, optional): show the object ? (default: True)
+            show_label (bool, optional): show the label ? (default: preference label.default_check if label is given, else False)
 
         Note:
             - if keyword is None, default value is used.
         """
-        row_data = self.set_common_row_data("toroid", opacity, position, cell, name, label, margin)
+        row_data = self.set_common_row_data("toroid", opacity, position, cell, name, label, margin, show, show_label)
 
         if normal is not None:
             if isinstance(normal, np.ndarray):
@@ -1490,6 +1546,8 @@ class PyVistaWidget(QtInteractor):
         name=None,
         label=None,
         margin=None,
+        show=None,
+        show_label=None,
     ):
         """
         Add box.
@@ -1510,11 +1568,13 @@ class PyVistaWidget(QtInteractor):
             name (str, optional): name of group. (default: untitled)
             label (str, optional): label. (default: label)
             margin (int, optional): label margin. (default: 3)
+            show (bool, optional): show the object ? (default: True)
+            show_label (bool, optional): show the label ? (default: preference label.default_check if label is given, else False)
 
         Note:
             - if keyword is None, default value is used.
         """
-        row_data = self.set_common_row_data("box", opacity, position, cell, name, label, margin)
+        row_data = self.set_common_row_data("box", opacity, position, cell, name, label, margin, show, show_label)
 
         if a1 is not None:
             if isinstance(a1, np.ndarray):
@@ -1561,6 +1621,8 @@ class PyVistaWidget(QtInteractor):
         name=None,
         label=None,
         margin=None,
+        show=None,
+        show_label=None,
     ):
         """
         Add polygon.
@@ -1580,11 +1642,13 @@ class PyVistaWidget(QtInteractor):
             name (str, optional): name of group. (default: untitled)
             label (str, optional): label. (default: label)
             margin (int, optional): label margin. (default: 3)
+            show (bool, optional): show the object ? (default: True)
+            show_label (bool, optional): show the label ? (default: preference label.default_check if label is given, else False)
 
         Note:
             - if keyword is None, default value is used.
         """
-        row_data = self.set_common_row_data("polygon", opacity, position, cell, name, label, margin)
+        row_data = self.set_common_row_data("polygon", opacity, position, cell, name, label, margin, show, show_label)
 
         if point is not None:
             if isinstance(point, np.ndarray):
@@ -1630,6 +1694,8 @@ class PyVistaWidget(QtInteractor):
         name=None,
         label=None,
         margin=None,
+        show=None,
+        show_label=None,
     ):
         """
         Add spline.
@@ -1652,11 +1718,13 @@ class PyVistaWidget(QtInteractor):
             name (str, optional): name of group. (default: untitled)
             label (str, optional): label. (default: label)
             margin (int, optional): label margin. (default: 3)
+            show (bool, optional): show the object ? (default: True)
+            show_label (bool, optional): show the label ? (default: preference label.default_check if label is given, else False)
 
         Note:
             - if keyword is None, default value is used.
         """
-        row_data = self.set_common_row_data("spline", opacity, position, cell, name, label, margin)
+        row_data = self.set_common_row_data("spline", opacity, position, cell, name, label, margin, show, show_label)
 
         if point is not None:
             if isinstance(point, np.ndarray):
@@ -1707,6 +1775,8 @@ class PyVistaWidget(QtInteractor):
         name=None,
         label=None,
         margin=None,
+        show=None,
+        show_label=None,
     ):
         """
         Add spline (parametric).
@@ -1730,11 +1800,13 @@ class PyVistaWidget(QtInteractor):
             name (str, optional): name of group. (default: untitled)
             label (str, optional): label. (default: label)
             margin (int, optional): label margin. (default: 3)
+            show (bool, optional): show the object ? (default: True)
+            show_label (bool, optional): show the label ? (default: preference label.default_check if label is given, else False)
 
         Note:
             - if keyword is None, default value is used.
         """
-        row_data = self.set_common_row_data("spline_t", opacity, position, cell, name, label, margin)
+        row_data = self.set_common_row_data("spline_t", opacity, position, cell, name, label, margin, show, show_label)
 
         if point is not None:
             row_data["point"] = point
@@ -1781,6 +1853,8 @@ class PyVistaWidget(QtInteractor):
         name=None,
         label=None,
         margin=None,
+        show=None,
+        show_label=None,
     ):
         """
         Add text 3d.
@@ -1798,11 +1872,13 @@ class PyVistaWidget(QtInteractor):
             name (str, optional): name of group. (default: untitled)
             label (str, optional): label. (default: label)
             margin (int, optional): label margin. (default: 3)
+            show (bool, optional): show the object ? (default: True)
+            show_label (bool, optional): show the label ? (default: preference label.default_check if label is given, else False)
 
         Note:
             - if keyword is None, default value is used.
         """
-        row_data = self.set_common_row_data("text3d", opacity, position, cell, name, label, margin)
+        row_data = self.set_common_row_data("text3d", opacity, position, cell, name, label, margin, show, show_label)
 
         if text is not None:
             row_data["text"] = text
@@ -1838,6 +1914,8 @@ class PyVistaWidget(QtInteractor):
         name=None,
         label=None,
         margin=None,
+        show=None,
+        show_label=None,
     ):
         """
         Add isosurface.
@@ -1854,12 +1932,14 @@ class PyVistaWidget(QtInteractor):
             name (str, optional): name of group. (default: untitled)
             label (str, optional): label. (default: label)
             margin (int, optional): label margin. (default: 3)
+            show (bool, optional): show the object ? (default: True)
+            show_label (bool, optional): show the label ? (default: preference label.default_check if label is given, else False)
 
         Note:
             - if keyword is None, default value is used.
             - if filename is tuple, (name, dict), use dict data as name.
         """
-        row_data = self.set_common_row_data("isosurface", opacity, position, cell, name, label, margin)
+        row_data = self.set_common_row_data("isosurface", opacity, position, cell, name, label, margin, show, show_label)
 
         if data is None or data == "":
             row_data["data"] = ""
@@ -1900,6 +1980,7 @@ class PyVistaWidget(QtInteractor):
         cell=None,
         name=None,
         margin=None,
+        show=None,
     ):
         """
         Add caption.
@@ -1913,6 +1994,7 @@ class PyVistaWidget(QtInteractor):
             cell (str, optional): cell. (default: [0,0,0])
             name (str, optional): name of group. (default: untitled)
             margin (int, optional): label margin. (default: 3)
+            show (bool, optional): show the object ? (default: True)
 
         Raises:
             ValueError: the number of captions differs from the number of positions.
@@ -1920,7 +2002,7 @@ class PyVistaWidget(QtInteractor):
         Note:
             - if keyword is None, default value is used.
         """
-        row_data = self.set_common_row_data("caption", None, position, cell, name, None, margin)
+        row_data = self.set_common_row_data("caption", None, position, cell, name, None, margin, show, None)
 
         if caption is not None:
             row_data["caption"] = caption
@@ -1945,6 +2027,7 @@ class PyVistaWidget(QtInteractor):
         font=None,
         position=None,
         name=None,
+        show=None,
     ):
         """
         Add text 2d.
@@ -1956,6 +2039,7 @@ class PyVistaWidget(QtInteractor):
             font (str, optional): caption font. (default: arial)
             position (str, optional): position in the window, [x,y,0], x and y from 0 to 1 (z is not used). (default: [0.02,0.95,0])
             name (str, optional): name of group. (default: untitled)
+            show (bool, optional): show the object ? (default: True)
 
         Raises:
             ValueError: the position does not have three components.
@@ -1963,7 +2047,7 @@ class PyVistaWidget(QtInteractor):
         Note:
             - if keyword is None, default value is used.
         """
-        row_data = self.set_common_row_data("text2d", None, position, None, name, None, None)
+        row_data = self.set_common_row_data("text2d", None, position, None, name, None, None, show, None)
         if _parse_vector(row_data["position"]).shape != (3,):
             raise ValueError(f"position of text2d is [x,y,0] (fractions of the window): {row_data['position']}.")
 
@@ -3454,6 +3538,7 @@ class PyVistaWidget(QtInteractor):
         self.clear_data()
         self.add_data(data)
         self.set_clip()
+        self.write_info("* repeated objects converted to those of the home cell.")
 
     # ==================================================
     def set_actor(self, object_type, index, actor_name, column=COLUMN_NAME_ACTOR):
@@ -3804,7 +3889,7 @@ class PyVistaWidget(QtInteractor):
     # ==================================================
     # internal use (add object utility).
     # ==================================================
-    def set_common_row_data(self, object_type, opacity, position, cell, name, label, margin):
+    def set_common_row_data(self, object_type, opacity, position, cell, name, label, margin, show=None, show_label=None):
         """
         Set common row data.
 
@@ -3816,6 +3901,8 @@ class PyVistaWidget(QtInteractor):
             name (str): group name.
             label (str): label.
             margin (int): label margin.
+            show (bool, optional): show the object ?
+            show_label (bool, optional): show the label ?
 
         Returns:
             - (dict) -- row data.
@@ -3843,6 +3930,10 @@ class PyVistaWidget(QtInteractor):
             row_data["label_check"] = self._preference["label"]["default_check"]
         if margin is not None:
             row_data["margin"] = convert_to_str(margin)
+        if show is not None:
+            row_data["name_check"] = bool(show)
+        if show_label is not None:
+            row_data["label_check"] = bool(show_label)
 
         return row_data
 

@@ -8,6 +8,8 @@ The main window of **QtDraw** is the following, which has the main and control p
 
 ![sample.jpg](fig/sample.jpg)
 
+The bar at the bottom shows short messages on the left for a few seconds (e.g. a file saved, an object that is not drawn, undo, a MultiPie group, a warning), and the version on the right. The messages are also kept in the `Info` window, and the warnings and errors in the `Log` window (`Window` menu).
+
 ## Create and Edit Object
 
 To draw these objects, push `e` key or the `DataSet` button in the right panel, and then the `DataSet` window appears as follows.
@@ -28,16 +30,17 @@ In the main panel:
 - `e`: open the `DataSet` window.
 
 In the `DataSet` window:
-- Right click: context menu to insert, copy or remove an object.
+- Right click: context menu to insert, copy or remove objects.
+- Shift or Ctrl (Cmd on macOS) + click: select several rows. `Delete` (also `Backspace` on macOS): remove the selected rows.
 - `Esc`: clear the selection. `Up`, `Down`: move the selection.
 
-The `File` menu opens (Ctrl+O, Cmd+O on macOS), reopens one of the last 10 files (`Open Recent`), saves (Ctrl+S, Cmd+S), saves under another name (`Save As`, Ctrl+Shift+S, Cmd+Shift+S), saves a screenshot and quits (Ctrl+Q, Cmd+Q). `Save` writes to the file opened or saved last, and asks for a name the first time or after importing a CIF, VESTA or XSF file. When the window is closed with unsaved changes, QtDraw asks whether to save them; without changes it closes at once.
+The `File` menu opens (Ctrl+O, Cmd+O on macOS), reopens one of the last 10 files (`Open Recent`), saves (Ctrl+S, Cmd+S), saves under another name (`Save As`, Ctrl+Shift+S, Cmd+Shift+S), saves a screenshot, writes the drawing as Python code (`Export as Python`) and quits (Ctrl+Q, Cmd+Q). `Save` writes to the file opened or saved last, and asks for a name the first time or after importing a CIF, VESTA or XSF file. When the window is closed with unsaved changes, QtDraw asks whether to save them; without changes it closes at once.
 
 The `Edit` menu undoes (Ctrl+Z, Cmd+Z on macOS) and redoes (Ctrl+Y or Ctrl+Shift+Z depending on the platform, Cmd+Shift+Z on macOS) changes of objects, unit cell, range and MultiPie group. The camera, view settings and preferences are not changed by undo or redo. Opening a file starts a new history; saving keeps it. `Clear` removes all objects without asking, and can be undone. `DataSet` opens the table of all objects (as the `e` key), and `Preferences` the preferences (in the application menu on macOS).
 
 The `View` menu sets the view direction (Ctrl+1 to Ctrl+6 for +x, +y, +z, -x, -y, -z, Ctrl+0 for the default; Cmd on macOS) switches parallel projection, grid, scalar bar, clip and repeat, converts to non-repeat, and chooses the axis and cell display, as the panel does.
 
-The `Window` menu shows the messages of QtDraw (`Info`) and the log (`Log`), and the internal data for checking a drawing: the camera, the raw data of all objects, the actor names, the status and the preferences (`Camera`, `Data`, `Actor`, `Status`, `Preference`).
+The `Window` menu shows the messages of QtDraw (`Info`) and the log of warnings and errors with their time (`Log`; it is not opened by a warning, so look at it when something is not drawn as expected), and the internal data for checking a drawing: the camera, the raw data of all objects, the actor names, the status and the preferences (`Camera`, `Data`, `Actor`, `Status`, `Preference`).
 
 The `Help` menu shows the mouse and key operations, opens this documentation and the page to report an issue, and shows the version information.
 
@@ -57,11 +60,7 @@ The look and feel of **QtDraw** can be changed in the `Preferences` dialog (`Edi
 All the objects can also be drawn from Python code or Jupyter Notebook.
 The example of Jupyter Notebook is given in [qtdraw.ipynb](examples/qtdraw.ipynb).
 See [API](from_python.md) in detail.
-Using this functionality, the background job can be performed.
-See the example in
-```{literalinclude} examples/background.py
-```
-The same thing is also simply done by
+Using this functionality, the background job can be performed: `create_qtdraw_file` writes a drawing to a file without a window.
 ```{literalinclude} examples/background_s.py
 ```
 

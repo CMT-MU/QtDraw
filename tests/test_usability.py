@@ -55,6 +55,22 @@ def test_screenshot_unknown_type_is_error(app, tmp_path):
 
 
 # ==================================================
+@pytest.mark.parametrize("name", ["shot.png", "shot.svg"])
+def test_qtdraw_saves_screenshot(app, monkeypatch, tmp_path, name):
+    saved = []
+    monkeypatch.setattr(app.pyvista_widget, "save_screenshot", saved.append)
+    app.save_screenshot(str(tmp_path / name))  # from Python, as File > Screenshot without the dialog.
+    assert saved == [str(tmp_path / name)]
+
+
+# ==================================================
+def test_qtdraw_screenshot_unknown_type_is_error(app, tmp_path):
+    with pytest.raises(ValueError):
+        app.save_screenshot(str(tmp_path / "shot.txt"))
+    assert not (tmp_path / "shot.txt").exists()
+
+
+# ==================================================
 @pytest.mark.parametrize("button, called", [(QMessageBox.Cancel, False), (QMessageBox.Ok, True)])
 def test_nonrepeat_asks_confirmation(app, monkeypatch, button, called):
     done = []
