@@ -86,7 +86,7 @@ win.set_repeat(True)
 | `cell` | 格子並進 | `[0,0,0]` |
 | `opacity` | 0（透明）から 1 まで | `1.0` |
 
-Python では、これらはすべての `add_*` メソッドのキーワード引数です。例：`win.add_site(name="Cu", label="Cu1", position="[0,0,0]")`。
+Python では、これらはすべての `add_*` メソッドのキーワード引数です。例：`win.add_site(name="Cu", label="Cu1", position="[0,0,0]")`。`name` と `label` のチェックボックスは `show` と `show_label` に当たります。例：非表示のオブジェクトは `win.add_site(show=False)`、ラベルを表示するなら `win.add_site(label="Cu1", show_label=True)`。
 以下、各オブジェクトに固有の列を説明します。
 
 ### 点と矢印
@@ -468,6 +468,37 @@ def draw(widget):
 create_qtdraw_file(filename="chain.qtdw", callback=draw)
 ```
 
+### 図から Python コードを作る
+
+`File` > `Export as Python...` は、今の図を、同じ図を描く Python コードとして書き出します。たとえば、手で作った図からスクリプトを始めるときに使います。`win.to_python()` でコードを文字列として取り出し、`win.save_python("drawing.py")` でファイルに保存できます。
+
+```python
+win.save_python("graphene.py")
+```
+
+で、たとえば次のようなコードが書かれます。
+
+```python
+import sys
+
+from qtdraw import QtDraw
+
+win = QtDraw()
+win.set_model('graphene')
+win.mp_set_group('D6h^1')
+win.set_crystal('hexagonal')
+win.set_unit_cell({'a': 2.46, 'b': 2.46, 'c': 6.7, 'alpha': 90.0, 'beta': 90.0, 'gamma': 120.0})
+
+# site.
+win.add_site(label='C1', show_label=True, position='[1/3,2/3,0]', size=0.2)
+...
+```
+
+- コードは今の状態から作ります。対象は、オブジェクト、単位胞、範囲・繰り返し・クリップ、表示の設定、モデル名、MultiPie の群です。カメラ（拡大や回転）、環境設定、MultiPie ダイアログは書きません。
+- 既定値と違う値だけを書きます。MultiPie で描いたオブジェクトは、`mp_set_group` のあとに1つずつ書きます。
+- 繰り返しが有効なときは、基本の単位胞のオブジェクトだけを書き、`set_repeat(True)` で繰り返します。
+- データがファイルにない等値面は書きません（コメントで知らせます）。
+
 ### よく使うメソッド
 
 | メソッド | すること |
@@ -477,6 +508,7 @@ create_qtdraw_file(filename="chain.qtdw", callback=draw)
 | `set_view`、`set_parallel_projection`、`set_axis`、`set_cell`、`set_grid` | 表示 |
 | `set_model` | モデルの名前 |
 | `load`、`save` | ファイル |
+| `to_python`、`save_python` | 図の Python コード |
 | `save_screenshot` | 図の画像（`.png`、`.bmp`、`.tif`、`.tiff`、`.svg`、`.eps`、`.ps`、`.pdf`）。`File` > `Screenshot` と同じ |
 | `clear_data` | すべてのオブジェクトを消す |
 | `update_preference` | 設定。例：`update_preference("label", "default_check", True)` でラベルを表示する |
