@@ -3456,6 +3456,7 @@ class PyVistaWidget(QtInteractor):
         self.clear_data()
         self.add_data(data)
         self.set_clip()
+        self.write_info("* repeated objects converted to those of the home cell.")
 
     # ==================================================
     def set_actor(self, object_type, index, actor_name, column=COLUMN_NAME_ACTOR):
