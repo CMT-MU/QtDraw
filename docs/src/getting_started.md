@@ -38,7 +38,7 @@ The `Edit` menu undoes (Ctrl+Z, Cmd+Z on macOS) and redoes (Ctrl+Y or Ctrl+Shift
 
 The `View` menu sets the view direction (Ctrl+1 to Ctrl+6 for +x, +y, +z, -x, -y, -z, Ctrl+0 for the default; Cmd on macOS) switches parallel projection, grid, scalar bar, clip and repeat, converts to non-repeat, and chooses the axis and cell display, as the panel does.
 
-The `Window` menu shows the messages of QtDraw (`Info`) and the log (`Log`), and the internal data for checking a drawing: the camera, the raw data of all objects, the actor names, the status and the preferences (`Camera`, `Data`, `Actor`, `Status`, `Preference`).
+The `Window` menu shows the messages of QtDraw (`Info`) and the log of warnings and errors with their time (`Log`; it is not opened by a warning, so look at it when something is not drawn as expected), and the internal data for checking a drawing: the camera, the raw data of all objects, the actor names, the status and the preferences (`Camera`, `Data`, `Actor`, `Status`, `Preference`).
 
 The `Help` menu shows the mouse and key operations, opens this documentation and the page to report an issue, and shows the version information.
 
