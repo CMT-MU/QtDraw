@@ -424,12 +424,11 @@ More examples: [Graphene](examples/mp_graphene.ipynb), [Te](examples/mp_Te.ipynb
 
 ## 4. Usage from Python code
 
-### Three ways
+### Two ways
 
 | way | use |
 | --- | --- |
 | `QtDraw()` | the QtDraw window, drawn from a script or a Jupyter notebook |
-| `PyVistaWidget()` | only the drawing area, e.g. in your own Qt application |
 | `create_qtdraw_file(filename, callback)` | writes a `.qtdw` file without a window (background job) |
 
 The arguments of `add_*` are the columns of the data tables, as strings or numbers; an argument left out (or `None`) takes the default value.
@@ -447,7 +446,7 @@ win.add_site(position="[2/3,1/3,0]", size=0.2, label="C2")
 win.add_bond(position="[1/2,1/2,0]", direction="[1/3,-1/3,0]")  # C1-C2.
 win.set_view([0, 0, 1])  # view along c.
 win.save("graphene.qtdw")
-win.pyvista_widget.save_screenshot("graphene.png")  # the drawing area of the window.
+win.save_screenshot("graphene.png")  # also .pdf, .svg, ...
 win.exec()  # in a script, show the window until it is closed (not needed in Jupyter).
 ```
 
@@ -474,9 +473,9 @@ create_qtdraw_file(filename="chain.qtdw", callback=draw)
 | `set_view`, `set_parallel_projection`, `set_axis`, `set_cell`, `set_grid` | view |
 | `set_model` | model name |
 | `load`, `save` | files |
-| `save_screenshot` | image of the drawing (`.png`, `.pdf`, `.svg`, ...); a method of `PyVistaWidget`, `win.pyvista_widget.save_screenshot(...)` from `QtDraw` |
+| `save_screenshot` | image of the drawing (`.png`, `.bmp`, `.tif`, `.tiff`, `.svg`, `.eps`, `.ps`, `.pdf`), as `File` > `Screenshot` |
 | `clear_data` | remove all objects |
 | `update_preference` | preferences, e.g. `update_preference("label", "default_check", True)` to show labels |
-| `undo`, `redo` | history (`QtDraw` only) |
+| `undo`, `redo` | history |
 
 All methods are listed in [Usage from Python code](from_python.md), and more examples are in [Examples](example.md).

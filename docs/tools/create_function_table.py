@@ -8,7 +8,10 @@
 """
 Create function table for jupyterbook document.
 
-Run this to create "docs/src/function_table.md".
+Writes "docs/src/function_table.md" from the docstrings of the qtdraw package. It is run by `make -C docs build`
+before Jupyter Book, so the table is always up to date (the file is not kept in git).
+
+    python docs/tools/create_function_table.py
 """
 
 import os
@@ -150,9 +153,9 @@ def create_function_table(directory, file):
 
 # ==================================================
 if __name__ == "__main__":
-    from qtdraw.core.qtdraw_info import __top_dir__
+    top = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir, os.pardir))  # the repository.
 
-    directory = __top_dir__ + "qtdraw"
-    file = __top_dir__ + "docs/src/function_table.md"
+    directory = os.path.join(top, "qtdraw")  # the source, also when another qtdraw is installed.
+    file = os.path.join(top, "docs", "src", "function_table.md")
 
     create_function_table(directory, file)

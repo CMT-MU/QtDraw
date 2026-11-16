@@ -57,11 +57,7 @@ The look and feel of **QtDraw** can be changed in the `Preferences` dialog (`Edi
 All the objects can also be drawn from Python code or Jupyter Notebook.
 The example of Jupyter Notebook is given in [qtdraw.ipynb](examples/qtdraw.ipynb).
 See [API](from_python.md) in detail.
-Using this functionality, the background job can be performed.
-See the example in
-```{literalinclude} examples/background.py
-```
-The same thing is also simply done by
+Using this functionality, the background job can be performed: `create_qtdraw_file` writes a drawing to a file without a window.
 ```{literalinclude} examples/background_s.py
 ```
 
