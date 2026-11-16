@@ -34,6 +34,8 @@ class LogHandler(logging.Handler):
 
         Note:
             - if stream/text_widget is None, it is not used.
+            - the level and the format are set on this handler only, not on the root logger (no basicConfig), so
+              that the logging of other libraries in the process is not changed.
         """
         super().__init__()
 
@@ -41,8 +43,9 @@ class LogHandler(logging.Handler):
         fmt = "%(asctime)s | %(levelname)8s | %(message)s"
         date_fmt = "%Y-%m-%d %H:%M:%S"
         self.setLevel(level)
-        logging.basicConfig(level=level, format=fmt, datefmt=date_fmt, handlers=[self], encoding="utf-8")
+        self.setFormatter(logging.Formatter(fmt, datefmt=date_fmt))
         self.header = False
+        self.text_widget = None
 
         # set plain text widget.
         if text_widget is not None:
@@ -90,15 +93,37 @@ def start_logging(level=logging.DEBUG, stream=None, text_widget=None, hook=True)
 
     Note:
         - stream is True, sys.stderr is used.
+        - the root logger is changed only when the level is lower than its own (e.g. debug), and stop_logging()
+          restores it.
     """
     if stream is True:
         stream = sys.stderr
     log_handler = LogHandler(level=level, stream=stream, text_widget=text_widget)
-    logging.getLogger().addHandler(log_handler)
+    root = logging.getLogger()
+    root.addHandler(log_handler)
+    log_handler.root_level = None  # level of the root logger before, if it is changed.
+    if level < root.getEffectiveLevel():  # a lower level asked for, e.g. debug: let the records reach the handler.
+        log_handler.root_level = root.level
+        root.setLevel(level)
     if hook:
         ExceptionHook()
 
     return log_handler
+
+
+# ==================================================
+def stop_logging(log_handler):
+    """
+    Stop logging to a handler of start_logging(), and restore the level of the root logger if it was changed.
+
+    Args:
+        log_handler (LogHandler): log handler.
+    """
+    root = logging.getLogger()
+    root.removeHandler(log_handler)
+    if getattr(log_handler, "root_level", None) is not None:
+        root.setLevel(log_handler.root_level)
+        log_handler.root_level = None
 
 
 # ==================================================
@@ -118,7 +143,7 @@ class LogWidget(QWidget):
         Note:
             - if stream is True, sys.stderr is used.
             - if level is None, no logging.
-            - the log handler is removed from the root logger when the widget is deleted.
+            - the log handler is removed from the root logger when the widget is deleted (see stop_logging).
         """
         super().__init__(parent)
         self.log = QPlainTextEdit(self)
@@ -129,7 +154,7 @@ class LogWidget(QWidget):
         if level is not None:
             handler = start_logging(level, stream, self, hook)
             # stop logging to this widget when it is deleted.
-            self.destroyed.connect(lambda: logging.getLogger().removeHandler(handler))
+            self.destroyed.connect(lambda: stop_logging(handler))
 
         self.setWindowTitle(title)
         self.resize(640, 800)

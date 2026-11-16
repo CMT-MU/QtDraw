@@ -198,7 +198,7 @@ class QtDraw(Window):
         layout.setVerticalSpacing(5)
 
         # PyVista widget.
-        self.info_dialog = LogWidget(title="Information")
+        self.info_dialog = LogWidget(title="Information", level=None)  # messages only: warnings are in the Log window.
         txt = get_version_info()
         self.write_info(txt)
         self.pyvista_widget = PyVistaWidget(self)

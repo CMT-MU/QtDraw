@@ -16,6 +16,7 @@ import os
 import re
 import ast
 import inspect
+import logging
 import threading
 from collections import OrderedDict
 from pathlib import Path
@@ -408,7 +409,8 @@ class Window(QMainWindow):
         :meta private:
         """
         self.app = get_qt_application()
-        self.logger = LogWidget(level=level)
+        # warnings and errors are always recorded (#291); a lower level, e.g. debug, is recorded when asked for.
+        self.logger = LogWidget(level=min(level, logging.WARNING))
         super().__init__()
 
 
