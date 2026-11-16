@@ -77,7 +77,7 @@ The `e` key, or the `DataSet` button, opens the `DataSet` window: a table for ea
 | --- | --- | --- |
 | `name` | name of the group; its check box shows or hides the group | `untitled` |
 | `label` | label text; its check box shows the label | `label` (hidden) |
-| `margin` | space between the object and its label (pixels) | `3` |
+| `margin` | space between the object and its label (number of space characters) | `3` |
 | `position` | position in fractional coordinates | `[0,0,0]` |
 | `cell` | lattice translation | `[0,0,0]` |
 | `opacity` | from 0 (transparent) to 1 | `1.0` |
