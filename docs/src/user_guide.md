@@ -57,7 +57,7 @@ The `e` key, or the `DataSet` button, opens the `DataSet` window: a table for ea
 
 - Objects with the same `name` form a group. The check box of `name` shows or hides it.
 - Double-click a cell to edit it. A value that cannot be read is not accepted.
-- Right-click to insert, copy or remove a row.
+- Right-click to insert, copy or remove rows. Shift or Ctrl (Cmd on macOS) + click selects several rows, and `Delete` (also `Backspace` on macOS) removes the selected rows at once.
 - Right-click an object in the main panel to open its row, hide it or remove it.
 
 ### Values

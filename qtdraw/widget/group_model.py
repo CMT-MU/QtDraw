@@ -556,19 +556,40 @@ class GroupModel(QStandardItemModel):
     # ==================================================
     def action_remove_row(self, indexes):
         """
-        Slot for remove row action.
+        Slot for remove row action: remove all the given rows at once.
 
         Args:
-            indexes (list): list of index.
+            indexes (list): list of index (of any column; a group removes all its objects).
+
+        Note:
+            - a removal changes the rows after it, and a group of two objects becomes a single row when one of them
+              is removed. So the rows are found first, the objects in groups are removed from the last one, and
+              the groups at the end, also from the last one.
         """
-        if len(indexes) == 0:
+        groups = set()  # top-level rows to remove.
+        children = {}  # top-level row: rows of its objects to remove.
+        for index in indexes:
+            if not index.isValid():
+                continue
+            if index.parent().isValid():
+                children.setdefault(index.parent().row(), set()).add(index.row())
+            else:
+                groups.add(index.row())
+
+        for parent, rows in list(children.items()):
+            if parent in groups or len(rows) == self.rowCount(self.index(parent, 0)):  # the whole group.
+                groups.add(parent)
+                del children[parent]
+
+        if not groups and not children:
             return
 
-        indexes = [index for index in indexes if index.column() == 0]
-
         with self.batch():
-            for index in indexes:
-                self.remove_row(index)
+            for parent in sorted(children, reverse=True):
+                for row in sorted(children[parent], reverse=True):
+                    self.remove_row(self.index(row, 0, self.index(parent, 0)))
+            for row in sorted(groups, reverse=True):
+                self.remove_row(self.index(row, 0))
 
     # ==================================================
     # override.

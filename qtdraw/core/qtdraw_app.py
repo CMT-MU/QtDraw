@@ -14,6 +14,7 @@ This module provides application of QtDraw.
 import os
 import copy
 import importlib
+import sys
 import warnings
 from pathlib import Path
 import logging
@@ -108,6 +109,8 @@ def help_text():
     quit_key = QKeySequence(QKeySequence.Quit).toString(QKeySequence.NativeText)
     undo_key = QKeySequence(QKeySequence.Undo).toString(QKeySequence.NativeText)
     redo_key = QKeySequence(QKeySequence.Redo).toString(QKeySequence.NativeText)
+    select_key = "Shift or Cmd" if sys.platform == "darwin" else "Shift or Ctrl"
+    delete_key = "Delete or Backspace" if sys.platform == "darwin" else "Delete"
     return (
         "In the view:\n"
         "- Left drag: rotate. Shift + left drag: move. Wheel or right drag: zoom.\n"
@@ -115,7 +118,8 @@ def help_text():
         f"- {detail['data_edit_key']}: open the data table of all objects.\n"
         "\n"
         "In the data table:\n"
-        "- Right click: menu to create or copy an object.\n"
+        "- Right click: menu to create, copy or remove objects.\n"
+        f"- {select_key} + click: select several rows. {delete_key}: remove the selected rows.\n"
         "- Esc: clear the selection. Up, Down: move the selection.\n"
         "\n"
         f"{open_key}: open a file. {save_key}: save. {quit_key}: quit.\n"
