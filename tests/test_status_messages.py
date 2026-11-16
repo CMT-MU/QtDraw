@@ -11,6 +11,8 @@ stay on the right (#292).
 """
 
 import logging
+import warnings
+from pathlib import Path
 
 import pytest
 from PySide6.QtTest import QTest
@@ -62,13 +64,34 @@ def test_details_of_a_message_are_only_in_the_info_window(app):
 
 
 # ==================================================
+def log_from_qtdraw(level, text):
+    """
+    A log record made by the code of the qtdraw package.
+    """
+    import qtdraw
+
+    path = str(Path(qtdraw.__file__).resolve().parent / "core" / "qtdraw_app.py")
+    logging.getLogger().handle(logging.LogRecord("root", level, path, 1, text, None, None))
+
+
+# ==================================================
 def test_warnings_and_errors_are_told(app):
-    logging.warning("something to look at\nwith details")
+    log_from_qtdraw(logging.WARNING, "something to look at\nwith details")
     assert message(app) == "Warning: something to look at (see Window > Log)"
-    logging.error("something wrong")
+    log_from_qtdraw(logging.ERROR, "something wrong")
     assert message(app) == "Error: something wrong (see Window > Log)"
-    logging.info("not told")
+    log_from_qtdraw(logging.INFO, "not told")
     assert "not told" not in message(app)
+
+
+# ==================================================
+def test_warnings_of_others_are_only_in_the_log(app):
+    app.show_message("kept")
+    logging.error("Couldn't build the shader program.")  # e.g. VTK with a software renderer: not of QtDraw.
+    warnings.warn("a deprecation of a library", DeprecationWarning)  # a Python warning.
+    assert message(app) == "kept"
+    log = app.logger.log.toPlainText()
+    assert "Couldn't build the shader program." in log and "a deprecation of a library" in log
 
 
 # ==================================================

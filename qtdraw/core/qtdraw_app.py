@@ -135,15 +135,23 @@ MESSAGE_TIME = 8000  # time [ms] that a message stays in the message field at th
 # ==================================================
 class _MessageHandler(logging.Handler):
     """
-    Log handler that sends warnings and errors to the message field of a window (by a signal: logging may run in
-    another thread).
+    Log handler that sends the warnings and errors of QtDraw to the message field of a window (by a signal: logging
+    may run in another thread).
+
+    Note:
+        - only the records of the qtdraw package are shown: others, e.g. VTK errors of a software renderer or Python
+          warnings, can come often, and stay in the Log window only.
     """
+
+    _package = str(Path(__file__).resolve().parents[1])  # the qtdraw package.
 
     def __init__(self, signal):
         super().__init__(level=logging.WARNING)
         self._signal = signal
 
     def emit(self, record):
+        if getattr(record, "python_warning", False) or not str(Path(record.pathname).resolve()).startswith(self._package):
+            return
         try:
             text = record.getMessage().strip().splitlines()
             self._signal.emit(f"{record.levelname.capitalize()}: {text[0] if text else ''} (see Window > Log)")
@@ -176,7 +184,9 @@ class QtDraw(Window):
         super().__init__(log_id[level])
         self.debug = level == "debug"
 
-        warnings.showwarning = lambda message, category, filename, lineno, file=None, line=None: logging.warning(str(message))
+        warnings.showwarning = lambda message, category, filename, lineno, file=None, line=None: logging.warning(
+            str(message), extra={"python_warning": True}  # in the Log window, not in the message field.
+        )
         warnings.filterwarnings("default", category=DeprecationWarning)
 
         self._is_view_updating = False
