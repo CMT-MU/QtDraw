@@ -6,7 +6,7 @@ orphan: true
 
 英語版は[こちら](user_guide.md)です。
 
-QtDraw を使った MultiPie の実践的なチュートリアルは [Tutorial via QtDraw](tutorial_multipie_qtdraw_ja.pdf) にあります。
+[QtDraw を使った MultiPie の実践的なチュートリアル](tutorial_multipie_qtdraw_ja.pdf)（PDF）があります。
 
 このガイドでは、**QtDraw** の図がどう作られているかを説明します。図の構成、データ表にある各オブジェクト、MultiPie を使った描画、Python コードからの使い方です。
 メニュー、マウス、キーの操作は [はじめに](getting_started_ja.md) に、すべてのメソッドは [Python のコードからの利用](from_python_ja.md) にまとめてあります。
