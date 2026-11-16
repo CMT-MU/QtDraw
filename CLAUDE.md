@@ -26,13 +26,14 @@ pytest -n auto                               # all tests (testpaths = tests), in
 pytest tests/test_undo.py::test_name -v      # one test
 black --line-length 130 qtdraw tests         # formatting (line length set in pyproject.toml)
 qtdraw [file]                                # run the app (.qtdw, or .cif / .vesta / .xsf)
-make -C docs build                           # documentation (Jupyter Book); `upload` publishes to gh-pages
+make -C docs build                           # documentation: the function table, then Jupyter Book; `upload` publishes to gh-pages
 ```
 
 - `tests/conftest.py` sets `QT_QPA_PLATFORM=offscreen` and keeps QSettings and the MathJax SVG cache in temporary directories. Its autouse fixture **fails any test that leaves a window open**, because a leftover window crashes later off-screen tests on Linux/Mesa (#197). Close what a test opens. After each test, `gui_helpers.process_deleted` processes the pending events and the deferred deletions, so that the events a test leaves are handled in its own teardown, not at the setup of the next test (an occasional access violation on Windows in CI happened there). The Windows CI job keeps minidumps of crashed test processes (artifact `crash-dumps-*`) and prints their native stacks.
 - GUI tests check that the side panel matches the document after each test. Mark a test `@pytest.mark.panel_not_checked(reason)` only when it leaves the panel out of date on purpose (see `tests/gui_helpers.py`).
 - Visual regression (`tests/test_visual.py`) compares against reference images in `tests/data/visual/<system>-vtk<version>/`. Without references for the current system the test is skipped. `QTDRAW_UPDATE_VISUAL=1` writes them (check them before committing), `QTDRAW_VISUAL_OUTPUT=<dir>` saves the images of failures, and `QTDRAW_VISUAL_REQUIRE=1` fails instead of skipping.
 - File compatibility (`tests/test_file_compat.py`) checks old `.qtdw` files in `tests/data/compat/` against `expected.json`, which `make_expected.py` writes from the *released* version (see its docstring).
+- `docs/src/function_table.md` (Function Summary in the API reference) is generated from the docstrings by `docs/tools/create_function_table.py`, which `make -C docs build` runs first; it is not kept in git. Build the docs with `make`, not `jb build` alone.
 - `others/tests/` holds older manual and interactive scripts. pytest does not collect them.
 - CI (`.github/workflows/test.yml`) runs on Ubuntu, macOS and Windows, plus a job pinned to the minimum PySide6/pyvista/pyvistaqt versions. Those minimums must stay in sync with `pyproject.toml`. It also installs the built wheel and sdist and runs `tests/install_check.py`. `release.yml` publishes to PyPI when a GitHub release is published. The tag must be `v` + `__version__` in `qtdraw/core/qtdraw_info.py`.
 
