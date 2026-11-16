@@ -82,7 +82,7 @@ The `e` key, or the `DataSet` button, opens the `DataSet` window: a table for ea
 | `cell` | lattice translation | `[0,0,0]` |
 | `opacity` | from 0 (transparent) to 1 | `1.0` |
 
-In Python, these are keyword arguments of every `add_*` method, e.g. `win.add_site(name="Cu", label="Cu1", position="[0,0,0]")`.
+In Python, these are keyword arguments of every `add_*` method, e.g. `win.add_site(name="Cu", label="Cu1", position="[0,0,0]")`. The check boxes of `name` and `label` are `show` and `show_label`, e.g. `win.add_site(show=False)` for a hidden object, `win.add_site(label="Cu1", show_label=True)` for a shown label.
 The other columns of each object follow.
 
 ### Points and arrows
@@ -464,6 +464,37 @@ def draw(widget):
 create_qtdraw_file(filename="chain.qtdw", callback=draw)
 ```
 
+### From a drawing to Python code
+
+`File` > `Export as Python...` writes the current drawing as Python code that draws the same, e.g. to start a script from a drawing made by hand. `win.to_python()` returns the code, and `win.save_python("drawing.py")` saves it.
+
+```python
+win.save_python("graphene.py")
+```
+
+writes, for example,
+
+```python
+import sys
+
+from qtdraw import QtDraw
+
+win = QtDraw()
+win.set_model('graphene')
+win.mp_set_group('D6h^1')
+win.set_crystal('hexagonal')
+win.set_unit_cell({'a': 2.46, 'b': 2.46, 'c': 6.7, 'alpha': 90.0, 'beta': 90.0, 'gamma': 120.0})
+
+# site.
+win.add_site(label='C1', show_label=True, position='[1/3,2/3,0]', size=0.2)
+...
+```
+
+- The code is made from the current state: the objects, the unit cell, the range, repeat and clip, the view settings, the model name and the MultiPie group. The camera (zoom and rotation), the preferences and the MultiPie dialog are not written.
+- Only the values that differ from the defaults are written. The objects drawn by MultiPie are written one by one, after `mp_set_group`.
+- With repeat, only the objects of the home cell are written, and `set_repeat(True)` repeats them.
+- An isosurface whose data is not in a file is not written (a comment tells it).
+
 ### Useful methods
 
 | method | does |
@@ -473,6 +504,7 @@ create_qtdraw_file(filename="chain.qtdw", callback=draw)
 | `set_view`, `set_parallel_projection`, `set_axis`, `set_cell`, `set_grid` | view |
 | `set_model` | model name |
 | `load`, `save` | files |
+| `to_python`, `save_python` | Python code of the drawing |
 | `save_screenshot` | image of the drawing (`.png`, `.bmp`, `.tif`, `.tiff`, `.svg`, `.eps`, `.ps`, `.pdf`), as `File` > `Screenshot` |
 | `clear_data` | remove all objects |
 | `update_preference` | preferences, e.g. `update_preference("label", "default_check", True)` to show labels |
