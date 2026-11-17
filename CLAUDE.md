@@ -12,10 +12,10 @@ QtDraw is a 3D drawing tool for molecules and crystals, built on PyVista/pyvista
 
 ### MultiPie Ver.2 and Ver.3
 
-- `develop` is QtDraw 3.4 (version `3.4.0.devN`), which works with MultiPie Ver.2 from 2.5 and with Ver.3 (`multipie>=2.5,<4`; MultiPie's branch `develop-v3`). QtDraw 3.3 (for Ver.2 only) is not developed any more; its releases remain as the tags `v3.3.x`. The former development branch `develop-v3.4` was merged into `develop` and deleted.
+- `develop` is QtDraw 3.4 (version `3.4.0.devN`), which works with MultiPie Ver.2 from 2.5 and with Ver.3 (`multipie>=2.5,<4`; Ver.3 is released as MultiPie 3.0.0). QtDraw 3.3 (for Ver.2 only) is not developed any more; its releases remain as the tags `v3.3.x`. The former development branch `develop-v3.4` was merged into `develop` and deleted.
 - The MultiPie requirement is in `pyproject.toml` and in `MULTIPIE_REQUIREMENT`, `MULTIPIE_VERSION` and `MULTIPIE_RANGE` (`qtdraw/util/util.py`); keep them in sync. QtDraw uses only the parts of MultiPie that are the same in both (`Group`, `harmonics_decomposition`, `convert_mp_alias`, `multipole_rank`); a change that needs Ver.3 must keep Ver.2 working, or raise the lower bound.
-- CI (`.github/workflows/test.yml`) runs the job with the minimum versions on MultiPie 2.5 from PyPI, and the other jobs on Ver.3, which is not on PyPI yet, from MultiPie's `develop-v3` with git (on all OS: the names of MultiPie's data files have no `:`, so git on Windows can check them out). `docs.yml` also uses Ver.3. The check of the built wheel and sdist installs MultiPie from PyPI, as users do. When MultiPie Ver.3 is released, install it from PyPI instead of git.
-- Locally, either MultiPie works: e.g. `pip install -e ".[dev]"` (MultiPie 2.5 from PyPI), or `pip install -e <MultiPie checkout of develop-v3>` first for Ver.3.
+- CI (`.github/workflows/test.yml`) runs the job with the minimum versions on MultiPie 2.5, and the other jobs on the latest MultiPie (Ver.3), both from PyPI. `docs.yml` also uses Ver.3. The check of the built wheel and sdist installs MultiPie from PyPI, as users do.
+- Locally, either MultiPie works: `pip install -e ".[dev]"` installs the latest (Ver.3), and `pip install "multipie~=2.5.0"` gives Ver.2.
 
 ## Commands
 
