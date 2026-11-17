@@ -80,12 +80,6 @@ A Japanese version is [here](install_ja.md).
     pip install -U "multipie>=2.5,<4"
     ```
 
-    Until MultiPie Ver.3 is released, install it from its development branch to use it:
-
-    ```bash
-    pip install "git+https://github.com/CMT-MU/MultiPie.git@develop-v3"
-    ```
-
 4. Associate QtDraw file (**.qtdw**) to the application
 
     It is useful to associate with the following application with `.qtdw`, `.cif`, `.vesta`, and `.xsf` extensions.
