@@ -84,12 +84,6 @@ orphan: true
     pip install -U "multipie>=2.5,<4"
     ```
 
-    MultiPie Ver.3 を使うには、リリースされるまではその開発ブランチからインストールします：
-
-    ```bash
-    pip install "git+https://github.com/CMT-MU/MultiPie.git@develop-v3"
-    ```
-
 4. QtDraw のファイル（**.qtdw**）をアプリケーションに関連づけます
 
     `.qtdw`、`.cif`、`.vesta`、`.xsf` の拡張子を次のアプリケーションに関連づけておくと便利です。
