@@ -1,0 +1,644 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>はじめに &#8212; QtDraw</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=6a604523" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=8d1e04a5" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
+
+    <script src="../_static/documentation_options.js?v=a8e58a58"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script data-sd-tabs-storage-prefix="sphinx-design-tab-id-" src="../_static/design-tabs.js?v=fcb327ea"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'src/getting_started_ja';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <script src="../_static/custom.js?v=f6c2dbb1"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../_static/searchtools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../README.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/qtdraw_logo.png" class="logo__image only-light" alt="QtDraw - Home"/>
+    <img src="../_static/qtdraw_logo.png" class="logo__image only-dark pst-js-only" alt="QtDraw - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installing QtDraw</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="user_guide.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="example.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="from_python.html">Usage from Python code</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">API reference</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="api_summary.html">Module summary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_core.html">Core</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_multipie.html">MultiPie</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_parser.html">Parser</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_script.html">Script</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_util.html">Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_widget.html">Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="function_table.html">Function Summary</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/CMT-MU/QtDraw.git" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/CMT-MU/QtDraw.git/edit/main/docs/src/getting_started_ja.md" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/CMT-MU/QtDraw.git/issues/new?title=Issue%20on%20page%20%2Fsrc/getting_started_ja.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>はじめに</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">メインウィンドウ</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">オブジェクトの作成と編集</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">マウスとキー</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">環境設定</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#python">Python のコードからのオブジェクトの作成</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1>はじめに<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<p>英語版は<a class="reference internal" href="getting_started.html"><span class="std std-doc">こちら</span></a>です。</p>
+<section id="id2">
+<h2>メインウィンドウ<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<p><strong>QtDraw</strong> のメインウィンドウは次のとおりで、メインパネルとコントロールパネルがあります。</p>
+<p><img alt="sample.jpg" src="../_images/sample.jpg" /></p>
+<p>ウィンドウ下部の欄には、左側に短いメッセージが数秒間表示されます（例：ファイルの保存、描けなかったオブジェクト、undo、MultiPie の群、warning）。右側にはバージョンが表示されます。メッセージは <code class="docutils literal notranslate"><span class="pre">Info</span></code> ウィンドウにも、warning と error は <code class="docutils literal notranslate"><span class="pre">Log</span></code> ウィンドウにも残ります（<code class="docutils literal notranslate"><span class="pre">Window</span></code> メニュー）。</p>
+</section>
+<section id="id3">
+<h2>オブジェクトの作成と編集<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<p>これらのオブジェクトを描くには、<code class="docutils literal notranslate"><span class="pre">e</span></code> キーか右のパネルの <code class="docutils literal notranslate"><span class="pre">DataSet</span></code> ボタンを押します。すると、次のように <code class="docutils literal notranslate"><span class="pre">DataSet</span></code> ウィンドウが表示されます。</p>
+<p><img alt="dataset.jpg" src="../_images/dataset.jpg" /></p>
+<p><code class="docutils literal notranslate"><span class="pre">DataSet</span></code> ウィンドウでは、タブでオブジェクトの種類を選び、各タブで右クリックのコンテキストメニューからオブジェクトを挿入、コピー、削除できます。最も簡単なのは、まずデフォルト値でオブジェクトを作り、そのあと自由に編集する方法です。</p>
+<p>メインパネルでオブジェクトを右クリックするとコンテキストメニューが表示され、そのオブジェクトを削除、非表示にしたり、開いたりできます。</p>
+</section>
+<section id="id4">
+<h2>マウスとキー<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<p>メニューバーの <code class="docutils literal notranslate"><span class="pre">Help</span></code> &gt; <code class="docutils literal notranslate"><span class="pre">Mouse</span> <span class="pre">and</span> <span class="pre">Keys</span></code> にも同じまとめが表示されます。</p>
+<p>メインパネルでは：</p>
+<ul class="simple">
+<li><p>左ドラッグ：回転。Shift + 左ドラッグ：移動。ホイールまたは右ドラッグ：ズーム。</p></li>
+<li><p>オブジェクトの上で（ドラッグせずに）右クリック：そのオブジェクトを <code class="docutils literal notranslate"><span class="pre">DataSet</span></code> ウィンドウで開く、非表示にする、削除するためのコンテキストメニュー。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">e</span></code>：<code class="docutils literal notranslate"><span class="pre">DataSet</span></code> ウィンドウを開きます。</p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">DataSet</span></code> ウィンドウでは：</p>
+<ul class="simple">
+<li><p>右クリック：オブジェクトを挿入、コピー、削除するためのコンテキストメニュー。</p></li>
+<li><p>Shift または Ctrl（macOS では Cmd）+ クリック：複数の行を選びます。<code class="docutils literal notranslate"><span class="pre">Delete</span></code>（macOS では <code class="docutils literal notranslate"><span class="pre">Backspace</span></code> も）：選んだ行を削除します。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Esc</span></code>：選択を解除します。<code class="docutils literal notranslate"><span class="pre">Up</span></code>、<code class="docutils literal notranslate"><span class="pre">Down</span></code>：選択を移動します。</p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">File</span></code> メニューでは、ファイルを開く (Ctrl+O、macOS では Cmd+O)、最近の 10 個のファイルの一つを開き直す (<code class="docutils literal notranslate"><span class="pre">Open</span> <span class="pre">Recent</span></code>)、保存する (Ctrl+S、Cmd+S)、別の名前で保存する (<code class="docutils literal notranslate"><span class="pre">Save</span> <span class="pre">As</span></code>、Ctrl+Shift+S、Cmd+Shift+S)、スクリーンショットを保存する、図を Python コードとして書き出す (<code class="docutils literal notranslate"><span class="pre">Export</span> <span class="pre">as</span> <span class="pre">Python</span></code>)、終了する (Ctrl+Q、Cmd+Q) ことができます。<code class="docutils literal notranslate"><span class="pre">Save</span></code> は最後に開いたか保存したファイルに書き出します。初めて保存するときや、CIF、VESTA、XSF のファイルを読み込んだあとは、ファイル名を尋ねます。保存していない変更があるままウィンドウを閉じると、QtDraw は保存するかどうかを尋ねます。変更がなければ、すぐに閉じます。</p>
+<p><code class="docutils literal notranslate"><span class="pre">Edit</span></code> メニューでは、オブジェクト、単位胞、範囲、MultiPie の群の変更を元に戻す (Ctrl+Z、macOS では Cmd+Z)、やり直す（プラットフォームによって Ctrl+Y または Ctrl+Shift+Z、macOS では Cmd+Shift+Z）ことができます。カメラ、表示の設定、環境設定は、元に戻す・やり直すの対象になりません。ファイルを開くと新しい履歴が始まり、保存しても履歴は保たれます。<code class="docutils literal notranslate"><span class="pre">Clear</span></code> は確認なしにすべてのオブジェクトを削除しますが、元に戻すことができます。<code class="docutils literal notranslate"><span class="pre">DataSet</span></code> は（<code class="docutils literal notranslate"><span class="pre">e</span></code> キーと同じく）すべてのオブジェクトの表を開き、<code class="docutils literal notranslate"><span class="pre">Preferences</span></code> は環境設定を開きます（macOS ではアプリケーションメニューにあります）。</p>
+<p><code class="docutils literal notranslate"><span class="pre">View</span></code> メニューでは、パネルと同じように、視点の方向を設定し（+x、+y、+z、-x、-y、-z に Ctrl+1 から Ctrl+6、デフォルトに Ctrl+0。macOS では Cmd）、平行投影、グリッド、スカラーバー、クリップ、繰り返しを切り替え、繰り返しなしに変換し、軸と単位胞の表示を選びます。</p>
+<p><code class="docutils literal notranslate"><span class="pre">Window</span></code> メニューは、QtDraw のメッセージ (<code class="docutils literal notranslate"><span class="pre">Info</span></code>) と、warning と error を時刻付きで記録したログ (<code class="docutils literal notranslate"><span class="pre">Log</span></code>。warning では自動で開かないので、思いどおりに描かれないときに確認してください)、そして描画を確認するための内部データ（カメラ、すべてのオブジェクトの生データ、アクターの名前、状態、環境設定。<code class="docutils literal notranslate"><span class="pre">Camera</span></code>、<code class="docutils literal notranslate"><span class="pre">Data</span></code>、<code class="docutils literal notranslate"><span class="pre">Actor</span></code>、<code class="docutils literal notranslate"><span class="pre">Status</span></code>、<code class="docutils literal notranslate"><span class="pre">Preference</span></code>）を表示します。</p>
+<p><code class="docutils literal notranslate"><span class="pre">Help</span></code> メニューは、マウスとキーの操作を表示し、このドキュメントと問題を報告するためのページを開き、バージョンの情報を表示します。</p>
+<p>単位胞と表示の設定の下にある <code class="docutils literal notranslate"><span class="pre">DataSet</span></code> ボタンと <code class="docutils literal notranslate"><span class="pre">MultiPie</span></code> ボタンは、<code class="docutils literal notranslate"><span class="pre">DataSet</span></code> ウィンドウと MultiPie のダイアログを開きます。MultiPie がない場合は、<code class="docutils literal notranslate"><span class="pre">MultiPie</span></code> ボタンから pip でインストールできます（出力は <code class="docutils literal notranslate"><span class="pre">Log</span></code> ウィンドウに表示されます）。それが失敗した場合は、手でインストールするためのコマンドを表示します。MultiPie を使った描画は、MultiPie がインストールされているときだけ開けます。環境設定は <code class="docutils literal notranslate"><span class="pre">Edit</span></code> &gt; <code class="docutils literal notranslate"><span class="pre">Preferences</span></code> に、バージョンの情報は <code class="docutils literal notranslate"><span class="pre">Help</span></code> &gt; <code class="docutils literal notranslate"><span class="pre">About</span> <span class="pre">QtDraw</span></code> にあります（macOS ではどちらもアプリケーションメニューにあります）。</p>
+<p>エラーが起きると、短いメッセージが表示されます。トレースバックは <code class="docutils literal notranslate"><span class="pre">Show</span> <span class="pre">Details...</span></code> の中とログにあります。問題を報告するときは、それを含めてください。</p>
+</section>
+<section id="id5">
+<h2>環境設定<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
+<p><strong>QtDraw</strong> の見た目と使い勝手は、次のように <code class="docutils literal notranslate"><span class="pre">Preferences</span></code> ダイアログ（<code class="docutils literal notranslate"><span class="pre">Edit</span></code> &gt; <code class="docutils literal notranslate"><span class="pre">Preferences</span></code>。macOS ではアプリケーションメニューにあります）で変更できます。</p>
+<a class="reference internal image-reference" href="../_images/preference.jpg"><img alt="preference.jpg" src="../_images/preference.jpg" style="width: 300px;" />
+</a>
+</section>
+<section id="python">
+<h2>Python のコードからのオブジェクトの作成<a class="headerlink" href="#python" title="Link to this heading">#</a></h2>
+<p>すべてのオブジェクトは、Python のコードや Jupyter Notebook からも描けます。
+Jupyter Notebook の例は <a class="reference internal" href="examples/qtdraw.html"><span class="std std-doc">qtdraw.ipynb</span></a> にあります。
+詳しくは <a class="reference internal" href="from_python_ja.html"><span class="std std-doc">API</span></a> を参照してください。
+この機能を使うと、バックグラウンドでの処理ができます。<code class="docutils literal notranslate"><span class="pre">create_qtdraw_file</span></code> は、ウィンドウを出さずに図をファイルに書きます。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#</span>
+<span class="c1"># background_s.py</span>
+<span class="c1">#</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_qtdraw_file</span>
+
+
+<span class="c1"># draw objects by using widget.</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">draw</span><span class="p">(</span><span class="n">widget</span><span class="p">):</span>
+    <span class="n">widget</span><span class="o">.</span><span class="n">set_cell</span><span class="p">(</span><span class="s2">"off"</span><span class="p">)</span>  <span class="c1"># cell off.</span>
+
+    <span class="c1"># add objects.</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">32</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">i</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">8</span><span class="p">)</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">i</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">8</span><span class="p">)</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="n">i</span> <span class="o">*</span> <span class="mf">0.05</span>
+        <span class="n">widget</span><span class="o">.</span><span class="n">add_site</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="sa">f</span><span class="s2">"[</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">,</span><span class="si">{</span><span class="n">y</span><span class="si">}</span><span class="s2">,</span><span class="si">{</span><span class="n">z</span><span class="si">}</span><span class="s2">]"</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+
+    <span class="n">widget</span><span class="o">.</span><span class="n">set_view</span><span class="p">()</span>
+
+
+<span class="c1"># draw and write file.</span>
+<span class="n">create_qtdraw_file</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s2">"output.qtdw"</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">draw</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>ほかの例については、<a class="reference internal" href="example_ja.html"><span class="std std-doc">例のページ</span></a>を参照してください。</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./src"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">メインウィンドウ</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">オブジェクトの作成と編集</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">マウスとキー</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">環境設定</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#python">Python のコードからのオブジェクトの作成</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Hiroaki Kusunose
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2021-.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

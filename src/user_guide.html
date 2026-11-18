@@ -1,0 +1,1562 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>User Guide &#8212; QtDraw</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=6a604523" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=8d1e04a5" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
+
+    <script src="../_static/documentation_options.js?v=a8e58a58"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script data-sd-tabs-storage-prefix="sphinx-design-tab-id-" src="../_static/design-tabs.js?v=fcb327ea"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"loader": {"load": ["[tex]/physics"]}, "tex": {"packages": {"[+]": ["physics"]}}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'src/user_guide';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <script src="../_static/custom.js?v=f6c2dbb1"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Examples" href="example.html" />
+    <link rel="prev" title="Getting Started" href="getting_started.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../_static/searchtools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../README.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/qtdraw_logo.png" class="logo__image only-light" alt="QtDraw - Home"/>
+    <img src="../_static/qtdraw_logo.png" class="logo__image only-dark pst-js-only" alt="QtDraw - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installing QtDraw</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="example.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="from_python.html">Usage from Python code</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">API reference</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="api_summary.html">Module summary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_core.html">Core</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_multipie.html">MultiPie</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_parser.html">Parser</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_script.html">Script</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_util.html">Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_widget.html">Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="function_table.html">Function Summary</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/CMT-MU/QtDraw.git" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/CMT-MU/QtDraw.git/edit/main/docs/src/user_guide.md" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/CMT-MU/QtDraw.git/issues/new?title=Issue%20on%20page%20%2Fsrc/user_guide.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>User Guide</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">1. Overview</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-drawing">A drawing</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#position-of-an-object">Position of an object</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#range-repeat-and-clip">Range, repeat and clip</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-tables">2. Data tables</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-dataset-window">The DataSet window</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#values">Values</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#columns-common-to-all-objects">Columns common to all objects</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#points-and-arrows">Points and arrows</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#functions-on-a-sphere">Functions on a sphere</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#shapes">Shapes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#curves">Curves</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#texts">Texts</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data">Data</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#drawing-with-multipie">3. Drawing with MultiPie</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-multipie-dialog">The MultiPie dialog</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-give-a-site-a-bond-a-vector-and-an-orbital">How to give a site, a bond, a vector and an orbital</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#from-python">From Python</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#usage-from-python-code">4. Usage from Python code</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#two-ways">Two ways</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-script">A script</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#without-a-window">Without a window</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#from-a-drawing-to-python-code">From a drawing to Python code</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#useful-methods">Useful methods</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="user-guide">
+<h1>User Guide<a class="headerlink" href="#user-guide" title="Link to this heading">#</a></h1>
+<p>A Japanese version is <a class="reference internal" href="user_guide_ja.html"><span class="std std-doc">here</span></a>.</p>
+<p>A practical tutorial of MultiPie via QtDraw is given by <a class="reference download internal" download="" href="../_downloads/548c90b4bdf6edd064eb37e6ce67e7d4/tutorial_multipie_qtdraw.pdf"><span class="xref download myst">Tutorial via QtDraw</span></a></p>
+<p>This guide explains how a drawing of <strong>QtDraw</strong> is made: what it consists of, the objects in the data tables, the drawing with MultiPie, and the use from Python code.
+The menus, the mouse and the keys are summarized in <a class="reference internal" href="getting_started.html"><span class="std std-doc">Getting Started</span></a>, and all the methods in <a class="reference internal" href="from_python.html"><span class="std std-doc">Usage from Python code</span></a>.</p>
+<section id="overview">
+<h2>1. Overview<a class="headerlink" href="#overview" title="Link to this heading">#</a></h2>
+<section id="a-drawing">
+<h3>A drawing<a class="headerlink" href="#a-drawing" title="Link to this heading">#</a></h3>
+<p>A drawing consists of three parts, which are saved together in a <code class="docutils literal notranslate"><span class="pre">.qtdw</span></code> file.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>part</p></th>
+<th class="head"><p>contents</p></th>
+<th class="head"><p>where to change</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>objects</p></td>
+<td><p>sites, bonds, vectors, orbitals, … (19 types)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">DataSet</span></code> window (data tables)</p></td>
+</tr>
+<tr class="row-odd"><td><p>unit cell</p></td>
+<td><p>crystal system, <code class="docutils literal notranslate"><span class="pre">a</span></code>, <code class="docutils literal notranslate"><span class="pre">b</span></code>, <code class="docutils literal notranslate"><span class="pre">c</span></code>, <code class="docutils literal notranslate"><span class="pre">alpha</span></code>, <code class="docutils literal notranslate"><span class="pre">beta</span></code>, <code class="docutils literal notranslate"><span class="pre">gamma</span></code>, origin</p></td>
+<td><p>side panel</p></td>
+</tr>
+<tr class="row-even"><td><p>view</p></td>
+<td><p>range, repeat, clip, view direction, axis and cell display</p></td>
+<td><p>side panel, <code class="docutils literal notranslate"><span class="pre">View</span></code> menu</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>A material file (<code class="docutils literal notranslate"><span class="pre">.cif</span></code>, <code class="docutils literal notranslate"><span class="pre">.vesta</span></code>, <code class="docutils literal notranslate"><span class="pre">.xsf</span></code>) can also be opened: it is converted to a drawing of sites and bonds (and the grid data of an <code class="docutils literal notranslate"><span class="pre">.xsf</span></code> file).</p>
+</section>
+<section id="position-of-an-object">
+<h3>Position of an object<a class="headerlink" href="#position-of-an-object" title="Link to this heading">#</a></h3>
+<p>Every object is placed at <code class="docutils literal notranslate"><span class="pre">position</span></code> + <code class="docutils literal notranslate"><span class="pre">cell</span></code>:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">position</span></code>: a point in the <strong>fractional coordinates</strong> of the unit cell, e.g. <code class="docutils literal notranslate"><span class="pre">[1/2,1/2,0]</span></code>;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cell</span></code>: a lattice translation <code class="docutils literal notranslate"><span class="pre">[n1,n2,n3]</span></code>, <code class="docutils literal notranslate"><span class="pre">[0,0,0]</span></code> for the home cell.</p></li>
+</ul>
+<p>A direction of an object (of a bond, a vector, …) is given in the fractional or in the Cartesian coordinates, chosen by its <code class="docutils literal notranslate"><span class="pre">cartesian</span></code> column.</p>
+</section>
+<section id="range-repeat-and-clip">
+<h3>Range, repeat and clip<a class="headerlink" href="#range-repeat-and-clip" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">range</span></code> (<code class="docutils literal notranslate"><span class="pre">lower</span></code>, <code class="docutils literal notranslate"><span class="pre">upper</span></code>): the region to draw, in fractional coordinates.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">repeat</span></code>: draws every object also at all the lattice translations within the range.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">clip</span></code>: cuts away the parts outside the range.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">non-repeat</span></code> (<code class="docutils literal notranslate"><span class="pre">View</span></code> menu): turns the repeated objects back into the objects of the home cell.</p></li>
+</ul>
+<p>For example, two sites in a cubic cell, repeated over 2 × 2 × 1 cells:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw</span><span class="w"> </span><span class="kn">import</span> <span class="n">QtDraw</span>
+
+<span class="n">win</span> <span class="o">=</span> <span class="n">QtDraw</span><span class="p">()</span>
+<span class="n">win</span><span class="o">.</span><span class="n">add_site</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="s2">"[0,0,0]"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"red"</span><span class="p">)</span>
+<span class="n">win</span><span class="o">.</span><span class="n">add_site</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="s2">"[1/2,1/2,1/2]"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"blue"</span><span class="p">)</span>
+<span class="n">win</span><span class="o">.</span><span class="n">set_range</span><span class="p">(</span><span class="n">lower</span><span class="o">=</span><span class="s2">"[0,0,0]"</span><span class="p">,</span> <span class="n">upper</span><span class="o">=</span><span class="s2">"[2,2,1]"</span><span class="p">)</span>
+<span class="n">win</span><span class="o">.</span><span class="n">set_repeat</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="data-tables">
+<h2>2. Data tables<a class="headerlink" href="#data-tables" title="Link to this heading">#</a></h2>
+<section id="the-dataset-window">
+<h3>The DataSet window<a class="headerlink" href="#the-dataset-window" title="Link to this heading">#</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">e</span></code> key, or the <code class="docutils literal notranslate"><span class="pre">DataSet</span></code> button, opens the <code class="docutils literal notranslate"><span class="pre">DataSet</span></code> window: a table for each type of object, in tabs.</p>
+<ul class="simple">
+<li><p>Objects with the same <code class="docutils literal notranslate"><span class="pre">name</span></code> form a group. The check box of <code class="docutils literal notranslate"><span class="pre">name</span></code> shows or hides it.</p></li>
+<li><p>Double-click a cell to edit it. A value that cannot be read is not accepted.</p></li>
+<li><p>Right-click to insert, copy or remove rows. Shift or Ctrl (Cmd on macOS) + click selects several rows, and <code class="docutils literal notranslate"><span class="pre">Delete</span></code> (also <code class="docutils literal notranslate"><span class="pre">Backspace</span></code> on macOS) removes the selected rows at once.</p></li>
+<li><p>Right-click an object in the main panel to open its row, hide it or remove it.</p></li>
+</ul>
+</section>
+<section id="values">
+<h3>Values<a class="headerlink" href="#values" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>kind</p></th>
+<th class="head"><p>example</p></th>
+<th class="head"><p>note</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>vector</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">[1/2,0,0]</span></code>, <code class="docutils literal notranslate"><span class="pre">[sqrt(3)/2,1/2,0]</span></code></p></td>
+<td><p>numbers or expressions</p></td>
+</tr>
+<tr class="row-odd"><td><p>polynomial</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">x*y</span></code>, <code class="docutils literal notranslate"><span class="pre">3z**2-r**2</span></code></p></td>
+<td><p>in <code class="docutils literal notranslate"><span class="pre">x</span></code>, <code class="docutils literal notranslate"><span class="pre">y</span></code>, <code class="docutils literal notranslate"><span class="pre">z</span></code> and <code class="docutils literal notranslate"><span class="pre">r</span></code> (= <span class="math notranslate nohighlight">\(\sqrt{x^2+y^2+z^2}\)</span>)</p></td>
+</tr>
+<tr class="row-even"><td><p>color</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">red</span></code>, <code class="docutils literal notranslate"><span class="pre">darkseagreen</span></code></p></td>
+<td><p>a color name</p></td>
+</tr>
+<tr class="row-odd"><td><p>colormap</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">coolwarm</span></code>, <code class="docutils literal notranslate"><span class="pre">Wistia</span></code></p></td>
+<td><p>for an orbital, a stream or an isosurface, a colormap is also accepted</p></td>
+</tr>
+<tr class="row-even"><td><p>check</p></td>
+<td><p>on / off</p></td>
+<td><p>e.g. <code class="docutils literal notranslate"><span class="pre">cartesian</span></code>, <code class="docutils literal notranslate"><span class="pre">arrow1</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>LaTeX</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">$\alpha_1$</span></code></p></td>
+<td><p>in a label, a caption or a 2D text; drawn with MathJax</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="columns-common-to-all-objects">
+<h3>Columns common to all objects<a class="headerlink" href="#columns-common-to-all-objects" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>column</p></th>
+<th class="head"><p>meaning</p></th>
+<th class="head"><p>default</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">name</span></code></p></td>
+<td><p>name of the group; its check box shows or hides the group</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">untitled</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">label</span></code></p></td>
+<td><p>label text; its check box shows the label</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">label</span></code> (hidden)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">margin</span></code></p></td>
+<td><p>space between the object and its label (number of space characters)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">3</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">position</span></code></p></td>
+<td><p>position in fractional coordinates</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">[0,0,0]</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cell</span></code></p></td>
+<td><p>lattice translation</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">[0,0,0]</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">opacity</span></code></p></td>
+<td><p>from 0 (transparent) to 1</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">1.0</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>In Python, these are keyword arguments of every <code class="docutils literal notranslate"><span class="pre">add_*</span></code> method, e.g. <code class="docutils literal notranslate"><span class="pre">win.add_site(name=&quot;Cu&quot;,</span> <span class="pre">label=&quot;Cu1&quot;,</span> <span class="pre">position=&quot;[0,0,0]&quot;)</span></code>. The check boxes of <code class="docutils literal notranslate"><span class="pre">name</span></code> and <code class="docutils literal notranslate"><span class="pre">label</span></code> are <code class="docutils literal notranslate"><span class="pre">show</span></code> and <code class="docutils literal notranslate"><span class="pre">show_label</span></code>, e.g. <code class="docutils literal notranslate"><span class="pre">win.add_site(show=False)</span></code> for a hidden object, <code class="docutils literal notranslate"><span class="pre">win.add_site(label=&quot;Cu1&quot;,</span> <span class="pre">show_label=True)</span></code> for a shown label.
+The other columns of each object follow.</p>
+</section>
+<section id="points-and-arrows">
+<h3>Points and arrows<a class="headerlink" href="#points-and-arrows" title="Link to this heading">#</a></h3>
+<p><strong>site</strong>: a sphere.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>column</p></th>
+<th class="head"><p>meaning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">size</span></code></p></td>
+<td><p>radius</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">color</span></code></p></td>
+<td><p>color</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">win</span><span class="o">.</span><span class="n">add_site</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="s2">"[1/2,0,0]"</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"red"</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>bond</strong>: a cylinder; <code class="docutils literal notranslate"><span class="pre">position</span></code> is its <strong>center</strong>, and <code class="docutils literal notranslate"><span class="pre">direction</span></code> the vector from one end to the other.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>column</p></th>
+<th class="head"><p>meaning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">direction</span></code></p></td>
+<td><p>vector from the tail to the head</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">width</span></code></p></td>
+<td><p>radius</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">color</span></code>, <code class="docutils literal notranslate"><span class="pre">color2</span></code></p></td>
+<td><p>colors of the tail and head halves</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cartesian</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">direction</span></code> in Cartesian coordinates ? (off: fractional)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">win</span><span class="o">.</span><span class="n">add_bond</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="s2">"[1/2,0,0]"</span><span class="p">,</span> <span class="n">direction</span><span class="o">=</span><span class="s2">"[1,0,0]"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"red"</span><span class="p">,</span> <span class="n">color2</span><span class="o">=</span><span class="s2">"blue"</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>vector</strong>: an arrow through <code class="docutils literal notranslate"><span class="pre">position</span></code>.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>column</p></th>
+<th class="head"><p>meaning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">direction</span></code></p></td>
+<td><p>direction of the arrow</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length</span></code></p></td>
+<td><p>length; a negative value uses |<code class="docutils literal notranslate"><span class="pre">length</span></code>| × the norm of <code class="docutils literal notranslate"><span class="pre">direction</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">width</span></code></p></td>
+<td><p>width</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">offset</span></code></p></td>
+<td><p>position of the tail, in units of the length (<code class="docutils literal notranslate"><span class="pre">-0.43</span></code>: the arrow is centered near <code class="docutils literal notranslate"><span class="pre">position</span></code>)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">color</span></code></p></td>
+<td><p>color</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cartesian</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">direction</span></code> in Cartesian coordinates ? (on by default)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">shaft</span> <span class="pre">R</span></code>, <code class="docutils literal notranslate"><span class="pre">tip</span> <span class="pre">R</span></code>, <code class="docutils literal notranslate"><span class="pre">tip</span> <span class="pre">length</span></code></p></td>
+<td><p>shape of the arrow, relative to <code class="docutils literal notranslate"><span class="pre">width</span></code> and <code class="docutils literal notranslate"><span class="pre">length</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">win</span><span class="o">.</span><span class="n">add_vector</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="s2">"[0,0,0]"</span><span class="p">,</span> <span class="n">direction</span><span class="o">=</span><span class="s2">"[1,1,0]"</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"green"</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>line</strong>: a line (or an arrow) from <code class="docutils literal notranslate"><span class="pre">position</span></code> to <code class="docutils literal notranslate"><span class="pre">position</span></code> + <code class="docutils literal notranslate"><span class="pre">direction</span></code>.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>column</p></th>
+<th class="head"><p>meaning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">direction</span></code></p></td>
+<td><p>vector from the start to the end</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">width</span></code></p></td>
+<td><p>width</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">arrow1</span></code>, <code class="docutils literal notranslate"><span class="pre">arrow2</span></code></p></td>
+<td><p>arrow heads at the start and at the end</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">tip</span> <span class="pre">R</span></code>, <code class="docutils literal notranslate"><span class="pre">tip</span> <span class="pre">length</span></code></p></td>
+<td><p>shape of the arrow heads</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">color</span></code></p></td>
+<td><p>color</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cartesian</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">direction</span></code> in Cartesian coordinates ?</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">win</span><span class="o">.</span><span class="n">add_line</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="s2">"[0,0,0]"</span><span class="p">,</span> <span class="n">direction</span><span class="o">=</span><span class="s2">"[1,0,0]"</span><span class="p">,</span> <span class="n">arrow2</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="functions-on-a-sphere">
+<h3>Functions on a sphere<a class="headerlink" href="#functions-on-a-sphere" title="Link to this heading">#</a></h3>
+<p><strong>orbital</strong>: a surface <span class="math notranslate nohighlight">\(r(\theta,\phi) \propto |f|\)</span> of a polynomial <span class="math notranslate nohighlight">\(f(x,y,z)\)</span>, colored by another polynomial.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>column</p></th>
+<th class="head"><p>meaning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">shape</span></code></p></td>
+<td><p>polynomial <span class="math notranslate nohighlight">\(f\)</span> of the shape</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">surface</span></code></p></td>
+<td><p>polynomial of the color (empty: the same as <code class="docutils literal notranslate"><span class="pre">shape</span></code>)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">size</span></code></p></td>
+<td><p>the maximum radius; a negative value scales the radius by |<code class="docutils literal notranslate"><span class="pre">size</span></code>|</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">range</span></code></p></td>
+<td><p>range of <span class="math notranslate nohighlight">\(\theta\)</span> and <span class="math notranslate nohighlight">\(\phi\)</span> in degrees, <code class="docutils literal notranslate"><span class="pre">[[0,180],[0,360]]</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">color</span></code></p></td>
+<td><p>color, or colormap of the <code class="docutils literal notranslate"><span class="pre">surface</span></code> value</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">win</span><span class="o">.</span><span class="n">add_orbital</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="s2">"[0,0,0]"</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s2">"x*y"</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"coolwarm"</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>stream</strong>: arrows of a vector field drawn on a surface.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>column</p></th>
+<th class="head"><p>meaning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">shape</span></code></p></td>
+<td><p>polynomial of the surface on which the arrows are put (<code class="docutils literal notranslate"><span class="pre">1</span></code>: a sphere)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">vector</span></code></p></td>
+<td><p>polynomials of the vector field, <code class="docutils literal notranslate"><span class="pre">[vx,vy,vz]</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">size</span></code></p></td>
+<td><p>size of the surface; a negative value normalizes the shape</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">range</span></code></p></td>
+<td><p>range of <span class="math notranslate nohighlight">\(\theta\)</span> and <span class="math notranslate nohighlight">\(\phi\)</span> in degrees</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">division</span></code></p></td>
+<td><p>numbers of arrows in <span class="math notranslate nohighlight">\(\theta\)</span> and <span class="math notranslate nohighlight">\(\phi\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length</span></code>, <code class="docutils literal notranslate"><span class="pre">width</span></code>, <code class="docutils literal notranslate"><span class="pre">offset</span></code></p></td>
+<td><p>size of each arrow</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">abs_scale</span></code></p></td>
+<td><p>scale each arrow by the size of the vector ?</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">color</span></code>, <code class="docutils literal notranslate"><span class="pre">component</span></code></p></td>
+<td><p>color, or colormap of the component (<code class="docutils literal notranslate"><span class="pre">x</span></code>, <code class="docutils literal notranslate"><span class="pre">y</span></code>, <code class="docutils literal notranslate"><span class="pre">z</span></code>, <code class="docutils literal notranslate"><span class="pre">abs</span></code>)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">shaft</span> <span class="pre">R</span></code>, <code class="docutils literal notranslate"><span class="pre">tip</span> <span class="pre">R</span></code>, <code class="docutils literal notranslate"><span class="pre">tip</span> <span class="pre">length</span></code></p></td>
+<td><p>shape of the arrows</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">win</span><span class="o">.</span><span class="n">add_stream</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="s2">"[0,0,0]"</span><span class="p">,</span> <span class="n">vector</span><span class="o">=</span><span class="s2">"[-y,x,0]"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"coolwarm"</span><span class="p">,</span> <span class="n">component</span><span class="o">=</span><span class="s2">"abs"</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="shapes">
+<h3>Shapes<a class="headerlink" href="#shapes" title="Link to this heading">#</a></h3>
+<p><strong>plane</strong>: a rectangle centered at <code class="docutils literal notranslate"><span class="pre">position</span></code>.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>column</p></th>
+<th class="head"><p>meaning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">normal</span></code></p></td>
+<td><p>normal vector</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">x_size</span></code>, <code class="docutils literal notranslate"><span class="pre">y_size</span></code></p></td>
+<td><p>lengths of the sides</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">color</span></code></p></td>
+<td><p>color</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">grid</span></code>, <code class="docutils literal notranslate"><span class="pre">grid_color</span></code>, <code class="docutils literal notranslate"><span class="pre">width</span></code></p></td>
+<td><p>grid lines on the plane, their color and width</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cartesian</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">normal</span></code> in Cartesian coordinates ?</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">win</span><span class="o">.</span><span class="n">add_plane</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="s2">"[1/2,1/2,0]"</span><span class="p">,</span> <span class="n">normal</span><span class="o">=</span><span class="s2">"[0,0,1]"</span><span class="p">,</span> <span class="n">x_size</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">y_size</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">opacity</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>circle</strong>: a disk centered at <code class="docutils literal notranslate"><span class="pre">position</span></code>.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>column</p></th>
+<th class="head"><p>meaning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">normal</span></code></p></td>
+<td><p>normal vector</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">size</span></code></p></td>
+<td><p>radius</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">color</span></code></p></td>
+<td><p>color</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">edge</span></code>, <code class="docutils literal notranslate"><span class="pre">edge_color</span></code>, <code class="docutils literal notranslate"><span class="pre">width</span></code></p></td>
+<td><p>its edge, the color and width of the edge</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cartesian</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">normal</span></code> in Cartesian coordinates ?</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">win</span><span class="o">.</span><span class="n">add_circle</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="s2">"[0,0,0]"</span><span class="p">,</span> <span class="n">normal</span><span class="o">=</span><span class="s2">"[1,0,0]"</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>torus</strong>: a ring.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>column</p></th>
+<th class="head"><p>meaning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">normal</span></code></p></td>
+<td><p>axis of the ring</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">size</span></code></p></td>
+<td><p>radius of the ring</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">width</span></code></p></td>
+<td><p>radius of the tube</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">color</span></code></p></td>
+<td><p>color</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cartesian</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">normal</span></code> in Cartesian coordinates ?</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">win</span><span class="o">.</span><span class="n">add_torus</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="s2">"[0,0,0]"</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>ellipsoid</strong>: an ellipsoid centered at <code class="docutils literal notranslate"><span class="pre">position</span></code>.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>column</p></th>
+<th class="head"><p>meaning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">normal</span></code></p></td>
+<td><p>direction of the <code class="docutils literal notranslate"><span class="pre">z_size</span></code> axis</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">x_size</span></code>, <code class="docutils literal notranslate"><span class="pre">y_size</span></code>, <code class="docutils literal notranslate"><span class="pre">z_size</span></code></p></td>
+<td><p>radii along the three axes</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">color</span></code></p></td>
+<td><p>color</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cartesian</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">normal</span></code> in Cartesian coordinates ?</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">win</span><span class="o">.</span><span class="n">add_ellipsoid</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="s2">"[0,0,0]"</span><span class="p">,</span> <span class="n">x_size</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">y_size</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">z_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>toroid</strong>: a superellipsoidal ring, e.g. a rounded square ring.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>column</p></th>
+<th class="head"><p>meaning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">normal</span></code></p></td>
+<td><p>axis of the ring</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">size</span></code>, <code class="docutils literal notranslate"><span class="pre">width</span></code></p></td>
+<td><p>radius of the ring and of the tube</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">x_scale</span></code>, <code class="docutils literal notranslate"><span class="pre">y_scale</span></code>, <code class="docutils literal notranslate"><span class="pre">z_scale</span></code></p></td>
+<td><p>scales along the three axes</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ring_shape</span></code>, <code class="docutils literal notranslate"><span class="pre">tube_shape</span></code></p></td>
+<td><p>shape exponents of the ring and of the tube (1: round, smaller: squarer, larger: pointed)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">color</span></code></p></td>
+<td><p>color</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cartesian</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">normal</span></code> in Cartesian coordinates ?</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">win</span><span class="o">.</span><span class="n">add_toroid</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="s2">"[0,0,0]"</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">0.15</span><span class="p">,</span> <span class="n">ring_shape</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>box</strong>: a parallelepiped with a corner at <code class="docutils literal notranslate"><span class="pre">position</span></code>.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>column</p></th>
+<th class="head"><p>meaning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">a1</span></code>, <code class="docutils literal notranslate"><span class="pre">a2</span></code>, <code class="docutils literal notranslate"><span class="pre">a3</span></code></p></td>
+<td><p>edge vectors</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">color</span></code></p></td>
+<td><p>color</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">edge</span></code>, <code class="docutils literal notranslate"><span class="pre">edge_color</span></code>, <code class="docutils literal notranslate"><span class="pre">width</span></code></p></td>
+<td><p>its edges, their color and width</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">wireframe</span></code></p></td>
+<td><p>draw only the edges ?</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cartesian</span></code></p></td>
+<td><p>edge vectors in Cartesian coordinates ? (off: fractional)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">win</span><span class="o">.</span><span class="n">add_box</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="s2">"[0,0,0]"</span><span class="p">,</span> <span class="n">a1</span><span class="o">=</span><span class="s2">"[1,0,0]"</span><span class="p">,</span> <span class="n">a2</span><span class="o">=</span><span class="s2">"[0,1,0]"</span><span class="p">,</span> <span class="n">a3</span><span class="o">=</span><span class="s2">"[0,0,1/2]"</span><span class="p">,</span> <span class="n">opacity</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>polygon</strong>: a polyhedron given by its vertices and faces.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>column</p></th>
+<th class="head"><p>meaning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">point</span></code></p></td>
+<td><p>vertices, relative to <code class="docutils literal notranslate"><span class="pre">position</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">connectivity</span></code></p></td>
+<td><p>faces, each a list of vertex indices (from 0)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">color</span></code>, <code class="docutils literal notranslate"><span class="pre">edge</span></code>, <code class="docutils literal notranslate"><span class="pre">edge_color</span></code>, <code class="docutils literal notranslate"><span class="pre">width</span></code>, <code class="docutils literal notranslate"><span class="pre">wireframe</span></code></p></td>
+<td><p>as for a box</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cartesian</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">point</span></code> in Cartesian coordinates ? (off: fractional)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">win</span><span class="o">.</span><span class="n">add_polygon</span><span class="p">(</span><span class="n">point</span><span class="o">=</span><span class="s2">"[[0,0,0],[1,0,0],[0,1,0],[0,0,1]]"</span><span class="p">,</span> <span class="n">connectivity</span><span class="o">=</span><span class="s2">"[[0,1,2],[0,1,3],[0,2,3],[1,2,3]]"</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="curves">
+<h3>Curves<a class="headerlink" href="#curves" title="Link to this heading">#</a></h3>
+<p><strong>spline</strong>: a smooth curve through points.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>column</p></th>
+<th class="head"><p>meaning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">point</span></code></p></td>
+<td><p>points of the curve, relative to <code class="docutils literal notranslate"><span class="pre">position</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">width</span></code></p></td>
+<td><p>width</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">n_interp</span></code></p></td>
+<td><p>number of interpolated points</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">closed</span></code></p></td>
+<td><p>closed curve ?</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">natural</span></code></p></td>
+<td><p>natural end conditions ?</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">arrow1</span></code>, <code class="docutils literal notranslate"><span class="pre">arrow2</span></code>, <code class="docutils literal notranslate"><span class="pre">tip</span> <span class="pre">R</span></code>, <code class="docutils literal notranslate"><span class="pre">tip</span> <span class="pre">length</span></code></p></td>
+<td><p>arrow heads at the start and at the end</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">color</span></code></p></td>
+<td><p>color</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cartesian</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">point</span></code> in Cartesian coordinates ?</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">win</span><span class="o">.</span><span class="n">add_spline</span><span class="p">(</span><span class="n">point</span><span class="o">=</span><span class="s2">"[[0,0,0],[1,0,1],[0,1,2]]"</span><span class="p">,</span> <span class="n">arrow2</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>spline_t</strong>: a curve given by a function of a parameter <code class="docutils literal notranslate"><span class="pre">t</span></code>.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>column</p></th>
+<th class="head"><p>meaning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">point</span></code></p></td>
+<td><p>function of <code class="docutils literal notranslate"><span class="pre">t</span></code>, <code class="docutils literal notranslate"><span class="pre">[x(t),y(t),z(t)]</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">t_range</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">[t0,t1,dt]</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>others</p></td>
+<td><p>as for a spline</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">win</span><span class="o">.</span><span class="n">add_spline_t</span><span class="p">(</span><span class="n">point</span><span class="o">=</span><span class="s2">"[cos(2 pi t), sin(2 pi t), t/2]"</span><span class="p">,</span> <span class="n">t_range</span><span class="o">=</span><span class="s2">"[0,2,0.02]"</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="texts">
+<h3>Texts<a class="headerlink" href="#texts" title="Link to this heading">#</a></h3>
+<p><strong>text3d</strong>: a 3D text placed in the drawing.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>column</p></th>
+<th class="head"><p>meaning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">text</span></code></p></td>
+<td><p>text</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">size</span></code></p></td>
+<td><p>height</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">view</span></code></p></td>
+<td><p>direction from which the text is read</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">depth</span></code></p></td>
+<td><p>thickness</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">offset</span></code></p></td>
+<td><p>shift from <code class="docutils literal notranslate"><span class="pre">position</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">color</span></code></p></td>
+<td><p>color</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">win</span><span class="o">.</span><span class="n">add_text3d</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="s2">"[0,0,1]"</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">"Cu"</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>caption</strong>: texts at several positions, of a fixed size on the screen.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>column</p></th>
+<th class="head"><p>meaning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">position</span></code></p></td>
+<td><p>positions, one for each caption, <code class="docutils literal notranslate"><span class="pre">[[x1,y1,z1],[x2,y2,z2],...]</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">caption</span></code></p></td>
+<td><p>captions, <code class="docutils literal notranslate"><span class="pre">[A,B,...]</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">size</span></code>, <code class="docutils literal notranslate"><span class="pre">bold</span></code>, <code class="docutils literal notranslate"><span class="pre">color</span></code></p></td>
+<td><p>font size, bold and color</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">win</span><span class="o">.</span><span class="n">add_caption</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="s2">"[[0,0,0],[1,0,0]]"</span><span class="p">,</span> <span class="n">caption</span><span class="o">=</span><span class="s2">"[A,B]"</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>text2d</strong>: a text fixed on the window, e.g. a title.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>column</p></th>
+<th class="head"><p>meaning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">position</span></code></p></td>
+<td><p>position in the window, <code class="docutils literal notranslate"><span class="pre">[x,y,0]</span></code>, with <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> from 0 to 1</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">caption</span></code></p></td>
+<td><p>text (LaTeX in <code class="docutils literal notranslate"><span class="pre">$...$</span></code>)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">size</span></code>, <code class="docutils literal notranslate"><span class="pre">color</span></code>, <code class="docutils literal notranslate"><span class="pre">font</span></code></p></td>
+<td><p>font size, color and font</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">win</span><span class="o">.</span><span class="n">add_text2d</span><span class="p">(</span><span class="n">caption</span><span class="o">=</span><span class="sa">r</span><span class="s2">"$E = \hbar\omega$"</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="s2">"[0.05,0.9,0]"</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="data">
+<h3>Data<a class="headerlink" href="#data" title="Link to this heading">#</a></h3>
+<p><strong>isosurface</strong>: isosurfaces of grid data, e.g. a charge density in an <code class="docutils literal notranslate"><span class="pre">.xsf</span></code> file.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>column</p></th>
+<th class="head"><p>meaning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">data</span></code></p></td>
+<td><p>file of the grid data (<code class="docutils literal notranslate"><span class="pre">.xsf</span></code>, or a dict file written by QtDraw), relative to the drawing</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">value</span></code></p></td>
+<td><p>values of the isosurfaces, <code class="docutils literal notranslate"><span class="pre">[v1,v2,...]</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">surface</span></code></p></td>
+<td><p>name of other data used for the color of the surface (empty: one color)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">color</span></code></p></td>
+<td><p>color, or colormap of the <code class="docutils literal notranslate"><span class="pre">surface</span></code> data</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">color_range</span></code></p></td>
+<td><p>range of the colormap</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">win</span><span class="o">.</span><span class="n">add_isosurface</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="s2">"Si.xsf"</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="s2">"[0.05]"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"skyblue"</span><span class="p">,</span> <span class="n">opacity</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="drawing-with-multipie">
+<h2>3. Drawing with MultiPie<a class="headerlink" href="#drawing-with-multipie" title="Link to this heading">#</a></h2>
+<p><a class="reference external" href="https://github.com/CMT-MU/MultiPie">MultiPie</a> gives the symmetry operations of point and space groups (also magnetic ones) and the symmetry-adapted multipole basis (SAMB).
+With it, QtDraw draws all the objects equivalent by symmetry, and SAMBs.
+QtDraw works with MultiPie Ver.2 (2.5 or later) and Ver.3. Without MultiPie, the <code class="docutils literal notranslate"><span class="pre">MultiPie</span></code> button offers to install it.</p>
+<section id="the-multipie-dialog">
+<h3>The MultiPie dialog<a class="headerlink" href="#the-multipie-dialog" title="Link to this heading">#</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">MultiPie</span></code> button opens the dialog.
+At its top, a group is chosen by its type (PG, SG, MPG, MSG), crystal system and name; the unit cell of QtDraw follows the crystal system of the group.
+The <code class="docutils literal notranslate"><span class="pre">Info.</span></code> buttons show the symmetry operations, the character table, the Wyckoff sites and bonds and the product table.
+The dialog has three tabs:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>tab</p></th>
+<th class="head"><p>what it does</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Group Info.</strong></p></td>
+<td><p>irrep and harmonics decompositions, harmonics, finding and drawing Wyckoff sites and bonds, atomic multipoles, response tensors</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Object Drawing</strong></p></td>
+<td><p>draws the sites, bonds, vectors and orbitals equivalent to a representative one</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Basis Drawing</strong></p></td>
+<td><p>lists the SAMBs of a site, bond, vector or orbital cluster, and draws one of them, a linear combination, or a modulation over cells (space groups only)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>What is drawn is a set of ordinary objects, which can be edited in the data tables as any other.</p>
+</section>
+<section id="how-to-give-a-site-a-bond-a-vector-and-an-orbital">
+<h3>How to give a site, a bond, a vector and an orbital<a class="headerlink" href="#how-to-give-a-site-a-bond-a-vector-and-an-orbital" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>object</p></th>
+<th class="head"><p>form</p></th>
+<th class="head"><p>example</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>site</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">[x,y,z]</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">[1/3,2/3,0]</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>bond</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">[x0,y0,z0];[x1,y1,z1]</span></code> (tail;head), <code class="docutils literal notranslate"><span class="pre">[X,Y,Z]&#64;[x,y,z]</span></code> (vector&#64;center), or <code class="docutils literal notranslate"><span class="pre">[x0,y0,z0]:[X,Y,Z]</span></code> (start:vector)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">[2/3,1/3,0];[1/3,2/3,0]</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>vector</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">[X,Y,Z]</span> <span class="pre">#</span> <span class="pre">site/bond</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">[0,0,1]</span> <span class="pre">#</span> <span class="pre">[1/3,2/3,0]</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>orbital</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">polynomial</span> <span class="pre">#</span> <span class="pre">site/bond</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">x*y</span> <span class="pre">#</span> <span class="pre">[0,0,0]</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="from-python">
+<h3>From Python<a class="headerlink" href="#from-python" title="Link to this heading">#</a></h3>
+<p>A group is set by its tag: e.g. <code class="docutils literal notranslate"><span class="pre">D6h</span></code> (point group), <code class="docutils literal notranslate"><span class="pre">D6h^1</span></code> (space group), <code class="docutils literal notranslate"><span class="pre">MPG:1.1.1</span></code>, <code class="docutils literal notranslate"><span class="pre">MSG:123.345</span></code> (magnetic groups).
+The <code class="docutils literal notranslate"><span class="pre">mp_*</span></code> methods do what the dialog does:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw</span><span class="w"> </span><span class="kn">import</span> <span class="n">QtDraw</span>
+
+<span class="n">win</span> <span class="o">=</span> <span class="n">QtDraw</span><span class="p">()</span>
+<span class="n">win</span><span class="o">.</span><span class="n">mp_set_group</span><span class="p">(</span><span class="s2">"D6h^1"</span><span class="p">)</span>  <span class="c1"># graphene.</span>
+<span class="n">win</span><span class="o">.</span><span class="n">mp_add_site</span><span class="p">(</span><span class="s2">"[1/3,2/3,0]"</span><span class="p">)</span>  <span class="c1"># equivalent sites.</span>
+<span class="n">win</span><span class="o">.</span><span class="n">mp_add_bond</span><span class="p">(</span><span class="s2">"[2/3,1/3,0];[1/3,2/3,0]"</span><span class="p">)</span>  <span class="c1"># equivalent bonds.</span>
+
+<span class="n">lst</span> <span class="o">=</span> <span class="n">win</span><span class="o">.</span><span class="n">mp_site_samb_list</span><span class="p">(</span><span class="s2">"[1/3,2/3,0]"</span><span class="p">)</span>  <span class="c1"># SAMBs of the site cluster.</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">lst</span><span class="p">)</span>
+<span class="n">win</span><span class="o">.</span><span class="n">mp_add_site_samb</span><span class="p">(</span><span class="n">lst</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>  <span class="c1"># draw one of them.</span>
+</pre></div>
+</div>
+<p>A vector or orbital SAMB is drawn by its tag (e.g. <code class="docutils literal notranslate"><span class="pre">Q01</span></code>), a linear combination of tags (e.g. <code class="docutils literal notranslate"><span class="pre">Q02+G01</span></code>), or a modulation:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">lst</span> <span class="o">=</span> <span class="n">win</span><span class="o">.</span><span class="n">mp_vector_samb_list</span><span class="p">(</span><span class="s2">"[1/3,2/3,0]"</span><span class="p">,</span> <span class="s2">"M"</span><span class="p">)</span>  <span class="c1"># magnetic-dipole SAMBs, {type: [tags]}.</span>
+<span class="n">win</span><span class="o">.</span><span class="n">mp_add_vector_samb</span><span class="p">(</span><span class="s2">"M01"</span><span class="p">)</span>
+<span class="n">win</span><span class="o">.</span><span class="n">mp_add_vector_samb_modulation</span><span class="p">(</span><span class="s2">"[[M01, 1, [1/2,0,0], cos]] : [2,2,1]"</span><span class="p">)</span>  <span class="c1"># [[tag, coefficient, k, cos/sin]] : cells.</span>
+</pre></div>
+</div>
+<p>A modulation needs the lattice translations of a space group; for a point group it is ignored with a warning.
+More examples: <a class="reference internal" href="examples/mp_graphene.html"><span class="std std-doc">Graphene</span></a>, <a class="reference internal" href="examples/mp_Te.html"><span class="std std-doc">Te</span></a>, <a class="reference internal" href="examples/multipie.html"><span class="std std-doc">all mp_* methods</span></a>.</p>
+</section>
+</section>
+<section id="usage-from-python-code">
+<h2>4. Usage from Python code<a class="headerlink" href="#usage-from-python-code" title="Link to this heading">#</a></h2>
+<section id="two-ways">
+<h3>Two ways<a class="headerlink" href="#two-ways" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>way</p></th>
+<th class="head"><p>use</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">QtDraw()</span></code></p></td>
+<td><p>the QtDraw window, drawn from a script or a Jupyter notebook</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">create_qtdraw_file(filename,</span> <span class="pre">callback)</span></code></p></td>
+<td><p>writes a <code class="docutils literal notranslate"><span class="pre">.qtdw</span></code> file without a window (background job)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The arguments of <code class="docutils literal notranslate"><span class="pre">add_*</span></code> are the columns of the data tables, as strings or numbers; an argument left out (or <code class="docutils literal notranslate"><span class="pre">None</span></code>) takes the default value.</p>
+</section>
+<section id="a-script">
+<h3>A script<a class="headerlink" href="#a-script" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw</span><span class="w"> </span><span class="kn">import</span> <span class="n">QtDraw</span>
+
+<span class="n">win</span> <span class="o">=</span> <span class="n">QtDraw</span><span class="p">()</span>
+<span class="n">win</span><span class="o">.</span><span class="n">set_crystal</span><span class="p">(</span><span class="s2">"hexagonal"</span><span class="p">)</span>
+<span class="n">win</span><span class="o">.</span><span class="n">set_unit_cell</span><span class="p">({</span><span class="s2">"a"</span><span class="p">:</span> <span class="mf">2.46</span><span class="p">,</span> <span class="s2">"c"</span><span class="p">:</span> <span class="mf">6.7</span><span class="p">})</span>
+<span class="n">win</span><span class="o">.</span><span class="n">add_site</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="s2">"[1/3,2/3,0]"</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"C1"</span><span class="p">)</span>
+<span class="n">win</span><span class="o">.</span><span class="n">add_site</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="s2">"[2/3,1/3,0]"</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"C2"</span><span class="p">)</span>
+<span class="n">win</span><span class="o">.</span><span class="n">add_bond</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="s2">"[1/2,1/2,0]"</span><span class="p">,</span> <span class="n">direction</span><span class="o">=</span><span class="s2">"[1/3,-1/3,0]"</span><span class="p">)</span>  <span class="c1"># C1-C2.</span>
+<span class="n">win</span><span class="o">.</span><span class="n">set_view</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>  <span class="c1"># view along c.</span>
+<span class="n">win</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">"graphene.qtdw"</span><span class="p">)</span>
+<span class="n">win</span><span class="o">.</span><span class="n">save_screenshot</span><span class="p">(</span><span class="s2">"graphene.png"</span><span class="p">)</span>  <span class="c1"># also .pdf, .svg, ...</span>
+<span class="n">win</span><span class="o">.</span><span class="n">exec</span><span class="p">()</span>  <span class="c1"># in a script, show the window until it is closed (not needed in Jupyter).</span>
+</pre></div>
+</div>
+</section>
+<section id="without-a-window">
+<h3>Without a window<a class="headerlink" href="#without-a-window" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_qtdraw_file</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">draw</span><span class="p">(</span><span class="n">widget</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">8</span><span class="p">):</span>
+        <span class="n">widget</span><span class="o">.</span><span class="n">add_site</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="sa">f</span><span class="s2">"[</span><span class="si">{</span><span class="n">i</span><span class="o">/</span><span class="mi">8</span><span class="si">}</span><span class="s2">,0,0]"</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>
+
+
+<span class="n">create_qtdraw_file</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s2">"chain.qtdw"</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">draw</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="from-a-drawing-to-python-code">
+<h3>From a drawing to Python code<a class="headerlink" href="#from-a-drawing-to-python-code" title="Link to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">File</span></code> &gt; <code class="docutils literal notranslate"><span class="pre">Export</span> <span class="pre">as</span> <span class="pre">Python...</span></code> writes the current drawing as Python code that draws the same, e.g. to start a script from a drawing made by hand. <code class="docutils literal notranslate"><span class="pre">win.to_python()</span></code> returns the code, and <code class="docutils literal notranslate"><span class="pre">win.save_python(&quot;drawing.py&quot;)</span></code> saves it.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">win</span><span class="o">.</span><span class="n">save_python</span><span class="p">(</span><span class="s2">"graphene.py"</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>writes, for example,</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw</span><span class="w"> </span><span class="kn">import</span> <span class="n">QtDraw</span>
+
+<span class="n">win</span> <span class="o">=</span> <span class="n">QtDraw</span><span class="p">()</span>
+<span class="n">win</span><span class="o">.</span><span class="n">set_model</span><span class="p">(</span><span class="s1">'graphene'</span><span class="p">)</span>
+<span class="n">win</span><span class="o">.</span><span class="n">mp_set_group</span><span class="p">(</span><span class="s1">'D6h^1'</span><span class="p">)</span>
+<span class="n">win</span><span class="o">.</span><span class="n">set_crystal</span><span class="p">(</span><span class="s1">'hexagonal'</span><span class="p">)</span>
+<span class="n">win</span><span class="o">.</span><span class="n">set_unit_cell</span><span class="p">({</span><span class="s1">'a'</span><span class="p">:</span> <span class="mf">2.46</span><span class="p">,</span> <span class="s1">'b'</span><span class="p">:</span> <span class="mf">2.46</span><span class="p">,</span> <span class="s1">'c'</span><span class="p">:</span> <span class="mf">6.7</span><span class="p">,</span> <span class="s1">'alpha'</span><span class="p">:</span> <span class="mf">90.0</span><span class="p">,</span> <span class="s1">'beta'</span><span class="p">:</span> <span class="mf">90.0</span><span class="p">,</span> <span class="s1">'gamma'</span><span class="p">:</span> <span class="mf">120.0</span><span class="p">})</span>
+
+<span class="c1"># site.</span>
+<span class="n">win</span><span class="o">.</span><span class="n">add_site</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">'C1'</span><span class="p">,</span> <span class="n">show_label</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="s1">'[1/3,2/3,0]'</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+<span class="o">...</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>The code is made from the current state: the objects, the unit cell, the range, repeat and clip, the view settings, the model name and the MultiPie group. The camera (zoom and rotation), the preferences and the MultiPie dialog are not written.</p></li>
+<li><p>Only the values that differ from the defaults are written. The objects drawn by MultiPie are written one by one, after <code class="docutils literal notranslate"><span class="pre">mp_set_group</span></code>.</p></li>
+<li><p>With repeat, only the objects of the home cell are written, and <code class="docutils literal notranslate"><span class="pre">set_repeat(True)</span></code> repeats them.</p></li>
+<li><p>An isosurface whose data is not in a file is not written (a comment tells it).</p></li>
+</ul>
+</section>
+<section id="useful-methods">
+<h3>Useful methods<a class="headerlink" href="#useful-methods" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>method</p></th>
+<th class="head"><p>does</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">set_crystal</span></code>, <code class="docutils literal notranslate"><span class="pre">set_unit_cell</span></code>, <code class="docutils literal notranslate"><span class="pre">set_origin</span></code></p></td>
+<td><p>unit cell</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">set_range</span></code>, <code class="docutils literal notranslate"><span class="pre">set_repeat</span></code>, <code class="docutils literal notranslate"><span class="pre">set_clip</span></code>, <code class="docutils literal notranslate"><span class="pre">set_nonrepeat</span></code></p></td>
+<td><p>range, repeat and clip</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">set_view</span></code>, <code class="docutils literal notranslate"><span class="pre">set_parallel_projection</span></code>, <code class="docutils literal notranslate"><span class="pre">set_axis</span></code>, <code class="docutils literal notranslate"><span class="pre">set_cell</span></code>, <code class="docutils literal notranslate"><span class="pre">set_grid</span></code></p></td>
+<td><p>view</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">set_model</span></code></p></td>
+<td><p>model name</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">load</span></code>, <code class="docutils literal notranslate"><span class="pre">save</span></code></p></td>
+<td><p>files</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">to_python</span></code>, <code class="docutils literal notranslate"><span class="pre">save_python</span></code></p></td>
+<td><p>Python code of the drawing</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">save_screenshot</span></code></p></td>
+<td><p>image of the drawing (<code class="docutils literal notranslate"><span class="pre">.png</span></code>, <code class="docutils literal notranslate"><span class="pre">.bmp</span></code>, <code class="docutils literal notranslate"><span class="pre">.tif</span></code>, <code class="docutils literal notranslate"><span class="pre">.tiff</span></code>, <code class="docutils literal notranslate"><span class="pre">.svg</span></code>, <code class="docutils literal notranslate"><span class="pre">.eps</span></code>, <code class="docutils literal notranslate"><span class="pre">.ps</span></code>, <code class="docutils literal notranslate"><span class="pre">.pdf</span></code>), as <code class="docutils literal notranslate"><span class="pre">File</span></code> &gt; <code class="docutils literal notranslate"><span class="pre">Screenshot</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">clear_data</span></code></p></td>
+<td><p>remove all objects</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">update_preference</span></code></p></td>
+<td><p>preferences, e.g. <code class="docutils literal notranslate"><span class="pre">update_preference(&quot;label&quot;,</span> <span class="pre">&quot;default_check&quot;,</span> <span class="pre">True)</span></code> to show labels</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">undo</span></code>, <code class="docutils literal notranslate"><span class="pre">redo</span></code></p></td>
+<td><p>history</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>All methods are listed in <a class="reference internal" href="from_python.html"><span class="std std-doc">Usage from Python code</span></a>, and more examples are in <a class="reference internal" href="example.html"><span class="std std-doc">Examples</span></a>.</p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./src"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">1. Overview</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-drawing">A drawing</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#position-of-an-object">Position of an object</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#range-repeat-and-clip">Range, repeat and clip</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-tables">2. Data tables</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-dataset-window">The DataSet window</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#values">Values</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#columns-common-to-all-objects">Columns common to all objects</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#points-and-arrows">Points and arrows</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#functions-on-a-sphere">Functions on a sphere</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#shapes">Shapes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#curves">Curves</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#texts">Texts</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data">Data</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#drawing-with-multipie">3. Drawing with MultiPie</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-multipie-dialog">The MultiPie dialog</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-give-a-site-a-bond-a-vector-and-an-orbital">How to give a site, a bond, a vector and an orbital</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#from-python">From Python</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#usage-from-python-code">4. Usage from Python code</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#two-ways">Two ways</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-script">A script</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#without-a-window">Without a window</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#from-a-drawing-to-python-code">From a drawing to Python code</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#useful-methods">Useful methods</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Hiroaki Kusunose
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2021-.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
