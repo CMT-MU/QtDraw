@@ -1,0 +1,1562 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>ユーザーガイド &#8212; QtDraw</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=6a604523" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=8d1e04a5" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
+
+    <script src="../_static/documentation_options.js?v=a8e58a58"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script data-sd-tabs-storage-prefix="sphinx-design-tab-id-" src="../_static/design-tabs.js?v=fcb327ea"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"loader": {"load": ["[tex]/physics"]}, "tex": {"packages": {"[+]": ["physics"]}}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'src/user_guide_ja';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <script src="../_static/custom.js?v=f6c2dbb1"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../_static/searchtools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../README.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/qtdraw_logo.png" class="logo__image only-light" alt="QtDraw - Home"/>
+    <img src="../_static/qtdraw_logo.png" class="logo__image only-dark pst-js-only" alt="QtDraw - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installing QtDraw</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="user_guide.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="example.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="from_python.html">Usage from Python code</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">API reference</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="api_summary.html">Module summary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_core.html">Core</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_multipie.html">MultiPie</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_parser.html">Parser</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_script.html">Script</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_util.html">Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_widget.html">Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="function_table.html">Function Summary</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/CMT-MU/QtDraw.git" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/CMT-MU/QtDraw.git/edit/main/docs/src/user_guide_ja.md" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/CMT-MU/QtDraw.git/issues/new?title=Issue%20on%20page%20%2Fsrc/user_guide_ja.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>ユーザーガイド</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">1. 全体像</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">図の構成</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">オブジェクトの位置</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">範囲、繰り返し、クリップ</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">2. データ表</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dataset">DataSet ウィンドウ</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">値の書き方</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">すべてのオブジェクトに共通の列</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">点と矢印</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">球面上の関数</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">図形</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">曲線</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">文字</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">データ</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multipie">3. MultiPie を使った描画</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">MultiPie ダイアログ</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">サイト、ボンド、ベクトル、軌道の与え方</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#python">Python から</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id17">4. Python コードからの使い方</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id18">2つの使い方</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id19">スクリプト</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id20">ウィンドウを出さずに</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id21">図から Python コードを作る</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id22">よく使うメソッド</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1>ユーザーガイド<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<p>英語版は<a class="reference internal" href="user_guide.html"><span class="std std-doc">こちら</span></a>です。</p>
+<p><a class="reference download internal" download="" href="../_downloads/689a71e4242862a8510855d72926f14c/tutorial_multipie_qtdraw_ja.pdf"><span class="xref download myst">QtDraw を使った MultiPie の実践的なチュートリアル</span></a>（PDF）があります。</p>
+<p>このガイドでは、<strong>QtDraw</strong> の図がどう作られているかを説明します。図の構成、データ表にある各オブジェクト、MultiPie を使った描画、Python コードからの使い方です。
+メニュー、マウス、キーの操作は <a class="reference internal" href="getting_started_ja.html"><span class="std std-doc">はじめに</span></a> に、すべてのメソッドは <a class="reference internal" href="from_python_ja.html"><span class="std std-doc">Python のコードからの利用</span></a> にまとめてあります。</p>
+<section id="id2">
+<h2>1. 全体像<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<section id="id3">
+<h3>図の構成<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
+<p>図は次の3つからなり、まとめて <code class="docutils literal notranslate"><span class="pre">.qtdw</span></code> ファイルに保存されます。</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>部分</p></th>
+<th class="head"><p>内容</p></th>
+<th class="head"><p>変更する場所</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>オブジェクト</p></td>
+<td><p>サイト、ボンド、ベクトル、軌道など（19種類）</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">DataSet</span></code> ウィンドウ（データ表）</p></td>
+</tr>
+<tr class="row-odd"><td><p>単位胞</p></td>
+<td><p>結晶系、<code class="docutils literal notranslate"><span class="pre">a</span></code>、<code class="docutils literal notranslate"><span class="pre">b</span></code>、<code class="docutils literal notranslate"><span class="pre">c</span></code>、<code class="docutils literal notranslate"><span class="pre">alpha</span></code>、<code class="docutils literal notranslate"><span class="pre">beta</span></code>、<code class="docutils literal notranslate"><span class="pre">gamma</span></code>、原点</p></td>
+<td><p>右側のパネル</p></td>
+</tr>
+<tr class="row-even"><td><p>表示</p></td>
+<td><p>範囲、繰り返し、クリップ、視線方向、軸と単位胞の表示</p></td>
+<td><p>右側のパネル、<code class="docutils literal notranslate"><span class="pre">View</span></code> メニュー</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>物質のファイル（<code class="docutils literal notranslate"><span class="pre">.cif</span></code>、<code class="docutils literal notranslate"><span class="pre">.vesta</span></code>、<code class="docutils literal notranslate"><span class="pre">.xsf</span></code>）も開けます。サイトとボンド（<code class="docutils literal notranslate"><span class="pre">.xsf</span></code> ならグリッドデータも）の図に変換されます。</p>
+</section>
+<section id="id4">
+<h3>オブジェクトの位置<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
+<p>どのオブジェクトも <code class="docutils literal notranslate"><span class="pre">position</span></code> + <code class="docutils literal notranslate"><span class="pre">cell</span></code> の位置に置かれます。</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">position</span></code>：単位胞の<strong>分数座標</strong>で表した点。例：<code class="docutils literal notranslate"><span class="pre">[1/2,1/2,0]</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cell</span></code>：格子並進 <code class="docutils literal notranslate"><span class="pre">[n1,n2,n3]</span></code>。基本の単位胞なら <code class="docutils literal notranslate"><span class="pre">[0,0,0]</span></code></p></li>
+</ul>
+<p>オブジェクトの向き（ボンドやベクトルなど）は、分数座標でもデカルト座標でも与えられます。どちらにするかは <code class="docutils literal notranslate"><span class="pre">cartesian</span></code> 列で選びます。</p>
+</section>
+<section id="id5">
+<h3>範囲、繰り返し、クリップ<a class="headerlink" href="#id5" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">range</span></code>（<code class="docutils literal notranslate"><span class="pre">lower</span></code>、<code class="docutils literal notranslate"><span class="pre">upper</span></code>）：描く範囲。分数座標で与えます。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">repeat</span></code>：すべてのオブジェクトを、範囲内のすべての格子並進の位置にも描きます。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">clip</span></code>：範囲の外にはみ出た部分を切り取ります。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">non-repeat</span></code>（<code class="docutils literal notranslate"><span class="pre">View</span></code> メニュー）：繰り返して描いたオブジェクトを、基本の単位胞のオブジェクトに戻します。</p></li>
+</ul>
+<p>たとえば、立方晶の単位胞に置いた2つのサイトを 2 × 2 × 1 の範囲に繰り返すには：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw</span><span class="w"> </span><span class="kn">import</span> <span class="n">QtDraw</span>
+
+<span class="n">win</span> <span class="o">=</span> <span class="n">QtDraw</span><span class="p">()</span>
+<span class="n">win</span><span class="o">.</span><span class="n">add_site</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="s2">"[0,0,0]"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"red"</span><span class="p">)</span>
+<span class="n">win</span><span class="o">.</span><span class="n">add_site</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="s2">"[1/2,1/2,1/2]"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"blue"</span><span class="p">)</span>
+<span class="n">win</span><span class="o">.</span><span class="n">set_range</span><span class="p">(</span><span class="n">lower</span><span class="o">=</span><span class="s2">"[0,0,0]"</span><span class="p">,</span> <span class="n">upper</span><span class="o">=</span><span class="s2">"[2,2,1]"</span><span class="p">)</span>
+<span class="n">win</span><span class="o">.</span><span class="n">set_repeat</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id6">
+<h2>2. データ表<a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
+<section id="dataset">
+<h3>DataSet ウィンドウ<a class="headerlink" href="#dataset" title="Link to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">e</span></code> キーか <code class="docutils literal notranslate"><span class="pre">DataSet</span></code> ボタンで <code class="docutils literal notranslate"><span class="pre">DataSet</span></code> ウィンドウが開きます。オブジェクトの種類ごとに、タブに分かれた表があります。</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">name</span></code> が同じオブジェクトは1つのグループになります。<code class="docutils literal notranslate"><span class="pre">name</span></code> のチェックボックスで、グループの表示と非表示を切り替えます。</p></li>
+<li><p>セルをダブルクリックすると編集できます。読み取れない値は受け付けません。</p></li>
+<li><p>右クリックで行の挿入、コピー、削除ができます。Shift または Ctrl（macOS では Cmd）+ クリックで複数の行を選び、<code class="docutils literal notranslate"><span class="pre">Delete</span></code>（macOS では <code class="docutils literal notranslate"><span class="pre">Backspace</span></code> も）で選んだ行をまとめて削除できます。</p></li>
+<li><p>描画領域でオブジェクトを右クリックすると、その行を開く、隠す、削除することができます。</p></li>
+</ul>
+</section>
+<section id="id7">
+<h3>値の書き方<a class="headerlink" href="#id7" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>種類</p></th>
+<th class="head"><p>例</p></th>
+<th class="head"><p>注意</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>ベクトル</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">[1/2,0,0]</span></code>、<code class="docutils literal notranslate"><span class="pre">[sqrt(3)/2,1/2,0]</span></code></p></td>
+<td><p>数値または式</p></td>
+</tr>
+<tr class="row-odd"><td><p>多項式</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">x*y</span></code>、<code class="docutils literal notranslate"><span class="pre">3z**2-r**2</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">x</span></code>、<code class="docutils literal notranslate"><span class="pre">y</span></code>、<code class="docutils literal notranslate"><span class="pre">z</span></code>、<code class="docutils literal notranslate"><span class="pre">r</span></code>（= <span class="math notranslate nohighlight">\(\sqrt{x^2+y^2+z^2}\)</span>）の式</p></td>
+</tr>
+<tr class="row-even"><td><p>色</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">red</span></code>、<code class="docutils literal notranslate"><span class="pre">darkseagreen</span></code></p></td>
+<td><p>色の名前</p></td>
+</tr>
+<tr class="row-odd"><td><p>カラーマップ</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">coolwarm</span></code>、<code class="docutils literal notranslate"><span class="pre">Wistia</span></code></p></td>
+<td><p>軌道、ストリーム、等値面では、カラーマップも使えます</p></td>
+</tr>
+<tr class="row-even"><td><p>チェック</p></td>
+<td><p>オン / オフ</p></td>
+<td><p>例：<code class="docutils literal notranslate"><span class="pre">cartesian</span></code>、<code class="docutils literal notranslate"><span class="pre">arrow1</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>LaTeX</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">$\alpha_1$</span></code></p></td>
+<td><p>ラベル、キャプション、2D テキストで使えます。MathJax で描かれます</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="id8">
+<h3>すべてのオブジェクトに共通の列<a class="headerlink" href="#id8" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>列</p></th>
+<th class="head"><p>意味</p></th>
+<th class="head"><p>既定値</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">name</span></code></p></td>
+<td><p>グループの名前。チェックボックスでグループの表示を切り替える</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">untitled</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">label</span></code></p></td>
+<td><p>ラベルの文字列。チェックボックスでラベルを表示する</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">label</span></code>（非表示）</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">margin</span></code></p></td>
+<td><p>オブジェクトとラベルの間隔（空白文字の数）</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">3</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">position</span></code></p></td>
+<td><p>分数座標での位置</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">[0,0,0]</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cell</span></code></p></td>
+<td><p>格子並進</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">[0,0,0]</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">opacity</span></code></p></td>
+<td><p>0（透明）から 1 まで</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">1.0</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Python では、これらはすべての <code class="docutils literal notranslate"><span class="pre">add_*</span></code> メソッドのキーワード引数です。例：<code class="docutils literal notranslate"><span class="pre">win.add_site(name=&quot;Cu&quot;,</span> <span class="pre">label=&quot;Cu1&quot;,</span> <span class="pre">position=&quot;[0,0,0]&quot;)</span></code>。<code class="docutils literal notranslate"><span class="pre">name</span></code> と <code class="docutils literal notranslate"><span class="pre">label</span></code> のチェックボックスは <code class="docutils literal notranslate"><span class="pre">show</span></code> と <code class="docutils literal notranslate"><span class="pre">show_label</span></code> に当たります。例：非表示のオブジェクトは <code class="docutils literal notranslate"><span class="pre">win.add_site(show=False)</span></code>、ラベルを表示するなら <code class="docutils literal notranslate"><span class="pre">win.add_site(label=&quot;Cu1&quot;,</span> <span class="pre">show_label=True)</span></code>。
+以下、各オブジェクトに固有の列を説明します。</p>
+</section>
+<section id="id9">
+<h3>点と矢印<a class="headerlink" href="#id9" title="Link to this heading">#</a></h3>
+<p><strong>site</strong>：球。</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>列</p></th>
+<th class="head"><p>意味</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">size</span></code></p></td>
+<td><p>半径</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">color</span></code></p></td>
+<td><p>色</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">win</span><span class="o">.</span><span class="n">add_site</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="s2">"[1/2,0,0]"</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"red"</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>bond</strong>：円柱。<code class="docutils literal notranslate"><span class="pre">position</span></code> は<strong>中心</strong>で、<code class="docutils literal notranslate"><span class="pre">direction</span></code> は一方の端から他方の端へのベクトルです。</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>列</p></th>
+<th class="head"><p>意味</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">direction</span></code></p></td>
+<td><p>始点（tail）から終点（head）へのベクトル</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">width</span></code></p></td>
+<td><p>半径</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">color</span></code>、<code class="docutils literal notranslate"><span class="pre">color2</span></code></p></td>
+<td><p>始点側と終点側の半分の色</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cartesian</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">direction</span></code> をデカルト座標で与えるか（オフなら分数座標）</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">win</span><span class="o">.</span><span class="n">add_bond</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="s2">"[1/2,0,0]"</span><span class="p">,</span> <span class="n">direction</span><span class="o">=</span><span class="s2">"[1,0,0]"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"red"</span><span class="p">,</span> <span class="n">color2</span><span class="o">=</span><span class="s2">"blue"</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>vector</strong>：<code class="docutils literal notranslate"><span class="pre">position</span></code> を通る矢印。</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>列</p></th>
+<th class="head"><p>意味</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">direction</span></code></p></td>
+<td><p>矢印の向き</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length</span></code></p></td>
+<td><p>長さ。負の値なら |<code class="docutils literal notranslate"><span class="pre">length</span></code>| × <code class="docutils literal notranslate"><span class="pre">direction</span></code> のノルムを長さにする</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">width</span></code></p></td>
+<td><p>太さ</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">offset</span></code></p></td>
+<td><p>根元の位置。長さを単位にする（<code class="docutils literal notranslate"><span class="pre">-0.43</span></code> なら、矢印の中心がほぼ <code class="docutils literal notranslate"><span class="pre">position</span></code> に来る）</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">color</span></code></p></td>
+<td><p>色</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cartesian</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">direction</span></code> をデカルト座標で与えるか（既定はオン）</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">shaft</span> <span class="pre">R</span></code>、<code class="docutils literal notranslate"><span class="pre">tip</span> <span class="pre">R</span></code>、<code class="docutils literal notranslate"><span class="pre">tip</span> <span class="pre">length</span></code></p></td>
+<td><p>矢印の形。<code class="docutils literal notranslate"><span class="pre">width</span></code> と <code class="docutils literal notranslate"><span class="pre">length</span></code> に対する比</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">win</span><span class="o">.</span><span class="n">add_vector</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="s2">"[0,0,0]"</span><span class="p">,</span> <span class="n">direction</span><span class="o">=</span><span class="s2">"[1,1,0]"</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"green"</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>line</strong>：<code class="docutils literal notranslate"><span class="pre">position</span></code> から <code class="docutils literal notranslate"><span class="pre">position</span></code> + <code class="docutils literal notranslate"><span class="pre">direction</span></code> までの線（または矢印）。</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>列</p></th>
+<th class="head"><p>意味</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">direction</span></code></p></td>
+<td><p>始点から終点へのベクトル</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">width</span></code></p></td>
+<td><p>太さ</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">arrow1</span></code>、<code class="docutils literal notranslate"><span class="pre">arrow2</span></code></p></td>
+<td><p>始点と終点の矢じり</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">tip</span> <span class="pre">R</span></code>、<code class="docutils literal notranslate"><span class="pre">tip</span> <span class="pre">length</span></code></p></td>
+<td><p>矢じりの形</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">color</span></code></p></td>
+<td><p>色</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cartesian</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">direction</span></code> をデカルト座標で与えるか</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">win</span><span class="o">.</span><span class="n">add_line</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="s2">"[0,0,0]"</span><span class="p">,</span> <span class="n">direction</span><span class="o">=</span><span class="s2">"[1,0,0]"</span><span class="p">,</span> <span class="n">arrow2</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="id10">
+<h3>球面上の関数<a class="headerlink" href="#id10" title="Link to this heading">#</a></h3>
+<p><strong>orbital</strong>：多項式 <span class="math notranslate nohighlight">\(f(x,y,z)\)</span> に対する曲面 <span class="math notranslate nohighlight">\(r(\theta,\phi) \propto |f|\)</span>。色は別の多項式で付けられます。</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>列</p></th>
+<th class="head"><p>意味</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">shape</span></code></p></td>
+<td><p>形を決める多項式 <span class="math notranslate nohighlight">\(f\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">surface</span></code></p></td>
+<td><p>色を決める多項式（空なら <code class="docutils literal notranslate"><span class="pre">shape</span></code> と同じ）</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">size</span></code></p></td>
+<td><p>最大の半径。負の値なら、半径を |<code class="docutils literal notranslate"><span class="pre">size</span></code>| 倍する</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">range</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\theta\)</span> と <span class="math notranslate nohighlight">\(\phi\)</span> の範囲（度）。<code class="docutils literal notranslate"><span class="pre">[[0,180],[0,360]]</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">color</span></code></p></td>
+<td><p>色、または <code class="docutils literal notranslate"><span class="pre">surface</span></code> の値に対するカラーマップ</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">win</span><span class="o">.</span><span class="n">add_orbital</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="s2">"[0,0,0]"</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s2">"x*y"</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"coolwarm"</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>stream</strong>：曲面の上に描いたベクトル場の矢印。</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>列</p></th>
+<th class="head"><p>意味</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">shape</span></code></p></td>
+<td><p>矢印を置く曲面の多項式（<code class="docutils literal notranslate"><span class="pre">1</span></code> なら球）</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">vector</span></code></p></td>
+<td><p>ベクトル場の多項式 <code class="docutils literal notranslate"><span class="pre">[vx,vy,vz]</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">size</span></code></p></td>
+<td><p>曲面の大きさ。負の値なら形を規格化する</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">range</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\theta\)</span> と <span class="math notranslate nohighlight">\(\phi\)</span> の範囲（度）</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">division</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\theta\)</span> 方向と <span class="math notranslate nohighlight">\(\phi\)</span> 方向の矢印の数</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length</span></code>、<code class="docutils literal notranslate"><span class="pre">width</span></code>、<code class="docutils literal notranslate"><span class="pre">offset</span></code></p></td>
+<td><p>各矢印の大きさ</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">abs_scale</span></code></p></td>
+<td><p>各矢印をベクトルの大きさに比例させるか</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">color</span></code>、<code class="docutils literal notranslate"><span class="pre">component</span></code></p></td>
+<td><p>色、または成分（<code class="docutils literal notranslate"><span class="pre">x</span></code>、<code class="docutils literal notranslate"><span class="pre">y</span></code>、<code class="docutils literal notranslate"><span class="pre">z</span></code>、<code class="docutils literal notranslate"><span class="pre">abs</span></code>）に対するカラーマップ</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">shaft</span> <span class="pre">R</span></code>、<code class="docutils literal notranslate"><span class="pre">tip</span> <span class="pre">R</span></code>、<code class="docutils literal notranslate"><span class="pre">tip</span> <span class="pre">length</span></code></p></td>
+<td><p>矢印の形</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">win</span><span class="o">.</span><span class="n">add_stream</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="s2">"[0,0,0]"</span><span class="p">,</span> <span class="n">vector</span><span class="o">=</span><span class="s2">"[-y,x,0]"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"coolwarm"</span><span class="p">,</span> <span class="n">component</span><span class="o">=</span><span class="s2">"abs"</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="id11">
+<h3>図形<a class="headerlink" href="#id11" title="Link to this heading">#</a></h3>
+<p><strong>plane</strong>：<code class="docutils literal notranslate"><span class="pre">position</span></code> を中心とする長方形。</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>列</p></th>
+<th class="head"><p>意味</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">normal</span></code></p></td>
+<td><p>法線ベクトル</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">x_size</span></code>、<code class="docutils literal notranslate"><span class="pre">y_size</span></code></p></td>
+<td><p>辺の長さ</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">color</span></code></p></td>
+<td><p>色</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">grid</span></code>、<code class="docutils literal notranslate"><span class="pre">grid_color</span></code>、<code class="docutils literal notranslate"><span class="pre">width</span></code></p></td>
+<td><p>面上の格子線、その色と太さ</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cartesian</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">normal</span></code> をデカルト座標で与えるか</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">win</span><span class="o">.</span><span class="n">add_plane</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="s2">"[1/2,1/2,0]"</span><span class="p">,</span> <span class="n">normal</span><span class="o">=</span><span class="s2">"[0,0,1]"</span><span class="p">,</span> <span class="n">x_size</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">y_size</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">opacity</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>circle</strong>：<code class="docutils literal notranslate"><span class="pre">position</span></code> を中心とする円板。</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>列</p></th>
+<th class="head"><p>意味</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">normal</span></code></p></td>
+<td><p>法線ベクトル</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">size</span></code></p></td>
+<td><p>半径</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">color</span></code></p></td>
+<td><p>色</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">edge</span></code>、<code class="docutils literal notranslate"><span class="pre">edge_color</span></code>、<code class="docutils literal notranslate"><span class="pre">width</span></code></p></td>
+<td><p>縁、縁の色と太さ</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cartesian</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">normal</span></code> をデカルト座標で与えるか</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">win</span><span class="o">.</span><span class="n">add_circle</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="s2">"[0,0,0]"</span><span class="p">,</span> <span class="n">normal</span><span class="o">=</span><span class="s2">"[1,0,0]"</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>torus</strong>：輪。</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>列</p></th>
+<th class="head"><p>意味</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">normal</span></code></p></td>
+<td><p>輪の軸</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">size</span></code></p></td>
+<td><p>輪の半径</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">width</span></code></p></td>
+<td><p>管の半径</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">color</span></code></p></td>
+<td><p>色</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cartesian</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">normal</span></code> をデカルト座標で与えるか</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">win</span><span class="o">.</span><span class="n">add_torus</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="s2">"[0,0,0]"</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>ellipsoid</strong>：<code class="docutils literal notranslate"><span class="pre">position</span></code> を中心とする楕円体。</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>列</p></th>
+<th class="head"><p>意味</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">normal</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">z_size</span></code> の軸の向き</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">x_size</span></code>、<code class="docutils literal notranslate"><span class="pre">y_size</span></code>、<code class="docutils literal notranslate"><span class="pre">z_size</span></code></p></td>
+<td><p>3つの軸の方向の半径</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">color</span></code></p></td>
+<td><p>色</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cartesian</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">normal</span></code> をデカルト座標で与えるか</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">win</span><span class="o">.</span><span class="n">add_ellipsoid</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="s2">"[0,0,0]"</span><span class="p">,</span> <span class="n">x_size</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">y_size</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">z_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>toroid</strong>：超楕円の輪。たとえば角の丸い四角の輪。</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>列</p></th>
+<th class="head"><p>意味</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">normal</span></code></p></td>
+<td><p>輪の軸</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">size</span></code>、<code class="docutils literal notranslate"><span class="pre">width</span></code></p></td>
+<td><p>輪の半径と管の半径</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">x_scale</span></code>、<code class="docutils literal notranslate"><span class="pre">y_scale</span></code>、<code class="docutils literal notranslate"><span class="pre">z_scale</span></code></p></td>
+<td><p>3つの軸の方向の拡大率</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ring_shape</span></code>、<code class="docutils literal notranslate"><span class="pre">tube_shape</span></code></p></td>
+<td><p>輪と管の形の指数（1 で丸、小さいほど四角、大きいほど尖る）</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">color</span></code></p></td>
+<td><p>色</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cartesian</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">normal</span></code> をデカルト座標で与えるか</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">win</span><span class="o">.</span><span class="n">add_toroid</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="s2">"[0,0,0]"</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">0.15</span><span class="p">,</span> <span class="n">ring_shape</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>box</strong>：<code class="docutils literal notranslate"><span class="pre">position</span></code> を1つの角とする平行六面体。</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>列</p></th>
+<th class="head"><p>意味</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">a1</span></code>、<code class="docutils literal notranslate"><span class="pre">a2</span></code>、<code class="docutils literal notranslate"><span class="pre">a3</span></code></p></td>
+<td><p>辺のベクトル</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">color</span></code></p></td>
+<td><p>色</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">edge</span></code>、<code class="docutils literal notranslate"><span class="pre">edge_color</span></code>、<code class="docutils literal notranslate"><span class="pre">width</span></code></p></td>
+<td><p>辺、辺の色と太さ</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">wireframe</span></code></p></td>
+<td><p>辺だけを描くか</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cartesian</span></code></p></td>
+<td><p>辺のベクトルをデカルト座標で与えるか（オフなら分数座標）</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">win</span><span class="o">.</span><span class="n">add_box</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="s2">"[0,0,0]"</span><span class="p">,</span> <span class="n">a1</span><span class="o">=</span><span class="s2">"[1,0,0]"</span><span class="p">,</span> <span class="n">a2</span><span class="o">=</span><span class="s2">"[0,1,0]"</span><span class="p">,</span> <span class="n">a3</span><span class="o">=</span><span class="s2">"[0,0,1/2]"</span><span class="p">,</span> <span class="n">opacity</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>polygon</strong>：頂点と面で与える多面体。</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>列</p></th>
+<th class="head"><p>意味</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">point</span></code></p></td>
+<td><p>頂点。<code class="docutils literal notranslate"><span class="pre">position</span></code> からの相対位置</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">connectivity</span></code></p></td>
+<td><p>面。各面は頂点の番号（0 から）のリスト</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">color</span></code>、<code class="docutils literal notranslate"><span class="pre">edge</span></code>、<code class="docutils literal notranslate"><span class="pre">edge_color</span></code>、<code class="docutils literal notranslate"><span class="pre">width</span></code>、<code class="docutils literal notranslate"><span class="pre">wireframe</span></code></p></td>
+<td><p>box と同じ</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cartesian</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">point</span></code> をデカルト座標で与えるか（オフなら分数座標）</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">win</span><span class="o">.</span><span class="n">add_polygon</span><span class="p">(</span><span class="n">point</span><span class="o">=</span><span class="s2">"[[0,0,0],[1,0,0],[0,1,0],[0,0,1]]"</span><span class="p">,</span> <span class="n">connectivity</span><span class="o">=</span><span class="s2">"[[0,1,2],[0,1,3],[0,2,3],[1,2,3]]"</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="id12">
+<h3>曲線<a class="headerlink" href="#id12" title="Link to this heading">#</a></h3>
+<p><strong>spline</strong>：点を滑らかに結ぶ曲線。</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>列</p></th>
+<th class="head"><p>意味</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">point</span></code></p></td>
+<td><p>曲線が通る点。<code class="docutils literal notranslate"><span class="pre">position</span></code> からの相対位置</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">width</span></code></p></td>
+<td><p>太さ</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">n_interp</span></code></p></td>
+<td><p>補間する点の数</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">closed</span></code></p></td>
+<td><p>閉じた曲線にするか</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">natural</span></code></p></td>
+<td><p>自然な端の条件にするか</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">arrow1</span></code>、<code class="docutils literal notranslate"><span class="pre">arrow2</span></code>、<code class="docutils literal notranslate"><span class="pre">tip</span> <span class="pre">R</span></code>、<code class="docutils literal notranslate"><span class="pre">tip</span> <span class="pre">length</span></code></p></td>
+<td><p>始点と終点の矢じり</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">color</span></code></p></td>
+<td><p>色</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cartesian</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">point</span></code> をデカルト座標で与えるか</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">win</span><span class="o">.</span><span class="n">add_spline</span><span class="p">(</span><span class="n">point</span><span class="o">=</span><span class="s2">"[[0,0,0],[1,0,1],[0,1,2]]"</span><span class="p">,</span> <span class="n">arrow2</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>spline_t</strong>：パラメータ <code class="docutils literal notranslate"><span class="pre">t</span></code> の関数で与える曲線。</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>列</p></th>
+<th class="head"><p>意味</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">point</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">t</span></code> の関数 <code class="docutils literal notranslate"><span class="pre">[x(t),y(t),z(t)]</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">t_range</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">[t0,t1,dt]</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>その他</p></td>
+<td><p>spline と同じ</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">win</span><span class="o">.</span><span class="n">add_spline_t</span><span class="p">(</span><span class="n">point</span><span class="o">=</span><span class="s2">"[cos(2 pi t), sin(2 pi t), t/2]"</span><span class="p">,</span> <span class="n">t_range</span><span class="o">=</span><span class="s2">"[0,2,0.02]"</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="id13">
+<h3>文字<a class="headerlink" href="#id13" title="Link to this heading">#</a></h3>
+<p><strong>text3d</strong>：図の中に置く立体の文字。</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>列</p></th>
+<th class="head"><p>意味</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">text</span></code></p></td>
+<td><p>文字列</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">size</span></code></p></td>
+<td><p>高さ</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">view</span></code></p></td>
+<td><p>文字を読む向き</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">depth</span></code></p></td>
+<td><p>厚み</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">offset</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">position</span></code> からのずれ</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">color</span></code></p></td>
+<td><p>色</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">win</span><span class="o">.</span><span class="n">add_text3d</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="s2">"[0,0,1]"</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">"Cu"</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>caption</strong>：複数の位置に置く文字。画面上の大きさは一定です。</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>列</p></th>
+<th class="head"><p>意味</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">position</span></code></p></td>
+<td><p>キャプションごとの位置 <code class="docutils literal notranslate"><span class="pre">[[x1,y1,z1],[x2,y2,z2],...]</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">caption</span></code></p></td>
+<td><p>キャプション <code class="docutils literal notranslate"><span class="pre">[A,B,...]</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">size</span></code>、<code class="docutils literal notranslate"><span class="pre">bold</span></code>、<code class="docutils literal notranslate"><span class="pre">color</span></code></p></td>
+<td><p>文字の大きさ、太字、色</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">win</span><span class="o">.</span><span class="n">add_caption</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="s2">"[[0,0,0],[1,0,0]]"</span><span class="p">,</span> <span class="n">caption</span><span class="o">=</span><span class="s2">"[A,B]"</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>text2d</strong>：ウィンドウに固定した文字。たとえば題名。</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>列</p></th>
+<th class="head"><p>意味</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">position</span></code></p></td>
+<td><p>ウィンドウ内の位置 <code class="docutils literal notranslate"><span class="pre">[x,y,0]</span></code>。<code class="docutils literal notranslate"><span class="pre">x</span></code> と <code class="docutils literal notranslate"><span class="pre">y</span></code> は 0 から 1</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">caption</span></code></p></td>
+<td><p>文字列（LaTeX は <code class="docutils literal notranslate"><span class="pre">$...$</span></code>）</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">size</span></code>、<code class="docutils literal notranslate"><span class="pre">color</span></code>、<code class="docutils literal notranslate"><span class="pre">font</span></code></p></td>
+<td><p>文字の大きさ、色、フォント</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">win</span><span class="o">.</span><span class="n">add_text2d</span><span class="p">(</span><span class="n">caption</span><span class="o">=</span><span class="sa">r</span><span class="s2">"$E = \hbar\omega$"</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="s2">"[0.05,0.9,0]"</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="id14">
+<h3>データ<a class="headerlink" href="#id14" title="Link to this heading">#</a></h3>
+<p><strong>isosurface</strong>：グリッドデータの等値面。たとえば <code class="docutils literal notranslate"><span class="pre">.xsf</span></code> ファイルの電荷密度。</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>列</p></th>
+<th class="head"><p>意味</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">data</span></code></p></td>
+<td><p>グリッドデータのファイル（<code class="docutils literal notranslate"><span class="pre">.xsf</span></code>、または QtDraw が書いた辞書のファイル）。図のファイルからの相対パス</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">value</span></code></p></td>
+<td><p>等値面の値 <code class="docutils literal notranslate"><span class="pre">[v1,v2,...]</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">surface</span></code></p></td>
+<td><p>面の色に使う別のデータの名前（空なら単色）</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">color</span></code></p></td>
+<td><p>色、または <code class="docutils literal notranslate"><span class="pre">surface</span></code> のデータに対するカラーマップ</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">color_range</span></code></p></td>
+<td><p>カラーマップの範囲</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">win</span><span class="o">.</span><span class="n">add_isosurface</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="s2">"Si.xsf"</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="s2">"[0.05]"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"skyblue"</span><span class="p">,</span> <span class="n">opacity</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="multipie">
+<h2>3. MultiPie を使った描画<a class="headerlink" href="#multipie" title="Link to this heading">#</a></h2>
+<p><a class="reference external" href="https://github.com/CMT-MU/MultiPie">MultiPie</a> は、点群と空間群（磁気群も含む）の対称操作と、対称性に適合した多極子基底（SAMB）を与えます。
+これを使うと QtDraw は、対称性で等価なオブジェクトをまとめて描いたり、SAMB を描いたりできます。
+QtDraw は MultiPie Ver.2（2.5 以降）と Ver.3 のどちらでも動きます。MultiPie がないときは、<code class="docutils literal notranslate"><span class="pre">MultiPie</span></code> ボタンがインストールを提案します。</p>
+<section id="id15">
+<h3>MultiPie ダイアログ<a class="headerlink" href="#id15" title="Link to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">MultiPie</span></code> ボタンでダイアログが開きます。
+上部で、群の種類（PG、SG、MPG、MSG）、結晶系、群の名前を選びます。QtDraw の単位胞は、群の結晶系に合わせて変わります。
+<code class="docutils literal notranslate"><span class="pre">Info.</span></code> のボタンで、対称操作、指標表、Wyckoff サイトとボンド、積表を表示できます。
+ダイアログには3つのタブがあります。</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>タブ</p></th>
+<th class="head"><p>すること</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Group Info.</strong></p></td>
+<td><p>既約表現と調和関数の分解、調和関数、Wyckoff サイトとボンドの検索と描画、原子多極子、応答テンソル</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Object Drawing</strong></p></td>
+<td><p>代表のサイト、ボンド、ベクトル、軌道と等価なものをまとめて描く</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Basis Drawing</strong></p></td>
+<td><p>サイト、ボンド、ベクトル、軌道のクラスターの SAMB を一覧にし、その1つ、線形結合、または複数の単位胞にわたる変調（空間群のみ）を描く</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>描かれるのは普通のオブジェクトなので、ほかのオブジェクトと同じようにデータ表で編集できます。</p>
+</section>
+<section id="id16">
+<h3>サイト、ボンド、ベクトル、軌道の与え方<a class="headerlink" href="#id16" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>対象</p></th>
+<th class="head"><p>形式</p></th>
+<th class="head"><p>例</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>サイト</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">[x,y,z]</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">[1/3,2/3,0]</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>ボンド</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">[x0,y0,z0];[x1,y1,z1]</span></code>（始点;終点）、<code class="docutils literal notranslate"><span class="pre">[X,Y,Z]&#64;[x,y,z]</span></code>（ベクトル&#64;中心）、<code class="docutils literal notranslate"><span class="pre">[x0,y0,z0]:[X,Y,Z]</span></code>（始点:ベクトル）</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">[2/3,1/3,0];[1/3,2/3,0]</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>ベクトル</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">[X,Y,Z]</span> <span class="pre">#</span> <span class="pre">サイトまたはボンド</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">[0,0,1]</span> <span class="pre">#</span> <span class="pre">[1/3,2/3,0]</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>軌道</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">多項式</span> <span class="pre">#</span> <span class="pre">サイトまたはボンド</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">x*y</span> <span class="pre">#</span> <span class="pre">[0,0,0]</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="python">
+<h3>Python から<a class="headerlink" href="#python" title="Link to this heading">#</a></h3>
+<p>群はタグで指定します。例：<code class="docutils literal notranslate"><span class="pre">D6h</span></code>（点群）、<code class="docutils literal notranslate"><span class="pre">D6h^1</span></code>（空間群）、<code class="docutils literal notranslate"><span class="pre">MPG:1.1.1</span></code>、<code class="docutils literal notranslate"><span class="pre">MSG:123.345</span></code>（磁気群）。
+<code class="docutils literal notranslate"><span class="pre">mp_*</span></code> メソッドで、ダイアログと同じことができます。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw</span><span class="w"> </span><span class="kn">import</span> <span class="n">QtDraw</span>
+
+<span class="n">win</span> <span class="o">=</span> <span class="n">QtDraw</span><span class="p">()</span>
+<span class="n">win</span><span class="o">.</span><span class="n">mp_set_group</span><span class="p">(</span><span class="s2">"D6h^1"</span><span class="p">)</span>  <span class="c1"># graphene.</span>
+<span class="n">win</span><span class="o">.</span><span class="n">mp_add_site</span><span class="p">(</span><span class="s2">"[1/3,2/3,0]"</span><span class="p">)</span>  <span class="c1"># equivalent sites.</span>
+<span class="n">win</span><span class="o">.</span><span class="n">mp_add_bond</span><span class="p">(</span><span class="s2">"[2/3,1/3,0];[1/3,2/3,0]"</span><span class="p">)</span>  <span class="c1"># equivalent bonds.</span>
+
+<span class="n">lst</span> <span class="o">=</span> <span class="n">win</span><span class="o">.</span><span class="n">mp_site_samb_list</span><span class="p">(</span><span class="s2">"[1/3,2/3,0]"</span><span class="p">)</span>  <span class="c1"># SAMBs of the site cluster.</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">lst</span><span class="p">)</span>
+<span class="n">win</span><span class="o">.</span><span class="n">mp_add_site_samb</span><span class="p">(</span><span class="n">lst</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>  <span class="c1"># draw one of them.</span>
+</pre></div>
+</div>
+<p>ベクトルと軌道の SAMB は、タグ（例：<code class="docutils literal notranslate"><span class="pre">Q01</span></code>）、タグの線形結合（例：<code class="docutils literal notranslate"><span class="pre">Q02+G01</span></code>）、または変調で描きます。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">lst</span> <span class="o">=</span> <span class="n">win</span><span class="o">.</span><span class="n">mp_vector_samb_list</span><span class="p">(</span><span class="s2">"[1/3,2/3,0]"</span><span class="p">,</span> <span class="s2">"M"</span><span class="p">)</span>  <span class="c1"># magnetic-dipole SAMBs, {type: [tags]}.</span>
+<span class="n">win</span><span class="o">.</span><span class="n">mp_add_vector_samb</span><span class="p">(</span><span class="s2">"M01"</span><span class="p">)</span>
+<span class="n">win</span><span class="o">.</span><span class="n">mp_add_vector_samb_modulation</span><span class="p">(</span><span class="s2">"[[M01, 1, [1/2,0,0], cos]] : [2,2,1]"</span><span class="p">)</span>  <span class="c1"># [[tag, coefficient, k, cos/sin]] : cells.</span>
+</pre></div>
+</div>
+<p>変調には空間群の格子並進が必要です。点群で使うと、警告を出して無視されます。
+ほかの例：<a class="reference internal" href="examples/mp_graphene.html"><span class="std std-doc">グラフェン</span></a>、<a class="reference internal" href="examples/mp_Te.html"><span class="std std-doc">Te</span></a>、<a class="reference internal" href="examples/multipie.html"><span class="std std-doc">すべての mp_* メソッド</span></a>。</p>
+</section>
+</section>
+<section id="id17">
+<h2>4. Python コードからの使い方<a class="headerlink" href="#id17" title="Link to this heading">#</a></h2>
+<section id="id18">
+<h3>2つの使い方<a class="headerlink" href="#id18" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>使い方</p></th>
+<th class="head"><p>用途</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">QtDraw()</span></code></p></td>
+<td><p>QtDraw のウィンドウ。スクリプトや Jupyter ノートブックから描く</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">create_qtdraw_file(filename,</span> <span class="pre">callback)</span></code></p></td>
+<td><p>ウィンドウを出さずに <code class="docutils literal notranslate"><span class="pre">.qtdw</span></code> ファイルを書く（バックグラウンドの処理）</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">add_*</span></code> の引数はデータ表の列と同じで、文字列か数値で与えます。省いた引数（または <code class="docutils literal notranslate"><span class="pre">None</span></code>）には既定値が使われます。</p>
+</section>
+<section id="id19">
+<h3>スクリプト<a class="headerlink" href="#id19" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw</span><span class="w"> </span><span class="kn">import</span> <span class="n">QtDraw</span>
+
+<span class="n">win</span> <span class="o">=</span> <span class="n">QtDraw</span><span class="p">()</span>
+<span class="n">win</span><span class="o">.</span><span class="n">set_crystal</span><span class="p">(</span><span class="s2">"hexagonal"</span><span class="p">)</span>
+<span class="n">win</span><span class="o">.</span><span class="n">set_unit_cell</span><span class="p">({</span><span class="s2">"a"</span><span class="p">:</span> <span class="mf">2.46</span><span class="p">,</span> <span class="s2">"c"</span><span class="p">:</span> <span class="mf">6.7</span><span class="p">})</span>
+<span class="n">win</span><span class="o">.</span><span class="n">add_site</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="s2">"[1/3,2/3,0]"</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"C1"</span><span class="p">)</span>
+<span class="n">win</span><span class="o">.</span><span class="n">add_site</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="s2">"[2/3,1/3,0]"</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"C2"</span><span class="p">)</span>
+<span class="n">win</span><span class="o">.</span><span class="n">add_bond</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="s2">"[1/2,1/2,0]"</span><span class="p">,</span> <span class="n">direction</span><span class="o">=</span><span class="s2">"[1/3,-1/3,0]"</span><span class="p">)</span>  <span class="c1"># C1-C2.</span>
+<span class="n">win</span><span class="o">.</span><span class="n">set_view</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>  <span class="c1"># view along c.</span>
+<span class="n">win</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">"graphene.qtdw"</span><span class="p">)</span>
+<span class="n">win</span><span class="o">.</span><span class="n">save_screenshot</span><span class="p">(</span><span class="s2">"graphene.png"</span><span class="p">)</span>  <span class="c1"># also .pdf, .svg, ...</span>
+<span class="n">win</span><span class="o">.</span><span class="n">exec</span><span class="p">()</span>  <span class="c1"># in a script, show the window until it is closed (not needed in Jupyter).</span>
+</pre></div>
+</div>
+</section>
+<section id="id20">
+<h3>ウィンドウを出さずに<a class="headerlink" href="#id20" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_qtdraw_file</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">draw</span><span class="p">(</span><span class="n">widget</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">8</span><span class="p">):</span>
+        <span class="n">widget</span><span class="o">.</span><span class="n">add_site</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="sa">f</span><span class="s2">"[</span><span class="si">{</span><span class="n">i</span><span class="o">/</span><span class="mi">8</span><span class="si">}</span><span class="s2">,0,0]"</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>
+
+
+<span class="n">create_qtdraw_file</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s2">"chain.qtdw"</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">draw</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="id21">
+<h3>図から Python コードを作る<a class="headerlink" href="#id21" title="Link to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">File</span></code> &gt; <code class="docutils literal notranslate"><span class="pre">Export</span> <span class="pre">as</span> <span class="pre">Python...</span></code> は、今の図を、同じ図を描く Python コードとして書き出します。たとえば、手で作った図からスクリプトを始めるときに使います。<code class="docutils literal notranslate"><span class="pre">win.to_python()</span></code> でコードを文字列として取り出し、<code class="docutils literal notranslate"><span class="pre">win.save_python(&quot;drawing.py&quot;)</span></code> でファイルに保存できます。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">win</span><span class="o">.</span><span class="n">save_python</span><span class="p">(</span><span class="s2">"graphene.py"</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>で、たとえば次のようなコードが書かれます。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">qtdraw</span><span class="w"> </span><span class="kn">import</span> <span class="n">QtDraw</span>
+
+<span class="n">win</span> <span class="o">=</span> <span class="n">QtDraw</span><span class="p">()</span>
+<span class="n">win</span><span class="o">.</span><span class="n">set_model</span><span class="p">(</span><span class="s1">'graphene'</span><span class="p">)</span>
+<span class="n">win</span><span class="o">.</span><span class="n">mp_set_group</span><span class="p">(</span><span class="s1">'D6h^1'</span><span class="p">)</span>
+<span class="n">win</span><span class="o">.</span><span class="n">set_crystal</span><span class="p">(</span><span class="s1">'hexagonal'</span><span class="p">)</span>
+<span class="n">win</span><span class="o">.</span><span class="n">set_unit_cell</span><span class="p">({</span><span class="s1">'a'</span><span class="p">:</span> <span class="mf">2.46</span><span class="p">,</span> <span class="s1">'b'</span><span class="p">:</span> <span class="mf">2.46</span><span class="p">,</span> <span class="s1">'c'</span><span class="p">:</span> <span class="mf">6.7</span><span class="p">,</span> <span class="s1">'alpha'</span><span class="p">:</span> <span class="mf">90.0</span><span class="p">,</span> <span class="s1">'beta'</span><span class="p">:</span> <span class="mf">90.0</span><span class="p">,</span> <span class="s1">'gamma'</span><span class="p">:</span> <span class="mf">120.0</span><span class="p">})</span>
+
+<span class="c1"># site.</span>
+<span class="n">win</span><span class="o">.</span><span class="n">add_site</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">'C1'</span><span class="p">,</span> <span class="n">show_label</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="s1">'[1/3,2/3,0]'</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+<span class="o">...</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>コードは今の状態から作ります。対象は、オブジェクト、単位胞、範囲・繰り返し・クリップ、表示の設定、モデル名、MultiPie の群です。カメラ（拡大や回転）、環境設定、MultiPie ダイアログは書きません。</p></li>
+<li><p>既定値と違う値だけを書きます。MultiPie で描いたオブジェクトは、<code class="docutils literal notranslate"><span class="pre">mp_set_group</span></code> のあとに1つずつ書きます。</p></li>
+<li><p>繰り返しが有効なときは、基本の単位胞のオブジェクトだけを書き、<code class="docutils literal notranslate"><span class="pre">set_repeat(True)</span></code> で繰り返します。</p></li>
+<li><p>データがファイルにない等値面は書きません（コメントで知らせます）。</p></li>
+</ul>
+</section>
+<section id="id22">
+<h3>よく使うメソッド<a class="headerlink" href="#id22" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>メソッド</p></th>
+<th class="head"><p>すること</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">set_crystal</span></code>、<code class="docutils literal notranslate"><span class="pre">set_unit_cell</span></code>、<code class="docutils literal notranslate"><span class="pre">set_origin</span></code></p></td>
+<td><p>単位胞</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">set_range</span></code>、<code class="docutils literal notranslate"><span class="pre">set_repeat</span></code>、<code class="docutils literal notranslate"><span class="pre">set_clip</span></code>、<code class="docutils literal notranslate"><span class="pre">set_nonrepeat</span></code></p></td>
+<td><p>範囲、繰り返し、クリップ</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">set_view</span></code>、<code class="docutils literal notranslate"><span class="pre">set_parallel_projection</span></code>、<code class="docutils literal notranslate"><span class="pre">set_axis</span></code>、<code class="docutils literal notranslate"><span class="pre">set_cell</span></code>、<code class="docutils literal notranslate"><span class="pre">set_grid</span></code></p></td>
+<td><p>表示</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">set_model</span></code></p></td>
+<td><p>モデルの名前</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">load</span></code>、<code class="docutils literal notranslate"><span class="pre">save</span></code></p></td>
+<td><p>ファイル</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">to_python</span></code>、<code class="docutils literal notranslate"><span class="pre">save_python</span></code></p></td>
+<td><p>図の Python コード</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">save_screenshot</span></code></p></td>
+<td><p>図の画像（<code class="docutils literal notranslate"><span class="pre">.png</span></code>、<code class="docutils literal notranslate"><span class="pre">.bmp</span></code>、<code class="docutils literal notranslate"><span class="pre">.tif</span></code>、<code class="docutils literal notranslate"><span class="pre">.tiff</span></code>、<code class="docutils literal notranslate"><span class="pre">.svg</span></code>、<code class="docutils literal notranslate"><span class="pre">.eps</span></code>、<code class="docutils literal notranslate"><span class="pre">.ps</span></code>、<code class="docutils literal notranslate"><span class="pre">.pdf</span></code>）。<code class="docutils literal notranslate"><span class="pre">File</span></code> &gt; <code class="docutils literal notranslate"><span class="pre">Screenshot</span></code> と同じ</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">clear_data</span></code></p></td>
+<td><p>すべてのオブジェクトを消す</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">update_preference</span></code></p></td>
+<td><p>設定。例：<code class="docutils literal notranslate"><span class="pre">update_preference(&quot;label&quot;,</span> <span class="pre">&quot;default_check&quot;,</span> <span class="pre">True)</span></code> でラベルを表示する</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">undo</span></code>、<code class="docutils literal notranslate"><span class="pre">redo</span></code></p></td>
+<td><p>履歴</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>すべてのメソッドは <a class="reference internal" href="from_python_ja.html"><span class="std std-doc">Python のコードからの利用</span></a> に、ほかの例は <a class="reference internal" href="example_ja.html"><span class="std std-doc">例</span></a> にあります。</p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./src"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">1. 全体像</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">図の構成</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">オブジェクトの位置</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">範囲、繰り返し、クリップ</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">2. データ表</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dataset">DataSet ウィンドウ</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">値の書き方</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">すべてのオブジェクトに共通の列</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">点と矢印</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">球面上の関数</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">図形</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">曲線</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">文字</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">データ</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multipie">3. MultiPie を使った描画</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">MultiPie ダイアログ</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">サイト、ボンド、ベクトル、軌道の与え方</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#python">Python から</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id17">4. Python コードからの使い方</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id18">2つの使い方</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id19">スクリプト</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id20">ウィンドウを出さずに</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id21">図から Python コードを作る</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id22">よく使うメソッド</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Hiroaki Kusunose
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2021-.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
